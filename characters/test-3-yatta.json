@@ -2,7 +2,7 @@
   "id": "d3140756-ab6b-4540-81bf-93701042b5db",
   "meta": {
     "repoPath": "characters/test-3-yatta.json",
-    "lastUpdated": "2026-05-01T14:01:38.945Z"
+    "lastUpdated": "2026-05-01T14:03:09.569Z"
   },
   "identity": {
     "name": "Test 3 yatta guuhh what how do i change a name",
@@ -11,7 +11,9 @@
     "height": "",
     "age": "",
     "origin": "",
-    "tags": []
+    "tags": [
+      "Boss"
+    ]
   },
   "appearance": {
     "description": "",
