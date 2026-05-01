@@ -36,7 +36,7 @@
             }
           ],
           "desc": [
-            "You’ve developed the Skills necessary to hold your own in close--quarters Grappling. You gain the following benefits:",
+            "Youâve developed the Skills necessary to hold your own in close--quarters Grappling. You gain the following benefits:",
             "- You have advantage on Attack Rolls against a creature you are Grappling.",
             "- You can use your action to try to pin a creature Grappled by you. To do so, make another grapple check. If you succeed, you and the creature are both Restrained until the grapple ends."
           ],
@@ -46,7 +46,71 @@
       },
       "createdAt": "2026-05-01T15:27:30.212Z",
       "updatedAt": "2026-05-01T15:27:30.212Z",
-      "description": "You’ve developed the Skills necessary to hold your own in close--quarters Grappling. You gain the following benefits:\n\n- You have advantage on Attack Rolls against a creature you are Grappling.\n\n- You can use your action to try to pin a creature Grappled by you. To do so, make another grapple check. If you succeed, you and the creature are both Restrained until the grapple ends."
+      "description": "Youâve developed the Skills necessary to hold your own in close--quarters Grappling. You gain the following benefits:\n\n- You have advantage on Attack Rolls against a creature you are Grappling.\n\n- You can use your action to try to pin a creature Grappled by you. To do so, make another grapple check. If you succeed, you and the creature are both Restrained until the grapple ends."
+    },
+    {
+      "id": "931a6347-81ac-48d0-b499-cbf2c914eb60",
+      "collection": "feats",
+      "name": "Actor Feat",
+      "tags": [],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {
+        "prerequisites": []
+      },
+      "createdAt": "2026-05-01T15:51:09.535Z",
+      "updatedAt": "2026-05-01T15:51:09.535Z",
+      "description": "+1 CHA. Supports mimicry, false identities, and impersonation flavor without adding another flat bonus to player-facing deception."
+    },
+    {
+      "id": "b4205c6e-c27e-44d8-aeb9-7b9bb474a4e0",
+      "collection": "feats",
+      "name": "Skill Expert",
+      "tags": [],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {
+        "prerequisites": []
+      },
+      "createdAt": "2026-05-01T15:51:09.535Z",
+      "updatedAt": "2026-05-01T15:51:09.535Z",
+      "description": "+1 CHA. Folded into Expert Deceiver for prepared deception/impersonation/persuasion."
+    },
+    {
+      "id": "73f591ce-f655-4898-943c-37e896a0d1eb",
+      "collection": "feats",
+      "name": "Beguiling Influence",
+      "tags": [],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {
+        "prerequisites": []
+      },
+      "createdAt": "2026-05-01T15:51:09.535Z",
+      "updatedAt": "2026-05-01T15:51:09.535Z",
+      "description": "Folded into Expert Deceiver. Grants proficiency in Deception and Persuasion."
+    },
+    {
+      "id": "2236f92f-66db-42e9-a1ad-34544cd3919c",
+      "collection": "feats",
+      "name": "Silver Tongue",
+      "tags": [],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {
+        "prerequisites": []
+      },
+      "createdAt": "2026-05-01T15:51:09.535Z",
+      "updatedAt": "2026-05-01T15:51:09.535Z",
+      "description": "For Deception/Persuasion outside player-facing checks, d20 rolls of 9 or lower count as 10."
     }
   ]
 }
