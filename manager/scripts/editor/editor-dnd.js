@@ -4,8 +4,10 @@
  * speed, initiative, feats, and multiclass entries.
  * The HP tracker lives in editor-resources.js.
  *
+ * When character.dnd is absent, the tab shows an Enable call-to-action instead.
+ *
  * Exports: EditorDnd.buildTab(character) → HTMLElement
- *          EditorDnd.readTab(character)  → mutates character in-place
+ *          EditorDnd.readTab(character)  → mutates character in-place (skips if section absent)
  */
 
 const EditorDnd = (() => {
@@ -15,260 +17,306 @@ const EditorDnd = (() => {
     panel.className = "editor-tab-panel";
     panel.id        = "tab-panel-dnd";
 
-    const dnd = character.dnd || Schema.createDefaultDnd();
+    function render() {
+      panel.innerHTML = "";
 
-    panel.innerHTML = `
-      <div style="padding: var(--space-6) 0; display: flex; flex-direction: column; gap: var(--space-8);">
+      // ── Section not enabled ──────────────────────────────────────────────────
+      if (!character.dnd) {
+        panel.innerHTML = `
+          <div style="padding: var(--space-12, 3rem) var(--space-6); display: flex; flex-direction: column;
+                      align-items: center; gap: var(--space-4); text-align: center; min-height: 320px;
+                      justify-content: center;">
+            <div style="font-size: 3rem; line-height: 1;">⚔️</div>
+            <h3 style="color: var(--text-secondary, #8a8299);">D&amp;D Stats</h3>
+            <p class="text-muted text-sm" style="max-width: 400px;">
+              This character doesn't have D&amp;D 5e stats yet. Enable this section to add class,
+              ability scores, AC modes, saving throws, skill proficiencies, feats, and more.
+            </p>
+            <button class="button button-primary btn-enable-dnd" style="margin-top: var(--space-2);">
+              ✦ Enable D&amp;D Stats
+            </button>
+          </div>
+        `;
+        panel.querySelector(".btn-enable-dnd").addEventListener("click", () => {
+          character.dnd = Schema.createDefaultDnd();
+          render();
+        });
+        return;
+      }
 
-        <!-- ── Class & Level ─────────────────────────────────────── -->
-        <section>
-          <div class="section-header">
-            <span class="section-icon">⚔️</span>
-            <h3>Class &amp; Background</h3>
+      // ── Full editor ──────────────────────────────────────────────────────────
+      const dnd = character.dnd;
+
+      panel.innerHTML = `
+        <div style="padding: var(--space-6) 0; display: flex; flex-direction: column; gap: var(--space-8);">
+
+          <!-- Remove section -->
+          <div style="display: flex; justify-content: flex-end;">
+            <button class="button button-ghost button-sm btn-remove-dnd-section"
+              style="color: var(--color-danger, #b94040);">
+              🗑 Remove D&amp;D Section
+            </button>
           </div>
 
-          <div class="fields-grid-4">
-            <div class="field-group">
-              <label class="field-label" for="dnd-class">Class</label>
-              <input type="text" id="dnd-class" class="field-input"
-                placeholder="Wizard" value="${EditorBase.escapeAttr(dnd.class || "")}" />
+          <!-- ── Class & Level ─────────────────────────────────────── -->
+          <section>
+            <div class="section-header">
+              <span class="section-icon">⚔️</span>
+              <h3>Class &amp; Background</h3>
             </div>
-            <div class="field-group">
-              <label class="field-label" for="dnd-subclass">Subclass</label>
-              <input type="text" id="dnd-subclass" class="field-input"
-                placeholder="Bladesinging" value="${EditorBase.escapeAttr(dnd.subclass || "")}" />
-            </div>
-            <div class="field-group">
-              <label class="field-label" for="dnd-level">Level</label>
-              <input type="number" min="1" max="20" id="dnd-level" class="field-input field-number"
-                value="${dnd.level || 1}" />
-            </div>
-            <div class="field-group">
-              <label class="field-label" for="dnd-proficiency">Proficiency Bonus</label>
-              <input type="number" min="2" max="9" id="dnd-proficiency" class="field-input field-number"
-                value="${dnd.proficiencyBonus || 2}" />
-            </div>
-          </div>
 
-          <div class="fields-grid-3">
-            <div class="field-group">
-              <label class="field-label" for="dnd-background">Background</label>
-              <input type="text" id="dnd-background" class="field-input"
-                placeholder="Sage" value="${EditorBase.escapeAttr(dnd.background || "")}" />
+            <div class="fields-grid-4">
+              <div class="field-group">
+                <label class="field-label" for="dnd-class">Class</label>
+                <input type="text" id="dnd-class" class="field-input"
+                  placeholder="Wizard" value="${EditorBase.escapeAttr(dnd.class || "")}" />
+              </div>
+              <div class="field-group">
+                <label class="field-label" for="dnd-subclass">Subclass</label>
+                <input type="text" id="dnd-subclass" class="field-input"
+                  placeholder="Bladesinging" value="${EditorBase.escapeAttr(dnd.subclass || "")}" />
+              </div>
+              <div class="field-group">
+                <label class="field-label" for="dnd-level">Level</label>
+                <input type="number" min="1" max="20" id="dnd-level" class="field-input field-number"
+                  value="${dnd.level || 1}" />
+              </div>
+              <div class="field-group">
+                <label class="field-label" for="dnd-proficiency">Proficiency Bonus</label>
+                <input type="number" min="2" max="9" id="dnd-proficiency" class="field-input field-number"
+                  value="${dnd.proficiencyBonus || 2}" />
+              </div>
             </div>
-            <div class="field-group">
-              <label class="field-label" for="dnd-alignment">Alignment</label>
-              <input type="text" id="dnd-alignment" class="field-input"
-                placeholder="Chaotic Neutral" value="${EditorBase.escapeAttr(dnd.alignment || "")}" />
-            </div>
-            <div class="field-group">
-              <label class="field-label">Spellcasting Ability</label>
-              <select id="dnd-spellcasting-ability" class="field-select">
-                ${Object.entries(Schema.ABILITY_NAMES).map(([key, name]) =>
-                  `<option value="${key}" ${dnd.spellcastingAbility === key ? "selected" : ""}>${name}</option>`
-                ).join("")}
-              </select>
-            </div>
-          </div>
 
-          <!-- Multiclass entries -->
-          <div class="field-group">
-            <label class="field-label">Multiclass</label>
-            <div id="multiclass-list" class="array-list">
-              ${(dnd.multiclass || []).map(entry => renderMulticlassRow(entry)).join("")}
+            <div class="fields-grid-3">
+              <div class="field-group">
+                <label class="field-label" for="dnd-background">Background</label>
+                <input type="text" id="dnd-background" class="field-input"
+                  placeholder="Sage" value="${EditorBase.escapeAttr(dnd.background || "")}" />
+              </div>
+              <div class="field-group">
+                <label class="field-label" for="dnd-alignment">Alignment</label>
+                <input type="text" id="dnd-alignment" class="field-input"
+                  placeholder="Chaotic Neutral" value="${EditorBase.escapeAttr(dnd.alignment || "")}" />
+              </div>
+              <div class="field-group">
+                <label class="field-label">Spellcasting Ability</label>
+                <select id="dnd-spellcasting-ability" class="field-select">
+                  ${Object.entries(Schema.ABILITY_NAMES).map(([key, name]) =>
+                    `<option value="${key}" ${dnd.spellcastingAbility === key ? "selected" : ""}>${name}</option>`
+                  ).join("")}
+                </select>
+              </div>
+            </div>
+
+            <!-- Multiclass entries -->
+            <div class="field-group">
+              <label class="field-label">Multiclass</label>
+              <div id="multiclass-list" class="array-list">
+                ${(dnd.multiclass || []).map(entry => renderMulticlassRow(entry)).join("")}
+              </div>
+              <div class="array-add-row">
+                <button class="button button-ghost button-sm" id="btn-add-multiclass">+ Add Class</button>
+              </div>
+            </div>
+          </section>
+
+          <!-- ── Ability Scores ─────────────────────────────────────── -->
+          <section>
+            <div class="section-header">
+              <span class="section-icon">🎲</span>
+              <h3>Ability Scores</h3>
+            </div>
+
+            <div class="grid-6-stats">
+              ${Object.keys(Schema.ABILITY_ABBREVIATIONS).map(ability =>
+                renderStatInputGroup(ability, (dnd.stats || {})[ability]?.score ?? 10)
+              ).join("")}
+            </div>
+          </section>
+
+          <!-- ── AC Modes ───────────────────────────────────────────── -->
+          <section>
+            <div class="section-header">
+              <span class="section-icon">🛡️</span>
+              <h3>Armor Class</h3>
+            </div>
+            <p class="text-muted text-sm" style="margin-bottom: var(--space-3);">
+              Add multiple AC modes (e.g. Base, Bladesong, Shield). Mark one as active.
+            </p>
+
+            <div id="ac-modes-list" class="array-list">
+              ${(dnd.acModes || []).map(mode => renderAcModeRow(mode)).join("")}
             </div>
             <div class="array-add-row">
-              <button class="button button-ghost button-sm" id="btn-add-multiclass">+ Add Class</button>
+              <button class="button button-ghost button-sm" id="btn-add-ac-mode">+ Add AC Mode</button>
             </div>
-          </div>
-        </section>
+          </section>
 
-        <!-- ── Ability Scores ─────────────────────────────────────── -->
-        <section>
-          <div class="section-header">
-            <span class="section-icon">🎲</span>
-            <h3>Ability Scores</h3>
-          </div>
-
-          <div class="grid-6-stats">
-            ${Object.keys(Schema.ABILITY_ABBREVIATIONS).map(ability =>
-              renderStatInputGroup(ability, (dnd.stats || {})[ability]?.score ?? 10)
-            ).join("")}
-          </div>
-        </section>
-
-        <!-- ── AC Modes ───────────────────────────────────────────── -->
-        <section>
-          <div class="section-header">
-            <span class="section-icon">🛡️</span>
-            <h3>Armor Class</h3>
-          </div>
-          <p class="text-muted text-sm" style="margin-bottom: var(--space-3);">
-            Add multiple AC modes (e.g. Base, Bladesong, Shield). Mark one as active.
-          </p>
-
-          <div id="ac-modes-list" class="array-list">
-            ${(dnd.acModes || []).map(mode => renderAcModeRow(mode)).join("")}
-          </div>
-          <div class="array-add-row">
-            <button class="button button-ghost button-sm" id="btn-add-ac-mode">+ Add AC Mode</button>
-          </div>
-        </section>
-
-        <!-- ── Speed & Initiative ──────────────────────────────────── -->
-        <section>
-          <div class="section-header">
-            <span class="section-icon">💨</span>
-            <h3>Speed &amp; Initiative</h3>
-          </div>
-
-          <div class="fields-grid-4">
-            <div class="field-group">
-              <label class="field-label" for="speed-walk">Walk (ft)</label>
-              <input type="number" min="0" id="speed-walk" class="field-input field-number"
-                value="${dnd.speed?.walk ?? 30}" />
+          <!-- ── Speed & Initiative ──────────────────────────────────── -->
+          <section>
+            <div class="section-header">
+              <span class="section-icon">💨</span>
+              <h3>Speed &amp; Initiative</h3>
             </div>
-            <div class="field-group">
-              <label class="field-label" for="speed-fly">Fly (ft)</label>
-              <input type="number" min="0" id="speed-fly" class="field-input field-number"
-                value="${dnd.speed?.fly ?? 0}" />
+
+            <div class="fields-grid-4">
+              <div class="field-group">
+                <label class="field-label" for="speed-walk">Walk (ft)</label>
+                <input type="number" min="0" id="speed-walk" class="field-input field-number"
+                  value="${dnd.speed?.walk ?? 30}" />
+              </div>
+              <div class="field-group">
+                <label class="field-label" for="speed-fly">Fly (ft)</label>
+                <input type="number" min="0" id="speed-fly" class="field-input field-number"
+                  value="${dnd.speed?.fly ?? 0}" />
+              </div>
+              <div class="field-group">
+                <label class="field-label" for="speed-swim">Swim (ft)</label>
+                <input type="number" min="0" id="speed-swim" class="field-input field-number"
+                  value="${dnd.speed?.swim ?? 0}" />
+              </div>
+              <div class="field-group">
+                <label class="field-label" for="speed-climb">Climb (ft)</label>
+                <input type="number" min="0" id="speed-climb" class="field-input field-number"
+                  value="${dnd.speed?.climb ?? 0}" />
+              </div>
             </div>
-            <div class="field-group">
-              <label class="field-label" for="speed-swim">Swim (ft)</label>
-              <input type="number" min="0" id="speed-swim" class="field-input field-number"
-                value="${dnd.speed?.swim ?? 0}" />
+            <div style="max-width: 120px;">
+              <div class="field-group">
+                <label class="field-label" for="dnd-initiative">Initiative Bonus</label>
+                <input type="number" id="dnd-initiative" class="field-input field-number"
+                  value="${dnd.initiative ?? 0}" />
+              </div>
             </div>
-            <div class="field-group">
-              <label class="field-label" for="speed-climb">Climb (ft)</label>
-              <input type="number" min="0" id="speed-climb" class="field-input field-number"
-                value="${dnd.speed?.climb ?? 0}" />
+          </section>
+
+          <!-- ── Saving Throw Proficiencies ────────────────────────── -->
+          <section>
+            <div class="section-header">
+              <span class="section-icon">🎯</span>
+              <h3>Saving Throws</h3>
             </div>
-          </div>
-          <div style="max-width: 120px;">
-            <div class="field-group">
-              <label class="field-label" for="dnd-initiative">Initiative Bonus</label>
-              <input type="number" id="dnd-initiative" class="field-input field-number"
-                value="${dnd.initiative ?? 0}" />
+            <div class="flex flex-wrap gap-4">
+              ${Object.entries(Schema.ABILITY_NAMES).map(([key, name]) => `
+                <label class="field-checkbox-row">
+                  <input type="checkbox" class="save-prof-checkbox" data-ability="${key}"
+                    ${(dnd.savingThrowProficiencies || []).includes(key) ? "checked" : ""} />
+                  ${Schema.ABILITY_ABBREVIATIONS[key]} — ${name}
+                </label>
+              `).join("")}
             </div>
-          </div>
-        </section>
+          </section>
 
-        <!-- ── Saving Throw Proficiencies ────────────────────────── -->
-        <section>
-          <div class="section-header">
-            <span class="section-icon">🎯</span>
-            <h3>Saving Throws</h3>
-          </div>
-          <div class="flex flex-wrap gap-4">
-            ${Object.entries(Schema.ABILITY_NAMES).map(([key, name]) => `
-              <label class="field-checkbox-row">
-                <input type="checkbox" class="save-prof-checkbox" data-ability="${key}"
-                  ${(dnd.savingThrowProficiencies || []).includes(key) ? "checked" : ""} />
-                ${Schema.ABILITY_ABBREVIATIONS[key]} — ${name}
-              </label>
-            `).join("")}
-          </div>
-        </section>
+          <!-- ── Skill Proficiencies ────────────────────────────────── -->
+          <section>
+            <div class="section-header">
+              <span class="section-icon">📚</span>
+              <h3>Skill Proficiencies</h3>
+            </div>
+            <div class="skills-grid">
+              ${Schema.SKILLS.map(skill => {
+                const prof = (dnd.skillProficiencies || []).find(p => p.skill === skill.name);
+                const isProficient = !!prof;
+                const isExpert     = prof?.expertise || false;
+                return `
+                  <div class="skill-row">
+                    <label class="field-checkbox-row" style="flex: 1; min-width: 0;">
+                      <input type="checkbox" class="skill-prof-checkbox"
+                        data-skill="${EditorBase.escapeAttr(skill.name)}"
+                        data-ability="${skill.ability}"
+                        ${isProficient ? "checked" : ""} />
+                      <span class="truncate">${skill.name}</span>
+                      <span class="text-faint text-xs">(${Schema.ABILITY_ABBREVIATIONS[skill.ability]})</span>
+                    </label>
+                    <label class="field-checkbox-row text-xs text-muted">
+                      <input type="checkbox" class="skill-expert-checkbox"
+                        data-skill="${EditorBase.escapeAttr(skill.name)}"
+                        ${isExpert ? "checked" : ""}
+                        ${!isProficient ? "disabled" : ""} />
+                      Expertise
+                    </label>
+                  </div>
+                `;
+              }).join("")}
+            </div>
 
-        <!-- ── Skill Proficiencies ────────────────────────────────── -->
-        <section>
-          <div class="section-header">
-            <span class="section-icon">📚</span>
-            <h3>Skill Proficiencies</h3>
-          </div>
-          <div class="skills-grid">
-            ${Schema.SKILLS.map(skill => {
-              const prof = (dnd.skillProficiencies || []).find(p => p.skill === skill.name.toLowerCase().replace(" ", "_"));
-              const isProficient = !!prof;
-              const isExpert     = prof?.expertise || false;
-              return `
-                <div class="skill-row">
-                  <label class="field-checkbox-row" style="flex: 1; min-width: 0;">
-                    <input type="checkbox" class="skill-prof-checkbox"
-                      data-skill="${EditorBase.escapeAttr(skill.name)}"
-                      data-ability="${skill.ability}"
-                      ${isProficient ? "checked" : ""} />
-                    <span class="truncate">${skill.name}</span>
-                    <span class="text-faint text-xs">(${Schema.ABILITY_ABBREVIATIONS[skill.ability]})</span>
-                  </label>
-                  <label class="field-checkbox-row text-xs text-muted">
-                    <input type="checkbox" class="skill-expert-checkbox"
-                      data-skill="${EditorBase.escapeAttr(skill.name)}"
-                      ${isExpert ? "checked" : ""}
-                      ${!isProficient ? "disabled" : ""} />
-                    Expertise
-                  </label>
-                </div>
-              `;
-            }).join("")}
-          </div>
+            <style>
+              .skills-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: var(--space-2);
+              }
+              .skill-row {
+                display:     flex;
+                align-items: center;
+                gap:         var(--space-3);
+              }
+            </style>
+          </section>
 
-          <style>
-            .skills-grid {
-              display: grid;
-              grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-              gap: var(--space-2);
-            }
-            .skill-row {
-              display:     flex;
-              align-items: center;
-              gap:         var(--space-3);
-            }
-          </style>
-        </section>
+          <!-- ── Feats ──────────────────────────────────────────────── -->
+          <section>
+            <div class="section-header">
+              <span class="section-icon">⭐</span>
+              <h3>Feats</h3>
+            </div>
 
-        <!-- ── Feats ──────────────────────────────────────────────── -->
-        <section>
-          <div class="section-header">
-            <span class="section-icon">⭐</span>
-            <h3>Feats</h3>
-          </div>
+            <div id="feats-list" class="array-list">
+              ${(dnd.feats || []).map(feat => renderFeatRow(feat)).join("")}
+            </div>
+            <div class="array-add-row">
+              <button class="button button-ghost button-sm" id="btn-add-feat">+ Add Feat</button>
+            </div>
+          </section>
 
-          <div id="feats-list" class="array-list">
-            ${(dnd.feats || []).map(feat => renderFeatRow(feat)).join("")}
-          </div>
-          <div class="array-add-row">
-            <button class="button button-ghost button-sm" id="btn-add-feat">+ Add Feat</button>
-          </div>
-        </section>
+        </div>
+      `;
 
-      </div>
-    `;
-
-    // Wire up stat inputs — auto-update modifiers
-    panel.querySelectorAll(".stat-input-score").forEach(input => {
-      input.addEventListener("input", () => {
-        const score    = parseInt(input.value, 10) || 10;
-        const modifier = Schema.getAbilityModifier(score);
-        const modEl    = input.closest(".stat-input-group")?.querySelector(".stat-input-modifier");
-        if (modEl) modEl.textContent = Schema.formatModifier(modifier);
-      });
-    });
-
-    // Wire skill proficiency ↔ expertise dependency
-    panel.querySelectorAll(".skill-prof-checkbox").forEach(checkbox => {
-      checkbox.addEventListener("change", () => {
-        const skill   = checkbox.dataset.skill;
-        const expertEl = panel.querySelector(`.skill-expert-checkbox[data-skill="${skill}"]`);
-        if (expertEl) {
-          expertEl.disabled = !checkbox.checked;
-          if (!checkbox.checked) expertEl.checked = false;
+      // Wire remove section
+      panel.querySelector(".btn-remove-dnd-section").addEventListener("click", () => {
+        if (confirm("Remove D&D Stats section? All D&D data for this character will be deleted.")) {
+          delete character.dnd;
+          render();
         }
       });
-    });
 
-    // Wire multiclass add
-    panel.querySelector("#btn-add-multiclass")?.addEventListener("click", () => addMulticlassRow(panel));
-    wireMulticlassList(panel);
+      // Wire stat inputs — auto-update modifiers
+      panel.querySelectorAll(".stat-input-score").forEach(input => {
+        input.addEventListener("input", () => {
+          const score    = parseInt(input.value, 10) || 10;
+          const modifier = Schema.getAbilityModifier(score);
+          const modEl    = input.closest(".stat-input-group")?.querySelector(".stat-input-modifier");
+          if (modEl) modEl.textContent = Schema.formatModifier(modifier);
+        });
+      });
 
-    // Wire AC mode add
-    panel.querySelector("#btn-add-ac-mode")?.addEventListener("click", () => addAcModeRow(panel));
-    wireAcModeList(panel);
+      // Wire skill proficiency ↔ expertise dependency
+      panel.querySelectorAll(".skill-prof-checkbox").forEach(checkbox => {
+        checkbox.addEventListener("change", () => {
+          const skill    = checkbox.dataset.skill;
+          const expertEl = panel.querySelector(`.skill-expert-checkbox[data-skill="${skill}"]`);
+          if (expertEl) {
+            expertEl.disabled = !checkbox.checked;
+            if (!checkbox.checked) expertEl.checked = false;
+          }
+        });
+      });
 
-    // Wire feats add
-    panel.querySelector("#btn-add-feat")?.addEventListener("click", () => addFeatRow(panel));
-    wireFeatList(panel);
+      // Wire multiclass add
+      panel.querySelector("#btn-add-multiclass")?.addEventListener("click", () => addMulticlassRow(panel));
+      wireMulticlassList(panel);
 
+      // Wire AC mode add
+      panel.querySelector("#btn-add-ac-mode")?.addEventListener("click", () => addAcModeRow(panel));
+      wireAcModeList(panel);
+
+      // Wire feats add
+      panel.querySelector("#btn-add-feat")?.addEventListener("click", () => addFeatRow(panel));
+      wireFeatList(panel);
+    } // end render()
+
+    render();
     return panel;
   }
 
@@ -407,7 +455,7 @@ const EditorDnd = (() => {
   // ─── Read Tab ────────────────────────────────────────────────────────────────
 
   function readTab(character) {
-    if (!character.dnd) character.dnd = Schema.createDefaultDnd();
+    if (!character.dnd) return; // Section not enabled — skip
     const dnd = character.dnd;
 
     dnd.class                = document.getElementById("dnd-class")?.value.trim()    || "";
@@ -441,7 +489,7 @@ const EditorDnd = (() => {
       document.querySelectorAll(".save-prof-checkbox:checked")
     ).map(checkbox => checkbox.dataset.ability);
 
-    // Skill proficiencies
+    // Skill proficiencies — stored by full display name (matches Schema.SKILLS[i].name)
     dnd.skillProficiencies = Array.from(
       document.querySelectorAll(".skill-prof-checkbox:checked")
     ).map(checkbox => ({

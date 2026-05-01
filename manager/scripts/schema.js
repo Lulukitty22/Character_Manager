@@ -431,6 +431,28 @@ const Schema = (() => {
     "other",
   ];
 
+  // ─── Section Enable / Remove ───────────────────────────────────────────────
+
+  /**
+   * Initialize a named section on a character if it doesn't already exist.
+   * @param {object} character
+   * @param {"dnd"|"boss"|"roblox"} section
+   */
+  function enableSection(character, section) {
+    if (section === "dnd"    && !character.dnd)    character.dnd    = createDefaultDnd();
+    if (section === "boss"   && !character.boss)   character.boss   = createDefaultBoss();
+    if (section === "roblox" && !character.roblox) character.roblox = createDefaultRoblox();
+  }
+
+  /**
+   * Remove a named section from a character entirely.
+   * @param {object} character
+   * @param {"dnd"|"boss"|"roblox"} section
+   */
+  function removeSection(character, section) {
+    delete character[section];
+  }
+
   // ─── Public API ────────────────────────────────────────────────────────────
 
   return {
@@ -458,6 +480,9 @@ const Schema = (() => {
     createDefaultBoss,
     createDefaultRoblox,
     createDefaultRobloxCatalogItem,
+
+    enableSection,
+    removeSection,
 
     ABILITY_NAMES,
     ABILITY_ABBREVIATIONS,

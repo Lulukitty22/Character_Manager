@@ -4,8 +4,10 @@
  * attacks with damage arrays, polymorph traits, resistances, immunities,
  * weaknesses, legendary actions, regeneration, and death/tamed rules.
  *
+ * When character.boss is absent, the tab shows an Enable call-to-action instead.
+ *
  * Exports: EditorBoss.buildTab(character) → HTMLElement
- *          EditorBoss.readTab(character)  → mutates character in-place
+ *          EditorBoss.readTab(character)  → mutates character in-place (skips if section absent)
  */
 
 const EditorBoss = (() => {
@@ -15,215 +17,261 @@ const EditorBoss = (() => {
     panel.className = "editor-tab-panel";
     panel.id        = "tab-panel-boss";
 
-    const boss = character.boss || Schema.createDefaultBoss();
+    function render() {
+      panel.innerHTML = "";
 
-    panel.innerHTML = `
-      <div style="padding: var(--space-6) 0; display: flex; flex-direction: column; gap: var(--space-8);">
+      // ── Section not enabled ──────────────────────────────────────────────────
+      if (!character.boss) {
+        panel.innerHTML = `
+          <div style="padding: var(--space-12, 3rem) var(--space-6); display: flex; flex-direction: column;
+                      align-items: center; gap: var(--space-4); text-align: center; min-height: 320px;
+                      justify-content: center;">
+            <div style="font-size: 3rem; line-height: 1;">💀</div>
+            <h3 style="color: var(--text-secondary, #8a8299);">Boss Stats</h3>
+            <p class="text-muted text-sm" style="max-width: 400px;">
+              This character doesn't have boss data yet. Enable this section to add dual HP pools,
+              stat bonuses, attacks, resistances, immunities, polymorph traits, and special rules.
+            </p>
+            <button class="button button-primary btn-enable-boss" style="margin-top: var(--space-2);">
+              ✦ Enable Boss Stats
+            </button>
+          </div>
+        `;
+        panel.querySelector(".btn-enable-boss").addEventListener("click", () => {
+          character.boss = Schema.createDefaultBoss();
+          render();
+        });
+        return;
+      }
 
-        <!-- ── Boss State Toggle ──────────────────────────────────── -->
-        <section>
-          <div class="section-header">
-            <span class="section-icon">💀</span>
-            <h3>Boss State</h3>
+      // ── Full editor ──────────────────────────────────────────────────────────
+      const boss = character.boss;
+
+      panel.innerHTML = `
+        <div style="padding: var(--space-6) 0; display: flex; flex-direction: column; gap: var(--space-8);">
+
+          <!-- Remove section -->
+          <div style="display: flex; justify-content: flex-end;">
+            <button class="button button-ghost button-sm btn-remove-boss-section"
+              style="color: var(--color-danger, #b94040);">
+              🗑 Remove Boss Section
+            </button>
           </div>
 
-          <div class="card" style="margin-bottom: var(--space-4);">
-            <label class="field-checkbox-row" style="font-size: var(--text-base); gap: var(--space-3);">
-              <input type="checkbox" id="boss-active" ${boss.bossActive ? "checked" : ""} />
-              <span>
-                <strong>Boss Presence Active</strong>
-                <span class="text-muted text-sm" style="display: block;">When active, stat bonuses apply and boss HP is used.</span>
-              </span>
-            </label>
-          </div>
+          <!-- ── Boss State Toggle ──────────────────────────────────── -->
+          <section>
+            <div class="section-header">
+              <span class="section-icon">💀</span>
+              <h3>Boss State</h3>
+            </div>
 
-          <div class="fields-grid-2">
-            <div class="card">
-              <div class="text-muted text-sm uppercase" style="letter-spacing: 0.08em; margin-bottom: var(--space-3);">Boss HP</div>
-              <div class="fields-grid-2">
-                <div class="field-group" style="margin-bottom: 0;">
-                  <label class="field-label">Max</label>
-                  <input type="number" min="0" id="boss-hp-max" class="field-input"
-                    value="${boss.bossHp?.max ?? 0}" />
+            <div class="card" style="margin-bottom: var(--space-4);">
+              <label class="field-checkbox-row" style="font-size: var(--text-base); gap: var(--space-3);">
+                <input type="checkbox" id="boss-active" ${boss.bossActive ? "checked" : ""} />
+                <span>
+                  <strong>Boss Presence Active</strong>
+                  <span class="text-muted text-sm" style="display: block;">When active, stat bonuses apply and boss HP is used.</span>
+                </span>
+              </label>
+            </div>
+
+            <div class="fields-grid-2">
+              <div class="card">
+                <div class="text-muted text-sm uppercase" style="letter-spacing: 0.08em; margin-bottom: var(--space-3);">Boss HP</div>
+                <div class="fields-grid-2">
+                  <div class="field-group" style="margin-bottom: 0;">
+                    <label class="field-label">Max</label>
+                    <input type="number" min="0" id="boss-hp-max" class="field-input"
+                      value="${boss.bossHp?.max ?? 0}" />
+                  </div>
+                  <div class="field-group" style="margin-bottom: 0;">
+                    <label class="field-label">Current</label>
+                    <input type="number" min="0" id="boss-hp-current" class="field-input"
+                      value="${boss.bossHp?.current ?? 0}" />
+                  </div>
                 </div>
-                <div class="field-group" style="margin-bottom: 0;">
-                  <label class="field-label">Current</label>
-                  <input type="number" min="0" id="boss-hp-current" class="field-input"
-                    value="${boss.bossHp?.current ?? 0}" />
+              </div>
+              <div class="card">
+                <div class="text-muted text-sm uppercase" style="letter-spacing: 0.08em; margin-bottom: var(--space-3);">Default / Tamed HP</div>
+                <div class="fields-grid-2">
+                  <div class="field-group" style="margin-bottom: 0;">
+                    <label class="field-label">Max</label>
+                    <input type="number" min="0" id="default-hp-max" class="field-input"
+                      value="${boss.defaultHp?.max ?? 0}" />
+                  </div>
+                  <div class="field-group" style="margin-bottom: 0;">
+                    <label class="field-label">Current</label>
+                    <input type="number" min="0" id="default-hp-current" class="field-input"
+                      value="${boss.defaultHp?.current ?? 0}" />
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="card">
-              <div class="text-muted text-sm uppercase" style="letter-spacing: 0.08em; margin-bottom: var(--space-3);">Default / Tamed HP</div>
-              <div class="fields-grid-2">
-                <div class="field-group" style="margin-bottom: 0;">
-                  <label class="field-label">Max</label>
-                  <input type="number" min="0" id="default-hp-max" class="field-input"
-                    value="${boss.defaultHp?.max ?? 0}" />
+          </section>
+
+          <!-- ── Boss Stat Bonuses ──────────────────────────────────── -->
+          <section>
+            <div class="section-header">
+              <span class="section-icon">📈</span>
+              <h3>Boss Presence Stat Bonuses</h3>
+            </div>
+            <p class="text-muted text-sm" style="margin-bottom: var(--space-3);">
+              These bonuses are added on top of the base stats when Boss Presence is active.
+            </p>
+            <div class="grid-6-stats">
+              ${Object.keys(Schema.ABILITY_ABBREVIATIONS).map(ability => `
+                <div class="stat-input-group">
+                  <span class="stat-input-label">${Schema.ABILITY_ABBREVIATIONS[ability]}</span>
+                  <input type="number" class="field-input stat-input-score boss-stat-bonus"
+                    data-ability="${ability}"
+                    value="${boss.bossStatBonuses?.[ability] ?? 0}"
+                    style="width: 56px; text-align: center; font-size: var(--text-lg);" />
+                  <span class="text-muted text-xs">bonus</span>
                 </div>
-                <div class="field-group" style="margin-bottom: 0;">
-                  <label class="field-label">Current</label>
-                  <input type="number" min="0" id="default-hp-current" class="field-input"
-                    value="${boss.defaultHp?.current ?? 0}" />
-                </div>
+              `).join("")}
+            </div>
+          </section>
+
+          <!-- ── Combat Stats ───────────────────────────────────────── -->
+          <section>
+            <div class="section-header">
+              <span class="section-icon">⚔️</span>
+              <h3>Combat</h3>
+            </div>
+
+            <div class="fields-grid-4">
+              <div class="field-group">
+                <label class="field-label" for="boss-regen">Regeneration (HP/turn)</label>
+                <input type="number" min="0" id="boss-regen" class="field-input field-number"
+                  value="${boss.regeneration?.amount ?? 0}" />
+              </div>
+              <div class="field-group">
+                <label class="field-label" for="boss-legendary">Legendary Actions</label>
+                <input type="number" min="0" id="boss-legendary" class="field-input field-number"
+                  value="${boss.legendaryActions ?? 0}" />
               </div>
             </div>
-          </div>
-        </section>
 
-        <!-- ── Boss Stat Bonuses ──────────────────────────────────── -->
-        <section>
-          <div class="section-header">
-            <span class="section-icon">📈</span>
-            <h3>Boss Presence Stat Bonuses</h3>
-          </div>
-          <p class="text-muted text-sm" style="margin-bottom: var(--space-3);">
-            These bonuses are added on top of the base stats when Boss Presence is active.
-          </p>
-          <div class="grid-6-stats">
-            ${Object.keys(Schema.ABILITY_ABBREVIATIONS).map(ability => `
-              <div class="stat-input-group">
-                <span class="stat-input-label">${Schema.ABILITY_ABBREVIATIONS[ability]}</span>
-                <input type="number" class="field-input stat-input-score boss-stat-bonus"
-                  data-ability="${ability}"
-                  value="${boss.bossStatBonuses?.[ability] ?? 0}"
-                  style="width: 56px; text-align: center; font-size: var(--text-lg);" />
-                <span class="text-muted text-xs">bonus</span>
+            <div class="field-group">
+              <label class="field-label">Regeneration Disabled By (comma-separated)</label>
+              <input type="text" id="boss-regen-disabled" class="field-input"
+                placeholder="e.g. radiant damage, critical hit"
+                value="${EditorBase.escapeAttr((boss.regeneration?.disabledBy || []).join(", "))}" />
+            </div>
+          </section>
+
+          <!-- ── Resistances / Immunities / Weaknesses ─────────────── -->
+          <section>
+            <div class="section-header">
+              <span class="section-icon">🛡️</span>
+              <h3>Damage Defenses</h3>
+            </div>
+
+            <div class="fields-grid-3">
+              <div class="field-group">
+                <label class="field-label">Resistances</label>
+                <p class="field-hint">Comma-separated damage types</p>
+                <textarea id="boss-resistances" class="field-textarea" rows="3"
+                  placeholder="psychic, cold, necrotic…">${EditorBase.escapeHTML((boss.resistances || []).join(", "))}</textarea>
               </div>
-            `).join("")}
-          </div>
-        </section>
-
-        <!-- ── Combat Stats ───────────────────────────────────────── -->
-        <section>
-          <div class="section-header">
-            <span class="section-icon">⚔️</span>
-            <h3>Combat</h3>
-          </div>
-
-          <div class="fields-grid-4">
-            <div class="field-group">
-              <label class="field-label" for="boss-regen">Regeneration (HP/turn)</label>
-              <input type="number" min="0" id="boss-regen" class="field-input field-number"
-                value="${boss.regeneration?.amount ?? 0}" />
+              <div class="field-group">
+                <label class="field-label">Immunities</label>
+                <p class="field-hint">Damage type immunities</p>
+                <textarea id="boss-immunities" class="field-textarea" rows="3"
+                  placeholder="poison, lightning…">${EditorBase.escapeHTML((boss.immunities || []).join(", "))}</textarea>
+              </div>
+              <div class="field-group">
+                <label class="field-label">Condition Immunities</label>
+                <p class="field-hint">Condition immunities</p>
+                <textarea id="boss-condition-immunities" class="field-textarea" rows="3"
+                  placeholder="charmed, frightened…">${EditorBase.escapeHTML((boss.conditionImmunities || []).join(", "))}</textarea>
+              </div>
             </div>
-            <div class="field-group">
-              <label class="field-label" for="boss-legendary">Legendary Actions</label>
-              <input type="number" min="0" id="boss-legendary" class="field-input field-number"
-                value="${boss.legendaryActions ?? 0}" />
-            </div>
-          </div>
 
-          <div class="field-group">
-            <label class="field-label">Regeneration Disabled By (comma-separated)</label>
-            <input type="text" id="boss-regen-disabled" class="field-input"
-              placeholder="e.g. radiant damage, critical hit"
-              value="${EditorBase.escapeAttr((boss.regeneration?.disabledBy || []).join(", "))}" />
-          </div>
-        </section>
-
-        <!-- ── Resistances / Immunities / Weaknesses ─────────────── -->
-        <section>
-          <div class="section-header">
-            <span class="section-icon">🛡️</span>
-            <h3>Damage Defenses</h3>
-          </div>
-
-          <div class="fields-grid-3">
             <div class="field-group">
-              <label class="field-label">Resistances</label>
-              <p class="field-hint">Comma-separated damage types</p>
-              <textarea id="boss-resistances" class="field-textarea" rows="3"
-                placeholder="psychic, cold, necrotic…">${EditorBase.escapeHTML((boss.resistances || []).join(", "))}</textarea>
+              <label class="field-label">Weaknesses</label>
+              <div id="weaknesses-list" class="array-list">
+                ${(boss.weaknesses || []).map(weakness => renderWeaknessRow(weakness)).join("")}
+              </div>
+              <div class="array-add-row">
+                <button class="button button-ghost button-sm" id="btn-add-weakness">+ Add Weakness</button>
+              </div>
             </div>
-            <div class="field-group">
-              <label class="field-label">Immunities</label>
-              <p class="field-hint">Damage type immunities</p>
-              <textarea id="boss-immunities" class="field-textarea" rows="3"
-                placeholder="poison, lightning…">${EditorBase.escapeHTML((boss.immunities || []).join(", "))}</textarea>
-            </div>
-            <div class="field-group">
-              <label class="field-label">Condition Immunities</label>
-              <p class="field-hint">Condition immunities</p>
-              <textarea id="boss-condition-immunities" class="field-textarea" rows="3"
-                placeholder="charmed, frightened…">${EditorBase.escapeHTML((boss.conditionImmunities || []).join(", "))}</textarea>
-            </div>
-          </div>
+          </section>
 
-          <div class="field-group">
-            <label class="field-label">Weaknesses</label>
-            <div id="weaknesses-list" class="array-list">
-              ${(boss.weaknesses || []).map(weakness => renderWeaknessRow(weakness)).join("")}
+          <!-- ── Attacks ────────────────────────────────────────────── -->
+          <section>
+            <div class="section-header">
+              <span class="section-icon">🗡️</span>
+              <h3>Attacks</h3>
+            </div>
+
+            <div id="attacks-list" class="array-list">
+              ${(boss.attacks || []).map(attack => renderAttackRow(attack)).join("")}
             </div>
             <div class="array-add-row">
-              <button class="button button-ghost button-sm" id="btn-add-weakness">+ Add Weakness</button>
+              <button class="button button-primary button-sm" id="btn-add-attack">✦ Add Attack</button>
             </div>
-          </div>
-        </section>
+          </section>
 
-        <!-- ── Attacks ────────────────────────────────────────────── -->
-        <section>
-          <div class="section-header">
-            <span class="section-icon">🗡️</span>
-            <h3>Attacks</h3>
-          </div>
-
-          <div id="attacks-list" class="array-list">
-            ${(boss.attacks || []).map(attack => renderAttackRow(attack)).join("")}
-          </div>
-          <div class="array-add-row">
-            <button class="button button-primary button-sm" id="btn-add-attack">✦ Add Attack</button>
-          </div>
-        </section>
-
-        <!-- ── Polymorph Traits ───────────────────────────────────── -->
-        <section>
-          <div class="section-header">
-            <span class="section-icon">🦋</span>
-            <h3>Polymorph / Shape Traits</h3>
-          </div>
-
-          <div id="polymorph-list" class="array-list">
-            ${(boss.polymorphTraits || []).map(trait => renderPolymorphRow(trait)).join("")}
-          </div>
-          <div class="array-add-row">
-            <button class="button button-ghost button-sm" id="btn-add-polymorph">+ Add Trait</button>
-          </div>
-        </section>
-
-        <!-- ── Special Rules ──────────────────────────────────────── -->
-        <section>
-          <div class="section-header">
-            <span class="section-icon">📜</span>
-            <h3>Special Rules</h3>
-          </div>
-
-          <div class="fields-grid-2">
-            <div class="field-group">
-              <label class="field-label" for="boss-death-rule">Death / Defeat Rule</label>
-              <textarea id="boss-death-rule" class="field-textarea" rows="3"
-                placeholder="What happens when HP reaches 0?">${EditorBase.escapeHTML(boss.deathRule || "")}</textarea>
+          <!-- ── Polymorph Traits ───────────────────────────────────── -->
+          <section>
+            <div class="section-header">
+              <span class="section-icon">🦋</span>
+              <h3>Polymorph / Shape Traits</h3>
             </div>
-            <div class="field-group">
-              <label class="field-label" for="boss-tamed-rule">Tamed / Pacified Rule</label>
-              <textarea id="boss-tamed-rule" class="field-textarea" rows="3"
-                placeholder="What changes when boss presence is removed?">${EditorBase.escapeHTML(boss.tamedRule || "")}</textarea>
+
+            <div id="polymorph-list" class="array-list">
+              ${(boss.polymorphTraits || []).map(trait => renderPolymorphRow(trait)).join("")}
             </div>
-          </div>
-        </section>
+            <div class="array-add-row">
+              <button class="button button-ghost button-sm" id="btn-add-polymorph">+ Add Trait</button>
+            </div>
+          </section>
 
-      </div>
-    `;
+          <!-- ── Special Rules ──────────────────────────────────────── -->
+          <section>
+            <div class="section-header">
+              <span class="section-icon">📜</span>
+              <h3>Special Rules</h3>
+            </div>
 
-    // Wire buttons
-    panel.querySelector("#btn-add-attack")?.addEventListener("click",   () => addAttackRow(panel));
-    panel.querySelector("#btn-add-polymorph")?.addEventListener("click", () => addPolymorphRow(panel));
-    panel.querySelector("#btn-add-weakness")?.addEventListener("click",  () => addWeaknessRow(panel));
+            <div class="fields-grid-2">
+              <div class="field-group">
+                <label class="field-label" for="boss-death-rule">Death / Defeat Rule</label>
+                <textarea id="boss-death-rule" class="field-textarea" rows="3"
+                  placeholder="What happens when HP reaches 0?">${EditorBase.escapeHTML(boss.deathRule || "")}</textarea>
+              </div>
+              <div class="field-group">
+                <label class="field-label" for="boss-tamed-rule">Tamed / Pacified Rule</label>
+                <textarea id="boss-tamed-rule" class="field-textarea" rows="3"
+                  placeholder="What changes when boss presence is removed?">${EditorBase.escapeHTML(boss.tamedRule || "")}</textarea>
+              </div>
+            </div>
+          </section>
 
-    wireAttackList(panel);
-    wirePolymorphList(panel);
-    wireWeaknessList(panel);
+        </div>
+      `;
 
+      // Wire remove section
+      panel.querySelector(".btn-remove-boss-section").addEventListener("click", () => {
+        if (confirm("Remove Boss section? All boss data for this character will be deleted.")) {
+          delete character.boss;
+          render();
+        }
+      });
+
+      // Wire buttons
+      panel.querySelector("#btn-add-attack")?.addEventListener("click",   () => addAttackRow(panel));
+      panel.querySelector("#btn-add-polymorph")?.addEventListener("click", () => addPolymorphRow(panel));
+      panel.querySelector("#btn-add-weakness")?.addEventListener("click",  () => addWeaknessRow(panel));
+
+      wireAttackList(panel);
+      wirePolymorphList(panel);
+      wireWeaknessList(panel);
+    } // end render()
+
+    render();
     return panel;
   }
 
@@ -478,7 +526,7 @@ const EditorBoss = (() => {
   // ─── Read Tab ────────────────────────────────────────────────────────────────
 
   function readTab(character) {
-    if (!character.boss) character.boss = Schema.createDefaultBoss();
+    if (!character.boss) return; // Section not enabled — skip
     const boss = character.boss;
 
     boss.bossActive = document.getElementById("boss-active")?.checked || false;

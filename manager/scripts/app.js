@@ -376,29 +376,16 @@ const CharacterEditor = (() => {
   // ─── Tab Definitions ─────────────────────────────────────────────────────────
 
   function buildTabDefinitions(character) {
-    const type = character.type;
-    const tabs = [
+    // All tabs are always shown — sections have their own Enable/Remove UI.
+    return [
       { id: "base",      icon: "🧾", label: "Identity",   buildFn: (char) => EditorBase.buildTab(char)      },
+      { id: "dnd",       icon: "⚔️",  label: "D&D Stats",  buildFn: (char) => EditorDnd.buildTab(char)       },
+      { id: "boss",      icon: "💀",  label: "Boss",       buildFn: (char) => EditorBoss.buildTab(char)      },
+      { id: "spells",    icon: "✨",  label: "Spells",     buildFn: (char) => EditorSpells.buildTab(char)    },
+      { id: "inventory", icon: "🎒",  label: "Inventory",  buildFn: (char) => EditorInventory.buildTab(char) },
+      { id: "resources", icon: "🔮",  label: "Resources",  buildFn: (char) => EditorResources.buildTab(char) },
+      { id: "roblox",    icon: "🎮",  label: "Roblox",     buildFn: (char) => EditorRoblox.buildTab(char)    },
     ];
-
-    if (type === Schema.CHARACTER_TYPES.DND5E_PC) {
-      tabs.push({ id: "dnd",       icon: "⚔️",  label: "D&D Stats",  buildFn: (char) => EditorDnd.buildTab(char)       });
-    }
-
-    if (type === Schema.CHARACTER_TYPES.DND5E_BOSS) {
-      tabs.push({ id: "boss",      icon: "💀",  label: "Boss",       buildFn: (char) => EditorBoss.buildTab(char)      });
-    }
-
-    // Spells available to everyone
-    tabs.push({ id: "spells",    icon: "✨",  label: "Spells",     buildFn: (char) => EditorSpells.buildTab(char)    });
-    tabs.push({ id: "inventory", icon: "🎒",  label: "Inventory",  buildFn: (char) => EditorInventory.buildTab(char) });
-    tabs.push({ id: "resources", icon: "🔮",  label: "Resources",  buildFn: (char) => EditorResources.buildTab(char) });
-
-    if (type === Schema.CHARACTER_TYPES.ROBLOX_OC) {
-      tabs.push({ id: "roblox", icon: "🎮", label: "Roblox", buildFn: (char) => EditorRoblox.buildTab(char) });
-    }
-
-    return tabs;
   }
 
   // ─── Collect & Save ───────────────────────────────────────────────────────────
@@ -406,15 +393,14 @@ const CharacterEditor = (() => {
   function collectCharacterData() {
     const character = JSON.parse(JSON.stringify(currentCharacter)); // deep copy
 
-    // Read each active editor module
+    // Read all editor modules — each skips gracefully if its section isn't enabled.
     EditorBase.readTab(character);
+    EditorDnd.readTab(character);
+    EditorBoss.readTab(character);
     EditorSpells.readTab(character);
     EditorInventory.readTab(character);
     EditorResources.readTab(character);
-
-    if (character.type === Schema.CHARACTER_TYPES.DND5E_PC)   EditorDnd.readTab(character);
-    if (character.type === Schema.CHARACTER_TYPES.DND5E_BOSS) EditorBoss.readTab(character);
-    if (character.type === Schema.CHARACTER_TYPES.ROBLOX_OC)  EditorRoblox.readTab(character);
+    EditorRoblox.readTab(character);
 
     // Update name in header
     const headerH2 = document.querySelector(".editor-title h2");
@@ -452,12 +438,7 @@ const CharacterEditor = (() => {
   // ─── Preview ─────────────────────────────────────────────────────────────────
 
   function openPreview(characterData) {
-    let sheetHTML = "";
-    const type    = characterData.type;
-
-    if (type === Schema.CHARACTER_TYPES.DND5E_PC)   sheetHTML = ViewDnd5e.buildHTML(characterData);
-    else if (type === Schema.CHARACTER_TYPES.DND5E_BOSS) sheetHTML = ViewBoss.buildHTML(characterData);
-    else sheetHTML = ViewOc.buildHTML(characterData);
+    const sheetHTML = ViewCharacter.buildHTML(characterData);
 
     const overlay = document.createElement("div");
     overlay.className = "sheet-preview-overlay";
@@ -471,6 +452,10 @@ const CharacterEditor = (() => {
       </div>
     `;
     document.body.appendChild(overlay);
+
+    // Wire interactive elements (boss toggle etc.)
+    ViewCharacter.wireInteractive(overlay.querySelector(".sheet-preview-body"), characterData);
+
     overlay.querySelector("#btn-close-editor-preview").addEventListener("click", () => overlay.remove());
     overlay.addEventListener("click", (event) => { if (event.target === overlay) overlay.remove(); });
   }

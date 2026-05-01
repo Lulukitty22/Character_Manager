@@ -8,11 +8,9 @@
  *
  *   1. manager/style/base.css   — CSS variables + utilities
  *   2. manager/style/sheet.css  — sheet display styles
- *   3. manager/scripts/schema.js          — shared helpers
- *   4. manager/scripts/views/view-dnd5e.js
- *   5. manager/scripts/views/view-boss.js
- *   6. manager/scripts/views/view-oc.js
- *   7. characters/{name}.json   — the actual character data
+ *   3. manager/scripts/schema.js               — shared helpers
+ *   4. manager/scripts/views/view-character.js — unified renderer (all types)
+ *   5. characters/{name}.json   — the actual character data
  *
  * Why this works:
  *   - raw.githubusercontent.com has open CORS headers (public repos)
@@ -49,12 +47,10 @@ const SheetExporter = (() => {
 
     // URLs of the renderer assets (fetched at sheet-open time)
     const scriptUrls = {
-      baseCss:    `${repoBase}/manager/style/base.css`,
-      sheetCss:   `${repoBase}/manager/style/sheet.css`,
-      schema:     `${repoBase}/manager/scripts/schema.js`,
-      viewDnd5e:  `${repoBase}/manager/scripts/views/view-dnd5e.js`,
-      viewBoss:   `${repoBase}/manager/scripts/views/view-boss.js`,
-      viewOc:     `${repoBase}/manager/scripts/views/view-oc.js`,
+      baseCss:       `${repoBase}/manager/style/base.css`,
+      sheetCss:      `${repoBase}/manager/style/sheet.css`,
+      schema:        `${repoBase}/manager/scripts/schema.js`,
+      viewCharacter: `${repoBase}/manager/scripts/views/view-character.js`,
     };
 
     const name        = characterData.identity?.name || "Character";
@@ -70,11 +66,9 @@ const SheetExporter = (() => {
     const escapedName        = escapeHtmlEntities(characterName);
     const escapedCharacterUrl = escapeJsString(characterUrl);
     const escapedBaseCss      = escapeJsString(scriptUrls.baseCss);
-    const escapedSheetCss     = escapeJsString(scriptUrls.sheetCss);
-    const escapedSchema       = escapeJsString(scriptUrls.schema);
-    const escapedViewDnd5e    = escapeJsString(scriptUrls.viewDnd5e);
-    const escapedViewBoss     = escapeJsString(scriptUrls.viewBoss);
-    const escapedViewOc       = escapeJsString(scriptUrls.viewOc);
+    const escapedSheetCss      = escapeJsString(scriptUrls.sheetCss);
+    const escapedSchema        = escapeJsString(scriptUrls.schema);
+    const escapedViewCharacter = escapeJsString(scriptUrls.viewCharacter);
 
     return `<!DOCTYPE html>
 <html lang="en">
@@ -113,13 +107,11 @@ const SheetExporter = (() => {
   "use strict";
 
   // ── URLs embedded at export time ──────────────────────────────────────────
-  var CHARACTER_URL = "${escapedCharacterUrl}";
-  var BASE_CSS_URL  = "${escapedBaseCss}";
-  var SHEET_CSS_URL = "${escapedSheetCss}";
-  var SCHEMA_URL    = "${escapedSchema}";
-  var VIEW_DND5E_URL = "${escapedViewDnd5e}";
-  var VIEW_BOSS_URL  = "${escapedViewBoss}";
-  var VIEW_OC_URL    = "${escapedViewOc}";
+  var CHARACTER_URL      = "${escapedCharacterUrl}";
+  var BASE_CSS_URL       = "${escapedBaseCss}";
+  var SHEET_CSS_URL      = "${escapedSheetCss}";
+  var SCHEMA_URL         = "${escapedSchema}";
+  var VIEW_CHARACTER_URL = "${escapedViewCharacter}";
 
   // ── DOM refs ──────────────────────────────────────────────────────────────
   var loadingEl = document.getElementById("state-loading");
@@ -188,19 +180,13 @@ const SheetExporter = (() => {
       injectCSS(baseCssText);
       injectCSS(sheetCssText);
 
-      // 2. Load renderer scripts (sequential — each depends on the previous)
-      setStatus("Loading renderers…");
-      var schemaText   = await fetchText(SCHEMA_URL,    "schema.js");
+      // 2. Load renderer scripts (schema first, then the unified renderer)
+      setStatus("Loading renderer…");
+      var schemaText    = await fetchText(SCHEMA_URL,         "schema.js");
       injectScript(schemaText, "schema.js");
 
-      var dnd5eText    = await fetchText(VIEW_DND5E_URL, "view-dnd5e.js");
-      injectScript(dnd5eText,  "view-dnd5e.js");
-
-      var bossText     = await fetchText(VIEW_BOSS_URL,  "view-boss.js");
-      injectScript(bossText,   "view-boss.js");
-
-      var ocText       = await fetchText(VIEW_OC_URL,    "view-oc.js");
-      injectScript(ocText,     "view-oc.js");
+      var viewCharText  = await fetchText(VIEW_CHARACTER_URL, "view-character.js");
+      injectScript(viewCharText, "view-character.js");
 
       // 3. Fetch the character data
       setStatus("Loading character data…");
@@ -209,26 +195,15 @@ const SheetExporter = (() => {
 
       // 4. Render
       setStatus("Rendering…");
-      var type = characterData.type || "oc";
-      var html = "";
-
-      if (type === "dnd5e_pc") {
-        html = ViewDnd5e.buildHTML(characterData);
-      } else if (type === "dnd5e_boss") {
-        html = ViewBoss.buildHTML(characterData);
-      } else {
-        html = ViewOc.buildHTML(characterData);
-      }
+      var html = ViewCharacter.buildHTML(characterData);
 
       // 5. Display
       loadingEl.hidden = true;
       contentEl.hidden = false;
       contentEl.innerHTML = html;
 
-      // Wire interactive boss toggle if applicable
-      if (type === "dnd5e_boss" && typeof ViewBoss !== "undefined" && typeof ViewBoss.wireToggle === "function") {
-        ViewBoss.wireToggle(contentEl, characterData);
-      }
+      // Wire interactive elements (boss toggle, etc.)
+      ViewCharacter.wireInteractive(contentEl, characterData);
 
       // Update page title
       var name = characterData.identity && characterData.identity.name;
