@@ -1,5 +1,276 @@
 {
   "version": 1,
   "collection": "traits",
-  "entries": []
+  "entries": [
+    {
+      "id": "22aa3b43-201b-48e5-a393-79ccccd0c18e",
+      "collection": "traits",
+      "name": "Roll Calculator — Boss Saves",
+      "tags": [
+        "calculator"
+      ],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {},
+      "createdAt": "2026-05-01T15:51:09.535Z",
+      "updatedAt": "2026-05-01T15:51:09.535Z",
+      "type": "feature",
+      "description": "STR Save: Advantage 1d20+7. DEX Save: Advantage 1d20+9. CON Save: Advantage 1d20+10. INT Save: Advantage 1d20+8. WIS Save: Advantage 1d20+9. CHA Save: Advantage 1d20+15.",
+      "active": true
+    },
+    {
+      "id": "b0d2e3d0-f347-4d01-a943-9b821a55acf1",
+      "collection": "traits",
+      "name": "Roll Calculator — Social / Casting",
+      "tags": [
+        "calculator"
+      ],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {},
+      "createdAt": "2026-05-01T15:51:09.535Z",
+      "updatedAt": "2026-05-01T15:51:09.535Z",
+      "type": "feature",
+      "description": "Spell Save DC: 25. Spellcasting / Flesh Attack: Advantage 1d20+17. Proficient Charisma Skill: Advantage 1d20+15. Prepared Deception / Impersonation / Persuasion: 1d20+15; Silver Tongue d20 floor 10 applies. Player Improv Deception / Impersonation / Persuasion: 1d20+10; Expert Deceiver and Silver Tongue do not apply vs players.",
+      "active": true
+    },
+    {
+      "id": "e533c4f5-df28-4c54-8eb1-b0c3b0365e6d",
+      "collection": "traits",
+      "name": "Advantage on All Rolls",
+      "tags": [
+        "boss"
+      ],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {},
+      "createdAt": "2026-05-01T15:51:09.535Z",
+      "updatedAt": "2026-05-01T15:51:09.535Z",
+      "type": "trait",
+      "description": "While Boss Presence is active, Capella rolls 2d20 and takes the higher result on attacks, saves, checks, and contested rolls unless a line says otherwise.",
+      "active": true
+    },
+    {
+      "id": "69a33466-f911-4440-907d-bd020e7f0b77",
+      "collection": "traits",
+      "name": "Charisma Spellcasting",
+      "tags": [
+        "spellcasting"
+      ],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {},
+      "createdAt": "2026-05-01T15:51:09.535Z",
+      "updatedAt": "2026-05-01T15:51:09.535Z",
+      "type": "trait",
+      "description": "Capella uses Charisma for spell save DCs, spell attacks, flesh magic, Polymorph effects, and distortion effects.",
+      "active": true
+    },
+    {
+      "id": "7f1b4dc6-32ad-46bf-88ad-d438e3cbe878",
+      "collection": "traits",
+      "name": "Expert Deceiver",
+      "tags": [
+        "social"
+      ],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {},
+      "createdAt": "2026-05-01T15:51:09.535Z",
+      "updatedAt": "2026-05-01T15:51:09.535Z",
+      "type": "trait",
+      "description": "Umbrella social mastery package. Grants prepared Deception / Impersonation / Persuasion a +10 expertise-style bonus. Does not apply against player characters.",
+      "active": true
+    },
+    {
+      "id": "2ab2a7d6-bc03-4c5b-801f-9d9ac93633f9",
+      "collection": "traits",
+      "name": "Silver Tongue",
+      "tags": [
+        "social"
+      ],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {},
+      "createdAt": "2026-05-01T15:51:09.535Z",
+      "updatedAt": "2026-05-01T15:51:09.535Z",
+      "type": "feature",
+      "description": "College of Eloquence-style feature. For Deception and Persuasion, d20 rolls of 9 or lower count as 10. This is a d20 floor of 10. Does not apply against player character Insight checks.",
+      "active": true
+    },
+    {
+      "id": "08f36953-b9aa-4c81-aa37-78dbb191585d",
+      "collection": "traits",
+      "name": "Arcane Mastery",
+      "tags": [
+        "magic"
+      ],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {},
+      "createdAt": "2026-05-01T15:51:09.535Z",
+      "updatedAt": "2026-05-01T15:51:09.535Z",
+      "type": "trait",
+      "description": "Adds +2 to spell save DCs and spell/flesh attack rolls.",
+      "active": true
+    },
+    {
+      "id": "fca2be53-1cce-4334-a412-0fedad0d6aae",
+      "collection": "traits",
+      "name": "Unnatural Armor",
+      "tags": [
+        "defense"
+      ],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {},
+      "createdAt": "2026-05-01T15:51:09.535Z",
+      "updatedAt": "2026-05-01T15:51:09.535Z",
+      "type": "trait",
+      "description": "Base AC becomes 15 + Dexterity modifier while unarmored. With Boss DEX 18, this gives AC 19. Armored Flesh can raise this to AC 21.",
+      "active": true
+    },
+    {
+      "id": "c9bf4ca6-3342-4cfc-9589-8211d1d06736",
+      "collection": "traits",
+      "name": "Aberrant Lich Bonus",
+      "tags": [
+        "lich"
+      ],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {},
+      "createdAt": "2026-05-01T15:51:09.535Z",
+      "updatedAt": "2026-05-01T15:51:09.535Z",
+      "type": "trait",
+      "description": "Adds +2 CHA and supports lich-style undead/Far Realm traits such as Soul Vessel, Far Realm Mutation, Unnatural Armor, Arcane Mastery, and Telepathy.",
+      "active": true
+    },
+    {
+      "id": "4d354f04-d3ac-4ae0-bd35-42c91eb0542a",
+      "collection": "traits",
+      "name": "Far Realm Mutation",
+      "tags": [
+        "defense"
+      ],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {},
+      "createdAt": "2026-05-01T15:51:09.535Z",
+      "updatedAt": "2026-05-01T15:51:09.535Z",
+      "type": "trait",
+      "description": "Explains psychic/cold/necrotic/acid resistance, poison/lightning/nonmagical weapon immunity, unstable biology, and body horror transformations.",
+      "active": true
+    },
+    {
+      "id": "ffe07a77-b388-434d-8e14-c649847f26fe",
+      "collection": "traits",
+      "name": "Soul Vessel / Far Realm Parasite",
+      "tags": [
+        "death"
+      ],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {},
+      "createdAt": "2026-05-01T15:51:09.535Z",
+      "updatedAt": "2026-05-01T15:51:09.535Z",
+      "type": "trait",
+      "description": "When reduced to 0 HP, the current body collapses. Capella does not truly die unless the parasite/vessel anchor is found, contained, destroyed, or otherwise dealt with.",
+      "active": true
+    },
+    {
+      "id": "f675664e-0615-4aaf-ba48-e2db8592941d",
+      "collection": "traits",
+      "name": "Extra Attack",
+      "tags": [
+        "combat"
+      ],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {},
+      "createdAt": "2026-05-01T15:51:09.535Z",
+      "updatedAt": "2026-05-01T15:51:09.535Z",
+      "type": "feature",
+      "description": "When Capella takes the Attack action, she makes 2 attacks.",
+      "active": true
+    },
+    {
+      "id": "05dd66db-ddc3-493d-a4b7-b446d2736e30",
+      "collection": "traits",
+      "name": "Bonus Attack",
+      "tags": [
+        "combat"
+      ],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {},
+      "createdAt": "2026-05-01T15:51:09.535Z",
+      "updatedAt": "2026-05-01T15:51:09.535Z",
+      "type": "bonus_action",
+      "description": "If Capella takes the Attack action on her turn, she may make 1 additional natural attack as a Bonus Action.",
+      "active": true
+    },
+    {
+      "id": "38224464-3cbf-4e4b-a30a-f06d63742400",
+      "collection": "traits",
+      "name": "Legendary Action",
+      "tags": [
+        "combat"
+      ],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {},
+      "createdAt": "2026-05-01T15:51:09.535Z",
+      "updatedAt": "2026-05-01T15:51:09.535Z",
+      "type": "legendary",
+      "description": "Once per round, outside her turn, Capella may take 1 full Action. If used for Attack, this gives her 2 more attacks.",
+      "active": true
+    },
+    {
+      "id": "f14b5e09-2157-4bca-b7ac-fd36471f0a37",
+      "collection": "traits",
+      "name": "Nonlethal Intent",
+      "tags": [
+        "roleplay"
+      ],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {},
+      "createdAt": "2026-05-01T15:51:09.535Z",
+      "updatedAt": "2026-05-01T15:51:09.535Z",
+      "type": "trait",
+      "description": "Capella usually avoids killing. Her attacks are meant to disable, maim, pin, terrify, transform, or humiliate rather than execute.",
+      "active": true
+    }
+  ]
 }
