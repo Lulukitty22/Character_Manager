@@ -528,6 +528,9 @@ const EditorBoss = (() => {
   function readTab(character) {
     if (!character.boss) return; // Section not enabled — skip
     const boss = character.boss;
+    const existingWeaknesses = new Map((boss.weaknesses || []).map(weakness => [weakness.id, weakness]));
+    const existingAttacks = new Map((boss.attacks || []).map(attack => [attack.id, attack]));
+    const existingPolymorphTraits = new Map((boss.polymorphTraits || []).map(trait => [trait.id, trait]));
 
     boss.bossActive = document.getElementById("boss-active")?.checked || false;
 
@@ -564,12 +567,18 @@ const EditorBoss = (() => {
     boss.conditionImmunities = (document.getElementById("boss-condition-immunities")?.value || "")
       .split(",").map(s => s.trim()).filter(Boolean);
 
-    boss.weaknesses = Array.from(document.querySelectorAll(".weakness-row")).map(rowEl => ({
-      id:          rowEl.dataset.weaknessId || Schema.generateId(),
-      description: rowEl.querySelector(".weakness-description")?.value.trim() || "",
-    })).filter(weakness => weakness.description);
+    boss.weaknesses = Array.from(document.querySelectorAll(".weakness-row")).map(rowEl => {
+      const id = rowEl.dataset.weaknessId || Schema.generateId();
+      return {
+        ...(existingWeaknesses.get(id) || {}),
+        id,
+        description: rowEl.querySelector(".weakness-description")?.value.trim() || "",
+      };
+    }).filter(weakness => weakness.description);
 
     boss.attacks = Array.from(document.querySelectorAll(".attack-row")).map(rowEl => {
+      const id = rowEl.dataset.attackId || Schema.generateId();
+      const existing = existingAttacks.get(id) || {};
       const damage = Array.from(rowEl.querySelectorAll(".damage-roll-row")).map(rollEl => ({
         dice:  rollEl.querySelector(".damage-dice")?.value.trim()             || "1d6",
         bonus: parseInt(rollEl.querySelector(".damage-bonus")?.value, 10)     || 0,
@@ -577,7 +586,8 @@ const EditorBoss = (() => {
       }));
 
       return {
-        id:          rowEl.dataset.attackId || Schema.generateId(),
+        ...existing,
+        id,
         name:        rowEl.querySelector(".attack-name")?.value.trim()     || "",
         toHitBonus:  parseInt(rowEl.querySelector(".attack-to-hit")?.value, 10) || 0,
         advantage:   rowEl.querySelector(".attack-advantage")?.checked     || false,
@@ -589,12 +599,16 @@ const EditorBoss = (() => {
       };
     }).filter(attack => attack.name);
 
-    boss.polymorphTraits = Array.from(document.querySelectorAll(".polymorph-row")).map(rowEl => ({
-      id:          rowEl.dataset.traitId || Schema.generateId(),
-      name:        rowEl.querySelector(".polymorph-name")?.value.trim()        || "",
-      description: rowEl.querySelector(".polymorph-description")?.value.trim() || "",
-      active:      rowEl.querySelector(".polymorph-active")?.checked           || false,
-    })).filter(trait => trait.name);
+    boss.polymorphTraits = Array.from(document.querySelectorAll(".polymorph-row")).map(rowEl => {
+      const id = rowEl.dataset.traitId || Schema.generateId();
+      return {
+        ...(existingPolymorphTraits.get(id) || {}),
+        id,
+        name:        rowEl.querySelector(".polymorph-name")?.value.trim()        || "",
+        description: rowEl.querySelector(".polymorph-description")?.value.trim() || "",
+        active:      rowEl.querySelector(".polymorph-active")?.checked           || false,
+      };
+    }).filter(trait => trait.name);
 
     boss.deathRule = document.getElementById("boss-death-rule")?.value || "";
     boss.tamedRule = document.getElementById("boss-tamed-rule")?.value || "";

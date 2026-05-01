@@ -522,12 +522,18 @@ const EditorDnd = (() => {
     }));
 
     // AC modes
-    dnd.acModes = Array.from(document.querySelectorAll(".ac-mode-row")).map(rowEl => ({
-      id:     rowEl.dataset.acId || Schema.generateId(),
-      label:  rowEl.querySelector(".ac-mode-label")?.value.trim() || "",
-      value:  parseInt(rowEl.querySelector(".ac-mode-value")?.value, 10) || 10,
-      active: rowEl.querySelector(".ac-mode-active")?.checked || false,
-    }));
+    const existingAcModes = new Map((dnd.acModes || []).map(mode => [mode.id, mode]));
+    dnd.acModes = Array.from(document.querySelectorAll(".ac-mode-row")).map(rowEl => {
+      const id = rowEl.dataset.acId || Schema.generateId();
+      const existing = existingAcModes.get(id) || {};
+      return {
+        ...existing,
+        id,
+        label:  rowEl.querySelector(".ac-mode-label")?.value.trim() || "",
+        value:  parseInt(rowEl.querySelector(".ac-mode-value")?.value, 10) || 10,
+        active: rowEl.querySelector(".ac-mode-active")?.checked || false,
+      };
+    });
 
     // Multiclass
     dnd.multiclass = Array.from(document.querySelectorAll(".multiclass-row")).map(rowEl => ({

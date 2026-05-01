@@ -23,15 +23,15 @@ const ViewCharacter = (() => {
     const resources = character.customResources || [];
 
     return `
-      <div class="sheet-root" data-boss-active="${boss?.bossActive ? "true" : "false"}">
+      <div class="sheet-root ${boss?.bossActive ? "is-boss-active" : "is-tamed-active"}" data-boss-active="${boss?.bossActive ? "true" : "false"}">
         ${ViewCharacterHeader.render(character)}
         ${boss ? ViewCharacterBoss.renderToggleBar(boss) : ""}
         ${ViewCharacterIdentity.render(identity, appearance, character)}
         ${dnd ? ViewCharacterDnd.renderCombatBlock(dnd, boss) : ""}
-        ${dnd ? ViewCharacterDnd.renderAbilityScores(dnd) : ""}
-        ${dnd ? ViewCharacterDnd.renderSavingThrows(dnd) : ""}
-        ${dnd ? ViewCharacterDnd.renderSkills(dnd) : ""}
-        ${boss ? ViewCharacterBoss.renderAttacks(boss) : ""}
+        ${dnd ? ViewCharacterDnd.renderAbilityScores(dnd, boss) : ""}
+        ${dnd ? ViewCharacterDnd.renderSavingThrows(dnd, boss) : ""}
+        ${dnd ? ViewCharacterDnd.renderSkills(dnd, boss) : ""}
+        ${boss ? ViewCharacterBoss.renderAttacks(boss, dnd) : ""}
         ${boss ? ViewCharacterBoss.renderBossDefences(boss) : ""}
         ${boss ? ViewCharacterBoss.renderPolymorphTraits(boss) : ""}
         ${boss ? ViewCharacterBoss.renderBossSpecialRules(boss) : ""}

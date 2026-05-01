@@ -719,6 +719,172 @@
       "updatedAt": "2026-05-01T16:40:39.832Z",
       "type": "trait",
       "description": "Charisma measures your ability to interact effectively with others. It includes such factors as confidence and eloquence, and it can represent a charming or commanding personality.\n\n## Charisma Checks\n\nA Charisma check might arise when you try to influence or entertain others, when you try to make an impression or tell a convincing lie, or when you are navigating a tricky social situation. The Deception, Intimidation, Performance, and Persuasion skills reflect aptitude in certain kinds of Charisma checks.\n\n### Deception\n\nYour Charisma (Deception) check determines whether you can convincingly hide the truth, either verbally or through your actions. This deception can encompass everything from misleading others through ambiguity to telling outright lies. Typical situations include trying to fast-talk a guard, con a merchant, earn money through gambling, pass yourself off in a disguise, dull someone's suspicions with false assurances, or maintain a straight face while telling a blatant lie.\n\n### Intimidation  \nWhen you attempt to influence someone through overt threats, hostile actions, and physical violence, the GM might ask you to make a Charisma (Intimidation) check. Examples include trying to pry information out of a prisoner, convincing street thugs to back down from a confrontation, or using the edge of a broken bottle to convince a sneering vizier to reconsider a decision.\n\n### Performance  \nYour Charisma (Performance) check determines how well you can delight an audience with music, dance, acting, storytelling, or some other form of entertainment.\n\n### Persuasion  \nWhen you attempt to influence someone or a group of people with tact, social graces, or good nature, the GM might ask you to make a Charisma (Persuasion) check. Typically, you use persuasion when acting in good faith, to foster friendships, make cordial requests, or exhibit proper etiquette. Examples of persuading others include convincing a chamberlain to let your party see the king, negotiating peace between warring tribes, or inspiring a crowd of townsfolk\n\n### Other Charisma Checks\n\nThe GM might call for a Charisma check when you try to accomplish tasks like the following:\n\n- Find the best person to talk to for news, rumors, and gossip\n- Blend into a crowd to get the sense of key topics of conversation\n\n\n## Spellcasting Ability\n\nBards, paladins, sorcerers, and warlocks use Charisma as their spellcasting ability, which helps determine the saving throw DCs of spells they cast."
+    },
+    {
+      "id": "capella-trait-boss-presence",
+      "collection": "traits",
+      "name": "Boss Presence",
+      "tags": [
+        "Capella",
+        "boss",
+        "state"
+      ],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {
+        "statBonuses": {
+          "str": 6,
+          "dex": 5,
+          "con": 8,
+          "int": 1,
+          "wis": 9,
+          "cha": 10
+        }
+      },
+      "type": "trait",
+      "description": "Temporary enemy-boss overlay. Adds STR +6, DEX +5, CON +8, INT +1, WIS +9, and CHA +10, swaps to the boss HP pool, grants encounter pressure, and is removed when she is tamed, pacified, recruited, purified, or weakened out of boss status.",
+      "active": true,
+      "createdAt": "2026-05-01T16:57:08.797Z",
+      "updatedAt": "2026-05-01T16:57:08.797Z"
+    },
+    {
+      "id": "capella-trait-monstrous-regeneration",
+      "collection": "traits",
+      "name": "Monstrous Regeneration",
+      "tags": [
+        "Capella",
+        "boss",
+        "defense"
+      ],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {
+        "regeneration": {
+          "amount": 30,
+          "disabledBy": [
+            "Radiant damage",
+            "Critical hit"
+          ]
+        }
+      },
+      "type": "trait",
+      "description": "At the start of Capella's turn, she regains 30 HP. This shuts off for 1 round if she took radiant damage or suffered a critical hit since the end of her last turn.",
+      "active": true,
+      "createdAt": "2026-05-01T16:57:08.797Z",
+      "updatedAt": "2026-05-01T16:57:08.797Z"
+    },
+    {
+      "id": "capella-trait-flesh-polymorph",
+      "collection": "traits",
+      "name": "Flesh Polymorph",
+      "tags": [
+        "Capella",
+        "shapechange",
+        "combat"
+      ],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {
+        "polymorph": {
+          "selfOnly": true,
+          "replacesStatBlock": false
+        }
+      },
+      "type": "bonus_action",
+      "description": "Modified self-only Polymorph. Capella changes body traits without replacing her stat block, HP, AC, or mental stats. It adds physical traits only.",
+      "active": true,
+      "createdAt": "2026-05-01T16:57:08.797Z",
+      "updatedAt": "2026-05-01T16:57:08.797Z"
+    },
+    {
+      "id": "capella-trait-flesh-reshape-escape",
+      "collection": "traits",
+      "name": "Flesh Reshape Escape",
+      "tags": [
+        "Capella",
+        "reaction",
+        "escape"
+      ],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {},
+      "type": "reaction",
+      "description": "When hit, grappled, restrained, knocked prone, paralyzed, forced into a shape, or targeted by a body-restricting effect, Capella may immediately use Flesh Polymorph.",
+      "active": true,
+      "createdAt": "2026-05-01T16:57:08.797Z",
+      "updatedAt": "2026-05-01T16:57:08.797Z"
+    },
+    {
+      "id": "capella-trait-impersonation",
+      "collection": "traits",
+      "name": "Impersonation",
+      "tags": [
+        "Capella",
+        "social",
+        "shapechange"
+      ],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {},
+      "type": "trait",
+      "description": "Capella can assume a humanoid form she has studied, including voice, posture, habits, surface memories, and conversational knowledge. Each form change prompts a new Insight or Investigation contest.",
+      "active": true,
+      "createdAt": "2026-05-01T16:57:08.797Z",
+      "updatedAt": "2026-05-01T16:57:08.797Z"
+    },
+    {
+      "id": "capella-trait-telepathy",
+      "collection": "traits",
+      "name": "Telepathy",
+      "tags": [
+        "Capella",
+        "psychic",
+        "social"
+      ],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {
+        "range": "120 ft"
+      },
+      "type": "trait",
+      "description": "Capella has 120 ft telepathy, supporting silent pressure, invasive intimacy, and unsettling social manipulation.",
+      "active": true,
+      "createdAt": "2026-05-01T16:57:08.797Z",
+      "updatedAt": "2026-05-01T16:57:08.797Z"
+    },
+    {
+      "id": "capella-trait-polymorph-trait-limit",
+      "collection": "traits",
+      "name": "Polymorph Trait Limit",
+      "tags": [
+        "Capella",
+        "shapechange",
+        "balance"
+      ],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {
+        "maxActiveTraits": 3
+      },
+      "type": "feature",
+      "description": "Capella should usually keep up to 3 major Flesh Polymorph traits active at once. This is a table-control limit, not a biology limit.",
+      "active": true,
+      "createdAt": "2026-05-01T16:57:08.797Z",
+      "updatedAt": "2026-05-01T16:57:08.797Z"
     }
   ]
 }

@@ -1,5 +1,53 @@
 {
   "version": 1,
   "collection": "resources",
-  "entries": []
+  "entries": [
+    {
+      "id": "capella-resource-polymorph-traits",
+      "collection": "resources",
+      "name": "Active Flesh Polymorph Traits",
+      "tags": [
+        "Capella",
+        "shapechange"
+      ],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {
+        "resource": {
+          "currentIsCharacterState": true,
+          "logIsCharacterState": true
+        }
+      },
+      "max": 3,
+      "description": "Tracks the suggested cap of major Flesh Polymorph traits active at one time.",
+      "createdAt": "2026-05-01T16:57:08.797Z",
+      "updatedAt": "2026-05-01T16:57:08.797Z"
+    },
+    {
+      "id": "capella-resource-legendary-action",
+      "collection": "resources",
+      "name": "Legendary Action",
+      "tags": [
+        "Capella",
+        "boss",
+        "action economy"
+      ],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {
+        "resource": {
+          "currentIsCharacterState": true,
+          "logIsCharacterState": true
+        }
+      },
+      "max": 1,
+      "description": "Tracks Capella's once-per-round full Action outside her turn while Boss Presence is active.",
+      "createdAt": "2026-05-01T16:57:08.797Z",
+      "updatedAt": "2026-05-01T16:57:08.797Z"
+    }
+  ]
 }

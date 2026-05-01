@@ -222,6 +222,585 @@
       "duration": "Concentration, up to 8 hours",
       "description": "Social pressure option for manipulation scenes.",
       "prepared": true
+    },
+    {
+      "id": "capella-spell-disguise-self",
+      "collection": "spells",
+      "name": "Disguise Self",
+      "tags": [
+        "Capella",
+        "social",
+        "disguise"
+      ],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {
+        "components": [
+          "V",
+          "S"
+        ],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "role": "social cover",
+        "sourceDocument": {
+          "provider": "homebrew",
+          "title": "Capella combat rebuild",
+          "type": "spell-adaptation"
+        }
+      },
+      "level": 1,
+      "school": "Illusion",
+      "castingTime": "1 action",
+      "range": "Self",
+      "components": [
+        "V",
+        "S"
+      ],
+      "duration": "1 hour",
+      "description": "Quick social cover for a harmless, noble, wounded, or ordinary persona. This supports roleplay disguise; Mimic Anatomy still handles physical impersonation.",
+      "prepared": true,
+      "createdAt": "2026-05-01T16:57:08.797Z",
+      "updatedAt": "2026-05-01T16:57:08.797Z"
+    },
+    {
+      "id": "capella-spell-alter-self",
+      "collection": "spells",
+      "name": "Alter Self",
+      "tags": [
+        "Capella",
+        "shapechange",
+        "utility"
+      ],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {
+        "components": [
+          "V",
+          "S"
+        ],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": true
+        },
+        "role": "minor body edit",
+        "sourceDocument": {
+          "provider": "homebrew",
+          "title": "Capella combat rebuild",
+          "type": "spell-adaptation"
+        }
+      },
+      "level": 2,
+      "school": "Transmutation",
+      "castingTime": "1 action",
+      "range": "Self",
+      "components": [
+        "V",
+        "S"
+      ],
+      "duration": "Concentration, up to 1 hour",
+      "description": "A cleaner low-intensity transformation option when full Flesh Polymorph would be too loud. Good for gills, claws, texture changes, and unsettling physical tells.",
+      "prepared": true,
+      "createdAt": "2026-05-01T16:57:08.797Z",
+      "updatedAt": "2026-05-01T16:57:08.797Z"
+    },
+    {
+      "id": "capella-spell-mirror-image",
+      "collection": "spells",
+      "name": "Mirror Image",
+      "tags": [
+        "Capella",
+        "defense",
+        "illusion"
+      ],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {
+        "components": [
+          "V",
+          "S"
+        ],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "role": "defense",
+        "sourceDocument": {
+          "provider": "homebrew",
+          "title": "Capella combat rebuild",
+          "type": "spell-adaptation"
+        }
+      },
+      "level": 2,
+      "school": "Illusion",
+      "castingTime": "1 action",
+      "range": "Self",
+      "components": [
+        "V",
+        "S"
+      ],
+      "duration": "1 minute",
+      "description": "Defensive misdirection for the elegant monster routine: attackers strike false angles while her real body keeps reshaping.",
+      "prepared": true,
+      "createdAt": "2026-05-01T16:57:08.797Z",
+      "updatedAt": "2026-05-01T16:57:08.797Z"
+    },
+    {
+      "id": "capella-spell-fear",
+      "collection": "spells",
+      "name": "Fear",
+      "tags": [
+        "Capella",
+        "control",
+        "psychic"
+      ],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {
+        "components": [
+          "V",
+          "S",
+          "M"
+        ],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": true
+        },
+        "role": "crowd control",
+        "sourceDocument": {
+          "provider": "homebrew",
+          "title": "Capella combat rebuild",
+          "type": "spell-adaptation"
+        }
+      },
+      "level": 3,
+      "school": "Illusion",
+      "castingTime": "1 action",
+      "range": "30 ft cone",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "duration": "Concentration, up to 1 minute",
+      "description": "Turns body horror and social dread into battlefield control. Use when the encounter wants panic, scattering, and loss of nerve instead of raw damage.",
+      "prepared": true,
+      "createdAt": "2026-05-01T16:57:08.797Z",
+      "updatedAt": "2026-05-01T16:57:08.797Z"
+    },
+    {
+      "id": "capella-spell-counterspell",
+      "collection": "spells",
+      "name": "Counterspell",
+      "tags": [
+        "Capella",
+        "reaction",
+        "defense"
+      ],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {
+        "components": [
+          "S"
+        ],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "role": "anti-magic",
+        "sourceDocument": {
+          "provider": "homebrew",
+          "title": "Capella combat rebuild",
+          "type": "spell-adaptation"
+        }
+      },
+      "level": 3,
+      "school": "Abjuration",
+      "castingTime": "Reaction",
+      "range": "60 ft",
+      "components": [
+        "S"
+      ],
+      "duration": "Instantaneous",
+      "description": "Lets Capella interrupt magic that would pin, reveal, banish, or burst her down before the body horror engine gets rolling.",
+      "prepared": true,
+      "createdAt": "2026-05-01T16:57:08.797Z",
+      "updatedAt": "2026-05-01T16:57:08.797Z"
+    },
+    {
+      "id": "capella-spell-dimension-door",
+      "collection": "spells",
+      "name": "Dimension Door",
+      "tags": [
+        "Capella",
+        "mobility",
+        "escape"
+      ],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {
+        "components": [
+          "V"
+        ],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "role": "mobility",
+        "sourceDocument": {
+          "provider": "homebrew",
+          "title": "Capella combat rebuild",
+          "type": "spell-adaptation"
+        }
+      },
+      "level": 4,
+      "school": "Conjuration",
+      "castingTime": "1 action",
+      "range": "500 ft",
+      "components": [
+        "V"
+      ],
+      "duration": "Instantaneous",
+      "description": "Panic-button repositioning, dramatic exits, abduction staging, or returning from an impossible angle.",
+      "prepared": true,
+      "createdAt": "2026-05-01T16:57:08.797Z",
+      "updatedAt": "2026-05-01T16:57:08.797Z"
+    },
+    {
+      "id": "capella-spell-hold-monster",
+      "collection": "spells",
+      "name": "Hold Monster",
+      "tags": [
+        "Capella",
+        "control",
+        "disable"
+      ],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {
+        "components": [
+          "V",
+          "S",
+          "M"
+        ],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": true
+        },
+        "role": "lockdown",
+        "sourceDocument": {
+          "provider": "homebrew",
+          "title": "Capella combat rebuild",
+          "type": "spell-adaptation"
+        }
+      },
+      "level": 5,
+      "school": "Enchantment",
+      "castingTime": "1 action",
+      "range": "90 ft",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "duration": "Concentration, up to 1 minute",
+      "description": "Single-target lockdown that fits her nonlethal disable/maim/control style. Particularly scary before a tendril, bite, or false mercy follow-up.",
+      "prepared": true,
+      "createdAt": "2026-05-01T16:57:08.797Z",
+      "updatedAt": "2026-05-01T16:57:08.797Z"
+    },
+    {
+      "id": "capella-spell-modify-memory",
+      "collection": "spells",
+      "name": "Modify Memory",
+      "tags": [
+        "Capella",
+        "social",
+        "memory"
+      ],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {
+        "components": [
+          "V",
+          "S"
+        ],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": true
+        },
+        "role": "aftermath control",
+        "sourceDocument": {
+          "provider": "homebrew",
+          "title": "Capella combat rebuild",
+          "type": "spell-adaptation"
+        }
+      },
+      "level": 5,
+      "school": "Enchantment",
+      "castingTime": "1 action",
+      "range": "30 ft",
+      "components": [
+        "V",
+        "S"
+      ],
+      "duration": "Concentration, up to 1 minute",
+      "description": "After-scene cleanup, interrogation horror, or social manipulation. Use with care around player agency.",
+      "prepared": true,
+      "createdAt": "2026-05-01T16:57:08.797Z",
+      "updatedAt": "2026-05-01T16:57:08.797Z"
+    },
+    {
+      "id": "capella-spell-mislead",
+      "collection": "spells",
+      "name": "Mislead",
+      "tags": [
+        "Capella",
+        "illusion",
+        "escape"
+      ],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {
+        "components": [
+          "S"
+        ],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": true
+        },
+        "role": "decoy",
+        "sourceDocument": {
+          "provider": "homebrew",
+          "title": "Capella combat rebuild",
+          "type": "spell-adaptation"
+        }
+      },
+      "level": 5,
+      "school": "Illusion",
+      "castingTime": "1 action",
+      "range": "Self",
+      "components": [
+        "S"
+      ],
+      "duration": "Concentration, up to 1 hour",
+      "description": "Lets her split attention between an innocent-looking decoy and the real monster body moving elsewhere.",
+      "prepared": false,
+      "createdAt": "2026-05-01T16:57:08.797Z",
+      "updatedAt": "2026-05-01T16:57:08.797Z"
+    },
+    {
+      "id": "capella-spell-seeming",
+      "collection": "spells",
+      "name": "Seeming",
+      "tags": [
+        "Capella",
+        "social",
+        "mass disguise"
+      ],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {
+        "components": [
+          "V",
+          "S"
+        ],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "role": "scene control",
+        "sourceDocument": {
+          "provider": "homebrew",
+          "title": "Capella combat rebuild",
+          "type": "spell-adaptation"
+        }
+      },
+      "level": 5,
+      "school": "Illusion",
+      "castingTime": "1 action",
+      "range": "30 ft",
+      "components": [
+        "V",
+        "S"
+      ],
+      "duration": "8 hours",
+      "description": "Mass disguise for staged scenes, cult cover, hostage confusion, or making the room lie before she even speaks.",
+      "prepared": false,
+      "createdAt": "2026-05-01T16:57:08.797Z",
+      "updatedAt": "2026-05-01T16:57:08.797Z"
+    },
+    {
+      "id": "capella-spell-geas",
+      "collection": "spells",
+      "name": "Geas",
+      "tags": [
+        "Capella",
+        "social",
+        "coercion"
+      ],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {
+        "components": [
+          "V"
+        ],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "role": "plot pressure",
+        "sourceDocument": {
+          "provider": "homebrew",
+          "title": "Capella combat rebuild",
+          "type": "spell-adaptation"
+        }
+      },
+      "level": 5,
+      "school": "Enchantment",
+      "castingTime": "1 minute",
+      "range": "60 ft",
+      "components": [
+        "V"
+      ],
+      "duration": "30 days",
+      "description": "Long-form coercion for NPC plots and offscreen manipulation, not a quick combat button.",
+      "prepared": false,
+      "createdAt": "2026-05-01T16:57:08.797Z",
+      "updatedAt": "2026-05-01T16:57:08.797Z"
+    },
+    {
+      "id": "capella-spell-mass-suggestion",
+      "collection": "spells",
+      "name": "Mass Suggestion",
+      "tags": [
+        "Capella",
+        "social",
+        "control"
+      ],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {
+        "components": [
+          "V",
+          "M"
+        ],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "role": "mass control",
+        "sourceDocument": {
+          "provider": "homebrew",
+          "title": "Capella combat rebuild",
+          "type": "spell-adaptation"
+        }
+      },
+      "level": 6,
+      "school": "Enchantment",
+      "castingTime": "1 action",
+      "range": "60 ft",
+      "components": [
+        "V",
+        "M"
+      ],
+      "duration": "24 hours",
+      "description": "A high-tier version of her social pressure: broad, elegant, and terrifying when used on bystanders, guards, or enemy mobs.",
+      "prepared": true,
+      "createdAt": "2026-05-01T16:57:08.797Z",
+      "updatedAt": "2026-05-01T16:57:08.797Z"
+    },
+    {
+      "id": "capella-spell-power-word-stun",
+      "collection": "spells",
+      "name": "Power Word Stun",
+      "tags": [
+        "Capella",
+        "control",
+        "nonlethal"
+      ],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {
+        "components": [
+          "V"
+        ],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "role": "boss disable",
+        "sourceDocument": {
+          "provider": "homebrew",
+          "title": "Capella combat rebuild",
+          "type": "spell-adaptation"
+        }
+      },
+      "level": 8,
+      "school": "Enchantment",
+      "castingTime": "1 action",
+      "range": "60 ft",
+      "components": [
+        "V"
+      ],
+      "duration": "Instantaneous",
+      "description": "Clean nonlethal boss disable. It fits her preference for humiliation, capture, and control over immediate execution.",
+      "prepared": true,
+      "createdAt": "2026-05-01T16:57:08.797Z",
+      "updatedAt": "2026-05-01T16:57:08.797Z"
     }
   ]
 }
