@@ -404,7 +404,7 @@ const Library = (() => {
     if (result.provider === "open5e") {
       const detailed = await fetchExternalDetail(result).catch(() => result.raw || result);
       const record = result.collection === "spells"
-        ? Schema.normalizeOpen5eSpell({ ...detailed, ...result.raw })
+        ? Schema.normalizeOpen5eSpell({ ...result.raw, ...detailed })
         : normalizeGenericExternalRecord(result, detailed);
       return upsert(record.collection, record, record.source || "external");
     }
@@ -439,18 +439,21 @@ const Library = (() => {
     const collection = mapOpen5eTypeToCollection(route, raw);
     const document = raw.document || {};
     const documentKey = document.key || document.slug || raw.document_slug || raw.document__slug || "";
-    const documentTitle = document.title || document.name || raw.document_title || raw.document__title || "";
-    const subsource = raw.source || raw.publisher || raw.document_source || raw.category || "";
+    const documentTitle = document.display_name || document.title || document.name || raw.document_title || raw.document__title || "";
+    const subsource = document.publisher?.name || raw.source || raw.publisher || raw.document_source || raw.category || "";
+    const objectName = raw.object_name || raw.name || raw.title || "";
+    const objectKey = raw.object_pk || raw.key || raw.slug || comparableName(objectName);
+    const routePath = String(route || "").replace(/^\/+|\/+$/g, "");
 
     return {
       provider: "open5e",
       providerLabel: "Open5e",
       collection,
-      id: `open5e-${collection}-${raw.key || raw.slug || comparableName(raw.name)}`,
-      name: raw.name || raw.title || "(Unnamed)",
-      typeLabel: labelForCollection(collection),
+      id: `open5e-${collection}-${objectKey}`,
+      name: objectName || "(Unnamed)",
+      typeLabel: raw.object_model || labelForCollection(collection),
       sourceLabel: [documentTitle || documentKey || "Open5e", subsource].filter(Boolean).join(" / "),
-      detailUrl: raw.api_url || raw.url || raw.resource_uri || "",
+      detailUrl: raw.api_url || raw.url || raw.resource_uri || (routePath && objectKey ? `https://api.open5e.com/${routePath}/${objectKey}/` : ""),
       tags: ["Open5e", documentTitle || documentKey, subsource].filter(Boolean),
       raw,
     };

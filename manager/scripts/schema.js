@@ -270,8 +270,12 @@ const Schema = (() => {
       .concat(open5eData.desc || [])
       .concat(open5eData.higher_level || open5eData.higherLevel || []);
     const document = open5eData.document || {};
-    const key = open5eData.key || open5eData.slug || open5eData.id || slugify(open5eData.name || "spell");
+    const key = open5eData.key || open5eData.object_pk || open5eData.slug || open5eData.id || slugify(open5eData.name || open5eData.object_name || "spell");
     const record = createLibraryRecord("spells");
+    const components = normalizeComponents(open5eData.components, open5eData);
+    const documentTitle = document.display_name || document.title || document.name || open5eData.document__title || "";
+    const documentKey = document.key || document.slug || open5eData.document__slug || "";
+    const publisher = document.publisher?.name || open5eData.publisher || open5eData.source || "";
 
     return {
       ...record,
@@ -279,28 +283,41 @@ const Schema = (() => {
       source: "srd",
       provider: "open5e",
       providerId: key,
-      name: open5eData.name || "",
+      name: open5eData.name || open5eData.object_name || "",
       level: Number(open5eData.level_int ?? open5eData.level ?? 0) || 0,
-      school: normalizeSchool(open5eData.school),
+      school: normalizeSchool(open5eData.school || open5eData.object?.school),
       castingTime: open5eData.casting_time || open5eData.castingTime || "",
-      range: open5eData.range || "",
-      components: normalizeComponents(open5eData.components),
+      range: open5eData.range_text || open5eData.range || "",
+      components,
       duration: open5eData.duration || "",
       description: descriptionParts.filter(Boolean).join("\n\n"),
       tags: [
         "Open5e",
-        document.title || document.name || open5eData.document__title || "",
-        document.key || document.slug || open5eData.document__slug || "SRD",
-        open5eData.source || open5eData.publisher || "",
+        documentTitle,
+        documentKey || "SRD",
+        publisher,
+        document.gamesystem?.name || "",
       ].filter(Boolean),
       addons: {
-        components: normalizeComponents(open5eData.components),
+        components,
         ritual: { enabled: Boolean(open5eData.ritual) },
-        concentration: { enabled: /concentration/i.test(open5eData.duration || "") },
+        concentration: { enabled: Boolean(open5eData.concentration) || /concentration/i.test(open5eData.duration || "") },
+        damage: {
+          roll: open5eData.damage_roll || "",
+          types: open5eData.damage_types || [],
+          savingThrow: open5eData.saving_throw_ability || "",
+        },
+        area: {
+          shape: open5eData.shape_type || "",
+          size: open5eData.shape_size || null,
+          unit: open5eData.shape_size_unit || "",
+        },
         sourceDocument: {
           provider: "open5e",
-          key: document.key || document.slug || open5eData.document__slug || "",
-          title: document.title || document.name || open5eData.document__title || "",
+          key: documentKey,
+          title: documentTitle,
+          publisher,
+          gameSystem: document.gamesystem?.name || "",
         },
       },
       open5eUrl: open5eData.url || "",
@@ -320,11 +337,16 @@ const Schema = (() => {
     return String(value);
   }
 
-  function normalizeComponents(value) {
+  function normalizeComponents(value, spellData = {}) {
     if (Array.isArray(value)) return value.map(component => String(component).trim()).filter(Boolean);
     if (typeof value === "string") {
       return value.split(/[,\s]+/).map(component => component.trim()).filter(Boolean);
     }
+    const components = [];
+    if (spellData.verbal) components.push("V");
+    if (spellData.somatic) components.push("S");
+    if (spellData.material) components.push("M");
+    if (components.length) return components;
     return [];
   }
 
