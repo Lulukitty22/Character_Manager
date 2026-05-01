@@ -1,0 +1,36 @@
+{
+  "id": "d3140756-ab6b-4540-81bf-93701042b5db",
+  "meta": {
+    "repoPath": "characters/test-3-wait-how-do-i-change-a-name.json",
+    "lastUpdated": "2026-05-01T15:32:11.189Z"
+  },
+  "identity": {
+    "name": "Test 3 wait how do i change a name",
+    "aliases": [],
+    "race": "",
+    "height": "",
+    "age": "",
+    "origin": "",
+    "tags": [],
+    "classification": "boss_npc"
+  },
+  "appearance": {
+    "description": "",
+    "images": []
+  },
+  "personality": "",
+  "backstory": "",
+  "notes": "",
+  "spells": [],
+  "spellSlots": {},
+  "abilities": [],
+  "inventory": [],
+  "currency": {
+    "pp": 0,
+    "gp": 0,
+    "ep": 0,
+    "sp": 0,
+    "cp": 0
+  },
+  "customResources": []
+}
