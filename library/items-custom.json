@@ -1,5 +1,61 @@
 {
   "version": 1,
   "collection": "items",
-  "entries": []
+  "entries": [
+    {
+      "id": "dnd5eapi-equipment-case-crossbow-bolt",
+      "collection": "items",
+      "name": "Case, crossbow bolt",
+      "tags": [
+        "D&D 5e API",
+        "SRD 2014",
+        "equipment"
+      ],
+      "source": "external",
+      "provider": "dnd5eapi",
+      "providerId": "case-crossbow-bolt",
+      "variantOf": "",
+      "addons": {
+        "sourceDocument": {
+          "provider": "dnd5eapi",
+          "title": "D&D 5e SRD 2014",
+          "type": "equipment",
+          "detailUrl": "https://www.dnd5eapi.co/api/2014/equipment/case-crossbow-bolt"
+        },
+        "rawImport": {
+          "special": [],
+          "index": "case-crossbow-bolt",
+          "name": "Case, crossbow bolt",
+          "equipment_category": {
+            "index": "adventuring-gear",
+            "name": "Adventuring Gear",
+            "url": "/api/2014/equipment-categories/adventuring-gear"
+          },
+          "gear_category": {
+            "index": "standard-gear",
+            "name": "Standard Gear",
+            "url": "/api/2014/equipment-categories/standard-gear"
+          },
+          "cost": {
+            "quantity": 1,
+            "unit": "gp"
+          },
+          "weight": 1,
+          "desc": [
+            "This wooden case can hold up to twenty crossbow bolts."
+          ],
+          "url": "/api/2014/equipment/case-crossbow-bolt",
+          "updated_at": "2026-04-01T20:35:37.141Z",
+          "contents": [],
+          "properties": []
+        }
+      },
+      "createdAt": "2026-05-01T15:27:45.014Z",
+      "updatedAt": "2026-05-01T15:27:45.014Z",
+      "type": "Adventuring Gear",
+      "weight": 1,
+      "attuned": false,
+      "description": "This wooden case can hold up to twenty crossbow bolts."
+    }
+  ]
 }
