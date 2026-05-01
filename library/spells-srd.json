@@ -1,5 +1,62 @@
 {
   "version": 1,
   "collection": "spells",
-  "entries": []
+  "entries": [
+    {
+      "id": "open5e-spells-wz_abrupt-hug",
+      "collection": "spells",
+      "name": "Abrupt Hug",
+      "tags": [
+        "Open5e",
+        "Warlock Zine",
+        "wz",
+        "Kobold Press",
+        "5th Edition 2014"
+      ],
+      "source": "srd",
+      "provider": "open5e",
+      "providerId": "wz_abrupt-hug",
+      "variantOf": "",
+      "addons": {
+        "components": [
+          "V"
+        ],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "damage": {
+          "roll": "",
+          "types": [],
+          "savingThrow": ""
+        },
+        "area": {
+          "shape": "",
+          "size": null,
+          "unit": "feet"
+        },
+        "sourceDocument": {
+          "provider": "open5e",
+          "key": "wz",
+          "title": "Warlock Zine",
+          "publisher": "Kobold Press",
+          "gameSystem": "5th Edition 2014"
+        }
+      },
+      "createdAt": "2026-05-01T15:44:13.579Z",
+      "updatedAt": "2026-05-01T15:44:13.580Z",
+      "level": 1,
+      "school": "Transmutation",
+      "castingTime": "reaction",
+      "range": "30 feet",
+      "components": [
+        "V"
+      ],
+      "duration": "instantaneous",
+      "description": "You or the creature taking the Attack action can immediately make an unarmed strike. In addition to dealing damage with the unarmed strike, the target can grapple the creature it hit with the unarmed strike.",
+      "open5eUrl": ""
+    }
+  ]
 }
