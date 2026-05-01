@@ -1,5 +1,36 @@
 {
   "version": 1,
   "collection": "tags",
-  "entries": []
+  "entries": [
+    {
+      "id": "test",
+      "collection": "tags",
+      "name": "Test",
+      "tags": [],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {},
+      "createdAt": "2026-05-01T15:46:54.662Z",
+      "updatedAt": "2026-05-01T15:46:54.662Z",
+      "color": "",
+      "description": ""
+    },
+    {
+      "id": "debug",
+      "collection": "tags",
+      "name": "Debug",
+      "tags": [],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {},
+      "createdAt": "2026-05-01T15:46:54.662Z",
+      "updatedAt": "2026-05-01T15:46:54.662Z",
+      "color": "",
+      "description": ""
+    }
+  ]
 }
