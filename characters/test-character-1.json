@@ -1,0 +1,185 @@
+{
+  "id": "a34bbbcd-d770-413d-829b-5da278db5973",
+  "type": "dnd5e_pc",
+  "meta": {
+    "repoPath": "characters/test-character-1.json",
+    "lastUpdated": "2026-05-01T09:30:00.412Z"
+  },
+  "identity": {
+    "name": "Test Character 1",
+    "aliases": [
+      "Testie 1"
+    ],
+    "race": "Human",
+    "height": "6'7",
+    "age": "22",
+    "origin": "Test Plane",
+    "tags": [
+      "Test",
+      "Debug"
+    ]
+  },
+  "appearance": {
+    "description": "Um... uhm, tall handsome squidward.",
+    "images": [
+      {
+        "id": "18502019-7679-4de4-bbda-e3d2913c9ec0",
+        "label": "Squidward Image",
+        "url": "https://m.media-amazon.com/images/M/MV5BYjYyYmFlODQtYmIyMS00MDNlLTk2MWMtMjMwMTUzYjZjYTM2XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg"
+      },
+      {
+        "id": "812c1238-8247-4686-8114-fff0d7c66994",
+        "label": "Second Image I guess",
+        "url": "https://art.pixilart.com/watermark/sr20a56664bd2b0.png"
+      }
+    ]
+  },
+  "personality": "Uh.. handsome. A test dummie.",
+  "backstory": "Been through a lot. Lots of car crashes too.",
+  "notes": "Yes",
+  "spells": [
+    {
+      "id": "31a1247c-263b-42a8-ba23-4b4d0bbd4738",
+      "name": "HANDSOME SQUIDWARD SPELL",
+      "level": 0,
+      "school": "Divination",
+      "castingTime": "1 action",
+      "range": "67",
+      "components": [],
+      "duration": "Instant",
+      "description": "Squidward looks at you handsomly.",
+      "prepared": true,
+      "tags": [
+        "aoa"
+      ]
+    }
+  ],
+  "spellSlots": {},
+  "abilities": [],
+  "inventory": [
+    {
+      "id": "7b96b390-674c-4aba-a0eb-f79baea8e7d2",
+      "name": "Squidwards Stash",
+      "type": "tool",
+      "quantity": 1,
+      "weight": 100,
+      "attuned": true,
+      "description": "... dont look....",
+      "tags": []
+    }
+  ],
+  "currency": {
+    "pp": 1,
+    "gp": 4,
+    "ep": 0,
+    "sp": 0,
+    "cp": 0
+  },
+  "customResources": [],
+  "dnd": {
+    "class": "Wizard",
+    "subclass": "",
+    "level": 1,
+    "multiclass": [],
+    "background": "",
+    "alignment": "",
+    "proficiencyBonus": 2,
+    "spellcastingAbility": "wis",
+    "stats": {
+      "str": {
+        "score": 12
+      },
+      "dex": {
+        "score": 9
+      },
+      "con": {
+        "score": 11
+      },
+      "int": {
+        "score": 5
+      },
+      "wis": {
+        "score": 14
+      },
+      "cha": {
+        "score": 15
+      }
+    },
+    "savingThrowProficiencies": [],
+    "skillProficiencies": [
+      {
+        "skill": "Acrobatics",
+        "expertise": true
+      },
+      {
+        "skill": "Arcana",
+        "expertise": true
+      },
+      {
+        "skill": "Athletics",
+        "expertise": true
+      },
+      {
+        "skill": "History",
+        "expertise": true
+      },
+      {
+        "skill": "Insight",
+        "expertise": true
+      },
+      {
+        "skill": "Intimidation",
+        "expertise": true
+      },
+      {
+        "skill": "Investigation",
+        "expertise": false
+      },
+      {
+        "skill": "Nature",
+        "expertise": false
+      },
+      {
+        "skill": "Performance",
+        "expertise": false
+      },
+      {
+        "skill": "Religion",
+        "expertise": true
+      },
+      {
+        "skill": "Survival",
+        "expertise": true
+      }
+    ],
+    "hp": {
+      "max": 0,
+      "current": 0,
+      "temp": 0,
+      "log": []
+    },
+    "acModes": [
+      {
+        "id": "4cdc681b-a00f-46c2-bbb1-17e3a9d0d0a1",
+        "label": "Base",
+        "value": 10,
+        "active": true
+      }
+    ],
+    "speed": {
+      "walk": 30,
+      "fly": 0,
+      "swim": 0,
+      "climb": 0,
+      "burrow": 0
+    },
+    "initiative": 0,
+    "feats": [
+      {
+        "id": "db429bbe-c3bb-41f7-be37-197499c590e0",
+        "name": "Yes",
+        "description": "Like, literally so handsome you cant take it"
+      }
+    ]
+  }
+}
