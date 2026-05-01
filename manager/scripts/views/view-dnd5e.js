@@ -263,8 +263,10 @@ const ViewDnd5e = (() => {
     const profBonus = dnd.proficiencyBonus || 2;
     const profList  = dnd.skillProficiencies || [];
 
-    const rows = Schema.SKILLS.map(({ skill, ability }) => {
-      const profEntry  = profList.find(p => p.skill === skill);
+    const rows = Schema.SKILLS.map(({ name, ability }) => {
+      // Proficiencies are stored by the editor using the skill's display name
+      // e.g. { skill: "Acrobatics", expertise: false }
+      const profEntry    = profList.find(p => p.skill === name);
       const isProficient = !!profEntry;
       const isExpert     = profEntry?.expertise ?? false;
 
@@ -272,14 +274,13 @@ const ViewDnd5e = (() => {
       const baseMod  = Schema.getAbilityModifier(score);
       const bonus    = isExpert ? baseMod + profBonus * 2 : isProficient ? baseMod + profBonus : baseMod;
       const dotClass = isExpert ? "expert" : isProficient ? "proficient" : "";
-      const label    = skill.charAt(0).toUpperCase() + skill.slice(1);
       const abilLabel = ability.toUpperCase().slice(0, 3);
 
       return `
         <div class="sheet-skill-row">
           <span class="sheet-prof-dot ${dotClass}"></span>
           <span class="sheet-skill-bonus">${Schema.formatModifier(bonus)}</span>
-          <span class="sheet-skill-label">${label}</span>
+          <span class="sheet-skill-label">${name}</span>
           <span class="sheet-skill-ability text-muted">${abilLabel}</span>
         </div>
       `;
