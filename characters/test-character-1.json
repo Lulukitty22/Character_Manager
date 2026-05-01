@@ -1,12 +1,12 @@
 {
   "id": "a34bbbcd-d770-413d-829b-5da278db5973",
-  "type": "dnd5e_pc",
   "meta": {
     "repoPath": "characters/test-character-1.json",
     "lastUpdated": "2026-05-01T10:58:44.054Z"
   },
   "identity": {
     "name": "Test Character 1",
+    "classification": "player_character",
     "aliases": [
       "Testie 1"
     ],

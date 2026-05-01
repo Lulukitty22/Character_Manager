@@ -64,7 +64,7 @@ const CharacterList = (() => {
         <div class="list-header flex-between">
           <div>
             <h2 class="list-title">📜 Characters</h2>
-            <p class="text-muted text-sm">All characters stored in your GitHub repository. Search by name, alias, or tag.</p>
+            <p class="text-muted text-sm">All characters stored in your GitHub repository. Search by name, alias, tag, or classification.</p>
           </div>
           <button id="btn-new-character" class="button button-primary">✦ New Character</button>
         </div>
