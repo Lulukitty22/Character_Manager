@@ -172,19 +172,19 @@ const EditorBoss = (() => {
                 <label class="field-label">Resistances</label>
                 <p class="field-hint">Comma-separated damage types</p>
                 <textarea id="boss-resistances" class="field-textarea" rows="3"
-                  placeholder="psychic, cold, necrotic…">${EditorBase.escapeHTML((boss.resistances || []).join(", "))}</textarea>
+                  placeholder="psychic, cold, necrotic…">${EditorBase.escapeHTML(mechanicListToText(boss.resistances || []))}</textarea>
               </div>
               <div class="field-group">
                 <label class="field-label">Immunities</label>
                 <p class="field-hint">Damage type immunities</p>
                 <textarea id="boss-immunities" class="field-textarea" rows="3"
-                  placeholder="poison, lightning…">${EditorBase.escapeHTML((boss.immunities || []).join(", "))}</textarea>
+                  placeholder="poison, lightning…">${EditorBase.escapeHTML(mechanicListToText(boss.immunities || []))}</textarea>
               </div>
               <div class="field-group">
                 <label class="field-label">Condition Immunities</label>
                 <p class="field-hint">Condition immunities</p>
                 <textarea id="boss-condition-immunities" class="field-textarea" rows="3"
-                  placeholder="charmed, frightened…">${EditorBase.escapeHTML((boss.conditionImmunities || []).join(", "))}</textarea>
+                  placeholder="charmed, frightened…">${EditorBase.escapeHTML(mechanicListToText(boss.conditionImmunities || []))}</textarea>
               </div>
             </div>
 
@@ -523,6 +523,25 @@ const EditorBoss = (() => {
     rowEl.querySelector(".weakness-description")?.focus();
   }
 
+  function mechanicListToText(entries) {
+    return (entries || []).map(entry => {
+      if (typeof entry === "string") return entry;
+      return entry.label || entry.name || entry.description || "";
+    }).filter(Boolean).join(", ");
+  }
+
+  function parseMechanicListText(text, existingEntries = []) {
+    const existingByLabel = new Map((existingEntries || [])
+      .filter(entry => entry && typeof entry === "object")
+      .map(entry => [String(entry.label || entry.name || "").trim().toLowerCase(), entry]));
+
+    return String(text || "")
+      .split(",")
+      .map(value => value.trim())
+      .filter(Boolean)
+      .map(value => existingByLabel.get(value.toLowerCase()) || value);
+  }
+
   // ─── Read Tab ────────────────────────────────────────────────────────────────
 
   function readTab(character) {
@@ -558,14 +577,11 @@ const EditorBoss = (() => {
 
     boss.legendaryActions = parseInt(document.getElementById("boss-legendary")?.value, 10) || 0;
 
-    boss.resistances = (document.getElementById("boss-resistances")?.value || "")
-      .split(",").map(s => s.trim()).filter(Boolean);
+    boss.resistances = parseMechanicListText(document.getElementById("boss-resistances")?.value || "", boss.resistances || []);
 
-    boss.immunities = (document.getElementById("boss-immunities")?.value || "")
-      .split(",").map(s => s.trim()).filter(Boolean);
+    boss.immunities = parseMechanicListText(document.getElementById("boss-immunities")?.value || "", boss.immunities || []);
 
-    boss.conditionImmunities = (document.getElementById("boss-condition-immunities")?.value || "")
-      .split(",").map(s => s.trim()).filter(Boolean);
+    boss.conditionImmunities = parseMechanicListText(document.getElementById("boss-condition-immunities")?.value || "", boss.conditionImmunities || []);
 
     boss.weaknesses = Array.from(document.querySelectorAll(".weakness-row")).map(rowEl => {
       const id = rowEl.dataset.weaknessId || Schema.generateId();

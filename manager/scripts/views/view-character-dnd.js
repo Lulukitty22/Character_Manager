@@ -10,6 +10,7 @@
 const ViewCharacterDnd = (() => {
 
   const esc = ViewCharacterUtils.esc;
+  const renderMechanicChips = ViewCharacterUtils.renderMechanicChips;
   const ABILITY_ORDER = ["str", "dex", "con", "int", "wis", "cha"];
 
   function renderCombatBlock(dnd, boss) {
@@ -304,19 +305,35 @@ const ViewCharacterDnd = (() => {
     ] : [];
 
     const allRows = [...computedRows, ...rolls];
-    const rows = allRows.map(row => `
-      <div class="sheet-roll-row">
-        <div>
-          <div class="sheet-roll-label">${esc(row.label || "")}</div>
-          ${row.note ? `<div class="sheet-roll-note text-muted">${esc(row.note)}</div>` : ""}
+    const rows = allRows.map(row => {
+      const mechanics = [
+        row.bossAdvantage ? {
+          label: "Advantage",
+          kind: "positive",
+          description: "Boss-state roll uses advantage unless another rule says otherwise.",
+        } : null,
+        row.floor ? {
+          label: "Floor",
+          value: row.floor,
+          kind: "positive",
+          description: "Any lower d20 result is treated as this value.",
+        } : null,
+        ...(row.mechanics || []),
+      ].filter(Boolean);
+
+      return `
+        <div class="sheet-roll-row">
+          <div>
+            <div class="sheet-roll-label">${esc(row.label || "")}</div>
+            ${row.note ? `<div class="sheet-roll-note text-muted">${esc(row.note)}</div>` : ""}
+            ${renderMechanicChips(mechanics)}
+          </div>
+          <div class="sheet-roll-values">
+            ${renderStateValue(row.tamed ?? row.default ?? "-", row.boss ?? "-", bossActive, boss)}
+          </div>
         </div>
-        <div class="sheet-roll-values">
-          ${renderStateValue(row.tamed ?? row.default ?? "-", row.boss ?? "-", bossActive, boss)}
-          ${row.bossAdvantage ? `<span class="sheet-state-chip sheet-boss-only" style="${stateStyle(bossActive, true)}">Advantage</span>` : ""}
-          ${row.floor ? `<span class="sheet-state-chip">Floor ${esc(row.floor)}</span>` : ""}
-        </div>
-      </div>
-    `).join("");
+      `;
+    }).join("");
 
     return `
       <div class="sheet-roll-calculator">

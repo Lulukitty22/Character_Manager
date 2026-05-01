@@ -681,19 +681,30 @@
       "Disease",
       "Poisoned",
       "Charmed unless she chooses to play along",
-      "Frightened unless she chooses to play along"
+      {
+        "label": "False Surrender",
+        "kind": "condition",
+        "description": "She can act extremely convincingly that she wishes to surrender and stop, but in reality she is just playing.",
+        "relatedRoll": "Improv Deception / Impersonation / Persuasion +10 in boss mode, +5 tamed"
+      }
     ],
     "weaknesses": [
       {
         "id": "capella-weakness-radiant",
+        "label": "Radiant Damage",
+        "kind": "negative",
         "description": "Radiant damage disables regeneration for 1 round."
       },
       {
         "id": "capella-weakness-critical",
+        "label": "Critical Hit",
+        "kind": "negative",
         "description": "Critical hits disable regeneration for 1 round."
       },
       {
         "id": "capella-weakness-vessel",
+        "label": "Soul Vessel",
+        "kind": "requirement",
         "description": "Soul Vessel / Far Realm Parasite must be found, contained, destroyed, or otherwise dealt with to truly kill her."
       }
     ],
@@ -1030,7 +1041,21 @@
             "tamed": "+15",
             "boss": "+15",
             "floor": "10",
-            "note": "Cannot apply to members of the player party. Uses CHA +5 and Expert Deceiver +10; Silver Tongue floors the d20 at 10."
+            "note": "Cannot apply to members of the player party. Must spend a day or long rest studying the target first. Uses CHA +5 and Expert Deceiver +10; Silver Tongue floors the d20 at 10.",
+            "mechanics": [
+              {
+                "label": "Study Target",
+                "value": "Day / Long Rest",
+                "kind": "requirement",
+                "description": "Capella must spend a day or long rest studying a target before using the prepared deception package.",
+                "relatedRoll": "Prepared Deception / Impersonation / Persuasion +15; Silver Tongue floor 10"
+              },
+              {
+                "label": "Not vs Party",
+                "kind": "negative",
+                "description": "Prepared Deception cannot apply to members of the player party."
+              }
+            ]
           },
           {
             "label": "Improv Deception / Impersonation / Persuasion",

@@ -481,12 +481,13 @@ const Library = (() => {
       id: result.id,
       collection: result.collection,
       name: detail.name || detail.title || result.name || "",
-      tags: unique([...(result.tags || []), ...(detail.tags || [])]),
+      tags: unique([...toArray(result.tags), ...toArray(detail.tags)]),
       source: result.collection === "spells" ? "srd" : "external",
       provider: result.provider,
       providerId: detail.key || detail.slug || detail.index || result.id,
       description: normalizeDescription(detail.desc || detail.description || detail.text || result.raw?.highlighted || ""),
       addons: {
+        mechanics: genericMechanicsForImport(result, detail),
         sourceDocument: {
           provider: result.provider,
           title: result.sourceLabel || "",
@@ -501,6 +502,10 @@ const Library = (() => {
       record.type = detail.equipment_category?.name || detail.gear_category?.name || detail.rarity?.name || "misc";
       record.weight = detail.weight ?? null;
       record.attuned = Boolean(detail.requires_attunement);
+      record.addons.equipment = {
+        slot: detail.equipment_category?.name || detail.gear_category?.name || "",
+        rarity: detail.rarity?.name || "",
+      };
     }
 
     if (result.collection === "classes") {
@@ -537,6 +542,22 @@ const Library = (() => {
       description: normalizeDescription(detail.desc || ""),
       tags: unique([...(result.tags || []), detail.school?.name].filter(Boolean)),
       addons: {
+        mechanics: buildSpellMechanics({
+          castingTime: detail.casting_time || "",
+          range: detail.range || "",
+          components,
+          duration: detail.duration || "",
+          ritual: Boolean(detail.ritual),
+          concentration: Boolean(detail.concentration) || /concentration/i.test(detail.duration || ""),
+          damageRoll: detail.damage?.damage_at_slot_level
+            ? Object.values(detail.damage.damage_at_slot_level)[0]
+            : "",
+          damageTypes: detail.damage?.damage_type?.name ? [detail.damage.damage_type.name] : [],
+          savingThrow: detail.dc?.dc_type?.name || "",
+          areaShape: detail.area_of_effect?.type || "",
+          areaSize: detail.area_of_effect?.size || null,
+          areaUnit: detail.area_of_effect?.type ? "ft" : "",
+        }),
         components,
         ritual: { enabled: Boolean(detail.ritual) },
         concentration: { enabled: Boolean(detail.concentration) || /concentration/i.test(detail.duration || "") },
@@ -552,6 +573,85 @@ const Library = (() => {
       },
       updatedAt: new Date().toISOString(),
     };
+  }
+
+  function genericMechanicsForImport(result, detail = {}) {
+    const mechanics = [];
+
+    if (result.collection === "items") {
+      const type = detail.equipment_category?.name || detail.gear_category?.name || detail.rarity?.name || "";
+      if (type) mechanics.push({ label: "Type", value: type, kind: "neutral" });
+      if (detail.weight != null) mechanics.push({ label: "Weight", value: detail.weight, kind: "neutral" });
+      if (detail.rarity?.name) mechanics.push({ label: "Rarity", value: detail.rarity.name, kind: "positive" });
+      if (detail.requires_attunement) {
+        mechanics.push({
+          label: "Attuned",
+          kind: "requirement",
+          description: "Requires attunement for its full effects.",
+        });
+      }
+      if (isCursedImport(detail)) {
+        mechanics.push({
+          label: "Cursed",
+          kind: "curse",
+          description: "Imported text appears to describe a cursed or harmful item. Review before use.",
+        });
+      }
+    }
+
+    if (["traits", "feats", "classes"].includes(result.collection)) {
+      if (result.typeLabel) mechanics.push({ label: "Type", value: result.typeLabel, kind: "neutral" });
+      if (result.sourceLabel) mechanics.push({ label: "Source", value: result.sourceLabel, kind: "neutral" });
+    }
+
+    return mechanics;
+  }
+
+  function buildSpellMechanics(config = {}) {
+    const components = Array.isArray(config.components) ? config.components.join(", ") : config.components || "";
+    const damageTypes = Array.isArray(config.damageTypes) ? config.damageTypes.join(", ") : config.damageTypes || "";
+    return [
+      config.castingTime ? { label: "Cast", value: config.castingTime, kind: "action" } : null,
+      config.range ? { label: "Range", value: config.range, kind: "range" } : null,
+      components ? {
+        label: "Components",
+        value: components,
+        kind: "component",
+        description: "Spell components required to cast this spell.",
+      } : null,
+      config.duration ? { label: "Duration", value: config.duration, kind: "duration" } : null,
+      config.ritual ? {
+        label: "Ritual",
+        kind: "positive",
+        description: "Can be cast as a ritual if the caster has the right feature or permission.",
+      } : null,
+      config.concentration ? {
+        label: "Concentration",
+        kind: "requirement",
+        description: "Requires concentration; taking damage or losing focus can end the spell.",
+      } : null,
+      config.damageRoll ? {
+        label: "Damage",
+        value: [config.damageRoll, damageTypes].filter(Boolean).join(" "),
+        kind: "damage",
+      } : null,
+      config.savingThrow ? { label: "Save", value: config.savingThrow, kind: "requirement" } : null,
+      config.areaShape || config.areaSize ? {
+        label: "Area",
+        value: [config.areaSize, config.areaUnit, config.areaShape].filter(Boolean).join(" "),
+        kind: "range",
+      } : null,
+    ].filter(Boolean);
+  }
+
+  function isCursedImport(detail = {}) {
+    const text = normalizeDescription([
+      detail.name,
+      detail.desc,
+      detail.description,
+      detail.text,
+    ].flat().filter(Boolean).join(" "));
+    return /\bcurse[ds]?\b|\bcursed\b/i.test(text);
   }
 
   function mapOpen5eTypeToCollection(type, raw = {}) {
@@ -593,6 +693,12 @@ const Library = (() => {
 
   function unique(values) {
     return Array.from(new Set(values.filter(Boolean)));
+  }
+
+  function toArray(value) {
+    if (Array.isArray(value)) return value;
+    if (value == null || value === "") return [];
+    return [value];
   }
 
   function comparableName(name) {

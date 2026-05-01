@@ -6,8 +6,9 @@
 const ViewCharacterSpells = (() => {
 
   const esc = ViewCharacterUtils.esc;
+  const renderMechanicChips = ViewCharacterUtils.renderMechanicChips;
 
-  function render(spells, spellSlots) {
+  function render(spells, spellSlots = {}) {
     if (!spells || !spells.length) return "";
 
     const grouped = {};
@@ -50,12 +51,30 @@ const ViewCharacterSpells = (() => {
 
   function renderSpellEntry(spell) {
     const components = (spell.components || []).join(", ");
-    const details = [
-      spell.castingTime ? `Cast: ${esc(spell.castingTime)}` : "",
-      spell.range ? `Range: ${esc(spell.range)}` : "",
-      components ? `Components: ${esc(components)}` : "",
-      spell.duration ? `Duration: ${esc(spell.duration)}` : "",
-    ].filter(Boolean).join("  ·  ");
+    const mechanics = [
+      spell.castingTime ? { label: "Cast", value: spell.castingTime, kind: "action" } : null,
+      spell.range ? { label: "Range", value: spell.range, kind: "range" } : null,
+      components ? {
+        label: "Components",
+        value: components,
+        kind: "component",
+        description: "Spell components required to cast this spell.",
+      } : null,
+      spell.duration ? { label: "Duration", value: spell.duration, kind: "duration" } : null,
+      spell.addons?.ritual?.enabled ? {
+        label: "Ritual",
+        kind: "positive",
+        description: "Can be cast as a ritual if the caster has the right feature or permission.",
+      } : null,
+      spell.addons?.concentration?.enabled ? {
+        label: "Concentration",
+        kind: "requirement",
+        description: "Requires concentration; taking damage or losing focus can end the spell.",
+      } : null,
+      ...spellDamageChips(spell),
+      ...(spell.addons?.mechanics || []),
+    ].filter(Boolean);
+    const mechanicChips = renderMechanicChips(mechanics);
     const tags = (spell.tags || []).map(t => `<span class="sheet-tag">${esc(t)}</span>`).join("");
 
     return `
@@ -66,11 +85,44 @@ const ViewCharacterSpells = (() => {
             ${esc(spell.name || "(Unnamed spell)")}
             ${spell.school ? `<span class="sheet-spell-school text-muted">${esc(spell.school)}</span>` : ""}
           </div>
-          ${details ? `<div class="sheet-spell-details text-muted text-sm">${details}</div>` : ""}
+          ${mechanicChips}
           ${spell.description ? `<div class="sheet-spell-desc text-sm">${esc(spell.description)}</div>` : ""}
           ${tags ? `<div class="sheet-spell-tags">${tags}</div>` : ""}
         </div>
       </div>`;
+  }
+
+  function spellDamageChips(spell) {
+    const damage = spell.addons?.damage || {};
+    const area = spell.addons?.area || {};
+    const chips = [];
+
+    if (damage.roll) {
+      const types = Array.isArray(damage.types) ? damage.types.join(", ") : damage.types || "";
+      chips.push({
+        label: "Damage",
+        value: [damage.roll, types].filter(Boolean).join(" "),
+        kind: "damage",
+      });
+    }
+
+    if (damage.savingThrow) {
+      chips.push({
+        label: "Save",
+        value: damage.savingThrow,
+        kind: "requirement",
+      });
+    }
+
+    if (area.shape || area.size) {
+      chips.push({
+        label: "Area",
+        value: [area.size, area.unit, area.shape].filter(Boolean).join(" "),
+        kind: "range",
+      });
+    }
+
+    return chips;
   }
 
   return { render };

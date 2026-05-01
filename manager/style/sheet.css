@@ -329,14 +329,140 @@
   font-style:  italic;
 }
 
+.sheet-mechanic-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.35rem;
+}
+
+.sheet-mechanic-chip {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  border: 1px solid rgba(180, 160, 220, 0.2);
+  border-radius: 9999px;
+  background-color: rgba(35, 31, 47, 0.85);
+  color: #bdb4cb;
+  font-family: var(--font-ui, 'Inter', system-ui, sans-serif);
+  font-size: 0.62rem;
+  font-weight: 750;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  padding: 0.18em 0.55em;
+  position: relative;
+}
+
+details.sheet-mechanic-chip {
+  cursor: help;
+}
+
+.sheet-mechanic-chip summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  list-style: none;
+}
+
+.sheet-mechanic-chip summary::-webkit-details-marker {
+  display: none;
+}
+
+.sheet-mechanic-value {
+  color: #f0eaf8;
+  font-weight: 850;
+  text-transform: none;
+}
+
+.sheet-mechanic-popover {
+  position: absolute;
+  z-index: 20;
+  left: 0;
+  top: calc(100% + 0.35rem);
+  min-width: min(280px, 80vw);
+  max-width: 360px;
+  padding: 0.6rem 0.7rem;
+  border: 1px solid rgba(180, 160, 220, 0.22);
+  border-radius: 8px;
+  background: rgba(16, 14, 22, 0.98);
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.35);
+  color: #d4ccdf;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1.45;
+  text-transform: none;
+}
+
+.sheet-mechanic-popover p {
+  margin: 0;
+}
+
+.sheet-mechanic-popover p + p {
+  margin-top: 0.45rem;
+}
+
+.sheet-mechanic-positive,
+.sheet-mechanic-resistance {
+  background-color: rgba(76, 175, 128, 0.14);
+  border-color: rgba(76, 175, 128, 0.38);
+  color: #73d49b;
+}
+
+.sheet-mechanic-negative,
+.sheet-mechanic-curse {
+  background-color: rgba(185, 64, 64, 0.16);
+  border-color: rgba(185, 64, 64, 0.45);
+  color: #e17878;
+}
+
+.sheet-mechanic-requirement {
+  background-color: rgba(201, 168, 76, 0.16);
+  border-color: rgba(201, 168, 76, 0.42);
+  color: #d9b95d;
+}
+
+.sheet-mechanic-duration,
+.sheet-mechanic-action {
+  background-color: rgba(155, 114, 207, 0.16);
+  border-color: rgba(155, 114, 207, 0.42);
+  color: #b899e8;
+}
+
+.sheet-mechanic-range,
+.sheet-mechanic-component,
+.sheet-mechanic-quantity {
+  background-color: rgba(76, 144, 192, 0.15);
+  border-color: rgba(76, 144, 192, 0.4);
+  color: #83b8e5;
+}
+
+.sheet-mechanic-damage,
+.sheet-mechanic-immunity {
+  background-color: rgba(217, 96, 96, 0.16);
+  border-color: rgba(217, 96, 96, 0.44);
+  color: #f08b8b;
+}
+
+.sheet-mechanic-condition {
+  background-color: rgba(80, 190, 164, 0.14);
+  border-color: rgba(80, 190, 164, 0.38);
+  color: #6bd8bf;
+}
+
 /* ─── Inventory ──────────────────────────────────────────────────────────────── */
 
 .sheet-item-row {
-  display:     flex;
-  align-items: center;
-  gap:         0.6rem;
+  display:     block;
   padding:     0.3rem 0;
   border-bottom: 1px solid rgba(180, 160, 220, 0.07);
+}
+
+.sheet-item-main {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
 }
 
 .sheet-item-name {
@@ -368,6 +494,19 @@
 
 .sheet-ability-entry {
   margin-bottom: 0.8rem;
+}
+
+.sheet-ability-header {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.sheet-ability-name {
+  font-family:  var(--font-display, 'Cinzel', Georgia, serif);
+  font-size:    0.85rem;
+  font-weight:  600;
+  color:        #e0c070;
 }
 
 .sheet-ability-entry-name {

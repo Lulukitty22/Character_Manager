@@ -6,6 +6,7 @@
 const ViewCharacterInventory = (() => {
 
   const esc = ViewCharacterUtils.esc;
+  const renderMechanicChips = ViewCharacterUtils.renderMechanicChips;
 
   function render(inventory, currency) {
     const items = inventory || [];
@@ -13,18 +14,28 @@ const ViewCharacterInventory = (() => {
     if (!items.length && !Object.values(funds).some(v => v > 0)) return "";
 
     const rows = items.map(item => {
-      const qty = item.quantity != null && item.quantity !== 1 ? `<span class="sheet-item-qty">×${item.quantity}</span>` : "";
-      const typeBadge = item.type ? `<span class="sheet-item-type-badge">${esc(item.type)}</span>` : "";
-      const attunedBadge = item.attuned ? `<span class="sheet-attuned-badge">Attuned</span>` : "";
       const tags = (item.tags || []).map(t => `<span class="sheet-tag">${esc(t)}</span>`).join("");
+      const mechanics = [
+        item.quantity != null && item.quantity !== 1 ? { label: "Qty", value: item.quantity, kind: "quantity" } : null,
+        item.type ? { label: "Type", value: item.type, kind: "neutral" } : null,
+        item.weight != null && item.weight !== "" ? { label: "Weight", value: item.weight, kind: "neutral" } : null,
+        item.attuned ? {
+          label: "Attuned",
+          kind: "requirement",
+          description: "This item is attuned or requires attunement for its full effects.",
+        } : null,
+        item.addons?.equipment?.slot ? { label: "Slot", value: item.addons.equipment.slot, kind: "neutral" } : null,
+        item.addons?.equipment?.rarity ? { label: "Rarity", value: item.addons.equipment.rarity, kind: "positive" } : null,
+        ...(item.addons?.mechanics || []),
+      ].filter(Boolean);
+      const mechanicChips = renderMechanicChips(mechanics);
+
       return `
         <div class="sheet-item-row">
           <div class="sheet-item-main">
             <span class="sheet-item-name">${esc(item.name || "(Unnamed)")}</span>
-            ${qty}
-            ${typeBadge}
-            ${attunedBadge}
           </div>
+          ${mechanicChips}
           ${item.description ? `<div class="sheet-item-desc text-sm text-muted">${esc(item.description)}</div>` : ""}
           ${tags ? `<div class="sheet-item-tags">${tags}</div>` : ""}
         </div>`;

@@ -152,7 +152,7 @@ const Schema = (() => {
       provider: "",
       providerId: "",
       variantOf: "",
-      addons: {},
+      addons: { mechanics: [] },
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
@@ -168,6 +168,7 @@ const Schema = (() => {
         duration: "",
         description: "",
         addons: {
+          mechanics: [],
           components: [],
           ritual: { enabled: false },
           concentration: { enabled: false },
@@ -183,6 +184,7 @@ const Schema = (() => {
         attuned: false,
         description: "",
         addons: {
+          mechanics: [],
           equipment: { slot: "", rarity: "" },
         },
       };
@@ -194,6 +196,7 @@ const Schema = (() => {
         max: 0,
         description: "",
         addons: {
+          mechanics: [],
           resource: { currentIsCharacterState: true, logIsCharacterState: true },
         },
       };
@@ -204,7 +207,7 @@ const Schema = (() => {
         ...base,
         color: "",
         description: "",
-        addons: {},
+        addons: { mechanics: [] },
       };
     }
 
@@ -213,6 +216,7 @@ const Schema = (() => {
         ...base,
         description: "",
         addons: {
+          mechanics: [],
           prerequisites: [],
         },
       };
@@ -223,7 +227,7 @@ const Schema = (() => {
         ...base,
         type: "trait",
         description: "",
-        addons: {},
+        addons: { mechanics: [] },
       };
     }
 
@@ -234,6 +238,7 @@ const Schema = (() => {
         hitDie: "",
         primaryAbility: "",
         addons: {
+          mechanics: [],
           stats: {},
           speed: {},
           proficiencies: [],
@@ -312,6 +317,20 @@ const Schema = (() => {
           size: open5eData.shape_size || null,
           unit: open5eData.shape_size_unit || "",
         },
+        mechanics: buildSpellMechanics({
+          castingTime: open5eData.casting_time || open5eData.castingTime || "",
+          range: open5eData.range_text || open5eData.range || "",
+          components,
+          duration: open5eData.duration || "",
+          ritual: Boolean(open5eData.ritual),
+          concentration: Boolean(open5eData.concentration) || /concentration/i.test(open5eData.duration || ""),
+          damageRoll: open5eData.damage_roll || "",
+          damageTypes: open5eData.damage_types || [],
+          savingThrow: open5eData.saving_throw_ability || "",
+          areaShape: open5eData.shape_type || "",
+          areaSize: open5eData.shape_size || null,
+          areaUnit: open5eData.shape_size_unit || "",
+        }),
         sourceDocument: {
           provider: "open5e",
           key: documentKey,
@@ -348,6 +367,43 @@ const Schema = (() => {
     if (spellData.material) components.push("M");
     if (components.length) return components;
     return [];
+  }
+
+  function buildSpellMechanics(config = {}) {
+    const components = Array.isArray(config.components) ? config.components.join(", ") : config.components || "";
+    const damageTypes = Array.isArray(config.damageTypes) ? config.damageTypes.join(", ") : config.damageTypes || "";
+    return [
+      config.castingTime ? { label: "Cast", value: config.castingTime, kind: "action" } : null,
+      config.range ? { label: "Range", value: config.range, kind: "range" } : null,
+      components ? {
+        label: "Components",
+        value: components,
+        kind: "component",
+        description: "Spell components required to cast this spell.",
+      } : null,
+      config.duration ? { label: "Duration", value: config.duration, kind: "duration" } : null,
+      config.ritual ? {
+        label: "Ritual",
+        kind: "positive",
+        description: "Can be cast as a ritual if the caster has the right feature or permission.",
+      } : null,
+      config.concentration ? {
+        label: "Concentration",
+        kind: "requirement",
+        description: "Requires concentration; taking damage or losing focus can end the spell.",
+      } : null,
+      config.damageRoll ? {
+        label: "Damage",
+        value: [config.damageRoll, damageTypes].filter(Boolean).join(" "),
+        kind: "damage",
+      } : null,
+      config.savingThrow ? { label: "Save", value: config.savingThrow, kind: "requirement" } : null,
+      config.areaShape || config.areaSize ? {
+        label: "Area",
+        value: [config.areaSize, config.areaUnit, config.areaShape].filter(Boolean).join(" "),
+        kind: "range",
+      } : null,
+    ].filter(Boolean);
   }
 
   function slugify(text) {

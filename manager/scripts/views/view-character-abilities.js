@@ -6,21 +6,25 @@
 const ViewCharacterAbilities = (() => {
 
   const esc = ViewCharacterUtils.esc;
+  const renderMechanicChips = ViewCharacterUtils.renderMechanicChips;
 
   function render(abilities) {
     if (!abilities || !abilities.length) return "";
 
     const entries = abilities.map(ability => {
-      const typeBadge = ability.type ? `<span class="sheet-ability-type-badge">${esc(ability.type.replace(/_/g, " "))}</span>` : "";
-      const activeBadge = ability.active ? `<span class="sheet-ability-active-badge">Active</span>` : "";
       const tags = (ability.tags || []).map(t => `<span class="sheet-tag">${esc(t)}</span>`).join("");
+      const mechanics = [
+        ability.type ? { label: "Type", value: ability.type.replace(/_/g, " "), kind: abilityKind(ability.type) } : null,
+        ability.active ? { label: "Active", kind: "positive" } : null,
+        ...(ability.addons?.mechanics || []),
+      ].filter(Boolean);
+
       return `
         <div class="sheet-ability-entry">
           <div class="sheet-ability-header">
             <span class="sheet-ability-name">${esc(ability.name || "(Unnamed)")}</span>
-            ${typeBadge}
-            ${activeBadge}
           </div>
+          ${renderMechanicChips(mechanics)}
           ${ability.description ? `<div class="sheet-ability-desc text-sm">${esc(ability.description)}</div>` : ""}
           ${tags ? `<div class="sheet-ability-tags">${tags}</div>` : ""}
         </div>`;
@@ -32,6 +36,12 @@ const ViewCharacterAbilities = (() => {
         <div class="sheet-ability-list">${entries}</div>
       </section>
     `;
+  }
+
+  function abilityKind(type) {
+    if (["action", "bonus_action", "reaction", "legendary", "lair"].includes(type)) return "action";
+    if (type === "passive") return "duration";
+    return "neutral";
   }
 
   return { render };

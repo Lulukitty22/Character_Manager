@@ -6,6 +6,7 @@
 const ViewCharacterBoss = (() => {
 
   const esc = ViewCharacterUtils.esc;
+  const renderMechanicChips = ViewCharacterUtils.renderMechanicChips;
 
   function renderToggleBar(boss) {
     const isActive = boss.bossActive ?? false;
@@ -128,10 +129,15 @@ const ViewCharacterBoss = (() => {
 
     if (!resistances.length && !immunities.length && !condImmune.length && !weaknesses.length) return "";
 
-    const resistBadges = resistances.map(r => `<span class="sheet-resistance-badge resist">${esc(r)}</span>`).join("");
-    const immuneBadges = immunities.map(i => `<span class="sheet-resistance-badge immune">${esc(i)}</span>`).join("");
-    const condBadges = condImmune.map(c => `<span class="sheet-resistance-badge condition-immune">${esc(c)}</span>`).join("");
-    const weakEntries = weaknesses.map(w => `<div class="sheet-weakness-entry text-sm">- ${esc(w.description || "")}</div>`).join("");
+    const resistBadges = renderDefenceChips(resistances, "resistance");
+    const immuneBadges = renderDefenceChips(immunities, "immunity");
+    const condBadges = renderDefenceChips(condImmune, "condition");
+    const weakEntries = renderDefenceChips(weaknesses.map(w => ({
+      label: w.label || w.name || "Weakness",
+      description: w.description || "",
+      kind: w.kind || "negative",
+      relatedRoll: w.relatedRoll || "",
+    })), "negative");
 
     return `
       <section class="sheet-section sheet-boss-only" style="${isActive ? "" : "display:none"}">
@@ -139,7 +145,7 @@ const ViewCharacterBoss = (() => {
         ${resistBadges ? `<div class="sheet-resistance-group"><span class="sheet-resistance-group-label text-muted text-sm">Resistances</span><div class="sheet-resistance-badges">${resistBadges}</div></div>` : ""}
         ${immuneBadges ? `<div class="sheet-resistance-group"><span class="sheet-resistance-group-label text-muted text-sm">Damage Immunities</span><div class="sheet-resistance-badges">${immuneBadges}</div></div>` : ""}
         ${condBadges ? `<div class="sheet-resistance-group"><span class="sheet-resistance-group-label text-muted text-sm">Condition Immunities</span><div class="sheet-resistance-badges">${condBadges}</div></div>` : ""}
-        ${weakEntries ? `<div class="sheet-resistance-group"><span class="sheet-resistance-group-label text-muted text-sm">Weaknesses</span><div>${weakEntries}</div></div>` : ""}
+        ${weakEntries ? `<div class="sheet-resistance-group"><span class="sheet-resistance-group-label text-muted text-sm">Weaknesses</span>${weakEntries}</div>` : ""}
       </section>
     `;
   }
@@ -246,6 +252,18 @@ const ViewCharacterBoss = (() => {
     if (!value) return [];
     if (Array.isArray(value)) return value.filter(Boolean);
     return String(value).split(",").map(s => s.trim()).filter(Boolean);
+  }
+
+  function renderDefenceChips(entries, kind) {
+    const chips = (entries || []).map(entry => {
+      if (typeof entry === "string") return { label: entry, kind };
+      return {
+        ...entry,
+        label: entry.label || entry.name || entry.description || kind,
+        kind: entry.kind || kind,
+      };
+    });
+    return renderMechanicChips(chips, { kind });
   }
 
   return {
