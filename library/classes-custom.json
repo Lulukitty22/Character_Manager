@@ -1,5 +1,27 @@
 {
   "version": 1,
   "collection": "classes",
-  "entries": []
+  "entries": [
+    {
+      "id": "aberrant-lich-shapechanger",
+      "collection": "classes",
+      "name": "Aberrant Lich / Shapechanger",
+      "tags": [],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {
+        "stats": {},
+        "speed": {},
+        "proficiencies": [],
+        "feats": []
+      },
+      "createdAt": "2026-05-01T15:51:09.535Z",
+      "updatedAt": "2026-05-01T15:51:09.535Z",
+      "description": "",
+      "hitDie": "",
+      "primaryAbility": ""
+    }
+  ]
 }
