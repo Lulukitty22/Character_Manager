@@ -1,12 +1,12 @@
 {
   "id": "93b6bd4a-9f95-4788-a309-a75def5d3a7c",
-  "type": "dnd5e_boss",
   "meta": {
     "repoPath": "characters/capella-emerada-lugnica.json",
     "lastUpdated": "2026-05-01T00:00:00.000Z"
   },
   "identity": {
     "name": "Capella Emerada Lugnica",
+    "classification": "boss_npc",
     "aliases": [
       "Capella",
       "Lust",

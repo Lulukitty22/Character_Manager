@@ -239,16 +239,28 @@ const App = (() => {
     }
   }
 
-  async function saveCharacter(characterData, sha = null) {
+  async function saveCharacter(characterData, sha = null, previousRepoPath = null) {
     const repoPath = characterData.meta?.repoPath;
     if (!repoPath) { showToast("Character has no repo path. Cannot save.", "error"); return null; }
 
+    const renameFrom = previousRepoPath && previousRepoPath !== repoPath && sha ? previousRepoPath : null;
     characterData.meta.lastUpdated = new Date().toISOString();
 
     showLoading("Saving to GitHub…");
     try {
-      const result = await GitHub.writeCharacterFile(repoPath, characterData, sha);
-      showToast("Character saved!", "success");
+      const result = await GitHub.writeCharacterFile(repoPath, characterData, renameFrom ? null : sha);
+
+      if (renameFrom) {
+        try {
+          await GitHub.deleteCharacterFile(renameFrom, sha);
+          showToast("Character renamed and saved!", "success");
+        } catch (cleanupError) {
+          showToast(`Saved, but could not remove old file ${renameFrom}: ${cleanupError.message}`, "info");
+        }
+      } else {
+        showToast("Character saved!", "success");
+      }
+
       return result.sha;
     } catch (error) {
       showToast(`Save failed: ${error.message}`, "error");
@@ -291,12 +303,12 @@ const CharacterEditor = (() => {
     currentSha       = characterInfo.sha       || null;
     currentFilePath  = characterInfo.filePath  || currentCharacter.meta?.repoPath || "";
 
-    const type  = currentCharacter.type;
-    const name  = currentCharacter.identity?.name || "New Character";
-    const icon  = Schema.CHARACTER_TYPE_ICONS[type] || "✨";
-    const label = Schema.CHARACTER_TYPE_LABELS[type] || type;
+    const name = currentCharacter.identity?.name || "New Character";
+    const presentation = Schema.getCharacterPresentation(currentCharacter);
+    const icon = presentation.icon;
+    const label = presentation.label;
 
-    // Build tab definitions based on character type
+    // Build tab definitions for the section-driven editor
     const tabs = buildTabDefinitions(currentCharacter);
 
     // Shell
@@ -414,19 +426,23 @@ const CharacterEditor = (() => {
     if (statusEl) statusEl.textContent = "Saving…";
 
     const data = collectCharacterData();
+    const characterName = data.identity?.name?.trim() || "";
 
-    // Ensure repoPath
-    if (!data.meta.repoPath) {
-      data.meta.repoPath = Schema.deriveRepoPath(data.identity?.name || "character");
+    if (!characterName) {
+      if (statusEl) statusEl.textContent = "Name required.";
+      showToast("Character name is required before saving.", "error");
+      return;
     }
 
-    currentFilePath = data.meta.repoPath;
+    const previousRepoPath = currentFilePath || currentCharacter?.meta?.repoPath || "";
+    data.meta.repoPath = Schema.deriveRepoPath(characterName);
 
-    const newSha = await App.saveCharacter(data, currentSha);
+    const newSha = await App.saveCharacter(data, currentSha, previousRepoPath);
 
     if (newSha) {
       currentSha       = newSha;
       currentCharacter = data;
+      currentFilePath  = data.meta.repoPath;
       if (statusEl) {
         statusEl.textContent = `Saved ${new Date().toLocaleTimeString()}`;
       }

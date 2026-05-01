@@ -1,7 +1,7 @@
 /**
  * editor-base.js
  * Universal character editor panel — identity, appearance, personality,
- * backstory, notes, aliases, tags. Used by all character types.
+ * backstory, notes, aliases, tags. Used by all characters.
  *
  * Exports: EditorBase.buildTab(character) → HTMLElement
  *          EditorBase.readTab(character)  → mutates character in-place
@@ -18,6 +18,8 @@ const EditorBase = (() => {
 
     const identity   = character.identity   || {};
     const appearance = character.appearance  || {};
+    const classification = identity.classification || "";
+    const classificationOptions = Object.entries(Schema.CHARACTER_CLASSIFICATIONS || {});
 
     panel.innerHTML = `
       <div style="padding: var(--space-6) 0; display: flex; flex-direction: column; gap: var(--space-8);">
@@ -63,6 +65,19 @@ const EditorBase = (() => {
                 placeholder="e.g. Arnica, Lugnica…"
                 value="${escapeAttr(identity.origin || "")}" />
             </div>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label" for="base-classification">Classification</label>
+            <p class="field-hint">Controls the badge shown at the top of the list and sheet.</p>
+            <select id="base-classification" class="field-select">
+              <option value="" ${classification ? "" : "selected"}>Unclassified</option>
+              ${classificationOptions.map(([value, info]) => `
+                <option value="${escapeAttr(value)}" ${classification === value ? "selected" : ""}>
+                  ${escapeHTML(info.label)}
+                </option>
+              `).join("")}
+            </select>
           </div>
 
           <div class="field-group">
@@ -190,6 +205,7 @@ const EditorBase = (() => {
     character.identity.age    = document.getElementById("base-age")?.value.trim()    || "";
     character.identity.height = document.getElementById("base-height")?.value.trim() || "";
     character.identity.origin = document.getElementById("base-origin")?.value.trim() || "";
+    character.identity.classification = document.getElementById("base-classification")?.value || "";
 
     // Tags and aliases from pill containers
     character.identity.aliases = readTagsFromContainer("aliases-container");

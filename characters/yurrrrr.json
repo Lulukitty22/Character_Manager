@@ -1,12 +1,12 @@
 {
   "id": "64e80b10-70ec-49a4-8985-7a521c8cca4d",
-  "type": "oc",
   "meta": {
     "repoPath": "characters/yurrrrr.json",
     "lastUpdated": "2026-05-01T10:27:56.970Z"
   },
   "identity": {
     "name": "Yurtle Manntle",
+    "classification": "original_character",
     "aliases": [
       "Test Character 2"
     ],
