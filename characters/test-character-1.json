@@ -3,7 +3,7 @@
   "type": "dnd5e_pc",
   "meta": {
     "repoPath": "characters/test-character-1.json",
-    "lastUpdated": "2026-05-01T09:30:00.412Z"
+    "lastUpdated": "2026-05-01T09:46:26.427Z"
   },
   "identity": {
     "name": "Test Character 1",
@@ -106,57 +106,31 @@
       }
     },
     "savingThrowProficiencies": [],
-    "skillProficiencies": [
-      {
-        "skill": "Acrobatics",
-        "expertise": true
-      },
-      {
-        "skill": "Arcana",
-        "expertise": true
-      },
-      {
-        "skill": "Athletics",
-        "expertise": true
-      },
-      {
-        "skill": "History",
-        "expertise": true
-      },
-      {
-        "skill": "Insight",
-        "expertise": true
-      },
-      {
-        "skill": "Intimidation",
-        "expertise": true
-      },
-      {
-        "skill": "Investigation",
-        "expertise": false
-      },
-      {
-        "skill": "Nature",
-        "expertise": false
-      },
-      {
-        "skill": "Performance",
-        "expertise": false
-      },
-      {
-        "skill": "Religion",
-        "expertise": true
-      },
-      {
-        "skill": "Survival",
-        "expertise": true
-      }
-    ],
+    "skillProficiencies": [],
     "hp": {
-      "max": 0,
-      "current": 0,
+      "max": 1337,
+      "current": 730,
       "temp": 0,
-      "log": []
+      "log": [
+        {
+          "id": "1006ceb6-3dbe-49d2-a44b-3783d0f2c5d4",
+          "date": "2026-05-01",
+          "delta": -1000,
+          "reason": "FIREBALL!"
+        },
+        {
+          "id": "825ad394-b3a1-4d8d-bca4-ffe901721c67",
+          "date": "2026-05-01",
+          "delta": 1,
+          "reason": "Start"
+        },
+        {
+          "id": "7a8e576d-afc5-4fa5-a331-48416071f150",
+          "date": "2026-05-01",
+          "delta": -607,
+          "reason": "FIREBALL!"
+        }
+      ]
     },
     "acModes": [
       {
