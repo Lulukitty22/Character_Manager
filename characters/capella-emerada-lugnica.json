@@ -2,7 +2,7 @@
   "id": "93b6bd4a-9f95-4788-a309-a75def5d3a7c",
   "meta": {
     "repoPath": "characters/capella-emerada-lugnica.json",
-    "lastUpdated": "2026-05-01T15:51:18.387Z"
+    "lastUpdated": "2026-05-01T15:52:21.379Z"
   },
   "identity": {
     "name": "Capella Emerada Lugnica",
@@ -40,7 +40,7 @@
   "notes": "Core player-facing deception rule: against player characters, Deception / Impersonation / Persuasion uses only Charisma. No Expert Deceiver. No Silver Tongue. Prepared Deception cannot apply to members of the player party. Every form change prompts a fresh Insight or Investigation contest. Boss Presence is the temporary enemy-boss layer; remove it if tamed, purified, weakened, or recruited.",
   "spells": [
     {
-      "id": "9d0ba72a-8949-4fa6-add5-122971d923f8",
+      "id": "b1110647-0639-41c8-9074-1785ec977e6a",
       "source": "library",
       "libraryCollection": "spells",
       "librarySource": "custom",
@@ -49,7 +49,7 @@
       "prepared": true
     },
     {
-      "id": "ad107870-4c98-432b-8c51-55b5fbb2a077",
+      "id": "fceb8d95-826d-4e31-acb5-196c282f2f54",
       "source": "library",
       "libraryCollection": "spells",
       "librarySource": "custom",
@@ -58,7 +58,7 @@
       "prepared": true
     },
     {
-      "id": "d54f491b-91e3-4c73-98c7-1470eaba43c0",
+      "id": "da949096-fa92-4d18-a204-4558e6c87e17",
       "source": "library",
       "libraryCollection": "spells",
       "librarySource": "custom",
@@ -67,7 +67,7 @@
       "prepared": false
     },
     {
-      "id": "364e3630-ceb7-4f0b-8378-995812b0274e",
+      "id": "f6d3f787-b4cd-4eec-b200-a8ad648250f9",
       "source": "library",
       "libraryCollection": "spells",
       "librarySource": "custom",
@@ -76,7 +76,7 @@
       "prepared": false
     },
     {
-      "id": "5a7f313a-4719-4a23-acc3-c5bbed4dcef4",
+      "id": "d813bcd5-3ac0-480a-82a1-6e8b25194fe9",
       "source": "library",
       "libraryCollection": "spells",
       "librarySource": "custom",
@@ -85,7 +85,7 @@
       "prepared": true
     },
     {
-      "id": "b97dcb64-5034-447f-a746-78cc359df5e8",
+      "id": "9d4b668a-34d6-49c5-bbe5-53b978637659",
       "source": "library",
       "libraryCollection": "spells",
       "librarySource": "custom",
@@ -373,7 +373,7 @@
     "initiative": 4,
     "feats": [
       {
-        "id": "c4de23d4-d4da-41e1-a620-385afb98d47b",
+        "id": "5c29633b-532b-4cd5-9fbe-8f7e01727533",
         "source": "library",
         "libraryCollection": "feats",
         "librarySource": "custom",
@@ -381,7 +381,7 @@
         "overrides": {}
       },
       {
-        "id": "f61a745d-8ce8-44ae-a0d2-5e53bd112a66",
+        "id": "c95dff8a-ca0d-4da4-b3e6-73f81ccbc535",
         "source": "library",
         "libraryCollection": "feats",
         "librarySource": "custom",
@@ -389,7 +389,7 @@
         "overrides": {}
       },
       {
-        "id": "11f40bff-921f-42d3-8bc1-7b7e0c51ed08",
+        "id": "98444575-ed56-4576-b021-b93593d9165b",
         "source": "library",
         "libraryCollection": "feats",
         "librarySource": "custom",
@@ -397,7 +397,7 @@
         "overrides": {}
       },
       {
-        "id": "898637b7-3cf0-4d70-bbe4-20a421bf6eb0",
+        "id": "b40bae05-7d14-4123-a130-0ef50c605df3",
         "source": "library",
         "libraryCollection": "feats",
         "librarySource": "custom",
