@@ -56,7 +56,7 @@ const ViewLibrary = (() => {
               ${label(collection)}
             </button>
           `).join("")}
-          <button class="editor-tab" data-library-collection="open5e">Open5e Import</button>
+          <button class="editor-tab" data-library-collection="imports">Imports</button>
         </div>
 
         <div id="library-panel" style="padding: var(--space-6) 0;"></div>
@@ -79,8 +79,8 @@ const ViewLibrary = (() => {
     const panel = container.querySelector("#library-panel");
     if (!panel) return;
 
-    if (collection === "open5e") {
-      renderOpen5e(panel);
+    if (collection === "imports") {
+      renderImports(panel);
       return;
     }
 
@@ -245,58 +245,93 @@ const ViewLibrary = (() => {
     return record;
   }
 
-  function renderOpen5e(panel) {
+  function renderImports(panel) {
     panel.innerHTML = `
       <section>
         <div class="section-header">
           <span class="section-icon">API</span>
-          <h3>Open5e Spell Import</h3>
+          <h3>External Imports</h3>
         </div>
         <p class="text-muted text-sm" style="margin-bottom: var(--space-4);">
-          Search live, then import only the selected spell into the SRD cache.
+          Search Open5e across all resources, or search D&amp;D 5e API indexes. Select one or many results to import into the shared library.
         </p>
         <div class="list-controls">
-          <input id="open5e-search" class="search-input" placeholder="Search spells..." />
-          <button id="btn-open5e-search" class="button button-primary button-sm">Search</button>
+          <select id="import-provider" class="type-filter-select">
+            <option value="open5e">Open5e</option>
+            <option value="dnd5eapi">D&amp;D 5e API</option>
+          </select>
+          <input id="external-search" class="search-input" placeholder="Search spells, items, feats, classes..." />
+          <button id="btn-external-search" class="button button-primary button-sm">Search</button>
+          <button id="btn-import-selected" class="button button-ghost button-sm">Import Selected</button>
         </div>
-        <div id="open5e-results" class="array-list" style="margin-top: var(--space-4);"></div>
+        <div id="external-results" class="array-list" style="margin-top: var(--space-4);"></div>
       </section>
     `;
 
-    panel.querySelector("#btn-open5e-search")?.addEventListener("click", () => searchOpen5e(panel));
-    panel.querySelector("#open5e-search")?.addEventListener("keydown", event => {
-      if (event.key === "Enter") searchOpen5e(panel);
+    panel.querySelector("#btn-external-search")?.addEventListener("click", () => searchExternal(panel));
+    panel.querySelector("#btn-import-selected")?.addEventListener("click", () => importSelectedExternal(panel));
+    panel.querySelector("#external-search")?.addEventListener("keydown", event => {
+      if (event.key === "Enter") searchExternal(panel);
     });
   }
 
-  async function searchOpen5e(panel) {
-    const query = panel.querySelector("#open5e-search")?.value || "";
-    const resultsEl = panel.querySelector("#open5e-results");
+  async function searchExternal(panel) {
+    const query = panel.querySelector("#external-search")?.value || "";
+    const provider = panel.querySelector("#import-provider")?.value || "open5e";
+    const resultsEl = panel.querySelector("#external-results");
     resultsEl.innerHTML = `<p class="text-muted text-sm">Searching...</p>`;
     try {
-      const results = await Library.searchOpen5eSpells(query);
-      resultsEl.innerHTML = results.map(result => `
-        <div class="array-item open5e-result" data-spell='${escapeAttr(JSON.stringify(result))}'>
+      const results = provider === "dnd5eapi"
+        ? await Library.searchDnd5eApi(query)
+        : await Library.searchOpen5e(query);
+      resultsEl.innerHTML = results.map((result, index) => `
+        <div class="array-item external-result" data-result-index="${index}" data-result='${escapeAttr(JSON.stringify(result))}'>
           <div class="array-item-content">
-            <div class="array-item-title">${escapeHTML(result.name)}</div>
-            <div class="array-item-subtitle">Level ${Number(result.level || 0)} ${escapeHTML(result.school || "")}</div>
+            <label class="field-checkbox-row" style="align-items: flex-start;">
+              <input type="checkbox" class="external-result-checkbox" />
+              <span>
+                <span class="array-item-title">${escapeHTML(result.name)}</span>
+                <span class="array-item-subtitle">
+                  <span class="badge badge-accent">${escapeHTML(result.providerLabel || result.provider)}</span>
+                  <span class="badge">${escapeHTML(result.typeLabel || result.collection)}</span>
+                  ${result.sourceLabel ? `<span class="badge">${escapeHTML(result.sourceLabel)}</span>` : ""}
+                </span>
+              </span>
+            </label>
           </div>
           <div class="array-item-actions">
-            <button class="button button-primary button-sm btn-import-open5e">Import</button>
+            <button class="button button-primary button-sm btn-import-external">Import</button>
           </div>
         </div>
       `).join("") || `<p class="text-muted text-sm">No results.</p>`;
 
-      resultsEl.querySelectorAll(".btn-import-open5e").forEach(button => {
+      resultsEl.querySelectorAll(".btn-import-external").forEach(button => {
         button.addEventListener("click", async () => {
-          const row = button.closest(".open5e-result");
-          const spell = JSON.parse(row.dataset.spell || "{}");
-          await Library.importOpen5eSpell(spell);
-          App.showToast(`Imported ${spell.name}.`, "success");
+          const row = button.closest(".external-result");
+          const result = JSON.parse(row.dataset.result || "{}");
+          const imported = await Library.importExternalResult(result);
+          App.showToast(`Imported ${imported.name}.`, "success");
         });
       });
     } catch (error) {
       resultsEl.innerHTML = `<p class="text-danger text-sm">Search failed: ${escapeHTML(error.message)}</p>`;
+    }
+  }
+
+  async function importSelectedExternal(panel) {
+    const rows = Array.from(panel.querySelectorAll(".external-result"))
+      .filter(row => row.querySelector(".external-result-checkbox")?.checked);
+    if (!rows.length) {
+      App.showToast("Select at least one result to import.", "info");
+      return;
+    }
+
+    try {
+      const results = rows.map(row => JSON.parse(row.dataset.result || "{}"));
+      const imported = await Library.importExternalResults(results);
+      App.showToast(`Imported ${imported.length} record${imported.length === 1 ? "" : "s"}.`, "success");
+    } catch (error) {
+      App.showToast(`Import failed: ${error.message}`, "error");
     }
   }
 

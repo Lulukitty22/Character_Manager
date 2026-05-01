@@ -228,7 +228,18 @@ const CharacterList = (() => {
 
   // ─── Sheet Preview ───────────────────────────────────────────────────────────
 
-  function openSheetPreview(characterData, filePath) {
+  async function openSheetPreview(characterData, filePath) {
+    if (characterUsesLibrary(characterData) && typeof Library !== "undefined") {
+      App.showLoading("Loading shared library...");
+      try {
+        await Library.loadAll();
+      } catch (error) {
+        App.showToast(`Could not load shared library: ${error.message}`, "error");
+      } finally {
+        App.hideLoading();
+      }
+    }
+
     const sheetHTML = ViewCharacter.buildHTML(characterData);
 
     const overlay = document.createElement("div");
@@ -337,6 +348,17 @@ const CharacterList = (() => {
     if (characterData.customResources?.length) sections.push("Resources");
     if (characterData.abilities?.length) sections.push("Traits");
     return sections.length ? sections.join(" + ") : "";
+  }
+
+  function characterUsesLibrary(character) {
+    function hasRefs(entries) {
+      return Array.isArray(entries) && entries.some(entry => entry?.source === "library");
+    }
+    return hasRefs(character.spells) ||
+      hasRefs(character.inventory) ||
+      hasRefs(character.customResources) ||
+      hasRefs(character.abilities) ||
+      hasRefs(character.dnd?.feats);
   }
 
   return { render, refresh, openNewCharacterDialog };

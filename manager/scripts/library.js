@@ -18,6 +18,19 @@ const Library = (() => {
     classes:   { file: "classes-custom.json",   label: "Classes" },
   };
 
+  const DND5E_ENDPOINTS = [
+    "spells",
+    "equipment",
+    "magic-items",
+    "feats",
+    "features",
+    "traits",
+    "classes",
+    "subclasses",
+    "proficiencies",
+    "conditions",
+  ];
+
   const state = {
     collections: {},
     shaByKey: {},
@@ -173,14 +186,15 @@ const Library = (() => {
   async function syncCharacter(character) {
     await loadAll();
     const customChanged = new Set();
+    const characterName = character.identity?.name?.trim() || "Character";
 
-    character.spells = await syncArray(character.spells || [], "spells", customChanged, spellState);
-    character.inventory = await syncArray(character.inventory || [], "items", customChanged, itemState);
-    character.customResources = await syncArray(character.customResources || [], "resources", customChanged, resourceState);
-    character.abilities = await syncArray(character.abilities || [], "traits", customChanged, traitState);
+    character.spells = await syncArray(character.spells || [], "spells", customChanged, spellState, characterName);
+    character.inventory = await syncArray(character.inventory || [], "items", customChanged, itemState, characterName);
+    character.customResources = await syncArray(character.customResources || [], "resources", customChanged, resourceState, characterName);
+    character.abilities = await syncArray(character.abilities || [], "traits", customChanged, traitState, characterName);
 
     if (character.dnd) {
-      character.dnd.feats = await syncArray(character.dnd.feats || [], "feats", customChanged, featState);
+      character.dnd.feats = await syncArray(character.dnd.feats || [], "feats", customChanged, featState, characterName);
       syncNameRecord(character.dnd.class, "classes", customChanged);
       (character.dnd.multiclass || []).forEach(entry => syncNameRecord(entry.class, "classes", customChanged));
     }
@@ -195,10 +209,10 @@ const Library = (() => {
     return character;
   }
 
-  async function syncArray(entries, collection, changedKeys, stateMapper) {
+  async function syncArray(entries, collection, changedKeys, stateMapper, characterName) {
     return entries.filter(Boolean).map(entry => {
       if (entry.source === "library") {
-        return syncVariantIfNeeded(entry, collection, changedKeys);
+        return syncVariantIfNeeded(entry, collection, changedKeys, characterName);
       }
 
       const record = recordFromCharacterEntry(collection, entry);
@@ -208,12 +222,11 @@ const Library = (() => {
     });
   }
 
-  function syncVariantIfNeeded(entry, collection, changedKeys) {
+  function syncVariantIfNeeded(entry, collection, changedKeys, characterName) {
     const overrides = entry.overrides || {};
     if (!Object.keys(overrides).length) return entry;
 
     const base = find(collection, entry.libraryRef, entry.librarySource);
-    const characterName = document.getElementById("base-name")?.value.trim() || "Character";
     const variant = {
       ...mergeRecord(base || {}, overrides),
       id: Schema.generateId(),
@@ -336,24 +349,247 @@ const Library = (() => {
     const clean = String(query || "").trim();
     if (!clean) return [];
 
-    const v2Url = `https://api.open5e.com/v2/spells/?search=${encodeURIComponent(clean)}&limit=20`;
+    const v2Url = `https://api.open5e.com/v2/spells/?name__icontains=${encodeURIComponent(clean)}&limit=20`;
     const v1Url = `https://api.open5e.com/v1/spells/?search=${encodeURIComponent(clean)}&limit=20`;
     const response = await fetch(v2Url).catch(() => null);
     const fallbackNeeded = !response || !response.ok;
-    const data = fallbackNeeded
+    let data = fallbackNeeded
       ? await fetch(v1Url).then(result => result.json())
       : await response.json();
+
+    if (!fallbackNeeded && Array.isArray(data.results) && data.results.length === 0) {
+      data = await fetch(v1Url).then(result => result.json());
+    }
 
     return (data.results || []).map(Schema.normalizeOpen5eSpell);
   }
 
   async function importOpen5eSpell(open5eRecord) {
-    const record = {
-      ...Schema.normalizeOpen5eSpell(open5eRecord),
-      ...open5eRecord,
-      source: "srd",
-    };
+    const record = open5eRecord?.provider === "open5e" && open5eRecord?.collection === "spells"
+      ? open5eRecord
+      : Schema.normalizeOpen5eSpell(open5eRecord);
     return upsert("spells", record, "srd");
+  }
+
+  async function searchOpen5e(query) {
+    const clean = String(query || "").trim();
+    if (!clean) return [];
+
+    const response = await fetch(`https://api.open5e.com/v2/search/?query=${encodeURIComponent(clean)}&limit=50`);
+    if (!response.ok) throw new Error(`Open5e search failed: HTTP ${response.status}`);
+    const data = await response.json();
+    return (data.results || []).map(normalizeOpen5eSearchResult);
+  }
+
+  async function searchDnd5eApi(query) {
+    const clean = String(query || "").trim().toLowerCase();
+    if (!clean) return [];
+
+    const endpointResults = await Promise.all(DND5E_ENDPOINTS.map(async endpoint => {
+      const response = await fetch(`https://www.dnd5eapi.co/api/2014/${endpoint}`);
+      if (!response.ok) return [];
+      const data = await response.json();
+      return (data.results || [])
+        .filter(entry => entry.name?.toLowerCase().includes(clean) || entry.index?.toLowerCase().includes(clean))
+        .slice(0, 10)
+        .map(entry => normalizeDnd5eSearchResult(endpoint, entry));
+    }));
+
+    return endpointResults.flat().slice(0, 50);
+  }
+
+  async function importExternalResult(result) {
+    if (!result) throw new Error("No import result selected.");
+
+    if (result.provider === "open5e") {
+      const detailed = await fetchExternalDetail(result).catch(() => result.raw || result);
+      const record = result.collection === "spells"
+        ? Schema.normalizeOpen5eSpell({ ...detailed, ...result.raw })
+        : normalizeGenericExternalRecord(result, detailed);
+      return upsert(record.collection, record, record.source || "external");
+    }
+
+    if (result.provider === "dnd5eapi") {
+      const detailed = await fetchExternalDetail(result).catch(() => result.raw || result);
+      const record = normalizeDnd5eDetail(result, detailed);
+      return upsert(record.collection, record, record.source || "external");
+    }
+
+    const record = normalizeGenericExternalRecord(result, result.raw || result);
+    return upsert(record.collection, record, record.source || "external");
+  }
+
+  async function importExternalResults(results = []) {
+    const imported = [];
+    for (const result of results) {
+      imported.push(await importExternalResult(result));
+    }
+    return imported;
+  }
+
+  async function fetchExternalDetail(result) {
+    if (!result.detailUrl) return result.raw || result;
+    const response = await fetch(result.detailUrl);
+    if (!response.ok) throw new Error(`Detail fetch failed: HTTP ${response.status}`);
+    return response.json();
+  }
+
+  function normalizeOpen5eSearchResult(raw = {}) {
+    const route = raw.route || raw.resource_type || raw.type || raw.model || "";
+    const collection = mapOpen5eTypeToCollection(route, raw);
+    const document = raw.document || {};
+    const documentKey = document.key || document.slug || raw.document_slug || raw.document__slug || "";
+    const documentTitle = document.title || document.name || raw.document_title || raw.document__title || "";
+    const subsource = raw.source || raw.publisher || raw.document_source || raw.category || "";
+
+    return {
+      provider: "open5e",
+      providerLabel: "Open5e",
+      collection,
+      id: `open5e-${collection}-${raw.key || raw.slug || comparableName(raw.name)}`,
+      name: raw.name || raw.title || "(Unnamed)",
+      typeLabel: labelForCollection(collection),
+      sourceLabel: [documentTitle || documentKey || "Open5e", subsource].filter(Boolean).join(" / "),
+      detailUrl: raw.api_url || raw.url || raw.resource_uri || "",
+      tags: ["Open5e", documentTitle || documentKey, subsource].filter(Boolean),
+      raw,
+    };
+  }
+
+  function normalizeDnd5eSearchResult(endpoint, raw = {}) {
+    const collection = mapDnd5eEndpointToCollection(endpoint);
+    return {
+      provider: "dnd5eapi",
+      providerLabel: "D&D 5e API",
+      collection,
+      id: `dnd5eapi-${endpoint}-${raw.index || comparableName(raw.name)}`,
+      name: raw.name || raw.index || "(Unnamed)",
+      typeLabel: endpoint.replace(/-/g, " "),
+      sourceLabel: "D&D 5e SRD 2014",
+      detailUrl: raw.url ? `https://www.dnd5eapi.co${raw.url}` : "",
+      tags: ["D&D 5e API", "SRD 2014", endpoint],
+      raw: { ...raw, endpoint },
+    };
+  }
+
+  function normalizeGenericExternalRecord(result, detail = {}) {
+    const record = {
+      ...Schema.createLibraryRecord(result.collection),
+      id: result.id,
+      collection: result.collection,
+      name: detail.name || detail.title || result.name || "",
+      tags: unique([...(result.tags || []), ...(detail.tags || [])]),
+      source: result.collection === "spells" ? "srd" : "external",
+      provider: result.provider,
+      providerId: detail.key || detail.slug || detail.index || result.id,
+      description: normalizeDescription(detail.desc || detail.description || detail.text || result.raw?.highlighted || ""),
+      addons: {
+        sourceDocument: {
+          provider: result.provider,
+          title: result.sourceLabel || "",
+          type: result.typeLabel || "",
+          detailUrl: result.detailUrl || "",
+        },
+        rawImport: detail,
+      },
+    };
+
+    if (result.collection === "items") {
+      record.type = detail.equipment_category?.name || detail.gear_category?.name || detail.rarity?.name || "misc";
+      record.weight = detail.weight ?? null;
+      record.attuned = Boolean(detail.requires_attunement);
+    }
+
+    if (result.collection === "classes") {
+      record.hitDie = detail.hit_die ? `d${detail.hit_die}` : "";
+      record.primaryAbility = (detail.proficiency_choices || []).map(choice => choice.desc).filter(Boolean).join("; ");
+    }
+
+    return record;
+  }
+
+  function normalizeDnd5eDetail(result, detail = {}) {
+    if (result.collection === "spells") {
+      return normalizeDnd5eSpell(result, detail);
+    }
+    return normalizeGenericExternalRecord(result, detail);
+  }
+
+  function normalizeDnd5eSpell(result, detail = {}) {
+    const record = Schema.createLibraryRecord("spells");
+    const components = Array.isArray(detail.components) ? detail.components : [];
+    return {
+      ...record,
+      id: result.id,
+      source: "srd",
+      provider: "dnd5eapi",
+      providerId: detail.index || result.id,
+      name: detail.name || result.name || "",
+      level: Number(detail.level || 0) || 0,
+      school: detail.school?.name || "",
+      castingTime: detail.casting_time || "",
+      range: detail.range || "",
+      components,
+      duration: detail.duration || "",
+      description: normalizeDescription(detail.desc || ""),
+      tags: unique([...(result.tags || []), detail.school?.name].filter(Boolean)),
+      addons: {
+        components,
+        ritual: { enabled: Boolean(detail.ritual) },
+        concentration: { enabled: Boolean(detail.concentration) || /concentration/i.test(detail.duration || "") },
+        damage: detail.damage || {},
+        area: detail.area_of_effect || {},
+        sourceDocument: {
+          provider: "dnd5eapi",
+          title: "D&D 5e SRD 2014",
+          type: "spells",
+          detailUrl: result.detailUrl || "",
+        },
+        rawImport: detail,
+      },
+      updatedAt: new Date().toISOString(),
+    };
+  }
+
+  function mapOpen5eTypeToCollection(type, raw = {}) {
+    const value = String(type || raw.route || raw.category || "").toLowerCase();
+    if (value.includes("spell")) return "spells";
+    if (value.includes("item") || value.includes("equipment") || value.includes("weapon") || value.includes("armor")) return "items";
+    if (value.includes("feat")) return "feats";
+    if (value.includes("class") || value.includes("subclass")) return "classes";
+    if (value.includes("trait") || value.includes("feature") || value.includes("condition")) return "traits";
+    return "traits";
+  }
+
+  function mapDnd5eEndpointToCollection(endpoint) {
+    if (endpoint === "spells") return "spells";
+    if (["equipment", "magic-items"].includes(endpoint)) return "items";
+    if (endpoint === "feats") return "feats";
+    if (["classes", "subclasses"].includes(endpoint)) return "classes";
+    if (["traits", "features", "conditions", "proficiencies"].includes(endpoint)) return "traits";
+    return "traits";
+  }
+
+  function labelForCollection(collection) {
+    const labels = {
+      spells: "Spell",
+      items: "Item",
+      resources: "Resource",
+      tags: "Tag",
+      feats: "Feat",
+      traits: "Trait",
+      classes: "Class",
+    };
+    return labels[collection] || collection;
+  }
+
+  function normalizeDescription(value) {
+    if (Array.isArray(value)) return value.join("\n\n");
+    return String(value || "").replace(/<[^>]+>/g, "");
+  }
+
+  function unique(values) {
+    return Array.from(new Set(values.filter(Boolean)));
   }
 
   function comparableName(name) {
@@ -382,6 +618,10 @@ const Library = (() => {
     syncCharacter,
     searchOpen5eSpells,
     importOpen5eSpell,
+    searchOpen5e,
+    searchDnd5eApi,
+    importExternalResult,
+    importExternalResults,
   };
 
 })();

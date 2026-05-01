@@ -275,7 +275,7 @@ const Schema = (() => {
 
     return {
       ...record,
-      id: key,
+      id: `open5e-spells-${key}`,
       source: "srd",
       provider: "open5e",
       providerId: key,
@@ -287,7 +287,12 @@ const Schema = (() => {
       components: normalizeComponents(open5eData.components),
       duration: open5eData.duration || "",
       description: descriptionParts.filter(Boolean).join("\n\n"),
-      tags: ["Open5e", document.key || document.slug || open5eData.document__slug || "SRD"].filter(Boolean),
+      tags: [
+        "Open5e",
+        document.title || document.name || open5eData.document__title || "",
+        document.key || document.slug || open5eData.document__slug || "SRD",
+        open5eData.source || open5eData.publisher || "",
+      ].filter(Boolean),
       addons: {
         components: normalizeComponents(open5eData.components),
         ritual: { enabled: Boolean(open5eData.ritual) },
