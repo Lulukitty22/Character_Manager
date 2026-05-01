@@ -1,0 +1,35 @@
+{
+  "id": "d3140756-ab6b-4540-81bf-93701042b5db",
+  "meta": {
+    "repoPath": "characters/test-3-yatta.json",
+    "lastUpdated": "2026-05-01T14:01:13.652Z"
+  },
+  "identity": {
+    "name": "Test 3 yatta",
+    "aliases": [],
+    "race": "",
+    "height": "",
+    "age": "",
+    "origin": "",
+    "tags": []
+  },
+  "appearance": {
+    "description": "",
+    "images": []
+  },
+  "personality": "",
+  "backstory": "",
+  "notes": "",
+  "spells": [],
+  "spellSlots": {},
+  "abilities": [],
+  "inventory": [],
+  "currency": {
+    "pp": 0,
+    "gp": 0,
+    "ep": 0,
+    "sp": 0,
+    "cp": 0
+  },
+  "customResources": []
+}
