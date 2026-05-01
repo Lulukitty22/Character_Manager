@@ -79,6 +79,7 @@ const Schema = (() => {
   function createDefaultSpell() {
     return {
       id:          generateId(),
+      source:      "inline",
       name:        "",
       level:       0,
       school:      "",
@@ -95,6 +96,7 @@ const Schema = (() => {
   function createDefaultAbility() {
     return {
       id:          generateId(),
+      source:      "inline",
       name:        "",
       type:        "passive",
       description: "",
@@ -106,6 +108,7 @@ const Schema = (() => {
   function createDefaultInventoryItem() {
     return {
       id:          generateId(),
+      source:      "inline",
       name:        "",
       type:        "misc",
       quantity:    1,
@@ -118,12 +121,213 @@ const Schema = (() => {
 
   function createDefaultCustomResource() {
     return {
-      id:   generateId(),
-      name: "",
-      max:  0,
+      id:      generateId(),
+      source:  "inline",
+      name:    "",
+      max:     0,
       current: 0,
       log:  [],
     };
+  }
+
+  function createDefaultFeat() {
+    return {
+      id:          generateId(),
+      source:      "inline",
+      name:        "",
+      description: "",
+      tags:        [],
+    };
+  }
+
+  function createLibraryRecord(collection) {
+    const id = generateId();
+
+    const base = {
+      id,
+      collection,
+      name: "",
+      tags: [],
+      source: "custom",
+      provider: "",
+      providerId: "",
+      variantOf: "",
+      addons: {},
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+
+    if (collection === "spells") {
+      return {
+        ...base,
+        level: 0,
+        school: "",
+        castingTime: "1 action",
+        range: "",
+        components: [],
+        duration: "",
+        description: "",
+        addons: {
+          components: [],
+          ritual: { enabled: false },
+          concentration: { enabled: false },
+        },
+      };
+    }
+
+    if (collection === "items") {
+      return {
+        ...base,
+        type: "misc",
+        weight: null,
+        attuned: false,
+        description: "",
+        addons: {
+          equipment: { slot: "", rarity: "" },
+        },
+      };
+    }
+
+    if (collection === "resources") {
+      return {
+        ...base,
+        max: 0,
+        description: "",
+        addons: {
+          resource: { currentIsCharacterState: true, logIsCharacterState: true },
+        },
+      };
+    }
+
+    if (collection === "tags") {
+      return {
+        ...base,
+        color: "",
+        description: "",
+        addons: {},
+      };
+    }
+
+    if (collection === "feats") {
+      return {
+        ...base,
+        description: "",
+        addons: {
+          prerequisites: [],
+        },
+      };
+    }
+
+    if (collection === "traits") {
+      return {
+        ...base,
+        type: "trait",
+        description: "",
+        addons: {},
+      };
+    }
+
+    if (collection === "classes") {
+      return {
+        ...base,
+        description: "",
+        hitDie: "",
+        primaryAbility: "",
+        addons: {
+          stats: {},
+          speed: {},
+          proficiencies: [],
+          feats: [],
+        },
+      };
+    }
+
+    return base;
+  }
+
+  function createLibraryCollection(collection) {
+    return {
+      version: 1,
+      collection,
+      entries: [],
+    };
+  }
+
+  function createCharacterLibraryRef(collection, entry, state = {}) {
+    return {
+      id: generateId(),
+      source: "library",
+      libraryCollection: collection,
+      librarySource: entry.source || "custom",
+      libraryRef: entry.id,
+      overrides: {},
+      ...state,
+    };
+  }
+
+  function normalizeOpen5eSpell(open5eData = {}) {
+    const descriptionParts = []
+      .concat(open5eData.desc || [])
+      .concat(open5eData.higher_level || open5eData.higherLevel || []);
+    const document = open5eData.document || {};
+    const key = open5eData.key || open5eData.slug || open5eData.id || slugify(open5eData.name || "spell");
+    const record = createLibraryRecord("spells");
+
+    return {
+      ...record,
+      id: key,
+      source: "srd",
+      provider: "open5e",
+      providerId: key,
+      name: open5eData.name || "",
+      level: Number(open5eData.level_int ?? open5eData.level ?? 0) || 0,
+      school: normalizeSchool(open5eData.school),
+      castingTime: open5eData.casting_time || open5eData.castingTime || "",
+      range: open5eData.range || "",
+      components: normalizeComponents(open5eData.components),
+      duration: open5eData.duration || "",
+      description: descriptionParts.filter(Boolean).join("\n\n"),
+      tags: ["Open5e", document.key || document.slug || open5eData.document__slug || "SRD"].filter(Boolean),
+      addons: {
+        components: normalizeComponents(open5eData.components),
+        ritual: { enabled: Boolean(open5eData.ritual) },
+        concentration: { enabled: /concentration/i.test(open5eData.duration || "") },
+        sourceDocument: {
+          provider: "open5e",
+          key: document.key || document.slug || open5eData.document__slug || "",
+          title: document.title || document.name || open5eData.document__title || "",
+        },
+      },
+      open5eUrl: open5eData.url || "",
+      updatedAt: new Date().toISOString(),
+    };
+  }
+
+  function normalizeSchool(value) {
+    if (!value) return "";
+    if (typeof value === "string") {
+      const found = SCHOOLS_OF_MAGIC.find(school => school.toLowerCase() === value.toLowerCase());
+      return found || value.charAt(0).toUpperCase() + value.slice(1);
+    }
+    if (typeof value === "object") {
+      return value.name || value.key || "";
+    }
+    return String(value);
+  }
+
+  function normalizeComponents(value) {
+    if (Array.isArray(value)) return value.map(component => String(component).trim()).filter(Boolean);
+    if (typeof value === "string") {
+      return value.split(/[,\s]+/).map(component => component.trim()).filter(Boolean);
+    }
+    return [];
+  }
+
+  function slugify(text) {
+    return String(text || "")
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-|-$/g, "") || generateId();
   }
 
   function createDefaultResourceLogEntry(delta, reason) {
@@ -238,13 +442,16 @@ const Schema = (() => {
       name:     "",
       url:      "",
       category: "accessory",
+      command:  "hat",
+      assetId:  "",
     };
   }
 
   function createDefaultRoblox() {
     return {
-      outfitCommands: "",
-      catalogItems:   [],
+      outfitCommands:          "",
+      unparsedOutfitCommands:  [],
+      catalogItems:            [],
     };
   }
 
@@ -477,8 +684,13 @@ const Schema = (() => {
     createDefaultAbility,
     createDefaultInventoryItem,
     createDefaultCustomResource,
+    createDefaultFeat,
     createDefaultResourceLogEntry,
     createDefaultHpLogEntry,
+    createLibraryRecord,
+    createLibraryCollection,
+    createCharacterLibraryRef,
+    normalizeOpen5eSpell,
     createDefaultDnd,
     createDefaultDndStats,
     createDefaultAttack,

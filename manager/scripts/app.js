@@ -48,6 +48,9 @@ const App = (() => {
       case "list":
         CharacterList.render(mainContentEl);
         break;
+      case "library":
+        ViewLibrary.render(mainContentEl);
+        break;
       case "editor":
         if (options.character) state.editingCharacter = options.character;
         CharacterEditor.render(mainContentEl, state.editingCharacter);
@@ -293,7 +296,7 @@ const CharacterEditor = (() => {
   let currentSha       = null;
   let currentFilePath  = null;
 
-  function render(container, characterInfo) {
+  async function render(container, characterInfo) {
     if (!characterInfo) {
       container.innerHTML = `<p class="text-muted">No character selected.</p>`;
       return;
@@ -302,6 +305,17 @@ const CharacterEditor = (() => {
     currentCharacter = Schema.applyDefaults(characterInfo.data);
     currentSha       = characterInfo.sha       || null;
     currentFilePath  = characterInfo.filePath  || currentCharacter.meta?.repoPath || "";
+
+    if (typeof Library !== "undefined" && GitHub.isConfigured()) {
+      App.showLoading("Loading shared library...");
+      try {
+        await Library.loadAll();
+      } catch (error) {
+        App.showToast(`Shared library could not load yet: ${error.message}`, "info");
+      } finally {
+        App.hideLoading();
+      }
+    }
 
     const name = currentCharacter.identity?.name || "New Character";
     const presentation = Schema.getCharacterPresentation(currentCharacter);
@@ -430,12 +444,22 @@ const CharacterEditor = (() => {
 
     if (!characterName) {
       if (statusEl) statusEl.textContent = "Name required.";
-      showToast("Character name is required before saving.", "error");
+      App.showToast("Character name is required before saving.", "error");
       return;
     }
 
     const previousRepoPath = currentFilePath || currentCharacter?.meta?.repoPath || "";
     data.meta.repoPath = Schema.deriveRepoPath(characterName);
+
+    if (typeof Library !== "undefined") {
+      try {
+        await Library.syncCharacter(data);
+      } catch (error) {
+        App.showToast(`Library sync failed: ${error.message}`, "error");
+        if (statusEl) statusEl.textContent = "Library sync failed.";
+        return;
+      }
+    }
 
     const newSha = await App.saveCharacter(data, currentSha, previousRepoPath);
 

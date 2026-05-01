@@ -54,6 +54,7 @@ const SheetExporter = (() => {
       baseCss:       `${repoBase}/manager/style/base.css`,
       sheetCss:      `${repoBase}/manager/style/sheet.css`,
       schema:        `${repoBase}/manager/scripts/schema.js`,
+      library:       `${repoBase}/manager/scripts/library.js`,
       utils:         `${repoBase}/manager/scripts/views/view-character-utils.js`,
       header:        `${repoBase}/manager/scripts/views/view-character-header.js`,
       notes:         `${repoBase}/manager/scripts/views/view-character-notes.js`,
@@ -66,6 +67,16 @@ const SheetExporter = (() => {
       resources:     `${repoBase}/manager/scripts/views/view-character-resources.js`,
       roblox:        `${repoBase}/manager/scripts/views/view-character-roblox.js`,
       viewCharacter: `${repoBase}/manager/scripts/views/view-character.js`,
+      libraryFiles: {
+        "spells-srd.json":       `${repoBase}/library/spells-srd.json`,
+        "spells-custom.json":    `${repoBase}/library/spells-custom.json`,
+        "items-custom.json":     `${repoBase}/library/items-custom.json`,
+        "resources-custom.json": `${repoBase}/library/resources-custom.json`,
+        "tags-custom.json":      `${repoBase}/library/tags-custom.json`,
+        "feats-custom.json":     `${repoBase}/library/feats-custom.json`,
+        "traits-custom.json":    `${repoBase}/library/traits-custom.json`,
+        "classes-custom.json":   `${repoBase}/library/classes-custom.json`,
+      },
     };
 
     const name        = characterData.identity?.name || "Character";
@@ -83,6 +94,7 @@ const SheetExporter = (() => {
     const escapedBaseCss      = escapeJsString(scriptUrls.baseCss);
     const escapedSheetCss      = escapeJsString(scriptUrls.sheetCss);
     const escapedSchema        = escapeJsString(scriptUrls.schema);
+    const escapedLibrary       = escapeJsString(scriptUrls.library);
     const escapedUtils         = escapeJsString(scriptUrls.utils);
     const escapedHeader        = escapeJsString(scriptUrls.header);
     const escapedNotes         = escapeJsString(scriptUrls.notes);
@@ -95,6 +107,7 @@ const SheetExporter = (() => {
     const escapedResources     = escapeJsString(scriptUrls.resources);
     const escapedRoblox        = escapeJsString(scriptUrls.roblox);
     const escapedViewCharacter = escapeJsString(scriptUrls.viewCharacter);
+    const escapedLibraryFiles  = JSON.stringify(scriptUrls.libraryFiles).replace(/</g, "\\u003c");
 
     return `<!DOCTYPE html>
 <html lang="en">
@@ -137,6 +150,7 @@ const SheetExporter = (() => {
   var BASE_CSS_URL       = "${escapedBaseCss}";
   var SHEET_CSS_URL      = "${escapedSheetCss}";
   var SCHEMA_URL         = "${escapedSchema}";
+  var LIBRARY_URL        = "${escapedLibrary}";
   var UTILS_URL          = "${escapedUtils}";
   var HEADER_URL         = "${escapedHeader}";
   var NOTES_URL          = "${escapedNotes}";
@@ -149,6 +163,7 @@ const SheetExporter = (() => {
   var RESOURCES_URL      = "${escapedResources}";
   var ROBLOX_URL         = "${escapedRoblox}";
   var VIEW_CHARACTER_URL = "${escapedViewCharacter}";
+  var LIBRARY_FILES      = ${escapedLibraryFiles};
 
   // ── DOM refs ──────────────────────────────────────────────────────────────
   var loadingEl = document.getElementById("state-loading");
@@ -221,6 +236,7 @@ const SheetExporter = (() => {
       setStatus("Loading renderer…");
       var rendererScripts = [
         [SCHEMA_URL,         "schema.js"],
+        [LIBRARY_URL,        "library.js"],
         [UTILS_URL,          "view-character-utils.js"],
         [HEADER_URL,         "view-character-header.js"],
         [NOTES_URL,          "view-character-notes.js"],
@@ -247,6 +263,22 @@ const SheetExporter = (() => {
       var characterData = await fetchText(CHARACTER_URL, "character JSON")
         .then(function (text) { return JSON.parse(text); });
 
+      if (characterUsesLibrary(characterData) && typeof Library !== "undefined") {
+        setStatus("Loading shared library...");
+        var seeded = {};
+        var fileNames = Object.keys(LIBRARY_FILES);
+        for (var j = 0; j < fileNames.length; j++) {
+          var fileName = fileNames[j];
+          try {
+            seeded[fileName] = await fetchText(LIBRARY_FILES[fileName], fileName)
+              .then(function (text) { return JSON.parse(text); });
+          } catch (libraryError) {
+            seeded[fileName] = { version: 1, collection: fileName.split("-")[0], entries: [] };
+          }
+        }
+        Library.seedCollections(seeded);
+      }
+
       // 4. Render
       setStatus("Rendering…");
       var html = ViewCharacter.buildHTML(characterData);
@@ -269,6 +301,17 @@ const SheetExporter = (() => {
   }
 
   main();
+
+  function characterUsesLibrary(character) {
+    function hasRefs(entries) {
+      return Array.isArray(entries) && entries.some(function (entry) { return entry && entry.source === "library"; });
+    }
+    return hasRefs(character.spells) ||
+      hasRefs(character.inventory) ||
+      hasRefs(character.customResources) ||
+      hasRefs(character.abilities) ||
+      hasRefs(character.dnd && character.dnd.feats);
+  }
 
 })();
   </script>

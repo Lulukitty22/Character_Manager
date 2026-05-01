@@ -6,6 +6,10 @@
 const ViewCharacter = (() => {
 
   function buildHTML(character) {
+    if (typeof Library !== "undefined") {
+      character = Library.resolveCharacterSync(character);
+    }
+
     const identity = character.identity || {};
     const appearance = character.appearance || {};
     const dnd = character.dnd || null;
@@ -55,5 +59,3 @@ const ViewCharacter = (() => {
   };
 
 })();
-
-document.addEventListener("DOMContentLoaded", () => App.init());

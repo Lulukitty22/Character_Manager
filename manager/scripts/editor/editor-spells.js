@@ -17,7 +17,7 @@ const EditorSpells = (() => {
     panel.className = "editor-tab-panel";
     panel.id        = "tab-panel-spells";
 
-    const spells     = character.spells     || [];
+    const spells     = (character.spells || []).map(spell => typeof Library !== "undefined" ? Library.resolveRef(spell) : spell);
     const spellSlots = character.spellSlots || {};
     const isDnd      = character.dnd != null || character.boss != null;
 
@@ -56,6 +56,8 @@ const EditorSpells = (() => {
 
           <div class="array-add-row">
             <button class="button button-primary button-sm" id="btn-add-spell">✦ Add Spell</button>
+            <button class="button button-ghost button-sm" id="btn-browse-spells">Browse Library</button>
+            <button class="button button-ghost button-sm" id="btn-import-open5e-spell">Search Open5e</button>
           </div>
         </section>
 
@@ -66,6 +68,8 @@ const EditorSpells = (() => {
     panel.querySelector("#btn-add-spell").addEventListener("click", () => {
       addSpellRow(panel);
     });
+    panel.querySelector("#btn-browse-spells")?.addEventListener("click", () => browseLibrarySpells(panel));
+    panel.querySelector("#btn-import-open5e-spell")?.addEventListener("click", () => importOpen5eSpell(panel));
 
     // Wire existing spell interactions
     wireSpellList(panel);
@@ -163,7 +167,12 @@ const EditorSpells = (() => {
       : `<span class="badge">Unprepared</span>`;
 
     return `
-      <div class="array-item spell-row" data-spell-id="${EditorBase.escapeAttr(spell.id)}">
+      <div class="array-item spell-row"
+        data-spell-id="${EditorBase.escapeAttr(spell.id)}"
+        data-source="${EditorBase.escapeAttr(spell.source || "inline")}"
+        data-library-collection="${EditorBase.escapeAttr(spell.libraryCollection || "")}"
+        data-library-source="${EditorBase.escapeAttr(spell.librarySource || "")}"
+        data-library-ref="${EditorBase.escapeAttr(spell.libraryRef || "")}">
         <div class="array-item-content">
           <div class="flex-between">
             <div>
@@ -171,6 +180,7 @@ const EditorSpells = (() => {
               <div class="array-item-subtitle">${EditorBase.escapeHTML(subtitle)}</div>
             </div>
             <div class="flex gap-2 items-center">
+              ${spell.source === "library" ? `<span class="badge badge-accent">Library</span>` : ""}
               ${preparedBadge}
               ${tags}
             </div>
@@ -305,8 +315,8 @@ const EditorSpells = (() => {
     if (subtitleEl) subtitleEl.textContent = subtitle;
   }
 
-  function addSpellRow(panelEl) {
-    const spell  = Schema.createDefaultSpell();
+  function addSpellRow(panelEl, spell = null) {
+    spell = spell || Schema.createDefaultSpell();
     const listEl = panelEl.querySelector("#spells-list");
     const temp   = document.createElement("div");
     temp.innerHTML = renderSpellRow(spell);
@@ -325,6 +335,43 @@ const EditorSpells = (() => {
 
     listEl.appendChild(rowEl);
     rowEl.querySelector(".spell-name")?.focus();
+  }
+
+  async function browseLibrarySpells(panelEl) {
+    try {
+      await Library.loadAll();
+      const spells = Library.list("spells");
+      if (!spells.length) {
+        App.showToast("No shared spells yet. Add one in Library, or import from Open5e.", "info");
+        return;
+      }
+      const choice = prompt(`Choose a spell number:\n${spells.map((spell, index) => `${index + 1}. ${spell.name}`).join("\n")}`);
+      const index = parseInt(choice, 10) - 1;
+      if (!spells[index]) return;
+      addSpellRow(panelEl, Library.resolveRef(Library.createReference("spells", spells[index], { prepared: false })));
+    } catch (error) {
+      App.showToast(`Could not load spell library: ${error.message}`, "error");
+    }
+  }
+
+  async function importOpen5eSpell(panelEl) {
+    const query = prompt("Search Open5e for which spell?");
+    if (!query) return;
+    try {
+      const results = await Library.searchOpen5eSpells(query);
+      if (!results.length) {
+        App.showToast("No Open5e results found.", "info");
+        return;
+      }
+      const choice = prompt(`Import which result?\n${results.map((spell, index) => `${index + 1}. ${spell.name} (Level ${spell.level})`).join("\n")}`);
+      const index = parseInt(choice, 10) - 1;
+      if (!results[index]) return;
+      const imported = await Library.importOpen5eSpell(results[index]);
+      addSpellRow(panelEl, Library.resolveRef(Library.createReference("spells", imported, { prepared: false })));
+      App.showToast(`Imported ${imported.name}.`, "success");
+    } catch (error) {
+      App.showToast(`Open5e import failed: ${error.message}`, "error");
+    }
   }
 
   // ─── Filter ──────────────────────────────────────────────────────────────────
@@ -381,7 +428,7 @@ const EditorSpells = (() => {
       const tagsRaw = rowEl.querySelector(".spell-tags")?.value || "";
       const tags    = tagsRaw.split(",").map(t => t.trim()).filter(Boolean);
 
-      return {
+      const spell = {
         id,
         name:        rowEl.querySelector(".spell-name")?.value.trim()        || "",
         level:       parseInt(rowEl.querySelector(".spell-level")?.value,  10) || 0,
@@ -394,9 +441,38 @@ const EditorSpells = (() => {
         prepared:    rowEl.querySelector(".spell-prepared")?.checked          || false,
         tags,
       };
-    }).filter(spell => spell.name);
+
+      if (rowEl.dataset.source === "library") {
+        const base = Library.find("spells", rowEl.dataset.libraryRef, rowEl.dataset.librarySource) || {};
+        const overrides = diffAgainstBase(spell, base, ["prepared"]);
+        return {
+          id,
+          source: "library",
+          libraryCollection: "spells",
+          librarySource: rowEl.dataset.librarySource || "custom",
+          libraryRef: rowEl.dataset.libraryRef,
+          prepared: spell.prepared,
+          overrides,
+        };
+      }
+
+      return spell;
+    }).filter(spell => spell.name || spell.libraryRef);
 
     return character;
+  }
+
+  function diffAgainstBase(current, base, localKeys = []) {
+    const overrides = {};
+    Object.keys(current).forEach(key => {
+      if (["id", "source", "libraryCollection", "librarySource", "libraryRef", ...localKeys].includes(key)) return;
+      const currentValue = current[key];
+      const baseValue = base[key];
+      if (JSON.stringify(currentValue) !== JSON.stringify(baseValue)) {
+        overrides[key] = currentValue;
+      }
+    });
+    return overrides;
   }
 
   // ─── Public API ──────────────────────────────────────────────────────────────

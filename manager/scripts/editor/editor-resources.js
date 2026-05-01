@@ -15,7 +15,7 @@ const EditorResources = (() => {
     panel.className = "editor-tab-panel";
     panel.id        = "tab-panel-resources";
 
-    const customResources = character.customResources || [];
+    const customResources = (character.customResources || []).map(resource => typeof Library !== "undefined" ? Library.resolveRef(resource) : resource);
     const isDnd           = character.dnd != null;
     const hp              = character.dnd?.hp || null;
 
@@ -42,6 +42,7 @@ const EditorResources = (() => {
 
           <div class="array-add-row">
             <button class="button button-primary button-sm" id="btn-add-resource">✦ Add Resource Pool</button>
+            <button class="button button-ghost button-sm" id="btn-browse-resources">Browse Templates</button>
           </div>
         </section>
 
@@ -51,6 +52,7 @@ const EditorResources = (() => {
     panel.querySelector("#btn-add-resource")?.addEventListener("click", () => {
       addResourcePool(panel);
     });
+    panel.querySelector("#btn-browse-resources")?.addEventListener("click", () => browseResourceTemplates(panel));
 
     wireResourceList(panel);
 
@@ -210,12 +212,17 @@ const EditorResources = (() => {
     const logRows = (resource.log || []).slice().reverse().map(entry => renderLogEntry(entry)).join("");
 
     return `
-      <div class="resource-pool" data-resource-id="${EditorBase.escapeAttr(resource.id)}">
+      <div class="resource-pool"
+        data-resource-id="${EditorBase.escapeAttr(resource.id)}"
+        data-source="${EditorBase.escapeAttr(resource.source || "inline")}"
+        data-library-source="${EditorBase.escapeAttr(resource.librarySource || "")}"
+        data-library-ref="${EditorBase.escapeAttr(resource.libraryRef || "")}">
         <div class="resource-pool-header">
           <input type="text" class="field-input resource-name"
             placeholder="Resource name (e.g. Spell Memories)"
             value="${EditorBase.escapeAttr(resource.name || "")}"
             style="flex: 1; background: transparent; border: none; font-family: var(--font-display); font-size: var(--text-md); font-weight: 600; color: var(--color-text-bright); padding: 0;" />
+          ${resource.source === "library" ? `<span class="badge badge-accent">Library</span>` : ""}
           <button class="button button-icon button-danger btn-remove-resource" title="Remove pool">🗑️</button>
         </div>
 
@@ -311,8 +318,8 @@ const EditorResources = (() => {
     poolEl.querySelector(".resource-adjust-reason").value = "";
   }
 
-  function addResourcePool(panelEl) {
-    const resource = Schema.createDefaultCustomResource();
+  function addResourcePool(panelEl, resource = null) {
+    resource = resource || Schema.createDefaultCustomResource();
     const listEl   = panelEl.querySelector("#resources-list");
     const temp     = document.createElement("div");
     temp.innerHTML = renderResourcePool(resource);
@@ -321,6 +328,27 @@ const EditorResources = (() => {
     wireResourcePool(poolEl);
     listEl.appendChild(poolEl);
     poolEl.querySelector(".resource-name")?.focus();
+  }
+
+  async function browseResourceTemplates(panelEl) {
+    try {
+      await Library.loadAll();
+      const resources = Library.list("resources");
+      if (!resources.length) {
+        App.showToast("No resource templates yet. Save an inline resource or add one in Library.", "info");
+        return;
+      }
+      const choice = prompt(`Choose a resource template:\n${resources.map((resource, index) => `${index + 1}. ${resource.name}`).join("\n")}`);
+      const index = parseInt(choice, 10) - 1;
+      if (!resources[index]) return;
+      addResourcePool(panelEl, Library.resolveRef(Library.createReference("resources", resources[index], {
+        current: resources[index].max || 0,
+        max: resources[index].max || 0,
+        log: [],
+      })));
+    } catch (error) {
+      App.showToast(`Could not load resource library: ${error.message}`, "error");
+    }
   }
 
   // ─── Log Entry Rendering ─────────────────────────────────────────────────────
@@ -368,16 +396,42 @@ const EditorResources = (() => {
         reason: entryEl.querySelector(".log-entry-reason")?.textContent.trim()  || "",
       })).reverse(); // stored oldest-first
 
-      return {
+      const resource = {
         id,
         name:    poolEl.querySelector(".resource-name")?.value.trim()          || "",
         max:     parseInt(poolEl.querySelector(".resource-max")?.value,     10) || 0,
         current: parseInt(poolEl.querySelector(".resource-current")?.value, 10) || 0,
         log:     logEntries,
       };
-    }).filter(resource => resource.name);
+
+      if (poolEl.dataset.source === "library") {
+        const base = Library.find("resources", poolEl.dataset.libraryRef, poolEl.dataset.librarySource) || {};
+        return {
+          id,
+          source: "library",
+          libraryCollection: "resources",
+          librarySource: poolEl.dataset.librarySource || "custom",
+          libraryRef: poolEl.dataset.libraryRef,
+          current: resource.current,
+          max: resource.max,
+          log: resource.log,
+          overrides: diffAgainstBase(resource, base, ["current", "max", "log"]),
+        };
+      }
+
+      return resource;
+    }).filter(resource => resource.name || resource.libraryRef);
 
     return character;
+  }
+
+  function diffAgainstBase(current, base, localKeys = []) {
+    const overrides = {};
+    Object.keys(current).forEach(key => {
+      if (["id", "source", "libraryCollection", "librarySource", "libraryRef", ...localKeys].includes(key)) return;
+      if (JSON.stringify(current[key]) !== JSON.stringify(base[key])) overrides[key] = current[key];
+    });
+    return overrides;
   }
 
   return { buildTab, readTab };
