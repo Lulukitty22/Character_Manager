@@ -162,6 +162,10 @@ const EditorSpells = (() => {
     const schoolLabel = spell.school || "";
     const subtitle    = [levelLabel, schoolLabel].filter(Boolean).join(" — ");
     const tags        = (spell.tags || []).map(tag => `<span class="badge">${EditorBase.escapeHTML(tag)}</span>`).join("");
+    const access      = spell.access || spell.addons?.access || {};
+    const accessBadge = access.label || access.state
+      ? `<span class="badge">${EditorBase.escapeHTML(access.label || access.state)}</span>`
+      : "";
     const preparedBadge = spell.prepared
       ? `<span class="badge badge-accent">Prepared</span>`
       : `<span class="badge">Unprepared</span>`;
@@ -172,7 +176,8 @@ const EditorSpells = (() => {
         data-source="${EditorBase.escapeAttr(spell.source || "inline")}"
         data-library-collection="${EditorBase.escapeAttr(spell.libraryCollection || "")}"
         data-library-source="${EditorBase.escapeAttr(spell.librarySource || "")}"
-        data-library-ref="${EditorBase.escapeAttr(spell.libraryRef || "")}">
+        data-library-ref="${EditorBase.escapeAttr(spell.libraryRef || "")}"
+        data-spell-access="${EditorBase.escapeAttr(JSON.stringify(access || {}))}">
         <div class="array-item-content">
           <div class="flex-between">
             <div>
@@ -182,6 +187,7 @@ const EditorSpells = (() => {
             <div class="flex gap-2 items-center">
               ${spell.source === "library" ? `<span class="badge badge-accent">Library</span>` : ""}
               ${preparedBadge}
+              ${accessBadge}
               ${tags}
             </div>
           </div>
@@ -451,12 +457,13 @@ const EditorSpells = (() => {
         duration:    rowEl.querySelector(".spell-duration")?.value.trim()     || "",
         description: rowEl.querySelector(".spell-description")?.value         || "",
         prepared:    rowEl.querySelector(".spell-prepared")?.checked          || false,
+        access:      parseJsonDataset(rowEl.dataset.spellAccess, null),
         tags,
       };
 
       if (rowEl.dataset.source === "library") {
         const base = Library.find("spells", rowEl.dataset.libraryRef, rowEl.dataset.librarySource) || {};
-        const overrides = diffAgainstBase(spell, base, ["prepared"]);
+        const overrides = diffAgainstBase(spell, base, ["prepared", "access"]);
         return {
           id,
           source: "library",
@@ -464,6 +471,7 @@ const EditorSpells = (() => {
           librarySource: rowEl.dataset.librarySource || "custom",
           libraryRef: rowEl.dataset.libraryRef,
           prepared: spell.prepared,
+          access: spell.access,
           overrides,
         };
       }
@@ -485,6 +493,15 @@ const EditorSpells = (() => {
       }
     });
     return overrides;
+  }
+
+  function parseJsonDataset(value, fallback) {
+    if (!value) return fallback;
+    try {
+      return JSON.parse(value);
+    } catch (error) {
+      return fallback;
+    }
   }
 
   // ─── Public API ──────────────────────────────────────────────────────────────

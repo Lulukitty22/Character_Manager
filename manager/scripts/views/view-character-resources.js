@@ -6,6 +6,7 @@
 const ViewCharacterResources = (() => {
 
   const esc = ViewCharacterUtils.esc;
+  const renderMechanicChips = ViewCharacterUtils.renderMechanicChips;
 
   function render(dnd, customResources) {
     const resources = customResources || [];
@@ -27,12 +28,18 @@ const ViewCharacterResources = (() => {
     const customBlocks = resources.map(resource => {
       const percent = resource.max > 0 ? Math.round((resource.current / resource.max) * 100) : 0;
       const barClass = percent >= 60 ? "" : percent >= 30 ? "medium" : "low";
+      const mechanicChips = renderMechanicChips([
+        { label: "Current", value: resource.current, kind: "quantity" },
+        { label: "Max", value: resource.max, kind: "quantity" },
+        ...(resource.addons?.mechanics || []),
+      ]);
       return `
         <div class="sheet-resource-block">
           <div class="sheet-resource-header">
             <span class="sheet-resource-name">${esc(resource.name || "Resource")}</span>
             <span class="sheet-resource-values">${resource.current} / ${resource.max}</span>
           </div>
+          ${mechanicChips}
           <div class="hp-bar-track" style="margin-bottom:var(--space-2)">
             <div class="hp-bar-fill ${barClass}" style="width:${percent}%"></div>
           </div>

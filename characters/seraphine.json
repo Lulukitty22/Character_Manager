@@ -1,0 +1,4062 @@
+{
+  "id": "seraphine",
+  "meta": {
+    "repoPath": "characters/seraphine.json",
+    "lastUpdated": "2026-05-01T17:33:03.295Z"
+  },
+  "identity": {
+    "name": "Seraphine",
+    "classification": "player_character",
+    "aliases": [
+      "Unknown real name",
+      "The frightened cleric",
+      "Fading Grace"
+    ],
+    "race": "Human (Dragonmark of Sentinel)",
+    "height": "~160cm",
+    "age": "~22",
+    "origin": "Orth / religion-outlawed campaign setting",
+    "tags": [
+      "D&D 5e",
+      "Player Character",
+      "Cleric",
+      "Dragonmark of Sentinel",
+      "Protector",
+      "Trauma",
+      "Healing",
+      "Religion"
+    ]
+  },
+  "appearance": {
+    "description": "A short human woman who often wears clerical charms, colors, or priestess robes even where religion is outlawed. Her body language is guarded and flinchy, but she still moves to protect anyone smaller than her.",
+    "images": []
+  },
+  "personality": "\"I don't deserve protection.\" The joy and sparkle in her eyes are almost gone. She is constantly scared, jumpy, quiet, and soft-spoken. She compulsively overhelps and overexerts herself until it hurts her. Taller people approaching make her flinch every time; smaller people make her step in front of them, sometimes even as if defending them from her own allies.",
+  "backstory": "Seraphine refuses to give her real name, or may have forgotten it. She appeared one day with very little explanation. She is fanatical about religion and the old ways, even in a land hostile to religion, healing, and the supernatural. She has taken a self-imposed vow against violence, yet forces herself to watch the finishing blow. Some people think she is only playing at being a cleric; the supernatural survival around her suggests otherwise. Whatever trauma broke her happened recently and hit hard.",
+  "notes": "Fiction-first sheet: Seraphine can carry a broader cleric/story spell list than strict D&D preparation would normally allow. Use Prepared/Available/Mark Spell/Story Permission chips to decide what is ready, what is known, and what needs DM/story permission. Fading Grace is intentionally marked as undefined until its exact quirk rules are written.",
+  "spells": [
+    {
+      "id": "seraphine-spell-guidance",
+      "source": "inline",
+      "name": "Guidance",
+      "level": 0,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": true,
+      "access": {
+        "label": "Cantrip",
+        "kind": "positive",
+        "description": "Cantrip-level spell access; does not use spell slots.",
+        "chips": []
+      },
+      "tags": [
+        "Seraphine",
+        "Cantrip"
+      ],
+      "addons": {
+        "mechanics": [],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-light",
+      "source": "inline",
+      "name": "Light",
+      "level": 0,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": true,
+      "access": {
+        "label": "Cantrip",
+        "kind": "positive",
+        "description": "Cantrip-level spell access; does not use spell slots.",
+        "chips": []
+      },
+      "tags": [
+        "Seraphine",
+        "Cantrip"
+      ],
+      "addons": {
+        "mechanics": [],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-hand-of-radiance",
+      "source": "inline",
+      "name": "Hand of Radiance",
+      "level": 0,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": true,
+      "access": {
+        "label": "Cantrip",
+        "kind": "positive",
+        "description": "Cantrip-level spell access; does not use spell slots.",
+        "chips": [
+          {
+            "label": "Story Permission",
+            "kind": "requirement",
+            "description": "Allowed by Seraphine's RP spell list even if it is not a strict default Cleric spell."
+          }
+        ]
+      },
+      "tags": [
+        "Seraphine",
+        "Cantrip",
+        "Story Permission"
+      ],
+      "addons": {
+        "mechanics": [
+          {
+            "label": "Story Permission",
+            "kind": "requirement",
+            "description": "Allowed by Seraphine's RP spell list even if it is not a strict default Cleric spell."
+          }
+        ],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-mending",
+      "source": "inline",
+      "name": "Mending",
+      "level": 0,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": true,
+      "access": {
+        "label": "Cantrip",
+        "kind": "positive",
+        "description": "Cantrip-level spell access; does not use spell slots.",
+        "chips": []
+      },
+      "tags": [
+        "Seraphine",
+        "Cantrip"
+      ],
+      "addons": {
+        "mechanics": [],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-resistance",
+      "source": "inline",
+      "name": "Resistance",
+      "level": 0,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": true,
+      "access": {
+        "label": "Cantrip",
+        "kind": "positive",
+        "description": "Cantrip-level spell access; does not use spell slots.",
+        "chips": []
+      },
+      "tags": [
+        "Seraphine",
+        "Cantrip"
+      ],
+      "addons": {
+        "mechanics": [],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-spare-the-dying",
+      "source": "inline",
+      "name": "Spare the Dying",
+      "level": 0,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": true,
+      "access": {
+        "label": "Cantrip",
+        "kind": "positive",
+        "description": "Cantrip-level spell access; does not use spell slots.",
+        "chips": []
+      },
+      "tags": [
+        "Seraphine",
+        "Cantrip"
+      ],
+      "addons": {
+        "mechanics": [],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-sacred-flame",
+      "source": "inline",
+      "name": "Sacred Flame",
+      "level": 0,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": true,
+      "access": {
+        "label": "Cantrip",
+        "kind": "positive",
+        "description": "Cantrip-level spell access; does not use spell slots.",
+        "chips": []
+      },
+      "tags": [
+        "Seraphine",
+        "Cantrip"
+      ],
+      "addons": {
+        "mechanics": [],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-thaumaturgy",
+      "source": "inline",
+      "name": "Thaumaturgy",
+      "level": 0,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": true,
+      "access": {
+        "label": "Cantrip",
+        "kind": "positive",
+        "description": "Cantrip-level spell access; does not use spell slots.",
+        "chips": []
+      },
+      "tags": [
+        "Seraphine",
+        "Cantrip"
+      ],
+      "addons": {
+        "mechanics": [],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-virtue",
+      "source": "inline",
+      "name": "Virtue",
+      "level": 0,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": true,
+      "access": {
+        "label": "Cantrip",
+        "kind": "positive",
+        "description": "Cantrip-level spell access; does not use spell slots.",
+        "chips": [
+          {
+            "label": "Story Permission",
+            "kind": "requirement",
+            "description": "Allowed by Seraphine's RP spell list even if it is not a strict default Cleric spell."
+          }
+        ]
+      },
+      "tags": [
+        "Seraphine",
+        "Cantrip",
+        "Story Permission"
+      ],
+      "addons": {
+        "mechanics": [
+          {
+            "label": "Story Permission",
+            "kind": "requirement",
+            "description": "Allowed by Seraphine's RP spell list even if it is not a strict default Cleric spell."
+          }
+        ],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-word-of-radiance",
+      "source": "inline",
+      "name": "Word of Radiance",
+      "level": 0,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": true,
+      "access": {
+        "label": "Cantrip",
+        "kind": "positive",
+        "description": "Cantrip-level spell access; does not use spell slots.",
+        "chips": [
+          {
+            "label": "Story Permission",
+            "kind": "requirement",
+            "description": "Allowed by Seraphine's RP spell list even if it is not a strict default Cleric spell."
+          }
+        ]
+      },
+      "tags": [
+        "Seraphine",
+        "Cantrip",
+        "Story Permission"
+      ],
+      "addons": {
+        "mechanics": [
+          {
+            "label": "Story Permission",
+            "kind": "requirement",
+            "description": "Allowed by Seraphine's RP spell list even if it is not a strict default Cleric spell."
+          }
+        ],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-bane",
+      "source": "inline",
+      "name": "Bane",
+      "level": 1,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": false,
+      "access": {
+        "label": "Available",
+        "kind": "neutral",
+        "description": "Known or on her broad cleric/story list, but not currently marked as prepared.",
+        "chips": []
+      },
+      "tags": [
+        "Seraphine",
+        "Level 1"
+      ],
+      "addons": {
+        "mechanics": [],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-bless",
+      "source": "inline",
+      "name": "Bless",
+      "level": 1,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": true,
+      "access": {
+        "label": "Prepared",
+        "kind": "positive",
+        "description": "Marked as one of Seraphine's practical prepared/ready spells for play.",
+        "chips": []
+      },
+      "tags": [
+        "Seraphine",
+        "Level 1"
+      ],
+      "addons": {
+        "mechanics": [],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-ceremony",
+      "source": "inline",
+      "name": "Ceremony",
+      "level": 1,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": true,
+      "access": {
+        "label": "Prepared",
+        "kind": "positive",
+        "description": "Marked as one of Seraphine's practical prepared/ready spells for play.",
+        "chips": [
+          {
+            "label": "Ritual",
+            "kind": "positive",
+            "description": "Often usable as a ritual when time and circumstances allow."
+          }
+        ]
+      },
+      "tags": [
+        "Seraphine",
+        "Level 1"
+      ],
+      "addons": {
+        "mechanics": [
+          {
+            "label": "Ritual",
+            "kind": "positive",
+            "description": "Often usable as a ritual when time and circumstances allow."
+          }
+        ],
+        "ritual": {
+          "enabled": true
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-command",
+      "source": "inline",
+      "name": "Command",
+      "level": 1,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": false,
+      "access": {
+        "label": "Available",
+        "kind": "neutral",
+        "description": "Known or on her broad cleric/story list, but not currently marked as prepared.",
+        "chips": []
+      },
+      "tags": [
+        "Seraphine",
+        "Level 1"
+      ],
+      "addons": {
+        "mechanics": [],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-create-or-destroy-water",
+      "source": "inline",
+      "name": "Create or Destroy Water",
+      "level": 1,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": false,
+      "access": {
+        "label": "Available",
+        "kind": "neutral",
+        "description": "Known or on her broad cleric/story list, but not currently marked as prepared.",
+        "chips": []
+      },
+      "tags": [
+        "Seraphine",
+        "Level 1"
+      ],
+      "addons": {
+        "mechanics": [],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-cure-wounds",
+      "source": "inline",
+      "name": "Cure Wounds",
+      "level": 1,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": true,
+      "access": {
+        "label": "Prepared",
+        "kind": "positive",
+        "description": "Marked as one of Seraphine's practical prepared/ready spells for play.",
+        "chips": [
+          {
+            "label": "Mercy / Healing",
+            "kind": "positive",
+            "description": "Fits Seraphine's protective cleric identity."
+          }
+        ]
+      },
+      "tags": [
+        "Seraphine",
+        "Level 1",
+        "Healing"
+      ],
+      "addons": {
+        "mechanics": [
+          {
+            "label": "Mercy / Healing",
+            "kind": "positive",
+            "description": "Fits Seraphine's protective cleric identity."
+          }
+        ],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-detect-evil-and-good",
+      "source": "inline",
+      "name": "Detect Evil and Good",
+      "level": 1,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": false,
+      "access": {
+        "label": "Available",
+        "kind": "neutral",
+        "description": "Known or on her broad cleric/story list, but not currently marked as prepared.",
+        "chips": []
+      },
+      "tags": [
+        "Seraphine",
+        "Level 1"
+      ],
+      "addons": {
+        "mechanics": [],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-detect-magic",
+      "source": "inline",
+      "name": "Detect Magic",
+      "level": 1,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": true,
+      "access": {
+        "label": "Prepared",
+        "kind": "positive",
+        "description": "Marked as one of Seraphine's practical prepared/ready spells for play.",
+        "chips": [
+          {
+            "label": "Ritual",
+            "kind": "positive",
+            "description": "Often usable as a ritual when time and circumstances allow."
+          }
+        ]
+      },
+      "tags": [
+        "Seraphine",
+        "Level 1"
+      ],
+      "addons": {
+        "mechanics": [
+          {
+            "label": "Ritual",
+            "kind": "positive",
+            "description": "Often usable as a ritual when time and circumstances allow."
+          }
+        ],
+        "ritual": {
+          "enabled": true
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-detect-poison-and-disease",
+      "source": "inline",
+      "name": "Detect Poison and Disease",
+      "level": 1,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": false,
+      "access": {
+        "label": "Available",
+        "kind": "neutral",
+        "description": "Known or on her broad cleric/story list, but not currently marked as prepared.",
+        "chips": [
+          {
+            "label": "Ritual",
+            "kind": "positive",
+            "description": "Often usable as a ritual when time and circumstances allow."
+          }
+        ]
+      },
+      "tags": [
+        "Seraphine",
+        "Level 1"
+      ],
+      "addons": {
+        "mechanics": [
+          {
+            "label": "Ritual",
+            "kind": "positive",
+            "description": "Often usable as a ritual when time and circumstances allow."
+          }
+        ],
+        "ritual": {
+          "enabled": true
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-guiding-bolt",
+      "source": "inline",
+      "name": "Guiding Bolt",
+      "level": 1,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": false,
+      "access": {
+        "label": "Available",
+        "kind": "neutral",
+        "description": "Known or on her broad cleric/story list, but not currently marked as prepared.",
+        "chips": []
+      },
+      "tags": [
+        "Seraphine",
+        "Level 1"
+      ],
+      "addons": {
+        "mechanics": [],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-guiding-hand",
+      "source": "inline",
+      "name": "Guiding Hand",
+      "level": 1,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": false,
+      "access": {
+        "label": "Available",
+        "kind": "neutral",
+        "description": "Known or on her broad cleric/story list, but not currently marked as prepared.",
+        "chips": [
+          {
+            "label": "Story Permission",
+            "kind": "requirement",
+            "description": "Allowed by Seraphine's RP spell list even if it is not a strict default Cleric spell."
+          }
+        ]
+      },
+      "tags": [
+        "Seraphine",
+        "Level 1",
+        "Story Permission"
+      ],
+      "addons": {
+        "mechanics": [
+          {
+            "label": "Story Permission",
+            "kind": "requirement",
+            "description": "Allowed by Seraphine's RP spell list even if it is not a strict default Cleric spell."
+          }
+        ],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-healing-word",
+      "source": "inline",
+      "name": "Healing Word",
+      "level": 1,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": true,
+      "access": {
+        "label": "Prepared",
+        "kind": "positive",
+        "description": "Marked as one of Seraphine's practical prepared/ready spells for play.",
+        "chips": [
+          {
+            "label": "Mercy / Healing",
+            "kind": "positive",
+            "description": "Fits Seraphine's protective cleric identity."
+          }
+        ]
+      },
+      "tags": [
+        "Seraphine",
+        "Level 1",
+        "Healing"
+      ],
+      "addons": {
+        "mechanics": [
+          {
+            "label": "Mercy / Healing",
+            "kind": "positive",
+            "description": "Fits Seraphine's protective cleric identity."
+          }
+        ],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-protection-from-evil-and-good",
+      "source": "inline",
+      "name": "Protection from Evil and Good",
+      "level": 1,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": false,
+      "access": {
+        "label": "Available",
+        "kind": "neutral",
+        "description": "Known or on her broad cleric/story list, but not currently marked as prepared.",
+        "chips": []
+      },
+      "tags": [
+        "Seraphine",
+        "Level 1"
+      ],
+      "addons": {
+        "mechanics": [],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-purify-food-and-drink",
+      "source": "inline",
+      "name": "Purify Food and Drink",
+      "level": 1,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": false,
+      "access": {
+        "label": "Available",
+        "kind": "neutral",
+        "description": "Known or on her broad cleric/story list, but not currently marked as prepared.",
+        "chips": [
+          {
+            "label": "Ritual",
+            "kind": "positive",
+            "description": "Often usable as a ritual when time and circumstances allow."
+          }
+        ]
+      },
+      "tags": [
+        "Seraphine",
+        "Level 1"
+      ],
+      "addons": {
+        "mechanics": [
+          {
+            "label": "Ritual",
+            "kind": "positive",
+            "description": "Often usable as a ritual when time and circumstances allow."
+          }
+        ],
+        "ritual": {
+          "enabled": true
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-sanctuary",
+      "source": "inline",
+      "name": "Sanctuary",
+      "level": 1,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": true,
+      "access": {
+        "label": "Prepared",
+        "kind": "positive",
+        "description": "Marked as one of Seraphine's practical prepared/ready spells for play.",
+        "chips": []
+      },
+      "tags": [
+        "Seraphine",
+        "Level 1"
+      ],
+      "addons": {
+        "mechanics": [],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-shield",
+      "source": "inline",
+      "name": "Shield",
+      "level": 1,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [
+        "V",
+        "S"
+      ],
+      "duration": "",
+      "description": "",
+      "prepared": true,
+      "access": {
+        "label": "Prepared",
+        "kind": "positive",
+        "description": "Marked as one of Seraphine's practical prepared/ready spells for play.",
+        "chips": [
+          {
+            "label": "Mark Spell",
+            "kind": "positive",
+            "description": "Added by Dragonmark of Sentinel / story adaptation rather than normal cleric preparation."
+          }
+        ]
+      },
+      "tags": [
+        "Seraphine",
+        "Level 1",
+        "Dragonmark"
+      ],
+      "addons": {
+        "mechanics": [
+          {
+            "label": "Mark Spell",
+            "kind": "positive",
+            "description": "Added by Dragonmark of Sentinel / story adaptation rather than normal cleric preparation."
+          }
+        ],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": [
+          "V",
+          "S"
+        ]
+      }
+    },
+    {
+      "id": "seraphine-spell-shield-of-faith",
+      "source": "inline",
+      "name": "Shield of Faith",
+      "level": 1,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": false,
+      "access": {
+        "label": "Available",
+        "kind": "neutral",
+        "description": "Known or on her broad cleric/story list, but not currently marked as prepared.",
+        "chips": []
+      },
+      "tags": [
+        "Seraphine",
+        "Level 1"
+      ],
+      "addons": {
+        "mechanics": [],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-compelled-duel",
+      "source": "inline",
+      "name": "Compelled Duel",
+      "level": 1,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": false,
+      "access": {
+        "label": "Available",
+        "kind": "neutral",
+        "description": "Known or on her broad cleric/story list, but not currently marked as prepared.",
+        "chips": [
+          {
+            "label": "Mark Spell",
+            "kind": "positive",
+            "description": "Added by Dragonmark of Sentinel / story adaptation rather than normal cleric preparation."
+          }
+        ]
+      },
+      "tags": [
+        "Seraphine",
+        "Level 1",
+        "Dragonmark"
+      ],
+      "addons": {
+        "mechanics": [
+          {
+            "label": "Mark Spell",
+            "kind": "positive",
+            "description": "Added by Dragonmark of Sentinel / story adaptation rather than normal cleric preparation."
+          }
+        ],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-aid",
+      "source": "inline",
+      "name": "Aid",
+      "level": 2,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": true,
+      "access": {
+        "label": "Prepared",
+        "kind": "positive",
+        "description": "Marked as one of Seraphine's practical prepared/ready spells for play.",
+        "chips": [
+          {
+            "label": "Mercy / Healing",
+            "kind": "positive",
+            "description": "Fits Seraphine's protective cleric identity."
+          }
+        ]
+      },
+      "tags": [
+        "Seraphine",
+        "Level 2",
+        "Healing"
+      ],
+      "addons": {
+        "mechanics": [
+          {
+            "label": "Mercy / Healing",
+            "kind": "positive",
+            "description": "Fits Seraphine's protective cleric identity."
+          }
+        ],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-augury",
+      "source": "inline",
+      "name": "Augury",
+      "level": 2,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": true,
+      "access": {
+        "label": "Prepared",
+        "kind": "positive",
+        "description": "Marked as one of Seraphine's practical prepared/ready spells for play.",
+        "chips": [
+          {
+            "label": "Ritual",
+            "kind": "positive",
+            "description": "Often usable as a ritual when time and circumstances allow."
+          }
+        ]
+      },
+      "tags": [
+        "Seraphine",
+        "Level 2"
+      ],
+      "addons": {
+        "mechanics": [
+          {
+            "label": "Ritual",
+            "kind": "positive",
+            "description": "Often usable as a ritual when time and circumstances allow."
+          }
+        ],
+        "ritual": {
+          "enabled": true
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-blindness-deafness",
+      "source": "inline",
+      "name": "Blindness/Deafness",
+      "level": 2,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": false,
+      "access": {
+        "label": "Available",
+        "kind": "neutral",
+        "description": "Known or on her broad cleric/story list, but not currently marked as prepared.",
+        "chips": []
+      },
+      "tags": [
+        "Seraphine",
+        "Level 2"
+      ],
+      "addons": {
+        "mechanics": [],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-borrowed-knowledge",
+      "source": "inline",
+      "name": "Borrowed Knowledge",
+      "level": 2,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": false,
+      "access": {
+        "label": "Available",
+        "kind": "neutral",
+        "description": "Known or on her broad cleric/story list, but not currently marked as prepared.",
+        "chips": [
+          {
+            "label": "Story Permission",
+            "kind": "requirement",
+            "description": "Allowed by Seraphine's RP spell list even if it is not a strict default Cleric spell."
+          }
+        ]
+      },
+      "tags": [
+        "Seraphine",
+        "Level 2",
+        "Story Permission"
+      ],
+      "addons": {
+        "mechanics": [
+          {
+            "label": "Story Permission",
+            "kind": "requirement",
+            "description": "Allowed by Seraphine's RP spell list even if it is not a strict default Cleric spell."
+          }
+        ],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-calm-emotions",
+      "source": "inline",
+      "name": "Calm Emotions",
+      "level": 2,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": true,
+      "access": {
+        "label": "Prepared",
+        "kind": "positive",
+        "description": "Marked as one of Seraphine's practical prepared/ready spells for play.",
+        "chips": []
+      },
+      "tags": [
+        "Seraphine",
+        "Level 2"
+      ],
+      "addons": {
+        "mechanics": [],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-continual-flame",
+      "source": "inline",
+      "name": "Continual Flame",
+      "level": 2,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": false,
+      "access": {
+        "label": "Available",
+        "kind": "neutral",
+        "description": "Known or on her broad cleric/story list, but not currently marked as prepared.",
+        "chips": []
+      },
+      "tags": [
+        "Seraphine",
+        "Level 2"
+      ],
+      "addons": {
+        "mechanics": [],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-enhance-ability",
+      "source": "inline",
+      "name": "Enhance Ability",
+      "level": 2,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": false,
+      "access": {
+        "label": "Available",
+        "kind": "neutral",
+        "description": "Known or on her broad cleric/story list, but not currently marked as prepared.",
+        "chips": []
+      },
+      "tags": [
+        "Seraphine",
+        "Level 2"
+      ],
+      "addons": {
+        "mechanics": [],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-find-traps",
+      "source": "inline",
+      "name": "Find Traps",
+      "level": 2,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": false,
+      "access": {
+        "label": "Available",
+        "kind": "neutral",
+        "description": "Known or on her broad cleric/story list, but not currently marked as prepared.",
+        "chips": []
+      },
+      "tags": [
+        "Seraphine",
+        "Level 2"
+      ],
+      "addons": {
+        "mechanics": [],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-gentle-repose",
+      "source": "inline",
+      "name": "Gentle Repose",
+      "level": 2,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": false,
+      "access": {
+        "label": "Available",
+        "kind": "neutral",
+        "description": "Known or on her broad cleric/story list, but not currently marked as prepared.",
+        "chips": [
+          {
+            "label": "Ritual",
+            "kind": "positive",
+            "description": "Often usable as a ritual when time and circumstances allow."
+          }
+        ]
+      },
+      "tags": [
+        "Seraphine",
+        "Level 2"
+      ],
+      "addons": {
+        "mechanics": [
+          {
+            "label": "Ritual",
+            "kind": "positive",
+            "description": "Often usable as a ritual when time and circumstances allow."
+          }
+        ],
+        "ritual": {
+          "enabled": true
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-hold-person",
+      "source": "inline",
+      "name": "Hold Person",
+      "level": 2,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": false,
+      "access": {
+        "label": "Available",
+        "kind": "neutral",
+        "description": "Known or on her broad cleric/story list, but not currently marked as prepared.",
+        "chips": []
+      },
+      "tags": [
+        "Seraphine",
+        "Level 2"
+      ],
+      "addons": {
+        "mechanics": [],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-lesser-restoration",
+      "source": "inline",
+      "name": "Lesser Restoration",
+      "level": 2,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": true,
+      "access": {
+        "label": "Prepared",
+        "kind": "positive",
+        "description": "Marked as one of Seraphine's practical prepared/ready spells for play.",
+        "chips": [
+          {
+            "label": "Mercy / Healing",
+            "kind": "positive",
+            "description": "Fits Seraphine's protective cleric identity."
+          }
+        ]
+      },
+      "tags": [
+        "Seraphine",
+        "Level 2",
+        "Healing"
+      ],
+      "addons": {
+        "mechanics": [
+          {
+            "label": "Mercy / Healing",
+            "kind": "positive",
+            "description": "Fits Seraphine's protective cleric identity."
+          }
+        ],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-locate-object",
+      "source": "inline",
+      "name": "Locate Object",
+      "level": 2,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": false,
+      "access": {
+        "label": "Available",
+        "kind": "neutral",
+        "description": "Known or on her broad cleric/story list, but not currently marked as prepared.",
+        "chips": []
+      },
+      "tags": [
+        "Seraphine",
+        "Level 2"
+      ],
+      "addons": {
+        "mechanics": [],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-prayer-of-healing",
+      "source": "inline",
+      "name": "Prayer of Healing",
+      "level": 2,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": true,
+      "access": {
+        "label": "Prepared",
+        "kind": "positive",
+        "description": "Marked as one of Seraphine's practical prepared/ready spells for play.",
+        "chips": [
+          {
+            "label": "Mercy / Healing",
+            "kind": "positive",
+            "description": "Fits Seraphine's protective cleric identity."
+          }
+        ]
+      },
+      "tags": [
+        "Seraphine",
+        "Level 2",
+        "Healing"
+      ],
+      "addons": {
+        "mechanics": [
+          {
+            "label": "Mercy / Healing",
+            "kind": "positive",
+            "description": "Fits Seraphine's protective cleric identity."
+          }
+        ],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-protection-from-poison",
+      "source": "inline",
+      "name": "Protection from Poison",
+      "level": 2,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": false,
+      "access": {
+        "label": "Available",
+        "kind": "neutral",
+        "description": "Known or on her broad cleric/story list, but not currently marked as prepared.",
+        "chips": []
+      },
+      "tags": [
+        "Seraphine",
+        "Level 2"
+      ],
+      "addons": {
+        "mechanics": [],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-silence",
+      "source": "inline",
+      "name": "Silence",
+      "level": 2,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": false,
+      "access": {
+        "label": "Available",
+        "kind": "neutral",
+        "description": "Known or on her broad cleric/story list, but not currently marked as prepared.",
+        "chips": [
+          {
+            "label": "Ritual",
+            "kind": "positive",
+            "description": "Often usable as a ritual when time and circumstances allow."
+          }
+        ]
+      },
+      "tags": [
+        "Seraphine",
+        "Level 2"
+      ],
+      "addons": {
+        "mechanics": [
+          {
+            "label": "Ritual",
+            "kind": "positive",
+            "description": "Often usable as a ritual when time and circumstances allow."
+          }
+        ],
+        "ritual": {
+          "enabled": true
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-spiritual-weapon",
+      "source": "inline",
+      "name": "Spiritual Weapon",
+      "level": 2,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": false,
+      "access": {
+        "label": "Available",
+        "kind": "neutral",
+        "description": "Known or on her broad cleric/story list, but not currently marked as prepared.",
+        "chips": []
+      },
+      "tags": [
+        "Seraphine",
+        "Level 2"
+      ],
+      "addons": {
+        "mechanics": [],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-warding-bond",
+      "source": "inline",
+      "name": "Warding Bond",
+      "level": 2,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": true,
+      "access": {
+        "label": "Prepared",
+        "kind": "positive",
+        "description": "Marked as one of Seraphine's practical prepared/ready spells for play.",
+        "chips": []
+      },
+      "tags": [
+        "Seraphine",
+        "Level 2"
+      ],
+      "addons": {
+        "mechanics": [],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-zone-of-truth",
+      "source": "inline",
+      "name": "Zone of Truth",
+      "level": 2,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": true,
+      "access": {
+        "label": "Prepared",
+        "kind": "positive",
+        "description": "Marked as one of Seraphine's practical prepared/ready spells for play.",
+        "chips": []
+      },
+      "tags": [
+        "Seraphine",
+        "Level 2"
+      ],
+      "addons": {
+        "mechanics": [],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-aura-of-vitality",
+      "source": "inline",
+      "name": "Aura of Vitality",
+      "level": 3,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": false,
+      "access": {
+        "label": "Available",
+        "kind": "neutral",
+        "description": "Known or on her broad cleric/story list, but not currently marked as prepared.",
+        "chips": [
+          {
+            "label": "Mercy / Healing",
+            "kind": "positive",
+            "description": "Fits Seraphine's protective cleric identity."
+          }
+        ]
+      },
+      "tags": [
+        "Seraphine",
+        "Level 3",
+        "Healing"
+      ],
+      "addons": {
+        "mechanics": [
+          {
+            "label": "Mercy / Healing",
+            "kind": "positive",
+            "description": "Fits Seraphine's protective cleric identity."
+          }
+        ],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-beacon-of-hope",
+      "source": "inline",
+      "name": "Beacon of Hope",
+      "level": 3,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": true,
+      "access": {
+        "label": "Prepared",
+        "kind": "positive",
+        "description": "Marked as one of Seraphine's practical prepared/ready spells for play.",
+        "chips": [
+          {
+            "label": "Mercy / Healing",
+            "kind": "positive",
+            "description": "Fits Seraphine's protective cleric identity."
+          }
+        ]
+      },
+      "tags": [
+        "Seraphine",
+        "Level 3",
+        "Healing"
+      ],
+      "addons": {
+        "mechanics": [
+          {
+            "label": "Mercy / Healing",
+            "kind": "positive",
+            "description": "Fits Seraphine's protective cleric identity."
+          }
+        ],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-clairvoyance",
+      "source": "inline",
+      "name": "Clairvoyance",
+      "level": 3,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": false,
+      "access": {
+        "label": "Available",
+        "kind": "neutral",
+        "description": "Known or on her broad cleric/story list, but not currently marked as prepared.",
+        "chips": []
+      },
+      "tags": [
+        "Seraphine",
+        "Level 3"
+      ],
+      "addons": {
+        "mechanics": [],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-create-food-and-water",
+      "source": "inline",
+      "name": "Create Food and Water",
+      "level": 3,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": false,
+      "access": {
+        "label": "Available",
+        "kind": "neutral",
+        "description": "Known or on her broad cleric/story list, but not currently marked as prepared.",
+        "chips": []
+      },
+      "tags": [
+        "Seraphine",
+        "Level 3"
+      ],
+      "addons": {
+        "mechanics": [],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-daylight",
+      "source": "inline",
+      "name": "Daylight",
+      "level": 3,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": false,
+      "access": {
+        "label": "Available",
+        "kind": "neutral",
+        "description": "Known or on her broad cleric/story list, but not currently marked as prepared.",
+        "chips": []
+      },
+      "tags": [
+        "Seraphine",
+        "Level 3"
+      ],
+      "addons": {
+        "mechanics": [],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-dispel-magic",
+      "source": "inline",
+      "name": "Dispel Magic",
+      "level": 3,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": false,
+      "access": {
+        "label": "Available",
+        "kind": "neutral",
+        "description": "Known or on her broad cleric/story list, but not currently marked as prepared.",
+        "chips": []
+      },
+      "tags": [
+        "Seraphine",
+        "Level 3"
+      ],
+      "addons": {
+        "mechanics": [],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-fast-friends",
+      "source": "inline",
+      "name": "Fast Friends",
+      "level": 3,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": false,
+      "access": {
+        "label": "Available",
+        "kind": "neutral",
+        "description": "Known or on her broad cleric/story list, but not currently marked as prepared.",
+        "chips": [
+          {
+            "label": "Story Permission",
+            "kind": "requirement",
+            "description": "Allowed by Seraphine's RP spell list even if it is not a strict default Cleric spell."
+          }
+        ]
+      },
+      "tags": [
+        "Seraphine",
+        "Level 3",
+        "Story Permission"
+      ],
+      "addons": {
+        "mechanics": [
+          {
+            "label": "Story Permission",
+            "kind": "requirement",
+            "description": "Allowed by Seraphine's RP spell list even if it is not a strict default Cleric spell."
+          }
+        ],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-feign-death",
+      "source": "inline",
+      "name": "Feign Death",
+      "level": 3,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": false,
+      "access": {
+        "label": "Available",
+        "kind": "neutral",
+        "description": "Known or on her broad cleric/story list, but not currently marked as prepared.",
+        "chips": [
+          {
+            "label": "Ritual",
+            "kind": "positive",
+            "description": "Often usable as a ritual when time and circumstances allow."
+          }
+        ]
+      },
+      "tags": [
+        "Seraphine",
+        "Level 3"
+      ],
+      "addons": {
+        "mechanics": [
+          {
+            "label": "Ritual",
+            "kind": "positive",
+            "description": "Often usable as a ritual when time and circumstances allow."
+          }
+        ],
+        "ritual": {
+          "enabled": true
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-glyph-of-warding",
+      "source": "inline",
+      "name": "Glyph of Warding",
+      "level": 3,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": false,
+      "access": {
+        "label": "Available",
+        "kind": "neutral",
+        "description": "Known or on her broad cleric/story list, but not currently marked as prepared.",
+        "chips": []
+      },
+      "tags": [
+        "Seraphine",
+        "Level 3"
+      ],
+      "addons": {
+        "mechanics": [],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-incite-greed",
+      "source": "inline",
+      "name": "Incite Greed",
+      "level": 3,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": false,
+      "access": {
+        "label": "Available",
+        "kind": "neutral",
+        "description": "Known or on her broad cleric/story list, but not currently marked as prepared.",
+        "chips": [
+          {
+            "label": "Story Permission",
+            "kind": "requirement",
+            "description": "Allowed by Seraphine's RP spell list even if it is not a strict default Cleric spell."
+          }
+        ]
+      },
+      "tags": [
+        "Seraphine",
+        "Level 3",
+        "Story Permission"
+      ],
+      "addons": {
+        "mechanics": [
+          {
+            "label": "Story Permission",
+            "kind": "requirement",
+            "description": "Allowed by Seraphine's RP spell list even if it is not a strict default Cleric spell."
+          }
+        ],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-life-transference",
+      "source": "inline",
+      "name": "Life Transference",
+      "level": 3,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": false,
+      "access": {
+        "label": "Available",
+        "kind": "neutral",
+        "description": "Known or on her broad cleric/story list, but not currently marked as prepared.",
+        "chips": []
+      },
+      "tags": [
+        "Seraphine",
+        "Level 3"
+      ],
+      "addons": {
+        "mechanics": [],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-magic-circle",
+      "source": "inline",
+      "name": "Magic Circle",
+      "level": 3,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": false,
+      "access": {
+        "label": "Available",
+        "kind": "neutral",
+        "description": "Known or on her broad cleric/story list, but not currently marked as prepared.",
+        "chips": []
+      },
+      "tags": [
+        "Seraphine",
+        "Level 3"
+      ],
+      "addons": {
+        "mechanics": [],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-mass-healing-word",
+      "source": "inline",
+      "name": "Mass Healing Word",
+      "level": 3,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": true,
+      "access": {
+        "label": "Prepared",
+        "kind": "positive",
+        "description": "Marked as one of Seraphine's practical prepared/ready spells for play.",
+        "chips": [
+          {
+            "label": "Mercy / Healing",
+            "kind": "positive",
+            "description": "Fits Seraphine's protective cleric identity."
+          }
+        ]
+      },
+      "tags": [
+        "Seraphine",
+        "Level 3",
+        "Healing"
+      ],
+      "addons": {
+        "mechanics": [
+          {
+            "label": "Mercy / Healing",
+            "kind": "positive",
+            "description": "Fits Seraphine's protective cleric identity."
+          }
+        ],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-meld-into-stone",
+      "source": "inline",
+      "name": "Meld into Stone",
+      "level": 3,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": false,
+      "access": {
+        "label": "Available",
+        "kind": "neutral",
+        "description": "Known or on her broad cleric/story list, but not currently marked as prepared.",
+        "chips": [
+          {
+            "label": "Ritual",
+            "kind": "positive",
+            "description": "Often usable as a ritual when time and circumstances allow."
+          }
+        ]
+      },
+      "tags": [
+        "Seraphine",
+        "Level 3"
+      ],
+      "addons": {
+        "mechanics": [
+          {
+            "label": "Ritual",
+            "kind": "positive",
+            "description": "Often usable as a ritual when time and circumstances allow."
+          }
+        ],
+        "ritual": {
+          "enabled": true
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-motivational-speech",
+      "source": "inline",
+      "name": "Motivational Speech",
+      "level": 3,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": false,
+      "access": {
+        "label": "Available",
+        "kind": "neutral",
+        "description": "Known or on her broad cleric/story list, but not currently marked as prepared.",
+        "chips": [
+          {
+            "label": "Story Permission",
+            "kind": "requirement",
+            "description": "Allowed by Seraphine's RP spell list even if it is not a strict default Cleric spell."
+          }
+        ]
+      },
+      "tags": [
+        "Seraphine",
+        "Level 3",
+        "Story Permission"
+      ],
+      "addons": {
+        "mechanics": [
+          {
+            "label": "Story Permission",
+            "kind": "requirement",
+            "description": "Allowed by Seraphine's RP spell list even if it is not a strict default Cleric spell."
+          }
+        ],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-protection-from-energy",
+      "source": "inline",
+      "name": "Protection from Energy",
+      "level": 3,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": false,
+      "access": {
+        "label": "Available",
+        "kind": "neutral",
+        "description": "Known or on her broad cleric/story list, but not currently marked as prepared.",
+        "chips": []
+      },
+      "tags": [
+        "Seraphine",
+        "Level 3"
+      ],
+      "addons": {
+        "mechanics": [],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-remove-curse",
+      "source": "inline",
+      "name": "Remove Curse",
+      "level": 3,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": true,
+      "access": {
+        "label": "Prepared",
+        "kind": "positive",
+        "description": "Marked as one of Seraphine's practical prepared/ready spells for play.",
+        "chips": []
+      },
+      "tags": [
+        "Seraphine",
+        "Level 3"
+      ],
+      "addons": {
+        "mechanics": [],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-revivify",
+      "source": "inline",
+      "name": "Revivify",
+      "level": 3,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": true,
+      "access": {
+        "label": "Prepared",
+        "kind": "positive",
+        "description": "Marked as one of Seraphine's practical prepared/ready spells for play.",
+        "chips": [
+          {
+            "label": "Mercy / Healing",
+            "kind": "positive",
+            "description": "Fits Seraphine's protective cleric identity."
+          }
+        ]
+      },
+      "tags": [
+        "Seraphine",
+        "Level 3",
+        "Healing"
+      ],
+      "addons": {
+        "mechanics": [
+          {
+            "label": "Mercy / Healing",
+            "kind": "positive",
+            "description": "Fits Seraphine's protective cleric identity."
+          }
+        ],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-sending",
+      "source": "inline",
+      "name": "Sending",
+      "level": 3,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": false,
+      "access": {
+        "label": "Available",
+        "kind": "neutral",
+        "description": "Known or on her broad cleric/story list, but not currently marked as prepared.",
+        "chips": []
+      },
+      "tags": [
+        "Seraphine",
+        "Level 3"
+      ],
+      "addons": {
+        "mechanics": [],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-speak-with-dead",
+      "source": "inline",
+      "name": "Speak with Dead",
+      "level": 3,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": false,
+      "access": {
+        "label": "Available",
+        "kind": "neutral",
+        "description": "Known or on her broad cleric/story list, but not currently marked as prepared.",
+        "chips": []
+      },
+      "tags": [
+        "Seraphine",
+        "Level 3"
+      ],
+      "addons": {
+        "mechanics": [],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-spirit-guardians",
+      "source": "inline",
+      "name": "Spirit Guardians",
+      "level": 3,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": true,
+      "access": {
+        "label": "Prepared",
+        "kind": "positive",
+        "description": "Marked as one of Seraphine's practical prepared/ready spells for play.",
+        "chips": []
+      },
+      "tags": [
+        "Seraphine",
+        "Level 3"
+      ],
+      "addons": {
+        "mechanics": [],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-tongues",
+      "source": "inline",
+      "name": "Tongues",
+      "level": 3,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": true,
+      "access": {
+        "label": "Prepared",
+        "kind": "positive",
+        "description": "Marked as one of Seraphine's practical prepared/ready spells for play.",
+        "chips": []
+      },
+      "tags": [
+        "Seraphine",
+        "Level 3"
+      ],
+      "addons": {
+        "mechanics": [],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-water-walk",
+      "source": "inline",
+      "name": "Water Walk",
+      "level": 3,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": true,
+      "access": {
+        "label": "Prepared",
+        "kind": "positive",
+        "description": "Marked as one of Seraphine's practical prepared/ready spells for play.",
+        "chips": [
+          {
+            "label": "Ritual",
+            "kind": "positive",
+            "description": "Often usable as a ritual when time and circumstances allow."
+          }
+        ]
+      },
+      "tags": [
+        "Seraphine",
+        "Level 3"
+      ],
+      "addons": {
+        "mechanics": [
+          {
+            "label": "Ritual",
+            "kind": "positive",
+            "description": "Often usable as a ritual when time and circumstances allow."
+          }
+        ],
+        "ritual": {
+          "enabled": true
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-counterspell",
+      "source": "inline",
+      "name": "Counterspell",
+      "level": 3,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [
+        "V",
+        "S"
+      ],
+      "duration": "",
+      "description": "",
+      "prepared": false,
+      "access": {
+        "label": "Available",
+        "kind": "neutral",
+        "description": "Known or on her broad cleric/story list, but not currently marked as prepared.",
+        "chips": [
+          {
+            "label": "Mark Spell",
+            "kind": "positive",
+            "description": "Added by Dragonmark of Sentinel / story adaptation rather than normal cleric preparation."
+          }
+        ]
+      },
+      "tags": [
+        "Seraphine",
+        "Level 3",
+        "Dragonmark",
+        "Story Permission"
+      ],
+      "addons": {
+        "mechanics": [
+          {
+            "label": "Mark Spell",
+            "kind": "positive",
+            "description": "Added by Dragonmark of Sentinel / story adaptation rather than normal cleric preparation."
+          }
+        ],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": [
+          "V",
+          "S"
+        ]
+      }
+    },
+    {
+      "id": "seraphine-spell-aura-of-life",
+      "source": "inline",
+      "name": "Aura of Life",
+      "level": 4,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": false,
+      "access": {
+        "label": "Available",
+        "kind": "neutral",
+        "description": "Known or on her broad cleric/story list, but not currently marked as prepared.",
+        "chips": [
+          {
+            "label": "Mercy / Healing",
+            "kind": "positive",
+            "description": "Fits Seraphine's protective cleric identity."
+          }
+        ]
+      },
+      "tags": [
+        "Seraphine",
+        "Level 4",
+        "Healing"
+      ],
+      "addons": {
+        "mechanics": [
+          {
+            "label": "Mercy / Healing",
+            "kind": "positive",
+            "description": "Fits Seraphine's protective cleric identity."
+          }
+        ],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-aura-of-purity",
+      "source": "inline",
+      "name": "Aura of Purity",
+      "level": 4,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": false,
+      "access": {
+        "label": "Available",
+        "kind": "neutral",
+        "description": "Known or on her broad cleric/story list, but not currently marked as prepared.",
+        "chips": []
+      },
+      "tags": [
+        "Seraphine",
+        "Level 4"
+      ],
+      "addons": {
+        "mechanics": [],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-banishment",
+      "source": "inline",
+      "name": "Banishment",
+      "level": 4,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": false,
+      "access": {
+        "label": "Available",
+        "kind": "neutral",
+        "description": "Known or on her broad cleric/story list, but not currently marked as prepared.",
+        "chips": []
+      },
+      "tags": [
+        "Seraphine",
+        "Level 4"
+      ],
+      "addons": {
+        "mechanics": [],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-control-water",
+      "source": "inline",
+      "name": "Control Water",
+      "level": 4,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": false,
+      "access": {
+        "label": "Available",
+        "kind": "neutral",
+        "description": "Known or on her broad cleric/story list, but not currently marked as prepared.",
+        "chips": []
+      },
+      "tags": [
+        "Seraphine",
+        "Level 4"
+      ],
+      "addons": {
+        "mechanics": [],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-death-ward",
+      "source": "inline",
+      "name": "Death Ward",
+      "level": 4,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": true,
+      "access": {
+        "label": "Prepared",
+        "kind": "positive",
+        "description": "Marked as one of Seraphine's practical prepared/ready spells for play.",
+        "chips": []
+      },
+      "tags": [
+        "Seraphine",
+        "Level 4"
+      ],
+      "addons": {
+        "mechanics": [],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-divination",
+      "source": "inline",
+      "name": "Divination",
+      "level": 4,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": true,
+      "access": {
+        "label": "Prepared",
+        "kind": "positive",
+        "description": "Marked as one of Seraphine's practical prepared/ready spells for play.",
+        "chips": [
+          {
+            "label": "Ritual",
+            "kind": "positive",
+            "description": "Often usable as a ritual when time and circumstances allow."
+          }
+        ]
+      },
+      "tags": [
+        "Seraphine",
+        "Level 4"
+      ],
+      "addons": {
+        "mechanics": [
+          {
+            "label": "Ritual",
+            "kind": "positive",
+            "description": "Often usable as a ritual when time and circumstances allow."
+          }
+        ],
+        "ritual": {
+          "enabled": true
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-freedom-of-movement",
+      "source": "inline",
+      "name": "Freedom of Movement",
+      "level": 4,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": false,
+      "access": {
+        "label": "Available",
+        "kind": "neutral",
+        "description": "Known or on her broad cleric/story list, but not currently marked as prepared.",
+        "chips": []
+      },
+      "tags": [
+        "Seraphine",
+        "Level 4"
+      ],
+      "addons": {
+        "mechanics": [],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-guardian-of-faith",
+      "source": "inline",
+      "name": "Guardian of Faith",
+      "level": 4,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": true,
+      "access": {
+        "label": "Prepared",
+        "kind": "positive",
+        "description": "Marked as one of Seraphine's practical prepared/ready spells for play.",
+        "chips": []
+      },
+      "tags": [
+        "Seraphine",
+        "Level 4"
+      ],
+      "addons": {
+        "mechanics": [],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-locate-creature",
+      "source": "inline",
+      "name": "Locate Creature",
+      "level": 4,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": false,
+      "access": {
+        "label": "Available",
+        "kind": "neutral",
+        "description": "Known or on her broad cleric/story list, but not currently marked as prepared.",
+        "chips": []
+      },
+      "tags": [
+        "Seraphine",
+        "Level 4"
+      ],
+      "addons": {
+        "mechanics": [],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-stone-shape",
+      "source": "inline",
+      "name": "Stone Shape",
+      "level": 4,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": false,
+      "access": {
+        "label": "Available",
+        "kind": "neutral",
+        "description": "Known or on her broad cleric/story list, but not currently marked as prepared.",
+        "chips": []
+      },
+      "tags": [
+        "Seraphine",
+        "Level 4"
+      ],
+      "addons": {
+        "mechanics": [],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-bigby-s-hand",
+      "source": "inline",
+      "name": "Bigby's Hand",
+      "level": 5,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": false,
+      "access": {
+        "label": "Available",
+        "kind": "neutral",
+        "description": "Known or on her broad cleric/story list, but not currently marked as prepared.",
+        "chips": [
+          {
+            "label": "Mark Spell",
+            "kind": "positive",
+            "description": "Added by Dragonmark of Sentinel / story adaptation rather than normal cleric preparation."
+          }
+        ]
+      },
+      "tags": [
+        "Seraphine",
+        "Level 5",
+        "Dragonmark",
+        "Story Permission"
+      ],
+      "addons": {
+        "mechanics": [
+          {
+            "label": "Mark Spell",
+            "kind": "positive",
+            "description": "Added by Dragonmark of Sentinel / story adaptation rather than normal cleric preparation."
+          }
+        ],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-commune",
+      "source": "inline",
+      "name": "Commune",
+      "level": 5,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": true,
+      "access": {
+        "label": "Prepared",
+        "kind": "positive",
+        "description": "Marked as one of Seraphine's practical prepared/ready spells for play.",
+        "chips": [
+          {
+            "label": "Ritual",
+            "kind": "positive",
+            "description": "Often usable as a ritual when time and circumstances allow."
+          }
+        ]
+      },
+      "tags": [
+        "Seraphine",
+        "Level 5"
+      ],
+      "addons": {
+        "mechanics": [
+          {
+            "label": "Ritual",
+            "kind": "positive",
+            "description": "Often usable as a ritual when time and circumstances allow."
+          }
+        ],
+        "ritual": {
+          "enabled": true
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-dawn",
+      "source": "inline",
+      "name": "Dawn",
+      "level": 5,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": false,
+      "access": {
+        "label": "Available",
+        "kind": "neutral",
+        "description": "Known or on her broad cleric/story list, but not currently marked as prepared.",
+        "chips": []
+      },
+      "tags": [
+        "Seraphine",
+        "Level 5"
+      ],
+      "addons": {
+        "mechanics": [],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-dispel-evil-and-good",
+      "source": "inline",
+      "name": "Dispel Evil and Good",
+      "level": 5,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": false,
+      "access": {
+        "label": "Available",
+        "kind": "neutral",
+        "description": "Known or on her broad cleric/story list, but not currently marked as prepared.",
+        "chips": []
+      },
+      "tags": [
+        "Seraphine",
+        "Level 5"
+      ],
+      "addons": {
+        "mechanics": [],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-flame-strike",
+      "source": "inline",
+      "name": "Flame Strike",
+      "level": 5,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": false,
+      "access": {
+        "label": "Available",
+        "kind": "neutral",
+        "description": "Known or on her broad cleric/story list, but not currently marked as prepared.",
+        "chips": []
+      },
+      "tags": [
+        "Seraphine",
+        "Level 5"
+      ],
+      "addons": {
+        "mechanics": [],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-geas",
+      "source": "inline",
+      "name": "Geas",
+      "level": 5,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": false,
+      "access": {
+        "label": "Available",
+        "kind": "neutral",
+        "description": "Known or on her broad cleric/story list, but not currently marked as prepared.",
+        "chips": []
+      },
+      "tags": [
+        "Seraphine",
+        "Level 5"
+      ],
+      "addons": {
+        "mechanics": [],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-greater-restoration",
+      "source": "inline",
+      "name": "Greater Restoration",
+      "level": 5,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": true,
+      "access": {
+        "label": "Prepared",
+        "kind": "positive",
+        "description": "Marked as one of Seraphine's practical prepared/ready spells for play.",
+        "chips": [
+          {
+            "label": "Mercy / Healing",
+            "kind": "positive",
+            "description": "Fits Seraphine's protective cleric identity."
+          }
+        ]
+      },
+      "tags": [
+        "Seraphine",
+        "Level 5",
+        "Healing"
+      ],
+      "addons": {
+        "mechanics": [
+          {
+            "label": "Mercy / Healing",
+            "kind": "positive",
+            "description": "Fits Seraphine's protective cleric identity."
+          }
+        ],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-hallow",
+      "source": "inline",
+      "name": "Hallow",
+      "level": 5,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": false,
+      "access": {
+        "label": "Available",
+        "kind": "neutral",
+        "description": "Known or on her broad cleric/story list, but not currently marked as prepared.",
+        "chips": []
+      },
+      "tags": [
+        "Seraphine",
+        "Level 5"
+      ],
+      "addons": {
+        "mechanics": [],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-holy-weapon",
+      "source": "inline",
+      "name": "Holy Weapon",
+      "level": 5,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": false,
+      "access": {
+        "label": "Available",
+        "kind": "neutral",
+        "description": "Known or on her broad cleric/story list, but not currently marked as prepared.",
+        "chips": []
+      },
+      "tags": [
+        "Seraphine",
+        "Level 5"
+      ],
+      "addons": {
+        "mechanics": [],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-legend-lore",
+      "source": "inline",
+      "name": "Legend Lore",
+      "level": 5,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": false,
+      "access": {
+        "label": "Available",
+        "kind": "neutral",
+        "description": "Known or on her broad cleric/story list, but not currently marked as prepared.",
+        "chips": []
+      },
+      "tags": [
+        "Seraphine",
+        "Level 5"
+      ],
+      "addons": {
+        "mechanics": [],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-mass-cure-wounds",
+      "source": "inline",
+      "name": "Mass Cure Wounds",
+      "level": 5,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": true,
+      "access": {
+        "label": "Prepared",
+        "kind": "positive",
+        "description": "Marked as one of Seraphine's practical prepared/ready spells for play.",
+        "chips": [
+          {
+            "label": "Mercy / Healing",
+            "kind": "positive",
+            "description": "Fits Seraphine's protective cleric identity."
+          }
+        ]
+      },
+      "tags": [
+        "Seraphine",
+        "Level 5",
+        "Healing"
+      ],
+      "addons": {
+        "mechanics": [
+          {
+            "label": "Mercy / Healing",
+            "kind": "positive",
+            "description": "Fits Seraphine's protective cleric identity."
+          }
+        ],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-planar-binding",
+      "source": "inline",
+      "name": "Planar Binding",
+      "level": 5,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": false,
+      "access": {
+        "label": "Available",
+        "kind": "neutral",
+        "description": "Known or on her broad cleric/story list, but not currently marked as prepared.",
+        "chips": []
+      },
+      "tags": [
+        "Seraphine",
+        "Level 5"
+      ],
+      "addons": {
+        "mechanics": [],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-raise-dead",
+      "source": "inline",
+      "name": "Raise Dead",
+      "level": 5,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": true,
+      "access": {
+        "label": "Prepared",
+        "kind": "positive",
+        "description": "Marked as one of Seraphine's practical prepared/ready spells for play.",
+        "chips": [
+          {
+            "label": "Mercy / Healing",
+            "kind": "positive",
+            "description": "Fits Seraphine's protective cleric identity."
+          }
+        ]
+      },
+      "tags": [
+        "Seraphine",
+        "Level 5",
+        "Healing"
+      ],
+      "addons": {
+        "mechanics": [
+          {
+            "label": "Mercy / Healing",
+            "kind": "positive",
+            "description": "Fits Seraphine's protective cleric identity."
+          }
+        ],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-scrying",
+      "source": "inline",
+      "name": "Scrying",
+      "level": 5,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": false,
+      "access": {
+        "label": "Available",
+        "kind": "neutral",
+        "description": "Known or on her broad cleric/story list, but not currently marked as prepared.",
+        "chips": []
+      },
+      "tags": [
+        "Seraphine",
+        "Level 5"
+      ],
+      "addons": {
+        "mechanics": [],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    },
+    {
+      "id": "seraphine-spell-summon-celestial",
+      "source": "inline",
+      "name": "Summon Celestial",
+      "level": 5,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": false,
+      "access": {
+        "label": "Available",
+        "kind": "neutral",
+        "description": "Known or on her broad cleric/story list, but not currently marked as prepared.",
+        "chips": []
+      },
+      "tags": [
+        "Seraphine",
+        "Level 5"
+      ],
+      "addons": {
+        "mechanics": [],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        },
+        "components": []
+      }
+    }
+  ],
+  "spellSlots": {
+    "1": {
+      "max": 4,
+      "current": 4
+    },
+    "2": {
+      "max": 3,
+      "current": 3
+    },
+    "3": {
+      "max": 3,
+      "current": 3
+    },
+    "4": {
+      "max": 3,
+      "current": 3
+    },
+    "5": {
+      "max": 1,
+      "current": 1
+    }
+  },
+  "abilities": [
+    {
+      "id": "seraphine-trait-dragonmark-sentinel",
+      "source": "inline",
+      "name": "Dragonmark of Sentinel",
+      "type": "trait",
+      "active": true,
+      "description": "Protective dragonmark package. CON +2 and WIS +1 are already included in stats. Adds Sentinel's Intuition, Guardian's Shield, Vigilant Guardian, and expanded Mark spells.",
+      "tags": [
+        "Dragonmark",
+        "Protection"
+      ],
+      "addons": {
+        "mechanics": [
+          {
+            "label": "CON +2 / WIS +1",
+            "kind": "positive",
+            "description": "Already folded into the displayed ability scores."
+          },
+          {
+            "label": "Mark Spells",
+            "kind": "positive",
+            "description": "Adds protective spells such as Shield, Compelled Duel, Counterspell, and Bigby's Hand to her usable list."
+          }
+        ]
+      }
+    },
+    {
+      "id": "seraphine-trait-sentinels-intuition",
+      "source": "inline",
+      "name": "Sentinel's Intuition",
+      "type": "feature",
+      "active": true,
+      "description": "When she makes a Wisdom (Insight) or Wisdom (Perception) check, she can roll a d4 and add it to the ability check.",
+      "tags": [
+        "Dragonmark",
+        "Wisdom"
+      ],
+      "addons": {
+        "mechanics": [
+          {
+            "label": "+1d4",
+            "kind": "positive",
+            "relatedRoll": "Insight / Perception",
+            "description": "Add 1d4 to Wisdom Insight or Perception checks."
+          }
+        ]
+      }
+    },
+    {
+      "id": "seraphine-trait-guardian-shield",
+      "source": "inline",
+      "name": "Guardian's Shield",
+      "type": "reaction",
+      "active": true,
+      "description": "She can cast Shield once with this trait and regains the ability after finishing a long rest. Wisdom is the spellcasting ability for it.",
+      "tags": [
+        "Dragonmark",
+        "Shield",
+        "Long Rest"
+      ],
+      "addons": {
+        "mechanics": [
+          {
+            "label": "1 / Long Rest",
+            "kind": "requirement",
+            "description": "Recharge on long rest."
+          },
+          {
+            "label": "+5 AC reaction",
+            "kind": "positive",
+            "description": "Uses the Shield spell timing/effect."
+          }
+        ]
+      }
+    },
+    {
+      "id": "seraphine-trait-vigilant-guardian",
+      "source": "inline",
+      "name": "Vigilant Guardian",
+      "type": "reaction",
+      "active": true,
+      "description": "When a creature she can see within 5 feet is hit by an attack roll, she can use her reaction to swap places with that creature and be hit instead. Once per long rest.",
+      "tags": [
+        "Dragonmark",
+        "Protection",
+        "Long Rest"
+      ],
+      "addons": {
+        "mechanics": [
+          {
+            "label": "Reaction",
+            "kind": "action"
+          },
+          {
+            "label": "1 / Long Rest",
+            "kind": "requirement"
+          },
+          {
+            "label": "Take the Hit",
+            "kind": "negative",
+            "description": "Seraphine becomes the target and suffers the hit instead."
+          }
+        ]
+      }
+    },
+    {
+      "id": "seraphine-trait-fading-grace",
+      "source": "inline",
+      "name": "Fading Grace",
+      "type": "trait",
+      "active": true,
+      "description": "Unfinished quirk responsible for Seraphine supernaturally beating the odds in a land hostile to healing, religion, and the supernatural. Exact mechanics still need to be defined.",
+      "tags": [
+        "Quirk",
+        "Homebrew",
+        "Unfinished"
+      ],
+      "addons": {
+        "mechanics": [
+          {
+            "label": "Undefined",
+            "kind": "requirement",
+            "description": "Needs final mechanical rules before it should be used as a hard combat feature."
+          },
+          {
+            "label": "Survival Miracle",
+            "kind": "positive",
+            "description": "Explains improbable survival, healing, and divine grace themes."
+          }
+        ]
+      }
+    },
+    {
+      "id": "seraphine-trait-vow-against-violence",
+      "source": "inline",
+      "name": "Self-Imposed Vow Against Violence",
+      "type": "trait",
+      "active": true,
+      "description": "She refuses violence for herself, but still forces herself to witness the finishing blow. Use this as an RP constraint and possible stress trigger, not as a hard spellcasting ban.",
+      "tags": [
+        "Vow",
+        "Trauma",
+        "Roleplay"
+      ],
+      "addons": {
+        "mechanics": [
+          {
+            "label": "RP Constraint",
+            "kind": "requirement"
+          },
+          {
+            "label": "Stress Trigger",
+            "kind": "negative",
+            "description": "Watching violence or being unable to protect someone can worsen her fear and overhelping."
+          }
+        ]
+      }
+    }
+  ],
+  "inventory": [
+    {
+      "id": "seraphine-item-clerical-charms",
+      "source": "inline",
+      "name": "Clerical Charms and Colors",
+      "type": "wondrous",
+      "quantity": 1,
+      "weight": null,
+      "attuned": false,
+      "description": "Small religious charms, colors, and devotional markers worn even where religion is outlawed.",
+      "tags": [
+        "Clerical",
+        "Religion"
+      ],
+      "addons": {
+        "mechanics": [
+          {
+            "label": "Visible Faith",
+            "kind": "negative",
+            "description": "Can attract dangerous attention in places where religion is outlawed."
+          }
+        ]
+      }
+    },
+    {
+      "id": "seraphine-item-priestess-robes",
+      "source": "inline",
+      "name": "Priestess Robes",
+      "type": "clothing",
+      "quantity": 1,
+      "weight": null,
+      "attuned": false,
+      "description": "Full clerical robes or improvised priestess clothing. More symbolic than armored.",
+      "tags": [
+        "Clothing",
+        "Religion"
+      ],
+      "addons": {
+        "mechanics": [
+          {
+            "label": "Unarmored Symbol",
+            "kind": "requirement",
+            "description": "AC 16 is currently assumed from non-detailed protective gear or story calculator, not from these robes alone."
+          }
+        ]
+      }
+    }
+  ],
+  "currency": {
+    "gp": 0,
+    "sp": 0,
+    "cp": 0,
+    "ep": 0,
+    "pp": 0
+  },
+  "customResources": [
+    {
+      "id": "seraphine-resource-guardian-shield",
+      "source": "inline",
+      "name": "Guardian's Shield",
+      "max": 1,
+      "current": 1,
+      "log": [],
+      "addons": {
+        "mechanics": [
+          {
+            "label": "Long Rest",
+            "kind": "duration",
+            "description": "Restores after a long rest."
+          }
+        ]
+      }
+    },
+    {
+      "id": "seraphine-resource-vigilant-guardian",
+      "source": "inline",
+      "name": "Vigilant Guardian",
+      "max": 1,
+      "current": 1,
+      "log": [],
+      "addons": {
+        "mechanics": [
+          {
+            "label": "Long Rest",
+            "kind": "duration",
+            "description": "Restores after a long rest."
+          }
+        ]
+      }
+    },
+    {
+      "id": "seraphine-resource-overhelp-strain",
+      "source": "inline",
+      "name": "Overhelp Strain",
+      "max": 10,
+      "current": 0,
+      "log": [],
+      "addons": {
+        "mechanics": [
+          {
+            "label": "RP Stress",
+            "kind": "negative",
+            "description": "Optional tracker for self-harm by overexertion, panic, or compulsive protection."
+          }
+        ]
+      }
+    }
+  ],
+  "dnd": {
+    "class": "Cleric",
+    "subclass": "",
+    "level": 9,
+    "multiclass": [],
+    "background": "Acolyte / Unknown",
+    "alignment": "",
+    "proficiencyBonus": 4,
+    "spellcastingAbility": "wis",
+    "stats": {
+      "str": {
+        "score": 8
+      },
+      "dex": {
+        "score": 14
+      },
+      "con": {
+        "score": 12
+      },
+      "int": {
+        "score": 12
+      },
+      "wis": {
+        "score": 19
+      },
+      "cha": {
+        "score": 14
+      }
+    },
+    "savingThrowProficiencies": [
+      "wis",
+      "cha"
+    ],
+    "skillProficiencies": [
+      {
+        "skill": "Religion",
+        "expertise": false
+      },
+      {
+        "skill": "Insight",
+        "expertise": false
+      },
+      {
+        "skill": "Perception",
+        "expertise": false
+      },
+      {
+        "skill": "Medicine",
+        "expertise": false
+      }
+    ],
+    "hp": {
+      "max": 57,
+      "current": 57,
+      "temp": 0,
+      "log": [
+        {
+          "id": "seraphine-hp-start",
+          "date": "2025-02-07",
+          "delta": 57,
+          "reason": "Base HP calculator: 9 starting Cleric + 48 from 8 subsequent levels."
+        }
+      ]
+    },
+    "acModes": [
+      {
+        "id": "seraphine-ac-assumed",
+        "label": "Assumed AC",
+        "value": 16,
+        "active": true,
+        "formula": "Discord sheet says AC 16?; armor/shield details not yet specified.",
+        "conditional": false
+      }
+    ],
+    "speed": {
+      "walk": 30,
+      "fly": 0,
+      "swim": 0,
+      "climb": 0,
+      "burrow": 0
+    },
+    "initiative": 2,
+    "feats": [
+      {
+        "id": "seraphine-feat-dragonmark-sentinel",
+        "source": "inline",
+        "name": "Dragonmark of Sentinel",
+        "description": "Protective mark granting Sentinel's Intuition, Guardian's Shield, Vigilant Guardian, and expanded spell access.",
+        "tags": [
+          "Dragonmark",
+          "Protection"
+        ],
+        "addons": {
+          "mechanics": [
+            {
+              "label": "Expanded Spells",
+              "kind": "positive"
+            },
+            {
+              "label": "Protector Reaction",
+              "kind": "action"
+            }
+          ]
+        }
+      }
+    ],
+    "addons": {
+      "spellcasting": {
+        "ability": "wis"
+      },
+      "calculations": {
+        "notes": "Cleric 9. Prepared spell count is intentionally not enforced; the sheet separates Prepared from Available/Story Permission instead."
+      }
+    }
+  }
+}

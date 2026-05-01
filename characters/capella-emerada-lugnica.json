@@ -65,7 +65,20 @@
       "librarySource": "custom",
       "libraryRef": "7e97d247-569e-4b1e-a1ae-309711acd5e5",
       "overrides": {},
-      "prepared": false
+      "prepared": false,
+      "access": {
+        "label": "Boss Only",
+        "kind": "requirement",
+        "showKnown": false,
+        "description": "Capella can cast this directly while Boss Presence is active. Outside boss mode, treat it as Tier 8 casting that needs explicit story/DM permission.",
+        "chips": [
+          {
+            "label": "Tier 8",
+            "kind": "requirement",
+            "description": "Higher-tier access than her tamed/default sheet should assume."
+          }
+        ]
+      }
     },
     {
       "id": "f6d3f787-b4cd-4eec-b200-a8ad648250f9",

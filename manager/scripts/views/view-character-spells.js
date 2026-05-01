@@ -52,6 +52,7 @@ const ViewCharacterSpells = (() => {
   function renderSpellEntry(spell) {
     const components = (spell.components || []).join(", ");
     const mechanics = [
+      ...spellAccessChips(spell),
       spell.castingTime ? { label: "Cast", value: spell.castingTime, kind: "action" } : null,
       spell.range ? { label: "Range", value: spell.range, kind: "range" } : null,
       components ? {
@@ -122,6 +123,38 @@ const ViewCharacterSpells = (() => {
       });
     }
 
+    return chips;
+  }
+
+  function spellAccessChips(spell) {
+    const access = spell.access || spell.addons?.access || {};
+    const chips = [];
+
+    if (spell.prepared) {
+      chips.push({
+        label: access.preparedLabel || "Prepared",
+        kind: "positive",
+        description: "This spell is ready for active use on the sheet.",
+      });
+    } else if (access.showKnown !== false) {
+      chips.push({
+        label: access.knownLabel || "Known",
+        kind: "neutral",
+        description: "Known or available, but not currently marked prepared.",
+      });
+    }
+
+    if (access.label || access.state) {
+      chips.push({
+        label: access.label || access.state,
+        value: access.value || "",
+        kind: access.kind || "neutral",
+        description: access.description || access.note || "",
+        relatedRoll: access.relatedRoll || "",
+      });
+    }
+
+    (access.chips || []).forEach(chip => chips.push(chip));
     return chips;
   }
 

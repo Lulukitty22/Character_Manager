@@ -89,6 +89,7 @@ const Schema = (() => {
       duration:    "",
       description: "",
       prepared:    false,
+      access:      null,
       tags:        [],
     };
   }

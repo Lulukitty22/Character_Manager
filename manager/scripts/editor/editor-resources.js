@@ -216,7 +216,8 @@ const EditorResources = (() => {
         data-resource-id="${EditorBase.escapeAttr(resource.id)}"
         data-source="${EditorBase.escapeAttr(resource.source || "inline")}"
         data-library-source="${EditorBase.escapeAttr(resource.librarySource || "")}"
-        data-library-ref="${EditorBase.escapeAttr(resource.libraryRef || "")}">
+        data-library-ref="${EditorBase.escapeAttr(resource.libraryRef || "")}"
+        data-resource-addons="${EditorBase.escapeAttr(JSON.stringify(resource.addons || {}))}">
         <div class="resource-pool-header">
           <input type="text" class="field-input resource-name"
             placeholder="Resource name (e.g. Spell Memories)"
@@ -402,6 +403,7 @@ const EditorResources = (() => {
         max:     parseInt(poolEl.querySelector(".resource-max")?.value,     10) || 0,
         current: parseInt(poolEl.querySelector(".resource-current")?.value, 10) || 0,
         log:     logEntries,
+        addons:  parseJsonDataset(poolEl.dataset.resourceAddons, {}),
       };
 
       if (poolEl.dataset.source === "library") {
@@ -432,6 +434,15 @@ const EditorResources = (() => {
       if (JSON.stringify(current[key]) !== JSON.stringify(base[key])) overrides[key] = current[key];
     });
     return overrides;
+  }
+
+  function parseJsonDataset(value, fallback) {
+    if (!value) return fallback;
+    try {
+      return JSON.parse(value);
+    } catch (error) {
+      return fallback;
+    }
   }
 
   return { buildTab, readTab };

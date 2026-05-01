@@ -82,6 +82,18 @@
       "providerId": "",
       "variantOf": "",
       "addons": {
+        "mechanics": [
+          {
+            "label": "Boss Only",
+            "kind": "requirement",
+            "description": "Capella can cast this directly while Boss Presence is active."
+          },
+          {
+            "label": "Tier 8",
+            "kind": "requirement",
+            "description": "Outside boss mode, treat this as high-tier casting that requires explicit story/DM permission."
+          }
+        ],
         "components": [
           "V",
           "S"

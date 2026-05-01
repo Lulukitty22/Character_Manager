@@ -153,6 +153,7 @@ const Library = (() => {
       libraryRef: refObj.libraryRef,
       overrides: refObj.overrides || {},
       prepared: refObj.prepared ?? merged.prepared ?? false,
+      access: refObj.access || merged.access || null,
       quantity: refObj.quantity ?? merged.quantity ?? 1,
       current: refObj.current ?? merged.current ?? merged.max ?? 0,
       max: refObj.max ?? merged.max ?? 0,
