@@ -2,7 +2,7 @@
   "id": "93b6bd4a-9f95-4788-a309-a75def5d3a7c",
   "meta": {
     "repoPath": "characters/capella-emerada-lugnica.json",
-    "lastUpdated": "2026-05-01T00:00:00.000Z"
+    "lastUpdated": "2026-05-01T15:51:18.387Z"
   },
   "identity": {
     "name": "Capella Emerada Lugnica",
@@ -27,120 +27,71 @@
   },
   "appearance": {
     "description": "A beautiful, elegant, and deliberately disarming shapechanger whose body is never fixed. She can appear harmless, wounded, noble, monstrous, or perfectly ordinary, then unravel into claws, tendrils, wings, mouths, and impossible flesh.",
-    "images": []
+    "images": [
+      {
+        "id": "b464a316-9338-4e67-b523-3a10a65aeb5e",
+        "label": "Capella Image 1",
+        "url": "https://witchculttranslation.com/wp-content/uploads/2019/04/71340004_p0-768x913.jpg"
+      }
+    ]
   },
   "personality": "Elegant manipulator. Cruel, theatrical, adaptive, and socially predatory. She prefers control, humiliation, injury, and fear over killing outright.",
   "backstory": "Capella is written as a D&D boss adaptation of a near-unkillable shapechanger: an aberrant lich-like creature with a soul anchor, monstrous regeneration, Far Realm mutation, and self-only flesh polymorph.",
   "notes": "Core player-facing deception rule: against player characters, Deception / Impersonation / Persuasion uses only Charisma. No Expert Deceiver. No Silver Tongue. Prepared Deception cannot apply to members of the player party. Every form change prompts a fresh Insight or Investigation contest. Boss Presence is the temporary enemy-boss layer; remove it if tamed, purified, weakened, or recruited.",
   "spells": [
     {
-      "id": "4c177263-68ac-419d-84d5-d71d1c18bbbf",
-      "name": "Flesh Polymorph",
-      "level": 4,
-      "school": "Transmutation",
-      "castingTime": "Bonus Action or Reaction",
-      "range": "Self",
-      "components": [],
-      "duration": "Instant / sustained traits",
-      "description": "Modified self-only Polymorph. Does not replace HP, AC, mental stats, or the sheet. Adds physical traits only. Usually keep up to 3 major traits active at once.",
-      "prepared": true,
-      "tags": [
-        "signature",
-        "homebrew"
-      ]
+      "id": "9d0ba72a-8949-4fa6-add5-122971d923f8",
+      "source": "library",
+      "libraryCollection": "spells",
+      "librarySource": "custom",
+      "libraryRef": "4c177263-68ac-419d-84d5-d71d1c18bbbf",
+      "overrides": {},
+      "prepared": true
     },
     {
-      "id": "7b6931ed-1049-4d02-8590-78936898e3cc",
-      "name": "Voice of Distortion",
-      "level": 5,
-      "school": "Enchantment",
-      "castingTime": "Action or Legendary Action",
-      "range": "60 ft",
-      "components": [
-        "V"
-      ],
-      "duration": "1 round",
-      "description": "One creature that can hear Capella makes a DC 25 WIS save. On failure choose one: lose reaction, disadvantage on next attack, cannot willingly move closer, or subtract 1d6 from next saving throw or ability check.",
-      "prepared": true,
-      "tags": [
-        "control"
-      ]
+      "id": "ad107870-4c98-432b-8c51-55b5fbb2a077",
+      "source": "library",
+      "libraryCollection": "spells",
+      "librarySource": "custom",
+      "libraryRef": "7b6931ed-1049-4d02-8590-78936898e3cc",
+      "overrides": {},
+      "prepared": true
     },
     {
-      "id": "7e97d247-569e-4b1e-a1ae-309711acd5e5",
-      "name": "Dominate Monster",
-      "level": 8,
-      "school": "Enchantment",
-      "castingTime": "1 action",
-      "range": "60 ft",
-      "components": [
-        "V",
-        "S"
-      ],
-      "duration": "Concentration, up to 1 hour",
-      "description": "Used as an aberrant lich-style high-tier psychic power. DM may reflavor as invasive flesh/voice control.",
-      "prepared": false,
-      "tags": [
-        "psychic",
-        "boss"
-      ]
+      "id": "d54f491b-91e3-4c73-98c7-1470eaba43c0",
+      "source": "library",
+      "libraryCollection": "spells",
+      "librarySource": "custom",
+      "libraryRef": "7e97d247-569e-4b1e-a1ae-309711acd5e5",
+      "overrides": {},
+      "prepared": false
     },
     {
-      "id": "3aee59b4-649b-422b-9a06-1a6da700d624",
-      "name": "Plane Shift",
-      "level": 7,
-      "school": "Conjuration",
-      "castingTime": "1 action",
-      "range": "Touch / Self",
-      "components": [
-        "V",
-        "S",
-        "M"
-      ],
-      "duration": "Instantaneous",
-      "description": "Escape or story movement option. Usually used to leave or reposition rather than hard-delete players.",
-      "prepared": false,
-      "tags": [
-        "escape",
-        "boss"
-      ]
+      "id": "364e3630-ceb7-4f0b-8378-995812b0274e",
+      "source": "library",
+      "libraryCollection": "spells",
+      "librarySource": "custom",
+      "libraryRef": "3aee59b4-649b-422b-9a06-1a6da700d624",
+      "overrides": {},
+      "prepared": false
     },
     {
-      "id": "d249f049-b5c0-4dc0-87d6-3b755dc761ce",
-      "name": "Detect Thoughts",
-      "level": 2,
-      "school": "Divination",
-      "castingTime": "1 action",
-      "range": "Self",
-      "components": [
-        "V",
-        "S",
-        "M"
-      ],
-      "duration": "Concentration, up to 1 minute",
-      "description": "Used to tailor lies, impersonation, and social manipulation.",
-      "prepared": true,
-      "tags": [
-        "social"
-      ]
+      "id": "5a7f313a-4719-4a23-acc3-c5bbed4dcef4",
+      "source": "library",
+      "libraryCollection": "spells",
+      "librarySource": "custom",
+      "libraryRef": "d249f049-b5c0-4dc0-87d6-3b755dc761ce",
+      "overrides": {},
+      "prepared": true
     },
     {
-      "id": "504aee8d-99e5-48fe-934c-bd74f3eaf223",
-      "name": "Suggestion",
-      "level": 2,
-      "school": "Enchantment",
-      "castingTime": "1 action",
-      "range": "30 ft",
-      "components": [
-        "V",
-        "M"
-      ],
-      "duration": "Concentration, up to 8 hours",
-      "description": "Social pressure option for manipulation scenes.",
-      "prepared": true,
-      "tags": [
-        "social"
-      ]
+      "id": "b97dcb64-5034-447f-a746-78cc359df5e8",
+      "source": "library",
+      "libraryCollection": "spells",
+      "librarySource": "custom",
+      "libraryRef": "504aee8d-99e5-48fe-934c-bd74f3eaf223",
+      "overrides": {},
+      "prepared": true
     }
   ],
   "spellSlots": {
@@ -183,154 +134,139 @@
   },
   "abilities": [
     {
-      "id": "22aa3b43-201b-48e5-a393-79ccccd0c18e",
-      "name": "Roll Calculator \u2014 Boss Saves",
-      "type": "feature",
-      "description": "STR Save: Advantage 1d20+7. DEX Save: Advantage 1d20+9. CON Save: Advantage 1d20+10. INT Save: Advantage 1d20+8. WIS Save: Advantage 1d20+9. CHA Save: Advantage 1d20+15.",
-      "active": true,
-      "tags": [
-        "calculator"
-      ]
+      "id": "e8a6a59f-deab-42da-a691-46c0e119eaa7",
+      "source": "library",
+      "libraryCollection": "traits",
+      "librarySource": "custom",
+      "libraryRef": "22aa3b43-201b-48e5-a393-79ccccd0c18e",
+      "overrides": {},
+      "active": true
     },
     {
-      "id": "b0d2e3d0-f347-4d01-a943-9b821a55acf1",
-      "name": "Roll Calculator \u2014 Social / Casting",
-      "type": "feature",
-      "description": "Spell Save DC: 25. Spellcasting / Flesh Attack: Advantage 1d20+17. Proficient Charisma Skill: Advantage 1d20+15. Prepared Deception / Impersonation / Persuasion: 1d20+15; Silver Tongue d20 floor 10 applies. Player Improv Deception / Impersonation / Persuasion: 1d20+10; Expert Deceiver and Silver Tongue do not apply vs players.",
-      "active": true,
-      "tags": [
-        "calculator"
-      ]
+      "id": "f77e2880-ca9e-4737-956a-7f47c8699c53",
+      "source": "library",
+      "libraryCollection": "traits",
+      "librarySource": "custom",
+      "libraryRef": "b0d2e3d0-f347-4d01-a943-9b821a55acf1",
+      "overrides": {},
+      "active": true
     },
     {
-      "id": "e533c4f5-df28-4c54-8eb1-b0c3b0365e6d",
-      "name": "Advantage on All Rolls",
-      "type": "trait",
-      "description": "While Boss Presence is active, Capella rolls 2d20 and takes the higher result on attacks, saves, checks, and contested rolls unless a line says otherwise.",
-      "active": true,
-      "tags": [
-        "boss"
-      ]
+      "id": "6b10ef1c-a09f-416b-8d73-a7aeafcc858f",
+      "source": "library",
+      "libraryCollection": "traits",
+      "librarySource": "custom",
+      "libraryRef": "e533c4f5-df28-4c54-8eb1-b0c3b0365e6d",
+      "overrides": {},
+      "active": true
     },
     {
-      "id": "69a33466-f911-4440-907d-bd020e7f0b77",
-      "name": "Charisma Spellcasting",
-      "type": "trait",
-      "description": "Capella uses Charisma for spell save DCs, spell attacks, flesh magic, Polymorph effects, and distortion effects.",
-      "active": true,
-      "tags": [
-        "spellcasting"
-      ]
+      "id": "2f1843b3-288f-4149-b311-e3859ef903fa",
+      "source": "library",
+      "libraryCollection": "traits",
+      "librarySource": "custom",
+      "libraryRef": "69a33466-f911-4440-907d-bd020e7f0b77",
+      "overrides": {},
+      "active": true
     },
     {
-      "id": "7f1b4dc6-32ad-46bf-88ad-d438e3cbe878",
-      "name": "Expert Deceiver",
-      "type": "trait",
-      "description": "Umbrella social mastery package. Grants prepared Deception / Impersonation / Persuasion a +10 expertise-style bonus. Does not apply against player characters.",
-      "active": true,
-      "tags": [
-        "social"
-      ]
+      "id": "a787660f-43e5-43ed-b5b4-9d10a163ecd2",
+      "source": "library",
+      "libraryCollection": "traits",
+      "librarySource": "custom",
+      "libraryRef": "7f1b4dc6-32ad-46bf-88ad-d438e3cbe878",
+      "overrides": {},
+      "active": true
     },
     {
-      "id": "2ab2a7d6-bc03-4c5b-801f-9d9ac93633f9",
-      "name": "Silver Tongue",
-      "type": "feature",
-      "description": "College of Eloquence-style feature. For Deception and Persuasion, d20 rolls of 9 or lower count as 10. This is a d20 floor of 10. Does not apply against player character Insight checks.",
-      "active": true,
-      "tags": [
-        "social"
-      ]
+      "id": "5e5268cb-8a2a-4b91-9285-d445a1457484",
+      "source": "library",
+      "libraryCollection": "traits",
+      "librarySource": "custom",
+      "libraryRef": "2ab2a7d6-bc03-4c5b-801f-9d9ac93633f9",
+      "overrides": {},
+      "active": true
     },
     {
-      "id": "08f36953-b9aa-4c81-aa37-78dbb191585d",
-      "name": "Arcane Mastery",
-      "type": "trait",
-      "description": "Adds +2 to spell save DCs and spell/flesh attack rolls.",
-      "active": true,
-      "tags": [
-        "magic"
-      ]
+      "id": "5881b1ac-4cf8-432b-b46d-df7f99f54307",
+      "source": "library",
+      "libraryCollection": "traits",
+      "librarySource": "custom",
+      "libraryRef": "08f36953-b9aa-4c81-aa37-78dbb191585d",
+      "overrides": {},
+      "active": true
     },
     {
-      "id": "fca2be53-1cce-4334-a412-0fedad0d6aae",
-      "name": "Unnatural Armor",
-      "type": "trait",
-      "description": "Base AC becomes 15 + Dexterity modifier while unarmored. With Boss DEX 18, this gives AC 19. Armored Flesh can raise this to AC 21.",
-      "active": true,
-      "tags": [
-        "defense"
-      ]
+      "id": "713d21ca-4ad8-458c-afb8-96dbd0ecf3a4",
+      "source": "library",
+      "libraryCollection": "traits",
+      "librarySource": "custom",
+      "libraryRef": "fca2be53-1cce-4334-a412-0fedad0d6aae",
+      "overrides": {},
+      "active": true
     },
     {
-      "id": "c9bf4ca6-3342-4cfc-9589-8211d1d06736",
-      "name": "Aberrant Lich Bonus",
-      "type": "trait",
-      "description": "Adds +2 CHA and supports lich-style undead/Far Realm traits such as Soul Vessel, Far Realm Mutation, Unnatural Armor, Arcane Mastery, and Telepathy.",
-      "active": true,
-      "tags": [
-        "lich"
-      ]
+      "id": "0b27cda4-0111-44f4-9d55-72ca0b9151c7",
+      "source": "library",
+      "libraryCollection": "traits",
+      "librarySource": "custom",
+      "libraryRef": "c9bf4ca6-3342-4cfc-9589-8211d1d06736",
+      "overrides": {},
+      "active": true
     },
     {
-      "id": "4d354f04-d3ac-4ae0-bd35-42c91eb0542a",
-      "name": "Far Realm Mutation",
-      "type": "trait",
-      "description": "Explains psychic/cold/necrotic/acid resistance, poison/lightning/nonmagical weapon immunity, unstable biology, and body horror transformations.",
-      "active": true,
-      "tags": [
-        "defense"
-      ]
+      "id": "45dba3ae-b355-4759-885c-4044b3ce1141",
+      "source": "library",
+      "libraryCollection": "traits",
+      "librarySource": "custom",
+      "libraryRef": "4d354f04-d3ac-4ae0-bd35-42c91eb0542a",
+      "overrides": {},
+      "active": true
     },
     {
-      "id": "ffe07a77-b388-434d-8e14-c649847f26fe",
-      "name": "Soul Vessel / Far Realm Parasite",
-      "type": "trait",
-      "description": "When reduced to 0 HP, the current body collapses. Capella does not truly die unless the parasite/vessel anchor is found, contained, destroyed, or otherwise dealt with.",
-      "active": true,
-      "tags": [
-        "death"
-      ]
+      "id": "b76e7b69-756e-4253-96dd-658173663858",
+      "source": "library",
+      "libraryCollection": "traits",
+      "librarySource": "custom",
+      "libraryRef": "ffe07a77-b388-434d-8e14-c649847f26fe",
+      "overrides": {},
+      "active": true
     },
     {
-      "id": "f675664e-0615-4aaf-ba48-e2db8592941d",
-      "name": "Extra Attack",
-      "type": "feature",
-      "description": "When Capella takes the Attack action, she makes 2 attacks.",
-      "active": true,
-      "tags": [
-        "combat"
-      ]
+      "id": "41b2503f-a90a-4683-9b92-58474ffd355e",
+      "source": "library",
+      "libraryCollection": "traits",
+      "librarySource": "custom",
+      "libraryRef": "f675664e-0615-4aaf-ba48-e2db8592941d",
+      "overrides": {},
+      "active": true
     },
     {
-      "id": "05dd66db-ddc3-493d-a4b7-b446d2736e30",
-      "name": "Bonus Attack",
-      "type": "bonus_action",
-      "description": "If Capella takes the Attack action on her turn, she may make 1 additional natural attack as a Bonus Action.",
-      "active": true,
-      "tags": [
-        "combat"
-      ]
+      "id": "9a8fe175-8c25-44f9-a687-b0545e04fcb4",
+      "source": "library",
+      "libraryCollection": "traits",
+      "librarySource": "custom",
+      "libraryRef": "05dd66db-ddc3-493d-a4b7-b446d2736e30",
+      "overrides": {},
+      "active": true
     },
     {
-      "id": "38224464-3cbf-4e4b-a30a-f06d63742400",
-      "name": "Legendary Action",
-      "type": "legendary",
-      "description": "Once per round, outside her turn, Capella may take 1 full Action. If used for Attack, this gives her 2 more attacks.",
-      "active": true,
-      "tags": [
-        "combat"
-      ]
+      "id": "b00d25b7-cf92-477c-a7a4-c602ea4dbdb2",
+      "source": "library",
+      "libraryCollection": "traits",
+      "librarySource": "custom",
+      "libraryRef": "38224464-3cbf-4e4b-a30a-f06d63742400",
+      "overrides": {},
+      "active": true
     },
     {
-      "id": "f14b5e09-2157-4bca-b7ac-fd36471f0a37",
-      "name": "Nonlethal Intent",
-      "type": "trait",
-      "description": "Capella usually avoids killing. Her attacks are meant to disable, maim, pin, terrify, transform, or humiliate rather than execute.",
-      "active": true,
-      "tags": [
-        "roleplay"
-      ]
+      "id": "e73378c4-68f7-4684-b6b7-5e80ca285deb",
+      "source": "library",
+      "libraryCollection": "traits",
+      "librarySource": "custom",
+      "libraryRef": "f14b5e09-2157-4bca-b7ac-fd36471f0a37",
+      "overrides": {},
+      "active": true
     }
   ],
   "inventory": [],
@@ -353,22 +289,22 @@
     "spellcastingAbility": "cha",
     "stats": {
       "str": {
-        "score": 8
+        "score": 6
       },
       "dex": {
-        "score": 13
+        "score": 5
       },
       "con": {
-        "score": 12
+        "score": 8
       },
       "int": {
-        "score": 15
+        "score": 1
       },
       "wis": {
         "score": 9
       },
       "cha": {
-        "score": 20
+        "score": 10
       }
     },
     "savingThrowProficiencies": [
@@ -385,16 +321,16 @@
         "expertise": true
       },
       {
-        "skill": "Persuasion",
-        "expertise": true
-      },
-      {
         "skill": "Insight",
         "expertise": false
       },
       {
         "skill": "Perception",
         "expertise": false
+      },
+      {
+        "skill": "Persuasion",
+        "expertise": true
       },
       {
         "skill": "Stealth",
@@ -432,29 +368,41 @@
       "fly": 40,
       "swim": 30,
       "climb": 30,
-      "burrow": 20
+      "burrow": 0
     },
     "initiative": 4,
     "feats": [
       {
-        "id": "931a6347-81ac-48d0-b499-cbf2c914eb60",
-        "name": "Actor Feat",
-        "description": "+1 CHA. Supports mimicry, false identities, and impersonation flavor without adding another flat bonus to player-facing deception."
+        "id": "c4de23d4-d4da-41e1-a620-385afb98d47b",
+        "source": "library",
+        "libraryCollection": "feats",
+        "librarySource": "custom",
+        "libraryRef": "931a6347-81ac-48d0-b499-cbf2c914eb60",
+        "overrides": {}
       },
       {
-        "id": "b4205c6e-c27e-44d8-aeb9-7b9bb474a4e0",
-        "name": "Skill Expert",
-        "description": "+1 CHA. Folded into Expert Deceiver for prepared deception/impersonation/persuasion."
+        "id": "f61a745d-8ce8-44ae-a0d2-5e53bd112a66",
+        "source": "library",
+        "libraryCollection": "feats",
+        "librarySource": "custom",
+        "libraryRef": "b4205c6e-c27e-44d8-aeb9-7b9bb474a4e0",
+        "overrides": {}
       },
       {
-        "id": "73f591ce-f655-4898-943c-37e896a0d1eb",
-        "name": "Beguiling Influence",
-        "description": "Folded into Expert Deceiver. Grants proficiency in Deception and Persuasion."
+        "id": "11f40bff-921f-42d3-8bc1-7b7e0c51ed08",
+        "source": "library",
+        "libraryCollection": "feats",
+        "librarySource": "custom",
+        "libraryRef": "73f591ce-f655-4898-943c-37e896a0d1eb",
+        "overrides": {}
       },
       {
-        "id": "2236f92f-66db-42e9-a1ad-34544cd3919c",
-        "name": "Silver Tongue",
-        "description": "For Deception/Persuasion outside player-facing checks, d20 rolls of 9 or lower count as 10."
+        "id": "898637b7-3cf0-4d70-bbe4-20a421bf6eb0",
+        "source": "library",
+        "libraryCollection": "feats",
+        "librarySource": "custom",
+        "libraryRef": "2236f92f-66db-42e9-a1ad-34544cd3919c",
+        "overrides": {}
       }
     ]
   },
@@ -505,12 +453,15 @@
     ],
     "weaknesses": [
       {
+        "id": "473d1f4c-b769-402e-844f-a22f2937d857",
         "description": "Radiant damage disables regeneration for 1 round."
       },
       {
+        "id": "c68cd54e-c0ba-43a6-8646-71ce16196f97",
         "description": "Critical hits disable regeneration for 1 round."
       },
       {
+        "id": "f0c8428a-1cea-4619-8ec2-01e7fdbb37fa",
         "description": "Soul Vessel / Far Realm Parasite must be found or dealt with to truly kill her."
       }
     ],
@@ -525,7 +476,7 @@
           {
             "dice": "2d8",
             "bonus": 10,
-            "type": "Slashing"
+            "type": "acid"
           }
         ],
         "avgDamage": 19,
@@ -542,12 +493,12 @@
           {
             "dice": "2d6",
             "bonus": 10,
-            "type": "Bludgeoning"
+            "type": "acid"
           },
           {
             "dice": "1d6",
             "bonus": 0,
-            "type": "Acid"
+            "type": "acid"
           }
         ],
         "avgDamage": 21,
@@ -564,7 +515,7 @@
           {
             "dice": "2d10",
             "bonus": 10,
-            "type": "Piercing"
+            "type": "acid"
           }
         ],
         "avgDamage": 21,
@@ -581,12 +532,12 @@
           {
             "dice": "2d10",
             "bonus": 10,
-            "type": "Piercing"
+            "type": "acid"
           },
           {
             "dice": "1d8",
             "bonus": 0,
-            "type": "Necrotic"
+            "type": "acid"
           }
         ],
         "avgDamage": 26,
@@ -603,7 +554,7 @@
           {
             "dice": "3d8",
             "bonus": 10,
-            "type": "Necrotic or Psychic"
+            "type": "acid"
           }
         ],
         "avgDamage": 24,
@@ -620,7 +571,7 @@
           {
             "dice": "2d6",
             "bonus": 10,
-            "type": "Bludgeoning"
+            "type": "acid"
           }
         ],
         "avgDamage": 17,
