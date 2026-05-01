@@ -13,7 +13,7 @@ const EditorInventory = (() => {
     panel.className = "editor-tab-panel";
     panel.id        = "tab-panel-inventory";
 
-    const items    = character.inventory || [];
+    const items    = (character.inventory || []).map(item => typeof Library !== "undefined" ? Library.resolveRef(item) : item);
     const currency = character.currency  || { gp: 0, sp: 0, cp: 0, ep: 0, pp: 0 };
 
     panel.innerHTML = `
@@ -82,6 +82,7 @@ const EditorInventory = (() => {
 
           <div class="array-add-row">
             <button class="button button-primary button-sm" id="btn-add-item">✦ Add Item</button>
+            <button class="button button-ghost button-sm" id="btn-browse-items">Browse Library</button>
           </div>
         </section>
 
@@ -89,6 +90,7 @@ const EditorInventory = (() => {
     `;
 
     panel.querySelector("#btn-add-item").addEventListener("click", () => addItemRow(panel));
+    panel.querySelector("#btn-browse-items")?.addEventListener("click", () => browseLibraryItems(panel));
     wireItemList(panel);
 
     return panel;
@@ -111,11 +113,17 @@ const EditorInventory = (() => {
     const tags      = (item.tags || []).map(tag => `<span class="badge">${EditorBase.escapeHTML(tag)}</span>`).join("");
 
     return `
-      <div class="array-item item-row" data-item-id="${EditorBase.escapeAttr(item.id)}">
+      <div class="array-item item-row"
+        data-item-id="${EditorBase.escapeAttr(item.id)}"
+        data-source="${EditorBase.escapeAttr(item.source || "inline")}"
+        data-library-collection="${EditorBase.escapeAttr(item.libraryCollection || "")}"
+        data-library-source="${EditorBase.escapeAttr(item.librarySource || "")}"
+        data-library-ref="${EditorBase.escapeAttr(item.libraryRef || "")}">
         <div class="array-item-content">
           <div class="flex-between">
             <div class="flex items-center gap-2">
               <span class="array-item-title">${EditorBase.escapeHTML(item.name || "(Unnamed Item)")}</span>
+              ${item.source === "library" ? `<span class="badge badge-accent">Library</span>` : ""}
               <span class="badge">${EditorBase.escapeHTML(typeLabel)}</span>
               ${attuned}
               ${tags}
@@ -211,8 +219,8 @@ const EditorInventory = (() => {
     });
   }
 
-  function addItemRow(panelEl) {
-    const item   = Schema.createDefaultInventoryItem();
+  function addItemRow(panelEl, item = null) {
+    item = item || Schema.createDefaultInventoryItem();
     const listEl = panelEl.querySelector("#inventory-list");
     const temp   = document.createElement("div");
     temp.innerHTML = renderItemRow(item);
@@ -232,6 +240,23 @@ const EditorInventory = (() => {
     rowEl.querySelector(".item-name")?.focus();
   }
 
+  async function browseLibraryItems(panelEl) {
+    try {
+      await Library.loadAll();
+      const items = Library.list("items");
+      if (!items.length) {
+        App.showToast("No shared items yet. Add one in Library or save an inline item first.", "info");
+        return;
+      }
+      const choice = prompt(`Choose an item number:\n${items.map((item, index) => `${index + 1}. ${item.name}`).join("\n")}`);
+      const index = parseInt(choice, 10) - 1;
+      if (!items[index]) return;
+      addItemRow(panelEl, Library.resolveRef(Library.createReference("items", items[index], { quantity: 1 })));
+    } catch (error) {
+      App.showToast(`Could not load item library: ${error.message}`, "error");
+    }
+  }
+
   function readTab(character) {
     character.currency = {
       pp: parseInt(document.getElementById("currency-pp")?.value, 10) || 0,
@@ -247,7 +272,7 @@ const EditorInventory = (() => {
       const tags    = tagsRaw.split(",").map(t => t.trim()).filter(Boolean);
       const weight  = parseFloat(rowEl.querySelector(".item-weight")?.value);
 
-      return {
+      const item = {
         id:          rowEl.dataset.itemId || Schema.generateId(),
         name:        rowEl.querySelector(".item-name")?.value.trim()        || "",
         type:        rowEl.querySelector(".item-type")?.value               || "misc",
@@ -257,9 +282,33 @@ const EditorInventory = (() => {
         description: rowEl.querySelector(".item-description")?.value        || "",
         tags,
       };
-    }).filter(item => item.name);
+
+      if (rowEl.dataset.source === "library") {
+        const base = Library.find("items", rowEl.dataset.libraryRef, rowEl.dataset.librarySource) || {};
+        return {
+          id: rowEl.dataset.itemId || Schema.generateId(),
+          source: "library",
+          libraryCollection: "items",
+          librarySource: rowEl.dataset.librarySource || "custom",
+          libraryRef: rowEl.dataset.libraryRef,
+          quantity: item.quantity,
+          overrides: diffAgainstBase(item, base, ["quantity"]),
+        };
+      }
+
+      return item;
+    }).filter(item => item.name || item.libraryRef);
 
     return character;
+  }
+
+  function diffAgainstBase(current, base, localKeys = []) {
+    const overrides = {};
+    Object.keys(current).forEach(key => {
+      if (["id", "source", "libraryCollection", "librarySource", "libraryRef", ...localKeys].includes(key)) return;
+      if (JSON.stringify(current[key]) !== JSON.stringify(base[key])) overrides[key] = current[key];
+    });
+    return overrides;
   }
 
   return { buildTab, readTab };

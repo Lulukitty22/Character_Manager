@@ -46,6 +46,7 @@ const EditorDnd = (() => {
 
       // ── Full editor ──────────────────────────────────────────────────────────
       const dnd = character.dnd;
+      dnd.feats = (dnd.feats || []).map(feat => typeof Library !== "undefined" ? Library.resolveRef(feat) : feat);
 
       panel.innerHTML = `
         <div style="padding: var(--space-6) 0; display: flex; flex-direction: column; gap: var(--space-8);">
@@ -267,6 +268,7 @@ const EditorDnd = (() => {
             </div>
             <div class="array-add-row">
               <button class="button button-ghost button-sm" id="btn-add-feat">+ Add Feat</button>
+              <button class="button button-ghost button-sm" id="btn-browse-feats">Browse Library</button>
             </div>
           </section>
 
@@ -313,6 +315,7 @@ const EditorDnd = (() => {
 
       // Wire feats add
       panel.querySelector("#btn-add-feat")?.addEventListener("click", () => addFeatRow(panel));
+      panel.querySelector("#btn-browse-feats")?.addEventListener("click", () => browseLibraryFeats(panel));
       wireFeatList(panel);
     } // end render()
 
@@ -419,7 +422,11 @@ const EditorDnd = (() => {
 
   function renderFeatRow(feat) {
     return `
-      <div class="array-item feat-row" data-feat-id="${EditorBase.escapeAttr(feat.id || Schema.generateId())}">
+      <div class="array-item feat-row"
+        data-feat-id="${EditorBase.escapeAttr(feat.id || Schema.generateId())}"
+        data-source="${EditorBase.escapeAttr(feat.source || "inline")}"
+        data-library-source="${EditorBase.escapeAttr(feat.librarySource || "")}"
+        data-library-ref="${EditorBase.escapeAttr(feat.libraryRef || "")}">
         <div class="array-item-content">
           <div class="fields-grid-2">
             <input type="text" class="field-input feat-name"
@@ -441,8 +448,8 @@ const EditorDnd = (() => {
     });
   }
 
-  function addFeatRow(panelEl) {
-    const feat   = { id: Schema.generateId(), name: "", description: "" };
+  function addFeatRow(panelEl, feat = null) {
+    feat = feat || Schema.createDefaultFeat();
     const listEl = panelEl.querySelector("#feats-list");
     const temp   = document.createElement("div");
     temp.innerHTML = renderFeatRow(feat);
@@ -450,6 +457,23 @@ const EditorDnd = (() => {
     rowEl.querySelector(".btn-remove-feat")?.addEventListener("click", () => rowEl.remove());
     listEl.appendChild(rowEl);
     rowEl.querySelector(".feat-name")?.focus();
+  }
+
+  async function browseLibraryFeats(panelEl) {
+    try {
+      await Library.loadAll();
+      const feats = Library.list("feats");
+      if (!feats.length) {
+        App.showToast("No shared feats yet. Add one in Library or save an inline feat first.", "info");
+        return;
+      }
+      const choice = prompt(`Choose a feat number:\n${feats.map((feat, index) => `${index + 1}. ${feat.name}`).join("\n")}`);
+      const index = parseInt(choice, 10) - 1;
+      if (!feats[index]) return;
+      addFeatRow(panelEl, Library.resolveRef(Library.createReference("feats", feats[index])));
+    } catch (error) {
+      App.showToast(`Could not load feat library: ${error.message}`, "error");
+    }
   }
 
   // ─── Read Tab ────────────────────────────────────────────────────────────────
@@ -513,13 +537,38 @@ const EditorDnd = (() => {
     })).filter(entry => entry.class);
 
     // Feats
-    dnd.feats = Array.from(document.querySelectorAll(".feat-row")).map(rowEl => ({
-      id:          rowEl.dataset.featId || Schema.generateId(),
-      name:        rowEl.querySelector(".feat-name")?.value.trim()        || "",
-      description: rowEl.querySelector(".feat-description")?.value.trim() || "",
-    })).filter(feat => feat.name);
+    dnd.feats = Array.from(document.querySelectorAll(".feat-row")).map(rowEl => {
+      const feat = {
+        id:          rowEl.dataset.featId || Schema.generateId(),
+        name:        rowEl.querySelector(".feat-name")?.value.trim()        || "",
+        description: rowEl.querySelector(".feat-description")?.value.trim() || "",
+      };
+
+      if (rowEl.dataset.source === "library") {
+        const base = Library.find("feats", rowEl.dataset.libraryRef, rowEl.dataset.librarySource) || {};
+        return {
+          id: feat.id,
+          source: "library",
+          libraryCollection: "feats",
+          librarySource: rowEl.dataset.librarySource || "custom",
+          libraryRef: rowEl.dataset.libraryRef,
+          overrides: diffAgainstBase(feat, base),
+        };
+      }
+
+      return feat;
+    }).filter(feat => feat.name || feat.libraryRef);
 
     return character;
+  }
+
+  function diffAgainstBase(current, base) {
+    const overrides = {};
+    Object.keys(current).forEach(key => {
+      if (["id", "source", "libraryCollection", "librarySource", "libraryRef"].includes(key)) return;
+      if (JSON.stringify(current[key]) !== JSON.stringify(base[key])) overrides[key] = current[key];
+    });
+    return overrides;
   }
 
   return { buildTab, readTab };

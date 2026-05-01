@@ -107,6 +107,50 @@ const GitHub = (() => {
   }
 
   /**
+   * Read a JSON library file from the repo.
+   * Returns { data: parsedObject, sha: string|null, path: string }.
+   * If the library file does not exist yet, fallbackData is returned with sha null.
+   */
+  async function readLibraryFile(fileName, fallbackData = null) {
+    if (!isConfigured()) throw new Error("GitHub is not configured.");
+
+    const filePath = `library/${fileName}`;
+    const response = await fetch(buildUrl(filePath), {
+      headers: buildHeaders(),
+    });
+
+    if (response.status === 404 && fallbackData !== null) {
+      return {
+        data: fallbackData,
+        sha:  null,
+        path: filePath,
+      };
+    }
+
+    if (!response.ok) {
+      const errorBody = await response.json().catch(() => ({}));
+      throw new Error(`GitHub API error ${response.status}: ${errorBody.message || response.statusText}`);
+    }
+
+    const fileInfo = await response.json();
+    const decoded  = atob(fileInfo.content.replace(/\n/g, ""));
+    const parsed   = JSON.parse(decoded);
+
+    return {
+      data: parsed,
+      sha:  fileInfo.sha,
+      path: filePath,
+    };
+  }
+
+  /**
+   * Write a JSON library file in the repo.
+   */
+  async function writeLibraryFile(fileName, data, sha = null) {
+    return writeCharacterFile(`library/${fileName}`, data, sha, `Update library/${fileName}`);
+  }
+
+  /**
    * Write (create or update) a character file in the repo.
    * Provide the existing sha when updating; omit it when creating.
    *
@@ -231,6 +275,8 @@ const GitHub = (() => {
     readCharacterFile,
     writeCharacterFile,
     deleteCharacterFile,
+    readLibraryFile,
+    writeLibraryFile,
   };
 
 })();
