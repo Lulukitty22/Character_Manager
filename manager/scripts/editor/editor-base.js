@@ -18,6 +18,8 @@ const EditorBase = (() => {
 
     const identity   = character.identity   || {};
     const appearance = character.appearance  || {};
+    const classification = identity.classification || "";
+    const classificationOptions = Object.entries(Schema.CHARACTER_CLASSIFICATIONS || {});
 
     panel.innerHTML = `
       <div style="padding: var(--space-6) 0; display: flex; flex-direction: column; gap: var(--space-8);">

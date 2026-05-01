@@ -1,6 +1,6 @@
 /**
  * schema.js
- * Defines default structures for each character type, provides UUID generation,
+ * Defines default structures for character sections, provides UUID generation,
  * and helpers to create/validate character data objects.
  *
  * All sections (dnd, boss, roblox, spells, etc.) are optional on a character.
@@ -26,32 +26,40 @@ const Schema = (() => {
 
   // ─── Character Types ───────────────────────────────────────────────────────
 
-  const CHARACTER_TYPES = {
-    DND5E_PC:   "dnd5e_pc",
-    DND5E_BOSS: "dnd5e_boss",
-    OC:         "oc",
-    ROBLOX_OC:  "roblox_oc",
+  const CHARACTER_CLASSIFICATIONS = {
+    player_character:   { icon: "⚔️", label: "Player Character" },
+    boss_npc:           { icon: "💀", label: "Boss / NPC" },
+    original_character: { icon: "✨", label: "Original Character" },
+    roblox_oc:          { icon: "🎮", label: "Roblox OC" },
   };
 
-  const CHARACTER_TYPE_LABELS = {
-    dnd5e_pc:   "D&D 5e — Player Character",
-    dnd5e_boss: "D&D 5e — Boss / NPC",
-    oc:         "Original Character",
-    roblox_oc:  "Roblox OC",
-  };
-
-  const CHARACTER_TYPE_ICONS = {
-    dnd5e_pc:   "⚔️",
-    dnd5e_boss: "💀",
-    oc:         "✨",
-    roblox_oc:  "🎮",
-  };
+  function createBaseCharacter() {
+    return {
+      id:   generateId(),
+      meta: {
+        repoPath:    "",
+        lastUpdated: new Date().toISOString(),
+      },
+      identity:   createDefaultIdentity(),
+      appearance: createDefaultAppearance(),
+      personality:  "",
+      backstory:    "",
+      notes:        "",
+      spells:       [],
+      spellSlots:   {},
+      abilities:    [],
+      inventory:    [],
+      currency:     { gp: 0, sp: 0, cp: 0, ep: 0, pp: 0 },
+      customResources: [],
+    };
+  }
 
   // ─── Default Structures ────────────────────────────────────────────────────
 
   function createDefaultIdentity() {
     return {
       name:    "",
+      classification: "",
       aliases: [],
       race:    "",
       height:  "",
@@ -243,46 +251,13 @@ const Schema = (() => {
   // ─── Full Character Defaults ───────────────────────────────────────────────
 
   /**
-   * Create a fresh character object of the given type.
-   * Type-specific sections (dnd, boss, roblox) are included based on type.
+   * Create a fresh blank character object.
+   * Tabs and sections are enabled explicitly by the editor.
    *
-   * @param {string} type  One of CHARACTER_TYPES values
-   * @returns {object}     A default character object ready to be edited
+   * @returns {object} A default character object ready to be edited
    */
-  function createCharacter(type = CHARACTER_TYPES.DND5E_PC) {
-    const character = {
-      id:   generateId(),
-      type: type,
-      meta: {
-        repoPath:    "",
-        lastUpdated: new Date().toISOString(),
-      },
-      identity:   createDefaultIdentity(),
-      appearance: createDefaultAppearance(),
-      personality:  "",
-      backstory:    "",
-      notes:        "",
-      spells:       [],
-      spellSlots:   {},
-      abilities:    [],
-      inventory:    [],
-      currency:     { gp: 0, sp: 0, cp: 0, ep: 0, pp: 0 },
-      customResources: [],
-    };
-
-    if (type === CHARACTER_TYPES.DND5E_PC) {
-      character.dnd = createDefaultDnd();
-    }
-
-    if (type === CHARACTER_TYPES.DND5E_BOSS) {
-      character.boss = createDefaultBoss();
-    }
-
-    if (type === CHARACTER_TYPES.ROBLOX_OC) {
-      character.roblox = createDefaultRoblox();
-    }
-
-    return character;
+  function createCharacter() {
+    return createBaseCharacter();
   }
 
   /**
@@ -294,16 +269,17 @@ const Schema = (() => {
    * @returns {object}          Character with defaults applied for missing fields
    */
   function applyDefaults(character) {
-    const defaults = createCharacter(character.type || CHARACTER_TYPES.DND5E_PC);
+    const safeCharacter = character && typeof character === "object" ? character : {};
+    const defaults = createBaseCharacter();
 
-    // Deep-merge: only fill in top-level keys that are missing
+    // Fill in only the generic top-level keys required by the editor shell.
     for (const key of Object.keys(defaults)) {
-      if (!(key in character)) {
-        character[key] = defaults[key];
+      if (!(key in safeCharacter)) {
+        safeCharacter[key] = defaults[key];
       }
     }
 
-    return character;
+    return safeCharacter;
   }
 
   /**
@@ -316,6 +292,38 @@ const Schema = (() => {
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/^-|-$/g, "");
     return `characters/${slug}.json`;
+  }
+
+  function getCharacterPresentation(character = {}) {
+    const classification = character.identity?.classification || "";
+    if (classification && CHARACTER_CLASSIFICATIONS[classification]) {
+      return {
+        icon: CHARACTER_CLASSIFICATIONS[classification].icon,
+        label: CHARACTER_CLASSIFICATIONS[classification].label,
+      };
+    }
+
+    const hasAnySection = Boolean(
+      character.dnd ||
+      character.boss ||
+      character.roblox ||
+      character.spells?.length ||
+      character.inventory?.length ||
+      character.customResources?.length ||
+      character.abilities?.length
+    );
+
+    if (!hasAnySection) {
+      return {
+        icon: "✨",
+        label: "Blank Character",
+      };
+    }
+
+    return {
+      icon: "✨",
+      label: "Custom Character",
+    };
   }
 
   // ─── Ability Score Helpers ─────────────────────────────────────────────────
@@ -458,13 +466,12 @@ const Schema = (() => {
   return {
     generateId,
 
-    CHARACTER_TYPES,
-    CHARACTER_TYPE_LABELS,
-    CHARACTER_TYPE_ICONS,
+    CHARACTER_CLASSIFICATIONS,
 
     createCharacter,
     applyDefaults,
     deriveRepoPath,
+    getCharacterPresentation,
 
     createDefaultSpell,
     createDefaultAbility,

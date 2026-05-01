@@ -15,11 +15,10 @@ const CharacterList = (() => {
     const listEl       = document.getElementById("character-card-grid");
     const emptyStateEl = document.getElementById("empty-state");
     const searchInput  = document.getElementById("search-input");
-    const filterSelect = document.getElementById("type-filter");
 
     document.getElementById("btn-new-character").addEventListener("click", openNewCharacterDialog);
-    searchInput.addEventListener("input",  () => filterCards(searchInput.value, filterSelect.value));
-    filterSelect.addEventListener("change",() => filterCards(searchInput.value, filterSelect.value));
+    document.getElementById("btn-empty-create")?.addEventListener("click", openNewCharacterDialog);
+    searchInput.addEventListener("input", () => filterCards(searchInput.value));
     document.getElementById("btn-refresh").addEventListener("click", () => refresh());
 
     const files = await App.loadCharacterList();
@@ -60,26 +59,18 @@ const CharacterList = (() => {
   // ─── Shell HTML ──────────────────────────────────────────────────────────────
 
   function renderShell() {
-    const typeOptions = Object.entries(Schema.CHARACTER_TYPE_LABELS)
-      .map(([value, label]) => `<option value="${value}">${label}</option>`)
-      .join("");
-
     return `
       <div class="list-view">
         <div class="list-header flex-between">
           <div>
             <h2 class="list-title">📜 Characters</h2>
-            <p class="text-muted text-sm">All characters stored in your GitHub repository.</p>
+            <p class="text-muted text-sm">All characters stored in your GitHub repository. Search by name, alias, or tag.</p>
           </div>
           <button id="btn-new-character" class="button button-primary">✦ New Character</button>
         </div>
 
         <div class="list-controls">
-          <input id="search-input" type="search" class="search-input" placeholder="Search by name or tag…" />
-          <select id="type-filter" class="type-filter-select">
-            <option value="">All Types</option>
-            ${typeOptions}
-          </select>
+          <input id="search-input" type="search" class="search-input" placeholder="Search characters…" />
           <button id="btn-refresh" class="button button-ghost button-sm">🔄 Refresh</button>
         </div>
 
@@ -103,15 +94,6 @@ const CharacterList = (() => {
             <div class="settings-field">
               <label class="field-label" for="new-char-name">Character Name</label>
               <input type="text" id="new-char-name" class="field-input" placeholder="e.g. Capella Emerada Lugnica" />
-            </div>
-            <div class="settings-field">
-              <label class="field-label" for="new-char-type">Character Type</label>
-              <select id="new-char-type" class="field-input">
-                ${Object.entries(Schema.CHARACTER_TYPE_LABELS)
-                  .map(([value, label]) =>
-                    `<option value="${value}">${Schema.CHARACTER_TYPE_ICONS[value]} ${label}</option>`
-                  ).join("")}
-              </select>
             </div>
           </div>
           <div class="modal-footer">
@@ -139,12 +121,19 @@ const CharacterList = (() => {
 
   function renderCharacterCard(characterData, sha, filePath) {
     const identity  = characterData.identity || {};
-    const type      = characterData.type || "oc";
-    const typeLabel = Schema.CHARACTER_TYPE_LABELS[type] || type;
-    const typeIcon  = Schema.CHARACTER_TYPE_ICONS[type]  || "✨";
+    const presentation = Schema.getCharacterPresentation(characterData);
     const name      = identity.name || "(Unnamed)";
     const race      = identity.race || "";
     const tags      = (identity.tags || []).slice(0, 4);
+    const sectionSummary = buildSectionSummary(characterData);
+    const searchText = [
+      name,
+      race,
+      identity.aliases || [],
+      identity.tags || [],
+      sectionSummary,
+      presentation.label,
+    ].flat().join(" ");
 
     let subtitle = race;
     if (characterData.dnd) {
@@ -181,9 +170,10 @@ const CharacterList = (() => {
     const tagBadges = tags.map(tag => `<span class="badge">${escapeHTML(tag)}</span>`).join("");
 
     return `
-      <div class="character-card" data-file-path="${escapeAttr(filePath)}" data-sha="${escapeAttr(sha || "")}">
-        <div class="card-type-badge"><span class="badge badge-accent">${typeIcon} ${typeLabel}</span></div>
+      <div class="character-card" data-file-path="${escapeAttr(filePath)}" data-sha="${escapeAttr(sha || "")}" data-search="${escapeAttr(searchText)}">
+        <div class="card-type-badge"><span class="badge badge-accent">${presentation.icon} ${escapeHTML(presentation.label)}</span></div>
         <div class="card-name">${escapeHTML(name)}</div>
+        ${sectionSummary ? `<div class="card-subtitle">${escapeHTML(sectionSummary)}</div>` : ""}
         ${subtitle ? `<div class="card-subtitle">${escapeHTML(subtitle)}</div>` : ""}
         ${hpDisplay}
         ${tagBadges ? `<div class="card-tags">${tagBadges}</div>` : ""}
@@ -239,16 +229,7 @@ const CharacterList = (() => {
   // ─── Sheet Preview ───────────────────────────────────────────────────────────
 
   function openSheetPreview(characterData, filePath) {
-    let sheetHTML = "";
-    const type    = characterData.type;
-
-    if (type === Schema.CHARACTER_TYPES.DND5E_PC) {
-      sheetHTML = ViewDnd5e.buildHTML(characterData);
-    } else if (type === Schema.CHARACTER_TYPES.DND5E_BOSS) {
-      sheetHTML = ViewBoss.buildHTML(characterData);
-    } else {
-      sheetHTML = ViewOc.buildHTML(characterData);
-    }
+    const sheetHTML = ViewCharacter.buildHTML(characterData);
 
     const overlay = document.createElement("div");
     overlay.className = "sheet-preview-overlay";
@@ -266,6 +247,7 @@ const CharacterList = (() => {
     `;
 
     document.body.appendChild(overlay);
+    ViewCharacter.wireInteractive(overlay.querySelector(".sheet-preview-body"), characterData);
     overlay.querySelector("#btn-close-preview").addEventListener("click", () => overlay.remove());
     overlay.querySelector("#btn-export-preview").addEventListener("click", () => {
       SheetExporter.exportCharacter(characterData, filePath);
@@ -293,8 +275,7 @@ const CharacterList = (() => {
       const name = document.getElementById("new-char-name").value.trim();
       if (!name) { App.showToast("Enter a name for the character.", "error"); return; }
 
-      const type      = document.getElementById("new-char-type").value;
-      const character = Schema.createCharacter(type);
+      const character = Schema.createCharacter();
       character.identity.name = name;
       character.meta.repoPath = Schema.deriveRepoPath(name);
 
@@ -305,29 +286,28 @@ const CharacterList = (() => {
 
   // ─── Filtering ───────────────────────────────────────────────────────────────
 
-  function filterCards(searchQuery, typeFilter) {
+  function filterCards(searchQuery) {
     const query = searchQuery.toLowerCase().trim();
     const grid  = document.getElementById("character-card-grid");
     if (!grid) return;
 
     grid.querySelectorAll(".character-card").forEach(card => {
-      const nameText  = card.querySelector(".card-name")?.textContent.toLowerCase()    || "";
-      const tagsText  = Array.from(card.querySelectorAll(".badge")).map(b => b.textContent.toLowerCase()).join(" ");
-      const typeText  = Schema.CHARACTER_TYPE_LABELS[typeFilter]?.toLowerCase()        || "";
-      const cardType  = card.querySelector(".card-type-badge .badge")?.textContent.toLowerCase() || "";
+      const searchable = (card.dataset.search || card.textContent || "").toLowerCase();
+      const matchesSearch = !query || searchable.includes(query);
 
-      const matchesSearch = !query      || nameText.includes(query) || tagsText.includes(query);
-      const matchesType   = !typeFilter || cardType.includes(typeText);
-
-      card.style.display = matchesSearch && matchesType ? "" : "none";
+      card.style.display = matchesSearch ? "" : "none";
     });
+
+    checkEmptyState();
   }
 
   function checkEmptyState() {
     const grid  = document.getElementById("character-card-grid");
     const empty = document.getElementById("empty-state");
     if (!grid || !empty) return;
-    const visible = grid.querySelectorAll(".character-card").length;
+    const visible = Array.from(grid.querySelectorAll(".character-card"))
+      .filter(card => card.style.display !== "none")
+      .length;
     empty.classList.toggle("hidden", visible > 0);
     grid.classList.toggle("hidden",  visible === 0);
   }
@@ -345,6 +325,18 @@ const CharacterList = (() => {
 
   function escapeAttr(text) {
     return String(text).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+  }
+
+  function buildSectionSummary(characterData) {
+    const sections = [];
+    if (characterData.dnd) sections.push("D&D");
+    if (characterData.boss) sections.push("Boss");
+    if (characterData.roblox) sections.push("Roblox");
+    if (characterData.spells?.length) sections.push("Spells");
+    if (characterData.inventory?.length) sections.push("Inventory");
+    if (characterData.customResources?.length) sections.push("Resources");
+    if (characterData.abilities?.length) sections.push("Traits");
+    return sections.length ? sections.join(" + ") : "";
   }
 
   return { render, refresh, openNewCharacterDialog };

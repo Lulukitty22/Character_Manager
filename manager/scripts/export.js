@@ -8,9 +8,13 @@
  *
  *   1. manager/style/base.css   — CSS variables + utilities
  *   2. manager/style/sheet.css  — sheet display styles
- *   3. manager/scripts/schema.js               — shared helpers
- *   4. manager/scripts/views/view-character.js — unified renderer (all types)
- *   5. characters/{name}.json   — the actual character data
+ *   3. manager/scripts/schema.js
+ *   4. manager/scripts/views/view-character-utils.js
+ *   5. manager/scripts/views/view-character-header.js
+ *   6. manager/scripts/views/view-character-notes.js
+ *   7. manager/scripts/views/view-character-*.js
+ *   8. manager/scripts/views/view-character.js — unified coordinator
+ *   9. characters/{name}.json   — the actual character data
  *
  * Why this works:
  *   - raw.githubusercontent.com has open CORS headers (public repos)
@@ -50,6 +54,17 @@ const SheetExporter = (() => {
       baseCss:       `${repoBase}/manager/style/base.css`,
       sheetCss:      `${repoBase}/manager/style/sheet.css`,
       schema:        `${repoBase}/manager/scripts/schema.js`,
+      utils:         `${repoBase}/manager/scripts/views/view-character-utils.js`,
+      header:        `${repoBase}/manager/scripts/views/view-character-header.js`,
+      notes:         `${repoBase}/manager/scripts/views/view-character-notes.js`,
+      identity:      `${repoBase}/manager/scripts/views/view-character-identity.js`,
+      dnd:           `${repoBase}/manager/scripts/views/view-character-dnd.js`,
+      abilities:     `${repoBase}/manager/scripts/views/view-character-abilities.js`,
+      boss:          `${repoBase}/manager/scripts/views/view-character-boss.js`,
+      spells:        `${repoBase}/manager/scripts/views/view-character-spells.js`,
+      inventory:     `${repoBase}/manager/scripts/views/view-character-inventory.js`,
+      resources:     `${repoBase}/manager/scripts/views/view-character-resources.js`,
+      roblox:        `${repoBase}/manager/scripts/views/view-character-roblox.js`,
       viewCharacter: `${repoBase}/manager/scripts/views/view-character.js`,
     };
 
@@ -68,6 +83,17 @@ const SheetExporter = (() => {
     const escapedBaseCss      = escapeJsString(scriptUrls.baseCss);
     const escapedSheetCss      = escapeJsString(scriptUrls.sheetCss);
     const escapedSchema        = escapeJsString(scriptUrls.schema);
+    const escapedUtils         = escapeJsString(scriptUrls.utils);
+    const escapedHeader        = escapeJsString(scriptUrls.header);
+    const escapedNotes         = escapeJsString(scriptUrls.notes);
+    const escapedIdentity      = escapeJsString(scriptUrls.identity);
+    const escapedDnd           = escapeJsString(scriptUrls.dnd);
+    const escapedAbilities     = escapeJsString(scriptUrls.abilities);
+    const escapedBoss          = escapeJsString(scriptUrls.boss);
+    const escapedSpells        = escapeJsString(scriptUrls.spells);
+    const escapedInventory     = escapeJsString(scriptUrls.inventory);
+    const escapedResources     = escapeJsString(scriptUrls.resources);
+    const escapedRoblox        = escapeJsString(scriptUrls.roblox);
     const escapedViewCharacter = escapeJsString(scriptUrls.viewCharacter);
 
     return `<!DOCTYPE html>
@@ -111,6 +137,17 @@ const SheetExporter = (() => {
   var BASE_CSS_URL       = "${escapedBaseCss}";
   var SHEET_CSS_URL      = "${escapedSheetCss}";
   var SCHEMA_URL         = "${escapedSchema}";
+  var UTILS_URL          = "${escapedUtils}";
+  var HEADER_URL         = "${escapedHeader}";
+  var NOTES_URL          = "${escapedNotes}";
+  var IDENTITY_URL       = "${escapedIdentity}";
+  var DND_URL            = "${escapedDnd}";
+  var ABILITIES_URL      = "${escapedAbilities}";
+  var BOSS_URL           = "${escapedBoss}";
+  var SPELLS_URL         = "${escapedSpells}";
+  var INVENTORY_URL      = "${escapedInventory}";
+  var RESOURCES_URL      = "${escapedResources}";
+  var ROBLOX_URL         = "${escapedRoblox}";
   var VIEW_CHARACTER_URL = "${escapedViewCharacter}";
 
   // ── DOM refs ──────────────────────────────────────────────────────────────
@@ -180,13 +217,30 @@ const SheetExporter = (() => {
       injectCSS(baseCssText);
       injectCSS(sheetCssText);
 
-      // 2. Load renderer scripts (schema first, then the unified renderer)
+      // 2. Load renderer scripts in dependency order
       setStatus("Loading renderer…");
-      var schemaText    = await fetchText(SCHEMA_URL,         "schema.js");
-      injectScript(schemaText, "schema.js");
+      var rendererScripts = [
+        [SCHEMA_URL,         "schema.js"],
+        [UTILS_URL,          "view-character-utils.js"],
+        [HEADER_URL,         "view-character-header.js"],
+        [NOTES_URL,          "view-character-notes.js"],
+        [IDENTITY_URL,       "view-character-identity.js"],
+        [DND_URL,            "view-character-dnd.js"],
+        [ABILITIES_URL,      "view-character-abilities.js"],
+        [BOSS_URL,           "view-character-boss.js"],
+        [SPELLS_URL,         "view-character-spells.js"],
+        [INVENTORY_URL,      "view-character-inventory.js"],
+        [RESOURCES_URL,      "view-character-resources.js"],
+        [ROBLOX_URL,         "view-character-roblox.js"],
+        [VIEW_CHARACTER_URL, "view-character.js"],
+      ];
 
-      var viewCharText  = await fetchText(VIEW_CHARACTER_URL, "view-character.js");
-      injectScript(viewCharText, "view-character.js");
+      for (var i = 0; i < rendererScripts.length; i++) {
+        var scriptUrl = rendererScripts[i][0];
+        var scriptLabel = rendererScripts[i][1];
+        var scriptText = await fetchText(scriptUrl, scriptLabel);
+        injectScript(scriptText, scriptLabel);
+      }
 
       // 3. Fetch the character data
       setStatus("Loading character data…");

@@ -291,12 +291,12 @@ const CharacterEditor = (() => {
     currentSha       = characterInfo.sha       || null;
     currentFilePath  = characterInfo.filePath  || currentCharacter.meta?.repoPath || "";
 
-    const type  = currentCharacter.type;
-    const name  = currentCharacter.identity?.name || "New Character";
-    const icon  = Schema.CHARACTER_TYPE_ICONS[type] || "✨";
-    const label = Schema.CHARACTER_TYPE_LABELS[type] || type;
+    const name = currentCharacter.identity?.name || "New Character";
+    const presentation = Schema.getCharacterPresentation(currentCharacter);
+    const icon = presentation.icon;
+    const label = presentation.label;
 
-    // Build tab definitions based on character type
+    // Build tab definitions for the section-driven editor
     const tabs = buildTabDefinitions(currentCharacter);
 
     // Shell
