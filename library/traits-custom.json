@@ -1,5 +1,52 @@
 {
   "version": 1,
   "collection": "traits",
-  "entries": []
+  "entries": [
+    {
+      "id": "dnd5eapi-proficiencies-shortbows",
+      "collection": "traits",
+      "name": "Shortbows",
+      "tags": [
+        "D&D 5e API",
+        "SRD 2014",
+        "proficiencies"
+      ],
+      "source": "external",
+      "provider": "dnd5eapi",
+      "providerId": "shortbows",
+      "variantOf": "",
+      "addons": {
+        "sourceDocument": {
+          "provider": "dnd5eapi",
+          "title": "D&D 5e SRD 2014",
+          "type": "proficiencies",
+          "detailUrl": "https://www.dnd5eapi.co/api/2014/proficiencies/shortbows"
+        },
+        "rawImport": {
+          "index": "shortbows",
+          "type": "Weapons",
+          "name": "Shortbows",
+          "classes": [],
+          "races": [
+            {
+              "index": "high-elf",
+              "name": "High Elf",
+              "url": "/api/2014/subraces/high-elf"
+            }
+          ],
+          "url": "/api/2014/proficiencies/shortbows",
+          "reference": {
+            "index": "shortbow",
+            "name": "Shortbow",
+            "url": "/api/2014/equipment/shortbow"
+          },
+          "updated_at": "2026-04-01T20:35:38.536Z"
+        }
+      },
+      "createdAt": "2026-05-01T15:25:26.633Z",
+      "updatedAt": "2026-05-01T15:25:26.634Z",
+      "type": "trait",
+      "description": ""
+    }
+  ]
 }
