@@ -1,5 +1,227 @@
 {
   "version": 1,
   "collection": "spells",
-  "entries": []
+  "entries": [
+    {
+      "id": "4c177263-68ac-419d-84d5-d71d1c18bbbf",
+      "collection": "spells",
+      "name": "Flesh Polymorph",
+      "tags": [
+        "signature",
+        "homebrew"
+      ],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {
+        "components": [],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        }
+      },
+      "createdAt": "2026-05-01T15:51:09.535Z",
+      "updatedAt": "2026-05-01T15:51:09.535Z",
+      "level": 4,
+      "school": "Transmutation",
+      "castingTime": "Bonus Action or Reaction",
+      "range": "Self",
+      "components": [],
+      "duration": "Instant / sustained traits",
+      "description": "Modified self-only Polymorph. Does not replace HP, AC, mental stats, or the sheet. Adds physical traits only. Usually keep up to 3 major traits active at once.",
+      "prepared": true
+    },
+    {
+      "id": "7b6931ed-1049-4d02-8590-78936898e3cc",
+      "collection": "spells",
+      "name": "Voice of Distortion",
+      "tags": [
+        "control"
+      ],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {
+        "components": [
+          "V"
+        ],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        }
+      },
+      "createdAt": "2026-05-01T15:51:09.535Z",
+      "updatedAt": "2026-05-01T15:51:09.535Z",
+      "level": 5,
+      "school": "Enchantment",
+      "castingTime": "Action or Legendary Action",
+      "range": "60 ft",
+      "components": [
+        "V"
+      ],
+      "duration": "1 round",
+      "description": "One creature that can hear Capella makes a DC 25 WIS save. On failure choose one: lose reaction, disadvantage on next attack, cannot willingly move closer, or subtract 1d6 from next saving throw or ability check.",
+      "prepared": true
+    },
+    {
+      "id": "7e97d247-569e-4b1e-a1ae-309711acd5e5",
+      "collection": "spells",
+      "name": "Dominate Monster",
+      "tags": [
+        "psychic",
+        "boss"
+      ],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {
+        "components": [
+          "V",
+          "S"
+        ],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": true
+        }
+      },
+      "createdAt": "2026-05-01T15:51:09.535Z",
+      "updatedAt": "2026-05-01T15:51:09.535Z",
+      "level": 8,
+      "school": "Enchantment",
+      "castingTime": "1 action",
+      "range": "60 ft",
+      "components": [
+        "V",
+        "S"
+      ],
+      "duration": "Concentration, up to 1 hour",
+      "description": "Used as an aberrant lich-style high-tier psychic power. DM may reflavor as invasive flesh/voice control.",
+      "prepared": false
+    },
+    {
+      "id": "3aee59b4-649b-422b-9a06-1a6da700d624",
+      "collection": "spells",
+      "name": "Plane Shift",
+      "tags": [
+        "escape",
+        "boss"
+      ],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {
+        "components": [
+          "V",
+          "S",
+          "M"
+        ],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": false
+        }
+      },
+      "createdAt": "2026-05-01T15:51:09.535Z",
+      "updatedAt": "2026-05-01T15:51:09.535Z",
+      "level": 7,
+      "school": "Conjuration",
+      "castingTime": "1 action",
+      "range": "Touch / Self",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "duration": "Instantaneous",
+      "description": "Escape or story movement option. Usually used to leave or reposition rather than hard-delete players.",
+      "prepared": false
+    },
+    {
+      "id": "d249f049-b5c0-4dc0-87d6-3b755dc761ce",
+      "collection": "spells",
+      "name": "Detect Thoughts",
+      "tags": [
+        "social"
+      ],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {
+        "components": [
+          "V",
+          "S",
+          "M"
+        ],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": true
+        }
+      },
+      "createdAt": "2026-05-01T15:51:09.535Z",
+      "updatedAt": "2026-05-01T15:51:09.535Z",
+      "level": 2,
+      "school": "Divination",
+      "castingTime": "1 action",
+      "range": "Self",
+      "components": [
+        "V",
+        "S",
+        "M"
+      ],
+      "duration": "Concentration, up to 1 minute",
+      "description": "Used to tailor lies, impersonation, and social manipulation.",
+      "prepared": true
+    },
+    {
+      "id": "504aee8d-99e5-48fe-934c-bd74f3eaf223",
+      "collection": "spells",
+      "name": "Suggestion",
+      "tags": [
+        "social"
+      ],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {
+        "components": [
+          "V",
+          "M"
+        ],
+        "ritual": {
+          "enabled": false
+        },
+        "concentration": {
+          "enabled": true
+        }
+      },
+      "createdAt": "2026-05-01T15:51:09.535Z",
+      "updatedAt": "2026-05-01T15:51:09.535Z",
+      "level": 2,
+      "school": "Enchantment",
+      "castingTime": "1 action",
+      "range": "30 ft",
+      "components": [
+        "V",
+        "M"
+      ],
+      "duration": "Concentration, up to 8 hours",
+      "description": "Social pressure option for manipulation scenes.",
+      "prepared": true
+    }
+  ]
 }
