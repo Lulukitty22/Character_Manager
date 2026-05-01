@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Character Manager</title>
+
+  <!-- Styles (order matters) -->
+  <link rel="stylesheet" href="style/base.css"   />
+  <link rel="stylesheet" href="style/editor.css" />
+  <link rel="stylesheet" href="style/sheet.css"  />
+
+  <style>
+    /* ── Layout ─────────────────────────────────────────────────── */
+
+    body {
+      display:   flex;
+      flex-direction: column;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── Top Header Bar ─────────────────────────────────────────── */
+
+    #app-header {
+      display:          flex;
+      align-items:      center;
+      gap:              var(--space-4);
+      padding:          0 var(--space-6);
+      height:           var(--header-height);
+      background-color: var(--color-bg-deepest);
+      border-bottom:    1px solid var(--color-border-subtle);
+      position:         sticky;
+      top:              0;
+      z-index:          100;
+      flex-shrink:      0;
+    }
+
+    #app-logo {
+      font-family:    var(--font-display);
+      font-size:      var(--text-lg);
+      font-weight:    700;
+      color:          var(--color-gold);
+      letter-spacing: 0.05em;
+      white-space:    nowrap;
+    }
+
+    #app-logo span {
+      color: var(--color-accent-light);
+    }
+
+    /* ── Navigation ──────────────────────────────────────────────── */
+
+    #app-nav {
+      display:     flex;
+      align-items: center;
+      gap:         var(--space-1);
+      margin-left: var(--space-4);
+      flex:        1;
+    }
+
+    .nav-item {
+      display:         inline-flex;
+      align-items:     center;
+      gap:             var(--space-2);
+      padding:         var(--space-2) var(--space-4);
+      border-radius:   var(--radius-base);
+      font-family:     var(--font-ui);
+      font-size:       var(--text-sm);
+      font-weight:     500;
+      color:           var(--color-text-muted);
+      cursor:          pointer;
+      border:          1px solid transparent;
+      transition:      background-color var(--transition-base),
+                       color            var(--transition-base),
+                       border-color     var(--transition-base);
+      user-select:     none;
+    }
+
+    .nav-item:hover {
+      background-color: var(--color-bg-raised);
+      color:            var(--color-text-primary);
+    }
+
+    .nav-item.active {
+      background-color: var(--color-bg-elevated);
+      border-color:     var(--color-border-muted);
+      color:            var(--color-accent-light);
+    }
+
+    /* ── App Body ────────────────────────────────────────────────── */
+
+    #app-body {
+      flex:     1;
+      display:  flex;
+      overflow: hidden;
+    }
+
+    /* ── Main Content ────────────────────────────────────────────── */
+
+    #main-content {
+      flex:       1;
+      overflow-y: auto;
+      padding:    var(--space-8) var(--space-8);
+      max-width:  var(--content-max-width);
+      width:      100%;
+      margin:     0 auto;
+    }
+
+    /* ── Loading Overlay ─────────────────────────────────────────── */
+
+    #loading-overlay {
+      position:         fixed;
+      inset:            0;
+      background-color: rgba(10, 9, 13, 0.75);
+      backdrop-filter:  blur(3px);
+      display:          flex;
+      flex-direction:   column;
+      align-items:      center;
+      justify-content:  center;
+      gap:              var(--space-4);
+      z-index:          9000;
+    }
+
+    #loading-overlay .loading-message {
+      font-family: var(--font-display);
+      font-size:   var(--text-md);
+      color:       var(--color-text-muted);
+      letter-spacing: 0.05em;
+    }
+
+    /* ── Settings View ───────────────────────────────────────────── */
+
+    .settings-view {
+      max-width: 620px;
+    }
+
+    .settings-header {
+      margin-bottom: var(--space-6);
+    }
+
+    .settings-header h2 {
+      font-size:     var(--text-2xl);
+      margin-bottom: var(--space-2);
+    }
+
+    .settings-card {
+      padding: var(--space-6);
+    }
+
+    .settings-field {
+      margin-bottom: var(--space-5);
+    }
+
+    .settings-field .field-label {
+      display:       block;
+      font-family:   var(--font-ui);
+      font-size:     var(--text-sm);
+      font-weight:   500;
+      color:         var(--color-text-bright);
+      margin-bottom: var(--space-1);
+    }
+
+    .settings-field .field-hint {
+      font-family:   var(--font-ui);
+      font-size:     var(--text-xs);
+      color:         var(--color-text-muted);
+      margin-bottom: var(--space-2);
+      line-height:   1.5;
+    }
+
+    .settings-field .field-hint a {
+      color: var(--color-accent-light);
+    }
+
+    .settings-field .field-input {
+      width:            100%;
+      padding:          var(--space-2) var(--space-3);
+      background-color: var(--color-bg-deep);
+      border:           1px solid var(--color-border-muted);
+      border-radius:    var(--radius-base);
+      color:            var(--color-text-primary);
+      font-family:      var(--font-ui);
+      font-size:        var(--text-sm);
+      outline:          none;
+      transition:       border-color var(--transition-base);
+    }
+
+    .settings-field .field-input:focus {
+      border-color: var(--color-accent);
+    }
+
+    .settings-actions {
+      display:     flex;
+      align-items: center;
+      gap:         var(--space-3);
+      flex-wrap:   wrap;
+      margin-top:  var(--space-2);
+    }
+
+    .settings-status {
+      font-family: var(--font-ui);
+      font-size:   var(--text-sm);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ─── Header ─────────────────────────────────────────────────────────── -->
+  <header id="app-header">
+    <div id="app-logo">⚔️ Character <span>Manager</span></div>
+
+    <nav id="app-nav">
+      <button class="nav-item" data-nav-target="list">
+        📜 Characters
+      </button>
+      <button class="nav-item" data-nav-target="settings">
+        ⚙️ Settings
+      </button>
+    </nav>
+  </header>
+
+  <!-- ─── App Body ───────────────────────────────────────────────────────── -->
+  <div id="app-body">
+
+    <!-- Main content area — views are rendered here by app.js -->
+    <main id="main-content">
+      <!-- Populated dynamically -->
+    </main>
+
+  </div>
+
+  <!-- ─── Loading Overlay ────────────────────────────────────────────────── -->
+  <div id="loading-overlay" class="hidden">
+    <div class="spinner"></div>
+    <p class="loading-message">Loading…</p>
+  </div>
+
+  <!-- ─── Toast Container ────────────────────────────────────────────────── -->
+  <div id="toast-container"></div>
+
+  <!-- ─── Scripts (load order matters — dependencies first) ──────────────── -->
+  <script src="scripts/github.js"></script>
+  <script src="scripts/schema.js"></script>
+  <script src="scripts/editor/editor-base.js"></script>
+  <script src="scripts/editor/editor-dnd.js"></script>
+  <script src="scripts/editor/editor-boss.js"></script>
+  <script src="scripts/editor/editor-spells.js"></script>
+  <script src="scripts/editor/editor-inventory.js"></script>
+  <script src="scripts/editor/editor-resources.js"></script>
+  <script src="scripts/editor/editor-roblox.js"></script>
+  <script src="scripts/views/view-list.js"></script>
+  <script src="scripts/views/view-dnd5e.js"></script>
+  <script src="scripts/views/view-boss.js"></script>
+  <script src="scripts/views/view-oc.js"></script>
+  <script src="scripts/export.js"></script>
+  <script src="scripts/app.js"></script>
+
+</body>
+</html>

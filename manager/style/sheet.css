@@ -1,0 +1,692 @@
+/*
+ * sheet.css
+ * Styles for rendered character sheets — both in the manager's preview pane
+ * and embedded in exported shareable HTML files.
+ */
+
+/* ─── Sheet Root ─────────────────────────────────────────────────────────────── */
+
+.character-sheet {
+  font-family:      var(--font-body, 'Crimson Text', Georgia, serif);
+  color:            var(--color-text-primary, #d4ccdf);
+  background-color: var(--color-bg-base, #13111a);
+  max-width:        760px;
+  margin:           0 auto;
+  padding:          var(--space-6, 1.5rem);
+  line-height:      1.65;
+}
+
+/* ─── Sheet Header ───────────────────────────────────────────────────────────── */
+
+.sheet-header {
+  text-align:    center;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(180, 160, 220, 0.3);
+  position:      relative;
+}
+
+.sheet-character-name {
+  font-family:    var(--font-display, 'Cinzel', Georgia, serif);
+  font-size:      2.4rem;
+  font-weight:    700;
+  color:          #f0eaf8;
+  letter-spacing: 0.04em;
+  line-height:    1.15;
+  margin-bottom:  0.4rem;
+}
+
+.sheet-subtitle {
+  font-family:  var(--font-ui, 'Inter', system-ui, sans-serif);
+  font-size:    1rem;
+  color:        #8a8399;
+  margin-bottom: 0.8rem;
+}
+
+.sheet-type-badge {
+  display:          inline-flex;
+  align-items:      center;
+  padding:          0.2em 0.7em;
+  border-radius:    9999px;
+  font-family:      var(--font-ui, 'Inter', system-ui, sans-serif);
+  font-size:        0.7rem;
+  font-weight:      500;
+  letter-spacing:   0.06em;
+  text-transform:   uppercase;
+  background-color: rgba(155, 114, 207, 0.15);
+  border:           1px solid rgba(155, 114, 207, 0.4);
+  color:            #b899e8;
+  margin-bottom:    0.8rem;
+}
+
+.sheet-tags {
+  display:     flex;
+  flex-wrap:   wrap;
+  justify-content: center;
+  gap:         0.4rem;
+  margin-top:  0.5rem;
+}
+
+.sheet-tag {
+  display:          inline-flex;
+  padding:          0.1em 0.5em;
+  border-radius:    9999px;
+  font-family:      var(--font-ui, 'Inter', system-ui, sans-serif);
+  font-size:        0.65rem;
+  font-weight:      500;
+  letter-spacing:   0.05em;
+  text-transform:   uppercase;
+  background-color: rgba(42, 38, 61, 1);
+  border:           1px solid rgba(180, 160, 220, 0.25);
+  color:            #8a8399;
+}
+
+/* ─── Sheet Sections ─────────────────────────────────────────────────────────── */
+
+.sheet-section {
+  margin-bottom: 2rem;
+}
+
+.sheet-section-title {
+  font-family:    var(--font-display, 'Cinzel', Georgia, serif);
+  font-size:      0.8rem;
+  font-weight:    600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color:          #c9a84c;
+  margin-bottom:  0.75rem;
+  padding-bottom: 0.4rem;
+  border-bottom:  1px solid rgba(180, 160, 220, 0.15);
+}
+
+/* ─── Ability Scores ─────────────────────────────────────────────────────────── */
+
+.sheet-ability-grid {
+  display:               grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap:                   0.5rem;
+}
+
+.sheet-ability-box {
+  display:          flex;
+  flex-direction:   column;
+  align-items:      center;
+  background-color: rgba(26, 23, 36, 1);
+  border:           1px solid rgba(180, 160, 220, 0.25);
+  border-radius:    6px;
+  padding:          0.6rem 0.3rem;
+  text-align:       center;
+}
+
+.sheet-ability-label {
+  font-family:    var(--font-ui, 'Inter', system-ui, sans-serif);
+  font-size:      0.65rem;
+  font-weight:    600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color:          #5a5570;
+  margin-bottom:  0.2rem;
+}
+
+.sheet-ability-score {
+  font-family:  var(--font-display, 'Cinzel', Georgia, serif);
+  font-size:    1.8rem;
+  font-weight:  700;
+  color:        #f0eaf8;
+  line-height:  1;
+}
+
+.sheet-ability-mod {
+  font-family:  var(--font-ui, 'Inter', system-ui, sans-serif);
+  font-size:    0.8rem;
+  font-weight:  500;
+  color:        #b899e8;
+  margin-top:   0.2rem;
+}
+
+/* ─── Combat Row ─────────────────────────────────────────────────────────────── */
+
+.sheet-combat-row {
+  display:     flex;
+  flex-wrap:   wrap;
+  gap:         0.75rem;
+  margin-bottom: 1rem;
+}
+
+.sheet-combat-box {
+  display:          flex;
+  flex-direction:   column;
+  align-items:      center;
+  background-color: rgba(26, 23, 36, 1);
+  border:           1px solid rgba(180, 160, 220, 0.25);
+  border-radius:    6px;
+  padding:          0.5rem 0.8rem;
+  text-align:       center;
+  min-width:        70px;
+}
+
+.sheet-combat-label {
+  font-family:    var(--font-ui, 'Inter', system-ui, sans-serif);
+  font-size:      0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color:          #5a5570;
+  font-weight:    600;
+  margin-bottom:  0.15rem;
+}
+
+.sheet-combat-value {
+  font-family:  var(--font-display, 'Cinzel', Georgia, serif);
+  font-size:    1.2rem;
+  font-weight:  700;
+  color:        #f0eaf8;
+  line-height:  1;
+}
+
+/* ─── HP Display ─────────────────────────────────────────────────────────────── */
+
+.sheet-hp-block {
+  background-color: rgba(20, 18, 28, 1);
+  border:           1px solid rgba(180, 160, 220, 0.2);
+  border-radius:    8px;
+  padding:          1rem 1.2rem;
+  margin-bottom:    1rem;
+}
+
+.sheet-hp-numbers {
+  display:       flex;
+  align-items:   baseline;
+  gap:           0.4rem;
+  margin-bottom: 0.6rem;
+}
+
+.sheet-hp-current {
+  font-family:  var(--font-display, 'Cinzel', Georgia, serif);
+  font-size:    2.4rem;
+  font-weight:  700;
+  color:        #f0eaf8;
+  line-height:  1;
+}
+
+.sheet-hp-sep { color: #5a5570; font-size: 1.4rem; }
+
+.sheet-hp-max {
+  font-family:  var(--font-display, 'Cinzel', Georgia, serif);
+  font-size:    1.2rem;
+  color:        #8a8399;
+}
+
+.sheet-hp-label {
+  font-family:    var(--font-ui, 'Inter', system-ui, sans-serif);
+  font-size:      0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color:          #5a5570;
+  margin-left:    0.5rem;
+}
+
+/* ─── Proficiencies & Skills ─────────────────────────────────────────────────── */
+
+.sheet-skill-list {
+  columns:    2;
+  gap:        1rem;
+}
+
+.sheet-skill-row {
+  display:        flex;
+  align-items:    center;
+  gap:            0.4rem;
+  font-family:    var(--font-ui, 'Inter', system-ui, sans-serif);
+  font-size:      0.8rem;
+  color:          #8a8399;
+  padding:        0.15rem 0;
+  break-inside:   avoid;
+}
+
+.sheet-skill-row.proficient {
+  color: #d4ccdf;
+}
+
+.sheet-skill-dot {
+  width:         8px;
+  height:        8px;
+  border-radius: 50%;
+  background-color: rgba(90, 85, 112, 1);
+  flex-shrink:   0;
+}
+
+.sheet-skill-row.proficient .sheet-skill-dot  { background-color: #9b72cf; }
+.sheet-skill-row.expert     .sheet-skill-dot  { background-color: #c9a84c; }
+
+.sheet-skill-bonus {
+  margin-left: auto;
+  font-weight: 600;
+  color:       #b899e8;
+}
+
+/* ─── Spells ─────────────────────────────────────────────────────────────────── */
+
+.sheet-spell-level-group {
+  margin-bottom: 1.2rem;
+}
+
+.sheet-spell-level-header {
+  font-family:    var(--font-ui, 'Inter', system-ui, sans-serif);
+  font-size:      0.7rem;
+  font-weight:    600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color:          #8a8399;
+  margin-bottom:  0.4rem;
+  display:        flex;
+  align-items:    center;
+  gap:            0.5rem;
+}
+
+.sheet-spell-slots {
+  font-family: var(--font-ui, 'Inter', system-ui, sans-serif);
+  font-size:   0.75rem;
+  color:       #b899e8;
+  margin-left: auto;
+}
+
+.sheet-spell-entry {
+  display:          flex;
+  align-items:      flex-start;
+  gap:              0.5rem;
+  padding:          0.3rem 0.5rem;
+  border-radius:    4px;
+  font-family:      var(--font-body, 'Crimson Text', Georgia, serif);
+  font-size:        0.95rem;
+  transition:       background-color 150ms ease;
+}
+
+.sheet-spell-entry:hover {
+  background-color: rgba(42, 38, 61, 0.5);
+}
+
+.sheet-spell-prepared-dot {
+  width:         8px;
+  height:        8px;
+  border-radius: 50%;
+  background-color: #9b72cf;
+  margin-top:    0.4rem;
+  flex-shrink:   0;
+}
+
+.sheet-spell-entry:not(.prepared) .sheet-spell-prepared-dot {
+  background-color: rgba(90, 85, 112, 0.4);
+}
+
+.sheet-spell-name {
+  font-weight: 600;
+  color:       #d4ccdf;
+}
+
+.sheet-spell-details {
+  font-size:   0.8rem;
+  color:       #5a5570;
+  font-style:  italic;
+}
+
+/* ─── Inventory ──────────────────────────────────────────────────────────────── */
+
+.sheet-item-row {
+  display:     flex;
+  align-items: center;
+  gap:         0.6rem;
+  padding:     0.3rem 0;
+  border-bottom: 1px solid rgba(180, 160, 220, 0.07);
+}
+
+.sheet-item-name {
+  flex:        1;
+  font-family: var(--font-body, 'Crimson Text', Georgia, serif);
+  font-size:   0.95rem;
+  color:       #d4ccdf;
+}
+
+.sheet-item-qty {
+  font-family: var(--font-ui, 'Inter', system-ui, sans-serif);
+  font-size:   0.75rem;
+  color:       #5a5570;
+}
+
+.sheet-item-attuned {
+  font-family:    var(--font-ui, 'Inter', system-ui, sans-serif);
+  font-size:      0.6rem;
+  font-weight:    500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color:          #b899e8;
+  border:         1px solid rgba(155, 114, 207, 0.4);
+  border-radius:  9999px;
+  padding:        0.05em 0.45em;
+}
+
+/* ─── Abilities / Features ───────────────────────────────────────────────────── */
+
+.sheet-ability-entry {
+  margin-bottom: 0.8rem;
+}
+
+.sheet-ability-entry-name {
+  font-family:  var(--font-display, 'Cinzel', Georgia, serif);
+  font-size:    0.85rem;
+  font-weight:  600;
+  color:        #e0c070;
+}
+
+.sheet-ability-entry-type {
+  display:        inline-block;
+  font-family:    var(--font-ui, 'Inter', system-ui, sans-serif);
+  font-size:      0.6rem;
+  font-weight:    500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color:          #9b72cf;
+  border:         1px solid rgba(155, 114, 207, 0.3);
+  border-radius:  9999px;
+  padding:        0.05em 0.45em;
+  margin-left:    0.4rem;
+  vertical-align: middle;
+}
+
+.sheet-ability-entry-desc {
+  font-size:   0.9rem;
+  color:       #8a8399;
+  margin-top:  0.2rem;
+  line-height: 1.55;
+}
+
+/* ─── Boss Stat Block ────────────────────────────────────────────────────────── */
+
+.sheet-boss-toggle-bar {
+  display:          flex;
+  align-items:      center;
+  gap:              1rem;
+  background-color: rgba(185, 64, 64, 0.12);
+  border:           1px solid rgba(185, 64, 64, 0.35);
+  border-radius:    8px;
+  padding:          0.6rem 1rem;
+  margin-bottom:    1.2rem;
+}
+
+.sheet-boss-toggle-label {
+  font-family:    var(--font-ui, 'Inter', system-ui, sans-serif);
+  font-size:      0.8rem;
+  font-weight:    600;
+  letter-spacing: 0.04em;
+  color:          #d96060;
+}
+
+.sheet-boss-toggle-btn {
+  padding:          0.3em 0.8em;
+  border-radius:    6px;
+  font-family:      var(--font-ui, 'Inter', system-ui, sans-serif);
+  font-size:        0.75rem;
+  font-weight:      600;
+  cursor:           pointer;
+  border:           1px solid rgba(185, 64, 64, 0.5);
+  background-color: rgba(185, 64, 64, 0.2);
+  color:            #d96060;
+  transition:       background-color 150ms, color 150ms;
+}
+
+.sheet-boss-toggle-btn:hover {
+  background-color: rgba(185, 64, 64, 0.4);
+  color:            #f0a0a0;
+}
+
+.sheet-boss-toggle-btn.active {
+  background-color: rgba(185, 64, 64, 0.6);
+  color:            #f0eaf8;
+}
+
+.sheet-attack-row {
+  background-color: rgba(20, 18, 28, 1);
+  border:           1px solid rgba(180, 160, 220, 0.15);
+  border-radius:    6px;
+  padding:          0.6rem 0.8rem;
+  margin-bottom:    0.5rem;
+}
+
+.sheet-attack-name {
+  font-family:  var(--font-display, 'Cinzel', Georgia, serif);
+  font-size:    0.9rem;
+  font-weight:  600;
+  color:        #f0eaf8;
+  margin-bottom: 0.2rem;
+}
+
+.sheet-attack-stats {
+  font-family: var(--font-ui, 'Inter', system-ui, sans-serif);
+  font-size:   0.75rem;
+  color:       #8a8399;
+  display:     flex;
+  flex-wrap:   wrap;
+  gap:         0.6rem;
+}
+
+.sheet-attack-stat {
+  display:     flex;
+  align-items: center;
+  gap:         0.2rem;
+}
+
+.sheet-attack-stat-key {
+  color: #5a5570;
+}
+
+.sheet-attack-stat-val {
+  color:       #d4ccdf;
+  font-weight: 600;
+}
+
+.sheet-polymorph-grid {
+  display:               grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap:                   0.5rem;
+  margin-bottom:         0.75rem;
+}
+
+.sheet-polymorph-trait {
+  padding:          0.4rem 0.7rem;
+  border-radius:    6px;
+  background-color: rgba(26, 23, 36, 1);
+  border:           1px solid rgba(180, 160, 220, 0.15);
+  font-family:      var(--font-ui, 'Inter', system-ui, sans-serif);
+  font-size:        0.75rem;
+  color:            #8a8399;
+}
+
+.sheet-polymorph-trait.active {
+  background-color: rgba(155, 114, 207, 0.15);
+  border-color:     rgba(155, 114, 207, 0.4);
+  color:            #b899e8;
+}
+
+.sheet-resistance-list {
+  display:  flex;
+  flex-wrap: wrap;
+  gap:      0.4rem;
+}
+
+.sheet-resistance-badge {
+  display:          inline-flex;
+  padding:          0.15em 0.55em;
+  border-radius:    9999px;
+  font-family:      var(--font-ui, 'Inter', system-ui, sans-serif);
+  font-size:        0.65rem;
+  font-weight:      500;
+  letter-spacing:   0.04em;
+  text-transform:   capitalize;
+}
+
+.sheet-resistance-badge.resist   { background-color: rgba(76, 144, 192, 0.15); border: 1px solid rgba(76, 144, 192, 0.4); color: #6090c0; }
+.sheet-resistance-badge.immune   { background-color: rgba(185, 64, 64, 0.15);  border: 1px solid rgba(185, 64, 64, 0.4);  color: #d96060; }
+.sheet-resistance-badge.weak     { background-color: rgba(201, 168, 76, 0.15); border: 1px solid rgba(201, 168, 76, 0.3); color: #c9a84c; }
+.sheet-resistance-badge.immunity { background-color: rgba(76, 175, 128, 0.15); border: 1px solid rgba(76, 175, 128, 0.3); color: #4caf80; }
+
+/* ─── OC Profile ─────────────────────────────────────────────────────────────── */
+
+.sheet-prose {
+  font-family:  var(--font-body, 'Crimson Text', Georgia, serif);
+  font-size:    1rem;
+  color:        #8a8399;
+  line-height:  1.7;
+  white-space:  pre-wrap;
+}
+
+.sheet-image-gallery {
+  display:               grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap:                   0.75rem;
+  margin-bottom:         1rem;
+}
+
+.sheet-image-item img {
+  width:         100%;
+  height:        180px;
+  object-fit:    cover;
+  border-radius: 6px;
+  border:        1px solid rgba(180, 160, 220, 0.2);
+}
+
+.sheet-image-label {
+  font-family:    var(--font-ui, 'Inter', system-ui, sans-serif);
+  font-size:      0.7rem;
+  color:          #5a5570;
+  text-align:     center;
+  margin-top:     0.25rem;
+}
+
+.sheet-roblox-catalog {
+  display:               grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap:                   0.5rem;
+}
+
+.sheet-roblox-item a {
+  display:          flex;
+  align-items:      center;
+  gap:              0.5rem;
+  padding:          0.4rem 0.7rem;
+  border-radius:    6px;
+  background-color: rgba(26, 23, 36, 1);
+  border:           1px solid rgba(180, 160, 220, 0.15);
+  text-decoration:  none;
+  color:            #b899e8;
+  font-family:      var(--font-ui, 'Inter', system-ui, sans-serif);
+  font-size:        0.8rem;
+  transition:       background-color 150ms, border-color 150ms;
+}
+
+.sheet-roblox-item a:hover {
+  background-color: rgba(155, 114, 207, 0.15);
+  border-color:     rgba(155, 114, 207, 0.4);
+}
+
+.sheet-roblox-category {
+  font-size:      0.62rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color:          #5a5570;
+  margin-left:    auto;
+  white-space:    nowrap;
+}
+
+/* ─── Custom Resources ───────────────────────────────────────────────────────── */
+
+.sheet-resource-block {
+  display:          flex;
+  align-items:      center;
+  gap:              1rem;
+  background-color: rgba(20, 18, 28, 1);
+  border:           1px solid rgba(180, 160, 220, 0.2);
+  border-radius:    8px;
+  padding:          0.75rem 1rem;
+  margin-bottom:    0.5rem;
+}
+
+.sheet-resource-name {
+  font-family:  var(--font-display, 'Cinzel', Georgia, serif);
+  font-size:    0.85rem;
+  font-weight:  600;
+  color:        #d4ccdf;
+  flex:         1;
+}
+
+.sheet-resource-value {
+  font-family:  var(--font-display, 'Cinzel', Georgia, serif);
+  font-size:    1.4rem;
+  font-weight:  700;
+  color:        #f0eaf8;
+}
+
+.sheet-resource-max {
+  font-size:   0.9rem;
+  color:       #5a5570;
+}
+
+/* ─── Currency ───────────────────────────────────────────────────────────────── */
+
+.sheet-currency-row {
+  display:  flex;
+  flex-wrap: wrap;
+  gap:      0.75rem;
+}
+
+.sheet-currency-box {
+  display:          flex;
+  flex-direction:   column;
+  align-items:      center;
+  padding:          0.4rem 0.7rem;
+  background-color: rgba(26, 23, 36, 1);
+  border:           1px solid rgba(180, 160, 220, 0.15);
+  border-radius:    6px;
+  min-width:        56px;
+}
+
+.sheet-currency-amount {
+  font-family:  var(--font-display, 'Cinzel', Georgia, serif);
+  font-size:    1.1rem;
+  font-weight:  700;
+  color:        #c9a84c;
+}
+
+.sheet-currency-label {
+  font-family:    var(--font-ui, 'Inter', system-ui, sans-serif);
+  font-size:      0.6rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color:          #5a5570;
+  margin-top:     0.15rem;
+}
+
+/* ─── Roblox Outfit Commands ─────────────────────────────────────────────────── */
+
+.sheet-outfit-commands {
+  background-color: rgba(10, 9, 13, 1);
+  border:           1px solid rgba(180, 160, 220, 0.15);
+  border-radius:    6px;
+  padding:          0.75rem 1rem;
+  font-family:      'Courier New', monospace;
+  font-size:        0.78rem;
+  color:            #8a8399;
+  word-break:       break-all;
+  white-space:      pre-wrap;
+}
+
+/* ─── Footer ─────────────────────────────────────────────────────────────────── */
+
+.sheet-footer {
+  text-align:    center;
+  margin-top:    2rem;
+  padding-top:   1rem;
+  border-top:    1px solid rgba(180, 160, 220, 0.1);
+  font-family:   var(--font-ui, 'Inter', system-ui, sans-serif);
+  font-size:     0.65rem;
+  color:         #5a5570;
+  letter-spacing: 0.04em;
+}
