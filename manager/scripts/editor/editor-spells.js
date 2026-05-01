@@ -57,7 +57,7 @@ const EditorSpells = (() => {
           <div class="array-add-row">
             <button class="button button-primary button-sm" id="btn-add-spell">✦ Add Spell</button>
             <button class="button button-ghost button-sm" id="btn-browse-spells">Browse Library</button>
-            <button class="button button-ghost button-sm" id="btn-import-open5e-spell">Search Open5e</button>
+            <button class="button button-ghost button-sm" id="btn-import-external-spell">Search Sources</button>
           </div>
         </section>
 
@@ -69,7 +69,7 @@ const EditorSpells = (() => {
       addSpellRow(panel);
     });
     panel.querySelector("#btn-browse-spells")?.addEventListener("click", () => browseLibrarySpells(panel));
-    panel.querySelector("#btn-import-open5e-spell")?.addEventListener("click", () => importOpen5eSpell(panel));
+    panel.querySelector("#btn-import-external-spell")?.addEventListener("click", () => importExternalSpell(panel));
 
     // Wire existing spell interactions
     wireSpellList(panel);
@@ -342,7 +342,7 @@ const EditorSpells = (() => {
       await Library.loadAll();
       const spells = Library.list("spells");
       if (!spells.length) {
-        App.showToast("No shared spells yet. Add one in Library, or import from Open5e.", "info");
+        App.showToast("No shared spells yet. Add one in Library, or import from a source.", "info");
         return;
       }
       const choice = prompt(`Choose a spell number:\n${spells.map((spell, index) => `${index + 1}. ${spell.name}`).join("\n")}`);
@@ -354,23 +354,35 @@ const EditorSpells = (() => {
     }
   }
 
-  async function importOpen5eSpell(panelEl) {
-    const query = prompt("Search Open5e for which spell?");
+  async function importExternalSpell(panelEl) {
+    const providerChoice = prompt("Search which source?\n1. Open5e\n2. D&D 5e API", "1");
+    if (!providerChoice) return;
+    const provider = providerChoice.trim() === "2" || /d&?d|5e api/i.test(providerChoice)
+      ? "dnd5eapi"
+      : "open5e";
+    const providerLabel = provider === "dnd5eapi" ? "D&D 5e API" : "Open5e";
+    const query = prompt(`Search ${providerLabel} for which spell?`);
     if (!query) return;
     try {
-      const results = await Library.searchOpen5eSpells(query);
+      const allResults = provider === "dnd5eapi"
+        ? await Library.searchDnd5eApi(query)
+        : await Library.searchOpen5e(query);
+      const results = allResults.filter(result => result.collection === "spells");
       if (!results.length) {
-        App.showToast("No Open5e results found.", "info");
+        App.showToast(`No ${providerLabel} spell results found.`, "info");
         return;
       }
-      const choice = prompt(`Import which result?\n${results.map((spell, index) => `${index + 1}. ${spell.name} (Level ${spell.level})`).join("\n")}`);
+      const choice = prompt(`Import which spell?\n${results.map((spell, index) => {
+        const source = spell.sourceLabel ? ` - ${spell.sourceLabel}` : "";
+        return `${index + 1}. ${spell.name}${source}`;
+      }).join("\n")}`);
       const index = parseInt(choice, 10) - 1;
       if (!results[index]) return;
-      const imported = await Library.importOpen5eSpell(results[index]);
+      const imported = await Library.importExternalResult(results[index]);
       addSpellRow(panelEl, Library.resolveRef(Library.createReference("spells", imported, { prepared: false })));
       App.showToast(`Imported ${imported.name}.`, "success");
     } catch (error) {
-      App.showToast(`Open5e import failed: ${error.message}`, "error");
+      App.showToast(`${providerLabel} import failed: ${error.message}`, "error");
     }
   }
 
