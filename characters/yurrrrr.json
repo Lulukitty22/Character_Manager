@@ -1,0 +1,82 @@
+{
+  "id": "64e80b10-70ec-49a4-8985-7a521c8cca4d",
+  "type": "oc",
+  "meta": {
+    "repoPath": "characters/yurrrrr.json",
+    "lastUpdated": "2026-05-01T10:27:29.715Z"
+  },
+  "identity": {
+    "name": "Yurtle Manntle",
+    "aliases": [
+      "Test Character 2"
+    ],
+    "race": "Hooman",
+    "height": "3'1",
+    "age": "9001",
+    "origin": "British",
+    "tags": [
+      "Test",
+      "Debug"
+    ]
+  },
+  "appearance": {
+    "description": "",
+    "images": []
+  },
+  "personality": "",
+  "backstory": "",
+  "notes": "",
+  "spells": [],
+  "spellSlots": {},
+  "abilities": [],
+  "inventory": [],
+  "currency": {
+    "pp": 0,
+    "gp": 0,
+    "ep": 42,
+    "sp": 0,
+    "cp": 0
+  },
+  "customResources": [
+    {
+      "id": "08bd8192-fd0c-4ad8-9e9d-51b22da36b6d",
+      "name": "Thinking ability",
+      "max": 5,
+      "current": 4,
+      "log": [
+        {
+          "id": "1a85a0ce-cbf7-4eed-996b-04d28429a430",
+          "date": "2026-05-01",
+          "delta": 1,
+          "reason": "Start"
+        },
+        {
+          "id": "2d491ab1-6a9a-43b3-b54b-83731ff7b33f",
+          "date": "2026-05-01",
+          "delta": 5,
+          "reason": "Start"
+        },
+        {
+          "id": "7d5b6c9f-c8dd-495e-851e-54cbd5ae2a2b",
+          "date": "2026-05-01",
+          "delta": -1,
+          "reason": "Oof. Ow that hurt"
+        }
+      ]
+    },
+    {
+      "id": "f3415f95-d66b-40d3-9353-b887512c3e12",
+      "name": "Whining scale",
+      "max": 100,
+      "current": 17,
+      "log": [
+        {
+          "id": "1f9f20b2-b4b6-425e-b9d2-d81e49651a2e",
+          "date": "2026-05-01",
+          "delta": 17,
+          "reason": "got hurt. yeah that hurt..."
+        }
+      ]
+    }
+  ]
+}
