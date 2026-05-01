@@ -96,7 +96,7 @@ const EditorBase = (() => {
 
           <div class="field-group">
             <label class="field-label">Tags</label>
-            <p class="field-hint">Use tags to categorize and filter characters. Press Enter or comma to add.</p>
+            <p class="field-hint">Use tags to categorize and filter characters. Tags are synced into the shared library on save.</p>
             <div class="tags-input-container" id="tags-container">
               ${(identity.tags || []).map(tag => renderTagPill(tag, "tag")).join("")}
               <input
@@ -106,6 +106,16 @@ const EditorBase = (() => {
                 placeholder="Add tag…"
               />
             </div>
+            <div class="list-controls" style="margin-top: var(--space-3);">
+              <input
+                type="search"
+                id="shared-tag-search"
+                class="search-input"
+                placeholder="Search shared tags..."
+              />
+              <button class="button button-ghost button-sm" id="btn-search-shared-tags">Search Tags</button>
+            </div>
+            <div id="shared-tag-results" class="array-list" style="margin-top: var(--space-3);"></div>
           </div>
         </section>
 
@@ -179,6 +189,7 @@ const EditorBase = (() => {
     // Wire up tags inputs
     wireTagsInput(panel, "aliases-container", "aliases-input", "alias");
     wireTagsInput(panel, "tags-container",    "tags-input",    "tag");
+    wireSharedTagSearch(panel);
 
     // Wire up image add button
     panel.querySelector("#btn-add-image").addEventListener("click", () => {
@@ -260,6 +271,11 @@ const EditorBase = (() => {
   }
 
   function addTagPill(container, inputEl, value, dataType) {
+    const normalized = value.trim().toLowerCase();
+    const duplicate = Array.from(container.querySelectorAll(".tag-pill"))
+      .some(pill => (pill.dataset.value || "").trim().toLowerCase() === normalized);
+    if (duplicate) return;
+
     const pill = document.createElement("span");
     pill.className        = "tag-pill";
     pill.dataset.type     = dataType;
@@ -272,6 +288,87 @@ const EditorBase = (() => {
     });
 
     container.insertBefore(pill, inputEl);
+  }
+
+  function wireSharedTagSearch(panelEl) {
+    const searchInput = panelEl.querySelector("#shared-tag-search");
+    const searchButton = panelEl.querySelector("#btn-search-shared-tags");
+    if (!searchInput || !searchButton) return;
+
+    searchButton.addEventListener("click", () => searchSharedTags(panelEl));
+    searchInput.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        searchSharedTags(panelEl);
+      }
+    });
+  }
+
+  async function searchSharedTags(panelEl) {
+    const resultsEl = panelEl.querySelector("#shared-tag-results");
+    const query = (panelEl.querySelector("#shared-tag-search")?.value || "").trim().toLowerCase();
+    if (!resultsEl) return;
+
+    if (typeof Library === "undefined") {
+      resultsEl.innerHTML = `<p class="text-muted text-sm">Shared library is not loaded.</p>`;
+      return;
+    }
+
+    resultsEl.innerHTML = `<p class="text-muted text-sm">Searching shared tags...</p>`;
+
+    try {
+      await Library.loadAll();
+      const currentTags = new Set(readTagsFromContainer("tags-container").map(tag => tag.toLowerCase()));
+      const tags = Library.list("tags")
+        .filter(tag => {
+          const searchable = [tag.name, tag.description, tag.tags || []].flat().join(" ").toLowerCase();
+          return !query || searchable.includes(query);
+        })
+        .sort((a, b) => String(a.name || "").localeCompare(String(b.name || "")));
+
+      if (!tags.length) {
+        resultsEl.innerHTML = `<p class="text-muted text-sm">No shared tags found. New tags typed above become shared after save.</p>`;
+        return;
+      }
+
+      resultsEl.innerHTML = tags.map(tag => {
+        const selected = currentTags.has(String(tag.name || "").toLowerCase());
+        return `
+          <div class="array-item shared-tag-result" data-tag-name="${escapeAttr(tag.name || "")}">
+            <div class="array-item-content">
+              <div class="flex items-center gap-2 flex-wrap">
+                <span class="badge ${selected ? "badge-accent" : ""}">${escapeHTML(tag.name || "(Unnamed Tag)")}</span>
+                ${(tag.tags || []).map(child => `<span class="badge">${escapeHTML(child)}</span>`).join("")}
+              </div>
+              ${tag.description ? `<div class="array-item-subtitle">${escapeHTML(tag.description)}</div>` : ""}
+            </div>
+            <div class="array-item-actions">
+              <button class="button button-ghost button-sm btn-add-shared-tag" ${selected ? "disabled" : ""}>
+                ${selected ? "Added" : "Add"}
+              </button>
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      resultsEl.querySelectorAll(".btn-add-shared-tag").forEach(button => {
+        button.addEventListener("click", () => {
+          const row = button.closest(".shared-tag-result");
+          addSharedTag(row?.dataset.tagName || "");
+          button.textContent = "Added";
+          button.disabled = true;
+        });
+      });
+    } catch (error) {
+      resultsEl.innerHTML = `<p class="text-danger text-sm">Tag search failed: ${escapeHTML(error.message)}</p>`;
+    }
+  }
+
+  function addSharedTag(value) {
+    const container = document.getElementById("tags-container");
+    const input = document.getElementById("tags-input");
+    if (!container || !input || !value) return;
+    addTagPill(container, input, value, "tag");
   }
 
   function readTagsFromContainer(containerId) {

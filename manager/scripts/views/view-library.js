@@ -97,6 +97,14 @@ const ViewLibrary = (() => {
         <p class="text-muted text-sm" style="margin-bottom: var(--space-4);">
           ${entries.length} shared ${entries.length === 1 ? singular(collection).toLowerCase() : label(collection).toLowerCase()}.
         </p>
+        <div class="list-controls" style="margin-bottom: var(--space-4);">
+          <input
+            id="library-record-search"
+            type="search"
+            class="search-input"
+            placeholder="Search ${label(collection).toLowerCase()} by name, tag, source, or description..."
+          />
+        </div>
         <div id="library-record-list" class="array-list">
           ${entries.map(entry => renderRecordRow(collection, entry)).join("") || `<p class="text-muted text-sm">No records yet.</p>`}
         </div>
@@ -131,12 +139,32 @@ const ViewLibrary = (() => {
         renderCollection(container, collection);
       });
     });
+
+    panel.querySelector("#library-record-search")?.addEventListener("input", (event) => {
+      filterRecordRows(panel, event.target.value);
+    });
   }
 
   function renderRecordRow(collection, entry) {
     const addons = JSON.stringify(entry.addons || {}, null, 2);
+    const searchText = [
+      entry.name,
+      entry.description,
+      entry.source,
+      entry.provider,
+      entry.providerId,
+      entry.variantOf,
+      entry.tags || [],
+      entry.addons?.sourceDocument?.title,
+      entry.addons?.sourceDocument?.publisher,
+      entry.addons?.sourceDocument?.gameSystem,
+    ].flat().filter(Boolean).join(" ");
+
     return `
-      <div class="array-item library-record-row" data-record-id="${escapeAttr(entry.id)}" data-record-source="${escapeAttr(entry.source || "custom")}">
+      <div class="array-item library-record-row"
+        data-record-id="${escapeAttr(entry.id)}"
+        data-record-source="${escapeAttr(entry.source || "custom")}"
+        data-search="${escapeAttr(searchText)}">
         <div class="array-item-content">
           <div class="fields-grid-3">
             <input class="field-input library-record-name" value="${escapeAttr(entry.name || "")}" placeholder="Name" />
@@ -155,6 +183,14 @@ const ViewLibrary = (() => {
         </div>
       </div>
     `;
+  }
+
+  function filterRecordRows(panel, query) {
+    const needle = String(query || "").trim().toLowerCase();
+    panel.querySelectorAll(".library-record-row").forEach(row => {
+      const searchable = (row.dataset.search || row.textContent || "").toLowerCase();
+      row.style.display = !needle || searchable.includes(needle) ? "" : "none";
+    });
   }
 
   function renderFeatureFields(collection, entry) {
