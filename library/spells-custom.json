@@ -75,11 +75,13 @@
       "name": "Dominate Monster",
       "tags": [
         "psychic",
-        "boss"
+        "boss",
+        "D&D 5e Wiki",
+        "Player's Handbook"
       ],
       "source": "custom",
-      "provider": "",
-      "providerId": "",
+      "provider": "dnd5ewiki",
+      "providerId": "dominate-monster",
       "variantOf": "",
       "addons": {
         "mechanics": [
@@ -92,6 +94,23 @@
             "label": "Tier 8",
             "kind": "requirement",
             "description": "Outside boss mode, treat this as high-tier casting that requires explicit story/DM permission."
+          },
+          {
+            "label": "Telepathic",
+            "value": "Link",
+            "kind": "positive",
+            "description": "You can issue commands while you are conscious."
+          },
+          {
+            "label": "Control",
+            "value": "Action",
+            "kind": "requirement",
+            "description": "You can spend your action to take precise control until the end of your next turn."
+          },
+          {
+            "label": "Damage Save",
+            "kind": "negative",
+            "description": "Any time the target takes damage, it gets a new Wisdom save."
           }
         ],
         "components": [
@@ -103,6 +122,12 @@
         },
         "concentration": {
           "enabled": true
+        },
+        "sourceDocument": {
+          "provider": "dnd5ewiki",
+          "title": "Player's Handbook",
+          "type": "Spell",
+          "detailUrl": "https://dnd-5e.fandom.com/wiki/Dominate_Monster"
         }
       },
       "createdAt": "2026-05-01T15:52:17.807Z",
@@ -125,11 +150,13 @@
       "name": "Plane Shift",
       "tags": [
         "escape",
-        "boss"
+        "boss",
+        "D&D 5e Wiki",
+        "Player's Handbook"
       ],
       "source": "custom",
-      "provider": "",
-      "providerId": "",
+      "provider": "dnd5ewiki",
+      "providerId": "plane-shift",
       "variantOf": "",
       "addons": {
         "components": [
@@ -142,14 +169,33 @@
         },
         "concentration": {
           "enabled": false
-        }
+        },
+        "sourceDocument": {
+          "provider": "dnd5ewiki",
+          "title": "Player's Handbook",
+          "type": "Spell",
+          "detailUrl": "https://dnd-5e.fandom.com/wiki/Plane_Shift"
+        },
+        "mechanics": [
+          {
+            "label": "Willing",
+            "value": "Up to 8",
+            "kind": "positive",
+            "description": "You can transport up to eight willing creatures linked in a circle."
+          },
+          {
+            "label": "Banish",
+            "kind": "negative",
+            "description": "An unwilling creature can be banished with a melee spell attack."
+          }
+        ]
       },
       "createdAt": "2026-05-01T15:52:17.807Z",
       "updatedAt": "2026-05-01T15:52:17.807Z",
       "level": 7,
       "school": "Conjuration",
       "castingTime": "1 action",
-      "range": "Touch / Self",
+      "range": "Touch",
       "components": [
         "V",
         "S",
@@ -164,11 +210,13 @@
       "collection": "spells",
       "name": "Detect Thoughts",
       "tags": [
-        "social"
+        "social",
+        "D&D 5e Wiki",
+        "Player's Handbook"
       ],
       "source": "custom",
-      "provider": "",
-      "providerId": "",
+      "provider": "dnd5ewiki",
+      "providerId": "detect-thoughts",
       "variantOf": "",
       "addons": {
         "components": [
@@ -181,7 +229,32 @@
         },
         "concentration": {
           "enabled": true
-        }
+        },
+        "sourceDocument": {
+          "provider": "dnd5ewiki",
+          "title": "Player's Handbook",
+          "type": "Spell",
+          "detailUrl": "https://dnd-5e.fandom.com/wiki/Detect_Thoughts"
+        },
+        "mechanics": [
+          {
+            "label": "Probe",
+            "value": "Deeper",
+            "kind": "requirement",
+            "description": "Probing deeper forces a Wisdom saving throw."
+          },
+          {
+            "label": "Low INT",
+            "value": "3 or lower",
+            "kind": "negative",
+            "description": "Creatures with Intelligence 3 or lower are unaffected."
+          },
+          {
+            "label": "Thoughts",
+            "kind": "positive",
+            "description": "You can read surface thoughts and search for thinking creatures."
+          }
+        ]
       },
       "createdAt": "2026-05-01T15:52:17.807Z",
       "updatedAt": "2026-05-01T15:52:17.807Z",
@@ -203,11 +276,13 @@
       "collection": "spells",
       "name": "Suggestion",
       "tags": [
-        "social"
+        "social",
+        "D&D 5e Wiki",
+        "Player's Handbook"
       ],
       "source": "custom",
-      "provider": "",
-      "providerId": "",
+      "provider": "dnd5ewiki",
+      "providerId": "suggestion",
       "variantOf": "",
       "addons": {
         "components": [
@@ -219,7 +294,31 @@
         },
         "concentration": {
           "enabled": true
-        }
+        },
+        "sourceDocument": {
+          "provider": "dnd5ewiki",
+          "title": "Player's Handbook",
+          "type": "Spell",
+          "detailUrl": "https://dnd-5e.fandom.com/wiki/Suggestion"
+        },
+        "mechanics": [
+          {
+            "label": "Save",
+            "value": "Wisdom",
+            "kind": "requirement",
+            "description": "Targets make a Wisdom saving throw."
+          },
+          {
+            "label": "Charm",
+            "kind": "condition",
+            "description": "Creatures that cannot be charmed are immune."
+          },
+          {
+            "label": "Harm Ends",
+            "kind": "negative",
+            "description": "If you or your companions damage the target, the spell ends."
+          }
+        ]
       },
       "createdAt": "2026-05-01T15:52:17.807Z",
       "updatedAt": "2026-05-01T15:52:17.807Z",
@@ -242,11 +341,13 @@
       "tags": [
         "Capella",
         "social",
-        "disguise"
+        "disguise",
+        "D&D 5e Wiki",
+        "Player's Handbook"
       ],
       "source": "custom",
-      "provider": "",
-      "providerId": "",
+      "provider": "dnd5ewiki",
+      "providerId": "disguise-self",
       "variantOf": "",
       "addons": {
         "components": [
@@ -261,10 +362,18 @@
         },
         "role": "social cover",
         "sourceDocument": {
-          "provider": "homebrew",
-          "title": "Capella combat rebuild",
-          "type": "spell-adaptation"
-        }
+          "provider": "dnd5ewiki",
+          "title": "Player's Handbook",
+          "type": "Spell",
+          "detailUrl": "https://dnd-5e.fandom.com/wiki/Disguise_Self"
+        },
+        "mechanics": [
+          {
+            "label": "Inspect",
+            "kind": "negative",
+            "description": "Physical inspection reveals the illusion."
+          }
+        ]
       },
       "level": 1,
       "school": "Illusion",
@@ -287,11 +396,13 @@
       "tags": [
         "Capella",
         "shapechange",
-        "utility"
+        "utility",
+        "D&D 5e Wiki",
+        "Player's Handbook"
       ],
       "source": "custom",
-      "provider": "",
-      "providerId": "",
+      "provider": "dnd5ewiki",
+      "providerId": "alter-self",
       "variantOf": "",
       "addons": {
         "components": [
@@ -306,10 +417,19 @@
         },
         "role": "minor body edit",
         "sourceDocument": {
-          "provider": "homebrew",
-          "title": "Capella combat rebuild",
-          "type": "spell-adaptation"
-        }
+          "provider": "dnd5ewiki",
+          "title": "Player's Handbook",
+          "type": "Spell",
+          "detailUrl": "https://dnd-5e.fandom.com/wiki/Alter_Self"
+        },
+        "mechanics": [
+          {
+            "label": "Modes",
+            "value": "3 options",
+            "kind": "positive",
+            "description": "Aquatic adaptation, change appearance, or natural weapons."
+          }
+        ]
       },
       "level": 2,
       "school": "Transmutation",
@@ -332,11 +452,13 @@
       "tags": [
         "Capella",
         "defense",
-        "illusion"
+        "illusion",
+        "D&D 5e Wiki",
+        "Player's Handbook"
       ],
       "source": "custom",
-      "provider": "",
-      "providerId": "",
+      "provider": "dnd5ewiki",
+      "providerId": "mirror-image",
       "variantOf": "",
       "addons": {
         "components": [
@@ -351,10 +473,24 @@
         },
         "role": "defense",
         "sourceDocument": {
-          "provider": "homebrew",
-          "title": "Capella combat rebuild",
-          "type": "spell-adaptation"
-        }
+          "provider": "dnd5ewiki",
+          "title": "Player's Handbook",
+          "type": "Spell",
+          "detailUrl": "https://dnd-5e.fandom.com/wiki/Mirror_Image"
+        },
+        "mechanics": [
+          {
+            "label": "Duplicates",
+            "value": "3",
+            "kind": "positive",
+            "description": "Three illusory duplicates protect you from attacks."
+          },
+          {
+            "label": "Sight",
+            "kind": "requirement",
+            "description": "Blindsight, truesight, or not seeing you can bypass the spell."
+          }
+        ]
       },
       "level": 2,
       "school": "Illusion",
@@ -377,11 +513,13 @@
       "tags": [
         "Capella",
         "control",
-        "psychic"
+        "psychic",
+        "D&D 5e Wiki",
+        "Player's Handbook"
       ],
       "source": "custom",
-      "provider": "",
-      "providerId": "",
+      "provider": "dnd5ewiki",
+      "providerId": "fear",
       "variantOf": "",
       "addons": {
         "components": [
@@ -397,15 +535,28 @@
         },
         "role": "crowd control",
         "sourceDocument": {
-          "provider": "homebrew",
-          "title": "Capella combat rebuild",
-          "type": "spell-adaptation"
-        }
+          "provider": "dnd5ewiki",
+          "title": "Player's Handbook",
+          "type": "Spell",
+          "detailUrl": "https://dnd-5e.fandom.com/wiki/Fear"
+        },
+        "mechanics": [
+          {
+            "label": "Frightened",
+            "kind": "condition",
+            "description": "Failed saves force the target to Dash away from you."
+          },
+          {
+            "label": "Drop Item",
+            "kind": "negative",
+            "description": "A failed save makes the target drop what it is holding."
+          }
+        ]
       },
       "level": 3,
       "school": "Illusion",
       "castingTime": "1 action",
-      "range": "30 ft cone",
+      "range": "Self (30-foot cone)",
       "components": [
         "V",
         "S",
@@ -424,11 +575,13 @@
       "tags": [
         "Capella",
         "reaction",
-        "defense"
+        "defense",
+        "D&D 5e Wiki",
+        "Player's Handbook"
       ],
       "source": "custom",
-      "provider": "",
-      "providerId": "",
+      "provider": "dnd5ewiki",
+      "providerId": "counterspell",
       "variantOf": "",
       "addons": {
         "components": [
@@ -442,14 +595,28 @@
         },
         "role": "anti-magic",
         "sourceDocument": {
-          "provider": "homebrew",
-          "title": "Capella combat rebuild",
-          "type": "spell-adaptation"
-        }
+          "provider": "dnd5ewiki",
+          "title": "Player's Handbook",
+          "type": "Spell",
+          "detailUrl": "https://dnd-5e.fandom.com/wiki/Counterspell"
+        },
+        "mechanics": [
+          {
+            "label": "Interrupt",
+            "kind": "negative",
+            "description": "The target spell fails if your interruption succeeds."
+          },
+          {
+            "label": "Upcast",
+            "value": "4th+",
+            "kind": "positive",
+            "description": "Higher-level slots can shut down equal-or-lower spells."
+          }
+        ]
       },
       "level": 3,
       "school": "Abjuration",
-      "castingTime": "Reaction",
+      "castingTime": "1 reaction, which you take when you see a creature within 60 feet of you casting a spell",
       "range": "60 ft",
       "components": [
         "S"
@@ -467,11 +634,13 @@
       "tags": [
         "Capella",
         "mobility",
-        "escape"
+        "escape",
+        "D&D 5e Wiki",
+        "Player's Handbook"
       ],
       "source": "custom",
-      "provider": "",
-      "providerId": "",
+      "provider": "dnd5ewiki",
+      "providerId": "dimension-door",
       "variantOf": "",
       "addons": {
         "components": [
@@ -485,10 +654,24 @@
         },
         "role": "mobility",
         "sourceDocument": {
-          "provider": "homebrew",
-          "title": "Capella combat rebuild",
-          "type": "spell-adaptation"
-        }
+          "provider": "dnd5ewiki",
+          "title": "Player's Handbook",
+          "type": "Spell",
+          "detailUrl": "https://dnd-5e.fandom.com/wiki/Dimension_Door"
+        },
+        "mechanics": [
+          {
+            "label": "Carry",
+            "value": "1 willing creature",
+            "kind": "positive",
+            "description": "You can bring one willing creature of your size or smaller."
+          },
+          {
+            "label": "Collision",
+            "kind": "negative",
+            "description": "Arriving in an occupied space deals force damage and fails the teleport."
+          }
+        ]
       },
       "level": 4,
       "school": "Conjuration",
@@ -510,11 +693,13 @@
       "tags": [
         "Capella",
         "control",
-        "disable"
+        "disable",
+        "D&D 5e Wiki",
+        "Player's Handbook"
       ],
       "source": "custom",
-      "provider": "",
-      "providerId": "",
+      "provider": "dnd5ewiki",
+      "providerId": "hold-monster",
       "variantOf": "",
       "addons": {
         "components": [
@@ -530,10 +715,23 @@
         },
         "role": "lockdown",
         "sourceDocument": {
-          "provider": "homebrew",
-          "title": "Capella combat rebuild",
-          "type": "spell-adaptation"
-        }
+          "provider": "dnd5ewiki",
+          "title": "Player's Handbook",
+          "type": "Spell",
+          "detailUrl": "https://dnd-5e.fandom.com/wiki/Hold_Monster"
+        },
+        "mechanics": [
+          {
+            "label": "Paralyzed",
+            "kind": "condition",
+            "description": "A failed Wisdom save leaves the target paralyzed."
+          },
+          {
+            "label": "Repeat Save",
+            "kind": "requirement",
+            "description": "The target repeats the save at the end of each of its turns."
+          }
+        ]
       },
       "level": 5,
       "school": "Enchantment",
@@ -557,11 +755,13 @@
       "tags": [
         "Capella",
         "social",
-        "memory"
+        "memory",
+        "D&D 5e Wiki",
+        "Player's Handbook"
       ],
       "source": "custom",
-      "provider": "",
-      "providerId": "",
+      "provider": "dnd5ewiki",
+      "providerId": "modify-memory",
       "variantOf": "",
       "addons": {
         "components": [
@@ -576,10 +776,25 @@
         },
         "role": "aftermath control",
         "sourceDocument": {
-          "provider": "homebrew",
-          "title": "Capella combat rebuild",
-          "type": "spell-adaptation"
-        }
+          "provider": "dnd5ewiki",
+          "title": "Player's Handbook",
+          "type": "Spell",
+          "detailUrl": "https://dnd-5e.fandom.com/wiki/Modify_Memory"
+        },
+        "mechanics": [
+          {
+            "label": "Memory Window",
+            "value": "24h / 10m",
+            "kind": "requirement",
+            "description": "Only recent memories from the last 24 hours can be altered."
+          },
+          {
+            "label": "Restore",
+            "value": "Remove Curse / Greater Restoration / Wish",
+            "kind": "positive",
+            "description": "Those spells can restore the target's true memory."
+          }
+        ]
       },
       "level": 5,
       "school": "Enchantment",
@@ -602,11 +817,13 @@
       "tags": [
         "Capella",
         "illusion",
-        "escape"
+        "escape",
+        "D&D 5e Wiki",
+        "Player's Handbook"
       ],
       "source": "custom",
-      "provider": "",
-      "providerId": "",
+      "provider": "dnd5ewiki",
+      "providerId": "mislead",
       "variantOf": "",
       "addons": {
         "components": [
@@ -620,10 +837,23 @@
         },
         "role": "decoy",
         "sourceDocument": {
-          "provider": "homebrew",
-          "title": "Capella combat rebuild",
-          "type": "spell-adaptation"
-        }
+          "provider": "dnd5ewiki",
+          "title": "Player's Handbook",
+          "type": "Spell",
+          "detailUrl": "https://dnd-5e.fandom.com/wiki/Mislead"
+        },
+        "mechanics": [
+          {
+            "label": "Invisible",
+            "kind": "positive",
+            "description": "You become invisible while an illusory double remains."
+          },
+          {
+            "label": "Senses",
+            "kind": "neutral",
+            "description": "You can perceive through the double while using its senses."
+          }
+        ]
       },
       "level": 5,
       "school": "Illusion",
@@ -645,11 +875,13 @@
       "tags": [
         "Capella",
         "social",
-        "mass disguise"
+        "mass disguise",
+        "D&D 5e Wiki",
+        "Player's Handbook"
       ],
       "source": "custom",
-      "provider": "",
-      "providerId": "",
+      "provider": "dnd5ewiki",
+      "providerId": "seeming",
       "variantOf": "",
       "addons": {
         "components": [
@@ -664,10 +896,24 @@
         },
         "role": "scene control",
         "sourceDocument": {
-          "provider": "homebrew",
-          "title": "Capella combat rebuild",
-          "type": "spell-adaptation"
-        }
+          "provider": "dnd5ewiki",
+          "title": "Player's Handbook",
+          "type": "Spell",
+          "detailUrl": "https://dnd-5e.fandom.com/wiki/Seeming"
+        },
+        "mechanics": [
+          {
+            "label": "Inspection",
+            "kind": "negative",
+            "description": "Physical inspection can reveal the disguise."
+          },
+          {
+            "label": "Group",
+            "value": "Any number",
+            "kind": "positive",
+            "description": "You can disguise any number of creatures in range."
+          }
+        ]
       },
       "level": 5,
       "school": "Illusion",
@@ -690,11 +936,13 @@
       "tags": [
         "Capella",
         "social",
-        "coercion"
+        "coercion",
+        "D&D 5e Wiki",
+        "Player's Handbook"
       ],
       "source": "custom",
-      "provider": "",
-      "providerId": "",
+      "provider": "dnd5ewiki",
+      "providerId": "geas",
       "variantOf": "",
       "addons": {
         "components": [
@@ -708,10 +956,30 @@
         },
         "role": "plot pressure",
         "sourceDocument": {
-          "provider": "homebrew",
-          "title": "Capella combat rebuild",
-          "type": "spell-adaptation"
-        }
+          "provider": "dnd5ewiki",
+          "title": "Player's Handbook",
+          "type": "Spell",
+          "detailUrl": "https://dnd-5e.fandom.com/wiki/Geas"
+        },
+        "mechanics": [
+          {
+            "label": "Charmed",
+            "kind": "condition",
+            "description": "The target becomes charmed if it understands you."
+          },
+          {
+            "label": "Psychic",
+            "value": "5d10",
+            "kind": "damage",
+            "description": "Defying the command deals psychic damage once per day."
+          },
+          {
+            "label": "Long Rest",
+            "value": "30 days / 1 year / until ended",
+            "kind": "duration",
+            "description": "Higher slot levels extend the duration dramatically."
+          }
+        ]
       },
       "level": 5,
       "school": "Enchantment",
@@ -733,11 +1001,13 @@
       "tags": [
         "Capella",
         "social",
-        "control"
+        "control",
+        "D&D 5e Wiki",
+        "Player's Handbook"
       ],
       "source": "custom",
-      "provider": "",
-      "providerId": "",
+      "provider": "dnd5ewiki",
+      "providerId": "mass-suggestion",
       "variantOf": "",
       "addons": {
         "components": [
@@ -752,10 +1022,30 @@
         },
         "role": "mass control",
         "sourceDocument": {
-          "provider": "homebrew",
-          "title": "Capella combat rebuild",
-          "type": "spell-adaptation"
-        }
+          "provider": "dnd5ewiki",
+          "title": "Player's Handbook",
+          "type": "Spell",
+          "detailUrl": "https://dnd-5e.fandom.com/wiki/Mass_Suggestion"
+        },
+        "mechanics": [
+          {
+            "label": "Targets",
+            "value": "Up to 12",
+            "kind": "positive",
+            "description": "You can affect up to twelve creatures of your choice."
+          },
+          {
+            "label": "Harm Ends",
+            "kind": "negative",
+            "description": "Damaging a target ends the spell for that creature."
+          },
+          {
+            "label": "Upcast",
+            "value": "10d / 30d / 1y",
+            "kind": "duration",
+            "description": "Higher slots extend duration to 10 days, 30 days, or 1 year and a day."
+          }
+        ]
       },
       "level": 6,
       "school": "Enchantment",
@@ -778,11 +1068,13 @@
       "tags": [
         "Capella",
         "control",
-        "nonlethal"
+        "nonlethal",
+        "D&D 5e Wiki",
+        "Player's Handbook"
       ],
       "source": "custom",
-      "provider": "",
-      "providerId": "",
+      "provider": "dnd5ewiki",
+      "providerId": "power-word-stun",
       "variantOf": "",
       "addons": {
         "components": [
@@ -796,10 +1088,24 @@
         },
         "role": "boss disable",
         "sourceDocument": {
-          "provider": "homebrew",
-          "title": "Capella combat rebuild",
-          "type": "spell-adaptation"
-        }
+          "provider": "dnd5ewiki",
+          "title": "Player's Handbook",
+          "type": "Spell",
+          "detailUrl": "https://dnd-5e.fandom.com/wiki/Power_Word_Stun"
+        },
+        "mechanics": [
+          {
+            "label": "Threshold",
+            "value": "150 HP",
+            "kind": "requirement",
+            "description": "Only creatures with 150 hit points or fewer are affected."
+          },
+          {
+            "label": "Con Save",
+            "kind": "requirement",
+            "description": "The target repeats a Constitution saving throw at the end of each turn."
+          }
+        ]
       },
       "level": 8,
       "school": "Enchantment",
