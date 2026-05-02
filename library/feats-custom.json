@@ -52,65 +52,102 @@
       "id": "931a6347-81ac-48d0-b499-cbf2c914eb60",
       "collection": "feats",
       "name": "Actor Feat",
-      "tags": [],
+      "tags": [
+        "D&D 5e Wiki",
+        "Player's Handbook"
+      ],
       "source": "custom",
-      "provider": "",
-      "providerId": "",
+      "provider": "dnd5ewiki",
+      "providerId": "actor",
       "variantOf": "",
       "addons": {
-        "prerequisites": []
+        "prerequisites": [],
+        "sourceDocument": {
+          "provider": "dnd5ewiki",
+          "title": "Player's Handbook",
+          "type": "Feat",
+          "detailUrl": "https://dnd-5e.fandom.com/wiki/Feats"
+        }
       },
       "createdAt": "2026-05-01T15:52:17.807Z",
       "updatedAt": "2026-05-01T15:52:17.807Z",
-      "description": "+1 CHA. Supports mimicry, false identities, and impersonation flavor without adding another flat bonus to player-facing deception."
+      "description": "Official Actor feat: +1 Charisma, advantage on Deception and Performance checks when impersonating, and the ability to mimic voices and sounds you have heard for at least 1 minute."
     },
     {
       "id": "b4205c6e-c27e-44d8-aeb9-7b9bb474a4e0",
       "collection": "feats",
       "name": "Skill Expert",
-      "tags": [],
+      "tags": [
+        "D&D 5e Wiki",
+        "Tasha's Cauldron of Everything"
+      ],
       "source": "custom",
-      "provider": "",
-      "providerId": "",
+      "provider": "dnd5ewiki",
+      "providerId": "skill-expert",
       "variantOf": "",
       "addons": {
-        "prerequisites": []
+        "prerequisites": [],
+        "sourceDocument": {
+          "provider": "dnd5ewiki",
+          "title": "Tasha's Cauldron of Everything",
+          "type": "Feat",
+          "detailUrl": "https://dnd-5e.fandom.com/wiki/Feats"
+        }
       },
       "createdAt": "2026-05-01T15:52:17.807Z",
       "updatedAt": "2026-05-01T15:52:17.807Z",
-      "description": "+1 CHA. Folded into Expert Deceiver for prepared deception/impersonation/persuasion."
+      "description": "Official Skill Expert feat: increase one ability score by 1, gain proficiency in one skill, and choose one proficient skill to gain expertise."
     },
     {
       "id": "73f591ce-f655-4898-943c-37e896a0d1eb",
       "collection": "feats",
       "name": "Beguiling Influence",
-      "tags": [],
+      "tags": [
+        "D&D 5e Wiki",
+        "Player's Handbook"
+      ],
       "source": "custom",
-      "provider": "",
-      "providerId": "",
+      "provider": "dnd5ewiki",
+      "providerId": "beguiling-influence",
       "variantOf": "",
       "addons": {
-        "prerequisites": []
+        "prerequisites": [],
+        "sourceDocument": {
+          "provider": "dnd5ewiki",
+          "title": "Player's Handbook",
+          "type": "Invocation",
+          "detailUrl": "https://dnd-5e.fandom.com/wiki/Warlock_%28Class%29"
+        }
       },
       "createdAt": "2026-05-01T15:52:17.807Z",
       "updatedAt": "2026-05-01T15:52:17.807Z",
-      "description": "Folded into Expert Deceiver. Grants proficiency in Deception and Persuasion."
+      "description": "Official warlock invocation: gain proficiency in Deception and Persuasion."
     },
     {
       "id": "2236f92f-66db-42e9-a1ad-34544cd3919c",
       "collection": "feats",
       "name": "Silver Tongue",
-      "tags": [],
+      "tags": [
+        "D&D 5e Wiki",
+        "Tasha's Cauldron of Everything",
+        "Mythic Odysseys of Theros"
+      ],
       "source": "custom",
-      "provider": "",
-      "providerId": "",
+      "provider": "dnd5ewiki",
+      "providerId": "silver-tongue",
       "variantOf": "",
       "addons": {
-        "prerequisites": []
+        "prerequisites": [],
+        "sourceDocument": {
+          "provider": "dnd5ewiki",
+          "title": "Tasha's Cauldron of Everything / Mythic Odysseys of Theros",
+          "type": "Feature",
+          "detailUrl": "https://dnd-5e.fandom.com/wiki/Bard_%28Class%29"
+        }
       },
       "createdAt": "2026-05-01T15:52:17.807Z",
       "updatedAt": "2026-05-01T15:52:17.807Z",
-      "description": "For Deception/Persuasion outside player-facing checks, d20 rolls of 9 or lower count as 10."
+      "description": "Official College of Eloquence feature: when you make a Charisma (Deception) or Charisma (Persuasion) check, a d20 roll of 9 or lower counts as a 10."
     }
   ]
 }
