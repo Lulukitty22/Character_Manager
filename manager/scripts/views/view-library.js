@@ -147,6 +147,10 @@ const ViewLibrary = (() => {
 
   function renderRecordRow(collection, entry) {
     const addons = JSON.stringify(entry.addons || {}, null, 2);
+    const sourceDocuments = [
+      entry.addons?.sourceDocument ? { ...entry.addons.sourceDocument, primary: true } : null,
+      ...(Array.isArray(entry.addons?.sourceDocuments) ? entry.addons.sourceDocuments : []),
+    ].filter(Boolean);
     const searchText = [
       entry.name,
       entry.description,
@@ -158,6 +162,9 @@ const ViewLibrary = (() => {
       entry.addons?.sourceDocument?.title,
       entry.addons?.sourceDocument?.publisher,
       entry.addons?.sourceDocument?.gameSystem,
+      ...(Array.isArray(entry.addons?.sourceDocuments)
+        ? entry.addons.sourceDocuments.flatMap(doc => [doc?.title, doc?.publisher, doc?.gameSystem, doc?.detailUrl])
+        : []),
     ].flat().filter(Boolean).join(" ");
 
     return `
@@ -172,6 +179,7 @@ const ViewLibrary = (() => {
             <input class="field-input library-record-variant" value="${escapeAttr(entry.variantOf || "")}" placeholder="Variant of record id" />
           </div>
           ${renderFeatureFields(collection, entry)}
+          ${renderSourceSummary(sourceDocuments)}
           <div class="field-group" style="margin-top: var(--space-3); margin-bottom: 0;">
             <label class="field-label">Addons JSON</label>
             <textarea class="field-textarea library-record-addons" rows="4">${escapeHTML(addons)}</textarea>
@@ -231,6 +239,25 @@ const ViewLibrary = (() => {
     }
 
     return "";
+  }
+
+  function renderSourceSummary(sourceDocuments) {
+    if (!sourceDocuments || !sourceDocuments.length) return "";
+
+    return `
+      <div class="field-group" style="margin-top: var(--space-3); margin-bottom: 0;">
+        <label class="field-label">Sources</label>
+        <div style="display:flex; flex-wrap:wrap; gap: var(--space-2);">
+          ${sourceDocuments.map(doc => {
+            const label = [doc.title || doc.name || doc.type || doc.provider || "Source", doc.provider || "", doc.gameSystem || ""]
+              .filter(Boolean)
+              .join(" · ");
+            const title = [doc.detailUrl || "", doc.publisher || ""].filter(Boolean).join(" | ");
+            return `<span class="badge ${doc.primary ? "badge-accent" : ""}" title="${escapeAttr(title)}">${escapeHTML(label)}</span>`;
+          }).join("")}
+        </div>
+      </div>
+    `;
   }
 
   function readRecordRow(collection, row) {

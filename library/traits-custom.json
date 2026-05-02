@@ -67,7 +67,28 @@
       "provider": "",
       "providerId": "",
       "variantOf": "",
-      "addons": {},
+      "addons": {
+        "sourceDocument": {
+          "provider": "open5e",
+          "title": "System Reference Document 5.1",
+          "type": "Rule",
+          "detailUrl": "https://api.open5e.com/v2/rules/srd_abilities_charisma/"
+        },
+        "sourceDocuments": [
+          {
+            "provider": "dnd5ewiki",
+            "title": "Player's Handbook",
+            "type": "Class",
+            "detailUrl": "https://dnd-5e.fandom.com/wiki/Bard_%28Class%29"
+          },
+          {
+            "provider": "dnd5ewiki",
+            "title": "Player's Handbook",
+            "type": "Class",
+            "detailUrl": "https://dnd-5e.fandom.com/wiki/Warlock_%28Class%29"
+          }
+        ]
+      },
       "createdAt": "2026-05-01T15:51:13.985Z",
       "updatedAt": "2026-05-01T15:51:13.985Z",
       "type": "trait",
@@ -85,7 +106,28 @@
       "provider": "",
       "providerId": "",
       "variantOf": "",
-      "addons": {},
+      "addons": {
+        "sourceDocument": {
+          "provider": "dnd5eapi",
+          "title": "D&D 5e SRD 2014",
+          "type": "Feature",
+          "detailUrl": "https://www.dnd5eapi.co/api/2014/features/eldritch-invocation-beguiling-influence"
+        },
+        "sourceDocuments": [
+          {
+            "provider": "dnd5ewiki",
+            "title": "Player's Handbook",
+            "type": "Feat",
+            "detailUrl": "https://dnd-5e.fandom.com/wiki/Feats"
+          },
+          {
+            "provider": "dnd5ewiki",
+            "title": "Tasha's Cauldron of Everything / Mythic Odysseys of Theros",
+            "type": "Feature",
+            "detailUrl": "https://dnd-5e.fandom.com/wiki/Bard_%28Class%29"
+          }
+        ]
+      },
       "createdAt": "2026-05-01T15:51:13.985Z",
       "updatedAt": "2026-05-01T15:51:13.985Z",
       "type": "trait",
@@ -149,7 +191,22 @@
       "provider": "",
       "providerId": "",
       "variantOf": "",
-      "addons": {},
+      "addons": {
+        "sourceDocument": {
+          "provider": "dnd5ewiki",
+          "title": "Player's Handbook",
+          "type": "Spell",
+          "detailUrl": "https://dnd-5e.fandom.com/wiki/Mage_Armor"
+        },
+        "sourceDocuments": [
+          {
+            "provider": "dnd5ewiki",
+            "title": "Player's Handbook",
+            "type": "Class",
+            "detailUrl": "https://dnd-5e.fandom.com/wiki/Sorcerer"
+          }
+        ]
+      },
       "createdAt": "2026-05-01T15:51:13.985Z",
       "updatedAt": "2026-05-01T15:51:13.985Z",
       "type": "trait",
@@ -203,7 +260,14 @@
       "provider": "",
       "providerId": "",
       "variantOf": "",
-      "addons": {},
+      "addons": {
+        "sourceDocument": {
+          "provider": "dnd5ewiki",
+          "title": "Monster Manual",
+          "type": "Monster",
+          "detailUrl": "https://dnd-5e.fandom.com/wiki/Lich"
+        }
+      },
       "createdAt": "2026-05-01T15:51:13.985Z",
       "updatedAt": "2026-05-01T15:51:13.985Z",
       "type": "trait",
@@ -221,7 +285,14 @@
       "provider": "",
       "providerId": "",
       "variantOf": "",
-      "addons": {},
+      "addons": {
+        "sourceDocument": {
+          "provider": "dnd5ewiki",
+          "title": "Player's Handbook",
+          "type": "Feature",
+          "detailUrl": "https://dnd-5e.fandom.com/wiki/Fighter"
+        }
+      },
       "createdAt": "2026-05-01T15:51:13.985Z",
       "updatedAt": "2026-05-01T15:51:13.985Z",
       "type": "feature",
@@ -257,7 +328,28 @@
       "provider": "",
       "providerId": "",
       "variantOf": "",
-      "addons": {},
+      "addons": {
+        "sourceDocument": {
+          "provider": "dnd5ewiki",
+          "title": "Legendary Creatures",
+          "type": "Rule",
+          "detailUrl": "https://dnd-5e.fandom.com/wiki/Statistics"
+        },
+        "sourceDocuments": [
+          {
+            "provider": "dnd5ewiki",
+            "title": "Monster Manual",
+            "type": "Monster",
+            "detailUrl": "https://dnd-5e.fandom.com/wiki/Lich"
+          },
+          {
+            "provider": "dnd5ewiki",
+            "title": "Dungeon Master's Guide",
+            "type": "Item",
+            "detailUrl": "https://dnd-5e.fandom.com/wiki/Black_Dragon_Mask"
+          }
+        ]
+      },
       "createdAt": "2026-05-01T15:51:13.985Z",
       "updatedAt": "2026-05-01T15:51:13.985Z",
       "type": "legendary",
@@ -275,7 +367,22 @@
       "provider": "",
       "providerId": "",
       "variantOf": "",
-      "addons": {},
+      "addons": {
+        "sourceDocument": {
+          "provider": "dnd5ewiki",
+          "title": "Player's Handbook",
+          "type": "Rule",
+          "detailUrl": "https://dnd-5e.fandom.com/wiki/Damage_and_Healing"
+        },
+        "sourceDocuments": [
+          {
+            "provider": "dnd5ewiki",
+            "title": "Player's Handbook",
+            "type": "Rule",
+            "detailUrl": "https://dnd-5e.fandom.com/wiki/Conditions"
+          }
+        ]
+      },
       "createdAt": "2026-05-01T15:51:13.985Z",
       "updatedAt": "2026-05-01T15:51:13.985Z",
       "type": "trait",
@@ -744,6 +851,20 @@
       "providerId": "",
       "variantOf": "",
       "addons": {
+        "sourceDocument": {
+          "provider": "dnd5ewiki",
+          "title": "Legendary Creatures",
+          "type": "Rule",
+          "detailUrl": "https://dnd-5e.fandom.com/wiki/Statistics"
+        },
+        "sourceDocuments": [
+          {
+            "provider": "dnd5ewiki",
+            "title": "Monster Manual",
+            "type": "Monster",
+            "detailUrl": "https://dnd-5e.fandom.com/wiki/Lich"
+          }
+        ],
         "statBonuses": {
           "str": 6,
           "dex": 5,
@@ -773,6 +894,26 @@
       "providerId": "",
       "variantOf": "",
       "addons": {
+        "sourceDocument": {
+          "provider": "dnd5ewiki",
+          "title": "Belashyrra",
+          "type": "Monster",
+          "detailUrl": "https://dnd-5e.fandom.com/wiki/Belashyrra"
+        },
+        "sourceDocuments": [
+          {
+            "provider": "dnd5ewiki",
+            "title": "Monster Manual",
+            "type": "Monster",
+            "detailUrl": "https://dnd-5e.fandom.com/wiki/Troll"
+          },
+          {
+            "provider": "dnd5ewiki",
+            "title": "Monster Manual",
+            "type": "Spell",
+            "detailUrl": "https://dnd-5e.fandom.com/wiki/Regenerate"
+          }
+        ],
         "regeneration": {
           "amount": 30,
           "disabledBy": [
@@ -801,6 +942,20 @@
       "providerId": "",
       "variantOf": "",
       "addons": {
+        "sourceDocument": {
+          "provider": "dnd5ewiki",
+          "title": "Monster Manual",
+          "type": "Trait",
+          "detailUrl": "https://dnd-5e.fandom.com/wiki/Gray_Slaad"
+        },
+        "sourceDocuments": [
+          {
+            "provider": "dnd5ewiki",
+            "title": "Player's Handbook",
+            "type": "Spell",
+            "detailUrl": "https://dnd-5e.fandom.com/wiki/Polymorph"
+          }
+        ],
         "polymorph": {
           "selfOnly": true,
           "replacesStatBlock": false
@@ -825,7 +980,14 @@
       "provider": "",
       "providerId": "",
       "variantOf": "",
-      "addons": {},
+      "addons": {
+        "sourceDocument": {
+          "provider": "dnd5ewiki",
+          "title": "Player's Handbook",
+          "type": "Spell",
+          "detailUrl": "https://dnd-5e.fandom.com/wiki/Polymorph"
+        }
+      },
       "type": "reaction",
       "description": "When hit, grappled, restrained, knocked prone, paralyzed, forced into a shape, or targeted by a body-restricting effect, Capella may immediately use Flesh Polymorph.",
       "active": true,
@@ -845,7 +1007,28 @@
       "provider": "",
       "providerId": "",
       "variantOf": "",
-      "addons": {},
+      "addons": {
+        "sourceDocument": {
+          "provider": "dnd5ewiki",
+          "title": "Monster Manual",
+          "type": "Monster",
+          "detailUrl": "https://dnd-5e.fandom.com/wiki/Succubus/Incubus"
+        },
+        "sourceDocuments": [
+          {
+            "provider": "dnd5ewiki",
+            "title": "Player's Handbook",
+            "type": "Feat",
+            "detailUrl": "https://dnd-5e.fandom.com/wiki/Feats"
+          },
+          {
+            "provider": "dnd5ewiki",
+            "title": "Player's Handbook",
+            "type": "Spell",
+            "detailUrl": "https://dnd-5e.fandom.com/wiki/Disguise_Self"
+          }
+        ]
+      },
       "type": "trait",
       "description": "Capella can assume a humanoid form she has studied, including voice, posture, habits, surface memories, and conversational knowledge. Each form change prompts a new Insight or Investigation contest.",
       "active": true,
@@ -866,6 +1049,26 @@
       "providerId": "",
       "variantOf": "",
       "addons": {
+        "sourceDocument": {
+          "provider": "dnd5ewiki",
+          "title": "Monster Manual",
+          "type": "Monster",
+          "detailUrl": "https://dnd-5e.fandom.com/wiki/Arcanaloth"
+        },
+        "sourceDocuments": [
+          {
+            "provider": "open5e",
+            "title": "System Reference Document 5.1",
+            "type": "Rule",
+            "detailUrl": "https://api.open5e.com/v2/rules/srd_monsters_telepathy/"
+          },
+          {
+            "provider": "dnd5ewiki",
+            "title": "Player's Handbook",
+            "type": "Class",
+            "detailUrl": "https://dnd-5e.fandom.com/wiki/Mystic"
+          }
+        ],
         "range": "120 ft"
       },
       "type": "trait",

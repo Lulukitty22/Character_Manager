@@ -39,6 +39,12 @@
       "providerId": "",
       "variantOf": "",
       "addons": {
+        "sourceDocument": {
+          "provider": "dnd5ewiki",
+          "title": "Legendary Creatures",
+          "type": "Rule",
+          "detailUrl": "https://dnd-5e.fandom.com/wiki/Statistics"
+        },
         "resource": {
           "currentIsCharacterState": true,
           "logIsCharacterState": true
