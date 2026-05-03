@@ -213,6 +213,14 @@
     ],
     "items": [
       {
+        "id": "dnd5eapi-equipment-arrow",
+        "name": "Arrow",
+        "source": "external",
+        "path": "library/items/dnd5eapi-equipment-arrow.json",
+        "sha": "66ad9120e54c5e0aabf535de415b53c7d70f8b27",
+        "updatedAt": "2026-05-03T09:52:52.221Z"
+      },
+      {
         "id": "item-arrow-bundle-20-test",
         "name": "Arrow Bundle (20)",
         "source": "custom",
@@ -558,7 +566,7 @@
       },
       {
         "id": "22aa3b43-201b-48e5-a393-79ccccd0c18e",
-        "name": "Roll Calculator Ã¢â¬â Boss Saves",
+        "name": "Roll Calculator ÃÂ¢Ã¢ÂÂ¬Ã¢ÂÂ Boss Saves",
         "source": "custom",
         "path": "library/traits/22aa3b43-201b-48e5-a393-79ccccd0c18e.json",
         "sha": "",
@@ -566,7 +574,7 @@
       },
       {
         "id": "b0d2e3d0-f347-4d01-a943-9b821a55acf1",
-        "name": "Roll Calculator Ã¢â¬â Social / Casting",
+        "name": "Roll Calculator ÃÂ¢Ã¢ÂÂ¬Ã¢ÂÂ Social / Casting",
         "source": "custom",
         "path": "library/traits/b0d2e3d0-f347-4d01-a943-9b821a55acf1.json",
         "sha": "",
