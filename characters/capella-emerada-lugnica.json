@@ -2,7 +2,7 @@
   "id": "93b6bd4a-9f95-4788-a309-a75def5d3a7c",
   "meta": {
     "repoPath": "characters/capella-emerada-lugnica.json",
-    "lastUpdated": "2026-05-03T04:32:17.906Z"
+    "lastUpdated": "2026-05-03T04:33:02.778Z"
   },
   "identity": {
     "name": "Capella Emerada Lugnica",
@@ -243,7 +243,7 @@
       "overrides": {}
     },
     {
-      "id": "2cd11047-d2af-4589-8685-d76349bb5db9",
+      "id": "2d922568-021a-468f-aff5-4d3eefd61403",
       "source": "library",
       "libraryCollection": "spells",
       "librarySource": "custom",
