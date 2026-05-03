@@ -2,7 +2,7 @@
   "id": "1d8fc4ba-acac-44fe-8edd-7a0ffc465238",
   "meta": {
     "repoPath": "characters/rall.json",
-    "lastUpdated": "2026-05-03T04:18:20.694Z"
+    "lastUpdated": "2026-05-03T04:19:35.778Z"
   },
   "identity": {
     "name": "Rall",
@@ -21,7 +21,18 @@
   "personality": "",
   "backstory": "",
   "notes": "",
-  "spells": [],
+  "spells": [
+    {
+      "id": "cd77441c-a035-408c-a1c1-8bff904d9eb8",
+      "source": "library",
+      "libraryCollection": "spells",
+      "librarySource": "srd",
+      "libraryRef": "open5e-spells-srd-2024_fireball",
+      "prepared": false,
+      "access": {},
+      "overrides": {}
+    }
+  ],
   "spellSlots": {},
   "abilities": [],
   "inventory": [],
