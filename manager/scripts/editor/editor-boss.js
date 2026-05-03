@@ -46,6 +46,13 @@ const EditorBoss = (() => {
 
       // ── Full editor ──────────────────────────────────────────────────────────
       const boss = character.boss;
+      const tamedHp = typeof DndCalculations !== "undefined"
+        ? DndCalculations.resolveTamedHp(character)
+        : {
+          current: character.dnd?.hp?.current ?? boss.defaultHp?.current ?? 0,
+          max: character.dnd?.hp?.max ?? boss.defaultHp?.max ?? 0,
+          mode: "override",
+        };
 
       panel.innerHTML = `
         <div style="padding: var(--space-6) 0; display: flex; flex-direction: column; gap: var(--space-8);">
@@ -93,16 +100,19 @@ const EditorBoss = (() => {
               </div>
               <div class="card">
                 <div class="text-muted text-sm uppercase" style="letter-spacing: 0.08em; margin-bottom: var(--space-3);">Default / Tamed HP</div>
+                <p class="text-muted text-sm" style="margin-bottom: var(--space-3);">
+                  This pool now follows D&amp;D Gameplay HP automatically. Use the Gameplay tab to change calculated-vs-override behavior.
+                </p>
                 <div class="fields-grid-2">
                   <div class="field-group" style="margin-bottom: 0;">
-                    <label class="field-label">Max</label>
+                    <label class="field-label">Max (${tamedHp.mode === "override" ? "override" : "calculated"})</label>
                     <input type="number" min="0" id="default-hp-max" class="field-input"
-                      value="${boss.defaultHp?.max ?? 0}" />
+                      value="${tamedHp.max ?? 0}" readonly />
                   </div>
                   <div class="field-group" style="margin-bottom: 0;">
                     <label class="field-label">Current</label>
                     <input type="number" min="0" id="default-hp-current" class="field-input"
-                      value="${boss.defaultHp?.current ?? 0}" />
+                      value="${tamedHp.current ?? 0}" />
                   </div>
                 </div>
               </div>
@@ -558,10 +568,9 @@ const EditorBoss = (() => {
       current: parseInt(document.getElementById("boss-hp-current")?.value, 10) || 0,
     };
 
-    boss.defaultHp = {
-      max:     parseInt(document.getElementById("default-hp-max")?.value,     10) || 0,
-      current: parseInt(document.getElementById("default-hp-current")?.value, 10) || 0,
-    };
+    if (character.dnd?.hp) {
+      character.dnd.hp.current = parseInt(document.getElementById("default-hp-current")?.value, 10) || 0;
+    }
 
     // Boss stat bonuses
     boss.bossStatBonuses = {};
@@ -628,6 +637,7 @@ const EditorBoss = (() => {
 
     boss.deathRule = document.getElementById("boss-death-rule")?.value || "";
     boss.tamedRule = document.getElementById("boss-tamed-rule")?.value || "";
+    if (typeof DndCalculations !== "undefined") DndCalculations.syncBossDefaultHp(character);
 
     return character;
   }

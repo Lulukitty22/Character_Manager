@@ -469,6 +469,7 @@ const Schema = (() => {
       savingThrowProficiencies: [],
       skillProficiencies:      [],
       hp: {
+        mode:    "calculated",
         max:     0,
         current: 0,
         temp:    0,
@@ -518,7 +519,7 @@ const Schema = (() => {
     return {
       bossActive:    false,
       bossHp:        { max: 0, current: 0 },
-      defaultHp:     { max: 0, current: 0 },
+      defaultHp:     { mode: "calculated", max: 0, current: 0 },
       bossStatBonuses: { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 },
       regeneration:  { amount: 0, disabledBy: [] },
       legendaryActions: 0,

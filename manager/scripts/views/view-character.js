@@ -40,7 +40,7 @@ const ViewCharacter = (() => {
         ${spells.length ? ViewCharacterSpells.render(spells, spellSlots) : ""}
         ${abilities.length ? ViewCharacterAbilities.render(abilities) : ""}
         ${ViewCharacterInventory.render(inventory, currency)}
-        ${ViewCharacterResources.render(dnd, resources)}
+        ${ViewCharacterResources.render(character, resources)}
         ${ViewCharacterNotes.render(character.notes)}
       </div>
     `;

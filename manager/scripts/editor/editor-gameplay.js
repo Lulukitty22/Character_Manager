@@ -24,12 +24,12 @@ const EditorGameplay = (() => {
       return panel;
     }
 
-    if (!character.dnd.hp) character.dnd.hp = { max: 0, current: 0, temp: 0, log: [] };
+    if (!character.dnd.hp) character.dnd.hp = { mode: "calculated", max: 0, current: 0, temp: 0, log: [] };
     if (!character.spellSlots) character.spellSlots = {};
     if (!character.spellSlotLog) character.spellSlotLog = [];
 
-    const hpCalc = typeof DndCalculations !== "undefined"
-      ? DndCalculations.calculateHitPoints(character)
+    const hpState = typeof DndCalculations !== "undefined"
+      ? DndCalculations.resolveTamedHp(character)
       : null;
     const slotCalc = typeof DndCalculations !== "undefined"
       ? DndCalculations.calculateSpellSlots(character)
@@ -40,27 +40,33 @@ const EditorGameplay = (() => {
 
     panel.innerHTML = `
       <div style="padding: var(--space-6) 0; display: flex; flex-direction: column; gap: var(--space-8);">
-        ${renderHpSection(character.dnd.hp, hpCalc, healingItems)}
+        ${renderHpSection(character, hpState, healingItems)}
         ${renderSpellSlotSection(character.spellSlots, slotCalc, character.spellSlotLog)}
       </div>
     `;
 
-    wireHpSection(panel, character, hpCalc, healingItems);
+    wireHpSection(panel, character, hpState, healingItems);
     wireSpellSlots(panel, character, slotCalc);
 
     return panel;
   }
 
-  function renderHpSection(hp, hpCalc, healingItems) {
-    const percent = hp.max > 0 ? Math.round((hp.current / hp.max) * 100) : 0;
+  function renderHpSection(character, hpState, healingItems) {
+    const hp = character.dnd?.hp || {};
+    const percent = hpState?.max > 0 ? Math.round((hpState.current / hpState.max) * 100) : 0;
     const hpClass = percent >= 60 ? "" : percent >= 30 ? "medium" : "low";
     const logRows = (hp.log || []).slice().reverse().map(renderLogEntry).join("");
-    const calcChips = hpCalc?.parts?.length && typeof ViewCharacterUtils !== "undefined"
+    const calcChips = hpState?.calculation?.parts?.length && typeof ViewCharacterUtils !== "undefined"
       ? ViewCharacterUtils.renderMechanicChips([
-        { label: "Calculated Max", value: hpCalc.total, kind: "positive", description: "Calculated from class hit dice, level, Constitution, and race HP bonuses." },
-        ...hpCalc.parts,
+        { label: "Calculated Max", value: hpState.calculatedMax, kind: "positive", description: "Calculated from class hit dice, level, Constitution, and race HP bonuses." },
+        ...hpState.calculation.parts,
       ])
       : "";
+    const hasCalculatedMax = Boolean(hpState?.hasCalculatedMax);
+    const overrideActive = Boolean(hpState?.overrideActive);
+    const overrideValue = Math.max(0, Number(hpState?.storedOverrideMax || 0));
+    const effectiveMax = Math.max(0, Number(hpState?.max || 0));
+    const sourceLabel = overrideActive ? "Manual Override" : hasCalculatedMax ? "Calculated HP" : "Manual HP";
     const healingOptions = healingItems.map(item => {
       const amount = DndCalculations.healingAmount(item);
       const label = `${item.name || "Healing Item"} x${item.quantity ?? 1}${amount ? ` (${amount} avg)` : ""}`;
@@ -77,10 +83,11 @@ const EditorGameplay = (() => {
         <div class="hp-display card" style="margin-bottom: var(--space-4);">
           <div class="hp-numbers flex-between" style="margin-bottom: var(--space-3);">
             <div>
-              <span style="font-family: var(--font-display); font-size: var(--text-3xl); font-weight: 700; color: var(--color-text-bright);" id="gp-hp-current-display">${hp.current}</span>
+              <span style="font-family: var(--font-display); font-size: var(--text-3xl); font-weight: 700; color: var(--color-text-bright);" id="gp-hp-current-display">${hpState.current}</span>
               <span style="color: var(--color-text-muted); font-size: var(--text-xl);">/ </span>
-              <span style="font-family: var(--font-display); font-size: var(--text-xl); color: var(--color-text-muted);" id="gp-hp-max-display">${hp.max}</span>
+              <span style="font-family: var(--font-display); font-size: var(--text-xl); color: var(--color-text-muted);" id="gp-hp-max-display">${hpState.max}</span>
               <span style="font-family: var(--font-ui); font-size: var(--text-sm); color: var(--color-text-muted); margin-left: var(--space-2);">HP</span>
+              <span class="badge" id="gp-hp-source-badge" style="margin-left: var(--space-2);">${EditorBase.escapeHTML(sourceLabel)}</span>
             </div>
             <div class="flex items-center gap-2">
               <span class="text-muted text-sm">Temp:</span>
@@ -94,16 +101,38 @@ const EditorGameplay = (() => {
 
           <div class="fields-grid-2" style="margin-bottom: var(--space-4);">
             <div class="field-group" style="margin-bottom: 0;">
-              <label class="field-label" for="gp-hp-max-input">Max HP</label>
-              <input type="number" min="0" id="gp-hp-max-input" class="field-input" value="${hp.max}" />
+              <label class="field-label" for="gp-hp-max-input">${hasCalculatedMax ? "Override Max HP" : "Max HP"}</label>
+              <input
+                type="number"
+                min="0"
+                id="gp-hp-max-input"
+                class="field-input"
+                value="${overrideActive ? overrideValue : effectiveMax}"
+                data-override-value="${overrideValue}"
+                ${hasCalculatedMax && !overrideActive ? "readonly" : ""}
+              />
             </div>
             <div class="field-group" style="margin-bottom: 0;">
               <label class="field-label" for="gp-hp-current-input">Current HP</label>
-              <input type="number" min="0" id="gp-hp-current-input" class="field-input" value="${hp.current}" />
+              <input type="number" min="0" id="gp-hp-current-input" class="field-input" value="${hpState.current}" />
             </div>
           </div>
 
-          ${calcChips ? `<div style="margin-bottom: var(--space-4);">${calcChips}<button class="button button-ghost button-sm" id="btn-apply-calculated-hp" style="margin-top: var(--space-2);">Apply Calculated Max</button></div>` : ""}
+          ${hasCalculatedMax ? `
+            <div style="margin-bottom: var(--space-4); display: flex; flex-direction: column; gap: var(--space-3);">
+              <label class="field-checkbox-row">
+                <input type="checkbox" id="gp-hp-use-override" ${overrideActive ? "checked" : ""} />
+                Use manual max HP override
+              </label>
+              <p class="text-muted text-sm" id="gp-hp-mode-note">
+                ${overrideActive
+                  ? "Override is active. Turn it off to go back to automatic class/race HP."
+                  : "Calculated HP is primary. Turn on override only when this sheet needs a custom max HP."}
+              </p>
+              ${calcChips}
+              ${overrideActive ? `<button class="button button-ghost button-sm" id="btn-use-calculated-hp">Use Calculated HP</button>` : ""}
+            </div>
+          ` : calcChips ? `<div style="margin-bottom: var(--space-4);">${calcChips}</div>` : ""}
 
           <div class="hp-quick-adjust flex gap-2 flex-wrap" style="margin-bottom: var(--space-4);">
             <input type="number" id="gp-hp-adjust-amount" class="field-input field-number" placeholder="Delta" style="width: 86px;" />
@@ -188,6 +217,11 @@ const EditorGameplay = (() => {
     const barFill = panelEl.querySelector("#gp-hp-bar-fill");
     const currentDisplay = panelEl.querySelector("#gp-hp-current-display");
     const maxDisplay = panelEl.querySelector("#gp-hp-max-display");
+    const overrideToggle = panelEl.querySelector("#gp-hp-use-override");
+    const sourceBadge = panelEl.querySelector("#gp-hp-source-badge");
+    const modeNote = panelEl.querySelector("#gp-hp-mode-note");
+    const labelEl = panelEl.querySelector('label[for="gp-hp-max-input"]');
+    const hasCalculatedMax = Boolean(hpCalc?.hasCalculatedMax);
 
     const updateBar = () => {
       const max = parseInt(maxInput?.value, 10) || 0;
@@ -201,17 +235,51 @@ const EditorGameplay = (() => {
       if (maxDisplay) maxDisplay.textContent = max;
     };
 
+    const syncHpModeUi = (preserveCurrent = false) => {
+      if (!maxInput) return;
+      const overrideActive = overrideToggle?.checked || !hasCalculatedMax;
+      const calculatedMax = Math.max(0, Number(hpCalc?.calculatedMax || hpCalc?.max || 0));
+      const previousMax = parseInt(maxInput.value, 10) || 0;
+      const storedOverride = parseInt(maxInput.dataset.overrideValue || "0", 10) || 0;
+
+      if (overrideActive) {
+        const nextOverride = storedOverride > 0 ? storedOverride : previousMax || calculatedMax;
+        maxInput.value = nextOverride;
+        maxInput.dataset.overrideValue = String(nextOverride);
+        maxInput.readOnly = false;
+        if (labelEl) labelEl.textContent = "Override Max HP";
+        if (sourceBadge) sourceBadge.textContent = "Manual Override";
+        if (modeNote) modeNote.textContent = "Override is active. Turn it off to go back to automatic class/race HP.";
+      } else {
+        if (previousMax > 0) maxInput.dataset.overrideValue = String(previousMax);
+        maxInput.value = calculatedMax;
+        maxInput.readOnly = true;
+        if (labelEl) labelEl.textContent = "Calculated Max HP";
+        if (sourceBadge) sourceBadge.textContent = "Calculated HP";
+        if (modeNote) modeNote.textContent = "Calculated HP is primary. Turn on override only when this sheet needs a custom max HP.";
+        if (preserveCurrent && currentInput) {
+          const current = parseInt(currentInput.value, 10) || 0;
+          currentInput.value = Math.min(current, calculatedMax || current);
+        }
+      }
+
+      updateBar();
+    };
+
     maxInput?.addEventListener("input", updateBar);
     currentInput?.addEventListener("input", updateBar);
-
-    panelEl.querySelector("#btn-apply-calculated-hp")?.addEventListener("click", () => {
-      if (!hpCalc) return;
-      const oldMax = parseInt(maxInput?.value, 10) || 0;
-      maxInput.value = hpCalc.total;
-      if ((parseInt(currentInput?.value, 10) || 0) === oldMax) currentInput.value = hpCalc.total;
-      currentInput.value = Math.min(parseInt(currentInput.value, 10) || 0, hpCalc.total);
-      addHpLog(panelEl, character, 0, `Applied calculated max HP ${hpCalc.total}`);
-      updateBar();
+    maxInput?.addEventListener("input", () => {
+      if (overrideToggle?.checked || !hasCalculatedMax) {
+        maxInput.dataset.overrideValue = maxInput.value;
+      }
+    });
+    overrideToggle?.addEventListener("change", () => syncHpModeUi(true));
+    panelEl.querySelector("#btn-use-calculated-hp")?.addEventListener("click", () => {
+      if (overrideToggle) {
+        overrideToggle.checked = false;
+        syncHpModeUi(true);
+        addHpLog(panelEl, character, 0, `Returned to calculated max HP ${hpCalc.calculatedMax}`);
+      }
     });
 
     panelEl.querySelector("#btn-gp-hp-damage")?.addEventListener("click", () => applyHpAdjust(panelEl, character, "damage"));
@@ -239,6 +307,8 @@ const EditorGameplay = (() => {
       decrementInventoryItem(character, itemId);
       App.showToast(`Used ${item.name || "healing item"}.`, "success");
     });
+
+    syncHpModeUi(false);
   }
 
   function wireSpellSlots(panelEl, character, slotCalc) {
@@ -355,15 +425,26 @@ const EditorGameplay = (() => {
 
   function readTab(character) {
     if (!character.dnd) return character;
-    if (!character.dnd.hp) character.dnd.hp = { max: 0, current: 0, temp: 0, log: [] };
+    if (!character.dnd.hp) character.dnd.hp = { mode: "calculated", max: 0, current: 0, temp: 0, log: [] };
 
     const maxEl = document.getElementById("gp-hp-max-input");
     const currentEl = document.getElementById("gp-hp-current-input");
     const tempEl = document.getElementById("gp-hp-temp");
+    const overrideEl = document.getElementById("gp-hp-use-override");
+    const hpState = typeof DndCalculations !== "undefined"
+      ? DndCalculations.resolveTamedHp(character)
+      : null;
+    const overrideActive = overrideEl ? overrideEl.checked : !hpState?.hasCalculatedMax;
+    const effectiveMax = overrideActive
+      ? (parseInt(maxEl?.value, 10) || 0)
+      : Math.max(0, Number(hpState?.calculatedMax || parseInt(maxEl?.value, 10) || 0));
+    const storedOverride = parseInt(maxEl?.dataset.overrideValue || maxEl?.value || "0", 10) || 0;
 
-    if (maxEl) character.dnd.hp.max = parseInt(maxEl.value, 10) || 0;
-    if (currentEl) character.dnd.hp.current = parseInt(currentEl.value, 10) || 0;
+    character.dnd.hp.mode = overrideActive ? "override" : "calculated";
+    character.dnd.hp.max = storedOverride || effectiveMax;
+    if (currentEl) character.dnd.hp.current = Math.max(0, Math.min(parseInt(currentEl.value, 10) || 0, effectiveMax || parseInt(currentEl.value, 10) || 0));
     if (tempEl) character.dnd.hp.temp = parseInt(tempEl.value, 10) || 0;
+    if (typeof DndCalculations !== "undefined") DndCalculations.syncBossDefaultHp(character);
 
     character.spellSlots = {};
     document.querySelectorAll(".gp-spell-slot-max").forEach(input => {

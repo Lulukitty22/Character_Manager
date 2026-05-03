@@ -8,16 +8,20 @@ const ViewCharacterResources = (() => {
   const esc = ViewCharacterUtils.esc;
   const renderMechanicChips = ViewCharacterUtils.renderMechanicChips;
 
-  function render(dnd, customResources) {
+  function render(character, customResources) {
+    const dnd = character?.dnd || null;
     const resources = customResources || [];
     const hpLog = dnd?.hp?.log || [];
+    const hpState = character && typeof DndCalculations !== "undefined"
+      ? DndCalculations.resolveTamedHp(character)
+      : (dnd?.hp || { current: 0, max: 0 });
     if (!hpLog.length && !resources.length) return "";
 
     const hpLogSection = hpLog.length > 0 ? `
       <div class="sheet-resource-block">
         <div class="sheet-resource-header">
           <span class="sheet-resource-name">HP Log</span>
-          <span class="sheet-resource-values">${dnd.hp.current} / ${dnd.hp.max} HP</span>
+          <span class="sheet-resource-values">${hpState.current} / ${hpState.max} HP</span>
         </div>
         <div class="sheet-resource-log">
           ${hpLog.slice(0, 10).map(entry => renderLogEntry(entry)).join("")}

@@ -54,7 +54,11 @@ const ViewCharacterBoss = (() => {
       btn.classList.toggle("active", bossActive);
     }
 
-    const hp = bossActive ? (boss.bossHp || { current: 0, max: 0 }) : (boss.defaultHp || { current: 0, max: 0 });
+    const hp = bossActive
+      ? (boss.bossHp || { current: 0, max: 0 })
+      : (typeof DndCalculations !== "undefined"
+        ? DndCalculations.resolveTamedHp(character)
+        : (boss.defaultHp || character.dnd?.hp || { current: 0, max: 0 }));
     const percent = hp.max > 0 ? Math.round((hp.current / hp.max) * 100) : 0;
     const hpClass = percent >= 60 ? "" : percent >= 30 ? "medium" : "low";
 

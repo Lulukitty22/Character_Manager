@@ -197,6 +197,61 @@ const DndCalculations = (() => {
     return 0;
   }
 
+  function resolveTamedHp(character = {}) {
+    const dnd = character.dnd || {};
+    const hp = dnd.hp || {};
+    const legacyBossDefault = character.boss?.defaultHp || {};
+    const calc = calculateHitPoints(character);
+    const calculatedMax = Math.max(0, Number(calc.total || 0));
+    const hasCalculatedMax = calculatedMax > 0 || (calc.parts || []).length > 0;
+    const storedMode = hp.mode || legacyBossDefault.mode || (hasCalculatedMax ? "calculated" : "override");
+    const storedOverrideMax = Math.max(0, Number(hp.max ?? legacyBossDefault.max ?? 0));
+    const overrideActive = storedMode === "override" || (!hasCalculatedMax && storedOverrideMax > 0);
+    const effectiveMax = overrideActive
+      ? storedOverrideMax
+      : (hasCalculatedMax ? calculatedMax : storedOverrideMax);
+    const rawCurrent = hp.current ?? legacyBossDefault.current ?? 0;
+    const migratedCurrent = !overrideActive
+      && hasCalculatedMax
+      && storedOverrideMax > 0
+      && Number(rawCurrent || 0) === storedOverrideMax
+      ? calculatedMax
+      : rawCurrent;
+
+    return {
+      current: Math.max(0, Number(migratedCurrent || 0)),
+      max: Math.max(0, Number(effectiveMax || 0)),
+      temp: Math.max(0, Number(hp.temp || 0)),
+      mode: overrideActive ? "override" : "calculated",
+      overrideActive,
+      storedOverrideMax,
+      calculatedMax,
+      hasCalculatedMax,
+      calculation: calc,
+    };
+  }
+
+  function getActiveHp(character = {}, bossActive = null) {
+    const boss = character.boss || null;
+    const activeBoss = bossActive == null ? Boolean(boss?.bossActive) : Boolean(bossActive);
+    if (boss && activeBoss) {
+      return normalizeHpPool(boss.bossHp || {});
+    }
+    return resolveTamedHp(character);
+  }
+
+  function syncBossDefaultHp(character = {}) {
+    if (!character?.boss) return character;
+    const tamedHp = resolveTamedHp(character);
+    character.boss.defaultHp = {
+      ...(character.boss.defaultHp || {}),
+      mode: tamedHp.mode,
+      max: tamedHp.max,
+      current: tamedHp.current,
+    };
+    return character;
+  }
+
   function findClassRecord(name) {
     return findLibraryRecord("classes", name);
   }
@@ -224,6 +279,14 @@ const DndCalculations = (() => {
 
   function getCasterProgression(classRecord, className) {
     return classRecord?.addons?.spellcasting?.progression || FALLBACK_CASTER_PROGRESSIONS[comparableName(className)] || "none";
+  }
+
+  function normalizeHpPool(pool = {}) {
+    return {
+      current: Math.max(0, Number(pool.current || 0)),
+      max: Math.max(0, Number(pool.max || 0)),
+      temp: Math.max(0, Number(pool.temp || 0)),
+    };
   }
 
   function getRaceHpBonus(race, level) {
@@ -261,6 +324,9 @@ const DndCalculations = (() => {
     getClassLevels,
     getHealingItems,
     healingAmount,
+    resolveTamedHp,
+    getActiveHp,
+    syncBossDefaultHp,
     findClassRecord,
     findRaceRecord,
   };

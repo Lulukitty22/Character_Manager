@@ -15,7 +15,10 @@ const ViewCharacterDnd = (() => {
 
   function renderCombatBlock(dnd, boss, character = null) {
     const bossActive = boss?.bossActive ?? false;
-    const hp = getActiveHp(dnd, boss);
+    const hp = getActiveHp(character, dnd, boss);
+    const tamedHp = character && typeof DndCalculations !== "undefined"
+      ? DndCalculations.resolveTamedHp(character)
+      : normalizeHpPool(boss?.defaultHp || dnd?.hp || {});
     const percent = hp.max > 0 ? Math.round((hp.current / hp.max) * 100) : 0;
     const hpClass = percent >= 60 ? "" : percent >= 30 ? "medium" : "low";
     const profBonus = Number(dnd.proficiencyBonus || 2);
@@ -27,7 +30,7 @@ const ViewCharacterDnd = (() => {
 
     const speedParts = renderSpeed(dnd.speed || {});
     const acModesHTML = renderAcModes(dnd, boss);
-    const stateOverview = boss ? renderStateOverview(dnd, boss, acPair, initiativePair, spellcasting) : "";
+    const stateOverview = boss ? renderStateOverview(dnd, boss, acPair, initiativePair, spellcasting, tamedHp) : "";
     const hpBreakdown = boss ? renderHpBreakdown(boss) : "";
     const rollCalculator = boss ? renderRollCalculator(boss, spellcasting) : "";
     const hpCalc = character && typeof DndCalculations !== "undefined"
@@ -58,7 +61,7 @@ const ViewCharacterDnd = (() => {
           ${boss ? `
           <div class="sheet-state-mini-row text-sm">
             <span>Boss HP ${boss.bossHp?.max ?? 0}</span>
-            <span>Tamed HP ${boss.defaultHp?.max ?? 0}</span>
+            <span>Tamed HP ${tamedHp.max ?? 0}</span>
           </div>` : ""}
           ${hpCalcChips ? `<div class="sheet-hp-calculated">${hpCalcChips}</div>` : ""}
         </div>
@@ -253,7 +256,7 @@ const ViewCharacterDnd = (() => {
     `;
   }
 
-  function renderStateOverview(dnd, boss, acPair, initiativePair, spellcasting) {
+  function renderStateOverview(dnd, boss, acPair, initiativePair, spellcasting, tamedHp) {
     const bossActive = boss.bossActive ?? false;
     const stateModel = boss.addons?.stateModel || {};
     const tamedLabel = stateModel.tamedLabel || "Tamed / Default";
@@ -266,7 +269,7 @@ const ViewCharacterDnd = (() => {
       <div class="sheet-state-grid">
         <div class="sheet-state-card sheet-mode-tamed ${bossActive ? "" : "active"}">
           <div class="sheet-state-card-label">${esc(tamedLabel)}</div>
-          <div class="sheet-state-card-main">${boss.defaultHp?.max ?? dnd.hp?.max ?? 0} HP / AC ${acPair.tamed?.value ?? "-"}</div>
+          <div class="sheet-state-card-main">${tamedHp?.max ?? boss.defaultHp?.max ?? dnd.hp?.max ?? 0} HP / AC ${acPair.tamed?.value ?? "-"}</div>
           <div class="sheet-state-card-sub">Initiative ${formatSigned(initiativePair.tamed)}; Spell DC ${spellcasting?.tamedDc ?? "-"}</div>
         </div>
         <div class="sheet-state-card sheet-mode-boss ${bossActive ? "active" : ""}">
@@ -435,11 +438,22 @@ const ViewCharacterDnd = (() => {
     `;
   }
 
-  function getActiveHp(dnd, boss) {
-    if (!boss) return dnd.hp || { current: 0, max: 0 };
+  function getActiveHp(character, dnd, boss) {
+    if (character && typeof DndCalculations !== "undefined") {
+      return DndCalculations.getActiveHp(character, boss?.bossActive ?? false);
+    }
+    if (!boss) return normalizeHpPool(dnd.hp || {});
     return boss.bossActive
-      ? (boss.bossHp || { current: 0, max: 0 })
-      : (boss.defaultHp || { current: 0, max: 0 });
+      ? normalizeHpPool(boss.bossHp || {})
+      : normalizeHpPool(boss.defaultHp || dnd.hp || {});
+  }
+
+  function normalizeHpPool(pool = {}) {
+    return {
+      current: Math.max(0, Number(pool.current || 0)),
+      max: Math.max(0, Number(pool.max || 0)),
+      temp: Math.max(0, Number(pool.temp || 0)),
+    };
   }
 
   function getAcPair(dnd, boss) {

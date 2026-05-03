@@ -20,9 +20,9 @@
       },
       "createdAt": "2026-05-03T04:32:59.965Z",
       "updatedAt": "2026-05-03T04:32:59.965Z",
-      "description": "",
-      "hitDie": "",
-      "primaryAbility": ""
+      "description": "Custom boss-class frame for aberrant lich shapechangers such as Capella.",
+      "hitDie": "d10",
+      "primaryAbility": "Charisma"
     },
     {
       "id": "idk-what-class",
