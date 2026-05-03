@@ -24,6 +24,29 @@
       "weight": 67,
       "attuned": true,
       "description": "gives hp or something idk"
+    },
+    {
+      "id": "48c5c35b-bd9d-4425-ac00-5fc9ae24d624",
+      "collection": "items",
+      "name": "New item",
+      "tags": [],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {
+        "mechanics": [],
+        "equipment": {
+          "slot": "",
+          "rarity": ""
+        }
+      },
+      "createdAt": "2026-05-03T07:13:50.481Z",
+      "updatedAt": "2026-05-03T07:13:50.482Z",
+      "type": "misc",
+      "weight": null,
+      "attuned": false,
+      "description": ""
     }
   ]
 }
