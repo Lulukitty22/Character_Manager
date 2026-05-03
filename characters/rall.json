@@ -2,11 +2,11 @@
   "id": "1d8fc4ba-acac-44fe-8edd-7a0ffc465238",
   "meta": {
     "repoPath": "characters/rall.json",
-    "lastUpdated": "2026-05-03T04:16:37.136Z"
+    "lastUpdated": "2026-05-03T04:18:20.694Z"
   },
   "identity": {
     "name": "Rall",
-    "classification": "",
+    "classification": "player_character",
     "aliases": [],
     "race": "",
     "height": "",
@@ -34,10 +34,16 @@
   },
   "customResources": [],
   "dnd": {
-    "class": "idk what class",
-    "subclass": "",
-    "level": 1,
-    "multiclass": [],
+    "class": "Fighter",
+    "subclass": "Battlemaster",
+    "level": 11,
+    "multiclass": [
+      {
+        "class": "Fighter",
+        "subclass": "Eldritch Knight",
+        "level": 1
+      }
+    ],
     "background": "",
     "alignment": "",
     "proficiencyBonus": 2,
