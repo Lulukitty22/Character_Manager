@@ -2,7 +2,7 @@
   "id": "1d8fc4ba-acac-44fe-8edd-7a0ffc465238",
   "meta": {
     "repoPath": "characters/rall.json",
-    "lastUpdated": "2026-05-03T04:19:35.778Z"
+    "lastUpdated": "2026-05-03T04:22:05.402Z"
   },
   "identity": {
     "name": "Rall",
@@ -35,7 +35,17 @@
   ],
   "spellSlots": {},
   "abilities": [],
-  "inventory": [],
+  "inventory": [
+    {
+      "id": "9288c357-5016-4dca-9fae-c5962bf79061",
+      "source": "library",
+      "libraryCollection": "items",
+      "librarySource": "custom",
+      "libraryRef": "cdb0b5d2-8287-4f14-acdb-c5881df01916",
+      "overrides": {},
+      "quantity": 1
+    }
+  ],
   "currency": {
     "pp": 0,
     "gp": 0,
