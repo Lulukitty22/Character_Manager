@@ -26,29 +26,6 @@
       "description": "gives hp or something idk"
     },
     {
-      "id": "4eecefe1-8a9b-4f66-9634-4b2d5b73d6f5",
-      "collection": "items",
-      "name": "New item",
-      "tags": [],
-      "source": "custom",
-      "provider": "",
-      "providerId": "",
-      "variantOf": "",
-      "addons": {
-        "mechanics": [],
-        "equipment": {
-          "slot": "",
-          "rarity": ""
-        }
-      },
-      "createdAt": "2026-05-03T07:13:50.764Z",
-      "updatedAt": "2026-05-03T07:13:50.764Z",
-      "type": "misc",
-      "weight": null,
-      "attuned": false,
-      "description": ""
-    },
-    {
       "id": "c20951b4-5a2a-4566-bb0d-dd60f986b037",
       "collection": "items",
       "name": "New item",
