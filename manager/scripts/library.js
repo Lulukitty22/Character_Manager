@@ -757,6 +757,7 @@ const Library = (() => {
     importOpen5eSpell,
     searchOpen5e,
     searchDnd5eApi,
+    fetchExternalDetail,
     importExternalResult,
     importExternalResults,
   };

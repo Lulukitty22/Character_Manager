@@ -73,6 +73,7 @@ const EditorSpells = (() => {
     // Wire search / filter
     panel.querySelector("#spell-search")?.addEventListener("input",  () => filterSpells(panel));
     panel.querySelector("#spell-level-filter")?.addEventListener("change", () => filterSpells(panel));
+    ensureSpellBrowserDialog();
 
     return panel;
   }
@@ -347,45 +348,325 @@ const EditorSpells = (() => {
         App.showToast("No shared spells yet. Add one in Library, or import from a source.", "info");
         return;
       }
-      const choice = prompt(`Choose a spell number:\n${spells.map((spell, index) => `${index + 1}. ${spell.name}`).join("\n")}`);
-      const index = parseInt(choice, 10) - 1;
-      if (!spells[index]) return;
-      addSpellRow(panelEl, Library.resolveRef(Library.createReference("spells", spells[index], { prepared: false })));
+      openSpellBrowser({
+        title: "Browse Library Spells",
+        subtitle: "Search shared spells and preview them before adding to the character.",
+        entries: spells.map(spell => ({
+          id: spell.id,
+          name: spell.name || "(Unnamed Spell)",
+          subtitle: buildSpellSubtitle(spell),
+          sourceLabel: spell.source === "srd" ? "SRD" : "Library",
+          badge: spell.school || "",
+          preview: renderSpellPreview(resolvePreviewSpell(spell)),
+          onSelect: () => {
+            addSpellRow(panelEl, Library.resolveRef(Library.createReference("spells", spell, { prepared: false })));
+            App.showToast(`Added ${spell.name}.`, "success");
+          },
+        })),
+        actionLabel: "Add Spell",
+        searchPlaceholder: "Search library spells...",
+      });
     } catch (error) {
       App.showToast(`Could not load spell library: ${error.message}`, "error");
     }
   }
 
   async function importExternalSpell(panelEl) {
-    const providerChoice = prompt("Search which source?\n1. Open5e\n2. D&D 5e API", "1");
-    if (!providerChoice) return;
-    const provider = providerChoice.trim() === "2" || /d&?d|5e api/i.test(providerChoice)
-      ? "dnd5eapi"
-      : "open5e";
-    const providerLabel = provider === "dnd5eapi" ? "D&D 5e API" : "Open5e";
-    const query = prompt(`Search ${providerLabel} for which spell?`);
-    if (!query) return;
+    openExternalSpellBrowser(panelEl);
+  }
+
+  function ensureSpellBrowserDialog() {
+    if (document.getElementById("spell-browser-dialog")) return;
+    const wrapper = document.createElement("div");
+    wrapper.innerHTML = `
+      <dialog id="spell-browser-dialog" class="modal-dialog spell-browser-dialog">
+        <div class="modal-content card-elevated spell-browser-shell">
+          <div class="modal-header flex-between">
+            <div>
+              <h3 id="spell-browser-title">Spell Browser</h3>
+              <p id="spell-browser-subtitle" class="text-muted text-sm"></p>
+            </div>
+            <button class="button button-icon button-ghost" id="btn-close-spell-browser">Close</button>
+          </div>
+          <div id="spell-browser-controls" class="list-controls" style="margin-bottom: 0;"></div>
+          <div class="spell-browser-layout">
+            <div class="spell-browser-results-pane">
+              <div class="list-controls" style="margin-bottom: var(--space-3);">
+                <input id="spell-browser-search" type="search" class="search-input" placeholder="Search spells..." />
+              </div>
+              <div id="spell-browser-results" class="array-list spell-browser-results"></div>
+            </div>
+            <div class="spell-browser-preview-pane">
+              <div id="spell-browser-preview" class="spell-browser-preview text-muted">Select a spell to preview it.</div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button id="btn-spell-browser-cancel" class="button button-ghost">Close</button>
+            <button id="btn-spell-browser-action" class="button button-primary" disabled>Add Spell</button>
+          </div>
+        </div>
+      </dialog>
+    `;
+    document.body.appendChild(wrapper.firstElementChild);
+  }
+
+  function openSpellBrowser(config) {
+    ensureSpellBrowserDialog();
+    const dialog = document.getElementById("spell-browser-dialog");
+    const titleEl = document.getElementById("spell-browser-title");
+    const subtitleEl = document.getElementById("spell-browser-subtitle");
+    const controlsEl = document.getElementById("spell-browser-controls");
+    const searchEl = document.getElementById("spell-browser-search");
+    const resultsEl = document.getElementById("spell-browser-results");
+    const previewEl = document.getElementById("spell-browser-preview");
+    const actionBtn = document.getElementById("btn-spell-browser-action");
+    const closeBtn = document.getElementById("btn-close-spell-browser");
+    const cancelBtn = document.getElementById("btn-spell-browser-cancel");
+
+    let selected = null;
+    let entries = Array.isArray(config.entries) ? [...config.entries] : [];
+
+    titleEl.textContent = config.title || "Spell Browser";
+    subtitleEl.textContent = config.subtitle || "";
+    searchEl.value = "";
+    searchEl.placeholder = config.searchPlaceholder || "Search spells...";
+    controlsEl.innerHTML = config.controlsHTML || "";
+    previewEl.innerHTML = `<p class="text-muted">Select a spell to preview it.</p>`;
+    actionBtn.textContent = config.actionLabel || "Select";
+    actionBtn.disabled = true;
+
+    const closeDialog = () => {
+      actionBtn.onclick = null;
+      closeBtn.onclick = null;
+      cancelBtn.onclick = null;
+      searchEl.oninput = null;
+      dialog.close();
+    };
+
+    const renderEntries = () => {
+      const query = (searchEl.value || "").trim().toLowerCase();
+      const filtered = entries.filter(entry => {
+        const haystack = [entry.name, entry.subtitle, entry.sourceLabel, entry.badge].filter(Boolean).join(" ").toLowerCase();
+        return !query || haystack.includes(query);
+      });
+
+      resultsEl.innerHTML = filtered.map((entry, index) => `
+        <button type="button" class="array-item spell-browser-row ${selected?.id === entry.id ? "active" : ""}" data-entry-index="${index}">
+          <div class="array-item-content">
+            <div class="array-item-title">${EditorBase.escapeHTML(entry.name || "(Unnamed Spell)")}</div>
+            <div class="array-item-subtitle">
+              ${entry.subtitle ? EditorBase.escapeHTML(entry.subtitle) : ""}
+              ${entry.sourceLabel ? `<span class="badge">${EditorBase.escapeHTML(entry.sourceLabel)}</span>` : ""}
+              ${entry.badge ? `<span class="badge badge-accent">${EditorBase.escapeHTML(entry.badge)}</span>` : ""}
+            </div>
+          </div>
+        </button>
+      `).join("") || `<p class="text-muted text-sm">No spells found.</p>`;
+
+      resultsEl.querySelectorAll(".spell-browser-row").forEach((row, index) => {
+        row.addEventListener("click", async () => {
+          const entry = filtered[index];
+          selected = entry;
+          actionBtn.disabled = false;
+          renderEntries();
+          previewEl.innerHTML = `<p class="text-muted text-sm">Loading preview...</p>`;
+          try {
+            previewEl.innerHTML = typeof entry.preview === "function"
+              ? await entry.preview()
+              : entry.preview || `<p class="text-muted">No preview available.</p>`;
+          } catch (error) {
+            previewEl.innerHTML = `<p class="text-danger text-sm">Preview failed: ${EditorBase.escapeHTML(error.message)}</p>`;
+          }
+        });
+      });
+    };
+
+    searchEl.oninput = renderEntries;
+    closeBtn.onclick = closeDialog;
+    cancelBtn.onclick = closeDialog;
+    actionBtn.onclick = async () => {
+      if (!selected?.onSelect) return;
+      await selected.onSelect();
+      closeDialog();
+    };
+
+    renderEntries();
+    if (!dialog.open) dialog.showModal();
+  }
+
+  async function openExternalSpellBrowser(panelEl) {
     try {
-      const allResults = provider === "dnd5eapi"
-        ? await Library.searchDnd5eApi(query)
-        : await Library.searchOpen5e(query);
-      const results = allResults.filter(result => result.collection === "spells");
-      if (!results.length) {
-        App.showToast(`No ${providerLabel} spell results found.`, "info");
-        return;
-      }
-      const choice = prompt(`Import which spell?\n${results.map((spell, index) => {
-        const source = spell.sourceLabel ? ` - ${spell.sourceLabel}` : "";
-        return `${index + 1}. ${spell.name}${source}`;
-      }).join("\n")}`);
-      const index = parseInt(choice, 10) - 1;
-      if (!results[index]) return;
-      const imported = await Library.importExternalResult(results[index]);
-      addSpellRow(panelEl, Library.resolveRef(Library.createReference("spells", imported, { prepared: false })));
-      App.showToast(`Imported ${imported.name}.`, "success");
+      openSpellBrowser({
+        title: "Search External Spell Sources",
+        subtitle: "Search Open5e or the D&D 5e API, preview the result, then import and add it.",
+        entries: [],
+        actionLabel: "Import & Add",
+        searchPlaceholder: "Search external spells...",
+        controlsHTML: `
+          <select id="spell-browser-provider" class="type-filter-select">
+            <option value="open5e">Open5e</option>
+            <option value="dnd5eapi">D&D 5e API</option>
+          </select>
+          <button id="btn-spell-browser-run-search" class="button button-primary button-sm" type="button">Search</button>
+        `,
+      });
+
+      const providerEl = document.getElementById("spell-browser-provider");
+      const runSearchBtn = document.getElementById("btn-spell-browser-run-search");
+      const searchEl = document.getElementById("spell-browser-search");
+      const resultsEl = document.getElementById("spell-browser-results");
+      const previewEl = document.getElementById("spell-browser-preview");
+      const actionBtn = document.getElementById("btn-spell-browser-action");
+
+      const bindExternalSearchControls = () => {
+        document.getElementById("btn-spell-browser-run-search")?.addEventListener("click", runSearch);
+        document.getElementById("spell-browser-search")?.addEventListener("keydown", event => {
+          if (event.key === "Enter") {
+            event.preventDefault();
+            runSearch();
+          }
+        });
+      };
+
+      const runSearch = async () => {
+        const currentSearchEl = document.getElementById("spell-browser-search");
+        const currentProviderEl = document.getElementById("spell-browser-provider");
+        const query = (currentSearchEl?.value || "").trim();
+        const provider = currentProviderEl?.value || "open5e";
+        const providerLabel = provider === "dnd5eapi" ? "D&D 5e API" : "Open5e";
+        if (!query) {
+          App.showToast("Enter a spell name to search.", "info");
+          return;
+        }
+        resultsEl.innerHTML = `<p class="text-muted text-sm">Searching ${EditorBase.escapeHTML(providerLabel)}...</p>`;
+        previewEl.innerHTML = `<p class="text-muted">Select a spell to preview it.</p>`;
+        actionBtn.disabled = true;
+
+        try {
+          const allResults = provider === "dnd5eapi"
+            ? await Library.searchDnd5eApi(query)
+            : await Library.searchOpen5e(query);
+          const results = allResults.filter(result => result.collection === "spells");
+          if (!results.length) {
+            resultsEl.innerHTML = `<p class="text-muted text-sm">No ${EditorBase.escapeHTML(providerLabel)} spell results found.</p>`;
+            return;
+          }
+
+          openSpellBrowser({
+            title: "Search External Spell Sources",
+            subtitle: "Search Open5e or the D&D 5e API, preview the result, then import and add it.",
+            entries: results.map(result => ({
+              id: result.id,
+              name: result.name || "(Unnamed Spell)",
+              subtitle: result.typeLabel || "Spell",
+              sourceLabel: result.sourceLabel || result.providerLabel || "",
+              badge: result.providerLabel || "",
+              preview: async () => {
+                const detail = await Library.fetchExternalDetail(result).catch(() => result.raw || result);
+                return renderSpellPreview(resolvePreviewSpell(result, detail));
+              },
+              onSelect: async () => {
+                const imported = await Library.importExternalResult(result);
+                addSpellRow(panelEl, Library.resolveRef(Library.createReference("spells", imported, { prepared: false })));
+                App.showToast(`Imported ${imported.name}.`, "success");
+              },
+            })),
+            actionLabel: "Import & Add",
+            searchPlaceholder: "Search external spells...",
+            controlsHTML: `
+              <select id="spell-browser-provider" class="type-filter-select">
+                <option value="open5e" ${provider === "open5e" ? "selected" : ""}>Open5e</option>
+                <option value="dnd5eapi" ${provider === "dnd5eapi" ? "selected" : ""}>D&D 5e API</option>
+              </select>
+              <button id="btn-spell-browser-run-search" class="button button-primary button-sm" type="button">Search</button>
+            `,
+          });
+          document.getElementById("spell-browser-search").value = query;
+          bindExternalSearchControls();
+        } catch (error) {
+          resultsEl.innerHTML = `<p class="text-danger text-sm">${EditorBase.escapeHTML(providerLabel)} search failed: ${EditorBase.escapeHTML(error.message)}</p>`;
+        }
+      };
+
+      bindExternalSearchControls();
     } catch (error) {
-      App.showToast(`${providerLabel} import failed: ${error.message}`, "error");
+      App.showToast(`Could not search spell sources: ${error.message}`, "error");
     }
+  }
+
+  function buildSpellSubtitle(spell) {
+    const levelLabel = Number(spell.level || 0) === 0 ? "Cantrip" : `Level ${Number(spell.level || 0)}`;
+    return [levelLabel, spell.school || "", spell.castingTime || ""].filter(Boolean).join(" | ");
+  }
+
+  function resolvePreviewSpell(spell, detail = null) {
+    if (detail) {
+      return {
+        name: detail.name || spell.name || "(Unnamed Spell)",
+        level: Number(detail.level ?? spell.level ?? 0) || 0,
+        school: detail.school?.name || detail.school || spell.school || "",
+        castingTime: detail.casting_time || detail.castingTime || spell.castingTime || "",
+        range: detail.range || spell.range || "",
+        duration: detail.duration || spell.duration || "",
+        components: Array.isArray(detail.components) ? detail.components : (spell.components || []),
+        description: normalizePreviewDescription(detail.desc || detail.description || spell.description || ""),
+        tags: spell.tags || [],
+        sourceLabel: spell.sourceLabel || spell.providerLabel || "",
+      };
+    }
+
+    return {
+      name: spell.name || "(Unnamed Spell)",
+      level: Number(spell.level || 0) || 0,
+      school: spell.school || "",
+      castingTime: spell.castingTime || "",
+      range: spell.range || "",
+      duration: spell.duration || "",
+      components: spell.components || [],
+      description: normalizePreviewDescription(spell.description || ""),
+      tags: spell.tags || [],
+      sourceLabel: spell.source === "srd" ? "SRD" : (spell.source || "Library"),
+    };
+  }
+
+  function renderSpellPreview(spell) {
+    const levelLabel = Number(spell.level || 0) === 0 ? "Cantrip" : `Level ${Number(spell.level || 0)}`;
+    const tags = (spell.tags || []).map(tag => `<span class="badge">${EditorBase.escapeHTML(tag)}</span>`).join("");
+    return `
+      <div class="spell-browser-preview-card">
+        <div class="flex-between" style="align-items: flex-start; gap: var(--space-3); margin-bottom: var(--space-3);">
+          <div>
+            <div class="array-item-title">${EditorBase.escapeHTML(spell.name || "(Unnamed Spell)")}</div>
+            <div class="array-item-subtitle">${EditorBase.escapeHTML([levelLabel, spell.school, spell.sourceLabel].filter(Boolean).join(" | "))}</div>
+          </div>
+          <div class="flex gap-2 flex-wrap">${tags}</div>
+        </div>
+        <div class="fields-grid-2" style="margin-bottom: var(--space-3);">
+          <div class="card" style="padding: var(--space-3);">
+            <div class="text-muted text-xs">Casting Time</div>
+            <div>${EditorBase.escapeHTML(spell.castingTime || "-")}</div>
+          </div>
+          <div class="card" style="padding: var(--space-3);">
+            <div class="text-muted text-xs">Range</div>
+            <div>${EditorBase.escapeHTML(spell.range || "-")}</div>
+          </div>
+          <div class="card" style="padding: var(--space-3);">
+            <div class="text-muted text-xs">Duration</div>
+            <div>${EditorBase.escapeHTML(spell.duration || "-")}</div>
+          </div>
+          <div class="card" style="padding: var(--space-3);">
+            <div class="text-muted text-xs">Components</div>
+            <div>${EditorBase.escapeHTML((spell.components || []).join(", ") || "-")}</div>
+          </div>
+        </div>
+        <div class="card" style="padding: var(--space-4); white-space: pre-wrap;">${EditorBase.escapeHTML(spell.description || "No description available.")}</div>
+      </div>
+    `;
+  }
+
+  function normalizePreviewDescription(value) {
+    if (Array.isArray(value)) return value.join("\n\n");
+    return String(value || "").replace(/<[^>]+>/g, "");
   }
 
   // ─── Filter ──────────────────────────────────────────────────────────────────

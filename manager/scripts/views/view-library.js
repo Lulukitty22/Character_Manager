@@ -380,6 +380,7 @@ const ViewLibrary = (() => {
     panel.querySelector("#external-search")?.addEventListener("keydown", event => {
       if (event.key === "Enter") searchExternal(panel);
     });
+    ensureExternalPreviewDialog();
   }
 
   async function searchExternal(panel) {
@@ -392,9 +393,9 @@ const ViewLibrary = (() => {
         ? await Library.searchDnd5eApi(query)
         : await Library.searchOpen5e(query);
       resultsEl.innerHTML = results.map((result, index) => `
-        <div class="array-item external-result" data-result-index="${index}" data-result='${escapeAttr(JSON.stringify(result))}'>
+        <div class="array-item external-result ${result.collection === "spells" ? "external-result-clickable" : ""}" data-result-index="${index}" data-result='${escapeAttr(JSON.stringify(result))}'>
           <div class="array-item-content">
-            <label class="field-checkbox-row" style="align-items: flex-start;">
+            <div class="field-checkbox-row" style="align-items: flex-start;">
               <input type="checkbox" class="external-result-checkbox" />
               <span>
                 <span class="array-item-title">${escapeHTML(result.name)}</span>
@@ -404,7 +405,7 @@ const ViewLibrary = (() => {
                   ${result.sourceLabel ? `<span class="badge">${escapeHTML(result.sourceLabel)}</span>` : ""}
                 </span>
               </span>
-            </label>
+            </div>
           </div>
           <div class="array-item-actions">
             <button class="button button-primary button-sm btn-import-external">Import</button>
@@ -413,11 +414,21 @@ const ViewLibrary = (() => {
       `).join("") || `<p class="text-muted text-sm">No results.</p>`;
 
       resultsEl.querySelectorAll(".btn-import-external").forEach(button => {
-        button.addEventListener("click", async () => {
+        button.addEventListener("click", async event => {
+          event.stopPropagation();
           const row = button.closest(".external-result");
           const result = JSON.parse(row.dataset.result || "{}");
           const imported = await Library.importExternalResult(result);
           App.showToast(`Imported ${imported.name}.`, "success");
+        });
+      });
+
+      resultsEl.querySelectorAll(".external-result").forEach(row => {
+        row.addEventListener("click", async event => {
+          if (event.target.closest(".external-result-checkbox, .btn-import-external")) return;
+          const result = JSON.parse(row.dataset.result || "{}");
+          if (result.collection !== "spells") return;
+          await openExternalPreview(result);
         });
       });
     } catch (error) {
@@ -440,6 +451,90 @@ const ViewLibrary = (() => {
     } catch (error) {
       App.showToast(`Import failed: ${error.message}`, "error");
     }
+  }
+
+  function ensureExternalPreviewDialog() {
+    if (document.getElementById("external-preview-dialog")) return;
+    const wrapper = document.createElement("div");
+    wrapper.innerHTML = `
+      <dialog id="external-preview-dialog" class="modal-dialog spell-browser-dialog">
+        <div class="modal-content card-elevated spell-browser-shell">
+          <div class="modal-header flex-between">
+            <div>
+              <h3 id="external-preview-title">Spell Preview</h3>
+              <p id="external-preview-subtitle" class="text-muted text-sm"></p>
+            </div>
+            <button class="button button-icon button-ghost" id="btn-close-external-preview">Close</button>
+          </div>
+          <div id="external-preview-body" class="spell-browser-preview"></div>
+          <div class="modal-footer">
+            <button id="btn-dismiss-external-preview" class="button button-ghost">Close</button>
+          </div>
+        </div>
+      </dialog>
+    `;
+    document.body.appendChild(wrapper.firstElementChild);
+  }
+
+  async function openExternalPreview(result) {
+    ensureExternalPreviewDialog();
+    const dialog = document.getElementById("external-preview-dialog");
+    const titleEl = document.getElementById("external-preview-title");
+    const subtitleEl = document.getElementById("external-preview-subtitle");
+    const bodyEl = document.getElementById("external-preview-body");
+    const closeBtn = document.getElementById("btn-close-external-preview");
+    const dismissBtn = document.getElementById("btn-dismiss-external-preview");
+
+    titleEl.textContent = result.name || "Spell Preview";
+    subtitleEl.textContent = [result.providerLabel || result.provider, result.sourceLabel || ""].filter(Boolean).join(" | ");
+    bodyEl.innerHTML = `<p class="text-muted text-sm">Loading preview...</p>`;
+
+    const closeDialog = () => {
+      closeBtn.onclick = null;
+      dismissBtn.onclick = null;
+      dialog.close();
+    };
+    closeBtn.onclick = closeDialog;
+    dismissBtn.onclick = closeDialog;
+
+    dialog.showModal();
+
+    try {
+      const detail = await Library.fetchExternalDetail(result).catch(() => result.raw || result);
+      bodyEl.innerHTML = renderExternalSpellPreview(result, detail);
+    } catch (error) {
+      bodyEl.innerHTML = `<p class="text-danger text-sm">Preview failed: ${escapeHTML(error.message)}</p>`;
+    }
+  }
+
+  function renderExternalSpellPreview(result, detail = {}) {
+    const level = Number(detail.level || 0);
+    const levelLabel = level === 0 ? "Cantrip" : `Level ${level}`;
+    const school = detail.school?.name || detail.school || "";
+    const castingTime = detail.casting_time || detail.castingTime || "";
+    const range = detail.range || "";
+    const duration = detail.duration || "";
+    const components = Array.isArray(detail.components) ? detail.components.join(", ") : "";
+    const description = normalizePreviewDescription(detail.desc || detail.description || "");
+
+    return `
+      <div class="spell-browser-preview-card">
+        <div class="array-item-title" style="margin-bottom: var(--space-1);">${escapeHTML(detail.name || result.name || "(Unnamed Spell)")}</div>
+        <div class="array-item-subtitle" style="margin-bottom: var(--space-3);">${escapeHTML([levelLabel, school, result.sourceLabel || ""].filter(Boolean).join(" | "))}</div>
+        <div class="fields-grid-2" style="margin-bottom: var(--space-3);">
+          <div class="card" style="padding: var(--space-3);"><div class="text-muted text-xs">Casting Time</div><div>${escapeHTML(castingTime || "-")}</div></div>
+          <div class="card" style="padding: var(--space-3);"><div class="text-muted text-xs">Range</div><div>${escapeHTML(range || "-")}</div></div>
+          <div class="card" style="padding: var(--space-3);"><div class="text-muted text-xs">Duration</div><div>${escapeHTML(duration || "-")}</div></div>
+          <div class="card" style="padding: var(--space-3);"><div class="text-muted text-xs">Components</div><div>${escapeHTML(components || "-")}</div></div>
+        </div>
+        <div class="card" style="padding: var(--space-4); white-space: pre-wrap;">${escapeHTML(description || "No description available.")}</div>
+      </div>
+    `;
+  }
+
+  function normalizePreviewDescription(value) {
+    if (Array.isArray(value)) return value.join("\n\n");
+    return String(value || "").replace(/<[^>]+>/g, "");
   }
 
   function label(collection) {

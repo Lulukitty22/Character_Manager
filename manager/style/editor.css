@@ -212,6 +212,65 @@
   justify-content: flex-end;
 }
 
+.spell-browser-dialog {
+  max-width: 1120px;
+}
+
+.spell-browser-shell {
+  max-height: calc(100vh - 2rem);
+}
+
+.spell-browser-layout {
+  display: grid;
+  grid-template-columns: minmax(320px, 0.95fr) minmax(360px, 1.05fr);
+  gap: var(--space-4);
+  min-height: 420px;
+}
+
+.spell-browser-results-pane,
+.spell-browser-preview-pane {
+  min-height: 0;
+}
+
+.spell-browser-results,
+.spell-browser-preview {
+  max-height: calc(100vh - 240px);
+  overflow: auto;
+}
+
+.spell-browser-preview {
+  background-color: var(--color-bg-deep);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+}
+
+.spell-browser-row {
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+}
+
+.spell-browser-row.active {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-accent) 45%, transparent);
+}
+
+.external-result-clickable {
+  cursor: pointer;
+}
+
+@media (max-width: 920px) {
+  .spell-browser-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .spell-browser-results,
+  .spell-browser-preview {
+    max-height: none;
+  }
+}
+
 /* ─── Sheet Preview Overlay ──────────────────────────────────────────────────── */
 
 .sheet-preview-overlay {
