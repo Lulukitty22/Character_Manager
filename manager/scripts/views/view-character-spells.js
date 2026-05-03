@@ -79,12 +79,19 @@ const ViewCharacterSpells = (() => {
     const tags = (spell.tags || []).map(t => `<span class="sheet-tag">${esc(t)}</span>`).join("");
 
     return `
-      <div class="sheet-spell-entry">
+      <div class="sheet-spell-entry sheet-record-card" data-sheet-record="${ViewCharacterUtils.encodeDataAttr(buildSpellViewerRecord(spell, mechanics))}">
         <div class="sheet-spell-prepared-dot ${spell.prepared ? "prepared" : ""}"></div>
         <div class="sheet-spell-content">
-          <div class="sheet-spell-name">
-            ${esc(spell.name || "(Unnamed spell)")}
-            ${spell.school ? `<span class="sheet-spell-school text-muted">${esc(spell.school)}</span>` : ""}
+          <div class="sheet-record-card-header">
+            <div>
+              <div class="sheet-spell-name">
+                ${esc(spell.name || "(Unnamed spell)")}
+                ${spell.school ? `<span class="sheet-spell-school text-muted">${esc(spell.school)}</span>` : ""}
+              </div>
+            </div>
+            <div class="sheet-record-card-actions">
+              <button type="button" class="sheet-inline-button sheet-open-record-viewer">View</button>
+            </div>
           </div>
           ${mechanicChips}
           ${spell.description ? `<div class="sheet-spell-desc text-sm">${esc(spell.description)}</div>` : ""}
@@ -158,6 +165,37 @@ const ViewCharacterSpells = (() => {
     return chips;
   }
 
-  return { render };
+  function buildSpellViewerRecord(spell, mechanics) {
+    return {
+      kicker: "Spell",
+      title: spell.name || "(Unnamed Spell)",
+      subtitle: [Number(spell.level || 0) === 0 ? "Cantrip" : `Level ${Number(spell.level || 0)}`, spell.school || ""].filter(Boolean).join(" | "),
+      description: spell.description || "",
+      chips: mechanics,
+      sections: [
+        {
+          title: "Casting",
+          content: [
+            spell.castingTime ? `Casting Time: ${spell.castingTime}` : "",
+            spell.range ? `Range: ${spell.range}` : "",
+            spell.duration ? `Duration: ${spell.duration}` : "",
+            (spell.components || []).length ? `Components: ${(spell.components || []).join(", ")}` : "",
+          ].filter(Boolean).join("\n"),
+        },
+      ].filter(section => section.content),
+      raw: spell,
+    };
+  }
+
+  function wireInteractive(containerEl) {
+    containerEl.querySelectorAll(".sheet-spell-entry .sheet-open-record-viewer").forEach(button => {
+      button.addEventListener("click", () => {
+        const row = button.closest(".sheet-spell-entry");
+        ViewCharacterUtils.openRecordViewer(ViewCharacterUtils.decodeDataAttr(row?.dataset.sheetRecord, {}));
+      });
+    });
+  }
+
+  return { render, wireInteractive };
 
 })();

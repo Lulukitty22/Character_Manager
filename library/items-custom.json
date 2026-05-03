@@ -244,6 +244,137 @@
       "weight": null,
       "attuned": false,
       "description": "Potion, rare\n\nYou regain 8d4 + 8 hit points when you drink this potion. The potion's red liquid glimmers when agitated."
+    },
+    {
+      "id": "item-shortbow-archery-test",
+      "collection": "items",
+      "name": "Field Shortbow",
+      "tags": [
+        "weapon",
+        "archery",
+        "ammo test"
+      ],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {
+        "mechanics": [
+          {
+            "label": "Damage",
+            "value": "1d6 piercing",
+            "kind": "damage",
+            "description": "Typical shortbow damage before ability modifiers."
+          },
+          {
+            "label": "Range",
+            "value": "80 / 320 ft",
+            "kind": "range"
+          },
+          {
+            "label": "Ammo",
+            "value": "Arrows -1",
+            "kind": "requirement",
+            "description": "Each shot spends 1 arrow from the Arrows resource."
+          }
+        ],
+        "equipment": {
+          "slot": "Hands",
+          "rarity": ""
+        },
+        "effects": {
+          "hp": {
+            "flatBonus": 0,
+            "perLevelBonus": 0,
+            "tempHp": 0
+          },
+          "spellSlots": {}
+        },
+        "actions": [
+          {
+            "label": "Shoot",
+            "consumeQuantity": false,
+            "effects": {
+              "resources": [
+                {
+                  "target": "Arrows",
+                  "delta": -1,
+                  "reason": "Field Shortbow shot"
+                }
+              ]
+            },
+            "description": "Spend 1 arrow from the Arrows resource when firing."
+          }
+        ]
+      },
+      "createdAt": "2026-05-03T19:00:00.000Z",
+      "updatedAt": "2026-05-03T19:00:00.000Z",
+      "type": "weapon",
+      "active": true,
+      "weight": 2,
+      "attuned": false,
+      "description": "A practical shortbow used to test ammo consumption on the sheet."
+    },
+    {
+      "id": "item-arrow-bundle-20-test",
+      "collection": "items",
+      "name": "Arrow Bundle (20)",
+      "tags": [
+        "ammo",
+        "archery",
+        "consumable",
+        "ammo test"
+      ],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {
+        "mechanics": [
+          {
+            "label": "Reload",
+            "value": "+20 Arrows",
+            "kind": "positive",
+            "description": "Adds 20 arrows to the Arrows resource, up to its max."
+          }
+        ],
+        "equipment": {
+          "slot": "Quiver",
+          "rarity": ""
+        },
+        "effects": {
+          "hp": {
+            "flatBonus": 0,
+            "perLevelBonus": 0,
+            "tempHp": 0
+          },
+          "spellSlots": {}
+        },
+        "actions": [
+          {
+            "label": "Reload 20",
+            "consumeQuantity": true,
+            "effects": {
+              "resources": [
+                {
+                  "target": "Arrows",
+                  "delta": 20,
+                  "maxCap": 20,
+                  "reason": "Loaded a fresh bundle of arrows"
+                }
+              ]
+            },
+            "description": "Consume this bundle to refill the Arrows resource."
+          }
+        ]
+      },
+      "createdAt": "2026-05-03T19:00:00.000Z",
+      "updatedAt": "2026-05-03T19:00:00.000Z",
+      "type": "consumable",
+      "active": true,
+      "weight": 1,
+      "attuned": false,
+      "description": "A fresh bundle of twenty arrows for testing reload interactions."
     }
   ]
 }

@@ -382,10 +382,16 @@ const DndCalculations = (() => {
 
   function normalizeItemAction(item, action = {}) {
     if (!action || typeof action !== "object") return null;
+    const resourceEffects = Array.isArray(action.effects?.resources)
+      ? action.effects.resources
+      : [];
     return {
       label: action.label || inferActionLabel(item, action.effects || {}),
       consumeQuantity: action.consumeQuantity ?? action.usesQuantity ?? (item.type === "consumable"),
-      effects: action.effects || {},
+      effects: {
+        ...(action.effects || {}),
+        ...(resourceEffects.length ? { resources: resourceEffects } : {}),
+      },
       description: action.description || action.note || "",
     };
   }
@@ -422,6 +428,8 @@ const DndCalculations = (() => {
   function inferActionLabel(item = {}, effects = {}) {
     if (effects.heal) return item.type === "consumable" ? "Drink" : "Use";
     if (effects.tempHp) return "Use";
+    if (Array.isArray(effects.resources) && effects.resources.some(effect => Number(effect.delta || 0) < 0)) return "Use";
+    if (Array.isArray(effects.resources) && effects.resources.some(effect => Number(effect.delta || 0) > 0)) return "Restore";
     if (item.type === "ammo") return "Spend 1";
     return "Use";
   }

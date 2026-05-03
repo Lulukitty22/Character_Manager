@@ -16,7 +16,9 @@ const ViewCharacter = (() => {
     const boss = character.boss || null;
     const roblox = character.roblox || null;
     const spells = character.spells || [];
-    const spellSlots = character.spellSlots || {};
+    const spellSlots = typeof DndCalculations !== "undefined"
+      ? DndCalculations.resolveSpellSlots(character).slots
+      : (character.spellSlots || {});
     const abilities = character.abilities || [];
     const inventory = character.inventory || [];
     const currency = character.currency || {};
@@ -39,7 +41,7 @@ const ViewCharacter = (() => {
         ${roblox ? ViewCharacterRoblox.render(roblox) : ""}
         ${spells.length ? ViewCharacterSpells.render(spells, spellSlots) : ""}
         ${abilities.length ? ViewCharacterAbilities.render(abilities) : ""}
-        ${ViewCharacterInventory.render(inventory, currency)}
+        ${ViewCharacterInventory.render(character, inventory, currency)}
         ${ViewCharacterResources.render(character, resources)}
         ${ViewCharacterNotes.render(character.notes)}
       </div>
@@ -51,6 +53,10 @@ const ViewCharacter = (() => {
    */
   function wireInteractive(containerEl, character) {
     ViewCharacterBoss.wireInteractive(containerEl, character);
+    ViewCharacterSpells.wireInteractive?.(containerEl, character);
+    ViewCharacterAbilities.wireInteractive?.(containerEl, character);
+    ViewCharacterInventory.wireInteractive?.(containerEl, character);
+    ViewCharacterResources.wireInteractive?.(containerEl, character);
   }
 
   return {

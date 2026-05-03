@@ -32,16 +32,20 @@ const ViewCharacterResources = (() => {
     const customBlocks = resources.map(resource => {
       const percent = resource.max > 0 ? Math.round((resource.current / resource.max) * 100) : 0;
       const barClass = percent >= 60 ? "" : percent >= 30 ? "medium" : "low";
-      const mechanicChips = renderMechanicChips([
+      const mechanics = [
         { label: "Current", value: resource.current, kind: "quantity" },
         { label: "Max", value: resource.max, kind: "quantity" },
         ...(resource.addons?.mechanics || []),
-      ]);
+      ];
+      const mechanicChips = renderMechanicChips(mechanics);
       return `
-        <div class="sheet-resource-block">
-          <div class="sheet-resource-header">
+        <div class="sheet-resource-block sheet-record-card" data-sheet-record="${ViewCharacterUtils.encodeDataAttr(buildResourceViewerRecord(resource, mechanics))}">
+          <div class="sheet-resource-header sheet-record-card-header">
             <span class="sheet-resource-name">${esc(resource.name || "Resource")}</span>
-            <span class="sheet-resource-values">${resource.current} / ${resource.max}</span>
+            <div class="sheet-record-card-actions">
+              <span class="sheet-resource-values">${resource.current} / ${resource.max}</span>
+              <button type="button" class="sheet-inline-button sheet-open-record-viewer">View</button>
+            </div>
           </div>
           ${mechanicChips}
           <div class="hp-bar-track" style="margin-bottom:var(--space-2)">
@@ -75,6 +79,33 @@ const ViewCharacterResources = (() => {
       </div>`;
   }
 
-  return { render };
+  function buildResourceViewerRecord(resource, mechanics) {
+    return {
+      kicker: "Resource",
+      title: resource.name || "Resource",
+      subtitle: `${resource.current} / ${resource.max}`,
+      description: resource.description || "",
+      chips: mechanics,
+      sections: (resource.log || []).length ? [{
+        title: "Recent Log",
+        content: resource.log.slice(-12).reverse().map(entry => {
+          const delta = entry.delta >= 0 ? `+${entry.delta}` : `${entry.delta}`;
+          return `${entry.date || ""}  ${delta}  ${entry.reason || ""}`.trim();
+        }).join("\n"),
+      }] : [],
+      raw: resource,
+    };
+  }
+
+  function wireInteractive(containerEl) {
+    containerEl.querySelectorAll(".sheet-resource-block .sheet-open-record-viewer").forEach(button => {
+      button.addEventListener("click", () => {
+        const row = button.closest(".sheet-resource-block");
+        ViewCharacterUtils.openRecordViewer(ViewCharacterUtils.decodeDataAttr(row?.dataset.sheetRecord, {}));
+      });
+    });
+  }
+
+  return { render, wireInteractive };
 
 })();

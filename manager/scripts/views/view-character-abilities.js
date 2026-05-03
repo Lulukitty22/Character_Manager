@@ -20,9 +20,12 @@ const ViewCharacterAbilities = (() => {
       ].filter(Boolean);
 
       return `
-        <div class="sheet-ability-entry">
-          <div class="sheet-ability-header">
+        <div class="sheet-ability-entry sheet-record-card" data-sheet-record="${ViewCharacterUtils.encodeDataAttr(buildAbilityViewerRecord(ability, mechanics))}">
+          <div class="sheet-ability-header sheet-record-card-header">
             <span class="sheet-ability-name">${esc(ability.name || "(Unnamed)")}</span>
+            <div class="sheet-record-card-actions">
+              <button type="button" class="sheet-inline-button sheet-open-record-viewer">View</button>
+            </div>
           </div>
           ${renderMechanicChips(mechanics)}
           ${ability.description ? `<div class="sheet-ability-desc text-sm">${esc(ability.description)}</div>` : ""}
@@ -44,6 +47,26 @@ const ViewCharacterAbilities = (() => {
     return "neutral";
   }
 
-  return { render };
+  function buildAbilityViewerRecord(ability, mechanics) {
+    return {
+      kicker: "Ability",
+      title: ability.name || "(Unnamed Ability)",
+      subtitle: ability.type ? ability.type.replace(/_/g, " ") : "",
+      description: ability.description || "",
+      chips: mechanics,
+      raw: ability,
+    };
+  }
+
+  function wireInteractive(containerEl) {
+    containerEl.querySelectorAll(".sheet-ability-entry .sheet-open-record-viewer").forEach(button => {
+      button.addEventListener("click", () => {
+        const row = button.closest(".sheet-ability-entry");
+        ViewCharacterUtils.openRecordViewer(ViewCharacterUtils.decodeDataAttr(row?.dataset.sheetRecord, {}));
+      });
+    });
+  }
+
+  return { render, wireInteractive };
 
 })();

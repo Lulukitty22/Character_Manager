@@ -239,6 +239,7 @@ const EditorGameplay = (() => {
       const healAmount = DndCalculations.healingAmount(item);
       const tempHp = Number(item.action?.effects?.tempHp?.amount || item.action?.effects?.tempHp || 0);
       const slotEffect = item.action?.effects?.spellSlots || null;
+      const resourceEffects = Array.isArray(item.action?.effects?.resources) ? item.action.effects.resources : [];
       const chips = typeof ViewCharacterUtils !== "undefined"
         ? ViewCharacterUtils.renderMechanicChips([
           item.quantity != null ? { label: "Qty", value: item.quantity, kind: "quantity" } : null,
@@ -246,6 +247,12 @@ const EditorGameplay = (() => {
           tempHp ? { label: "Temp HP", value: `+${tempHp}`, kind: "positive" } : null,
           slotEffect?.all ? { label: "Slots", value: "Restore All", kind: "positive" } : null,
           slotEffect?.level ? { label: "Slot", value: `Lv ${slotEffect.level} +${slotEffect.amount || 1}`, kind: "positive" } : null,
+          ...resourceEffects.map(effect => ({
+            label: effect.target || effect.resourceName || "Resource",
+            value: Schema.formatModifier(Number(effect.delta || 0)),
+            kind: Number(effect.delta || 0) >= 0 ? "positive" : "negative",
+            description: effect.reason || "",
+          })),
         ].filter(Boolean))
         : "";
 
@@ -505,12 +512,36 @@ const EditorGameplay = (() => {
     } else if (slotEffect?.level) {
       adjustSpellSlot(panelEl, character, Number(slotEffect.level || 0), Math.max(1, Number(slotEffect.amount || 1)));
     }
+    (effects.resources || []).forEach(effect => {
+      applyResourceEffect(character, effect);
+    });
 
     if (item.action?.consumeQuantity) {
       decrementInventoryItem(character, item.id);
     }
 
     App.showToast(`${item.action?.label || "Used"} ${item.name || "item"}.`, "success");
+  }
+
+  function applyResourceEffect(character, effect = {}) {
+    const target = String(effect.target || effect.resourceName || "").trim().toLowerCase();
+    if (!target) return;
+    const resource = (character.customResources || []).find(entry => {
+      const resolved = typeof Library !== "undefined" ? Library.resolveRef(entry) : entry;
+      return [
+        entry.id,
+        entry.libraryRef,
+        resolved?.name,
+      ].filter(Boolean).some(value => String(value).trim().toLowerCase() === target);
+    });
+    if (!resource) return;
+    const resolved = typeof Library !== "undefined" ? Library.resolveRef(resource) : resource;
+    const delta = Number(effect.delta || 0);
+    const maxCap = effect.maxCap != null ? Number(effect.maxCap) : Number(resource.max ?? resolved?.max ?? 0);
+    const current = Number(resource.current ?? resolved?.current ?? 0);
+    resource.current = Math.max(0, maxCap > 0 ? Math.min(current + delta, maxCap) : current + delta);
+    if (!resource.log) resource.log = [];
+    resource.log.push(Schema.createDefaultResourceLogEntry(delta, effect.reason || "Item action"));
   }
 
   function addHpLog(panelEl, character, delta, reason) {

@@ -223,6 +223,7 @@ const ViewLibrary = (() => {
       const perLevelHp = Number(entry.addons?.effects?.hp?.perLevelBonus || 0);
       const slotBonuses = formatSlotBonusMap(entry.addons?.effects?.spellSlots?.bonusByLevel || {});
       const slotRestore = formatSlotRestore(action.effects?.spellSlots || null);
+      const resourceEffects = formatResourceEffects(action.effects?.resources || []);
       return `
         <div class="fields-grid-3" style="margin-top: var(--space-3);">
           <input class="field-input library-item-type" value="${escapeAttr(entry.type || "misc")}" placeholder="Type" />
@@ -242,6 +243,10 @@ const ViewLibrary = (() => {
         <div class="fields-grid-2" style="margin-top: var(--space-3);">
           <input class="field-input library-item-slot-bonuses" value="${escapeAttr(slotBonuses)}" placeholder="Passive slot bonuses, e.g. 1:+1, 3:+1" />
           <input class="field-input library-item-slot-restore" value="${escapeAttr(slotRestore)}" placeholder="Use restores slots: all or 3:+1" />
+        </div>
+        <div class="fields-grid-2" style="margin-top: var(--space-3);">
+          <input class="field-input library-item-resource-effects" value="${escapeAttr(resourceEffects)}" placeholder="Resource effects, e.g. Arrows:-1 or Arrows:+20" />
+          <div class="text-muted text-sm" style="align-self:center;">Targets a character resource by name or id when the item action is used.</div>
         </div>
         <textarea class="field-textarea library-description" rows="3" style="margin-top: var(--space-3);" placeholder="Description">${escapeHTML(entry.description || "")}</textarea>
       `;
@@ -342,6 +347,7 @@ const ViewLibrary = (() => {
       const actionLabel = row.querySelector(".library-item-action-label")?.value.trim() || "";
       const slotBonuses = parseSlotBonusMap(row.querySelector(".library-item-slot-bonuses")?.value || "");
       const slotRestore = parseSlotRestore(row.querySelector(".library-item-slot-restore")?.value || "");
+      const resourceEffects = parseResourceEffects(row.querySelector(".library-item-resource-effects")?.value || "");
       record.type = row.querySelector(".library-item-type")?.value.trim() || "misc";
       record.weight = Number.isNaN(weight) ? null : weight;
       record.attuned = row.querySelector(".library-item-attuned")?.checked || false;
@@ -365,7 +371,7 @@ const ViewLibrary = (() => {
           },
         },
       };
-      if (healDice || healAmount || tempHp || slotRestore) {
+      if (healDice || healAmount || tempHp || slotRestore || resourceEffects.length) {
         if (healDice || healAmount) {
           record.addons.healing = {
             ...(record.addons.healing || {}),
@@ -387,6 +393,7 @@ const ViewLibrary = (() => {
             } : {}),
             ...(tempHp ? { tempHp: { amount: tempHp } } : {}),
             ...(slotRestore ? { spellSlots: slotRestore } : {}),
+            ...(resourceEffects.length ? { resources: resourceEffects } : {}),
           },
           description: record.description || "",
         }];
@@ -703,6 +710,29 @@ const ViewLibrary = (() => {
       level: Number(match[1]),
       amount: Number(match[2]),
     };
+  }
+
+  function formatResourceEffects(effects = []) {
+    return (effects || [])
+      .map(effect => {
+        const target = effect.target || effect.resourceName || "";
+        const delta = Number(effect.delta || 0);
+        return target && delta ? `${target}:${Schema.formatModifier(delta)}` : "";
+      })
+      .filter(Boolean)
+      .join(", ");
+  }
+
+  function parseResourceEffects(value) {
+    return String(value || "").split(",").map(chunk => chunk.trim()).filter(Boolean).reduce((effects, chunk) => {
+      const match = chunk.match(/^(.+?)\s*:\s*([+-]?\d+)$/);
+      if (!match) return effects;
+      effects.push({
+        target: match[1].trim(),
+        delta: Number(match[2]),
+      });
+      return effects;
+    }, []);
   }
 
   function label(collection) {

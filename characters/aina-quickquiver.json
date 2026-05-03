@@ -1,0 +1,151 @@
+{
+  "id": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
+  "meta": {
+    "repoPath": "characters/aina-quickquiver.json",
+    "lastUpdated": "2026-05-03T19:00:00.000Z"
+  },
+  "identity": {
+    "name": "Aina Quickquiver",
+    "classification": "player_character",
+    "aliases": [
+      "Ammo Test Archer"
+    ],
+    "race": "Wood Elf",
+    "height": "5'7\"",
+    "age": "23",
+    "origin": "System test character for inventory actions and ammo handling.",
+    "tags": [
+      "D&D 5e",
+      "Ranger",
+      "Archery",
+      "Ammo Test"
+    ]
+  },
+  "appearance": {
+    "description": "A lean field scout with a shortbow, practical leathers, and a quiver always within reach.",
+    "images": []
+  },
+  "personality": "Focused, practical, and ideal for verifying inventory/resource loops without a ton of narrative clutter.",
+  "backstory": "Aina exists to test whether inventory actions, ammo resources, and read-only sheet viewers all play nicely together.",
+  "notes": "Use the Field Shortbow action to spend arrows. Use Arrow Bundle (20) to refill the Arrows resource up to its max. Exported sheet should match preview exactly.",
+  "spells": [],
+  "spellSlotMode": "calculated",
+  "spellSlotOverrides": {},
+  "spellSlots": {},
+  "abilities": [
+    {
+      "id": "aina-trait-archery-test",
+      "source": "inline",
+      "name": "Ammo Test Setup",
+      "type": "feature",
+      "description": "This character is wired to demonstrate shortbow shots consuming arrows and arrow bundles restoring the ammo resource.",
+      "active": true,
+      "tags": [
+        "test"
+      ]
+    }
+  ],
+  "inventory": [
+    {
+      "id": "aina-item-shortbow",
+      "source": "library",
+      "libraryCollection": "items",
+      "librarySource": "custom",
+      "libraryRef": "item-shortbow-archery-test",
+      "quantity": 1,
+      "active": true,
+      "overrides": {}
+    },
+    {
+      "id": "aina-item-arrow-bundle",
+      "source": "library",
+      "libraryCollection": "items",
+      "librarySource": "custom",
+      "libraryRef": "item-arrow-bundle-20-test",
+      "quantity": 2,
+      "active": true,
+      "overrides": {}
+    },
+    {
+      "id": "aina-item-healing-potion",
+      "source": "library",
+      "libraryCollection": "items",
+      "librarySource": "external",
+      "libraryRef": "dnd5eapi-magic-items-potion-of-healing",
+      "quantity": 1,
+      "active": true,
+      "overrides": {}
+    }
+  ],
+  "currency": {
+    "gp": 18,
+    "sp": 4,
+    "cp": 0,
+    "ep": 0,
+    "pp": 0
+  },
+  "customResources": [
+    {
+      "id": "aina-resource-arrows",
+      "source": "library",
+      "libraryCollection": "resources",
+      "librarySource": "custom",
+      "libraryRef": "resource-arrows-20",
+      "current": 20,
+      "max": 20,
+      "log": [],
+      "overrides": {}
+    }
+  ],
+  "dnd": {
+    "class": "Ranger",
+    "subclass": "Hunter",
+    "level": 5,
+    "multiclass": [],
+    "background": "Scout",
+    "alignment": "Neutral Good",
+    "proficiencyBonus": 3,
+    "spellcastingAbility": "wis",
+    "stats": {
+      "str": { "score": 10 },
+      "dex": { "score": 18 },
+      "con": { "score": 14 },
+      "int": { "score": 12 },
+      "wis": { "score": 14 },
+      "cha": { "score": 8 }
+    },
+    "savingThrowProficiencies": [
+      "str",
+      "dex"
+    ],
+    "skillProficiencies": [
+      { "skill": "Perception", "expertise": false },
+      { "skill": "Stealth", "expertise": false },
+      { "skill": "Survival", "expertise": false }
+    ],
+    "hp": {
+      "mode": "calculated",
+      "max": 44,
+      "current": 44,
+      "temp": 0,
+      "log": []
+    },
+    "acModes": [
+      {
+        "id": "aina-ac-base",
+        "label": "Studded Leather",
+        "value": 15,
+        "active": true
+      }
+    ],
+    "speed": {
+      "walk": 35,
+      "fly": 0,
+      "swim": 0,
+      "climb": 0,
+      "burrow": 0
+    },
+    "initiative": 4,
+    "feats": []
+  }
+}

@@ -2,9 +2,11 @@
  * export.js
  * Builds a self-contained shareable HTML file for a character.
  *
- * Architecture: the exported file contains NO embedded renderer code and NO
- * embedded character data. Instead it stores a set of raw.githubusercontent.com
- * URLs and, on open, fetches everything it needs:
+ * Architecture: the exported file contains NO embedded renderer code, but it
+ * DOES embed the exact character snapshot being exported. That keeps preview
+ * and shareable output aligned even when the user exports before saving.
+ * The export still stores a set of raw.githubusercontent.com URLs and, on
+ * open, fetches the renderer and shared library files it needs:
  *
  *   1. manager/style/base.css   — CSS variables + utilities
  *   2. manager/style/sheet.css  — sheet display styles
@@ -14,12 +16,13 @@
  *   6. manager/scripts/views/view-character-notes.js
  *   7. manager/scripts/views/view-character-*.js
  *   8. manager/scripts/views/view-character.js — unified coordinator
- *   9. characters/{name}.json   — the actual character data
+ *   10. Embedded character JSON snapshot — the exact state exported from editor
  *
  * Why this works:
  *   - raw.githubusercontent.com has open CORS headers (public repos)
  *   - fetch() to an HTTPS URL works from file:// pages in all major browsers
- *   - The file is ~3 KB and always renders the latest data & renderer version
+ *   - The renderer can update over time, but the exported sheet always uses the
+ *     exact character data snapshot taken at export time.
  *
  * Exports: SheetExporter.exportCharacter(characterData, filePath) → void
  */
@@ -47,14 +50,13 @@ const SheetExporter = (() => {
     const repoBase    = `https://raw.githubusercontent.com/${owner}/${repo}/${branch}`;
 
     // URL of the character JSON (what the sheet fetches for its data)
-    const characterUrl = `${repoBase}/${filePath}`;
-
     // URLs of the renderer assets (fetched at sheet-open time)
     const scriptUrls = {
       baseCss:       `${repoBase}/manager/style/base.css`,
       sheetCss:      `${repoBase}/manager/style/sheet.css`,
       schema:        `${repoBase}/manager/scripts/schema.js`,
       library:       `${repoBase}/manager/scripts/library.js`,
+      dndCalculations: `${repoBase}/manager/scripts/dnd-calculations.js`,
       utils:         `${repoBase}/manager/scripts/views/view-character-utils.js`,
       header:        `${repoBase}/manager/scripts/views/view-character-header.js`,
       notes:         `${repoBase}/manager/scripts/views/view-character-notes.js`,
@@ -76,25 +78,27 @@ const SheetExporter = (() => {
         "feats-custom.json":     `${repoBase}/library/feats-custom.json`,
         "traits-custom.json":    `${repoBase}/library/traits-custom.json`,
         "classes-custom.json":   `${repoBase}/library/classes-custom.json`,
+        "races-custom.json":     `${repoBase}/library/races-custom.json`,
       },
     };
 
     const name        = characterData.identity?.name || "Character";
     const safeFile    = name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
-    const html        = buildExportHTML(characterUrl, scriptUrls, name);
+    const html        = buildExportHTML(characterData, filePath, scriptUrls, name);
 
     downloadHTML(html, `${safeFile}-sheet.html`);
   }
 
   // ─── HTML Builder ─────────────────────────────────────────────────────────────
 
-  function buildExportHTML(characterUrl, scriptUrls, characterName) {
+  function buildExportHTML(characterData, filePath, scriptUrls, characterName) {
     const escapedName        = escapeHtmlEntities(characterName);
-    const escapedCharacterUrl = escapeJsString(characterUrl);
+    const escapedCharacterUrl = escapeJsString(`${localStorage.getItem("githubOwner") && localStorage.getItem("githubRepo") ? `https://raw.githubusercontent.com/${localStorage.getItem("githubOwner")}/${localStorage.getItem("githubRepo")}/${localStorage.getItem("githubBranch") || "main"}/${filePath}` : filePath}`);
     const escapedBaseCss      = escapeJsString(scriptUrls.baseCss);
     const escapedSheetCss      = escapeJsString(scriptUrls.sheetCss);
     const escapedSchema        = escapeJsString(scriptUrls.schema);
     const escapedLibrary       = escapeJsString(scriptUrls.library);
+    const escapedDndCalculations = escapeJsString(scriptUrls.dndCalculations);
     const escapedUtils         = escapeJsString(scriptUrls.utils);
     const escapedHeader        = escapeJsString(scriptUrls.header);
     const escapedNotes         = escapeJsString(scriptUrls.notes);
@@ -108,6 +112,7 @@ const SheetExporter = (() => {
     const escapedRoblox        = escapeJsString(scriptUrls.roblox);
     const escapedViewCharacter = escapeJsString(scriptUrls.viewCharacter);
     const escapedLibraryFiles  = JSON.stringify(scriptUrls.libraryFiles).replace(/</g, "\\u003c");
+    const escapedCharacterData = JSON.stringify(characterData).replace(/</g, "\\u003c");
 
     return `<!DOCTYPE html>
 <html lang="en">
@@ -147,10 +152,12 @@ const SheetExporter = (() => {
 
   // ── URLs embedded at export time ──────────────────────────────────────────
   var CHARACTER_URL      = "${escapedCharacterUrl}";
+  var EMBEDDED_CHARACTER = ${escapedCharacterData};
   var BASE_CSS_URL       = "${escapedBaseCss}";
   var SHEET_CSS_URL      = "${escapedSheetCss}";
   var SCHEMA_URL         = "${escapedSchema}";
   var LIBRARY_URL        = "${escapedLibrary}";
+  var DND_CALCULATIONS_URL = "${escapedDndCalculations}";
   var UTILS_URL          = "${escapedUtils}";
   var HEADER_URL         = "${escapedHeader}";
   var NOTES_URL          = "${escapedNotes}";
@@ -237,6 +244,7 @@ const SheetExporter = (() => {
       var rendererScripts = [
         [SCHEMA_URL,         "schema.js"],
         [LIBRARY_URL,        "library.js"],
+        [DND_CALCULATIONS_URL, "dnd-calculations.js"],
         [UTILS_URL,          "view-character-utils.js"],
         [HEADER_URL,         "view-character-header.js"],
         [NOTES_URL,          "view-character-notes.js"],
@@ -258,12 +266,11 @@ const SheetExporter = (() => {
         injectScript(scriptText, scriptLabel);
       }
 
-      // 3. Fetch the character data
+      // 3. Use the embedded character snapshot
       setStatus("Loading character data…");
-      var characterData = await fetchText(CHARACTER_URL, "character JSON")
-        .then(function (text) { return JSON.parse(text); });
+      var characterData = EMBEDDED_CHARACTER;
 
-      if (characterUsesLibrary(characterData) && typeof Library !== "undefined") {
+      if (typeof Library !== "undefined") {
         setStatus("Loading shared library...");
         var seeded = {};
         var fileNames = Object.keys(LIBRARY_FILES);
@@ -301,17 +308,6 @@ const SheetExporter = (() => {
   }
 
   main();
-
-  function characterUsesLibrary(character) {
-    function hasRefs(entries) {
-      return Array.isArray(entries) && entries.some(function (entry) { return entry && entry.source === "library"; });
-    }
-    return hasRefs(character.spells) ||
-      hasRefs(character.inventory) ||
-      hasRefs(character.customResources) ||
-      hasRefs(character.abilities) ||
-      hasRefs(character.dnd && character.dnd.feats);
-  }
 
 })();
   </script>
