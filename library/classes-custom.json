@@ -12,33 +12,14 @@
       "providerId": "",
       "variantOf": "",
       "addons": {
-        "sourceDocument": {
-          "provider": "dnd5ewiki",
-          "title": "Monster Manual",
-          "type": "Monster",
-          "detailUrl": "https://dnd-5e.fandom.com/wiki/Lich"
-        },
-        "sourceDocuments": [
-          {
-            "provider": "dnd5ewiki",
-            "title": "Monster Manual",
-            "type": "Trait",
-            "detailUrl": "https://dnd-5e.fandom.com/wiki/Gray_Slaad"
-          },
-          {
-            "provider": "dnd5ewiki",
-            "title": "Monster Manual",
-            "type": "Monster",
-            "detailUrl": "https://dnd-5e.fandom.com/wiki/Arcanaloth"
-          }
-        ],
+        "mechanics": [],
         "stats": {},
         "speed": {},
         "proficiencies": [],
         "feats": []
       },
-      "createdAt": "2026-05-01T15:52:17.807Z",
-      "updatedAt": "2026-05-01T15:52:17.807Z",
+      "createdAt": "2026-05-03T04:32:14.644Z",
+      "updatedAt": "2026-05-03T04:32:14.644Z",
       "description": "",
       "hitDie": "",
       "primaryAbility": ""
