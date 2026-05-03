@@ -1,240 +1,118 @@
 {
   "version": 1,
   "collections": {
-    "classes": [
-      {
-        "id": "idk-what-class",
-        "name": "idk what class",
-        "source": "custom",
-        "path": "library/classes/idk-what-class.json",
-        "sha": "",
-        "updatedAt": "2026-05-03T04:16:36.172Z"
-      },
-      {
-        "id": "sorcerer",
-        "name": "Sorcerer",
-        "source": "custom",
-        "path": "library/classes/sorcerer.json",
-        "sha": "",
-        "updatedAt": "2026-05-03T00:00:00.000Z"
-      },
-      {
-        "id": "wizard",
-        "name": "Wizard",
-        "source": "custom",
-        "path": "library/classes/wizard.json",
-        "sha": "",
-        "updatedAt": "2026-05-03T00:00:00.000Z"
-      },
-      {
-        "id": "aberrant-lich-shapechanger",
-        "name": "Aberrant Lich / Shapechanger",
-        "source": "custom",
-        "path": "library/classes/aberrant-lich-shapechanger.json",
-        "sha": "",
-        "updatedAt": "2026-05-03T04:32:59.965Z"
-      },
-      {
-        "id": "cleric",
-        "name": "Cleric",
-        "source": "custom",
-        "path": "library/classes/cleric.json",
-        "sha": "",
-        "updatedAt": "2026-05-03T00:00:00.000Z"
-      },
-      {
-        "id": "fighter",
-        "name": "Fighter",
-        "source": "custom",
-        "path": "library/classes/fighter.json",
-        "sha": "",
-        "updatedAt": "2026-05-03T04:22:03.660Z"
-      }
-    ],
-    "feats": [
-      {
-        "id": "b4205c6e-c27e-44d8-aeb9-7b9bb474a4e0",
-        "name": "Skill Expert",
-        "source": "custom",
-        "path": "library/feats/b4205c6e-c27e-44d8-aeb9-7b9bb474a4e0.json",
-        "sha": "",
-        "updatedAt": "2026-05-01T15:52:17.807Z"
-      },
-      {
-        "id": "dnd5eapi-feats-grappler",
-        "name": "Grappler",
-        "source": "external",
-        "path": "library/feats/dnd5eapi-feats-grappler.json",
-        "sha": "",
-        "updatedAt": "2026-05-01T15:27:30.212Z"
-      },
-      {
-        "id": "931a6347-81ac-48d0-b499-cbf2c914eb60",
-        "name": "Actor Feat",
-        "source": "custom",
-        "path": "library/feats/931a6347-81ac-48d0-b499-cbf2c914eb60.json",
-        "sha": "",
-        "updatedAt": "2026-05-01T15:52:17.807Z"
-      },
-      {
-        "id": "2236f92f-66db-42e9-a1ad-34544cd3919c",
-        "name": "Silver Tongue",
-        "source": "custom",
-        "path": "library/feats/2236f92f-66db-42e9-a1ad-34544cd3919c.json",
-        "sha": "",
-        "updatedAt": "2026-05-01T15:52:17.807Z"
-      },
-      {
-        "id": "73f591ce-f655-4898-943c-37e896a0d1eb",
-        "name": "Beguiling Influence",
-        "source": "custom",
-        "path": "library/feats/73f591ce-f655-4898-943c-37e896a0d1eb.json",
-        "sha": "",
-        "updatedAt": "2026-05-01T15:52:17.807Z"
-      }
-    ],
-    "items": [
-      {
-        "id": "dnd5eapi-magic-items-potion-of-healing-supreme",
-        "name": "Potion of Supreme Healing",
-        "source": "external",
-        "path": "library/items/dnd5eapi-magic-items-potion-of-healing-supreme.json",
-        "sha": "",
-        "updatedAt": "2026-05-03T09:37:05.2028059Z"
-      },
-      {
-        "id": "item-arrow-bundle-20-test",
-        "name": "Arrow Bundle (20)",
-        "source": "custom",
-        "path": "library/items/item-arrow-bundle-20-test.json",
-        "sha": "",
-        "updatedAt": "2026-05-03T19:00:00.000Z"
-      },
-      {
-        "id": "item-shortbow-archery-test",
-        "name": "Field Shortbow",
-        "source": "custom",
-        "path": "library/items/item-shortbow-archery-test.json",
-        "sha": "",
-        "updatedAt": "2026-05-03T19:00:00.000Z"
-      },
-      {
-        "id": "dnd5eapi-magic-items-potion-of-healing-superior",
-        "name": "Potion of Superior Healing",
-        "source": "external",
-        "path": "library/items/dnd5eapi-magic-items-potion-of-healing-superior.json",
-        "sha": "",
-        "updatedAt": "2026-05-03T09:37:05.1993030Z"
-      },
-      {
-        "id": "cdb0b5d2-8287-4f14-acdb-c5881df01916",
-        "name": "Rho's Heart",
-        "source": "custom",
-        "path": "library/items/cdb0b5d2-8287-4f14-acdb-c5881df01916.json",
-        "sha": "",
-        "updatedAt": "2026-05-03T04:22:03.660Z"
-      },
-      {
-        "id": "dnd5eapi-magic-items-potion-of-healing-common",
-        "name": "Potion of Healing",
-        "source": "external",
-        "path": "library/items/dnd5eapi-magic-items-potion-of-healing-common.json",
-        "sha": "",
-        "updatedAt": "2026-05-03T09:37:05.0935837Z"
-      },
-      {
-        "id": "dnd5eapi-magic-items-potion-of-healing-greater",
-        "name": "Potion of Greater Healing",
-        "source": "external",
-        "path": "library/items/dnd5eapi-magic-items-potion-of-healing-greater.json",
-        "sha": "",
-        "updatedAt": "2026-05-03T09:37:05.1907384Z"
-      }
-    ],
-    "races": [
-      {
-        "id": "human",
-        "name": "Human",
-        "source": "custom",
-        "path": "library/races/human.json",
-        "sha": "",
-        "updatedAt": "2026-05-03T00:00:00.000Z"
-      },
-      {
-        "id": "reborn-homunculus-human",
-        "name": "Reborn / Homunculus (Human)",
-        "source": "custom",
-        "path": "library/races/reborn-homunculus-human.json",
-        "sha": "",
-        "updatedAt": "2026-05-03T00:00:00.000Z"
-      },
-      {
-        "id": "aberrant-lich-shapechanger-race",
-        "name": "Aberrant Lich / Shapechanger",
-        "source": "custom",
-        "path": "library/races/aberrant-lich-shapechanger-race.json",
-        "sha": "",
-        "updatedAt": "2026-05-03T00:00:00.000Z"
-      },
-      {
-        "id": "human-dragonmark-of-sentinel",
-        "name": "Human (Dragonmark of Sentinel)",
-        "source": "custom",
-        "path": "library/races/human-dragonmark-of-sentinel.json",
-        "sha": "",
-        "updatedAt": "2026-05-03T00:00:00.000Z"
-      }
-    ],
-    "resources": [
-      {
-        "id": "resource-arrows-20",
-        "name": "Arrows",
-        "source": "custom",
-        "path": "library/resources/resource-arrows-20.json",
-        "sha": "",
-        "updatedAt": "2026-05-03T19:00:00.000Z"
-      },
-      {
-        "id": "capella-resource-polymorph-traits",
-        "name": "Active Flesh Polymorph Traits",
-        "source": "custom",
-        "path": "library/resources/capella-resource-polymorph-traits.json",
-        "sha": "",
-        "updatedAt": "2026-05-01T16:57:08.797Z"
-      },
-      {
-        "id": "capella-resource-legendary-action",
-        "name": "Legendary Action",
-        "source": "custom",
-        "path": "library/resources/capella-resource-legendary-action.json",
-        "sha": "",
-        "updatedAt": "2026-05-01T16:57:08.797Z"
-      }
-    ],
     "spells": [
       {
-        "id": "capella-spell-modify-memory",
-        "name": "Modify Memory",
+        "id": "open5e-spells-wz_abrupt-hug",
+        "name": "Abrupt Hug",
+        "source": "srd",
+        "path": "library/spells/open5e-spells-wz-abrupt-hug.json",
+        "sha": "",
+        "updatedAt": "2026-05-01T15:44:13.580Z"
+      },
+      {
+        "id": "capella-spell-alter-self",
+        "name": "Alter Self",
         "source": "custom",
-        "path": "library/spells/capella-spell-modify-memory.json",
+        "path": "library/spells/capella-spell-alter-self.json",
         "sha": "",
         "updatedAt": "2026-05-01T16:57:08.797Z"
       },
       {
-        "id": "capella-spell-power-word-stun",
-        "name": "Power Word Stun",
+        "id": "capella-spell-counterspell",
+        "name": "Counterspell",
         "source": "custom",
-        "path": "library/spells/capella-spell-power-word-stun.json",
+        "path": "library/spells/capella-spell-counterspell.json",
         "sha": "",
         "updatedAt": "2026-05-01T16:57:08.797Z"
       },
       {
-        "id": "capella-spell-seeming",
-        "name": "Seeming",
+        "id": "d249f049-b5c0-4dc0-87d6-3b755dc761ce",
+        "name": "Detect Thoughts",
         "source": "custom",
-        "path": "library/spells/capella-spell-seeming.json",
+        "path": "library/spells/d249f049-b5c0-4dc0-87d6-3b755dc761ce.json",
+        "sha": "",
+        "updatedAt": "2026-05-01T15:52:17.807Z"
+      },
+      {
+        "id": "capella-spell-dimension-door",
+        "name": "Dimension Door",
+        "source": "custom",
+        "path": "library/spells/capella-spell-dimension-door.json",
         "sha": "",
         "updatedAt": "2026-05-01T16:57:08.797Z"
+      },
+      {
+        "id": "capella-spell-disguise-self",
+        "name": "Disguise Self",
+        "source": "custom",
+        "path": "library/spells/capella-spell-disguise-self.json",
+        "sha": "",
+        "updatedAt": "2026-05-01T16:57:08.797Z"
+      },
+      {
+        "id": "7e97d247-569e-4b1e-a1ae-309711acd5e5",
+        "name": "Dominate Monster",
+        "source": "custom",
+        "path": "library/spells/7e97d247-569e-4b1e-a1ae-309711acd5e5.json",
+        "sha": "",
+        "updatedAt": "2026-05-01T15:52:17.807Z"
+      },
+      {
+        "id": "open5e-spells-srd-2024_dominate-person",
+        "name": "Dominate Person",
+        "source": "srd",
+        "path": "library/spells/open5e-spells-srd-2024-dominate-person.json",
+        "sha": "",
+        "updatedAt": "2026-05-01T16:37:33.650Z"
+      },
+      {
+        "id": "capella-spell-fear",
+        "name": "Fear",
+        "source": "custom",
+        "path": "library/spells/capella-spell-fear.json",
+        "sha": "",
+        "updatedAt": "2026-05-01T16:57:08.797Z"
+      },
+      {
+        "id": "open5e-spells-srd-2024_fireball",
+        "name": "Fireball",
+        "source": "srd",
+        "path": "library/spells/open5e-spells-srd-2024-fireball.json",
+        "sha": "",
+        "updatedAt": "2026-05-03T04:19:24.967Z"
+      },
+      {
+        "id": "4c177263-68ac-419d-84d5-d71d1c18bbbf",
+        "name": "Flesh Polymorph",
+        "source": "custom",
+        "path": "library/spells/4c177263-68ac-419d-84d5-d71d1c18bbbf.json",
+        "sha": "",
+        "updatedAt": "2026-05-01T15:52:17.807Z"
+      },
+      {
+        "id": "capella-spell-geas",
+        "name": "Geas",
+        "source": "custom",
+        "path": "library/spells/capella-spell-geas.json",
+        "sha": "",
+        "updatedAt": "2026-05-01T16:57:08.797Z"
+      },
+      {
+        "id": "capella-spell-hold-monster",
+        "name": "Hold Monster",
+        "source": "custom",
+        "path": "library/spells/capella-spell-hold-monster.json",
+        "sha": "",
+        "updatedAt": "2026-05-01T16:57:08.797Z"
+      },
+      {
+        "id": "open5e-spells-deepm_kiss-of-the-succubus",
+        "name": "Kiss of the Succubus",
+        "source": "srd",
+        "path": "library/spells/open5e-spells-deepm-kiss-of-the-succubus.json",
+        "sha": "",
+        "updatedAt": "2026-05-01T16:37:38.420Z"
       },
       {
         "id": "capella-spell-mass-suggestion",
@@ -261,10 +139,18 @@
         "updatedAt": "2026-05-01T16:57:08.797Z"
       },
       {
-        "id": "d249f049-b5c0-4dc0-87d6-3b755dc761ce",
-        "name": "Detect Thoughts",
+        "id": "capella-spell-modify-memory",
+        "name": "Modify Memory",
         "source": "custom",
-        "path": "library/spells/d249f049-b5c0-4dc0-87d6-3b755dc761ce.json",
+        "path": "library/spells/capella-spell-modify-memory.json",
+        "sha": "",
+        "updatedAt": "2026-05-01T16:57:08.797Z"
+      },
+      {
+        "id": "3aee59b4-649b-422b-9a06-1a6da700d624",
+        "name": "Plane Shift",
+        "source": "custom",
+        "path": "library/spells/3aee59b4-649b-422b-9a06-1a6da700d624.json",
         "sha": "",
         "updatedAt": "2026-05-01T15:52:17.807Z"
       },
@@ -277,44 +163,28 @@
         "updatedAt": "2026-05-01T16:41:18.815Z"
       },
       {
-        "id": "open5e-spells-srd-2024_true-polymorph",
-        "name": "True Polymorph",
-        "source": "srd",
-        "path": "library/spells/open5e-spells-srd-2024-true-polymorph.json",
+        "id": "19168ae2-b26b-4b5a-a3c3-aaef9c3d8047",
+        "name": "Power Word Cum",
+        "source": "custom",
+        "path": "library/spells/19168ae2-b26b-4b5a-a3c3-aaef9c3d8047.json",
         "sha": "",
-        "updatedAt": "2026-05-01T16:41:20.168Z"
+        "updatedAt": "2026-05-03T04:32:59.965Z"
       },
       {
-        "id": "open5e-spells-wz_abrupt-hug",
-        "name": "Abrupt Hug",
-        "source": "srd",
-        "path": "library/spells/open5e-spells-wz-abrupt-hug.json",
+        "id": "capella-spell-power-word-stun",
+        "name": "Power Word Stun",
+        "source": "custom",
+        "path": "library/spells/capella-spell-power-word-stun.json",
         "sha": "",
-        "updatedAt": "2026-05-01T15:44:13.580Z"
+        "updatedAt": "2026-05-01T16:57:08.797Z"
       },
       {
-        "id": "open5e-spells-deepm_kiss-of-the-succubus",
-        "name": "Kiss of the Succubus",
-        "source": "srd",
-        "path": "library/spells/open5e-spells-deepm-kiss-of-the-succubus.json",
+        "id": "capella-spell-seeming",
+        "name": "Seeming",
+        "source": "custom",
+        "path": "library/spells/capella-spell-seeming.json",
         "sha": "",
-        "updatedAt": "2026-05-01T16:37:38.420Z"
-      },
-      {
-        "id": "open5e-spells-srd-2024_dominate-person",
-        "name": "Dominate Person",
-        "source": "srd",
-        "path": "library/spells/open5e-spells-srd-2024-dominate-person.json",
-        "sha": "",
-        "updatedAt": "2026-05-01T16:37:33.650Z"
-      },
-      {
-        "id": "open5e-spells-srd-2024_fireball",
-        "name": "Fireball",
-        "source": "srd",
-        "path": "library/spells/open5e-spells-srd-2024-fireball.json",
-        "sha": "",
-        "updatedAt": "2026-05-03T04:19:24.967Z"
+        "updatedAt": "2026-05-01T16:57:08.797Z"
       },
       {
         "id": "504aee8d-99e5-48fe-934c-bd74f3eaf223",
@@ -325,132 +195,112 @@
         "updatedAt": "2026-05-01T15:52:17.807Z"
       },
       {
+        "id": "open5e-spells-srd-2024_true-polymorph",
+        "name": "True Polymorph",
+        "source": "srd",
+        "path": "library/spells/open5e-spells-srd-2024-true-polymorph.json",
+        "sha": "",
+        "updatedAt": "2026-05-01T16:41:20.168Z"
+      },
+      {
         "id": "7b6931ed-1049-4d02-8590-78936898e3cc",
         "name": "Voice of Distortion",
         "source": "custom",
         "path": "library/spells/7b6931ed-1049-4d02-8590-78936898e3cc.json",
         "sha": "",
         "updatedAt": "2026-05-01T15:52:17.807Z"
-      },
+      }
+    ],
+    "items": [
       {
-        "id": "7e97d247-569e-4b1e-a1ae-309711acd5e5",
-        "name": "Dominate Monster",
+        "id": "item-arrow-bundle-20-test",
+        "name": "Arrow Bundle (20)",
         "source": "custom",
-        "path": "library/spells/7e97d247-569e-4b1e-a1ae-309711acd5e5.json",
+        "path": "library/items/item-arrow-bundle-20-test.json",
         "sha": "",
-        "updatedAt": "2026-05-01T15:52:17.807Z"
+        "updatedAt": "2026-05-03T19:00:00.000Z"
       },
       {
-        "id": "19168ae2-b26b-4b5a-a3c3-aaef9c3d8047",
-        "name": "Power Word Cum",
+        "id": "item-shortbow-archery-test",
+        "name": "Field Shortbow",
         "source": "custom",
-        "path": "library/spells/19168ae2-b26b-4b5a-a3c3-aaef9c3d8047.json",
+        "path": "library/items/item-shortbow-archery-test.json",
         "sha": "",
-        "updatedAt": "2026-05-03T04:32:59.965Z"
+        "updatedAt": "2026-05-03T19:00:00.000Z"
       },
       {
-        "id": "3aee59b4-649b-422b-9a06-1a6da700d624",
-        "name": "Plane Shift",
-        "source": "custom",
-        "path": "library/spells/3aee59b4-649b-422b-9a06-1a6da700d624.json",
+        "id": "dnd5eapi-magic-items-potion-of-healing-greater",
+        "name": "Potion of Greater Healing",
+        "source": "external",
+        "path": "library/items/dnd5eapi-magic-items-potion-of-healing-greater.json",
         "sha": "",
-        "updatedAt": "2026-05-01T15:52:17.807Z"
+        "updatedAt": "2026-05-03T09:37:05.1907384Z"
       },
       {
-        "id": "4c177263-68ac-419d-84d5-d71d1c18bbbf",
-        "name": "Flesh Polymorph",
-        "source": "custom",
-        "path": "library/spells/4c177263-68ac-419d-84d5-d71d1c18bbbf.json",
+        "id": "dnd5eapi-magic-items-potion-of-healing-common",
+        "name": "Potion of Healing",
+        "source": "external",
+        "path": "library/items/dnd5eapi-magic-items-potion-of-healing-common.json",
         "sha": "",
-        "updatedAt": "2026-05-01T15:52:17.807Z"
+        "updatedAt": "2026-05-03T09:37:05.0935837Z"
       },
       {
-        "id": "capella-spell-alter-self",
-        "name": "Alter Self",
-        "source": "custom",
-        "path": "library/spells/capella-spell-alter-self.json",
+        "id": "dnd5eapi-magic-items-potion-of-healing-superior",
+        "name": "Potion of Superior Healing",
+        "source": "external",
+        "path": "library/items/dnd5eapi-magic-items-potion-of-healing-superior.json",
         "sha": "",
-        "updatedAt": "2026-05-01T16:57:08.797Z"
+        "updatedAt": "2026-05-03T09:37:05.1993030Z"
       },
       {
-        "id": "capella-spell-fear",
-        "name": "Fear",
-        "source": "custom",
-        "path": "library/spells/capella-spell-fear.json",
+        "id": "dnd5eapi-magic-items-potion-of-healing-supreme",
+        "name": "Potion of Supreme Healing",
+        "source": "external",
+        "path": "library/items/dnd5eapi-magic-items-potion-of-healing-supreme.json",
         "sha": "",
-        "updatedAt": "2026-05-01T16:57:08.797Z"
+        "updatedAt": "2026-05-03T09:37:05.2028059Z"
       },
       {
-        "id": "capella-spell-geas",
-        "name": "Geas",
+        "id": "cdb0b5d2-8287-4f14-acdb-c5881df01916",
+        "name": "Rho's Heart",
         "source": "custom",
-        "path": "library/spells/capella-spell-geas.json",
+        "path": "library/items/cdb0b5d2-8287-4f14-acdb-c5881df01916.json",
         "sha": "",
-        "updatedAt": "2026-05-01T16:57:08.797Z"
-      },
+        "updatedAt": "2026-05-03T04:22:03.660Z"
+      }
+    ],
+    "resources": [
       {
-        "id": "capella-spell-hold-monster",
-        "name": "Hold Monster",
+        "id": "capella-resource-polymorph-traits",
+        "name": "Active Flesh Polymorph Traits",
         "source": "custom",
-        "path": "library/spells/capella-spell-hold-monster.json",
-        "sha": "",
-        "updatedAt": "2026-05-01T16:57:08.797Z"
-      },
-      {
-        "id": "capella-spell-counterspell",
-        "name": "Counterspell",
-        "source": "custom",
-        "path": "library/spells/capella-spell-counterspell.json",
+        "path": "library/resources/capella-resource-polymorph-traits.json",
         "sha": "",
         "updatedAt": "2026-05-01T16:57:08.797Z"
       },
       {
-        "id": "capella-spell-dimension-door",
-        "name": "Dimension Door",
+        "id": "resource-arrows-20",
+        "name": "Arrows",
         "source": "custom",
-        "path": "library/spells/capella-spell-dimension-door.json",
+        "path": "library/resources/resource-arrows-20.json",
         "sha": "",
-        "updatedAt": "2026-05-01T16:57:08.797Z"
+        "updatedAt": "2026-05-03T19:00:00.000Z"
       },
       {
-        "id": "capella-spell-disguise-self",
-        "name": "Disguise Self",
+        "id": "capella-resource-legendary-action",
+        "name": "Legendary Action",
         "source": "custom",
-        "path": "library/spells/capella-spell-disguise-self.json",
+        "path": "library/resources/capella-resource-legendary-action.json",
         "sha": "",
         "updatedAt": "2026-05-01T16:57:08.797Z"
       }
     ],
     "tags": [
       {
-        "id": "shapechanger",
-        "name": "Shapechanger",
+        "id": "aberrant-lich",
+        "name": "Aberrant Lich",
         "source": "custom",
-        "path": "library/tags/shapechanger.json",
-        "sha": "",
-        "updatedAt": "2026-05-03T04:32:59.965Z"
-      },
-      {
-        "id": "dual-state-sheet",
-        "name": "Dual-State Sheet",
-        "source": "custom",
-        "path": "library/tags/dual-state-sheet.json",
-        "sha": "",
-        "updatedAt": "2026-05-03T04:32:59.965Z"
-      },
-      {
-        "id": "test",
-        "name": "Test",
-        "source": "custom",
-        "path": "library/tags/test.json",
-        "sha": "",
-        "updatedAt": "2026-05-01T15:47:44.030Z"
-      },
-      {
-        "id": "social-manipulator",
-        "name": "Social Manipulator",
-        "source": "custom",
-        "path": "library/tags/social-manipulator.json",
+        "path": "library/tags/aberrant-lich.json",
         "sha": "",
         "updatedAt": "2026-05-03T04:32:59.965Z"
       },
@@ -463,10 +313,10 @@
         "updatedAt": "2026-05-03T04:32:59.965Z"
       },
       {
-        "id": "aberrant-lich",
-        "name": "Aberrant Lich",
+        "id": "d-d-5e",
+        "name": "D&D 5e",
         "source": "custom",
-        "path": "library/tags/aberrant-lich.json",
+        "path": "library/tags/d-d-5e.json",
         "sha": "",
         "updatedAt": "2026-05-03T04:32:59.965Z"
       },
@@ -479,148 +329,94 @@
         "updatedAt": "2026-05-01T15:47:44.030Z"
       },
       {
-        "id": "d-d-5e",
-        "name": "D&D 5e",
+        "id": "dual-state-sheet",
+        "name": "Dual-State Sheet",
         "source": "custom",
-        "path": "library/tags/d-d-5e.json",
+        "path": "library/tags/dual-state-sheet.json",
         "sha": "",
         "updatedAt": "2026-05-03T04:32:59.965Z"
+      },
+      {
+        "id": "shapechanger",
+        "name": "Shapechanger",
+        "source": "custom",
+        "path": "library/tags/shapechanger.json",
+        "sha": "",
+        "updatedAt": "2026-05-03T04:32:59.965Z"
+      },
+      {
+        "id": "social-manipulator",
+        "name": "Social Manipulator",
+        "source": "custom",
+        "path": "library/tags/social-manipulator.json",
+        "sha": "",
+        "updatedAt": "2026-05-03T04:32:59.965Z"
+      },
+      {
+        "id": "test",
+        "name": "Test",
+        "source": "custom",
+        "path": "library/tags/test.json",
+        "sha": "",
+        "updatedAt": "2026-05-01T15:47:44.030Z"
+      }
+    ],
+    "feats": [
+      {
+        "id": "931a6347-81ac-48d0-b499-cbf2c914eb60",
+        "name": "Actor Feat",
+        "source": "custom",
+        "path": "library/feats/931a6347-81ac-48d0-b499-cbf2c914eb60.json",
+        "sha": "",
+        "updatedAt": "2026-05-01T15:52:17.807Z"
+      },
+      {
+        "id": "73f591ce-f655-4898-943c-37e896a0d1eb",
+        "name": "Beguiling Influence",
+        "source": "custom",
+        "path": "library/feats/73f591ce-f655-4898-943c-37e896a0d1eb.json",
+        "sha": "",
+        "updatedAt": "2026-05-01T15:52:17.807Z"
+      },
+      {
+        "id": "dnd5eapi-feats-grappler",
+        "name": "Grappler",
+        "source": "external",
+        "path": "library/feats/dnd5eapi-feats-grappler.json",
+        "sha": "",
+        "updatedAt": "2026-05-01T15:27:30.212Z"
+      },
+      {
+        "id": "2236f92f-66db-42e9-a1ad-34544cd3919c",
+        "name": "Silver Tongue",
+        "source": "custom",
+        "path": "library/feats/2236f92f-66db-42e9-a1ad-34544cd3919c.json",
+        "sha": "",
+        "updatedAt": "2026-05-01T15:52:17.807Z"
+      },
+      {
+        "id": "b4205c6e-c27e-44d8-aeb9-7b9bb474a4e0",
+        "name": "Skill Expert",
+        "source": "custom",
+        "path": "library/feats/b4205c6e-c27e-44d8-aeb9-7b9bb474a4e0.json",
+        "sha": "",
+        "updatedAt": "2026-05-01T15:52:17.807Z"
       }
     ],
     "traits": [
       {
-        "id": "capella-trait-telepathy",
-        "name": "Telepathy",
+        "id": "c9bf4ca6-3342-4cfc-9589-8211d1d06736",
+        "name": "Aberrant Lich Bonus",
         "source": "custom",
-        "path": "library/traits/capella-trait-telepathy.json",
+        "path": "library/traits/c9bf4ca6-3342-4cfc-9589-8211d1d06736.json",
         "sha": "",
-        "updatedAt": "2026-05-01T16:57:08.797Z"
-      },
-      {
-        "id": "dnd5eapi-features-eldritch-invocation-beguiling-influence",
-        "name": "Eldritch Invocation: Beguiling Influence",
-        "source": "external",
-        "path": "library/traits/dnd5eapi-features-eldritch-invocation-beguiling-influence.json",
-        "sha": "",
-        "updatedAt": "2026-05-01T16:38:37.562Z"
+        "updatedAt": "2026-05-01T15:51:13.985Z"
       },
       {
         "id": "e533c4f5-df28-4c54-8eb1-b0c3b0365e6d",
         "name": "Advantage on All Rolls",
         "source": "custom",
         "path": "library/traits/e533c4f5-df28-4c54-8eb1-b0c3b0365e6d.json",
-        "sha": "",
-        "updatedAt": "2026-05-01T15:51:13.985Z"
-      },
-      {
-        "id": "capella-trait-impersonation",
-        "name": "Impersonation",
-        "source": "custom",
-        "path": "library/traits/capella-trait-impersonation.json",
-        "sha": "",
-        "updatedAt": "2026-05-01T16:57:08.797Z"
-      },
-      {
-        "id": "capella-trait-monstrous-regeneration",
-        "name": "Monstrous Regeneration",
-        "source": "custom",
-        "path": "library/traits/capella-trait-monstrous-regeneration.json",
-        "sha": "",
-        "updatedAt": "2026-05-01T16:57:08.797Z"
-      },
-      {
-        "id": "capella-trait-polymorph-trait-limit",
-        "name": "Polymorph Trait Limit",
-        "source": "custom",
-        "path": "library/traits/capella-trait-polymorph-trait-limit.json",
-        "sha": "",
-        "updatedAt": "2026-05-01T16:57:08.797Z"
-      },
-      {
-        "id": "f14b5e09-2157-4bca-b7ac-fd36471f0a37",
-        "name": "Nonlethal Intent",
-        "source": "custom",
-        "path": "library/traits/f14b5e09-2157-4bca-b7ac-fd36471f0a37.json",
-        "sha": "",
-        "updatedAt": "2026-05-01T15:51:13.985Z"
-      },
-      {
-        "id": "open5e-traits-srd-2024_lich",
-        "name": "Lich",
-        "source": "external",
-        "path": "library/traits/open5e-traits-srd-2024-lich.json",
-        "sha": "",
-        "updatedAt": "2026-05-01T16:39:24.703Z"
-      },
-      {
-        "id": "open5e-traits-srd_abilities_charisma",
-        "name": "Charisma",
-        "source": "external",
-        "path": "library/traits/open5e-traits-srd-abilities-charisma.json",
-        "sha": "",
-        "updatedAt": "2026-05-01T16:40:39.832Z"
-      },
-      {
-        "id": "open5e-traits-srd_monsters_telepathy",
-        "name": "Telepathy",
-        "source": "external",
-        "path": "library/traits/open5e-traits-srd-monsters-telepathy.json",
-        "sha": "",
-        "updatedAt": "2026-05-01T16:37:52.788Z"
-      },
-      {
-        "id": "f675664e-0615-4aaf-ba48-e2db8592941d",
-        "name": "Extra Attack",
-        "source": "custom",
-        "path": "library/traits/f675664e-0615-4aaf-ba48-e2db8592941d.json",
-        "sha": "",
-        "updatedAt": "2026-05-01T15:51:13.985Z"
-      },
-      {
-        "id": "fca2be53-1cce-4334-a412-0fedad0d6aae",
-        "name": "Unnatural Armor",
-        "source": "custom",
-        "path": "library/traits/fca2be53-1cce-4334-a412-0fedad0d6aae.json",
-        "sha": "",
-        "updatedAt": "2026-05-01T15:51:13.985Z"
-      },
-      {
-        "id": "ffe07a77-b388-434d-8e14-c649847f26fe",
-        "name": "Soul Vessel / Far Realm Parasite",
-        "source": "custom",
-        "path": "library/traits/ffe07a77-b388-434d-8e14-c649847f26fe.json",
-        "sha": "",
-        "updatedAt": "2026-05-01T15:51:13.985Z"
-      },
-      {
-        "id": "2ab2a7d6-bc03-4c5b-801f-9d9ac93633f9",
-        "name": "Silver Tongue",
-        "source": "custom",
-        "path": "library/traits/2ab2a7d6-bc03-4c5b-801f-9d9ac93633f9.json",
-        "sha": "",
-        "updatedAt": "2026-05-01T15:51:13.985Z"
-      },
-      {
-        "id": "38224464-3cbf-4e4b-a30a-f06d63742400",
-        "name": "Legendary Action",
-        "source": "custom",
-        "path": "library/traits/38224464-3cbf-4e4b-a30a-f06d63742400.json",
-        "sha": "",
-        "updatedAt": "2026-05-01T15:51:13.985Z"
-      },
-      {
-        "id": "4d354f04-d3ac-4ae0-bd35-42c91eb0542a",
-        "name": "Far Realm Mutation",
-        "source": "custom",
-        "path": "library/traits/4d354f04-d3ac-4ae0-bd35-42c91eb0542a.json",
-        "sha": "",
-        "updatedAt": "2026-05-01T15:51:13.985Z"
-      },
-      {
-        "id": "05dd66db-ddc3-493d-a4b7-b446d2736e30",
-        "name": "Bonus Attack",
-        "source": "custom",
-        "path": "library/traits/05dd66db-ddc3-493d-a4b7-b446d2736e30.json",
         "sha": "",
         "updatedAt": "2026-05-01T15:51:13.985Z"
       },
@@ -633,18 +429,10 @@
         "updatedAt": "2026-05-01T15:51:13.985Z"
       },
       {
-        "id": "22aa3b43-201b-48e5-a393-79ccccd0c18e",
-        "name": "Roll Calculator â€” Boss Saves",
+        "id": "05dd66db-ddc3-493d-a4b7-b446d2736e30",
+        "name": "Bonus Attack",
         "source": "custom",
-        "path": "library/traits/22aa3b43-201b-48e5-a393-79ccccd0c18e.json",
-        "sha": "",
-        "updatedAt": "2026-05-01T15:51:13.985Z"
-      },
-      {
-        "id": "69a33466-f911-4440-907d-bd020e7f0b77",
-        "name": "Charisma Spellcasting",
-        "source": "custom",
-        "path": "library/traits/69a33466-f911-4440-907d-bd020e7f0b77.json",
+        "path": "library/traits/05dd66db-ddc3-493d-a4b7-b446d2736e30.json",
         "sha": "",
         "updatedAt": "2026-05-01T15:51:13.985Z"
       },
@@ -655,6 +443,54 @@
         "path": "library/traits/capella-trait-boss-presence.json",
         "sha": "",
         "updatedAt": "2026-05-01T16:57:08.797Z"
+      },
+      {
+        "id": "open5e-traits-srd_abilities_charisma",
+        "name": "Charisma",
+        "source": "external",
+        "path": "library/traits/open5e-traits-srd-abilities-charisma.json",
+        "sha": "",
+        "updatedAt": "2026-05-01T16:40:39.832Z"
+      },
+      {
+        "id": "69a33466-f911-4440-907d-bd020e7f0b77",
+        "name": "Charisma Spellcasting",
+        "source": "custom",
+        "path": "library/traits/69a33466-f911-4440-907d-bd020e7f0b77.json",
+        "sha": "",
+        "updatedAt": "2026-05-01T15:51:13.985Z"
+      },
+      {
+        "id": "dnd5eapi-features-eldritch-invocation-beguiling-influence",
+        "name": "Eldritch Invocation: Beguiling Influence",
+        "source": "external",
+        "path": "library/traits/dnd5eapi-features-eldritch-invocation-beguiling-influence.json",
+        "sha": "",
+        "updatedAt": "2026-05-01T16:38:37.562Z"
+      },
+      {
+        "id": "7f1b4dc6-32ad-46bf-88ad-d438e3cbe878",
+        "name": "Expert Deceiver",
+        "source": "custom",
+        "path": "library/traits/7f1b4dc6-32ad-46bf-88ad-d438e3cbe878.json",
+        "sha": "",
+        "updatedAt": "2026-05-01T15:51:13.985Z"
+      },
+      {
+        "id": "f675664e-0615-4aaf-ba48-e2db8592941d",
+        "name": "Extra Attack",
+        "source": "custom",
+        "path": "library/traits/f675664e-0615-4aaf-ba48-e2db8592941d.json",
+        "sha": "",
+        "updatedAt": "2026-05-01T15:51:13.985Z"
+      },
+      {
+        "id": "4d354f04-d3ac-4ae0-bd35-42c91eb0542a",
+        "name": "Far Realm Mutation",
+        "source": "custom",
+        "path": "library/traits/4d354f04-d3ac-4ae0-bd35-42c91eb0542a.json",
+        "sha": "",
+        "updatedAt": "2026-05-01T15:51:13.985Z"
       },
       {
         "id": "capella-trait-flesh-polymorph",
@@ -673,28 +509,200 @@
         "updatedAt": "2026-05-01T16:57:08.797Z"
       },
       {
-        "id": "7f1b4dc6-32ad-46bf-88ad-d438e3cbe878",
-        "name": "Expert Deceiver",
+        "id": "capella-trait-impersonation",
+        "name": "Impersonation",
         "source": "custom",
-        "path": "library/traits/7f1b4dc6-32ad-46bf-88ad-d438e3cbe878.json",
+        "path": "library/traits/capella-trait-impersonation.json",
+        "sha": "",
+        "updatedAt": "2026-05-01T16:57:08.797Z"
+      },
+      {
+        "id": "38224464-3cbf-4e4b-a30a-f06d63742400",
+        "name": "Legendary Action",
+        "source": "custom",
+        "path": "library/traits/38224464-3cbf-4e4b-a30a-f06d63742400.json",
+        "sha": "",
+        "updatedAt": "2026-05-01T15:51:13.985Z"
+      },
+      {
+        "id": "open5e-traits-srd-2024_lich",
+        "name": "Lich",
+        "source": "external",
+        "path": "library/traits/open5e-traits-srd-2024-lich.json",
+        "sha": "",
+        "updatedAt": "2026-05-01T16:39:24.703Z"
+      },
+      {
+        "id": "capella-trait-monstrous-regeneration",
+        "name": "Monstrous Regeneration",
+        "source": "custom",
+        "path": "library/traits/capella-trait-monstrous-regeneration.json",
+        "sha": "",
+        "updatedAt": "2026-05-01T16:57:08.797Z"
+      },
+      {
+        "id": "f14b5e09-2157-4bca-b7ac-fd36471f0a37",
+        "name": "Nonlethal Intent",
+        "source": "custom",
+        "path": "library/traits/f14b5e09-2157-4bca-b7ac-fd36471f0a37.json",
+        "sha": "",
+        "updatedAt": "2026-05-01T15:51:13.985Z"
+      },
+      {
+        "id": "capella-trait-polymorph-trait-limit",
+        "name": "Polymorph Trait Limit",
+        "source": "custom",
+        "path": "library/traits/capella-trait-polymorph-trait-limit.json",
+        "sha": "",
+        "updatedAt": "2026-05-01T16:57:08.797Z"
+      },
+      {
+        "id": "22aa3b43-201b-48e5-a393-79ccccd0c18e",
+        "name": "Roll Calculator Ã¢â¬â Boss Saves",
+        "source": "custom",
+        "path": "library/traits/22aa3b43-201b-48e5-a393-79ccccd0c18e.json",
         "sha": "",
         "updatedAt": "2026-05-01T15:51:13.985Z"
       },
       {
         "id": "b0d2e3d0-f347-4d01-a943-9b821a55acf1",
-        "name": "Roll Calculator â€” Social / Casting",
+        "name": "Roll Calculator Ã¢â¬â Social / Casting",
         "source": "custom",
         "path": "library/traits/b0d2e3d0-f347-4d01-a943-9b821a55acf1.json",
         "sha": "",
         "updatedAt": "2026-05-01T15:51:13.985Z"
       },
       {
-        "id": "c9bf4ca6-3342-4cfc-9589-8211d1d06736",
-        "name": "Aberrant Lich Bonus",
+        "id": "2ab2a7d6-bc03-4c5b-801f-9d9ac93633f9",
+        "name": "Silver Tongue",
         "source": "custom",
-        "path": "library/traits/c9bf4ca6-3342-4cfc-9589-8211d1d06736.json",
+        "path": "library/traits/2ab2a7d6-bc03-4c5b-801f-9d9ac93633f9.json",
         "sha": "",
         "updatedAt": "2026-05-01T15:51:13.985Z"
+      },
+      {
+        "id": "ffe07a77-b388-434d-8e14-c649847f26fe",
+        "name": "Soul Vessel / Far Realm Parasite",
+        "source": "custom",
+        "path": "library/traits/ffe07a77-b388-434d-8e14-c649847f26fe.json",
+        "sha": "",
+        "updatedAt": "2026-05-01T15:51:13.985Z"
+      },
+      {
+        "id": "capella-trait-telepathy",
+        "name": "Telepathy",
+        "source": "custom",
+        "path": "library/traits/capella-trait-telepathy.json",
+        "sha": "",
+        "updatedAt": "2026-05-01T16:57:08.797Z"
+      },
+      {
+        "id": "open5e-traits-srd_monsters_telepathy",
+        "name": "Telepathy",
+        "source": "external",
+        "path": "library/traits/open5e-traits-srd-monsters-telepathy.json",
+        "sha": "",
+        "updatedAt": "2026-05-01T16:37:52.788Z"
+      },
+      {
+        "id": "fca2be53-1cce-4334-a412-0fedad0d6aae",
+        "name": "Unnatural Armor",
+        "source": "custom",
+        "path": "library/traits/fca2be53-1cce-4334-a412-0fedad0d6aae.json",
+        "sha": "",
+        "updatedAt": "2026-05-01T15:51:13.985Z"
+      }
+    ],
+    "classes": [
+      {
+        "id": "aberrant-lich-shapechanger",
+        "name": "Aberrant Lich / Shapechanger",
+        "source": "custom",
+        "path": "library/classes/aberrant-lich-shapechanger.json",
+        "sha": "",
+        "updatedAt": "2026-05-03T04:32:59.965Z"
+      },
+      {
+        "id": "cleric",
+        "name": "Cleric",
+        "source": "custom",
+        "path": "library/classes/cleric.json",
+        "sha": "",
+        "updatedAt": "2026-05-03T00:00:00.000Z"
+      },
+      {
+        "id": "fighter",
+        "name": "Fighter",
+        "source": "custom",
+        "path": "library/classes/fighter.json",
+        "sha": "",
+        "updatedAt": "2026-05-03T04:22:03.660Z"
+      },
+      {
+        "id": "idk-what-class",
+        "name": "idk what class",
+        "source": "custom",
+        "path": "library/classes/idk-what-class.json",
+        "sha": "",
+        "updatedAt": "2026-05-03T04:16:36.172Z"
+      },
+      {
+        "id": "90359f6d-17a3-45bd-bdde-af77a254ddee",
+        "name": "New classe",
+        "source": "custom",
+        "path": "library/classes/90359f6d-17a3-45bd-bdde-af77a254ddee.json",
+        "sha": "e5d89a221132e0197ce8aeb582156948d4e766ad",
+        "updatedAt": "2026-05-03T09:47:21.837Z"
+      },
+      {
+        "id": "sorcerer",
+        "name": "Sorcerer",
+        "source": "custom",
+        "path": "library/classes/sorcerer.json",
+        "sha": "",
+        "updatedAt": "2026-05-03T00:00:00.000Z"
+      },
+      {
+        "id": "wizard",
+        "name": "Wizard",
+        "source": "custom",
+        "path": "library/classes/wizard.json",
+        "sha": "",
+        "updatedAt": "2026-05-03T00:00:00.000Z"
+      }
+    ],
+    "races": [
+      {
+        "id": "aberrant-lich-shapechanger-race",
+        "name": "Aberrant Lich / Shapechanger",
+        "source": "custom",
+        "path": "library/races/aberrant-lich-shapechanger-race.json",
+        "sha": "",
+        "updatedAt": "2026-05-03T00:00:00.000Z"
+      },
+      {
+        "id": "human",
+        "name": "Human",
+        "source": "custom",
+        "path": "library/races/human.json",
+        "sha": "",
+        "updatedAt": "2026-05-03T00:00:00.000Z"
+      },
+      {
+        "id": "human-dragonmark-of-sentinel",
+        "name": "Human (Dragonmark of Sentinel)",
+        "source": "custom",
+        "path": "library/races/human-dragonmark-of-sentinel.json",
+        "sha": "",
+        "updatedAt": "2026-05-03T00:00:00.000Z"
+      },
+      {
+        "id": "reborn-homunculus-human",
+        "name": "Reborn / Homunculus (Human)",
+        "source": "custom",
+        "path": "library/races/reborn-homunculus-human.json",
+        "sha": "",
+        "updatedAt": "2026-05-03T00:00:00.000Z"
       }
     ]
   }
