@@ -1,0 +1,22 @@
+{
+  "id": "7637ba3e-8a74-4073-be95-7af27ba93631",
+  "collection": "classes",
+  "name": "New classe",
+  "tags": [],
+  "source": "custom",
+  "provider": "",
+  "providerId": "",
+  "variantOf": "",
+  "addons": {
+    "mechanics": [],
+    "stats": {},
+    "speed": {},
+    "proficiencies": [],
+    "feats": []
+  },
+  "createdAt": "2026-05-03T09:47:41.218Z",
+  "updatedAt": "2026-05-03T09:47:41.218Z",
+  "description": "",
+  "hitDie": "",
+  "primaryAbility": ""
+}
