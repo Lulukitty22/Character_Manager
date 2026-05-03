@@ -156,6 +156,7 @@ const Library = (() => {
       overrides: refObj.overrides || {},
       prepared: refObj.prepared ?? merged.prepared ?? false,
       access: refObj.access || merged.access || null,
+      active: refObj.active ?? merged.active ?? true,
       quantity: refObj.quantity ?? merged.quantity ?? 1,
       current: refObj.current ?? merged.current ?? merged.max ?? 0,
       max: refObj.max ?? merged.max ?? 0,
@@ -276,6 +277,7 @@ const Library = (() => {
     delete record.overrides;
     delete record.current;
     delete record.quantity;
+    delete record.active;
     delete record.log;
 
     if (collection === "resources") {
@@ -330,7 +332,10 @@ const Library = (() => {
   }
 
   function itemState(entry) {
-    return { quantity: Number(entry.quantity ?? 1) || 1 };
+    return {
+      quantity: Number(entry.quantity ?? 1) || 1,
+      active: entry.active !== false,
+    };
   }
 
   function resourceState(entry) {
@@ -379,10 +384,24 @@ const Library = (() => {
     const clean = String(query || "").trim();
     if (!clean) return [];
 
-    const response = await fetch(`https://api.open5e.com/v2/search/?query=${encodeURIComponent(clean)}&limit=50`);
-    if (!response.ok) throw new Error(`Open5e search failed: HTTP ${response.status}`);
-    const data = await response.json();
-    return (data.results || []).map(normalizeOpen5eSearchResult);
+    const endpoints = [
+      `https://api.open5e.com/v2/search/?query=${encodeURIComponent(clean)}&limit=50`,
+      `https://api.open5e.com/search/?text=${encodeURIComponent(clean)}&limit=50`,
+    ];
+
+    let lastError = null;
+    for (const url of endpoints) {
+      try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const data = await response.json();
+        return dedupeSearchResults((data.results || []).map(normalizeOpen5eSearchResult));
+      } catch (error) {
+        lastError = error;
+      }
+    }
+
+    throw new Error(`Open5e search failed: ${lastError?.message || "unknown error"}`);
   }
 
   async function searchDnd5eApi(query) {
@@ -399,7 +418,7 @@ const Library = (() => {
         .map(entry => normalizeDnd5eSearchResult(endpoint, entry));
     }));
 
-    return endpointResults.flat().slice(0, 50);
+    return dedupeSearchResults(endpointResults.flat()).slice(0, 50);
   }
 
   async function importExternalResult(result) {
@@ -509,6 +528,10 @@ const Library = (() => {
       record.addons.equipment = {
         slot: detail.equipment_category?.name || detail.gear_category?.name || "",
         rarity: detail.rarity?.name || "",
+      };
+      record.addons = {
+        ...(record.addons || {}),
+        ...inferImportedItemAddons(detail, result),
       };
     }
 
@@ -727,6 +750,62 @@ const Library = (() => {
       if (key) stats[key] = Number(bonus.bonus || 0);
       return stats;
     }, {});
+  }
+
+  function inferImportedItemAddons(detail = {}, result = {}) {
+    const text = normalizeDescription([
+      detail.name,
+      detail.desc,
+      detail.description,
+      detail.text,
+    ].flat().filter(Boolean).join(" "));
+    const addons = {};
+    const healMatch = text.match(/regain[s]?\s+(\d+d\d+(?:\s*\+\s*\d+)?)\s+hit points/i);
+    const tempHpMatch = text.match(/gain[s]?\s+(\d+)\s+temporary hit points?/i);
+
+    if (/potion of healing/i.test(detail.name || result.name || "") || healMatch) {
+      addons.healing = {
+        dice: healMatch?.[1] || "2d4 + 2",
+      };
+      addons.actions = [{
+        label: "Drink",
+        consumeQuantity: true,
+        effects: {
+          heal: {
+            dice: healMatch?.[1] || "2d4 + 2",
+          },
+        },
+        description: "Consume the potion and regain hit points.",
+      }];
+    }
+
+    if (tempHpMatch) {
+      addons.effects = {
+        ...(addons.effects || {}),
+        hp: {
+          flatBonus: 0,
+          perLevelBonus: 0,
+          tempHp: Number(tempHpMatch[1] || 0),
+        },
+      };
+    }
+
+    return addons;
+  }
+
+  function dedupeSearchResults(results = []) {
+    const seen = new Set();
+    return results.filter(result => {
+      const key = [
+        result.provider,
+        result.collection,
+        String(result.name || "").trim().toLowerCase(),
+        result.detailUrl || "",
+      ].join("|");
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
   }
 
   function comparableName(name) {

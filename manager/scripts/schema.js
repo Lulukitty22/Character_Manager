@@ -46,6 +46,8 @@ const Schema = (() => {
       backstory:    "",
       notes:        "",
       spells:       [],
+      spellSlotMode: "calculated",
+      spellSlotOverrides: {},
       spellSlots:   {},
       abilities:    [],
       inventory:    [],
@@ -112,6 +114,7 @@ const Schema = (() => {
       source:      "inline",
       name:        "",
       type:        "misc",
+      active:      true,
       quantity:    1,
       weight:      null,
       attuned:     false,
@@ -181,12 +184,18 @@ const Schema = (() => {
       return {
         ...base,
         type: "misc",
+        active: true,
         weight: null,
         attuned: false,
         description: "",
         addons: {
           mechanics: [],
           equipment: { slot: "", rarity: "" },
+          effects: {
+            hp: { flatBonus: 0, perLevelBonus: 0, tempHp: 0 },
+            spellSlots: {},
+          },
+          actions: [],
         },
       };
     }

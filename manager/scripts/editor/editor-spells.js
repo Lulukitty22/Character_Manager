@@ -343,9 +343,10 @@ const EditorSpells = (() => {
   async function browseLibrarySpells(panelEl) {
     try {
       await Library.loadAll();
-      const spells = Library.list("spells");
+      const existing = currentSpellSignatures(panelEl);
+      const spells = Library.list("spells").filter(spell => !isDuplicateSpell(spell, existing));
       if (!spells.length) {
-        App.showToast("No shared spells yet. Add one in Library, or import from a source.", "info");
+        App.showToast("No addable shared spells found. Existing spells are already on this character, or the library is empty.", "info");
         return;
       }
       openSpellBrowser({
@@ -529,6 +530,7 @@ const EditorSpells = (() => {
       };
 
       const runSearch = async () => {
+        const existing = currentSpellSignatures(panelEl);
         const currentSearchEl = document.getElementById("spell-browser-search");
         const currentProviderEl = document.getElementById("spell-browser-provider");
         const query = (currentSearchEl?.value || "").trim();
@@ -546,9 +548,11 @@ const EditorSpells = (() => {
           const allResults = provider === "dnd5eapi"
             ? await Library.searchDnd5eApi(query)
             : await Library.searchOpen5e(query);
-          const results = allResults.filter(result => result.collection === "spells");
+          const results = allResults
+            .filter(result => result.collection === "spells")
+            .filter(result => !isDuplicateSpell(result, existing));
           if (!results.length) {
-            resultsEl.innerHTML = `<p class="text-muted text-sm">No ${EditorBase.escapeHTML(providerLabel)} spell results found.</p>`;
+            resultsEl.innerHTML = `<p class="text-muted text-sm">No new ${EditorBase.escapeHTML(providerLabel)} spell results found.</p>`;
             return;
           }
 
@@ -669,6 +673,25 @@ const EditorSpells = (() => {
     return String(value || "").replace(/<[^>]+>/g, "");
   }
 
+  function currentSpellSignatures(panelEl) {
+    const rows = Array.from(panelEl.querySelectorAll("#spells-list .spell-row"));
+    return new Set(rows.flatMap(rowEl => {
+      const libraryRef = rowEl.dataset.libraryRef ? `ref:${rowEl.dataset.libraryRef}` : null;
+      const level = parseInt(rowEl.querySelector(".spell-level")?.value || "0", 10) || 0;
+      const name = normalizeSpellName(rowEl.querySelector(".spell-name")?.value || rowEl.querySelector(".array-item-title")?.textContent || "");
+      return [libraryRef, name ? `name:${name}|${level}` : null].filter(Boolean);
+    }));
+  }
+
+  function isDuplicateSpell(spell, signatures) {
+    const nameKey = `name:${normalizeSpellName(spell.name || "")}|${Number(spell.level || 0)}`;
+    return signatures.has(`ref:${spell.id}`) || signatures.has(nameKey);
+  }
+
+  function normalizeSpellName(name) {
+    return String(name || "").trim().toLowerCase();
+  }
+
   // ─── Filter ──────────────────────────────────────────────────────────────────
 
   function filterSpells(panelEl) {
@@ -764,6 +787,7 @@ const EditorSpells = (() => {
   return {
     buildTab,
     readTab,
+    openBrowser: openSpellBrowser,
   };
 
 })();

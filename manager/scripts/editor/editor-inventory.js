@@ -110,6 +110,7 @@ const EditorInventory = (() => {
   function renderItemRow(item) {
     const typeLabel = item.type || "misc";
     const attuned   = item.attuned ? `<span class="badge badge-accent">Attuned</span>` : "";
+    const active    = item.active !== false ? `<span class="badge">Active</span>` : `<span class="badge">Inactive</span>`;
     const tags      = (item.tags || []).map(tag => `<span class="badge">${EditorBase.escapeHTML(tag)}</span>`).join("");
 
     return `
@@ -125,6 +126,7 @@ const EditorInventory = (() => {
               <span class="array-item-title">${EditorBase.escapeHTML(item.name || "(Unnamed Item)")}</span>
               ${item.source === "library" ? `<span class="badge badge-accent">Library</span>` : ""}
               <span class="badge">${EditorBase.escapeHTML(typeLabel)}</span>
+              ${active}
               ${attuned}
               ${tags}
             </div>
@@ -176,6 +178,11 @@ const EditorInventory = (() => {
                 <textarea class="field-textarea item-description" rows="3"
                   placeholder="Item description, abilities, lore…">${EditorBase.escapeHTML(item.description || "")}</textarea>
               </div>
+
+              <label class="field-checkbox-row">
+                <input type="checkbox" class="item-active" ${item.active !== false ? "checked" : ""} />
+                Active / Equipped
+              </label>
 
               <label class="field-checkbox-row">
                 <input type="checkbox" class="item-attuned" ${item.attuned ? "checked" : ""} />
@@ -248,13 +255,54 @@ const EditorInventory = (() => {
         App.showToast("No shared items yet. Add one in Library or save an inline item first.", "info");
         return;
       }
-      const choice = prompt(`Choose an item number:\n${items.map((item, index) => `${index + 1}. ${item.name}`).join("\n")}`);
-      const index = parseInt(choice, 10) - 1;
-      if (!items[index]) return;
-      addItemRow(panelEl, Library.resolveRef(Library.createReference("items", items[index], { quantity: 1 })));
+      EditorSpells.openBrowser({
+        title: "Browse Library Items",
+        subtitle: "Search shared items and preview their effects before adding them to the inventory.",
+        entries: items.map(item => ({
+          id: item.id,
+          name: item.name || "(Unnamed Item)",
+          subtitle: [item.type || "misc", item.attuned ? "Attunement" : "", item.weight != null ? `${item.weight} lb` : ""].filter(Boolean).join(" | "),
+          sourceLabel: item.source === "external" ? "Imported" : "Library",
+          badge: item.type || "",
+          preview: renderItemPreview(item),
+          onSelect: () => {
+            addItemRow(panelEl, Library.resolveRef(Library.createReference("items", item, { quantity: 1, active: true })));
+            App.showToast(`Added ${item.name || "item"}.`, "success");
+          },
+        })),
+        actionLabel: "Add Item",
+        searchPlaceholder: "Search library items...",
+      });
     } catch (error) {
       App.showToast(`Could not load item library: ${error.message}`, "error");
     }
+  }
+
+  function renderItemPreview(item) {
+    const resolved = typeof Library !== "undefined" ? Library.resolveRef(item) : item;
+    const hp = resolved.addons?.effects?.hp || {};
+    const healing = resolved.addons?.healing || {};
+    const mechanics = typeof ViewCharacterUtils !== "undefined"
+      ? ViewCharacterUtils.renderMechanicChips([
+        resolved.type ? { label: "Type", value: resolved.type, kind: "neutral" } : null,
+        resolved.weight != null ? { label: "Weight", value: `${resolved.weight} lb`, kind: "neutral" } : null,
+        resolved.attuned ? { label: "Attune", value: "Required", kind: "requirement" } : null,
+        hp.flatBonus ? { label: "Max HP", value: Schema.formatModifier(hp.flatBonus), kind: "positive" } : null,
+        hp.perLevelBonus ? { label: "HP / Lv", value: Schema.formatModifier(hp.perLevelBonus), kind: "positive" } : null,
+        hp.tempHp ? { label: "Temp HP", value: `+${hp.tempHp}`, kind: "positive" } : null,
+        healing.dice ? { label: "Heal", value: healing.dice, kind: "positive" } : null,
+        healing.amount ? { label: "Heal", value: `+${healing.amount}`, kind: "positive" } : null,
+      ].filter(Boolean))
+      : "";
+
+    return `
+      <div class="spell-browser-preview-card">
+        <div class="array-item-title" style="margin-bottom: var(--space-1);">${EditorBase.escapeHTML(resolved.name || "(Unnamed Item)")}</div>
+        <div class="array-item-subtitle" style="margin-bottom: var(--space-3);">${EditorBase.escapeHTML([resolved.type || "misc", resolved.attuned ? "Requires attunement" : ""].filter(Boolean).join(" | "))}</div>
+        ${mechanics}
+        <div class="card" style="padding: var(--space-4); white-space: pre-wrap; margin-top: var(--space-3);">${EditorBase.escapeHTML(resolved.description || "No description available.")}</div>
+      </div>
+    `;
   }
 
   function readTab(character) {
@@ -276,6 +324,7 @@ const EditorInventory = (() => {
         id:          rowEl.dataset.itemId || Schema.generateId(),
         name:        rowEl.querySelector(".item-name")?.value.trim()        || "",
         type:        rowEl.querySelector(".item-type")?.value               || "misc",
+        active:      rowEl.querySelector(".item-active")?.checked           ?? true,
         quantity:    parseInt(rowEl.querySelector(".item-quantity")?.value, 10) || 1,
         weight:      isNaN(weight) ? null : weight,
         attuned:     rowEl.querySelector(".item-attuned")?.checked          || false,
@@ -291,8 +340,9 @@ const EditorInventory = (() => {
           libraryCollection: "items",
           librarySource: rowEl.dataset.librarySource || "custom",
           libraryRef: rowEl.dataset.libraryRef,
+          active: item.active,
           quantity: item.quantity,
-          overrides: diffAgainstBase(item, base, ["quantity"]),
+          overrides: diffAgainstBase(item, base, ["quantity", "active"]),
         };
       }
 

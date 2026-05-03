@@ -101,6 +101,12 @@ const DndCalculations = (() => {
       });
     }
 
+    const itemHp = getItemHpBonus(character, dnd.level || totalLevel(levels));
+    if (itemHp.total) {
+      total += itemHp.total;
+      itemHp.parts.forEach(part => parts.push(part));
+    }
+
     return {
       total: Math.max(0, total),
       conMod,
@@ -115,18 +121,37 @@ const DndCalculations = (() => {
     const levels = getClassLevels(dnd);
     let casterLevel = 0;
     let hasPact = false;
+    const parts = [];
 
     levels.forEach(entry => {
       const classRecord = findClassRecord(entry.class);
       const progression = getCasterProgression(classRecord, entry.class);
       const level = Number(entry.level || 0);
+      let contribution = 0;
       if (!level) return;
 
-      if (progression === "full") casterLevel += level;
-      if (progression === "half") casterLevel += Math.floor(level / 2);
-      if (progression === "half-round-up") casterLevel += Math.ceil(level / 2);
-      if (progression === "third") casterLevel += Math.floor(level / 3);
+      if (progression === "full") contribution = level;
+      if (progression === "half") contribution = Math.floor(level / 2);
+      if (progression === "half-round-up") contribution = Math.ceil(level / 2);
+      if (progression === "third") contribution = Math.floor(level / 3);
       if (progression === "pact") hasPact = true;
+      casterLevel += contribution;
+
+      if (contribution > 0) {
+        parts.push({
+          label: entry.class || "Class",
+          value: `Caster Lv ${contribution}`,
+          kind: "positive",
+          description: `${level} level${level === 1 ? "" : "s"} using ${progression} spellcasting progression.`,
+        });
+      } else if (progression === "pact") {
+        parts.push({
+          label: entry.class || "Class",
+          value: "Pact Magic",
+          kind: "neutral",
+          description: "Warlock-style pact slots are tracked separately from regular spellcasting slots.",
+        });
+      }
     });
 
     casterLevel = Math.max(0, Math.min(20, casterLevel));
@@ -135,9 +160,26 @@ const DndCalculations = (() => {
       if (max > 0) slots[index + 1] = { max, current: max };
     });
 
+    const itemSlotBonuses = getItemSpellSlotBonuses(character);
+    Object.entries(itemSlotBonuses).forEach(([level, bonus]) => {
+      const numericLevel = Number(level || 0);
+      const max = Number(bonus || 0);
+      if (!numericLevel || !max) return;
+      if (!slots[numericLevel]) slots[numericLevel] = { max: 0, current: 0 };
+      slots[numericLevel].max += max;
+      slots[numericLevel].current += max;
+      parts.push({
+        label: "Item",
+        value: `Lv ${numericLevel} ${Schema.formatModifier(max)}`,
+        kind: "positive",
+        description: "Passive spell-slot bonus from active equipment or carried items.",
+      });
+    });
+
     return {
       casterLevel,
       slots,
+      parts,
       note: hasPact ? "Pact Magic is tracked manually; this table only covers regular spellcasting slots." : "",
     };
   }
@@ -167,24 +209,12 @@ const DndCalculations = (() => {
   }
 
   function getHealingItems(character = {}) {
-    return (character.inventory || [])
-      .map(item => typeof Library !== "undefined" ? Library.resolveRef(item) : item)
-      .filter(item => {
-        const text = [item.name, item.type, item.description, item.tags || [], item.addons?.healing?.dice, item.addons?.healing?.amount]
-          .flat()
-          .filter(Boolean)
-          .join(" ")
-          .toLowerCase();
-        return Number(item.quantity ?? 1) > 0 && (
-          item.addons?.healing ||
-          item.type === "consumable" ||
-          /\bheal|healing|potion|restores?\b/.test(text)
-        );
-      });
+    return getActionableItems(character)
+      .filter(item => item.action.effects?.heal || item.action.effects?.tempHp);
   }
 
   function healingAmount(item = {}) {
-    const healing = item.addons?.healing || {};
+    const healing = item.addons?.healing || item.action?.effects?.heal || {};
     if (Number(healing.amount || 0) > 0) return Number(healing.amount);
     if (Number(healing.average || 0) > 0) return Number(healing.average);
     const match = String(healing.dice || item.description || "").match(/(\d+)d(\d+)(?:\s*\+\s*(\d+))?/i);
@@ -195,6 +225,42 @@ const DndCalculations = (() => {
       return Math.floor(dice * ((sides + 1) / 2) + bonus);
     }
     return 0;
+  }
+
+  function resolveSpellSlots(character = {}) {
+    const calculated = calculateSpellSlots(character);
+    const mode = character.spellSlotMode || (Object.keys(character.spellSlotOverrides || {}).length ? "override" : "calculated");
+    const overrides = character.spellSlotOverrides || {};
+    const storedSlots = character.spellSlots || {};
+    const slots = {};
+
+    for (let level = 1; level <= 9; level += 1) {
+      const calcMax = calculated.slots[level]?.max || 0;
+      const overrideMax = Number(overrides[level] || 0);
+      const max = mode === "override" ? Math.max(overrideMax, calcMax, storedSlots[level]?.max || 0) : calcMax;
+      const storedCurrent = storedSlots[level]?.current;
+      const storedMax = storedSlots[level]?.max;
+      const current = storedCurrent == null
+        ? max
+        : Math.max(0, Math.min(Number(storedCurrent || 0), max || Number(storedMax || 0) || max));
+
+      if (max > 0 || current > 0 || overrideMax > 0 || calcMax > 0) {
+        slots[level] = {
+          max,
+          current: current || 0,
+          calculatedMax: calcMax,
+          overrideMax,
+        };
+      }
+    }
+
+    return {
+      ...calculated,
+      mode,
+      overrideActive: mode === "override",
+      overrides,
+      slots,
+    };
   }
 
   function resolveTamedHp(character = {}) {
@@ -250,6 +316,120 @@ const DndCalculations = (() => {
       current: tamedHp.current,
     };
     return character;
+  }
+
+  function getResolvedInventory(character = {}) {
+    return (character.inventory || []).map(item => typeof Library !== "undefined" ? Library.resolveRef(item) : item);
+  }
+
+  function getItemHpBonus(character = {}, level = 0) {
+    const parts = [];
+    let total = 0;
+
+    getResolvedInventory(character).forEach(item => {
+      if (!itemAppliesPassively(item)) return;
+      const hp = item.addons?.effects?.hp || {};
+      const flat = Number(hp.flatBonus || hp.maxFlatBonus || 0);
+      const perLevel = Number(hp.perLevelBonus || 0);
+      const bonusTotal = flat + perLevel * Number(level || 0);
+      if (!bonusTotal) return;
+      total += bonusTotal;
+      parts.push({
+        label: item.name || "Item",
+        value: Schema.formatModifier(bonusTotal),
+        kind: bonusTotal >= 0 ? "positive" : "negative",
+        description: [
+          flat ? `${Schema.formatModifier(flat)} flat max HP` : "",
+          perLevel ? `${Schema.formatModifier(perLevel)} per level` : "",
+          item.attuned ? "Requires attunement." : "",
+        ].filter(Boolean).join("; "),
+      });
+    });
+
+    return { total, parts };
+  }
+
+  function getItemSpellSlotBonuses(character = {}) {
+    return getResolvedInventory(character).reduce((bonuses, item) => {
+      if (!itemAppliesPassively(item)) return bonuses;
+      const slotBonuses = item.addons?.effects?.spellSlots?.bonusByLevel || {};
+      Object.entries(slotBonuses).forEach(([level, value]) => {
+        const numericLevel = Number(level || 0);
+        if (!numericLevel) return;
+        bonuses[numericLevel] = (bonuses[numericLevel] || 0) + Number(value || 0);
+      });
+      return bonuses;
+    }, {});
+  }
+
+  function getActionableItems(character = {}) {
+    return getResolvedInventory(character)
+      .filter(item => Number(item.quantity ?? 1) > 0)
+      .flatMap(item => {
+        const explicitActions = Array.isArray(item.addons?.actions) ? item.addons.actions : [];
+        const normalizedActions = explicitActions
+          .map(action => normalizeItemAction(item, action))
+          .filter(Boolean);
+
+        if (normalizedActions.length) {
+          return normalizedActions.map(action => ({ ...item, action }));
+        }
+
+        const inferred = inferDefaultItemAction(item);
+        return inferred ? [{ ...item, action: inferred }] : [];
+      });
+  }
+
+  function normalizeItemAction(item, action = {}) {
+    if (!action || typeof action !== "object") return null;
+    return {
+      label: action.label || inferActionLabel(item, action.effects || {}),
+      consumeQuantity: action.consumeQuantity ?? action.usesQuantity ?? (item.type === "consumable"),
+      effects: action.effects || {},
+      description: action.description || action.note || "",
+    };
+  }
+
+  function inferDefaultItemAction(item = {}) {
+    const heal = item.addons?.healing ? { ...item.addons.healing } : null;
+    const passiveHp = item.addons?.effects?.hp || {};
+    const tempHp = Number(passiveHp.tempHp || 0);
+
+    if (heal || tempHp) {
+      return {
+        label: inferActionLabel(item, { heal, tempHp }),
+        consumeQuantity: item.type === "consumable",
+        effects: {
+          ...(heal ? { heal } : {}),
+          ...(tempHp ? { tempHp: { amount: tempHp } } : {}),
+        },
+        description: item.description || "",
+      };
+    }
+
+    if (item.type === "ammo" || (item.tags || []).some(tag => /ammo|arrow|bolt/i.test(tag))) {
+      return {
+        label: "Spend 1",
+        consumeQuantity: true,
+        effects: {},
+        description: "Reduce quantity by 1.",
+      };
+    }
+
+    return null;
+  }
+
+  function inferActionLabel(item = {}, effects = {}) {
+    if (effects.heal) return item.type === "consumable" ? "Drink" : "Use";
+    if (effects.tempHp) return "Use";
+    if (item.type === "ammo") return "Spend 1";
+    return "Use";
+  }
+
+  function itemAppliesPassively(item = {}) {
+    return Number(item.quantity ?? 1) > 0
+      && item.active !== false
+      && (!item.addons?.requiresAttunement || item.attuned || item.active);
   }
 
   function findClassRecord(name) {
@@ -321,8 +501,10 @@ const DndCalculations = (() => {
   return {
     calculateHitPoints,
     calculateSpellSlots,
+    resolveSpellSlots,
     getClassLevels,
     getHealingItems,
+    getActionableItems,
     healingAmount,
     resolveTamedHp,
     getActiveHp,

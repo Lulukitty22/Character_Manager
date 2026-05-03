@@ -215,11 +215,33 @@ const ViewLibrary = (() => {
     }
 
     if (collection === "items") {
+      const action = Array.isArray(entry.addons?.actions) ? entry.addons.actions[0] || {} : {};
+      const healDice = entry.addons?.healing?.dice || action.effects?.heal?.dice || "";
+      const healAmount = Number(entry.addons?.healing?.amount || action.effects?.heal?.amount || 0);
+      const tempHp = Number(entry.addons?.effects?.hp?.tempHp || action.effects?.tempHp?.amount || action.effects?.tempHp || 0);
+      const flatHp = Number(entry.addons?.effects?.hp?.flatBonus || 0);
+      const perLevelHp = Number(entry.addons?.effects?.hp?.perLevelBonus || 0);
+      const slotBonuses = formatSlotBonusMap(entry.addons?.effects?.spellSlots?.bonusByLevel || {});
+      const slotRestore = formatSlotRestore(action.effects?.spellSlots || null);
       return `
         <div class="fields-grid-3" style="margin-top: var(--space-3);">
           <input class="field-input library-item-type" value="${escapeAttr(entry.type || "misc")}" placeholder="Type" />
           <input class="field-input library-item-weight" type="number" step="0.1" value="${entry.weight ?? ""}" placeholder="Weight" />
           <label class="field-checkbox-row"><input type="checkbox" class="library-item-attuned" ${entry.attuned ? "checked" : ""} /> Requires attunement</label>
+        </div>
+        <div class="fields-grid-3" style="margin-top: var(--space-3);">
+          <input class="field-input library-item-heal-dice" value="${escapeAttr(healDice)}" placeholder="Heal dice, e.g. 2d4 + 2" />
+          <input class="field-input library-item-heal-amount" type="number" value="${healAmount || ""}" placeholder="Flat heal amount" />
+          <input class="field-input library-item-temp-hp" type="number" value="${tempHp || ""}" placeholder="Temp HP on use" />
+        </div>
+        <div class="fields-grid-3" style="margin-top: var(--space-3);">
+          <input class="field-input library-item-hp-flat" type="number" value="${flatHp || ""}" placeholder="Passive max HP bonus" />
+          <input class="field-input library-item-hp-level" type="number" value="${perLevelHp || ""}" placeholder="Passive HP per level" />
+          <input class="field-input library-item-action-label" value="${escapeAttr(action.label || "")}" placeholder="Action label, e.g. Drink" />
+        </div>
+        <div class="fields-grid-2" style="margin-top: var(--space-3);">
+          <input class="field-input library-item-slot-bonuses" value="${escapeAttr(slotBonuses)}" placeholder="Passive slot bonuses, e.g. 1:+1, 3:+1" />
+          <input class="field-input library-item-slot-restore" value="${escapeAttr(slotRestore)}" placeholder="Use restores slots: all or 3:+1" />
         </div>
         <textarea class="field-textarea library-description" rows="3" style="margin-top: var(--space-3);" placeholder="Description">${escapeHTML(entry.description || "")}</textarea>
       `;
@@ -312,10 +334,66 @@ const ViewLibrary = (() => {
 
     if (collection === "items") {
       const weight = parseFloat(row.querySelector(".library-item-weight")?.value);
+      const healDice = row.querySelector(".library-item-heal-dice")?.value.trim() || "";
+      const healAmount = parseInt(row.querySelector(".library-item-heal-amount")?.value, 10) || 0;
+      const tempHp = parseInt(row.querySelector(".library-item-temp-hp")?.value, 10) || 0;
+      const flatHp = parseInt(row.querySelector(".library-item-hp-flat")?.value, 10) || 0;
+      const perLevelHp = parseInt(row.querySelector(".library-item-hp-level")?.value, 10) || 0;
+      const actionLabel = row.querySelector(".library-item-action-label")?.value.trim() || "";
+      const slotBonuses = parseSlotBonusMap(row.querySelector(".library-item-slot-bonuses")?.value || "");
+      const slotRestore = parseSlotRestore(row.querySelector(".library-item-slot-restore")?.value || "");
       record.type = row.querySelector(".library-item-type")?.value.trim() || "misc";
       record.weight = Number.isNaN(weight) ? null : weight;
       record.attuned = row.querySelector(".library-item-attuned")?.checked || false;
       record.description = row.querySelector(".library-description")?.value || "";
+      record.addons = {
+        ...(record.addons || {}),
+        equipment: {
+          ...(record.addons?.equipment || {}),
+        },
+        effects: {
+          ...(record.addons?.effects || {}),
+          hp: {
+            ...(record.addons?.effects?.hp || {}),
+            flatBonus: flatHp,
+            perLevelBonus: perLevelHp,
+            tempHp,
+          },
+          spellSlots: {
+            ...(record.addons?.effects?.spellSlots || {}),
+            bonusByLevel: slotBonuses,
+          },
+        },
+      };
+      if (healDice || healAmount || tempHp || slotRestore) {
+        if (healDice || healAmount) {
+          record.addons.healing = {
+            ...(record.addons.healing || {}),
+            ...(healDice ? { dice: healDice } : {}),
+            ...(healAmount ? { amount: healAmount } : {}),
+          };
+        } else {
+          delete record.addons.healing;
+        }
+        record.addons.actions = [{
+          label: actionLabel || "Use",
+          consumeQuantity: record.type === "consumable",
+          effects: {
+            ...(healDice || healAmount ? {
+              heal: {
+                ...(healDice ? { dice: healDice } : {}),
+                ...(healAmount ? { amount: healAmount } : {}),
+              },
+            } : {}),
+            ...(tempHp ? { tempHp: { amount: tempHp } } : {}),
+            ...(slotRestore ? { spellSlots: slotRestore } : {}),
+          },
+          description: record.description || "",
+        }];
+      } else {
+        delete record.addons.healing;
+        delete record.addons.actions;
+      }
     }
 
     if (collection === "resources") {
@@ -393,7 +471,7 @@ const ViewLibrary = (() => {
         ? await Library.searchDnd5eApi(query)
         : await Library.searchOpen5e(query);
       resultsEl.innerHTML = results.map((result, index) => `
-        <div class="array-item external-result ${result.collection === "spells" ? "external-result-clickable" : ""}" data-result-index="${index}" data-result='${escapeAttr(JSON.stringify(result))}'>
+        <div class="array-item external-result external-result-clickable" data-result-index="${index}" data-result='${escapeAttr(JSON.stringify(result))}'>
           <div class="array-item-content">
             <div class="field-checkbox-row" style="align-items: flex-start;">
               <input type="checkbox" class="external-result-checkbox" />
@@ -427,7 +505,6 @@ const ViewLibrary = (() => {
         row.addEventListener("click", async event => {
           if (event.target.closest(".external-result-checkbox, .btn-import-external")) return;
           const result = JSON.parse(row.dataset.result || "{}");
-          if (result.collection !== "spells") return;
           await openExternalPreview(result);
         });
       });
@@ -501,10 +578,20 @@ const ViewLibrary = (() => {
 
     try {
       const detail = await Library.fetchExternalDetail(result).catch(() => result.raw || result);
-      bodyEl.innerHTML = renderExternalSpellPreview(result, detail);
+      bodyEl.innerHTML = renderExternalRecordPreview(result, detail);
     } catch (error) {
       bodyEl.innerHTML = `<p class="text-danger text-sm">Preview failed: ${escapeHTML(error.message)}</p>`;
     }
+  }
+
+  function renderExternalRecordPreview(result, detail = {}) {
+    if (result.collection === "spells") {
+      return renderExternalSpellPreview(result, detail);
+    }
+    if (result.collection === "items") {
+      return renderExternalItemPreview(result, detail);
+    }
+    return renderExternalGenericPreview(result, detail);
   }
 
   function renderExternalSpellPreview(result, detail = {}) {
@@ -532,9 +619,90 @@ const ViewLibrary = (() => {
     `;
   }
 
+  function renderExternalItemPreview(result, detail = {}) {
+    const type = detail.equipment_category?.name || detail.gear_category?.name || detail.rarity?.name || result.typeLabel || "Item";
+    const weight = detail.weight != null ? `${detail.weight} lb` : "-";
+    const attuned = detail.requires_attunement ? "Yes" : "No";
+    const description = normalizePreviewDescription(detail.desc || detail.description || detail.text || "");
+
+    return `
+      <div class="spell-browser-preview-card">
+        <div class="array-item-title" style="margin-bottom: var(--space-1);">${escapeHTML(detail.name || result.name || "(Unnamed Item)")}</div>
+        <div class="array-item-subtitle" style="margin-bottom: var(--space-3);">${escapeHTML([type, result.sourceLabel || ""].filter(Boolean).join(" | "))}</div>
+        <div class="fields-grid-2" style="margin-bottom: var(--space-3);">
+          <div class="card" style="padding: var(--space-3);"><div class="text-muted text-xs">Type</div><div>${escapeHTML(type)}</div></div>
+          <div class="card" style="padding: var(--space-3);"><div class="text-muted text-xs">Weight</div><div>${escapeHTML(weight)}</div></div>
+          <div class="card" style="padding: var(--space-3);"><div class="text-muted text-xs">Attunement</div><div>${escapeHTML(attuned)}</div></div>
+          <div class="card" style="padding: var(--space-3);"><div class="text-muted text-xs">Source</div><div>${escapeHTML(result.providerLabel || result.provider || "-")}</div></div>
+        </div>
+        <div class="card" style="padding: var(--space-4); white-space: pre-wrap;">${escapeHTML(description || "No description available.")}</div>
+      </div>
+    `;
+  }
+
+  function renderExternalGenericPreview(result, detail = {}) {
+    const description = normalizePreviewDescription(detail.desc || detail.description || detail.text || "");
+    const fields = Object.entries(detail)
+      .filter(([key, value]) => value != null && typeof value !== "object" && String(value).trim() !== "")
+      .slice(0, 6);
+
+    return `
+      <div class="spell-browser-preview-card">
+        <div class="array-item-title" style="margin-bottom: var(--space-1);">${escapeHTML(detail.name || result.name || "(Unnamed Record)")}</div>
+        <div class="array-item-subtitle" style="margin-bottom: var(--space-3);">${escapeHTML([result.typeLabel || result.collection, result.sourceLabel || ""].filter(Boolean).join(" | "))}</div>
+        ${fields.length ? `
+          <div class="fields-grid-2" style="margin-bottom: var(--space-3);">
+            ${fields.map(([key, value]) => `
+              <div class="card" style="padding: var(--space-3);">
+                <div class="text-muted text-xs">${escapeHTML(key)}</div>
+                <div>${escapeHTML(String(value))}</div>
+              </div>
+            `).join("")}
+          </div>
+        ` : ""}
+        <div class="card" style="padding: var(--space-4); white-space: pre-wrap;">${escapeHTML(description || "No description available.")}</div>
+      </div>
+    `;
+  }
+
   function normalizePreviewDescription(value) {
     if (Array.isArray(value)) return value.join("\n\n");
     return String(value || "").replace(/<[^>]+>/g, "");
+  }
+
+  function formatSlotBonusMap(map) {
+    return Object.entries(map || {})
+      .filter(([, value]) => Number(value || 0))
+      .map(([level, value]) => `${level}:${Schema.formatModifier(Number(value || 0))}`)
+      .join(", ");
+  }
+
+  function parseSlotBonusMap(value) {
+    return String(value || "").split(",").reduce((map, chunk) => {
+      const match = chunk.trim().match(/^(\d)\s*:\s*([+-]?\d+)$/);
+      if (!match) return map;
+      map[Number(match[1])] = Number(match[2]);
+      return map;
+    }, {});
+  }
+
+  function formatSlotRestore(effect) {
+    if (!effect) return "";
+    if (effect.all) return "all";
+    if (effect.level) return `${effect.level}:${Schema.formatModifier(Number(effect.amount || 1))}`;
+    return "";
+  }
+
+  function parseSlotRestore(value) {
+    const clean = String(value || "").trim().toLowerCase();
+    if (!clean) return null;
+    if (clean === "all") return { all: true };
+    const match = clean.match(/^(\d)\s*:\s*([+-]?\d+)$/);
+    if (!match) return null;
+    return {
+      level: Number(match[1]),
+      amount: Number(match[2]),
+    };
   }
 
   function label(collection) {

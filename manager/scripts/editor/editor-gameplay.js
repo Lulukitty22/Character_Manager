@@ -31,22 +31,27 @@ const EditorGameplay = (() => {
     const hpState = typeof DndCalculations !== "undefined"
       ? DndCalculations.resolveTamedHp(character)
       : null;
-    const slotCalc = typeof DndCalculations !== "undefined"
-      ? DndCalculations.calculateSpellSlots(character)
+    const slotState = typeof DndCalculations !== "undefined"
+      ? DndCalculations.resolveSpellSlots(character)
       : null;
     const healingItems = typeof DndCalculations !== "undefined"
       ? DndCalculations.getHealingItems(character)
+      : [];
+    const actionableItems = typeof DndCalculations !== "undefined"
+      ? DndCalculations.getActionableItems(character)
       : [];
 
     panel.innerHTML = `
       <div style="padding: var(--space-6) 0; display: flex; flex-direction: column; gap: var(--space-8);">
         ${renderHpSection(character, hpState, healingItems)}
-        ${renderSpellSlotSection(character.spellSlots, slotCalc, character.spellSlotLog)}
+        ${renderSpellSlotSection(slotState, character.spellSlotLog)}
+        ${renderItemActionsSection(actionableItems)}
       </div>
     `;
 
     wireHpSection(panel, character, hpState, healingItems);
-    wireSpellSlots(panel, character, slotCalc);
+    wireSpellSlots(panel, character, slotState);
+    wireItemActions(panel, character, actionableItems);
 
     return panel;
   }
@@ -163,17 +168,20 @@ const EditorGameplay = (() => {
     `;
   }
 
-  function renderSpellSlotSection(spellSlots, slotCalc, spellSlotLog) {
+  function renderSpellSlotSection(slotState, spellSlotLog) {
+    const partChips = slotState?.parts?.length && typeof ViewCharacterUtils !== "undefined"
+      ? ViewCharacterUtils.renderMechanicChips(slotState.parts)
+      : "";
     const slotRows = [1,2,3,4,5,6,7,8,9].map(level => {
-      const slot = spellSlots[level] || { max: 0, current: 0 };
-      const calculated = slotCalc?.slots?.[level]?.max || 0;
+      const slot = slotState?.slots?.[level] || { max: 0, current: 0, calculatedMax: 0, overrideMax: 0 };
+      const calculated = slot.calculatedMax || 0;
       return `
         <div class="spell-slot-row" data-slot-level="${level}">
           <span class="spell-slot-level">Lv ${level}</span>
           <div class="spell-slot-inputs">
             <input type="number" min="0" max="20" class="field-input field-number gp-spell-slot-current" data-level="${level}" value="${slot.current || 0}" title="Current slots" />
             <span class="text-muted">/</span>
-            <input type="number" min="0" max="20" class="field-input field-number gp-spell-slot-max" data-level="${level}" value="${slot.max || 0}" title="Max slots" />
+            <input type="number" min="0" max="20" class="field-input field-number gp-spell-slot-max" data-level="${level}" value="${slotState?.overrideActive ? (slot.overrideMax || slot.max || 0) : (slot.max || 0)}" data-calculated-max="${calculated}" ${slotState?.overrideActive ? "" : "readonly"} title="Max slots" />
           </div>
           ${calculated ? `<span class="text-faint text-xs">Calc ${calculated}</span>` : ""}
           <div class="flex gap-2">
@@ -193,11 +201,24 @@ const EditorGameplay = (() => {
             <h3>Spell Slots</h3>
           </div>
           <div class="flex gap-2">
-            ${slotCalc ? `<button class="button button-ghost button-sm" id="btn-apply-calculated-slots">Apply Calculated Slots</button>` : ""}
             <button class="button button-ghost button-sm" id="btn-restore-all-slots">Restore All Slots</button>
           </div>
         </div>
-        ${slotCalc?.note ? `<p class="text-muted text-sm" style="margin-bottom: var(--space-3);">${EditorBase.escapeHTML(slotCalc.note)}</p>` : ""}
+        ${slotState ? `
+          <div style="margin-bottom: var(--space-4); display: flex; flex-direction: column; gap: var(--space-3);">
+            <label class="field-checkbox-row">
+              <input type="checkbox" id="gp-slot-use-override" ${slotState.overrideActive ? "checked" : ""} />
+              Use manual spell-slot max override
+            </label>
+            <p class="text-muted text-sm" id="gp-slot-mode-note">
+              ${slotState.overrideActive
+                ? "Override is active. Turn it off to use class-derived spell slot maxima."
+                : "Calculated spell-slot maxima are primary. Turn on override only when a sheet needs custom slot caps."}
+            </p>
+            ${partChips}
+            ${slotState.note ? `<p class="text-muted text-sm">${EditorBase.escapeHTML(slotState.note)}</p>` : ""}
+          </div>
+        ` : ""}
         <div class="spell-slots-grid">${slotRows}</div>
 
         <div class="section-header" style="margin-top: var(--space-6);">
@@ -207,6 +228,51 @@ const EditorGameplay = (() => {
         <div id="gp-spell-log-entries" class="log-entries">
           ${logRows || `<p class="text-faint text-sm" style="padding: var(--space-2);">No entries yet.</p>`}
         </div>
+      </section>
+    `;
+  }
+
+  function renderItemActionsSection(actionableItems) {
+    if (!actionableItems.length) return "";
+
+    const rows = actionableItems.map((item, index) => {
+      const healAmount = DndCalculations.healingAmount(item);
+      const tempHp = Number(item.action?.effects?.tempHp?.amount || item.action?.effects?.tempHp || 0);
+      const slotEffect = item.action?.effects?.spellSlots || null;
+      const chips = typeof ViewCharacterUtils !== "undefined"
+        ? ViewCharacterUtils.renderMechanicChips([
+          item.quantity != null ? { label: "Qty", value: item.quantity, kind: "quantity" } : null,
+          healAmount ? { label: "Heal", value: `+${healAmount}`, kind: "positive", description: "Average healing amount." } : null,
+          tempHp ? { label: "Temp HP", value: `+${tempHp}`, kind: "positive" } : null,
+          slotEffect?.all ? { label: "Slots", value: "Restore All", kind: "positive" } : null,
+          slotEffect?.level ? { label: "Slot", value: `Lv ${slotEffect.level} +${slotEffect.amount || 1}`, kind: "positive" } : null,
+        ].filter(Boolean))
+        : "";
+
+      return `
+        <div class="array-item" data-item-action-index="${index}">
+          <div class="array-item-content">
+            <div class="array-item-title">${EditorBase.escapeHTML(item.name || "Item")}</div>
+            <div class="array-item-subtitle">${EditorBase.escapeHTML(item.action?.description || item.description || "")}</div>
+            ${chips}
+          </div>
+          <div class="array-item-actions">
+            <button class="button button-primary button-sm btn-use-item-action">${EditorBase.escapeHTML(item.action?.label || "Use")}</button>
+          </div>
+        </div>
+      `;
+    }).join("");
+
+    return `
+      <section>
+        <div class="section-header">
+          <span class="section-icon">ITEM</span>
+          <h3>Item Actions</h3>
+        </div>
+        <p class="text-muted text-sm" style="margin-bottom: var(--space-4);">
+          Use consumables and other actionable items here. Passive HP effects are already included in calculated max HP when the item is active.
+        </p>
+        <div id="gp-item-actions" class="array-list">${rows}</div>
       </section>
     `;
   }
@@ -312,25 +378,53 @@ const EditorGameplay = (() => {
   }
 
   function wireSpellSlots(panelEl, character, slotCalc) {
+    const overrideToggle = panelEl.querySelector("#gp-slot-use-override");
+    const modeNote = panelEl.querySelector("#gp-slot-mode-note");
+
+    const syncSlotModeUi = () => {
+      const overrideActive = overrideToggle?.checked || false;
+      [1,2,3,4,5,6,7,8,9].forEach(level => {
+        const maxEl = panelEl.querySelector(`.gp-spell-slot-max[data-level="${level}"]`);
+        const currentEl = panelEl.querySelector(`.gp-spell-slot-current[data-level="${level}"]`);
+        if (!maxEl) return;
+        const calculatedMax = parseInt(maxEl.dataset.calculatedMax || "0", 10) || 0;
+        const current = parseInt(currentEl?.value, 10) || 0;
+        if (overrideActive) {
+          maxEl.readOnly = false;
+          if (!maxEl.value) maxEl.value = calculatedMax;
+        } else {
+          maxEl.readOnly = true;
+          maxEl.value = calculatedMax;
+          if (currentEl) currentEl.value = Math.min(current, calculatedMax || current);
+        }
+      });
+      if (modeNote) {
+        modeNote.textContent = overrideActive
+          ? "Override is active. Turn it off to use class-derived spell slot maxima."
+          : "Calculated spell-slot maxima are primary. Turn on override only when a sheet needs custom slot caps.";
+      }
+    };
+
     panelEl.querySelectorAll(".spell-slot-row").forEach(row => {
       const level = parseInt(row.dataset.slotLevel, 10);
       row.querySelector(".btn-slot-use")?.addEventListener("click", () => adjustSpellSlot(panelEl, character, level, -1));
       row.querySelector(".btn-slot-restore")?.addEventListener("click", () => adjustSpellSlot(panelEl, character, level, 1));
     });
 
-    panelEl.querySelector("#btn-apply-calculated-slots")?.addEventListener("click", () => {
-      if (!slotCalc) return;
-      [1,2,3,4,5,6,7,8,9].forEach(level => {
-        const max = slotCalc.slots[level]?.max || 0;
-        const maxEl = panelEl.querySelector(`.gp-spell-slot-max[data-level="${level}"]`);
-        const currentEl = panelEl.querySelector(`.gp-spell-slot-current[data-level="${level}"]`);
-        if (maxEl) maxEl.value = max;
-        if (currentEl) currentEl.value = max;
-      });
-      addSpellLog(panelEl, character, 0, "Applied calculated spell slots");
-    });
-
+    overrideToggle?.addEventListener("change", syncSlotModeUi);
     panelEl.querySelector("#btn-restore-all-slots")?.addEventListener("click", () => restoreAllSlots(panelEl, character));
+    syncSlotModeUi();
+  }
+
+  function wireItemActions(panelEl, character, actionableItems) {
+    panelEl.querySelectorAll(".btn-use-item-action").forEach(button => {
+      button.addEventListener("click", () => {
+        const row = button.closest("[data-item-action-index]");
+        const actionEntry = actionableItems[parseInt(row?.dataset.itemActionIndex || "-1", 10)];
+        if (!actionEntry) return;
+        applyItemAction(panelEl, character, actionEntry);
+      });
+    });
   }
 
   function applyHpAdjust(panelEl, character, mode, forcedAmount = null, forcedReason = "") {
@@ -391,6 +485,34 @@ const EditorGameplay = (() => {
     addSpellLog(panelEl, character, 0, reason);
   }
 
+  function applyItemAction(panelEl, character, item) {
+    const effects = item.action?.effects || {};
+    const healAmount = effects.heal ? DndCalculations.healingAmount({ action: { effects }, addons: { healing: effects.heal }, description: item.description }) : 0;
+    const tempHp = Number(effects.tempHp?.amount || effects.tempHp || 0);
+    const slotEffect = effects.spellSlots || null;
+
+    if (healAmount > 0) {
+      applyHpAdjust(panelEl, character, "heal", healAmount, item.name || "Item");
+    }
+    if (tempHp > 0) {
+      const tempEl = panelEl.querySelector("#gp-hp-temp");
+      const currentTemp = parseInt(tempEl?.value, 10) || 0;
+      if (tempEl) tempEl.value = Math.max(currentTemp, tempHp);
+      addHpLog(panelEl, character, 0, `${item.name || "Item"} granted ${tempHp} temp HP`);
+    }
+    if (slotEffect?.all) {
+      restoreAllSlots(panelEl, character, item.name || "Item restored all spell slots");
+    } else if (slotEffect?.level) {
+      adjustSpellSlot(panelEl, character, Number(slotEffect.level || 0), Math.max(1, Number(slotEffect.amount || 1)));
+    }
+
+    if (item.action?.consumeQuantity) {
+      decrementInventoryItem(character, item.id);
+    }
+
+    App.showToast(`${item.action?.label || "Used"} ${item.name || "item"}.`, "success");
+  }
+
   function addHpLog(panelEl, character, delta, reason) {
     if (!character.dnd.hp.log) character.dnd.hp.log = [];
     const entry = Schema.createDefaultHpLogEntry(delta, reason);
@@ -446,12 +568,21 @@ const EditorGameplay = (() => {
     if (tempEl) character.dnd.hp.temp = parseInt(tempEl.value, 10) || 0;
     if (typeof DndCalculations !== "undefined") DndCalculations.syncBossDefaultHp(character);
 
+    character.spellSlotMode = document.getElementById("gp-slot-use-override")?.checked ? "override" : "calculated";
+    character.spellSlotOverrides = {};
     character.spellSlots = {};
     document.querySelectorAll(".gp-spell-slot-max").forEach(input => {
       const level = parseInt(input.dataset.level, 10);
-      const max = parseInt(input.value, 10) || 0;
+      const calculatedMax = parseInt(input.dataset.calculatedMax || "0", 10) || 0;
+      const max = character.spellSlotMode === "override" ? (parseInt(input.value, 10) || 0) : calculatedMax;
       const current = parseInt(document.querySelector(`.gp-spell-slot-current[data-level="${level}"]`)?.value, 10) || 0;
-      if (max > 0 || current > 0) character.spellSlots[level] = { max, current };
+      if (character.spellSlotMode === "override" && max > 0) character.spellSlotOverrides[level] = max;
+      if (max > 0 || current > 0 || calculatedMax > 0) {
+        character.spellSlots[level] = {
+          max: character.spellSlotMode === "override" ? max : calculatedMax,
+          current: Math.max(0, Math.min(current, max || calculatedMax || current)),
+        };
+      }
     });
 
     return character;

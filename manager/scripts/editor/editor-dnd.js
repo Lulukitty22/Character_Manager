@@ -467,10 +467,29 @@ const EditorDnd = (() => {
         App.showToast("No shared feats yet. Add one in Library or save an inline feat first.", "info");
         return;
       }
-      const choice = prompt(`Choose a feat number:\n${feats.map((feat, index) => `${index + 1}. ${feat.name}`).join("\n")}`);
-      const index = parseInt(choice, 10) - 1;
-      if (!feats[index]) return;
-      addFeatRow(panelEl, Library.resolveRef(Library.createReference("feats", feats[index])));
+      EditorSpells.openBrowser({
+        title: "Browse Library Feats",
+        subtitle: "Search shared feats and preview them before adding one to the character.",
+        entries: feats.map(feat => ({
+          id: feat.id,
+          name: feat.name || "(Unnamed Feat)",
+          subtitle: feat.description || "Feat",
+          sourceLabel: feat.source === "external" ? "Imported" : "Library",
+          badge: "Feat",
+          preview: `
+            <div class="spell-browser-preview-card">
+              <div class="array-item-title" style="margin-bottom: var(--space-1);">${EditorBase.escapeHTML(feat.name || "(Unnamed Feat)")}</div>
+              <div class="card" style="padding: var(--space-4); white-space: pre-wrap;">${EditorBase.escapeHTML(feat.description || "No description available.")}</div>
+            </div>
+          `,
+          onSelect: () => {
+            addFeatRow(panelEl, Library.resolveRef(Library.createReference("feats", feat)));
+            App.showToast(`Added ${feat.name || "feat"}.`, "success");
+          },
+        })),
+        actionLabel: "Add Feat",
+        searchPlaceholder: "Search library feats...",
+      });
     } catch (error) {
       App.showToast(`Could not load feat library: ${error.message}`, "error");
     }

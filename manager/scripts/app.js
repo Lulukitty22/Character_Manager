@@ -424,9 +424,9 @@ const CharacterEditor = (() => {
     EditorBase.readTab(character);
     EditorDnd.readTab(character);
     EditorBoss.readTab(character);
+    EditorInventory.readTab(character);
     EditorGameplay.readTab(character);
     EditorSpells.readTab(character);
-    EditorInventory.readTab(character);
     EditorResources.readTab(character);
     EditorRoblox.readTab(character);
 

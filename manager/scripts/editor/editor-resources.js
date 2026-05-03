@@ -180,17 +180,41 @@ const EditorResources = (() => {
         App.showToast("No resource templates yet. Save an inline resource or add one in Library.", "info");
         return;
       }
-      const choice = prompt(`Choose a resource template:\n${resources.map((resource, index) => `${index + 1}. ${resource.name}`).join("\n")}`);
-      const index = parseInt(choice, 10) - 1;
-      if (!resources[index]) return;
-      addResourcePool(panelEl, Library.resolveRef(Library.createReference("resources", resources[index], {
-        current: resources[index].max || 0,
-        max: resources[index].max || 0,
-        log: [],
-      })));
+      EditorSpells.openBrowser({
+        title: "Browse Resource Templates",
+        subtitle: "Search saved resource templates and preview them before adding a new pool.",
+        entries: resources.map(resource => ({
+          id: resource.id,
+          name: resource.name || "(Unnamed Resource)",
+          subtitle: resource.description || `Max ${resource.max || 0}`,
+          sourceLabel: resource.source === "external" ? "Imported" : "Library",
+          badge: "Resource",
+          preview: renderResourcePreview(resource),
+          onSelect: () => {
+            addResourcePool(panelEl, Library.resolveRef(Library.createReference("resources", resource, {
+              current: resource.max || 0,
+              max: resource.max || 0,
+              log: [],
+            })));
+            App.showToast(`Added ${resource.name || "resource"}.`, "success");
+          },
+        })),
+        actionLabel: "Add Resource",
+        searchPlaceholder: "Search resource templates...",
+      });
     } catch (error) {
       App.showToast(`Could not load resource library: ${error.message}`, "error");
     }
+  }
+
+  function renderResourcePreview(resource) {
+    return `
+      <div class="spell-browser-preview-card">
+        <div class="array-item-title" style="margin-bottom: var(--space-1);">${EditorBase.escapeHTML(resource.name || "(Unnamed Resource)")}</div>
+        <div class="array-item-subtitle" style="margin-bottom: var(--space-3);">Default Max ${EditorBase.escapeHTML(String(resource.max || 0))}</div>
+        <div class="card" style="padding: var(--space-4); white-space: pre-wrap;">${EditorBase.escapeHTML(resource.description || "No description available.")}</div>
+      </div>
+    `;
   }
 
   function renderLogEntry(entry) {
