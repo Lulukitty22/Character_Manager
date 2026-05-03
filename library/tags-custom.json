@@ -1,0 +1,108 @@
+{
+  "version": 1,
+  "collection": "tags",
+  "entries": [
+    {
+      "id": "evil",
+      "collection": "tags",
+      "name": "evil",
+      "tags": [],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {
+        "mechanics": []
+      },
+      "createdAt": "2026-05-03T22:50:04.229Z",
+      "updatedAt": "2026-05-03T22:50:04.229Z",
+      "color": "",
+      "description": ""
+    },
+    {
+      "id": "super-evil",
+      "collection": "tags",
+      "name": "super evil",
+      "tags": [],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {
+        "mechanics": []
+      },
+      "createdAt": "2026-05-03T22:50:04.229Z",
+      "updatedAt": "2026-05-03T22:50:04.229Z",
+      "color": "",
+      "description": ""
+    },
+    {
+      "id": "largely-insane",
+      "collection": "tags",
+      "name": "largely insane",
+      "tags": [],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {
+        "mechanics": []
+      },
+      "createdAt": "2026-05-03T22:50:04.229Z",
+      "updatedAt": "2026-05-03T22:50:04.229Z",
+      "color": "",
+      "description": ""
+    },
+    {
+      "id": "maybe-a-bit-of-a-goober",
+      "collection": "tags",
+      "name": "maybe a bit of a goober",
+      "tags": [],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {
+        "mechanics": []
+      },
+      "createdAt": "2026-05-03T22:50:04.229Z",
+      "updatedAt": "2026-05-03T22:50:04.229Z",
+      "color": "",
+      "description": ""
+    },
+    {
+      "id": "mob-boss",
+      "collection": "tags",
+      "name": "mob boss",
+      "tags": [],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {
+        "mechanics": []
+      },
+      "createdAt": "2026-05-03T22:50:04.229Z",
+      "updatedAt": "2026-05-03T22:50:04.229Z",
+      "color": "",
+      "description": ""
+    },
+    {
+      "id": "guy",
+      "collection": "tags",
+      "name": "guy",
+      "tags": [],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {
+        "mechanics": []
+      },
+      "createdAt": "2026-05-03T22:50:04.229Z",
+      "updatedAt": "2026-05-03T22:50:04.229Z",
+      "color": "",
+      "description": ""
+    }
+  ]
+}
