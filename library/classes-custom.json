@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "collection": "classes",
+  "entries": [
+    {
+      "id": "mobster",
+      "collection": "classes",
+      "name": "Mobster",
+      "tags": [],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {
+        "mechanics": [],
+        "stats": {},
+        "speed": {},
+        "proficiencies": [],
+        "feats": []
+      },
+      "createdAt": "2026-05-03T22:50:04.229Z",
+      "updatedAt": "2026-05-03T22:50:04.229Z",
+      "description": "",
+      "hitDie": "",
+      "primaryAbility": ""
+    }
+  ]
+}
