@@ -64,6 +64,28 @@
       "description": "",
       "hitDie": "",
       "primaryAbility": ""
+    },
+    {
+      "id": "fighter",
+      "collection": "classes",
+      "name": "Fighter",
+      "tags": [],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {
+        "mechanics": [],
+        "stats": {},
+        "speed": {},
+        "proficiencies": [],
+        "feats": []
+      },
+      "createdAt": "2026-05-03T04:18:19.699Z",
+      "updatedAt": "2026-05-03T04:18:19.699Z",
+      "description": "",
+      "hitDie": "",
+      "primaryAbility": ""
     }
   ]
 }
