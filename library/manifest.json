@@ -647,14 +647,6 @@
         "updatedAt": "2026-05-03T04:16:36.172Z"
       },
       {
-        "id": "90359f6d-17a3-45bd-bdde-af77a254ddee",
-        "name": "New classe",
-        "source": "custom",
-        "path": "library/classes/90359f6d-17a3-45bd-bdde-af77a254ddee.json",
-        "sha": "e5d89a221132e0197ce8aeb582156948d4e766ad",
-        "updatedAt": "2026-05-03T09:47:21.837Z"
-      },
-      {
         "id": "sorcerer",
         "name": "Sorcerer",
         "source": "custom",
