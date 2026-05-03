@@ -153,6 +153,117 @@ const ViewCharacterUtils = (() => {
     if (!dialog.open) dialog.showModal();
   }
 
+  function buildRecordViewerRecord(record = {}, options = {}) {
+    const collection = options.collection || record.collection || record.libraryCollection || "";
+    const chips = [
+      ...genericRecordChips(record, collection),
+      ...(record.addons?.mechanics || []),
+      ...(options.chips || []),
+    ];
+    const sourceDoc = record.addons?.sourceDocument || {};
+    const sourceDocs = [sourceDoc, ...(record.addons?.sourceDocuments || [])].filter(doc => doc && Object.keys(doc).length);
+    return {
+      kicker: options.kicker || labelForCollection(collection) || record.type || "Library Record",
+      title: options.title || record.name || "(Unnamed Record)",
+      subtitle: options.subtitle || buildRecordSubtitle(record, collection),
+      description: options.description ?? record.description ?? "",
+      chips,
+      sections: [
+        ...(options.sections || []),
+        sourceDocs.length ? {
+          title: "Sources",
+          content: sourceDocs.map(doc => [
+            doc.title || doc.name || doc.provider || "Source",
+            doc.type || "",
+            doc.detailUrl || "",
+          ].filter(Boolean).join(" | ")).join("\n"),
+        } : null,
+      ].filter(Boolean),
+      raw: options.raw || record,
+    };
+  }
+
+  function renderRecordSummary(record = {}, options = {}) {
+    const viewer = buildRecordViewerRecord(record, options);
+    const chips = renderMechanicChips(viewer.chips, { className: options.chipClassName || "sheet-mechanic-chips" });
+    const description = viewer.description
+      ? `<div class="${escAttr(options.descriptionClass || "sheet-record-viewer-description")}">${esc(viewer.description)}</div>`
+      : "";
+    return `
+      <div class="${escAttr(options.className || "spell-browser-preview-card")}">
+        <div class="array-item-title" style="margin-bottom: var(--space-1);">${esc(viewer.title)}</div>
+        ${viewer.subtitle ? `<div class="array-item-subtitle" style="margin-bottom: var(--space-3);">${esc(viewer.subtitle)}</div>` : ""}
+        ${chips}
+        ${description}
+        ${viewer.sections.map(renderViewerSection).join("")}
+      </div>
+    `;
+  }
+
+  function wireRecordCardViewers(containerEl) {
+    containerEl?.querySelectorAll?.(".sheet-record-card[data-sheet-record]").forEach(card => {
+      if (card.dataset.viewerWired === "true") return;
+      card.dataset.viewerWired = "true";
+      card.addEventListener("click", event => {
+        if (event.target.closest("button, input, select, textarea, a, details")) return;
+        openRecordViewer(decodeDataAttr(card.dataset.sheetRecord, {}));
+      });
+    });
+
+    containerEl?.querySelectorAll?.(".sheet-open-record-viewer").forEach(button => {
+      if (button.dataset.viewerWired === "true") return;
+      button.dataset.viewerWired = "true";
+      button.addEventListener("click", event => {
+        event.stopPropagation();
+        const card = button.closest("[data-sheet-record]");
+        openRecordViewer(decodeDataAttr(card?.dataset.sheetRecord, {}));
+      });
+    });
+  }
+
+  function genericRecordChips(record = {}, collection = "") {
+    const chips = [];
+    if (record.source) chips.push({ label: "Source", value: record.source, kind: "neutral" });
+    if (record.provider) chips.push({ label: "Provider", value: record.provider, kind: "neutral" });
+    if (record.type) chips.push({ label: "Type", value: record.type, kind: "neutral" });
+    if (record.addons?.equipment?.rarity) chips.push({ label: "Rarity", value: record.addons.equipment.rarity, kind: "positive" });
+    if (record.quantity != null && collection === "items") chips.push({ label: "Qty", value: record.quantity, kind: "quantity" });
+    if (record.max != null && collection === "resources") chips.push({ label: "Max", value: record.max, kind: "quantity" });
+    (record.tags || []).slice(0, 8).forEach(tag => chips.push({ label: tag, kind: "neutral" }));
+    return chips;
+  }
+
+  function buildRecordSubtitle(record = {}, collection = "") {
+    if (collection === "spells") {
+      return [
+        Number(record.level || 0) === 0 ? "Cantrip" : `Level ${Number(record.level || 0)}`,
+        record.school || "",
+        record.castingTime || "",
+      ].filter(Boolean).join(" | ");
+    }
+    if (collection === "items") {
+      return [record.type || "Item", record.addons?.equipment?.rarity || "", record.attuned ? "Requires attunement" : ""].filter(Boolean).join(" | ");
+    }
+    if (collection === "resources") {
+      return [`Max ${Number(record.max || 0)}`, record.source || ""].filter(Boolean).join(" | ");
+    }
+    return [labelForCollection(collection), record.source || ""].filter(Boolean).join(" | ");
+  }
+
+  function labelForCollection(collection = "") {
+    const labels = {
+      spells: "Spell",
+      items: "Item",
+      resources: "Resource",
+      tags: "Tag",
+      feats: "Feat",
+      traits: "Trait",
+      classes: "Class",
+      races: "Race",
+    };
+    return labels[collection] || "";
+  }
+
   function renderViewerSection(section = {}) {
     if (!section || (!section.title && !section.content)) return "";
     return `
@@ -193,6 +304,9 @@ const ViewCharacterUtils = (() => {
     encodeDataAttr,
     decodeDataAttr,
     openRecordViewer,
+    buildRecordViewerRecord,
+    renderRecordSummary,
+    wireRecordCardViewers,
     showToast,
   };
 

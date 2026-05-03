@@ -1,0 +1,43 @@
+{
+  "id": "capella-trait-boss-presence",
+  "collection": "traits",
+  "name": "Boss Presence",
+  "tags": [
+    "Capella",
+    "boss",
+    "state"
+  ],
+  "source": "custom",
+  "provider": "",
+  "providerId": "",
+  "variantOf": "",
+  "addons": {
+    "sourceDocument": {
+      "provider": "dnd5ewiki",
+      "title": "Legendary Creatures",
+      "type": "Rule",
+      "detailUrl": "https://dnd-5e.fandom.com/wiki/Statistics"
+    },
+    "sourceDocuments": [
+      {
+        "provider": "dnd5ewiki",
+        "title": "Monster Manual",
+        "type": "Monster",
+        "detailUrl": "https://dnd-5e.fandom.com/wiki/Lich"
+      }
+    ],
+    "statBonuses": {
+      "str": 6,
+      "dex": 5,
+      "con": 8,
+      "int": 1,
+      "wis": 9,
+      "cha": 10
+    }
+  },
+  "type": "trait",
+  "description": "Temporary enemy-boss overlay. Adds STR +6, DEX +5, CON +8, INT +1, WIS +9, and CHA +10, swaps to the boss HP pool, grants encounter pressure, and is removed when she is tamed, pacified, recruited, purified, or weakened out of boss status.",
+  "active": true,
+  "createdAt": "2026-05-01T16:57:08.797Z",
+  "updatedAt": "2026-05-01T16:57:08.797Z"
+}

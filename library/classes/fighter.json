@@ -1,0 +1,22 @@
+{
+  "id": "fighter",
+  "collection": "classes",
+  "name": "Fighter",
+  "tags": [],
+  "source": "custom",
+  "provider": "",
+  "providerId": "",
+  "variantOf": "",
+  "addons": {
+    "mechanics": [],
+    "stats": {},
+    "speed": {},
+    "proficiencies": [],
+    "feats": []
+  },
+  "createdAt": "2026-05-03T04:22:03.660Z",
+  "updatedAt": "2026-05-03T04:22:03.660Z",
+  "description": "",
+  "hitDie": "d10",
+  "primaryAbility": "Charisma"
+}

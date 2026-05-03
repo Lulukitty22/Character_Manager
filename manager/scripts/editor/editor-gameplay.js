@@ -467,11 +467,12 @@ const EditorGameplay = (() => {
     const max = parseInt(panelEl.querySelector("#gp-hp-max-input")?.value, 10) || 0;
     const currentInput = panelEl.querySelector("#gp-hp-current-input");
     const tempInput = panelEl.querySelector("#gp-hp-temp");
+    const previous = parseInt(currentInput?.value, 10) || 0;
     if (currentInput) currentInput.value = max;
     if (tempInput) tempInput.value = 0;
     currentInput?.dispatchEvent(new Event("input"));
     restoreAllSlots(panelEl, character, "Full rest");
-    addHpLog(panelEl, character, 0, "Full rest");
+    addHpLog(panelEl, character, Math.max(0, max - previous), "Full rest");
   }
 
   function adjustSpellSlot(panelEl, character, level, delta) {

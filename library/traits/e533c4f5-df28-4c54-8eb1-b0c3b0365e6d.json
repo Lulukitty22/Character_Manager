@@ -1,0 +1,18 @@
+{
+  "id": "e533c4f5-df28-4c54-8eb1-b0c3b0365e6d",
+  "collection": "traits",
+  "name": "Advantage on All Rolls",
+  "tags": [
+    "boss"
+  ],
+  "source": "custom",
+  "provider": "",
+  "providerId": "",
+  "variantOf": "",
+  "addons": {},
+  "createdAt": "2026-05-01T15:51:13.985Z",
+  "updatedAt": "2026-05-01T15:51:13.985Z",
+  "type": "trait",
+  "description": "While Boss Presence is active, Capella rolls 2d20 and takes the higher result on attacks, saves, checks, and contested rolls unless a line says otherwise.",
+  "active": true
+}

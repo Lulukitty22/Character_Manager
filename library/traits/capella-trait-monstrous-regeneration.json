@@ -1,0 +1,48 @@
+{
+  "id": "capella-trait-monstrous-regeneration",
+  "collection": "traits",
+  "name": "Monstrous Regeneration",
+  "tags": [
+    "Capella",
+    "boss",
+    "defense"
+  ],
+  "source": "custom",
+  "provider": "",
+  "providerId": "",
+  "variantOf": "",
+  "addons": {
+    "sourceDocument": {
+      "provider": "dnd5ewiki",
+      "title": "Belashyrra",
+      "type": "Monster",
+      "detailUrl": "https://dnd-5e.fandom.com/wiki/Belashyrra"
+    },
+    "sourceDocuments": [
+      {
+        "provider": "dnd5ewiki",
+        "title": "Monster Manual",
+        "type": "Monster",
+        "detailUrl": "https://dnd-5e.fandom.com/wiki/Troll"
+      },
+      {
+        "provider": "dnd5ewiki",
+        "title": "Monster Manual",
+        "type": "Spell",
+        "detailUrl": "https://dnd-5e.fandom.com/wiki/Regenerate"
+      }
+    ],
+    "regeneration": {
+      "amount": 30,
+      "disabledBy": [
+        "Radiant damage",
+        "Critical hit"
+      ]
+    }
+  },
+  "type": "trait",
+  "description": "At the start of Capella's turn, she regains 30 HP. This shuts off for 1 round if she took radiant damage or suffered a critical hit since the end of her last turn.",
+  "active": true,
+  "createdAt": "2026-05-01T16:57:08.797Z",
+  "updatedAt": "2026-05-01T16:57:08.797Z"
+}

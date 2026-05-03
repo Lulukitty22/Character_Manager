@@ -1,0 +1,46 @@
+{
+  "id": "4c177263-68ac-419d-84d5-d71d1c18bbbf",
+  "collection": "spells",
+  "name": "Flesh Polymorph",
+  "tags": [
+    "signature",
+    "homebrew"
+  ],
+  "source": "custom",
+  "provider": "",
+  "providerId": "",
+  "variantOf": "",
+  "addons": {
+    "components": [],
+    "ritual": {
+      "enabled": false
+    },
+    "concentration": {
+      "enabled": false
+    },
+    "sourceDocument": {
+      "provider": "dnd5ewiki",
+      "title": "Player's Handbook",
+      "type": "Spell",
+      "detailUrl": "https://dnd-5e.fandom.com/wiki/Polymorph"
+    },
+    "sourceDocuments": [
+      {
+        "provider": "dnd5ewiki",
+        "title": "Monster Manual",
+        "type": "Trait",
+        "detailUrl": "https://dnd-5e.fandom.com/wiki/Gray_Slaad"
+      }
+    ]
+  },
+  "createdAt": "2026-05-01T15:52:17.807Z",
+  "updatedAt": "2026-05-01T15:52:17.807Z",
+  "level": 4,
+  "school": "Transmutation",
+  "castingTime": "Bonus Action or Reaction",
+  "range": "Self",
+  "components": [],
+  "duration": "Instant / sustained traits",
+  "description": "Modified self-only Polymorph. Does not replace HP, AC, mental stats, or the sheet. Adds physical traits only. Usually keep up to 3 major traits active at once.",
+  "prepared": true
+}

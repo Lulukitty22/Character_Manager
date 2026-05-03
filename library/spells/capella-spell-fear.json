@@ -1,0 +1,62 @@
+{
+  "id": "capella-spell-fear",
+  "collection": "spells",
+  "name": "Fear",
+  "tags": [
+    "Capella",
+    "control",
+    "psychic",
+    "D&D 5e Wiki",
+    "Player's Handbook"
+  ],
+  "source": "custom",
+  "provider": "dnd5ewiki",
+  "providerId": "fear",
+  "variantOf": "",
+  "addons": {
+    "components": [
+      "V",
+      "S",
+      "M"
+    ],
+    "ritual": {
+      "enabled": false
+    },
+    "concentration": {
+      "enabled": true
+    },
+    "role": "crowd control",
+    "sourceDocument": {
+      "provider": "dnd5ewiki",
+      "title": "Player's Handbook",
+      "type": "Spell",
+      "detailUrl": "https://dnd-5e.fandom.com/wiki/Fear"
+    },
+    "mechanics": [
+      {
+        "label": "Frightened",
+        "kind": "condition",
+        "description": "Failed saves force the target to Dash away from you."
+      },
+      {
+        "label": "Drop Item",
+        "kind": "negative",
+        "description": "A failed save makes the target drop what it is holding."
+      }
+    ]
+  },
+  "level": 3,
+  "school": "Illusion",
+  "castingTime": "1 action",
+  "range": "Self (30-foot cone)",
+  "components": [
+    "V",
+    "S",
+    "M"
+  ],
+  "duration": "Concentration, up to 1 minute",
+  "description": "Turns body horror and social dread into battlefield control. Use when the encounter wants panic, scattering, and loss of nerve instead of raw damage.",
+  "prepared": true,
+  "createdAt": "2026-05-01T16:57:08.797Z",
+  "updatedAt": "2026-05-01T16:57:08.797Z"
+}

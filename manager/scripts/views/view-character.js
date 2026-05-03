@@ -57,6 +57,7 @@ const ViewCharacter = (() => {
     ViewCharacterAbilities.wireInteractive?.(containerEl, character);
     ViewCharacterInventory.wireInteractive?.(containerEl, character);
     ViewCharacterResources.wireInteractive?.(containerEl, character);
+    ViewCharacterUtils.wireRecordCardViewers?.(containerEl);
   }
 
   return {

@@ -1,0 +1,18 @@
+{
+  "id": "c9bf4ca6-3342-4cfc-9589-8211d1d06736",
+  "collection": "traits",
+  "name": "Aberrant Lich Bonus",
+  "tags": [
+    "lich"
+  ],
+  "source": "custom",
+  "provider": "",
+  "providerId": "",
+  "variantOf": "",
+  "addons": {},
+  "createdAt": "2026-05-01T15:51:13.985Z",
+  "updatedAt": "2026-05-01T15:51:13.985Z",
+  "type": "trait",
+  "description": "Adds +2 CHA and supports lich-style undead/Far Realm traits such as Soul Vessel, Far Realm Mutation, Unnatural Armor, Arcane Mastery, and Telepathy.",
+  "active": true
+}

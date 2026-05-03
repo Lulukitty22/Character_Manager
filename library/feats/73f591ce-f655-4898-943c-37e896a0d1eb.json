@@ -1,0 +1,25 @@
+{
+  "id": "73f591ce-f655-4898-943c-37e896a0d1eb",
+  "collection": "feats",
+  "name": "Beguiling Influence",
+  "tags": [
+    "D&D 5e Wiki",
+    "Player's Handbook"
+  ],
+  "source": "custom",
+  "provider": "dnd5ewiki",
+  "providerId": "beguiling-influence",
+  "variantOf": "",
+  "addons": {
+    "prerequisites": [],
+    "sourceDocument": {
+      "provider": "dnd5ewiki",
+      "title": "Player's Handbook",
+      "type": "Invocation",
+      "detailUrl": "https://dnd-5e.fandom.com/wiki/Warlock_%28Class%29"
+    }
+  },
+  "createdAt": "2026-05-01T15:52:17.807Z",
+  "updatedAt": "2026-05-01T15:52:17.807Z",
+  "description": "Official warlock invocation: gain proficiency in Deception and Persuasion."
+}

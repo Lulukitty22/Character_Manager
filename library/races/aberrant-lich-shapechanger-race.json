@@ -1,0 +1,36 @@
+{
+  "id": "aberrant-lich-shapechanger-race",
+  "collection": "races",
+  "name": "Aberrant Lich / Shapechanger",
+  "tags": [
+    "Boss",
+    "Aberrant Lich",
+    "Shapechanger"
+  ],
+  "source": "custom",
+  "provider": "",
+  "providerId": "",
+  "variantOf": "",
+  "addons": {
+    "mechanics": [
+      {
+        "label": "Boss Template",
+        "kind": "requirement",
+        "description": "Capella's boss HP is intentionally table-tuned; calculated HP is informational unless applied."
+      }
+    ],
+    "stats": {},
+    "hp": {
+      "flatBonus": 0,
+      "perLevelBonus": 0
+    },
+    "proficiencies": [],
+    "traits": []
+  },
+  "createdAt": "2026-05-03T00:00:00.000Z",
+  "updatedAt": "2026-05-03T00:00:00.000Z",
+  "description": "Custom boss ancestry/template for Capella-style aberrant lich shapechangers.",
+  "speed": {
+    "walk": 30
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "id": "22aa3b43-201b-48e5-a393-79ccccd0c18e",
+  "collection": "traits",
+  "name": "Roll Calculator â€” Boss Saves",
+  "tags": [
+    "calculator"
+  ],
+  "source": "custom",
+  "provider": "",
+  "providerId": "",
+  "variantOf": "",
+  "addons": {},
+  "createdAt": "2026-05-01T15:51:13.985Z",
+  "updatedAt": "2026-05-01T15:51:13.985Z",
+  "type": "feature",
+  "description": "STR Save: Advantage 1d20+7. DEX Save: Advantage 1d20+9. CON Save: Advantage 1d20+10. INT Save: Advantage 1d20+8. WIS Save: Advantage 1d20+9. CHA Save: Advantage 1d20+15.",
+  "active": true
+}

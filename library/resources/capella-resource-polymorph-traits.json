@@ -1,0 +1,23 @@
+{
+  "id": "capella-resource-polymorph-traits",
+  "collection": "resources",
+  "name": "Active Flesh Polymorph Traits",
+  "tags": [
+    "Capella",
+    "shapechange"
+  ],
+  "source": "custom",
+  "provider": "",
+  "providerId": "",
+  "variantOf": "",
+  "addons": {
+    "resource": {
+      "currentIsCharacterState": true,
+      "logIsCharacterState": true
+    }
+  },
+  "max": 3,
+  "description": "Tracks the suggested cap of major Flesh Polymorph traits active at one time.",
+  "createdAt": "2026-05-01T16:57:08.797Z",
+  "updatedAt": "2026-05-01T16:57:08.797Z"
+}

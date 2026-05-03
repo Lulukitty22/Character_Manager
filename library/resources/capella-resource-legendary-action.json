@@ -1,0 +1,30 @@
+{
+  "id": "capella-resource-legendary-action",
+  "collection": "resources",
+  "name": "Legendary Action",
+  "tags": [
+    "Capella",
+    "boss",
+    "action economy"
+  ],
+  "source": "custom",
+  "provider": "",
+  "providerId": "",
+  "variantOf": "",
+  "addons": {
+    "sourceDocument": {
+      "provider": "dnd5ewiki",
+      "title": "Legendary Creatures",
+      "type": "Rule",
+      "detailUrl": "https://dnd-5e.fandom.com/wiki/Statistics"
+    },
+    "resource": {
+      "currentIsCharacterState": true,
+      "logIsCharacterState": true
+    }
+  },
+  "max": 1,
+  "description": "Tracks Capella's once-per-round full Action outside her turn while Boss Presence is active.",
+  "createdAt": "2026-05-01T16:57:08.797Z",
+  "updatedAt": "2026-05-01T16:57:08.797Z"
+}

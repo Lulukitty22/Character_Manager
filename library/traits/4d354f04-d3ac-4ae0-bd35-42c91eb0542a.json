@@ -1,0 +1,18 @@
+{
+  "id": "4d354f04-d3ac-4ae0-bd35-42c91eb0542a",
+  "collection": "traits",
+  "name": "Far Realm Mutation",
+  "tags": [
+    "defense"
+  ],
+  "source": "custom",
+  "provider": "",
+  "providerId": "",
+  "variantOf": "",
+  "addons": {},
+  "createdAt": "2026-05-01T15:51:13.985Z",
+  "updatedAt": "2026-05-01T15:51:13.985Z",
+  "type": "trait",
+  "description": "Explains psychic/cold/necrotic/acid resistance, poison/lightning/nonmagical weapon immunity, unstable biology, and body horror transformations.",
+  "active": true
+}

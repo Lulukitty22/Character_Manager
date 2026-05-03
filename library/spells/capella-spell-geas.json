@@ -1,0 +1,65 @@
+{
+  "id": "capella-spell-geas",
+  "collection": "spells",
+  "name": "Geas",
+  "tags": [
+    "Capella",
+    "social",
+    "coercion",
+    "D&D 5e Wiki",
+    "Player's Handbook"
+  ],
+  "source": "custom",
+  "provider": "dnd5ewiki",
+  "providerId": "geas",
+  "variantOf": "",
+  "addons": {
+    "components": [
+      "V"
+    ],
+    "ritual": {
+      "enabled": false
+    },
+    "concentration": {
+      "enabled": false
+    },
+    "role": "plot pressure",
+    "sourceDocument": {
+      "provider": "dnd5ewiki",
+      "title": "Player's Handbook",
+      "type": "Spell",
+      "detailUrl": "https://dnd-5e.fandom.com/wiki/Geas"
+    },
+    "mechanics": [
+      {
+        "label": "Charmed",
+        "kind": "condition",
+        "description": "The target becomes charmed if it understands you."
+      },
+      {
+        "label": "Psychic",
+        "value": "5d10",
+        "kind": "damage",
+        "description": "Defying the command deals psychic damage once per day."
+      },
+      {
+        "label": "Long Rest",
+        "value": "30 days / 1 year / until ended",
+        "kind": "duration",
+        "description": "Higher slot levels extend the duration dramatically."
+      }
+    ]
+  },
+  "level": 5,
+  "school": "Enchantment",
+  "castingTime": "1 minute",
+  "range": "60 ft",
+  "components": [
+    "V"
+  ],
+  "duration": "30 days",
+  "description": "Long-form coercion for NPC plots and offscreen manipulation, not a quick combat button.",
+  "prepared": false,
+  "createdAt": "2026-05-01T16:57:08.797Z",
+  "updatedAt": "2026-05-01T16:57:08.797Z"
+}

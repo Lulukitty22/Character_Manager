@@ -1,0 +1,59 @@
+{
+  "id": "capella-spell-dimension-door",
+  "collection": "spells",
+  "name": "Dimension Door",
+  "tags": [
+    "Capella",
+    "mobility",
+    "escape",
+    "D&D 5e Wiki",
+    "Player's Handbook"
+  ],
+  "source": "custom",
+  "provider": "dnd5ewiki",
+  "providerId": "dimension-door",
+  "variantOf": "",
+  "addons": {
+    "components": [
+      "V"
+    ],
+    "ritual": {
+      "enabled": false
+    },
+    "concentration": {
+      "enabled": false
+    },
+    "role": "mobility",
+    "sourceDocument": {
+      "provider": "dnd5ewiki",
+      "title": "Player's Handbook",
+      "type": "Spell",
+      "detailUrl": "https://dnd-5e.fandom.com/wiki/Dimension_Door"
+    },
+    "mechanics": [
+      {
+        "label": "Carry",
+        "value": "1 willing creature",
+        "kind": "positive",
+        "description": "You can bring one willing creature of your size or smaller."
+      },
+      {
+        "label": "Collision",
+        "kind": "negative",
+        "description": "Arriving in an occupied space deals force damage and fails the teleport."
+      }
+    ]
+  },
+  "level": 4,
+  "school": "Conjuration",
+  "castingTime": "1 action",
+  "range": "500 ft",
+  "components": [
+    "V"
+  ],
+  "duration": "Instantaneous",
+  "description": "Panic-button repositioning, dramatic exits, abduction staging, or returning from an impossible angle.",
+  "prepared": true,
+  "createdAt": "2026-05-01T16:57:08.797Z",
+  "updatedAt": "2026-05-01T16:57:08.797Z"
+}

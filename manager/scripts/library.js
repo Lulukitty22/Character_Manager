@@ -7,16 +7,17 @@
 
 const Library = (() => {
 
+  const MANIFEST_FILE = "manifest.json";
+
   const COLLECTIONS = {
-    spells:    { file: "spells-custom.json",    label: "Spells" },
-    srdSpells: { file: "spells-srd.json",       label: "SRD Spells", collection: "spells", source: "srd" },
-    items:     { file: "items-custom.json",     label: "Items" },
-    resources: { file: "resources-custom.json", label: "Resources" },
-    tags:      { file: "tags-custom.json",      label: "Tags" },
-    feats:     { file: "feats-custom.json",     label: "Feats" },
-    traits:    { file: "traits-custom.json",    label: "Traits" },
-    classes:   { file: "classes-custom.json",   label: "Classes" },
-    races:     { file: "races-custom.json",     label: "Races" },
+    spells:    { folder: "spells",    label: "Spells" },
+    items:     { folder: "items",     label: "Items" },
+    resources: { folder: "resources", label: "Resources" },
+    tags:      { folder: "tags",      label: "Tags" },
+    feats:     { folder: "feats",     label: "Feats" },
+    traits:    { folder: "traits",    label: "Traits" },
+    classes:   { folder: "classes",   label: "Classes" },
+    races:     { folder: "races",     label: "Races" },
   };
 
   const DND5E_ENDPOINTS = [
@@ -35,12 +36,13 @@ const Library = (() => {
 
   const state = {
     collections: {},
-    shaByKey: {},
+    shaByRecord: {},
+    manifest: null,
+    manifestSha: null,
     loaded: false,
   };
 
   function getCollectionKey(collection, source = "custom") {
-    if (collection === "spells" && source === "srd") return "srdSpells";
     return collection;
   }
 
@@ -50,33 +52,70 @@ const Library = (() => {
 
   async function loadAll() {
     const keys = Object.keys(COLLECTIONS);
+    await loadManifest();
     await Promise.all(keys.map(key => loadCollection(key)));
     state.loaded = true;
     return state.collections;
   }
 
-  async function loadCollection(key) {
+  async function loadCollection(key, options = {}) {
     const meta = COLLECTIONS[key];
     if (!meta) throw new Error(`Unknown library collection: ${key}`);
-    if (state.collections[key]) return state.collections[key];
+    if (state.collections[key] && !options.force) return state.collections[key];
 
     const collectionName = meta.collection || key;
     const fallback = emptyCollection(collectionName);
-    const result = await GitHub.readLibraryFile(meta.file, fallback);
-    const data = normalizeCollection(result.data, collectionName);
+    const manifest = state.manifest || await loadManifest();
+    const manifestFiles = (manifest.collections?.[key] || [])
+      .map(entry => ({ path: entry.path, sha: entry.sha || null }))
+      .filter(entry => entry.path);
+    const files = manifestFiles.length
+      ? manifestFiles
+      : await GitHub.listLibraryFolder(meta.folder);
+    const records = await Promise.all(files.map(async file => {
+      const result = await GitHub.readJsonFile(file.path, null);
+      state.shaByRecord[file.path] = result.sha;
+      return result.data;
+    }));
+    const data = normalizeCollection({ ...fallback, entries: records }, collectionName);
     state.collections[key] = data;
-    state.shaByKey[key] = result.sha;
     return data;
+  }
+
+  async function loadManifest(options = {}) {
+    if (state.manifest && !options.force) return state.manifest;
+    const result = await GitHub.readLibraryFile(MANIFEST_FILE, createEmptyManifest());
+    state.manifest = normalizeManifest(result.data);
+    state.manifestSha = result.sha;
+    return state.manifest;
   }
 
   function seedCollections(collectionDataByFile = {}) {
     Object.entries(COLLECTIONS).forEach(([key, meta]) => {
       const collectionName = meta.collection || key;
-      const data = collectionDataByFile[meta.file] || emptyCollection(collectionName);
+      const data = collectionDataByFile[meta.folder] || collectionDataByFile[key] || emptyCollection(collectionName);
       state.collections[key] = normalizeCollection(data, collectionName);
-      state.shaByKey[key] = null;
     });
     state.loaded = true;
+  }
+
+  function createEmptyManifest() {
+    return {
+      version: 1,
+      collections: Object.keys(COLLECTIONS).reduce((map, key) => {
+        map[key] = [];
+        return map;
+      }, {}),
+    };
+  }
+
+  function normalizeManifest(data = {}) {
+    const manifest = createEmptyManifest();
+    Object.entries(data.collections || {}).forEach(([key, entries]) => {
+      if (!COLLECTIONS[key]) return;
+      manifest.collections[key] = Array.isArray(entries) ? entries.filter(entry => entry?.path) : [];
+    });
+    return manifest;
   }
 
   function normalizeCollection(data, collectionName) {
@@ -89,9 +128,7 @@ const Library = (() => {
   }
 
   function list(collection, options = {}) {
-    const keys = collection === "spells"
-      ? ["spells", "srdSpells"]
-      : [getCollectionKey(collection, options.source || "custom")];
+    const keys = [getCollectionKey(collection, options.source || "custom")];
 
     return keys.flatMap(key => state.collections[key]?.entries || []);
   }
@@ -122,29 +159,145 @@ const Library = (() => {
     const index = data.entries.findIndex(entry => entry.id === normalized.id);
     if (index >= 0) data.entries[index] = { ...data.entries[index], ...normalized };
     else data.entries.push(normalized);
-    await saveCollection(key);
+    await saveRecord(key, normalized);
     return normalized;
   }
 
   async function remove(collection, id, source = "custom") {
     const key = getCollectionKey(collection, source);
     const data = await loadCollection(key);
+    const record = data.entries.find(entry => entry.id === id);
     data.entries = data.entries.filter(entry => entry.id !== id);
-    await saveCollection(key);
+    if (record) await deleteRecord(key, record);
   }
 
   async function saveCollection(key) {
     const meta = COLLECTIONS[key];
-    const result = await GitHub.writeLibraryFile(meta.file, state.collections[key], state.shaByKey[key]);
-    state.shaByKey[key] = result.sha;
-    return result;
+    const data = state.collections[key] || emptyCollection(key);
+    const results = [];
+    for (const record of data.entries || []) {
+      results.push(await saveRecord(key, record));
+    }
+    return results;
+  }
+
+  async function saveRecord(key, record) {
+    const meta = COLLECTIONS[key];
+    const path = libraryRecordPath(meta.folder, record);
+    const sha = state.shaByRecord[path] || null;
+    try {
+      const result = await GitHub.writeJsonFile(path, record, sha, `Update ${path}`);
+      state.shaByRecord[path] = result.sha;
+      await upsertManifestEntry(key, record, path, result.sha);
+      return result;
+    } catch (error) {
+      if (!isGitHubConflict(error)) throw error;
+      const latest = await GitHub.readJsonFile(path, null).catch(() => ({ sha: null }));
+      state.shaByRecord[path] = latest.sha || null;
+      const result = await GitHub.writeJsonFile(path, record, state.shaByRecord[path], `Update ${path}`);
+      state.shaByRecord[path] = result.sha;
+      await upsertManifestEntry(key, record, path, result.sha);
+      return result;
+    }
+  }
+
+  async function deleteRecord(key, record) {
+    const meta = COLLECTIONS[key];
+    const path = libraryRecordPath(meta.folder, record);
+    delete state.shaByRecord[path];
+    if (typeof GitHub.deleteCharacterFile === "function") {
+      const latest = await GitHub.readJsonFile(path, null).catch(() => null);
+      if (latest?.sha) await GitHub.deleteCharacterFile(path, latest.sha);
+    }
+    await removeManifestEntry(key, path);
+  }
+
+  async function upsertManifestEntry(key, record, path, sha = "") {
+    const manifest = state.manifest || await loadManifest();
+    const entries = manifest.collections[key] || [];
+    const entry = {
+      id: record.id,
+      name: record.name || "",
+      source: record.source || "custom",
+      path,
+      sha: sha || "",
+      updatedAt: record.updatedAt || new Date().toISOString(),
+    };
+    const index = entries.findIndex(item => item.path === path || item.id === record.id);
+    if (index >= 0) entries[index] = entry;
+    else entries.push(entry);
+    manifest.collections[key] = entries.sort((a, b) => String(a.name || a.id).localeCompare(String(b.name || b.id)));
+    await saveManifest();
+  }
+
+  async function removeManifestEntry(key, path) {
+    const manifest = state.manifest || await loadManifest();
+    manifest.collections[key] = (manifest.collections[key] || []).filter(entry => entry.path !== path);
+    await saveManifest();
+  }
+
+  async function saveManifest() {
+    const write = async () => {
+      const result = await GitHub.writeLibraryFile(MANIFEST_FILE, state.manifest || createEmptyManifest(), state.manifestSha);
+      state.manifestSha = result.sha;
+      return result;
+    };
+    try {
+      return await write();
+    } catch (error) {
+      if (!isGitHubConflict(error)) throw error;
+      const latest = await GitHub.readLibraryFile(MANIFEST_FILE, createEmptyManifest());
+      const local = state.manifest || createEmptyManifest();
+      state.manifest = mergeManifests(normalizeManifest(latest.data), local);
+      state.manifestSha = latest.sha;
+      return write();
+    }
+  }
+
+  function mergeManifests(base, overlay) {
+    const merged = createEmptyManifest();
+    Object.keys(COLLECTIONS).forEach(key => {
+      const byPath = new Map();
+      (base.collections[key] || []).forEach(entry => byPath.set(entry.path, entry));
+      (overlay.collections[key] || []).forEach(entry => byPath.set(entry.path, entry));
+      merged.collections[key] = Array.from(byPath.values()).sort((a, b) => String(a.name || a.id).localeCompare(String(b.name || b.id)));
+    });
+    return merged;
+  }
+
+  function libraryRecordPath(folder, record = {}) {
+    const id = comparableName(record.id || record.name || Schema.generateId());
+    return `library/${folder}/${id}.json`;
+  }
+
+  function isGitHubConflict(error) {
+    return /409|does not match|sha/i.test(String(error?.message || ""));
   }
 
   function resolveRef(refObj) {
     if (!refObj || refObj.source !== "library") return refObj;
     const collection = refObj.libraryCollection;
     const base = find(collection, refObj.libraryRef, refObj.librarySource);
-    if (!base) return refObj;
+    if (!base) {
+      return {
+        ...refObj,
+        name: refObj.name || refObj.overrides?.name || `(Missing ${collection || "library"} record)`,
+        description: refObj.description || `Could not resolve library reference "${refObj.libraryRef || ""}".`,
+        tags: [...(refObj.tags || []), "missing-library-ref"],
+        addons: {
+          ...(refObj.addons || {}),
+          mechanics: [
+            ...(refObj.addons?.mechanics || []),
+            {
+              label: "Missing Ref",
+              value: refObj.libraryRef || "",
+              kind: "negative",
+              description: "This character points at a library record that was not loaded or no longer exists.",
+            },
+          ],
+        },
+      };
+    }
     const merged = mergeRecord(base, refObj.overrides || {});
     return {
       ...merged,
@@ -386,6 +539,7 @@ const Library = (() => {
 
     const endpoints = [
       `https://api.open5e.com/v2/search/?query=${encodeURIComponent(clean)}&limit=50`,
+      `https://api.open5e.com/v1/search/?text=${encodeURIComponent(clean)}&limit=50`,
       `https://api.open5e.com/search/?text=${encodeURIComponent(clean)}&limit=50`,
     ];
 
@@ -418,7 +572,9 @@ const Library = (() => {
         .map(entry => normalizeDnd5eSearchResult(endpoint, entry));
     }));
 
-    return dedupeSearchResults(endpointResults.flat()).slice(0, 50);
+    return dedupeSearchResults(endpointResults.flat())
+      .filter(result => !isGenericDndPotionTable(result))
+      .slice(0, 50);
   }
 
   async function importExternalResult(result) {
@@ -493,7 +649,7 @@ const Library = (() => {
       typeLabel: endpoint.replace(/-/g, " "),
       sourceLabel: "D&D 5e SRD 2014",
       detailUrl: raw.url ? `https://www.dnd5eapi.co${raw.url}` : "",
-      tags: ["D&D 5e API", "SRD 2014", endpoint],
+      tags: normalizeImportTags(["D&D 5e API", "SRD 2014", endpoint, raw.index]),
       raw: { ...raw, endpoint },
     };
   }
@@ -504,7 +660,7 @@ const Library = (() => {
       id: result.id,
       collection: result.collection,
       name: detail.name || detail.title || result.name || "",
-      tags: unique([...toArray(result.tags), ...toArray(detail.tags)]),
+      tags: normalizeImportTags([...toArray(result.tags), ...toArray(detail.tags), ...detailTags(detail)]),
       source: result.collection === "spells" ? "srd" : "external",
       provider: result.provider,
       providerId: detail.key || detail.slug || detail.index || result.id,
@@ -793,19 +949,54 @@ const Library = (() => {
     return addons;
   }
 
+  function detailTags(detail = {}) {
+    return [
+      detail.equipment_category?.index ? `equipment-categories/${detail.equipment_category.index}` : "",
+      detail.equipment_category?.name || "",
+      detail.gear_category?.index ? `gear-categories/${detail.gear_category.index}` : "",
+      detail.rarity?.name ? `rarity/${comparableName(detail.rarity.name)}` : "",
+      detail.rarity?.name || "",
+    ].filter(Boolean);
+  }
+
+  function normalizeImportTags(tags = []) {
+    return unique(tags
+      .flatMap(tag => {
+        const clean = String(tag || "").trim();
+        if (!clean) return [];
+        const slug = comparableName(clean);
+        return clean.includes("/") || clean === slug ? [clean] : [clean, slug];
+      })
+      .filter(Boolean));
+  }
+
+  function isGenericDndPotionTable(result = {}) {
+    return result.provider === "dnd5eapi"
+      && result.raw?.endpoint === "magic-items"
+      && result.raw?.index === "potion-of-healing";
+  }
+
   function dedupeSearchResults(results = []) {
-    const seen = new Set();
-    return results.filter(result => {
+    const byKey = new Map();
+    results.forEach(result => {
       const key = [
         result.provider,
         result.collection,
         String(result.name || "").trim().toLowerCase(),
-        result.detailUrl || "",
       ].join("|");
-      if (seen.has(key)) return false;
-      seen.add(key);
-      return true;
+      const previous = byKey.get(key);
+      if (!previous || searchSpecificity(result) > searchSpecificity(previous)) byKey.set(key, result);
     });
+    return Array.from(byKey.values());
+  }
+
+  function searchSpecificity(result = {}) {
+    let score = 0;
+    const id = String(result.id || result.raw?.index || "").toLowerCase();
+    if (/common|greater|superior|supreme|rare|very-rare|uncommon/.test(id)) score += 10;
+    if (!/potion-of-healing$/.test(id)) score += 2;
+    if (result.detailUrl) score += 1;
+    return score;
   }
 
   function comparableName(name) {
@@ -821,8 +1012,10 @@ const Library = (() => {
 
   return {
     COLLECTIONS,
+    MANIFEST_FILE,
     loadAll,
     loadCollection,
+    loadManifest,
     seedCollections,
     list,
     find,

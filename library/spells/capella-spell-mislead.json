@@ -1,0 +1,58 @@
+{
+  "id": "capella-spell-mislead",
+  "collection": "spells",
+  "name": "Mislead",
+  "tags": [
+    "Capella",
+    "illusion",
+    "escape",
+    "D&D 5e Wiki",
+    "Player's Handbook"
+  ],
+  "source": "custom",
+  "provider": "dnd5ewiki",
+  "providerId": "mislead",
+  "variantOf": "",
+  "addons": {
+    "components": [
+      "S"
+    ],
+    "ritual": {
+      "enabled": false
+    },
+    "concentration": {
+      "enabled": true
+    },
+    "role": "decoy",
+    "sourceDocument": {
+      "provider": "dnd5ewiki",
+      "title": "Player's Handbook",
+      "type": "Spell",
+      "detailUrl": "https://dnd-5e.fandom.com/wiki/Mislead"
+    },
+    "mechanics": [
+      {
+        "label": "Invisible",
+        "kind": "positive",
+        "description": "You become invisible while an illusory double remains."
+      },
+      {
+        "label": "Senses",
+        "kind": "neutral",
+        "description": "You can perceive through the double while using its senses."
+      }
+    ]
+  },
+  "level": 5,
+  "school": "Illusion",
+  "castingTime": "1 action",
+  "range": "Self",
+  "components": [
+    "S"
+  ],
+  "duration": "Concentration, up to 1 hour",
+  "description": "Lets her split attention between an innocent-looking decoy and the real monster body moving elsewhere.",
+  "prepared": false,
+  "createdAt": "2026-05-01T16:57:08.797Z",
+  "updatedAt": "2026-05-01T16:57:08.797Z"
+}

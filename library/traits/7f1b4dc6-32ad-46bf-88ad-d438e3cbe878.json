@@ -1,0 +1,39 @@
+{
+  "id": "7f1b4dc6-32ad-46bf-88ad-d438e3cbe878",
+  "collection": "traits",
+  "name": "Expert Deceiver",
+  "tags": [
+    "social"
+  ],
+  "source": "custom",
+  "provider": "",
+  "providerId": "",
+  "variantOf": "",
+  "addons": {
+    "sourceDocument": {
+      "provider": "dnd5eapi",
+      "title": "D&D 5e SRD 2014",
+      "type": "Feature",
+      "detailUrl": "https://www.dnd5eapi.co/api/2014/features/eldritch-invocation-beguiling-influence"
+    },
+    "sourceDocuments": [
+      {
+        "provider": "dnd5ewiki",
+        "title": "Player's Handbook",
+        "type": "Feat",
+        "detailUrl": "https://dnd-5e.fandom.com/wiki/Feats"
+      },
+      {
+        "provider": "dnd5ewiki",
+        "title": "Tasha's Cauldron of Everything / Mythic Odysseys of Theros",
+        "type": "Feature",
+        "detailUrl": "https://dnd-5e.fandom.com/wiki/Bard_%28Class%29"
+      }
+    ]
+  },
+  "createdAt": "2026-05-01T15:51:13.985Z",
+  "updatedAt": "2026-05-01T15:51:13.985Z",
+  "type": "trait",
+  "description": "Umbrella social mastery package. Grants prepared Deception / Impersonation / Persuasion a +10 expertise-style bonus. Does not apply against player characters.",
+  "active": true
+}

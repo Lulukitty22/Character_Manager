@@ -1,0 +1,31 @@
+{
+  "id": "resource-arrows-20",
+  "collection": "resources",
+  "name": "Arrows",
+  "tags": [
+    "ammo",
+    "archery",
+    "test"
+  ],
+  "source": "custom",
+  "provider": "",
+  "providerId": "",
+  "variantOf": "",
+  "addons": {
+    "resource": {
+      "currentIsCharacterState": true,
+      "logIsCharacterState": true
+    },
+    "mechanics": [
+      {
+        "label": "Ammo",
+        "kind": "neutral",
+        "description": "Tracks arrows currently ready in the quiver."
+      }
+    ]
+  },
+  "max": 20,
+  "description": "Tracks arrows currently available for ranged attacks.",
+  "createdAt": "2026-05-03T19:00:00.000Z",
+  "updatedAt": "2026-05-03T19:00:00.000Z"
+}

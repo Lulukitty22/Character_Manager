@@ -1,0 +1,25 @@
+{
+  "id": "931a6347-81ac-48d0-b499-cbf2c914eb60",
+  "collection": "feats",
+  "name": "Actor Feat",
+  "tags": [
+    "D&D 5e Wiki",
+    "Player's Handbook"
+  ],
+  "source": "custom",
+  "provider": "dnd5ewiki",
+  "providerId": "actor",
+  "variantOf": "",
+  "addons": {
+    "prerequisites": [],
+    "sourceDocument": {
+      "provider": "dnd5ewiki",
+      "title": "Player's Handbook",
+      "type": "Feat",
+      "detailUrl": "https://dnd-5e.fandom.com/wiki/Feats"
+    }
+  },
+  "createdAt": "2026-05-01T15:52:17.807Z",
+  "updatedAt": "2026-05-01T15:52:17.807Z",
+  "description": "Official Actor feat: +1 Charisma, advantage on Deception and Performance checks when impersonating, and the ability to mimic voices and sounds you have heard for at least 1 minute."
+}

@@ -1,0 +1,18 @@
+{
+  "id": "08f36953-b9aa-4c81-aa37-78dbb191585d",
+  "collection": "traits",
+  "name": "Arcane Mastery",
+  "tags": [
+    "magic"
+  ],
+  "source": "custom",
+  "provider": "",
+  "providerId": "",
+  "variantOf": "",
+  "addons": {},
+  "createdAt": "2026-05-01T15:51:13.985Z",
+  "updatedAt": "2026-05-01T15:51:13.985Z",
+  "type": "trait",
+  "description": "Adds +2 to spell save DCs and spell/flesh attack rolls.",
+  "active": true
+}

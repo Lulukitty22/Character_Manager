@@ -1,0 +1,28 @@
+{
+  "id": "wizard",
+  "collection": "classes",
+  "name": "Wizard",
+  "tags": [
+    "D&D 5e",
+    "Full Caster"
+  ],
+  "source": "custom",
+  "provider": "",
+  "providerId": "",
+  "variantOf": "",
+  "addons": {
+    "mechanics": [],
+    "stats": {},
+    "speed": {},
+    "proficiencies": [],
+    "feats": [],
+    "spellcasting": {
+      "progression": "full"
+    }
+  },
+  "createdAt": "2026-05-03T00:00:00.000Z",
+  "updatedAt": "2026-05-03T00:00:00.000Z",
+  "description": "Prepared arcane full caster.",
+  "hitDie": "d6",
+  "primaryAbility": "Intelligence"
+}

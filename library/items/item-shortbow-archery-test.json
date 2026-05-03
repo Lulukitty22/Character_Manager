@@ -1,0 +1,74 @@
+{
+  "id": "item-shortbow-archery-test",
+  "collection": "items",
+  "name": "Field Shortbow",
+  "tags": [
+    "weapon",
+    "archery",
+    "ammo test",
+    "equipment-categories/weapon",
+    "equipment-categories/martial-ranged-weapons",
+    "ammunition-using"
+  ],
+  "source": "custom",
+  "provider": "",
+  "providerId": "",
+  "variantOf": "",
+  "addons": {
+    "mechanics": [
+      {
+        "label": "Damage",
+        "value": "1d6 piercing",
+        "kind": "damage",
+        "description": "Typical shortbow damage before ability modifiers."
+      },
+      {
+        "label": "Range",
+        "value": "80 / 320 ft",
+        "kind": "range"
+      },
+      {
+        "label": "Ammo",
+        "value": "Arrows -1",
+        "kind": "requirement",
+        "description": "Each shot spends 1 arrow from the Arrows resource."
+      }
+    ],
+    "equipment": {
+      "slot": "Hands",
+      "rarity": "",
+      "category": "equipment-categories/weapon"
+    },
+    "effects": {
+      "hp": {
+        "flatBonus": 0,
+        "perLevelBonus": 0,
+        "tempHp": 0
+      },
+      "spellSlots": {}
+    },
+    "actions": [
+      {
+        "label": "Shoot",
+        "consumeQuantity": false,
+        "effects": {
+          "resources": [
+            {
+              "target": "Arrows",
+              "delta": -1,
+              "reason": "Field Shortbow shot"
+            }
+          ]
+        },
+        "description": "Spend 1 arrow from the Arrows resource when firing."
+      }
+    ]
+  },
+  "createdAt": "2026-05-03T19:00:00.000Z",
+  "updatedAt": "2026-05-03T19:00:00.000Z",
+  "type": "weapon",
+  "active": true,
+  "weight": 2,
+  "attuned": false,
+  "description": "A practical shortbow used to test ammo consumption on the sheet."
+}

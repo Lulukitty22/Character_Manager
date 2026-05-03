@@ -1,0 +1,75 @@
+{
+  "id": "dnd5eapi-magic-items-potion-of-healing-common",
+  "collection": "items",
+  "name": "Potion of Healing",
+  "tags": [
+    "D&D 5e API",
+    "dnd-5e-api",
+    "SRD 2014",
+    "srd-2014",
+    "magic-items",
+    "equipment-categories/potion",
+    "Potion",
+    "potion",
+    "healing",
+    "consumable",
+    "rarity/common",
+    "Common"
+  ],
+  "source": "external",
+  "provider": "dnd5eapi",
+  "providerId": "potion-of-healing-common",
+  "variantOf": "dnd5eapi-magic-items-potion-of-healing",
+  "addons": {
+    "mechanics": [
+      {
+        "label": "Type",
+        "value": "Potion",
+        "kind": "neutral"
+      },
+      {
+        "label": "Rarity",
+        "value": "Common",
+        "kind": "positive"
+      },
+      {
+        "label": "Healing",
+        "value": "+2d4 + 2",
+        "kind": "positive",
+        "description": "Drink to regain hit points."
+      }
+    ],
+    "sourceDocument": {
+      "provider": "dnd5eapi",
+      "title": "D&D 5e SRD 2014",
+      "type": "magic items",
+      "detailUrl": "https://www.dnd5eapi.co/api/2014/magic-items/potion-of-healing-common"
+    },
+    "equipment": {
+      "slot": "Potion",
+      "rarity": "Common",
+      "category": "equipment-categories/potion"
+    },
+    "healing": {
+      "dice": "2d4 + 2"
+    },
+    "actions": [
+      {
+        "label": "Drink",
+        "consumeQuantity": true,
+        "effects": {
+          "heal": {
+            "dice": "2d4 + 2"
+          }
+        },
+        "description": "Consume the potion and regain hit points."
+      }
+    ]
+  },
+  "createdAt": "2026-05-03T07:16:27.422Z",
+  "updatedAt": "2026-05-03T09:37:05.0935837Z",
+  "type": "consumable",
+  "weight": null,
+  "attuned": false,
+  "description": "Potion, common\n\nYou regain 2d4 + 2 hit points when you drink this potion. The potion's red liquid glimmers when agitated."
+}

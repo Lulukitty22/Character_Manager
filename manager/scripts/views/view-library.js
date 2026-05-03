@@ -105,7 +105,7 @@ const ViewLibrary = (() => {
             placeholder="Search ${label(collection).toLowerCase()} by name, tag, source, or description..."
           />
         </div>
-        <div id="library-record-list" class="array-list">
+        <div id="library-record-list" class="array-list library-card-list">
           ${entries.map(entry => renderRecordRow(collection, entry)).join("") || `<p class="text-muted text-sm">No records yet.</p>`}
         </div>
       </section>
@@ -136,9 +136,20 @@ const ViewLibrary = (() => {
         if (!confirm(`Delete "${name}" from the shared library?`)) return;
         await Library.remove(collection, row.dataset.recordId, row.dataset.recordSource || "custom");
         App.showToast("Library record deleted.", "success");
+        row.remove();
         renderCollection(container, collection);
       });
     });
+
+    panel.querySelectorAll(".btn-view-library-record").forEach(button => {
+      button.addEventListener("click", event => {
+        event.stopPropagation();
+        const row = button.closest(".library-record-row");
+        ViewCharacterUtils.openRecordViewer(ViewCharacterUtils.decodeDataAttr(row?.dataset.sheetRecord, {}));
+      });
+    });
+
+    ViewCharacterUtils.wireRecordCardViewers?.(panel);
 
     panel.querySelector("#library-record-search")?.addEventListener("input", (event) => {
       filterRecordRows(panel, event.target.value);
@@ -147,6 +158,16 @@ const ViewLibrary = (() => {
 
   function renderRecordRow(collection, entry) {
     const addons = JSON.stringify(entry.addons || {}, null, 2);
+    const viewerRecord = typeof ViewCharacterUtils !== "undefined"
+      ? ViewCharacterUtils.buildRecordViewerRecord(entry, { collection })
+      : {};
+    const summary = typeof ViewCharacterUtils !== "undefined"
+      ? ViewCharacterUtils.renderRecordSummary(entry, {
+        collection,
+        className: "library-record-summary",
+        descriptionClass: "text-muted text-sm",
+      })
+      : "";
     const sourceDocuments = [
       entry.addons?.sourceDocument ? { ...entry.addons.sourceDocument, primary: true } : null,
       ...(Array.isArray(entry.addons?.sourceDocuments) ? entry.addons.sourceDocuments : []),
@@ -171,21 +192,27 @@ const ViewLibrary = (() => {
       <div class="array-item library-record-row"
         data-record-id="${escapeAttr(entry.id)}"
         data-record-source="${escapeAttr(entry.source || "custom")}"
+        data-sheet-record="${typeof ViewCharacterUtils !== "undefined" ? ViewCharacterUtils.encodeDataAttr(viewerRecord) : ""}"
         data-search="${escapeAttr(searchText)}">
         <div class="array-item-content">
-          <div class="fields-grid-3">
-            <input class="field-input library-record-name" value="${escapeAttr(entry.name || "")}" placeholder="Name" />
-            <input class="field-input library-record-tags" value="${escapeAttr((entry.tags || []).join(", "))}" placeholder="tags, comma, separated" />
-            <input class="field-input library-record-variant" value="${escapeAttr(entry.variantOf || "")}" placeholder="Variant of record id" />
-          </div>
-          ${renderFeatureFields(collection, entry)}
-          ${renderSourceSummary(sourceDocuments)}
-          <div class="field-group" style="margin-top: var(--space-3); margin-bottom: 0;">
-            <label class="field-label">Addons JSON</label>
-            <textarea class="field-textarea library-record-addons" rows="4">${escapeHTML(addons)}</textarea>
-          </div>
+          ${summary}
+          <details class="library-edit-details">
+            <summary class="button button-ghost button-sm">Edit Record</summary>
+            <div class="fields-grid-3" style="margin-top: var(--space-3);">
+              <input class="field-input library-record-name" value="${escapeAttr(entry.name || "")}" placeholder="Name" />
+              <input class="field-input library-record-tags" value="${escapeAttr((entry.tags || []).join(", "))}" placeholder="tags, comma, separated" />
+              <input class="field-input library-record-variant" value="${escapeAttr(entry.variantOf || "")}" placeholder="Variant of record id" />
+            </div>
+            ${renderFeatureFields(collection, entry)}
+            ${renderSourceSummary(sourceDocuments)}
+            <details class="library-json-details" style="margin-top: var(--space-3);">
+              <summary class="field-label">Advanced Addons JSON</summary>
+              <textarea class="field-textarea library-record-addons" rows="4">${escapeHTML(addons)}</textarea>
+            </details>
+          </details>
         </div>
         <div class="array-item-actions">
+          <button class="button button-icon button-ghost btn-view-library-record" title="View">View</button>
           <button class="button button-icon button-primary btn-save-library-record" title="Save">Save</button>
           <button class="button button-icon button-danger btn-delete-library-record" title="Delete">Delete</button>
         </div>
@@ -503,8 +530,18 @@ const ViewLibrary = (() => {
           event.stopPropagation();
           const row = button.closest(".external-result");
           const result = JSON.parse(row.dataset.result || "{}");
-          const imported = await Library.importExternalResult(result);
-          App.showToast(`Imported ${imported.name}.`, "success");
+          button.disabled = true;
+          button.textContent = "Importing...";
+          try {
+            const imported = await Library.importExternalResult(result);
+            App.showToast(`Imported ${imported.name}.`, "success");
+            button.textContent = "Imported";
+            row.classList.add("active");
+          } catch (error) {
+            button.disabled = false;
+            button.textContent = "Import";
+            App.showToast(`Import failed: ${error.message}`, "error");
+          }
         });
       });
 
@@ -532,6 +569,7 @@ const ViewLibrary = (() => {
       const results = rows.map(row => JSON.parse(row.dataset.result || "{}"));
       const imported = await Library.importExternalResults(results);
       App.showToast(`Imported ${imported.length} record${imported.length === 1 ? "" : "s"}.`, "success");
+      rows.forEach(row => row.classList.add("active"));
     } catch (error) {
       App.showToast(`Import failed: ${error.message}`, "error");
     }
@@ -592,13 +630,72 @@ const ViewLibrary = (() => {
   }
 
   function renderExternalRecordPreview(result, detail = {}) {
+    const record = normalizePreviewRecord(result, detail);
+    return typeof ViewCharacterUtils !== "undefined"
+      ? ViewCharacterUtils.renderRecordSummary(record, { collection: result.collection })
+      : renderExternalGenericPreview(result, detail);
+  }
+
+  function normalizePreviewRecord(result, detail = {}) {
+    const description = normalizePreviewDescription(detail.desc || detail.description || detail.text || "");
     if (result.collection === "spells") {
-      return renderExternalSpellPreview(result, detail);
+      return {
+        collection: "spells",
+        name: detail.name || result.name || "",
+        level: Number(detail.level || 0),
+        school: detail.school?.name || detail.school || "",
+        castingTime: detail.casting_time || detail.castingTime || "",
+        range: detail.range || "",
+        duration: detail.duration || "",
+        components: Array.isArray(detail.components) ? detail.components : [],
+        description,
+        source: result.sourceLabel || result.providerLabel || "",
+        tags: result.tags || [],
+        addons: {
+          mechanics: [
+            detail.casting_time ? { label: "Cast", value: detail.casting_time, kind: "action" } : null,
+            detail.range ? { label: "Range", value: detail.range, kind: "range" } : null,
+            detail.duration ? { label: "Duration", value: detail.duration, kind: "duration" } : null,
+          ].filter(Boolean),
+          sourceDocument: { provider: result.provider, title: result.sourceLabel || "", detailUrl: result.detailUrl || "" },
+        },
+      };
     }
     if (result.collection === "items") {
-      return renderExternalItemPreview(result, detail);
+      const type = detail.equipment_category?.name || detail.gear_category?.name || detail.rarity?.name || result.typeLabel || "Item";
+      return {
+        collection: "items",
+        name: detail.name || result.name || "",
+        type,
+        weight: detail.weight ?? null,
+        attuned: Boolean(detail.requires_attunement),
+        description,
+        source: result.sourceLabel || result.providerLabel || "",
+        tags: result.tags || [],
+        addons: {
+          equipment: {
+            slot: type,
+            rarity: detail.rarity?.name || "",
+            category: detail.equipment_category?.url || "",
+          },
+          mechanics: [
+            { label: "Type", value: type, kind: "neutral" },
+            detail.rarity?.name ? { label: "Rarity", value: detail.rarity.name, kind: "positive" } : null,
+            detail.weight != null ? { label: "Weight", value: detail.weight, kind: "neutral" } : null,
+            detail.requires_attunement ? { label: "Attunement", value: "Yes", kind: "requirement" } : null,
+          ].filter(Boolean),
+          sourceDocument: { provider: result.provider, title: result.sourceLabel || "", detailUrl: result.detailUrl || "" },
+        },
+      };
     }
-    return renderExternalGenericPreview(result, detail);
+    return {
+      collection: result.collection,
+      name: detail.name || detail.title || result.name || "",
+      description,
+      source: result.sourceLabel || result.providerLabel || "",
+      tags: result.tags || [],
+      addons: { sourceDocument: { provider: result.provider, title: result.sourceLabel || "", detailUrl: result.detailUrl || "" } },
+    };
   }
 
   function renderExternalSpellPreview(result, detail = {}) {

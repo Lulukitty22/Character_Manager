@@ -1,0 +1,39 @@
+{
+  "id": "38224464-3cbf-4e4b-a30a-f06d63742400",
+  "collection": "traits",
+  "name": "Legendary Action",
+  "tags": [
+    "combat"
+  ],
+  "source": "custom",
+  "provider": "",
+  "providerId": "",
+  "variantOf": "",
+  "addons": {
+    "sourceDocument": {
+      "provider": "dnd5ewiki",
+      "title": "Legendary Creatures",
+      "type": "Rule",
+      "detailUrl": "https://dnd-5e.fandom.com/wiki/Statistics"
+    },
+    "sourceDocuments": [
+      {
+        "provider": "dnd5ewiki",
+        "title": "Monster Manual",
+        "type": "Monster",
+        "detailUrl": "https://dnd-5e.fandom.com/wiki/Lich"
+      },
+      {
+        "provider": "dnd5ewiki",
+        "title": "Dungeon Master's Guide",
+        "type": "Item",
+        "detailUrl": "https://dnd-5e.fandom.com/wiki/Black_Dragon_Mask"
+      }
+    ]
+  },
+  "createdAt": "2026-05-01T15:51:13.985Z",
+  "updatedAt": "2026-05-01T15:51:13.985Z",
+  "type": "legendary",
+  "description": "Once per round, outside her turn, Capella may take 1 full Action. If used for Attack, this gives her 2 more attacks.",
+  "active": true
+}

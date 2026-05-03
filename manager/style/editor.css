@@ -260,6 +260,50 @@
   cursor: pointer;
 }
 
+.library-card-list {
+  gap: var(--space-4);
+}
+
+.library-record-row {
+  align-items: flex-start;
+}
+
+.library-record-summary {
+  padding: var(--space-4);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.01)),
+    var(--color-bg-deep);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+}
+
+.library-record-summary .sheet-mechanic-chips {
+  margin: var(--space-2) 0;
+}
+
+.library-edit-details {
+  margin-top: var(--space-3);
+}
+
+.library-edit-details > summary,
+.library-json-details > summary {
+  cursor: pointer;
+  width: fit-content;
+  list-style: none;
+}
+
+.library-edit-details > summary::-webkit-details-marker,
+.library-json-details > summary::-webkit-details-marker {
+  display: none;
+}
+
+.library-json-details {
+  padding: var(--space-3);
+  border: 1px dashed var(--color-border-muted);
+  border-radius: var(--radius-base);
+  background: rgba(0, 0, 0, 0.12);
+}
+
 @media (max-width: 920px) {
   .spell-browser-layout {
     grid-template-columns: 1fr;

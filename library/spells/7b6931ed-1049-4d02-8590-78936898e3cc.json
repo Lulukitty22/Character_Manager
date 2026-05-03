@@ -1,0 +1,35 @@
+{
+  "id": "7b6931ed-1049-4d02-8590-78936898e3cc",
+  "collection": "spells",
+  "name": "Voice of Distortion",
+  "tags": [
+    "control"
+  ],
+  "source": "custom",
+  "provider": "",
+  "providerId": "",
+  "variantOf": "",
+  "addons": {
+    "components": [
+      "V"
+    ],
+    "ritual": {
+      "enabled": false
+    },
+    "concentration": {
+      "enabled": false
+    }
+  },
+  "createdAt": "2026-05-01T15:52:17.807Z",
+  "updatedAt": "2026-05-01T15:52:17.807Z",
+  "level": 5,
+  "school": "Enchantment",
+  "castingTime": "Action or Legendary Action",
+  "range": "60 ft",
+  "components": [
+    "V"
+  ],
+  "duration": "1 round",
+  "description": "One creature that can hear Capella makes a DC 25 WIS save. On failure choose one: lose reaction, disadvantage on next attack, cannot willingly move closer, or subtract 1d6 from next saving throw or ability check.",
+  "prepared": true
+}

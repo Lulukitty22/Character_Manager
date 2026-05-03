@@ -1,0 +1,25 @@
+{
+  "id": "b4205c6e-c27e-44d8-aeb9-7b9bb474a4e0",
+  "collection": "feats",
+  "name": "Skill Expert",
+  "tags": [
+    "D&D 5e Wiki",
+    "Tasha's Cauldron of Everything"
+  ],
+  "source": "custom",
+  "provider": "dnd5ewiki",
+  "providerId": "skill-expert",
+  "variantOf": "",
+  "addons": {
+    "prerequisites": [],
+    "sourceDocument": {
+      "provider": "dnd5ewiki",
+      "title": "Tasha's Cauldron of Everything",
+      "type": "Feat",
+      "detailUrl": "https://dnd-5e.fandom.com/wiki/Feats"
+    }
+  },
+  "createdAt": "2026-05-01T15:52:17.807Z",
+  "updatedAt": "2026-05-01T15:52:17.807Z",
+  "description": "Official Skill Expert feat: increase one ability score by 1, gain proficiency in one skill, and choose one proficient skill to gain expertise."
+}

@@ -69,17 +69,8 @@ const SheetExporter = (() => {
       resources:     `${repoBase}/manager/scripts/views/view-character-resources.js`,
       roblox:        `${repoBase}/manager/scripts/views/view-character-roblox.js`,
       viewCharacter: `${repoBase}/manager/scripts/views/view-character.js`,
-      libraryFiles: {
-        "spells-srd.json":       `${repoBase}/library/spells-srd.json`,
-        "spells-custom.json":    `${repoBase}/library/spells-custom.json`,
-        "items-custom.json":     `${repoBase}/library/items-custom.json`,
-        "resources-custom.json": `${repoBase}/library/resources-custom.json`,
-        "tags-custom.json":      `${repoBase}/library/tags-custom.json`,
-        "feats-custom.json":     `${repoBase}/library/feats-custom.json`,
-        "traits-custom.json":    `${repoBase}/library/traits-custom.json`,
-        "classes-custom.json":   `${repoBase}/library/classes-custom.json`,
-        "races-custom.json":     `${repoBase}/library/races-custom.json`,
-      },
+      libraryManifest: `${repoBase}/library/manifest.json`,
+      libraryBase: `${repoBase}/`,
     };
 
     const name        = characterData.identity?.name || "Character";
@@ -111,7 +102,8 @@ const SheetExporter = (() => {
     const escapedResources     = escapeJsString(scriptUrls.resources);
     const escapedRoblox        = escapeJsString(scriptUrls.roblox);
     const escapedViewCharacter = escapeJsString(scriptUrls.viewCharacter);
-    const escapedLibraryFiles  = JSON.stringify(scriptUrls.libraryFiles).replace(/</g, "\\u003c");
+    const escapedLibraryManifest = escapeJsString(scriptUrls.libraryManifest);
+    const escapedLibraryBase = escapeJsString(scriptUrls.libraryBase);
     const escapedCharacterData = JSON.stringify(characterData).replace(/</g, "\\u003c");
 
     return `<!DOCTYPE html>
@@ -170,7 +162,8 @@ const SheetExporter = (() => {
   var RESOURCES_URL      = "${escapedResources}";
   var ROBLOX_URL         = "${escapedRoblox}";
   var VIEW_CHARACTER_URL = "${escapedViewCharacter}";
-  var LIBRARY_FILES      = ${escapedLibraryFiles};
+  var LIBRARY_MANIFEST_URL = "${escapedLibraryManifest}";
+  var LIBRARY_BASE_URL     = "${escapedLibraryBase}";
 
   // ── DOM refs ──────────────────────────────────────────────────────────────
   var loadingEl = document.getElementById("state-loading");
@@ -272,16 +265,25 @@ const SheetExporter = (() => {
 
       if (typeof Library !== "undefined") {
         setStatus("Loading shared library...");
+        var manifest = await fetchText(LIBRARY_MANIFEST_URL, "library manifest").then(function (text) { return JSON.parse(text); });
         var seeded = {};
-        var fileNames = Object.keys(LIBRARY_FILES);
-        for (var j = 0; j < fileNames.length; j++) {
-          var fileName = fileNames[j];
-          try {
-            seeded[fileName] = await fetchText(LIBRARY_FILES[fileName], fileName)
-              .then(function (text) { return JSON.parse(text); });
-          } catch (libraryError) {
-            seeded[fileName] = { version: 1, collection: fileName.split("-")[0], entries: [] };
+        var collections = manifest.collections || {};
+        var collectionNames = Object.keys(collections);
+        for (var j = 0; j < collectionNames.length; j++) {
+          var collectionName = collectionNames[j];
+          var entries = [];
+          var records = collections[collectionName] || [];
+          for (var k = 0; k < records.length; k++) {
+            var recordPath = records[k].path;
+            if (!recordPath) continue;
+            try {
+              var recordUrl = recordPath.indexOf("http") === 0 ? recordPath : LIBRARY_BASE_URL + recordPath;
+              entries.push(await fetchText(recordUrl, recordPath).then(function (text) { return JSON.parse(text); }));
+            } catch (recordError) {
+              // A missing library record should not break the whole exported sheet.
+            }
           }
+          seeded[collectionName] = { version: 1, collection: collectionName, entries: entries };
         }
         Library.seedCollections(seeded);
       }

@@ -1,0 +1,33 @@
+{
+  "id": "fca2be53-1cce-4334-a412-0fedad0d6aae",
+  "collection": "traits",
+  "name": "Unnatural Armor",
+  "tags": [
+    "defense"
+  ],
+  "source": "custom",
+  "provider": "",
+  "providerId": "",
+  "variantOf": "",
+  "addons": {
+    "sourceDocument": {
+      "provider": "dnd5ewiki",
+      "title": "Player's Handbook",
+      "type": "Spell",
+      "detailUrl": "https://dnd-5e.fandom.com/wiki/Mage_Armor"
+    },
+    "sourceDocuments": [
+      {
+        "provider": "dnd5ewiki",
+        "title": "Player's Handbook",
+        "type": "Class",
+        "detailUrl": "https://dnd-5e.fandom.com/wiki/Sorcerer"
+      }
+    ]
+  },
+  "createdAt": "2026-05-01T15:51:13.985Z",
+  "updatedAt": "2026-05-01T15:51:13.985Z",
+  "type": "trait",
+  "description": "Base AC becomes 15 + Dexterity modifier while unarmored. With Boss DEX 18, this gives AC 19. Armored Flesh can raise this to AC 21.",
+  "active": true
+}

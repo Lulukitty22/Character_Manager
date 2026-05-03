@@ -1,0 +1,22 @@
+{
+  "id": "idk-what-class",
+  "collection": "classes",
+  "name": "idk what class",
+  "tags": [],
+  "source": "custom",
+  "provider": "",
+  "providerId": "",
+  "variantOf": "",
+  "addons": {
+    "mechanics": [],
+    "stats": {},
+    "speed": {},
+    "proficiencies": [],
+    "feats": []
+  },
+  "createdAt": "2026-05-03T04:16:36.172Z",
+  "updatedAt": "2026-05-03T04:16:36.172Z",
+  "description": "",
+  "hitDie": "",
+  "primaryAbility": ""
+}

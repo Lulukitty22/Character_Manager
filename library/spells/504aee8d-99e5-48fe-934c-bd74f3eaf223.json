@@ -1,0 +1,63 @@
+{
+  "id": "504aee8d-99e5-48fe-934c-bd74f3eaf223",
+  "collection": "spells",
+  "name": "Suggestion",
+  "tags": [
+    "social",
+    "D&D 5e Wiki",
+    "Player's Handbook"
+  ],
+  "source": "custom",
+  "provider": "dnd5ewiki",
+  "providerId": "suggestion",
+  "variantOf": "",
+  "addons": {
+    "components": [
+      "V",
+      "M"
+    ],
+    "ritual": {
+      "enabled": false
+    },
+    "concentration": {
+      "enabled": true
+    },
+    "sourceDocument": {
+      "provider": "dnd5ewiki",
+      "title": "Player's Handbook",
+      "type": "Spell",
+      "detailUrl": "https://dnd-5e.fandom.com/wiki/Suggestion"
+    },
+    "mechanics": [
+      {
+        "label": "Save",
+        "value": "Wisdom",
+        "kind": "requirement",
+        "description": "Targets make a Wisdom saving throw."
+      },
+      {
+        "label": "Charm",
+        "kind": "condition",
+        "description": "Creatures that cannot be charmed are immune."
+      },
+      {
+        "label": "Harm Ends",
+        "kind": "negative",
+        "description": "If you or your companions damage the target, the spell ends."
+      }
+    ]
+  },
+  "createdAt": "2026-05-01T15:52:17.807Z",
+  "updatedAt": "2026-05-01T15:52:17.807Z",
+  "level": 2,
+  "school": "Enchantment",
+  "castingTime": "1 action",
+  "range": "30 ft",
+  "components": [
+    "V",
+    "M"
+  ],
+  "duration": "Concentration, up to 8 hours",
+  "description": "Social pressure option for manipulation scenes.",
+  "prepared": true
+}

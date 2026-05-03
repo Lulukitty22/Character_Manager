@@ -71,7 +71,7 @@
       "source": "library",
       "libraryCollection": "items",
       "librarySource": "external",
-      "libraryRef": "dnd5eapi-magic-items-potion-of-healing",
+      "libraryRef": "dnd5eapi-magic-items-potion-of-healing-common",
       "quantity": 1,
       "active": true,
       "overrides": {}
@@ -107,21 +107,42 @@
     "proficiencyBonus": 3,
     "spellcastingAbility": "wis",
     "stats": {
-      "str": { "score": 10 },
-      "dex": { "score": 18 },
-      "con": { "score": 14 },
-      "int": { "score": 12 },
-      "wis": { "score": 14 },
-      "cha": { "score": 8 }
+      "str": {
+        "score": 10
+      },
+      "dex": {
+        "score": 18
+      },
+      "con": {
+        "score": 14
+      },
+      "int": {
+        "score": 12
+      },
+      "wis": {
+        "score": 14
+      },
+      "cha": {
+        "score": 8
+      }
     },
     "savingThrowProficiencies": [
       "str",
       "dex"
     ],
     "skillProficiencies": [
-      { "skill": "Perception", "expertise": false },
-      { "skill": "Stealth", "expertise": false },
-      { "skill": "Survival", "expertise": false }
+      {
+        "skill": "Perception",
+        "expertise": false
+      },
+      {
+        "skill": "Stealth",
+        "expertise": false
+      },
+      {
+        "skill": "Survival",
+        "expertise": false
+      }
     ],
     "hp": {
       "mode": "calculated",

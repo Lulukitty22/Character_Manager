@@ -1,0 +1,58 @@
+{
+  "id": "open5e-spells-deepm_kiss-of-the-succubus",
+  "collection": "spells",
+  "name": "Kiss of the Succubus",
+  "tags": [
+    "Open5e",
+    "Deep Magic for 5th Edition",
+    "deepm",
+    "Kobold Press",
+    "5th Edition 2014"
+  ],
+  "source": "srd",
+  "provider": "open5e",
+  "providerId": "deepm_kiss-of-the-succubus",
+  "variantOf": "",
+  "addons": {
+    "components": [
+      "S"
+    ],
+    "ritual": {
+      "enabled": false
+    },
+    "concentration": {
+      "enabled": false
+    },
+    "damage": {
+      "roll": "5d10",
+      "types": [
+        "psychic"
+      ],
+      "savingThrow": "constitution"
+    },
+    "area": {
+      "shape": "",
+      "size": null,
+      "unit": "feet"
+    },
+    "sourceDocument": {
+      "provider": "open5e",
+      "key": "deepm",
+      "title": "Deep Magic for 5th Edition",
+      "publisher": "Kobold Press",
+      "gameSystem": "5th Edition 2014"
+    }
+  },
+  "createdAt": "2026-05-01T16:37:38.420Z",
+  "updatedAt": "2026-05-01T16:37:38.420Z",
+  "level": 5,
+  "school": "Necromancy",
+  "castingTime": "action",
+  "range": "Touch",
+  "components": [
+    "S"
+  ],
+  "duration": "instantaneous",
+  "description": "You kiss a willing creature or one you have charmed or held spellbound through spells or abilities such as [dominate person](https://api.open5e.com/spells/dominate-person). The target must make a Constitution saving throw. A creature takes 5d10 psychic damage on a failed save, or half as much damage on a successful one. The targetÃƒÂ¢Ã‚Â€Ã‚Â™s hit point maximum is reduced by an amount equal to the damage taken; this reduction lasts until the target finishes a long rest. The target dies if this effect reduces its hit point maximum to 0.\n\n\nWhen you cast this spell using a spell slot of 6th level or higher, the damage increases by 1d10 for each slot level above 5th.",
+  "open5eUrl": ""
+}

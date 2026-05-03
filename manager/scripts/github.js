@@ -144,10 +144,68 @@ const GitHub = (() => {
   }
 
   /**
+   * List JSON files in a library subfolder, e.g. library/items.
+   */
+  async function listLibraryFolder(folderName) {
+    if (!isConfigured()) throw new Error("GitHub is not configured.");
+
+    const folderPath = `library/${folderName}`;
+    const response = await fetch(buildUrl(folderPath), {
+      headers: buildHeaders(),
+    });
+
+    if (response.status === 404) return [];
+
+    if (!response.ok) {
+      const errorBody = await response.json().catch(() => ({}));
+      throw new Error(`GitHub API error ${response.status}: ${errorBody.message || response.statusText}`);
+    }
+
+    const files = await response.json();
+    return files
+      .filter(file => file.type === "file" && file.name.endsWith(".json"))
+      .map(file => ({
+        name: file.name,
+        path: file.path,
+        sha: file.sha,
+        downloadUrl: file.download_url,
+      }));
+  }
+
+  async function readJsonFile(filePath, fallbackData = null) {
+    if (!isConfigured()) throw new Error("GitHub is not configured.");
+
+    const response = await fetch(buildUrl(filePath), {
+      headers: buildHeaders(),
+    });
+
+    if (response.status === 404 && fallbackData !== null) {
+      return { data: fallbackData, sha: null, path: filePath };
+    }
+
+    if (!response.ok) {
+      const errorBody = await response.json().catch(() => ({}));
+      throw new Error(`GitHub API error ${response.status}: ${errorBody.message || response.statusText}`);
+    }
+
+    const fileInfo = await response.json();
+    const decoded = atob(fileInfo.content.replace(/\n/g, ""));
+    return {
+      data: JSON.parse(decoded),
+      sha: fileInfo.sha,
+      path: filePath,
+    };
+  }
+
+  /**
    * Write a JSON library file in the repo.
    */
   async function writeLibraryFile(fileName, data, sha = null) {
     return writeCharacterFile(`library/${fileName}`, data, sha, `Update library/${fileName}`);
+  }
+
+  async function writeJsonFile(filePath, data, sha = null, message = null) {
+    return writeCharacterFile(filePath, data, sha, message || `Update ${filePath}`);
   }
 
   /**
@@ -277,6 +335,9 @@ const GitHub = (() => {
     deleteCharacterFile,
     readLibraryFile,
     writeLibraryFile,
+    listLibraryFolder,
+    readJsonFile,
+    writeJsonFile,
   };
 
 })();

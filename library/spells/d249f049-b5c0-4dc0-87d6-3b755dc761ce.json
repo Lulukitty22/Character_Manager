@@ -1,0 +1,66 @@
+{
+  "id": "d249f049-b5c0-4dc0-87d6-3b755dc761ce",
+  "collection": "spells",
+  "name": "Detect Thoughts",
+  "tags": [
+    "social",
+    "D&D 5e Wiki",
+    "Player's Handbook"
+  ],
+  "source": "custom",
+  "provider": "dnd5ewiki",
+  "providerId": "detect-thoughts",
+  "variantOf": "",
+  "addons": {
+    "components": [
+      "V",
+      "S",
+      "M"
+    ],
+    "ritual": {
+      "enabled": false
+    },
+    "concentration": {
+      "enabled": true
+    },
+    "sourceDocument": {
+      "provider": "dnd5ewiki",
+      "title": "Player's Handbook",
+      "type": "Spell",
+      "detailUrl": "https://dnd-5e.fandom.com/wiki/Detect_Thoughts"
+    },
+    "mechanics": [
+      {
+        "label": "Probe",
+        "value": "Deeper",
+        "kind": "requirement",
+        "description": "Probing deeper forces a Wisdom saving throw."
+      },
+      {
+        "label": "Low INT",
+        "value": "3 or lower",
+        "kind": "negative",
+        "description": "Creatures with Intelligence 3 or lower are unaffected."
+      },
+      {
+        "label": "Thoughts",
+        "kind": "positive",
+        "description": "You can read surface thoughts and search for thinking creatures."
+      }
+    ]
+  },
+  "createdAt": "2026-05-01T15:52:17.807Z",
+  "updatedAt": "2026-05-01T15:52:17.807Z",
+  "level": 2,
+  "school": "Divination",
+  "castingTime": "1 action",
+  "range": "Self",
+  "components": [
+    "V",
+    "S",
+    "M"
+  ],
+  "duration": "Concentration, up to 1 minute",
+  "description": "Used to tailor lies, impersonation, and social manipulation.",
+  "prepared": true
+}

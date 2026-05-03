@@ -1,0 +1,75 @@
+{
+  "id": "dnd5eapi-magic-items-potion-of-healing-greater",
+  "collection": "items",
+  "name": "Potion of Greater Healing",
+  "tags": [
+    "D&D 5e API",
+    "dnd-5e-api",
+    "SRD 2014",
+    "srd-2014",
+    "magic-items",
+    "equipment-categories/potion",
+    "Potion",
+    "potion",
+    "healing",
+    "consumable",
+    "rarity/uncommon",
+    "Uncommon"
+  ],
+  "source": "external",
+  "provider": "dnd5eapi",
+  "providerId": "potion-of-healing-greater",
+  "variantOf": "dnd5eapi-magic-items-potion-of-healing",
+  "addons": {
+    "mechanics": [
+      {
+        "label": "Type",
+        "value": "Potion",
+        "kind": "neutral"
+      },
+      {
+        "label": "Rarity",
+        "value": "Uncommon",
+        "kind": "positive"
+      },
+      {
+        "label": "Healing",
+        "value": "+4d4 + 4",
+        "kind": "positive",
+        "description": "Drink to regain hit points."
+      }
+    ],
+    "sourceDocument": {
+      "provider": "dnd5eapi",
+      "title": "D&D 5e SRD 2014",
+      "type": "magic items",
+      "detailUrl": "https://www.dnd5eapi.co/api/2014/magic-items/potion-of-healing-greater"
+    },
+    "equipment": {
+      "slot": "Potion",
+      "rarity": "Uncommon",
+      "category": "equipment-categories/potion"
+    },
+    "healing": {
+      "dice": "4d4 + 4"
+    },
+    "actions": [
+      {
+        "label": "Drink",
+        "consumeQuantity": true,
+        "effects": {
+          "heal": {
+            "dice": "4d4 + 4"
+          }
+        },
+        "description": "Consume the potion and regain hit points."
+      }
+    ]
+  },
+  "createdAt": "2026-05-03T07:16:27.422Z",
+  "updatedAt": "2026-05-03T09:37:05.1907384Z",
+  "type": "consumable",
+  "weight": null,
+  "attuned": false,
+  "description": "Potion, uncommon\n\nYou regain 4d4 + 4 hit points when you drink this potion. The potion's red liquid glimmers when agitated."
+}

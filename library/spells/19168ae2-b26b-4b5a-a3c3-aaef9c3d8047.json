@@ -1,0 +1,35 @@
+{
+  "id": "19168ae2-b26b-4b5a-a3c3-aaef9c3d8047",
+  "collection": "spells",
+  "name": "Power Word Cum",
+  "tags": [],
+  "source": "custom",
+  "provider": "",
+  "providerId": "",
+  "variantOf": "",
+  "addons": {
+    "mechanics": [],
+    "components": [
+      "V"
+    ],
+    "ritual": {
+      "enabled": false
+    },
+    "concentration": {
+      "enabled": false
+    }
+  },
+  "createdAt": "2026-05-03T04:32:59.965Z",
+  "updatedAt": "2026-05-03T04:32:59.965Z",
+  "level": 10,
+  "school": "Enchantment",
+  "castingTime": "1 action",
+  "range": "69",
+  "components": [
+    "V"
+  ],
+  "duration": "Instantaneous",
+  "description": "Makes them cum on command. The target of this spell is unable to do anything except instantly nut so hard they almost bluescreen. Induces prone effect.",
+  "prepared": false,
+  "access": {}
+}

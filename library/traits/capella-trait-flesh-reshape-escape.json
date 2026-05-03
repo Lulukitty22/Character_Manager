@@ -1,0 +1,27 @@
+{
+  "id": "capella-trait-flesh-reshape-escape",
+  "collection": "traits",
+  "name": "Flesh Reshape Escape",
+  "tags": [
+    "Capella",
+    "reaction",
+    "escape"
+  ],
+  "source": "custom",
+  "provider": "",
+  "providerId": "",
+  "variantOf": "",
+  "addons": {
+    "sourceDocument": {
+      "provider": "dnd5ewiki",
+      "title": "Player's Handbook",
+      "type": "Spell",
+      "detailUrl": "https://dnd-5e.fandom.com/wiki/Polymorph"
+    }
+  },
+  "type": "reaction",
+  "description": "When hit, grappled, restrained, knocked prone, paralyzed, forced into a shape, or targeted by a body-restricting effect, Capella may immediately use Flesh Polymorph.",
+  "active": true,
+  "createdAt": "2026-05-01T16:57:08.797Z",
+  "updatedAt": "2026-05-01T16:57:08.797Z"
+}
