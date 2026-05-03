@@ -2,7 +2,7 @@
   "id": "93b6bd4a-9f95-4788-a309-a75def5d3a7c",
   "meta": {
     "repoPath": "characters/capella-emerada-lugnica.json",
-    "lastUpdated": "2026-05-01T16:57:08.797Z"
+    "lastUpdated": "2026-05-03T04:32:17.906Z"
   },
   "identity": {
     "name": "Capella Emerada Lugnica",
@@ -46,8 +46,9 @@
       "libraryCollection": "spells",
       "librarySource": "custom",
       "libraryRef": "4c177263-68ac-419d-84d5-d71d1c18bbbf",
-      "overrides": {},
-      "prepared": true
+      "prepared": true,
+      "access": {},
+      "overrides": {}
     },
     {
       "id": "fceb8d95-826d-4e31-acb5-196c282f2f54",
@@ -55,8 +56,9 @@
       "libraryCollection": "spells",
       "librarySource": "custom",
       "libraryRef": "7b6931ed-1049-4d02-8590-78936898e3cc",
-      "overrides": {},
-      "prepared": true
+      "prepared": true,
+      "access": {},
+      "overrides": {}
     },
     {
       "id": "da949096-fa92-4d18-a204-4558e6c87e17",
@@ -64,7 +66,6 @@
       "libraryCollection": "spells",
       "librarySource": "custom",
       "libraryRef": "7e97d247-569e-4b1e-a1ae-309711acd5e5",
-      "overrides": {},
       "prepared": false,
       "access": {
         "label": "Boss Only",
@@ -78,7 +79,8 @@
             "description": "Higher-tier access than her tamed/default sheet should assume."
           }
         ]
-      }
+      },
+      "overrides": {}
     },
     {
       "id": "f6d3f787-b4cd-4eec-b200-a8ad648250f9",
@@ -86,8 +88,9 @@
       "libraryCollection": "spells",
       "librarySource": "custom",
       "libraryRef": "3aee59b4-649b-422b-9a06-1a6da700d624",
-      "overrides": {},
-      "prepared": false
+      "prepared": false,
+      "access": {},
+      "overrides": {}
     },
     {
       "id": "d813bcd5-3ac0-480a-82a1-6e8b25194fe9",
@@ -95,8 +98,9 @@
       "libraryCollection": "spells",
       "librarySource": "custom",
       "libraryRef": "d249f049-b5c0-4dc0-87d6-3b755dc761ce",
-      "overrides": {},
-      "prepared": true
+      "prepared": true,
+      "access": {},
+      "overrides": {}
     },
     {
       "id": "9d4b668a-34d6-49c5-bbe5-53b978637659",
@@ -104,8 +108,9 @@
       "libraryCollection": "spells",
       "librarySource": "custom",
       "libraryRef": "504aee8d-99e5-48fe-934c-bd74f3eaf223",
-      "overrides": {},
-      "prepared": true
+      "prepared": true,
+      "access": {},
+      "overrides": {}
     },
     {
       "id": "capella-ref-disguise-self",
@@ -113,8 +118,9 @@
       "libraryCollection": "spells",
       "librarySource": "custom",
       "libraryRef": "capella-spell-disguise-self",
-      "overrides": {},
-      "prepared": true
+      "prepared": true,
+      "access": {},
+      "overrides": {}
     },
     {
       "id": "capella-ref-alter-self",
@@ -122,8 +128,9 @@
       "libraryCollection": "spells",
       "librarySource": "custom",
       "libraryRef": "capella-spell-alter-self",
-      "overrides": {},
-      "prepared": true
+      "prepared": true,
+      "access": {},
+      "overrides": {}
     },
     {
       "id": "capella-ref-mirror-image",
@@ -131,8 +138,9 @@
       "libraryCollection": "spells",
       "librarySource": "custom",
       "libraryRef": "capella-spell-mirror-image",
-      "overrides": {},
-      "prepared": true
+      "prepared": true,
+      "access": {},
+      "overrides": {}
     },
     {
       "id": "capella-ref-fear",
@@ -140,8 +148,9 @@
       "libraryCollection": "spells",
       "librarySource": "custom",
       "libraryRef": "capella-spell-fear",
-      "overrides": {},
-      "prepared": true
+      "prepared": true,
+      "access": {},
+      "overrides": {}
     },
     {
       "id": "capella-ref-counterspell",
@@ -149,8 +158,9 @@
       "libraryCollection": "spells",
       "librarySource": "custom",
       "libraryRef": "capella-spell-counterspell",
-      "overrides": {},
-      "prepared": true
+      "prepared": true,
+      "access": {},
+      "overrides": {}
     },
     {
       "id": "capella-ref-dimension-door",
@@ -158,8 +168,9 @@
       "libraryCollection": "spells",
       "librarySource": "custom",
       "libraryRef": "capella-spell-dimension-door",
-      "overrides": {},
-      "prepared": true
+      "prepared": true,
+      "access": {},
+      "overrides": {}
     },
     {
       "id": "capella-ref-hold-monster",
@@ -167,8 +178,9 @@
       "libraryCollection": "spells",
       "librarySource": "custom",
       "libraryRef": "capella-spell-hold-monster",
-      "overrides": {},
-      "prepared": true
+      "prepared": true,
+      "access": {},
+      "overrides": {}
     },
     {
       "id": "capella-ref-modify-memory",
@@ -176,8 +188,9 @@
       "libraryCollection": "spells",
       "librarySource": "custom",
       "libraryRef": "capella-spell-modify-memory",
-      "overrides": {},
-      "prepared": true
+      "prepared": true,
+      "access": {},
+      "overrides": {}
     },
     {
       "id": "capella-ref-mislead",
@@ -185,8 +198,9 @@
       "libraryCollection": "spells",
       "librarySource": "custom",
       "libraryRef": "capella-spell-mislead",
-      "overrides": {},
-      "prepared": false
+      "prepared": false,
+      "access": {},
+      "overrides": {}
     },
     {
       "id": "capella-ref-seeming",
@@ -194,8 +208,9 @@
       "libraryCollection": "spells",
       "librarySource": "custom",
       "libraryRef": "capella-spell-seeming",
-      "overrides": {},
-      "prepared": false
+      "prepared": false,
+      "access": {},
+      "overrides": {}
     },
     {
       "id": "capella-ref-geas",
@@ -203,8 +218,9 @@
       "libraryCollection": "spells",
       "librarySource": "custom",
       "libraryRef": "capella-spell-geas",
-      "overrides": {},
-      "prepared": false
+      "prepared": false,
+      "access": {},
+      "overrides": {}
     },
     {
       "id": "capella-ref-mass-suggestion",
@@ -212,8 +228,9 @@
       "libraryCollection": "spells",
       "librarySource": "custom",
       "libraryRef": "capella-spell-mass-suggestion",
-      "overrides": {},
-      "prepared": true
+      "prepared": true,
+      "access": {},
+      "overrides": {}
     },
     {
       "id": "capella-ref-power-word-stun",
@@ -221,8 +238,18 @@
       "libraryCollection": "spells",
       "librarySource": "custom",
       "libraryRef": "capella-spell-power-word-stun",
+      "prepared": true,
+      "access": {},
+      "overrides": {}
+    },
+    {
+      "id": "2cd11047-d2af-4589-8685-d76349bb5db9",
+      "source": "library",
+      "libraryCollection": "spells",
+      "librarySource": "custom",
+      "libraryRef": "19168ae2-b26b-4b5a-a3c3-aaef9c3d8047",
       "overrides": {},
-      "prepared": true
+      "prepared": false
     }
   ],
   "spellSlots": {
@@ -478,10 +505,10 @@
       "libraryCollection": "resources",
       "librarySource": "custom",
       "libraryRef": "capella-resource-polymorph-traits",
-      "overrides": {},
       "current": 2,
       "max": 3,
-      "log": []
+      "log": [],
+      "overrides": {}
     },
     {
       "id": "capella-resource-state-legendary-action",
@@ -489,10 +516,10 @@
       "libraryCollection": "resources",
       "librarySource": "custom",
       "libraryRef": "capella-resource-legendary-action",
-      "overrides": {},
       "current": 1,
       "max": 1,
-      "log": []
+      "log": [],
+      "overrides": {}
     }
   ],
   "dnd": {
@@ -506,22 +533,22 @@
     "spellcastingAbility": "cha",
     "stats": {
       "str": {
-        "score": 8
+        "score": 6
       },
       "dex": {
-        "score": 13
+        "score": 5
       },
       "con": {
-        "score": 12
+        "score": 8
       },
       "int": {
-        "score": 15
+        "score": 1
       },
       "wis": {
         "score": 9
       },
       "cha": {
-        "score": 20
+        "score": 10
       }
     },
     "savingThrowProficiencies": [
@@ -600,7 +627,7 @@
       "fly": 40,
       "swim": 30,
       "climb": 30,
-      "burrow": 20
+      "burrow": 0
     },
     "initiative": 1,
     "feats": [
