@@ -89,7 +89,17 @@ const ViewCharacterBoss = (() => {
         `${roll.dice}${roll.bonus ? `+${roll.bonus}` : ""} ${esc(roll.type)}`
       ).join(" + ");
       const avgDmg = attack.avgDamage > 0 ? `(avg ${attack.avgDamage})` : "";
-      const formula = toHit.formula ? `<div class="sheet-attack-formula text-sm text-muted">${esc(toHit.formula)}</div>` : "";
+      const formula = renderAttackBreakdown(toHit.breakdown, isActive, boss);
+      const mechanics = renderMechanicChips([
+        attack.reach ? { label: "Reach", value: attack.reach, kind: "range" } : null,
+        dmgParts ? { label: "Damage", value: `${dmgParts} ${avgDmg}`.trim(), kind: "damage" } : null,
+        attack.onHit ? {
+          label: "On Hit",
+          kind: "action",
+          description: attack.onHit,
+        } : null,
+        ...(attack.addons?.mechanics || []),
+      ].filter(Boolean));
 
       return `
         <div class="sheet-attack-row">
@@ -104,6 +114,7 @@ const ViewCharacterBoss = (() => {
             ${dmgParts ? `<span><strong>Damage:</strong> ${dmgParts} ${avgDmg}</span>` : ""}
           </div>
           ${formula}
+          ${mechanics}
           ${attack.onHit ? `<div class="sheet-attack-onhit text-sm text-muted">On hit: ${esc(attack.onHit)}</div>` : ""}
           ${attack.description ? `<div class="sheet-attack-desc text-sm">${esc(attack.description)}</div>` : ""}
         </div>`;
@@ -226,7 +237,7 @@ const ViewCharacterBoss = (() => {
         tamed: Number(attack.tamedToHitBonus ?? attack.toHitBonus ?? 0),
         boss: Number(attack.toHitBonus ?? 0),
         advantage: Boolean(attack.advantage),
-        formula: attack.formula || "",
+        breakdown: null,
       };
     }
 
@@ -235,17 +246,87 @@ const ViewCharacterBoss = (() => {
     const bonusTotal = (formula.bonuses || []).reduce((sum, bonus) => sum + Number(bonus.value || 0), 0);
     const baseScore = Number(dnd.stats?.[ability]?.score ?? 10);
     const bossScore = baseScore + Number(boss?.bossStatBonuses?.[ability] ?? 0);
+    const abilityLabel = Schema.ABILITY_NAMES[ability] || ability;
     const tamed = Schema.getAbilityModifier(baseScore) + prof + bonusTotal;
     const bossValue = Schema.getAbilityModifier(bossScore) + prof + bonusTotal;
-    const bonusText = (formula.bonuses || []).map(bonus => `${bonus.label || "bonus"} ${Schema.formatModifier(Number(bonus.value || 0))}`).join(", ");
-    const formulaText = `${Schema.ABILITY_ABBREVIATIONS[ability]} + proficiency${bonusText ? ` + ${bonusText}` : ""}`;
+    const tamedBreakdown = buildAttackBreakdown({
+      abilityLabel,
+      abilityValue: Schema.getAbilityModifier(baseScore),
+      proficiencyValue: prof,
+      bonuses: formula.bonuses || [],
+      bonusPrefix: "",
+      score: baseScore,
+    });
+    const bossBreakdown = buildAttackBreakdown({
+      abilityLabel,
+      abilityValue: Schema.getAbilityModifier(bossScore),
+      proficiencyValue: prof,
+      bonuses: formula.bonuses || [],
+      bonusPrefix: "",
+      score: bossScore,
+    });
 
     return {
       tamed,
       boss: bossValue,
       advantage: Boolean(attack.advantage || formula.advantageWhenBoss),
-      formula: formulaText,
+      breakdown: {
+        tamed: tamedBreakdown,
+        boss: bossBreakdown,
+      },
     };
+  }
+
+  function renderAttackBreakdown(breakdown, bossActive, boss) {
+    if (!breakdown) return "";
+
+    const tamedChips = Array.isArray(breakdown) ? breakdown : breakdown.tamed || breakdown.default || [];
+    const bossChips = Array.isArray(breakdown) ? breakdown : breakdown.boss || [];
+
+    if (!boss || !bossChips.length || sameChipSet(tamedChips, bossChips)) {
+      return `<div class="sheet-attack-formula text-sm text-muted">${renderMechanicChips(tamedChips)}</div>`;
+    }
+
+    return `
+      <div class="sheet-attack-formula text-sm text-muted">
+        <div class="sheet-tamed-only" style="${stateStyle(!bossActive)}">${renderMechanicChips(tamedChips)}</div>
+        <div class="sheet-boss-only" style="${stateStyle(bossActive)}">${renderMechanicChips(bossChips)}</div>
+      </div>
+    `;
+  }
+
+  function buildAttackBreakdown(options) {
+    const chips = [];
+
+    if (options.abilityLabel) {
+      chips.push({
+        label: options.abilityLabel,
+        value: Schema.formatModifier(Number(options.abilityValue || 0)),
+        kind: chipKindForValue(options.abilityValue),
+        description: `${options.abilityLabel} modifier from score ${options.score}.`,
+      });
+    }
+
+    if (Number(options.proficiencyValue || 0)) {
+      chips.push({
+        label: "Proficiency",
+        value: Schema.formatModifier(Number(options.proficiencyValue || 0)),
+        kind: chipKindForValue(options.proficiencyValue),
+        description: "Proficiency bonus.",
+      });
+    }
+
+    (options.bonuses || []).forEach(bonus => {
+      const value = Number(bonus.value || 0);
+      chips.push({
+        label: bonus.label || "Bonus",
+        value: Schema.formatModifier(value),
+        kind: chipKindForValue(value),
+        description: bonus.description || `${bonus.label || "Bonus"} bonus.`,
+      });
+    });
+
+    return chips;
   }
 
   function parseBadgeList(value) {
@@ -264,6 +345,29 @@ const ViewCharacterBoss = (() => {
       };
     });
     return renderMechanicChips(chips, { kind });
+  }
+
+  function sameChipSet(left, right) {
+    if (left.length !== right.length) return false;
+    for (let i = 0; i < left.length; i += 1) {
+      const a = left[i] || {};
+      const b = right[i] || {};
+      if (a.kind !== b.kind || a.label !== b.label || String(a.value ?? "") !== String(b.value ?? "")) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  function chipKindForValue(value) {
+    const number = Number(value || 0);
+    if (number < 0) return "negative";
+    if (number > 0) return "positive";
+    return "neutral";
+  }
+
+  function stateStyle(isVisible) {
+    return isVisible ? "" : "display:none";
   }
 
   return {

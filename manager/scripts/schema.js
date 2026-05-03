@@ -248,6 +248,21 @@ const Schema = (() => {
       };
     }
 
+    if (collection === "races") {
+      return {
+        ...base,
+        description: "",
+        speed: { walk: 30 },
+        addons: {
+          mechanics: [],
+          stats: {},
+          hp: { flatBonus: 0, perLevelBonus: 0 },
+          proficiencies: [],
+          traits: [],
+        },
+      };
+    }
+
     return base;
   }
 

@@ -407,6 +407,7 @@ const CharacterEditor = (() => {
       { id: "base",      icon: "🧾", label: "Identity",   buildFn: (char) => EditorBase.buildTab(char)      },
       { id: "dnd",       icon: "⚔️",  label: "D&D Stats",  buildFn: (char) => EditorDnd.buildTab(char)       },
       { id: "boss",      icon: "💀",  label: "Boss",       buildFn: (char) => EditorBoss.buildTab(char)      },
+      { id: "gameplay",  icon: "HP", label: "Gameplay",   buildFn: (char) => EditorGameplay.buildTab(char)  },
       { id: "spells",    icon: "✨",  label: "Spells",     buildFn: (char) => EditorSpells.buildTab(char)    },
       { id: "inventory", icon: "🎒",  label: "Inventory",  buildFn: (char) => EditorInventory.buildTab(char) },
       { id: "resources", icon: "🔮",  label: "Resources",  buildFn: (char) => EditorResources.buildTab(char) },
@@ -423,6 +424,7 @@ const CharacterEditor = (() => {
     EditorBase.readTab(character);
     EditorDnd.readTab(character);
     EditorBoss.readTab(character);
+    EditorGameplay.readTab(character);
     EditorSpells.readTab(character);
     EditorInventory.readTab(character);
     EditorResources.readTab(character);

@@ -2,7 +2,7 @@
  * editor-spells.js
  * Shared spell editor — available to ALL character types.
  * Each spell is an individual object in the character's spells[] array.
- * Also manages spell slots for D&D characters.
+ * Spell slots live in editor-gameplay.js.
  *
  * Exports: EditorSpells.buildTab(character) → HTMLElement
  *          EditorSpells.readTab(character)  → mutates character in-place
@@ -18,15 +18,11 @@ const EditorSpells = (() => {
     panel.id        = "tab-panel-spells";
 
     const spells     = (character.spells || []).map(spell => typeof Library !== "undefined" ? Library.resolveRef(spell) : spell);
-    const spellSlots = character.spellSlots || {};
-    const isDnd      = character.dnd != null || character.boss != null;
 
     panel.innerHTML = `
       <div style="padding: var(--space-6) 0; display: flex; flex-direction: column; gap: var(--space-8);">
 
         <!-- ── Spell Slots (D&D only) ───────────────────────────── -->
-        ${isDnd ? renderSpellSlotEditor(spellSlots, character.dnd?.spellcastingAbility || "") : ""}
-
         <!-- ── Spell List ────────────────────────────────────────── -->
         <section>
           <div class="section-header">
@@ -413,28 +409,6 @@ const EditorSpells = (() => {
   // ─── Read Tab ────────────────────────────────────────────────────────────────
 
   function readTab(character) {
-    // Read spell slots
-    if (character.dnd || character.boss) {
-      const spellSlots = {};
-      document.querySelectorAll(".spell-slot-max").forEach(input => {
-        const level   = parseInt(input.dataset.level, 10);
-        const max     = parseInt(input.value, 10) || 0;
-        const current = parseInt(
-          document.querySelector(`.spell-slot-current[data-level="${level}"]`)?.value,
-          10
-        ) || 0;
-        if (max > 0 || current > 0) {
-          spellSlots[level] = { max, current };
-        }
-      });
-      character.spellSlots = spellSlots;
-
-      const abilityEl = document.getElementById("spellcasting-ability");
-      if (abilityEl && character.dnd) {
-        character.dnd.spellcastingAbility = abilityEl.value;
-      }
-    }
-
     // Read spells
     const spellRows = document.querySelectorAll("#spells-list .spell-row");
     character.spells = Array.from(spellRows).map(rowEl => {

@@ -65,8 +65,92 @@
       "createdAt": "2026-05-03T04:22:03.660Z",
       "updatedAt": "2026-05-03T04:22:03.660Z",
       "description": "",
-      "hitDie": "",
-      "primaryAbility": ""
+      "hitDie": "d10",
+      "primaryAbility": "Charisma"
+    },
+    {
+      "id": "wizard",
+      "collection": "classes",
+      "name": "Wizard",
+      "tags": [
+        "D&D 5e",
+        "Full Caster"
+      ],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {
+        "mechanics": [],
+        "stats": {},
+        "speed": {},
+        "proficiencies": [],
+        "feats": [],
+        "spellcasting": {
+          "progression": "full"
+        }
+      },
+      "createdAt": "2026-05-03T00:00:00.000Z",
+      "updatedAt": "2026-05-03T00:00:00.000Z",
+      "description": "Prepared arcane full caster.",
+      "hitDie": "d6",
+      "primaryAbility": "Intelligence"
+    },
+    {
+      "id": "sorcerer",
+      "collection": "classes",
+      "name": "Sorcerer",
+      "tags": [
+        "D&D 5e",
+        "Full Caster"
+      ],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {
+        "mechanics": [],
+        "stats": {},
+        "speed": {},
+        "proficiencies": [],
+        "feats": [],
+        "spellcasting": {
+          "progression": "full"
+        }
+      },
+      "createdAt": "2026-05-03T00:00:00.000Z",
+      "updatedAt": "2026-05-03T00:00:00.000Z",
+      "description": "Innate arcane full caster.",
+      "hitDie": "d6",
+      "primaryAbility": "Charisma"
+    },
+    {
+      "id": "cleric",
+      "collection": "classes",
+      "name": "Cleric",
+      "tags": [
+        "D&D 5e",
+        "Full Caster"
+      ],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {
+        "mechanics": [],
+        "stats": {},
+        "speed": {},
+        "proficiencies": [],
+        "feats": [],
+        "spellcasting": {
+          "progression": "full"
+        }
+      },
+      "createdAt": "2026-05-03T00:00:00.000Z",
+      "updatedAt": "2026-05-03T00:00:00.000Z",
+      "description": "Divine prepared full caster.",
+      "hitDie": "d8",
+      "primaryAbility": "Wisdom"
     }
   ]
 }

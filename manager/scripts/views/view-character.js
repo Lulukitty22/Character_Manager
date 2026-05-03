@@ -27,7 +27,7 @@ const ViewCharacter = (() => {
         ${ViewCharacterHeader.render(character)}
         ${boss ? ViewCharacterBoss.renderToggleBar(boss) : ""}
         ${ViewCharacterIdentity.render(identity, appearance, character)}
-        ${dnd ? ViewCharacterDnd.renderCombatBlock(dnd, boss) : ""}
+        ${dnd ? ViewCharacterDnd.renderCombatBlock(dnd, boss, character) : ""}
         ${dnd ? ViewCharacterDnd.renderAbilityScores(dnd, boss) : ""}
         ${dnd ? ViewCharacterDnd.renderSavingThrows(dnd, boss) : ""}
         ${dnd ? ViewCharacterDnd.renderSkills(dnd, boss) : ""}

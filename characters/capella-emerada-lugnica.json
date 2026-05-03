@@ -1081,6 +1081,36 @@
             "tamed": "+15",
             "boss": "+15",
             "floor": "10",
+            "breakdown": {
+              "tamed": [
+              {
+                "label": "Charisma",
+                "value": "+5",
+                "kind": "positive",
+                "description": "Capella's Charisma modifier."
+              },
+              {
+                "label": "Expert Deceiver Trait",
+                "value": "+10",
+                "kind": "positive",
+                "description": "Prepared deception package bonus."
+              }
+            ],
+              "boss": [
+              {
+                "label": "Charisma",
+                "value": "+5",
+                "kind": "positive",
+                "description": "Capella's Charisma modifier."
+              },
+              {
+                "label": "Expert Deceiver Trait",
+                "value": "+10",
+                "kind": "positive",
+                "description": "Prepared deception package bonus."
+              }
+            ]
+            },
             "note": "Cannot apply to members of the player party. Must spend a day or long rest studying the target first. Uses CHA +5 and Expert Deceiver +10; Silver Tongue floors the d20 at 10.",
             "mechanics": [
               {
@@ -1101,14 +1131,78 @@
             "label": "Improv Deception / Impersonation / Persuasion",
             "tamed": "+5",
             "boss": "+10",
-            "bossAdvantage": true,
+            "breakdown": {
+              "tamed": [
+                {
+                  "label": "Charisma",
+                  "value": "+5",
+                  "kind": "positive",
+                  "description": "Tamed social checks use Capella's Charisma modifier."
+                }
+              ],
+              "boss": [
+                {
+                  "label": "Charisma",
+                  "value": "+5",
+                  "kind": "positive",
+                  "description": "Capella's Charisma modifier."
+                },
+                {
+                  "label": "Boss Presence",
+                  "value": "+5",
+                  "kind": "positive",
+                  "description": "Boss Presence trait bonus for improv social checks."
+                }
+              ]
+            },
             "note": "Player-facing social checks use Charisma only. No Expert Deceiver and no Silver Tongue versus player Insight checks."
           },
           {
             "label": "Insight / Perception / Stealth",
             "tamed": "+4 to +6",
             "boss": "+9",
-            "bossAdvantage": true,
+            "breakdown": {
+              "tamed": [
+                {
+                  "label": "Insight",
+                  "value": "+4",
+                  "kind": "neutral",
+                  "description": "Wisdom -1 plus proficiency +5."
+                },
+                {
+                  "label": "Perception",
+                  "value": "+4",
+                  "kind": "neutral",
+                  "description": "Wisdom -1 plus proficiency +5."
+                },
+                {
+                  "label": "Stealth",
+                  "value": "+6",
+                  "kind": "neutral",
+                  "description": "Dexterity +1 plus proficiency +5."
+                }
+              ],
+              "boss": [
+                {
+                  "label": "Insight",
+                  "value": "+9",
+                  "kind": "positive",
+                  "description": "Wisdom +4 plus proficiency +5."
+                },
+                {
+                  "label": "Perception",
+                  "value": "+9",
+                  "kind": "positive",
+                  "description": "Wisdom +4 plus proficiency +5."
+                },
+                {
+                  "label": "Stealth",
+                  "value": "+9",
+                  "kind": "positive",
+                  "description": "Dexterity +4 plus proficiency +5."
+                }
+              ]
+            },
             "note": "Use the relevant base ability in tamed mode; Boss Presence pushes the combat-useful read/stealth checks to +9."
           }
         ],

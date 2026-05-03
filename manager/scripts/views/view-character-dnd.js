@@ -13,7 +13,7 @@ const ViewCharacterDnd = (() => {
   const renderMechanicChips = ViewCharacterUtils.renderMechanicChips;
   const ABILITY_ORDER = ["str", "dex", "con", "int", "wis", "cha"];
 
-  function renderCombatBlock(dnd, boss) {
+  function renderCombatBlock(dnd, boss, character = null) {
     const bossActive = boss?.bossActive ?? false;
     const hp = getActiveHp(dnd, boss);
     const percent = hp.max > 0 ? Math.round((hp.current / hp.max) * 100) : 0;
@@ -30,6 +30,15 @@ const ViewCharacterDnd = (() => {
     const stateOverview = boss ? renderStateOverview(dnd, boss, acPair, initiativePair, spellcasting) : "";
     const hpBreakdown = boss ? renderHpBreakdown(boss) : "";
     const rollCalculator = boss ? renderRollCalculator(boss, spellcasting) : "";
+    const hpCalc = character && typeof DndCalculations !== "undefined"
+      ? DndCalculations.calculateHitPoints(character)
+      : null;
+    const hpCalcChips = hpCalc?.parts?.length
+      ? renderMechanicChips([
+        { label: "Calculated HP", value: hpCalc.total, kind: "positive", description: "Class hit dice plus Constitution and race HP bonuses." },
+        ...hpCalc.parts,
+      ])
+      : "";
 
     return `
       <section class="sheet-section">
@@ -51,6 +60,7 @@ const ViewCharacterDnd = (() => {
             <span>Boss HP ${boss.bossHp?.max ?? 0}</span>
             <span>Tamed HP ${boss.defaultHp?.max ?? 0}</span>
           </div>` : ""}
+          ${hpCalcChips ? `<div class="sheet-hp-calculated">${hpCalcChips}</div>` : ""}
         </div>
 
         ${stateOverview}
@@ -294,13 +304,13 @@ const ViewCharacterDnd = (() => {
         label: "Spell Save DC",
         tamed: spellcasting.tamedDc,
         boss: spellcasting.bossDc,
-        note: spellcasting.dcNote,
+        breakdown: spellcasting.dcBreakdown,
       },
       {
         label: "Spell/Flesh Attack",
         tamed: formatSigned(spellcasting.tamedAttack),
         boss: formatSigned(spellcasting.bossAttack),
-        note: spellcasting.attackNote,
+        breakdown: spellcasting.attackBreakdown,
       },
     ] : [];
 
@@ -320,11 +330,13 @@ const ViewCharacterDnd = (() => {
         } : null,
         ...(row.mechanics || []),
       ].filter(Boolean);
+      const breakdown = renderRollBreakdown(row, boss, bossActive);
 
       return `
         <div class="sheet-roll-row">
-          <div>
+          <div class="sheet-roll-content">
             <div class="sheet-roll-label">${esc(row.label || "")}</div>
+            ${breakdown}
             ${row.note ? `<div class="sheet-roll-note text-muted">${esc(row.note)}</div>` : ""}
             ${renderMechanicChips(mechanics)}
           </div>
@@ -339,6 +351,33 @@ const ViewCharacterDnd = (() => {
       <div class="sheet-roll-calculator">
         <div class="sheet-subsection-title">Roll Calculator</div>
         ${rows}
+      </div>
+    `;
+  }
+
+  function renderRollBreakdown(row, boss, bossActive) {
+    const breakdown = row.breakdown || null;
+    if (!breakdown) return "";
+
+    const tamedChips = Array.isArray(breakdown) ? breakdown : breakdown.tamed || breakdown.default || [];
+    const bossChips = Array.isArray(breakdown) ? breakdown : breakdown.boss || [];
+
+    if (!boss || !bossChips.length) {
+      return renderMechanicChips(tamedChips);
+    }
+
+    if (sameChipSet(tamedChips, bossChips)) {
+      return renderMechanicChips(tamedChips);
+    }
+
+    return `
+      <div class="sheet-roll-breakdown">
+        <div class="sheet-tamed-only" style="${stateStyle(!bossActive, true)}">
+          ${renderMechanicChips(tamedChips)}
+        </div>
+        <div class="sheet-boss-only" style="${stateStyle(bossActive, true)}">
+          ${renderMechanicChips(bossChips)}
+        </div>
       </div>
     `;
   }
@@ -449,6 +488,55 @@ const ViewCharacterDnd = (() => {
     const bossScore = baseScore + getBossBonus(boss, ability);
     const baseMod = Schema.getAbilityModifier(baseScore);
     const bossMod = Schema.getAbilityModifier(bossScore);
+    const abilityName = Schema.ABILITY_NAMES[ability] || ability;
+    const abilityAbbr = Schema.ABILITY_ABBREVIATIONS[ability] || ability.toUpperCase();
+
+    const tamedDcBreakdown = buildSpellcastingBreakdown({
+      baseLabel: "Base",
+      baseValue: 8,
+      abilityLabel: abilityName,
+      abilityValue: baseMod,
+      profBonus,
+      bonusLabel,
+      bonusValue: dcBonus,
+      bonusDescription: `${bonusLabel} bonus from the spellcasting package.`,
+      baseDescription: "Standard spell save DC base.",
+      abilityDescription: `${abilityName} modifier from score ${baseScore}.`,
+      profDescription: "Proficiency bonus.",
+    });
+    const bossDcBreakdown = buildSpellcastingBreakdown({
+      baseLabel: "Base",
+      baseValue: 8,
+      abilityLabel: abilityName,
+      abilityValue: bossMod,
+      profBonus,
+      bonusLabel,
+      bonusValue: dcBonus,
+      bonusDescription: `${bonusLabel} bonus from the spellcasting package.`,
+      baseDescription: "Standard spell save DC base.",
+      abilityDescription: `${abilityName} modifier from score ${bossScore}.`,
+      profDescription: "Proficiency bonus.",
+    });
+    const tamedAttackBreakdown = buildSpellcastingBreakdown({
+      abilityLabel: abilityName,
+      abilityValue: baseMod,
+      profBonus,
+      bonusLabel,
+      bonusValue: attackBonus,
+      bonusDescription: `${bonusLabel} bonus from the spellcasting package.`,
+      abilityDescription: `${abilityName} modifier from score ${baseScore}.`,
+      profDescription: "Proficiency bonus.",
+    });
+    const bossAttackBreakdown = buildSpellcastingBreakdown({
+      abilityLabel: abilityName,
+      abilityValue: bossMod,
+      profBonus,
+      bonusLabel,
+      bonusValue: attackBonus,
+      bonusDescription: `${bonusLabel} bonus from the spellcasting package.`,
+      abilityDescription: `${abilityName} modifier from score ${bossScore}.`,
+      profDescription: "Proficiency bonus.",
+    });
 
     return {
       ability,
@@ -456,9 +544,78 @@ const ViewCharacterDnd = (() => {
       bossDc: 8 + profBonus + bossMod + dcBonus,
       tamedAttack: profBonus + baseMod + attackBonus,
       bossAttack: profBonus + bossMod + attackBonus,
-      dcNote: `8 + ${Schema.ABILITY_ABBREVIATIONS[ability]} + proficiency${dcBonus ? ` + ${bonusLabel} ${formatSigned(dcBonus)}` : ""}`,
-      attackNote: `${Schema.ABILITY_ABBREVIATIONS[ability]} + proficiency${attackBonus ? ` + ${bonusLabel} ${formatSigned(attackBonus)}` : ""}`,
+      dcBreakdown: {
+        tamed: tamedDcBreakdown,
+        boss: bossDcBreakdown,
+      },
+      attackBreakdown: {
+        tamed: tamedAttackBreakdown,
+        boss: bossAttackBreakdown,
+      },
+      dcNote: `8 + ${abilityAbbr} + proficiency${dcBonus ? ` + ${bonusLabel} ${formatSigned(dcBonus)}` : ""}`,
+      attackNote: `${abilityAbbr} + proficiency${attackBonus ? ` + ${bonusLabel} ${formatSigned(attackBonus)}` : ""}`,
     };
+  }
+
+  function buildSpellcastingBreakdown(options) {
+    const chips = [];
+
+    if (options.baseLabel) {
+      chips.push({
+        label: options.baseLabel,
+        value: options.baseValue,
+        kind: "neutral",
+        description: options.baseDescription || "",
+      });
+    }
+
+    if (options.abilityLabel) {
+      chips.push({
+        label: options.abilityLabel,
+        value: formatSigned(options.abilityValue),
+        kind: chipKindForValue(options.abilityValue),
+        description: options.abilityDescription || "",
+      });
+    }
+
+    if (options.profBonus) {
+      chips.push({
+        label: "Proficiency",
+        value: formatSigned(options.profBonus),
+        kind: "positive",
+        description: options.profDescription || "Proficiency bonus.",
+      });
+    }
+
+    if (options.bonusValue) {
+      chips.push({
+        label: options.bonusLabel || "Bonus",
+        value: formatSigned(options.bonusValue),
+        kind: chipKindForValue(options.bonusValue),
+        description: options.bonusDescription || "",
+      });
+    }
+
+    return chips;
+  }
+
+  function sameChipSet(left, right) {
+    if (left.length !== right.length) return false;
+    for (let i = 0; i < left.length; i += 1) {
+      const a = left[i] || {};
+      const b = right[i] || {};
+      if (a.kind !== b.kind || a.label !== b.label || String(a.value ?? "") !== String(b.value ?? "")) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  function chipKindForValue(value) {
+    const number = Number(value || 0);
+    if (number < 0) return "negative";
+    if (number > 0) return "positive";
+    return "neutral";
   }
 
   function getBaseScore(stats, ability) {

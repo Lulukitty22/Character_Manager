@@ -225,6 +225,10 @@
   margin-left:    0.5rem;
 }
 
+.sheet-hp-calculated {
+  margin-top: 0.5rem;
+}
+
 /* ─── Proficiencies & Skills ─────────────────────────────────────────────────── */
 
 .sheet-skill-list {
@@ -1104,6 +1108,7 @@ details.sheet-mechanic-chip {
 .sheet-roll-row {
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
   gap: 1rem;
   padding: 0.55rem 0;
   border-top: 1px solid rgba(180, 160, 220, 0.08);
@@ -1111,6 +1116,11 @@ details.sheet-mechanic-chip {
 
 .sheet-roll-row:first-of-type {
   border-top: 0;
+}
+
+.sheet-roll-content {
+  flex: 1;
+  min-width: 0;
 }
 
 .sheet-roll-label {

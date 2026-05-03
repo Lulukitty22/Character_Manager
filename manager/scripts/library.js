@@ -1,7 +1,7 @@
 /**
  * library.js
  * Shared repo-backed records for spells, items, resources, tags, feats,
- * traits, and classes. Character files store lightweight references; this
+ * traits, classes, and races. Character files store lightweight references; this
  * module resolves those references for editing, preview, and export.
  */
 
@@ -16,6 +16,7 @@ const Library = (() => {
     feats:     { file: "feats-custom.json",     label: "Feats" },
     traits:    { file: "traits-custom.json",    label: "Traits" },
     classes:   { file: "classes-custom.json",   label: "Classes" },
+    races:     { file: "races-custom.json",     label: "Races" },
   };
 
   const DND5E_ENDPOINTS = [
@@ -26,6 +27,7 @@ const Library = (() => {
     "features",
     "traits",
     "classes",
+    "races",
     "subclasses",
     "proficiencies",
     "conditions",
@@ -200,6 +202,7 @@ const Library = (() => {
       (character.dnd.multiclass || []).forEach(entry => syncNameRecord(entry.class, "classes", customChanged));
     }
 
+    syncNameRecord(character.identity?.race, "races", customChanged);
     (character.identity?.tags || []).forEach(tag => syncNameRecord(tag, "tags", customChanged));
     collectNestedTags(character).forEach(tag => syncNameRecord(tag, "tags", customChanged));
 
@@ -514,6 +517,12 @@ const Library = (() => {
       record.primaryAbility = (detail.proficiency_choices || []).map(choice => choice.desc).filter(Boolean).join("; ");
     }
 
+    if (result.collection === "races") {
+      record.speed = { walk: detail.speed || 30 };
+      record.addons.stats = normalizeAbilityBonuses(detail.ability_bonuses || []);
+      record.addons.traits = (detail.traits || []).map(trait => trait.name || trait.index).filter(Boolean);
+    }
+
     return record;
   }
 
@@ -600,7 +609,7 @@ const Library = (() => {
       }
     }
 
-    if (["traits", "feats", "classes"].includes(result.collection)) {
+    if (["traits", "feats", "classes", "races"].includes(result.collection)) {
       if (result.typeLabel) mechanics.push({ label: "Type", value: result.typeLabel, kind: "neutral" });
       if (result.sourceLabel) mechanics.push({ label: "Source", value: result.sourceLabel, kind: "neutral" });
     }
@@ -661,6 +670,7 @@ const Library = (() => {
     if (value.includes("item") || value.includes("equipment") || value.includes("weapon") || value.includes("armor")) return "items";
     if (value.includes("feat")) return "feats";
     if (value.includes("class") || value.includes("subclass")) return "classes";
+    if (value.includes("race") || value.includes("species") || value.includes("ancestr")) return "races";
     if (value.includes("trait") || value.includes("feature") || value.includes("condition")) return "traits";
     return "traits";
   }
@@ -670,6 +680,7 @@ const Library = (() => {
     if (["equipment", "magic-items"].includes(endpoint)) return "items";
     if (endpoint === "feats") return "feats";
     if (["classes", "subclasses"].includes(endpoint)) return "classes";
+    if (endpoint === "races") return "races";
     if (["traits", "features", "conditions", "proficiencies"].includes(endpoint)) return "traits";
     return "traits";
   }
@@ -683,6 +694,7 @@ const Library = (() => {
       feats: "Feat",
       traits: "Trait",
       classes: "Class",
+      races: "Race",
     };
     return labels[collection] || collection;
   }
@@ -700,6 +712,21 @@ const Library = (() => {
     if (Array.isArray(value)) return value;
     if (value == null || value === "") return [];
     return [value];
+  }
+
+  function normalizeAbilityBonuses(bonuses = []) {
+    return bonuses.reduce((stats, bonus) => {
+      const ability = String(bonus.ability_score?.index || bonus.ability_score?.name || "").toLowerCase().slice(0, 3);
+      const key = ability === "con" ? "con"
+        : ability === "dex" ? "dex"
+        : ability === "str" ? "str"
+        : ability === "int" ? "int"
+        : ability === "wis" ? "wis"
+        : ability === "cha" ? "cha"
+        : "";
+      if (key) stats[key] = Number(bonus.bonus || 0);
+      return stats;
+    }, {});
   }
 
   function comparableName(name) {

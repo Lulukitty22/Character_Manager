@@ -5,7 +5,7 @@
 
 const ViewLibrary = (() => {
 
-  const EDITABLE_COLLECTIONS = ["spells", "items", "resources", "tags", "feats", "traits", "classes"];
+  const EDITABLE_COLLECTIONS = ["spells", "items", "resources", "tags", "feats", "traits", "classes", "races"];
 
   async function render(container) {
     container.innerHTML = `
@@ -45,7 +45,7 @@ const ViewLibrary = (() => {
         <div class="list-header flex-between">
           <div>
             <h2 class="list-title">Shared Library</h2>
-            <p class="text-muted text-sm">Reusable records for spells, items, resources, tags, feats, traits, and classes.</p>
+            <p class="text-muted text-sm">Reusable records for spells, items, resources, tags, feats, traits, classes, and races.</p>
           </div>
           <button id="btn-library-refresh" class="button button-ghost button-sm">Refresh</button>
         </div>
@@ -234,7 +234,29 @@ const ViewLibrary = (() => {
       `;
     }
 
-    if (["feats", "traits", "classes", "tags"].includes(collection)) {
+    if (collection === "classes") {
+      return `
+        <div class="fields-grid-2" style="margin-top: var(--space-3);">
+          <input class="field-input library-class-hit-die" value="${escapeAttr(entry.hitDie || "")}" placeholder="Hit die, e.g. d8" />
+          <input class="field-input library-class-primary" value="${escapeAttr(entry.primaryAbility || "")}" placeholder="Primary ability" />
+        </div>
+        <textarea class="field-textarea library-description" rows="3" style="margin-top: var(--space-3);" placeholder="Description">${escapeHTML(entry.description || "")}</textarea>
+      `;
+    }
+
+    if (collection === "races") {
+      const speed = entry.speed?.walk ?? "";
+      return `
+        <div class="fields-grid-3" style="margin-top: var(--space-3);">
+          <input class="field-input library-race-speed" type="number" value="${speed}" placeholder="Walk speed" />
+          <input class="field-input library-race-hp-flat" type="number" value="${Number(entry.addons?.hp?.flatBonus || 0)}" placeholder="Flat HP bonus" />
+          <input class="field-input library-race-hp-level" type="number" value="${Number(entry.addons?.hp?.perLevelBonus || 0)}" placeholder="HP per level" />
+        </div>
+        <textarea class="field-textarea library-description" rows="3" style="margin-top: var(--space-3);" placeholder="Description">${escapeHTML(entry.description || "")}</textarea>
+      `;
+    }
+
+    if (["feats", "traits", "tags"].includes(collection)) {
       return `<textarea class="field-textarea library-description" rows="3" style="margin-top: var(--space-3);" placeholder="Description">${escapeHTML(entry.description || "")}</textarea>`;
     }
 
@@ -301,7 +323,29 @@ const ViewLibrary = (() => {
       record.description = row.querySelector(".library-description")?.value || "";
     }
 
-    if (["feats", "traits", "classes", "tags"].includes(collection)) {
+    if (collection === "classes") {
+      record.hitDie = row.querySelector(".library-class-hit-die")?.value.trim() || "";
+      record.primaryAbility = row.querySelector(".library-class-primary")?.value.trim() || "";
+      record.description = row.querySelector(".library-description")?.value || "";
+    }
+
+    if (collection === "races") {
+      record.speed = {
+        ...(record.speed || {}),
+        walk: parseInt(row.querySelector(".library-race-speed")?.value, 10) || 30,
+      };
+      record.addons = {
+        ...(record.addons || {}),
+        hp: {
+          ...(record.addons?.hp || {}),
+          flatBonus: parseInt(row.querySelector(".library-race-hp-flat")?.value, 10) || 0,
+          perLevelBonus: parseInt(row.querySelector(".library-race-hp-level")?.value, 10) || 0,
+        },
+      };
+      record.description = row.querySelector(".library-description")?.value || "";
+    }
+
+    if (["feats", "traits", "tags"].includes(collection)) {
       record.description = row.querySelector(".library-description")?.value || "";
     }
 
