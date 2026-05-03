@@ -41,9 +41,11 @@
       "provider": "",
       "providerId": "",
       "variantOf": "",
-      "addons": {},
-      "createdAt": "2026-05-01T15:52:17.807Z",
-      "updatedAt": "2026-05-01T15:52:17.807Z",
+      "addons": {
+        "mechanics": []
+      },
+      "createdAt": "2026-05-03T04:32:14.644Z",
+      "updatedAt": "2026-05-03T04:32:14.644Z",
       "color": "",
       "description": ""
     },
@@ -56,9 +58,11 @@
       "provider": "",
       "providerId": "",
       "variantOf": "",
-      "addons": {},
-      "createdAt": "2026-05-01T15:52:17.807Z",
-      "updatedAt": "2026-05-01T15:52:17.807Z",
+      "addons": {
+        "mechanics": []
+      },
+      "createdAt": "2026-05-03T04:32:14.644Z",
+      "updatedAt": "2026-05-03T04:32:14.644Z",
       "color": "",
       "description": ""
     },
@@ -71,9 +75,11 @@
       "provider": "",
       "providerId": "",
       "variantOf": "",
-      "addons": {},
-      "createdAt": "2026-05-01T15:52:17.807Z",
-      "updatedAt": "2026-05-01T15:52:17.807Z",
+      "addons": {
+        "mechanics": []
+      },
+      "createdAt": "2026-05-03T04:32:14.644Z",
+      "updatedAt": "2026-05-03T04:32:14.644Z",
       "color": "",
       "description": ""
     },
@@ -86,9 +92,11 @@
       "provider": "",
       "providerId": "",
       "variantOf": "",
-      "addons": {},
-      "createdAt": "2026-05-01T15:52:17.807Z",
-      "updatedAt": "2026-05-01T15:52:17.807Z",
+      "addons": {
+        "mechanics": []
+      },
+      "createdAt": "2026-05-03T04:32:14.644Z",
+      "updatedAt": "2026-05-03T04:32:14.644Z",
       "color": "",
       "description": ""
     },
@@ -101,9 +109,28 @@
       "provider": "",
       "providerId": "",
       "variantOf": "",
-      "addons": {},
-      "createdAt": "2026-05-01T15:52:17.807Z",
-      "updatedAt": "2026-05-01T15:52:17.807Z",
+      "addons": {
+        "mechanics": []
+      },
+      "createdAt": "2026-05-03T04:32:14.644Z",
+      "updatedAt": "2026-05-03T04:32:14.644Z",
+      "color": "",
+      "description": ""
+    },
+    {
+      "id": "dual-state-sheet",
+      "collection": "tags",
+      "name": "Dual-State Sheet",
+      "tags": [],
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "variantOf": "",
+      "addons": {
+        "mechanics": []
+      },
+      "createdAt": "2026-05-03T04:32:14.644Z",
+      "updatedAt": "2026-05-03T04:32:14.644Z",
       "color": "",
       "description": ""
     }
