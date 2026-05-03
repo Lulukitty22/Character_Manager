@@ -1,0 +1,135 @@
+{
+  "id": "7853c477-4ba2-4882-af6f-3a4404f0380e",
+  "meta": {
+    "repoPath": "characters/john-baluci.json",
+    "lastUpdated": "2026-05-03T22:50:05.760Z"
+  },
+  "identity": {
+    "name": "John Baluci",
+    "classification": "original_character",
+    "aliases": [
+      "Johnny B.",
+      "Mr. J"
+    ],
+    "race": "Mob-Human",
+    "height": "8'6''",
+    "age": "67",
+    "origin": "Chicago, Illinois, United States of America",
+    "tags": [
+      "evil",
+      "super evil",
+      "largely insane",
+      "maybe a bit of a goober",
+      "mob boss",
+      "guy"
+    ]
+  },
+  "appearance": {
+    "description": "John Baluci is a very tall man with white skin, short brown hair, facial stubble from a lack of recent shaving and a very rotund body. He weighs approximately 1.07 metric tons, wears a comedically oversized business suit with black no-tie boots & tops the 'fit off with a black fedora.",
+    "images": []
+  },
+  "personality": "John Baluci speaks in 30s' mob slang, specifically as if he were a mob boss. He can materalize a cigar at will, usually around 9-10 inches in length, and will often command goons at will to 'take care of business' for him.\n\nHe is very closed off, but with a noticeable softness for young girls, especially ones with dark auburn hair and pigtails, assumed to be a potential resemblance to his deceased daughter.\n\nHe can act cheerful often times, but can be equally ruthless when 'disposing' of somebody. He is not opposed to gruesome torture, where he deems it is necessary.",
+  "backstory": "John Baluci was supposedly born around 67 years ago in urban Chicago, though the general consensus is that this is a cover story, as no records of his actual birth or anyone of his stature have ever been discovered. It also does not line up with his slang and general outward acting and appearance. His true origins, therefore, are largely unknown, save for notes that he has dropped at random, such as his former (now deceased) daughter, his wife, and an 'underground business chain.",
+  "notes": "test character, not to be taken seriously",
+  "spells": [],
+  "spellSlots": {},
+  "abilities": [],
+  "inventory": [],
+  "currency": {
+    "pp": 8,
+    "gp": 107,
+    "ep": 0,
+    "sp": 2048,
+    "cp": 19992
+  },
+  "customResources": [],
+  "dnd": {
+    "class": "Mobster",
+    "subclass": "Boss",
+    "level": 20,
+    "multiclass": [],
+    "background": "Human",
+    "alignment": "Chaotic Neutral",
+    "proficiencyBonus": 4,
+    "spellcastingAbility": "str",
+    "stats": {
+      "str": {
+        "score": 25
+      },
+      "dex": {
+        "score": 18
+      },
+      "con": {
+        "score": 15
+      },
+      "int": {
+        "score": 2
+      },
+      "wis": {
+        "score": 5
+      },
+      "cha": {
+        "score": 30
+      }
+    },
+    "savingThrowProficiencies": [
+      "str",
+      "cha"
+    ],
+    "skillProficiencies": [
+      {
+        "skill": "Athletics",
+        "expertise": false
+      },
+      {
+        "skill": "Deception",
+        "expertise": true
+      },
+      {
+        "skill": "Intimidation",
+        "expertise": true
+      },
+      {
+        "skill": "Persuasion",
+        "expertise": true
+      },
+      {
+        "skill": "Sleight of Hand",
+        "expertise": true
+      },
+      {
+        "skill": "Survival",
+        "expertise": false
+      }
+    ],
+    "hp": {
+      "max": 0,
+      "current": 0,
+      "temp": 0,
+      "log": []
+    },
+    "acModes": [
+      {
+        "id": "43da36d2-bc28-44cd-acc5-e81749801bf9",
+        "label": "Base",
+        "value": 48,
+        "active": true
+      },
+      {
+        "id": "8994e246-604e-417f-afcb-c993f16e4920",
+        "label": "Tank Mode",
+        "value": 67,
+        "active": false
+      }
+    ],
+    "speed": {
+      "walk": 60,
+      "fly": 0,
+      "swim": 0,
+      "climb": 0,
+      "burrow": 0
+    },
+    "initiative": 0,
+    "feats": []
+  }
+}
