@@ -2,7 +2,7 @@
   "id": "7853c477-4ba2-4882-af6f-3a4404f0380e",
   "meta": {
     "repoPath": "characters/john-baluci.json",
-    "lastUpdated": "2026-05-03T22:50:05.760Z"
+    "lastUpdated": "2026-05-03T23:02:30.819Z"
   },
   "identity": {
     "name": "John Baluci",
@@ -37,10 +37,10 @@
   "inventory": [],
   "currency": {
     "pp": 8,
-    "gp": 107,
+    "gp": 6,
     "ep": 0,
-    "sp": 2048,
-    "cp": 19992
+    "sp": 16,
+    "cp": 90
   },
   "customResources": [],
   "dnd": {
@@ -51,7 +51,7 @@
     "background": "Human",
     "alignment": "Chaotic Neutral",
     "proficiencyBonus": 4,
-    "spellcastingAbility": "str",
+    "spellcastingAbility": "cha",
     "stats": {
       "str": {
         "score": 25
