@@ -170,3 +170,74 @@ Proposed division for the panel-content port phase, contingent on `/core` split 
 - The editor-mockup revamp itself (`app/index.html` → left-edit + right-preview layout). This is a separate undertaking from the viewer port and should not start until the viewer port stabilises.
 
 **Trigger to start Step 2 (editor shell)**: `/core`, `/app`, and `/editor` have landed. Claude can target final core paths plus `editor/scripts/*` for editor-only modules.
+
+---
+
+## Step 2 Status (Claude, commit `dda0c29`)
+
+### What landed
+
+| File | Purpose |
+|---|---|
+| `editor/scripts/editor-mount.js` | `Editor.mount(container, character, options)` seam. Returns `{getCurrentCharacter, refresh, destroy}`. Builds tabs+panels using existing `editor-*` modules. Emits debounced `onChange`. |
+| `share/editor/manifest.json` | Cascade pointer for editor shell. Loads `core/style/* + editor/style/editor.css`, full `core/scripts/*` (so live preview works), all `editor/scripts/* + editor-mount.js`. `minCompatibleSchemaMajor: 2`. |
+| `share/editor/index.js` | Maintained editor shell — meta read, schema handshake, manifest fetch, library seed, renders sticky toolbar + edit pane + live preview pane + PAT drawer. PAT stored at `share-editor-pat:{owner}/{repo}`. Save uses GitHub Contents API (per-friend PAT → correct attribution). |
+| `app/scripts/export.js` | Adds `SheetExporter.exportEditor(characterData, filePath)` + `EDITOR_SHELL_STYLES` for chrome. |
+| `app/scripts/app.js` | "✏️ Export Editor" button next to existing viewer Export. |
+| `app/index.html` | Loads `editor-mount.js`. |
+
+### Not yet done — handing off to Codex
+
+Token budget on Claude side ran out before completing these. Codex picks up from here:
+
+**1. Sanity-check Step 2 in browser** (highest priority)
+- Pull staging, run `app/index.html`, open Capella, click `✏️ Export Editor`
+- Open the downloaded HTML
+- Verify: spinner → loads → edit pane + live preview render → PAT drawer opens → Test Connection works → editing a field updates preview within ~½ sec → Save commits via GitHub
+- `node --check share/editor/index.js`, `node --check editor/scripts/editor-mount.js`, `node --check app/scripts/export.js`
+
+**2. Refactor `app/scripts/app.js` editor mounting to use `Editor.mount()`** (parity test)
+- Currently `app.js` has its own inline tab orchestration (~80 lines around `buildTabDefinitions` + tab switching wiring + `collectCharacterData`)
+- Replace with: `const handle = Editor.mount(panelsContainer, currentCharacter, { onChange })`; `handle.getCurrentCharacter()` replaces `collectCharacterData()`
+- This is the same parity move that `ViewCharacter.mount()` enabled for the viewer side. Same code path → same render in app and shell. Catches future drift early.
+- Files: `app/scripts/app.js` (search for `EditorBase.buildTab` and `collectCharacterData`)
+
+**3. Visual panel-content port** (the bigger remaining chunk per "What's NOT yet ported" list above)
+- Pre-Step-2 split was: Codex owns `view-character-dnd.js` + `view-character-spells.js`, Claude owns `view-character-{identity, inventory, resources, notes}.js`. Codex now owns the lot until Claude tokens recover.
+- Source of truth for target visuals: `share/style-example.html` (Carol) and `share/style-example-tessa.html` (Tessa)
+- Mockup CSS lives inline in those files — copy the `.row-chip`, `.list-row`, `.row-mini-bar`, etc. patterns into `core/style/sheet.css` as `.ovh-*` classes alongside the existing chrome
+- Renderers in `core/scripts/views/view-character-*.js` should emit the new markup; old `.sheet-section`/`.sheet-card`/`.sheet-spell-entry` classes can be deleted (forward-only, per the staging philosophy)
+
+**4. Editor shell chrome — possible follow-ups** (after #1 verifies it works)
+- The `EDITOR_SHELL_STYLES` block in `app/scripts/export.js` is ~220 lines of inline CSS baked into the export stub. Tradeoff: simpler bootstrap vs. styles can't auto-update with the rest. If preferred, move into `editor/style/editor-shell.css` and add to `share/editor/manifest.json` styles array.
+- The shell uses raw `fetch` for GitHub API (read sha, PUT contents). Could refactor to use `core/scripts/github.js` if its API surface fits — would dedupe the auth code. Quick scan whether `GitHub.putFile()` or similar exists.
+
+### Reference files (for either agent)
+
+- Viewer mockup: `share/style-example.html` (full Carol data, all sections)
+- Viewer mockup, lean: `share/style-example-tessa.html` (Tessa, smaller comparison)
+- Editor mockup: `share/style-example-editor.html` (left-edit + right-preview, but is a future visual goal — not what Step 2 currently produces, which is functionally similar but visually rough)
+- Plan doc: `C:\Users\Nicol\.claude\plans\can-you-help-me-majestic-robin.md` (original architecture plan)
+
+### Lulu-facing summary
+
+✅ Done on staging:
+- Library reorganized into indexed tree (Codex)
+- `/core` + `/app` + `/editor` split (Codex)
+- Tabbed sheet + sticky head + shimmer name + quickstats (Claude)
+- Density pass on spells + abilities (Codex)
+- Maintained viewer shell with auto-update (Step 1)
+- Maintained editor shell with auto-update + PAT save (Step 2)
+- Schema-version handshake + breaking-change overlay (both shells)
+- Library loading with bounded concurrency + factual progress (Codex)
+
+🟡 In-flight:
+- Step 2 needs in-browser verification (Codex picking up)
+- `app.js` editor refactor to use `Editor.mount()` for parity
+
+❌ Not started:
+- Panel-content port (the inside-of-tab visuals — chips, dividers, callouts, etc.)
+- AC mode toggle UI
+- Appearance gallery + video support in viewer
+- Relationships card
+- Editor visual chrome polish to match `share/style-example-editor.html`
