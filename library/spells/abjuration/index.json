@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "index.spells.abjuration",
+  "name": "Abjuration",
+  "path": "library/spells/abjuration/index.json",
+  "directories": [],
+  "entries": [
+    {
+      "id": "spells.capella-spell-counterspell",
+      "name": "Counterspell",
+      "collections": [
+        "spells",
+        "spells/abjuration",
+        "spells/level-3"
+      ],
+      "tags": [
+        "capella",
+        "reaction",
+        "defense",
+        "dandd-5e-wiki",
+        "player-s-handbook",
+        "dnd5eapi"
+      ],
+      "path": "library/spells/abjuration/capella-spell-counterspell.json"
+    }
+  ]
+}

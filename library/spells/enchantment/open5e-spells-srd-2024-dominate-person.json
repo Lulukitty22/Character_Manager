@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "id": "spells.open5e-spells-srd-2024-dominate-person",
+  "name": "Dominate Person",
+  "collections": [
+    "spells",
+    "spells/enchantment",
+    "spells/level-5"
+  ],
+  "tags": [
+    "open5eapi",
+    "5e-2024-rules",
+    "srd",
+    "wizards-of-the-coast",
+    "5th-edition-2024"
+  ],
+  "variantOf": null,
+  "sourceReferences": [
+    {
+      "provider": "open5eapi",
+      "sourceId": "srd-2024_dominate-person",
+      "url": null,
+      "note": "5e 2024 Rules"
+    }
+  ],
+  "features": {
+    "spell": {
+      "level": 5,
+      "school": "enchantment",
+      "isRitual": false,
+      "requiresConcentration": true
+    },
+    "spellcasting": {
+      "castingTime": {
+        "text": "action"
+      },
+      "range": {
+        "quantity": 60,
+        "unit": "feet"
+      },
+      "duration": {
+        "text": "1 minute"
+      },
+      "components": {
+        "verbal": true,
+        "somatic": true,
+        "material": false,
+        "materialDescription": ""
+      }
+    },
+    "damage": {
+      "roll": "",
+      "types": [],
+      "savingThrow": "wisdom"
+    },
+    "area": {
+      "shape": "",
+      "size": null,
+      "unit": "feet"
+    },
+    "rulesText": {
+      "description": "One Humanoid you can see within range must succeed on a Wisdom saving throw or have the Charmed condition for the duration. The target has Advantage on the save if you or your allies are fighting it. Whenever the target takes damage, it repeats the save, ending the spell on itself on a success. You have a telepathic link with the Charmed target while the two of you are on the same plane of existence. On your turn, you can use this link to issue commands to the target (no action required), such as \"Attack that creature,\" \"Move over there,\" or \"Fetch that object.\" The target does its best to obey on its turn. If it completes an order and doesn't receive further direction from you, it acts and moves as it likes, focusing on protecting itself. You can command the target to take a Reaction but must take your own Reaction to do so.\n\nYour Concentration can last longer with a spell slot of level 6 (up to 10 minutes), 7 (up to 1 hour), or 8+ (up to 8 hours)."
+    }
+  },
+  "desc": "One Humanoid you can see within range must succeed on a Wisdom saving throw or have the Charmed condition for the duration. The target has Advantage on the save if you or your allies are fighting it. Whenever the target takes damage, it repeats the save, ending the spell on itself on a success. You have a telepathic link with the Charmed target while the two of you are on the same plane of existence. On your turn, you can use this link to issue commands to the target (no action required), such as \"Attack that creature,\" \"Move over there,\" or \"Fetch that object.\" The target does its best to obey on its turn. If it completes an order and doesn't receive further direction from you, it acts and moves as it likes, focusing on protecting itself. You can command the target to take a Reaction but must take your own Reaction to do so.\n\nYour Concentration can last longer with a spell slot of level 6 (up to 10 minutes), 7 (up to 1 hour), or 8+ (up to 8 hours)."
+}

@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "id": "items.item-shortbow-archery-test",
+  "name": "Field Shortbow",
+  "collections": [
+    "items",
+    "items/weapon",
+    "items/weapon/equipment-categories-weapon"
+  ],
+  "tags": [
+    "weapon",
+    "archery",
+    "ammo-test",
+    "equipment-categories-weapon",
+    "equipment-categories-martial-ranged-weapons",
+    "ammunition-using"
+  ],
+  "variantOf": null,
+  "sourceReferences": [],
+  "features": {
+    "item": {
+      "category": "weapon",
+      "subcategory": "equipment-categories-weapon",
+      "rarity": "",
+      "requiresAttunement": false
+    },
+    "weight": {
+      "quantity": 2,
+      "unit": "lb"
+    },
+    "effects": {
+      "hp": {
+        "flatBonus": 0,
+        "perLevelBonus": 0,
+        "tempHp": 0
+      },
+      "spellSlots": {}
+    },
+    "actions": [
+      {
+        "label": "Shoot",
+        "consumeQuantity": false,
+        "effects": {
+          "resources": [
+            {
+              "target": "Arrows",
+              "delta": -1,
+              "reason": "Field Shortbow shot"
+            }
+          ]
+        },
+        "description": "Spend 1 arrow from the Arrows resource when firing."
+      }
+    ],
+    "inventory": {
+      "isStackable": true,
+      "defaultQuantity": 1,
+      "consumedOnUse": false
+    },
+    "mechanics": [
+      {
+        "label": "Damage",
+        "value": "1d6 piercing",
+        "kind": "damage",
+        "description": "Typical shortbow damage before ability modifiers."
+      },
+      {
+        "label": "Range",
+        "value": "80 / 320 ft",
+        "kind": "range"
+      },
+      {
+        "label": "Ammo",
+        "value": "Arrows -1",
+        "kind": "requirement",
+        "description": "Each shot spends 1 arrow from the Arrows resource."
+      }
+    ]
+  },
+  "desc": "A practical shortbow used to test ammo consumption on the sheet."
+}

@@ -1,22 +1,18 @@
 {
-  "id": "idk-what-class",
-  "collection": "classes",
+  "schemaVersion": 1,
+  "id": "classes.idk-what-class",
   "name": "idk what class",
+  "collections": [
+    "classes"
+  ],
   "tags": [],
-  "source": "custom",
-  "provider": "",
-  "providerId": "",
-  "variantOf": "",
-  "addons": {
-    "mechanics": [],
-    "stats": {},
-    "speed": {},
-    "proficiencies": [],
-    "feats": []
+  "variantOf": null,
+  "sourceReferences": [],
+  "features": {
+    "class": {
+      "hitDie": "",
+      "primaryAbility": ""
+    }
   },
-  "createdAt": "2026-05-03T04:16:36.172Z",
-  "updatedAt": "2026-05-03T04:16:36.172Z",
-  "description": "",
-  "hitDie": "",
-  "primaryAbility": ""
+  "desc": ""
 }

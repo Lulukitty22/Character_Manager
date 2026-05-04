@@ -1,22 +1,22 @@
 {
-  "id": "capella-trait-polymorph-trait-limit",
-  "collection": "traits",
+  "schemaVersion": 1,
+  "id": "traits.capella-trait-polymorph-trait-limit",
   "name": "Polymorph Trait Limit",
+  "collections": [
+    "traits"
+  ],
   "tags": [
-    "Capella",
+    "capella",
     "shapechange",
     "balance"
   ],
-  "source": "custom",
-  "provider": "",
-  "providerId": "",
-  "variantOf": "",
-  "addons": {
-    "maxActiveTraits": 3
+  "variantOf": null,
+  "sourceReferences": [],
+  "features": {
+    "trait": {},
+    "rulesText": {
+      "description": "Capella should usually keep up to 3 major Flesh Polymorph traits active at once. This is a table-control limit, not a biology limit."
+    }
   },
-  "type": "feature",
-  "description": "Capella should usually keep up to 3 major Flesh Polymorph traits active at once. This is a table-control limit, not a biology limit.",
-  "active": true,
-  "createdAt": "2026-05-01T16:57:08.797Z",
-  "updatedAt": "2026-05-01T16:57:08.797Z"
+  "desc": "Capella should usually keep up to 3 major Flesh Polymorph traits active at once. This is a table-control limit, not a biology limit."
 }

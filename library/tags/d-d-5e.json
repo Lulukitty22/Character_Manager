@@ -1,17 +1,18 @@
 {
-  "id": "d-d-5e",
-  "collection": "tags",
+  "schemaVersion": 1,
+  "id": "tag:d-d-5e",
   "name": "D&D 5e",
+  "collections": [
+    "tags"
+  ],
   "tags": [],
-  "source": "custom",
-  "provider": "",
-  "providerId": "",
-  "variantOf": "",
-  "addons": {
-    "mechanics": []
+  "variantOf": null,
+  "sourceReferences": [],
+  "features": {
+    "tag": {},
+    "rulesText": {
+      "description": ""
+    }
   },
-  "createdAt": "2026-05-03T04:32:59.965Z",
-  "updatedAt": "2026-05-03T04:32:59.965Z",
-  "color": "",
-  "description": ""
+  "desc": ""
 }

@@ -1,39 +1,27 @@
 {
-  "id": "69a33466-f911-4440-907d-bd020e7f0b77",
-  "collection": "traits",
+  "schemaVersion": 1,
+  "id": "traits.69a33466-f911-4440-907d-bd020e7f0b77",
   "name": "Charisma Spellcasting",
+  "collections": [
+    "traits"
+  ],
   "tags": [
     "spellcasting"
   ],
-  "source": "custom",
-  "provider": "",
-  "providerId": "",
-  "variantOf": "",
-  "addons": {
-    "sourceDocument": {
-      "provider": "open5e",
-      "title": "System Reference Document 5.1",
-      "type": "Rule",
-      "detailUrl": "https://api.open5e.com/v2/rules/srd_abilities_charisma/"
-    },
-    "sourceDocuments": [
-      {
-        "provider": "dnd5ewiki",
-        "title": "Player's Handbook",
-        "type": "Class",
-        "detailUrl": "https://dnd-5e.fandom.com/wiki/Bard_%28Class%29"
-      },
-      {
-        "provider": "dnd5ewiki",
-        "title": "Player's Handbook",
-        "type": "Class",
-        "detailUrl": "https://dnd-5e.fandom.com/wiki/Warlock_%28Class%29"
-      }
-    ]
+  "variantOf": null,
+  "sourceReferences": [
+    {
+      "provider": "internal",
+      "sourceId": "69a33466-f911-4440-907d-bd020e7f0b77",
+      "url": "https://api.open5e.com/v2/rules/srd_abilities_charisma/",
+      "note": "System Reference Document 5.1"
+    }
+  ],
+  "features": {
+    "trait": {},
+    "rulesText": {
+      "description": "Capella uses Charisma for spell save DCs, spell attacks, flesh magic, Polymorph effects, and distortion effects."
+    }
   },
-  "createdAt": "2026-05-01T15:51:13.985Z",
-  "updatedAt": "2026-05-01T15:51:13.985Z",
-  "type": "trait",
-  "description": "Capella uses Charisma for spell save DCs, spell attacks, flesh magic, Polymorph effects, and distortion effects.",
-  "active": true
+  "desc": "Capella uses Charisma for spell save DCs, spell attacks, flesh magic, Polymorph effects, and distortion effects."
 }

@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "id": "index.species",
+  "name": "Species",
+  "path": "library/species/index.json",
+  "directories": [],
+  "entries": [
+    {
+      "id": "species.aberrant-lich-shapechanger-race",
+      "name": "Aberrant Lich / Shapechanger",
+      "collections": [
+        "species"
+      ],
+      "tags": [
+        "boss",
+        "aberrant-lich",
+        "shapechanger",
+        "species"
+      ],
+      "path": "library/species/aberrant-lich-shapechanger-race.json"
+    },
+    {
+      "id": "species.human",
+      "name": "Human",
+      "collections": [
+        "species"
+      ],
+      "tags": [
+        "dandd-5e",
+        "species"
+      ],
+      "path": "library/species/human.json"
+    },
+    {
+      "id": "species.human-dragonmark-of-sentinel",
+      "name": "Human (Dragonmark of Sentinel)",
+      "collections": [
+        "species"
+      ],
+      "tags": [
+        "dandd-5e",
+        "dragonmark",
+        "human",
+        "species"
+      ],
+      "path": "library/species/human-dragonmark-of-sentinel.json"
+    },
+    {
+      "id": "species.reborn-homunculus-human",
+      "name": "Reborn / Homunculus (Human)",
+      "collections": [
+        "species"
+      ],
+      "tags": [
+        "dandd-5e",
+        "reborn",
+        "human",
+        "homunculus",
+        "species"
+      ],
+      "path": "library/species/reborn-homunculus-human.json"
+    }
+  ]
+}

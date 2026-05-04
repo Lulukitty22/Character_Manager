@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "id": "spells.capella-spell-mass-suggestion",
+  "name": "Mass Suggestion",
+  "collections": [
+    "spells",
+    "spells/enchantment",
+    "spells/level-6"
+  ],
+  "tags": [
+    "capella",
+    "social",
+    "control",
+    "dandd-5e-wiki",
+    "player-s-handbook",
+    "dnd5eapi"
+  ],
+  "variantOf": null,
+  "sourceReferences": [
+    {
+      "provider": "dnd5eapi",
+      "sourceId": "mass-suggestion",
+      "url": "https://dnd-5e.fandom.com/wiki/Mass_Suggestion",
+      "note": "Player's Handbook"
+    }
+  ],
+  "features": {
+    "spell": {
+      "level": 6,
+      "school": "enchantment",
+      "isRitual": false,
+      "requiresConcentration": false
+    },
+    "spellcasting": {
+      "castingTime": {
+        "quantity": 1,
+        "unit": "action"
+      },
+      "range": {
+        "quantity": 60,
+        "unit": "ft"
+      },
+      "duration": {
+        "text": "24 hours"
+      },
+      "components": {
+        "verbal": true,
+        "somatic": false,
+        "material": true,
+        "materialDescription": ""
+      }
+    },
+    "rulesText": {
+      "description": "A high-tier version of her social pressure: broad, elegant, and terrifying when used on bystanders, guards, or enemy mobs."
+    },
+    "mechanics": [
+      {
+        "label": "Targets",
+        "value": "Up to 12",
+        "kind": "positive",
+        "description": "You can affect up to twelve creatures of your choice."
+      },
+      {
+        "label": "Harm Ends",
+        "kind": "negative",
+        "description": "Damaging a target ends the spell for that creature."
+      },
+      {
+        "label": "Upcast",
+        "value": "10d / 30d / 1y",
+        "kind": "duration",
+        "description": "Higher slots extend duration to 10 days, 30 days, or 1 year and a day."
+      }
+    ]
+  },
+  "desc": "A high-tier version of her social pressure: broad, elegant, and terrifying when used on bystanders, guards, or enemy mobs."
+}

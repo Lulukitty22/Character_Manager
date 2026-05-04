@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "id": "index.items.consumable",
+  "name": "Consumable",
+  "path": "library/items/consumable/index.json",
+  "directories": [
+    {
+      "name": "Equipment Categories Ammunition",
+      "path": "library/items/consumable/equipment-categories-ammunition/index.json"
+    },
+    {
+      "name": "Equipment Categories Potion",
+      "path": "library/items/consumable/equipment-categories-potion/index.json"
+    }
+  ],
+  "entries": []
+}

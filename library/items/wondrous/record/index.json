@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "index.items.wondrous.record",
+  "name": "Record",
+  "path": "library/items/wondrous/record/index.json",
+  "directories": [],
+  "entries": [
+    {
+      "id": "items.cdb0b5d2-8287-4f14-acdb-c5881df01916",
+      "name": "Rho's Heart",
+      "collections": [
+        "items",
+        "items/wondrous",
+        "items/wondrous/record"
+      ],
+      "tags": [],
+      "path": "library/items/wondrous/record/cdb0b5d2-8287-4f14-acdb-c5881df01916.json"
+    }
+  ]
+}

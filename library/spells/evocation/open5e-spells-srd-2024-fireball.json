@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 1,
+  "id": "spells.open5e-spells-srd-2024-fireball",
+  "name": "Fireball",
+  "collections": [
+    "spells",
+    "spells/evocation",
+    "spells/level-3"
+  ],
+  "tags": [
+    "open5eapi",
+    "5e-2024-rules",
+    "srd",
+    "wizards-of-the-coast",
+    "5th-edition-2024"
+  ],
+  "variantOf": null,
+  "sourceReferences": [
+    {
+      "provider": "open5eapi",
+      "sourceId": "srd-2024_fireball",
+      "url": null,
+      "note": "5e 2024 Rules"
+    }
+  ],
+  "features": {
+    "spell": {
+      "level": 3,
+      "school": "evocation",
+      "isRitual": false,
+      "requiresConcentration": false
+    },
+    "spellcasting": {
+      "castingTime": {
+        "text": "action"
+      },
+      "range": {
+        "quantity": 150,
+        "unit": "feet"
+      },
+      "duration": {
+        "text": "instantaneous"
+      },
+      "components": {
+        "verbal": true,
+        "somatic": true,
+        "material": true,
+        "materialDescription": ""
+      }
+    },
+    "damage": {
+      "roll": "8d6",
+      "types": [
+        "fire"
+      ],
+      "savingThrow": "dexterity"
+    },
+    "area": {
+      "shape": "sphere",
+      "size": 20,
+      "unit": "feet"
+    },
+    "rulesText": {
+      "description": "A bright streak flashes from you to a point you choose within range and then blossoms with a low roar into a fiery explosion. Each creature in a 20-foot-radius Sphere centered on that point makes a Dexterity saving throw, taking 8d6 Fire damage on a failed save or half as much damage on a successful one. Flammable objects in the area that aren't being worn or carried start burning.\n\nThe damage increases by 1d6 for each spell slot level above 3."
+    },
+    "mechanics": [
+      {
+        "label": "Cast",
+        "value": "action",
+        "kind": "action"
+      },
+      {
+        "label": "Range",
+        "value": "150 feet",
+        "kind": "range"
+      },
+      {
+        "label": "Components",
+        "value": "V, S, M",
+        "kind": "component",
+        "description": "Spell components required to cast this spell."
+      },
+      {
+        "label": "Duration",
+        "value": "instantaneous",
+        "kind": "duration"
+      },
+      {
+        "label": "Damage",
+        "value": "8d6 fire",
+        "kind": "damage"
+      },
+      {
+        "label": "Save",
+        "value": "dexterity",
+        "kind": "requirement"
+      },
+      {
+        "label": "Area",
+        "value": "20 feet sphere",
+        "kind": "range"
+      }
+    ]
+  },
+  "desc": "A bright streak flashes from you to a point you choose within range and then blossoms with a low roar into a fiery explosion. Each creature in a 20-foot-radius Sphere centered on that point makes a Dexterity saving throw, taking 8d6 Fire damage on a failed save or half as much damage on a successful one. Flammable objects in the area that aren't being worn or carried start burning.\n\nThe damage increases by 1d6 for each spell slot level above 3."
+}

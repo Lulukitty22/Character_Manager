@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "id": "index.items.consumable.equipment-categories-potion",
+  "name": "Equipment Categories Potion",
+  "path": "library/items/consumable/equipment-categories-potion/index.json",
+  "directories": [],
+  "entries": [
+    {
+      "id": "items.dnd5eapi-magic-items-potion-of-healing-greater",
+      "name": "Potion of Greater Healing",
+      "collections": [
+        "items",
+        "items/consumable",
+        "items/consumable/equipment-categories-potion"
+      ],
+      "tags": [
+        "dnd5eapi",
+        "srd",
+        "magic-items",
+        "equipment-categories-potion",
+        "potion",
+        "healing",
+        "consumable",
+        "rarity-uncommon",
+        "uncommon"
+      ],
+      "path": "library/items/consumable/equipment-categories-potion/dnd5eapi-magic-items-potion-of-healing-greater.json"
+    },
+    {
+      "id": "items.dnd5eapi-magic-items-potion-of-healing-common",
+      "name": "Potion of Healing",
+      "collections": [
+        "items",
+        "items/consumable",
+        "items/consumable/equipment-categories-potion"
+      ],
+      "tags": [
+        "dnd5eapi",
+        "srd",
+        "magic-items",
+        "equipment-categories-potion",
+        "potion",
+        "healing",
+        "consumable",
+        "rarity-common",
+        "common"
+      ],
+      "path": "library/items/consumable/equipment-categories-potion/dnd5eapi-magic-items-potion-of-healing-common.json"
+    },
+    {
+      "id": "items.dnd5eapi-magic-items-potion-of-healing-superior",
+      "name": "Potion of Superior Healing",
+      "collections": [
+        "items",
+        "items/consumable",
+        "items/consumable/equipment-categories-potion"
+      ],
+      "tags": [
+        "dnd5eapi",
+        "srd",
+        "magic-items",
+        "equipment-categories-potion",
+        "potion",
+        "healing",
+        "consumable",
+        "rarity-rare",
+        "rare"
+      ],
+      "path": "library/items/consumable/equipment-categories-potion/dnd5eapi-magic-items-potion-of-healing-superior.json"
+    },
+    {
+      "id": "items.dnd5eapi-magic-items-potion-of-healing-supreme",
+      "name": "Potion of Supreme Healing",
+      "collections": [
+        "items",
+        "items/consumable",
+        "items/consumable/equipment-categories-potion"
+      ],
+      "tags": [
+        "dnd5eapi",
+        "srd",
+        "magic-items",
+        "equipment-categories-potion",
+        "potion",
+        "healing",
+        "consumable",
+        "rarity-very-rare",
+        "very-rare"
+      ],
+      "path": "library/items/consumable/equipment-categories-potion/dnd5eapi-magic-items-potion-of-healing-supreme.json"
+    }
+  ]
+}

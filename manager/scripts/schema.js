@@ -146,6 +146,19 @@ const Schema = (() => {
 
   function createLibraryRecord(collection) {
     const id = generateId();
+    const canonicalCollection = collection === "races" ? "species" : collection;
+
+    return {
+      schemaVersion: 1,
+      id,
+      name: "",
+      collections: [canonicalCollection],
+      tags: [],
+      variantOf: null,
+      sourceReferences: [],
+      features: {},
+      desc: "",
+    };
 
     const base = {
       id,
@@ -309,9 +322,9 @@ const Schema = (() => {
 
     return {
       ...record,
-      id: `open5e-spells-${key}`,
+      id: `open5eapi-spells-${key}`,
       source: "srd",
-      provider: "open5e",
+      provider: "open5eapi",
       providerId: key,
       name: open5eData.name || open5eData.object_name || "",
       level: Number(open5eData.level_int ?? open5eData.level ?? 0) || 0,
@@ -322,7 +335,7 @@ const Schema = (() => {
       duration: open5eData.duration || "",
       description: descriptionParts.filter(Boolean).join("\n\n"),
       tags: [
-        "Open5e",
+        "open5eapi",
         documentTitle,
         documentKey || "SRD",
         publisher,
@@ -357,7 +370,7 @@ const Schema = (() => {
           areaUnit: open5eData.shape_size_unit || "",
         }),
         sourceDocument: {
-          provider: "open5e",
+          provider: "open5eapi",
           key: documentKey,
           title: documentTitle,
           publisher,

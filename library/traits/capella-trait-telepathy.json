@@ -1,42 +1,29 @@
 {
-  "id": "capella-trait-telepathy",
-  "collection": "traits",
+  "schemaVersion": 1,
+  "id": "traits.capella-trait-telepathy",
   "name": "Telepathy",
+  "collections": [
+    "traits"
+  ],
   "tags": [
-    "Capella",
+    "capella",
     "psychic",
     "social"
   ],
-  "source": "custom",
-  "provider": "",
-  "providerId": "",
-  "variantOf": "",
-  "addons": {
-    "sourceDocument": {
-      "provider": "dnd5ewiki",
-      "title": "Monster Manual",
-      "type": "Monster",
-      "detailUrl": "https://dnd-5e.fandom.com/wiki/Arcanaloth"
-    },
-    "sourceDocuments": [
-      {
-        "provider": "open5e",
-        "title": "System Reference Document 5.1",
-        "type": "Rule",
-        "detailUrl": "https://api.open5e.com/v2/rules/srd_monsters_telepathy/"
-      },
-      {
-        "provider": "dnd5ewiki",
-        "title": "Player's Handbook",
-        "type": "Class",
-        "detailUrl": "https://dnd-5e.fandom.com/wiki/Mystic"
-      }
-    ],
-    "range": "120 ft"
+  "variantOf": null,
+  "sourceReferences": [
+    {
+      "provider": "internal",
+      "sourceId": "capella-trait-telepathy",
+      "url": "https://dnd-5e.fandom.com/wiki/Arcanaloth",
+      "note": "Monster Manual"
+    }
+  ],
+  "features": {
+    "trait": {},
+    "rulesText": {
+      "description": "Capella has 120 ft telepathy, supporting silent pressure, invasive intimacy, and unsettling social manipulation."
+    }
   },
-  "type": "trait",
-  "description": "Capella has 120 ft telepathy, supporting silent pressure, invasive intimacy, and unsettling social manipulation.",
-  "active": true,
-  "createdAt": "2026-05-01T16:57:08.797Z",
-  "updatedAt": "2026-05-01T16:57:08.797Z"
+  "desc": "Capella has 120 ft telepathy, supporting silent pressure, invasive intimacy, and unsettling social manipulation."
 }

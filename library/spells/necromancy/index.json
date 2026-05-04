@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "index.spells.necromancy",
+  "name": "Necromancy",
+  "path": "library/spells/necromancy/index.json",
+  "directories": [],
+  "entries": [
+    {
+      "id": "spells.open5e-spells-deepm-kiss-of-the-succubus",
+      "name": "Kiss of the Succubus",
+      "collections": [
+        "spells",
+        "spells/necromancy",
+        "spells/level-5"
+      ],
+      "tags": [
+        "open5eapi",
+        "deep-magic-for-5th-edition",
+        "deepm",
+        "kobold-press",
+        "5th-edition-2014",
+        "srd"
+      ],
+      "path": "library/spells/necromancy/open5e-spells-deepm-kiss-of-the-succubus.json"
+    }
+  ]
+}

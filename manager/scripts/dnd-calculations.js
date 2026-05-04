@@ -445,7 +445,7 @@ const DndCalculations = (() => {
   }
 
   function findRaceRecord(name) {
-    return findLibraryRecord("races", name);
+    return findLibraryRecord("species", name);
   }
 
   function findLibraryRecord(collection, name) {
@@ -466,7 +466,10 @@ const DndCalculations = (() => {
   }
 
   function getCasterProgression(classRecord, className) {
-    return classRecord?.addons?.spellcasting?.progression || FALLBACK_CASTER_PROGRESSIONS[comparableName(className)] || "none";
+    return classRecord?.addons?.spellcasting?.progression
+      || classRecord?.features?.spellcastingProgression?.progression
+      || FALLBACK_CASTER_PROGRESSIONS[comparableName(className)]
+      || "none";
   }
 
   function normalizeHpPool(pool = {}) {

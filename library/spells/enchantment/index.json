@@ -1,0 +1,173 @@
+{
+  "schemaVersion": 1,
+  "id": "index.spells.enchantment",
+  "name": "Enchantment",
+  "path": "library/spells/enchantment/index.json",
+  "directories": [],
+  "entries": [
+    {
+      "id": "spells.7e97d247-569e-4b1e-a1ae-309711acd5e5",
+      "name": "Dominate Monster",
+      "collections": [
+        "spells",
+        "spells/enchantment",
+        "spells/level-8"
+      ],
+      "tags": [
+        "psychic",
+        "boss",
+        "dandd-5e-wiki",
+        "player-s-handbook",
+        "dnd5eapi"
+      ],
+      "path": "library/spells/enchantment/7e97d247-569e-4b1e-a1ae-309711acd5e5.json"
+    },
+    {
+      "id": "spells.open5e-spells-srd-2024-dominate-person",
+      "name": "Dominate Person",
+      "collections": [
+        "spells",
+        "spells/enchantment",
+        "spells/level-5"
+      ],
+      "tags": [
+        "open5eapi",
+        "5e-2024-rules",
+        "srd",
+        "wizards-of-the-coast",
+        "5th-edition-2024"
+      ],
+      "path": "library/spells/enchantment/open5e-spells-srd-2024-dominate-person.json"
+    },
+    {
+      "id": "spells.capella-spell-geas",
+      "name": "Geas",
+      "collections": [
+        "spells",
+        "spells/enchantment",
+        "spells/level-5"
+      ],
+      "tags": [
+        "capella",
+        "social",
+        "coercion",
+        "dandd-5e-wiki",
+        "player-s-handbook",
+        "dnd5eapi"
+      ],
+      "path": "library/spells/enchantment/capella-spell-geas.json"
+    },
+    {
+      "id": "spells.capella-spell-hold-monster",
+      "name": "Hold Monster",
+      "collections": [
+        "spells",
+        "spells/enchantment",
+        "spells/level-5"
+      ],
+      "tags": [
+        "capella",
+        "control",
+        "disable",
+        "dandd-5e-wiki",
+        "player-s-handbook",
+        "dnd5eapi"
+      ],
+      "path": "library/spells/enchantment/capella-spell-hold-monster.json"
+    },
+    {
+      "id": "spells.capella-spell-mass-suggestion",
+      "name": "Mass Suggestion",
+      "collections": [
+        "spells",
+        "spells/enchantment",
+        "spells/level-6"
+      ],
+      "tags": [
+        "capella",
+        "social",
+        "control",
+        "dandd-5e-wiki",
+        "player-s-handbook",
+        "dnd5eapi"
+      ],
+      "path": "library/spells/enchantment/capella-spell-mass-suggestion.json"
+    },
+    {
+      "id": "spells.capella-spell-modify-memory",
+      "name": "Modify Memory",
+      "collections": [
+        "spells",
+        "spells/enchantment",
+        "spells/level-5"
+      ],
+      "tags": [
+        "capella",
+        "social",
+        "memory",
+        "dandd-5e-wiki",
+        "player-s-handbook",
+        "dnd5eapi"
+      ],
+      "path": "library/spells/enchantment/capella-spell-modify-memory.json"
+    },
+    {
+      "id": "spells.19168ae2-b26b-4b5a-a3c3-aaef9c3d8047",
+      "name": "Power Word Cum",
+      "collections": [
+        "spells",
+        "spells/enchantment",
+        "spells/level-10"
+      ],
+      "tags": [],
+      "path": "library/spells/enchantment/19168ae2-b26b-4b5a-a3c3-aaef9c3d8047.json"
+    },
+    {
+      "id": "spells.capella-spell-power-word-stun",
+      "name": "Power Word Stun",
+      "collections": [
+        "spells",
+        "spells/enchantment",
+        "spells/level-8"
+      ],
+      "tags": [
+        "capella",
+        "control",
+        "nonlethal",
+        "dandd-5e-wiki",
+        "player-s-handbook",
+        "dnd5eapi"
+      ],
+      "path": "library/spells/enchantment/capella-spell-power-word-stun.json"
+    },
+    {
+      "id": "spells.504aee8d-99e5-48fe-934c-bd74f3eaf223",
+      "name": "Suggestion",
+      "collections": [
+        "spells",
+        "spells/enchantment",
+        "spells/level-2"
+      ],
+      "tags": [
+        "social",
+        "dandd-5e-wiki",
+        "player-s-handbook",
+        "dnd5eapi"
+      ],
+      "path": "library/spells/enchantment/504aee8d-99e5-48fe-934c-bd74f3eaf223.json"
+    },
+    {
+      "id": "spells.7b6931ed-1049-4d02-8590-78936898e3cc",
+      "name": "Voice of Distortion",
+      "collections": [
+        "spells",
+        "spells/enchantment",
+        "spells/level-5"
+      ],
+      "tags": [
+        "control"
+      ],
+      "path": "library/spells/enchantment/7b6931ed-1049-4d02-8590-78936898e3cc.json"
+    }
+  ]
+}

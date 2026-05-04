@@ -1,15 +1,18 @@
 {
-  "id": "test",
-  "collection": "tags",
+  "schemaVersion": 1,
+  "id": "tag:test",
   "name": "Test",
+  "collections": [
+    "tags"
+  ],
   "tags": [],
-  "source": "custom",
-  "provider": "",
-  "providerId": "",
-  "variantOf": "",
-  "addons": {},
-  "createdAt": "2026-05-01T15:47:44.030Z",
-  "updatedAt": "2026-05-01T15:47:44.030Z",
-  "color": "",
-  "description": ""
+  "variantOf": null,
+  "sourceReferences": [],
+  "features": {
+    "tag": {},
+    "rulesText": {
+      "description": ""
+    }
+  },
+  "desc": ""
 }

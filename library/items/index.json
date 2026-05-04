@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "index.items",
+  "name": "Items",
+  "path": "library/items/index.json",
+  "directories": [
+    {
+      "name": "Consumable",
+      "path": "library/items/consumable/index.json"
+    },
+    {
+      "name": "Weapon",
+      "path": "library/items/weapon/index.json"
+    },
+    {
+      "name": "Wondrous",
+      "path": "library/items/wondrous/index.json"
+    }
+  ],
+  "entries": []
+}

@@ -1,28 +1,31 @@
 {
-  "id": "2ab2a7d6-bc03-4c5b-801f-9d9ac93633f9",
-  "collection": "traits",
+  "schemaVersion": 1,
+  "id": "traits.2ab2a7d6-bc03-4c5b-801f-9d9ac93633f9",
   "name": "Silver Tongue",
+  "collections": [
+    "traits"
+  ],
   "tags": [
     "social",
-    "D&D 5e Wiki",
-    "Tasha's Cauldron of Everything",
-    "Mythic Odysseys of Theros"
+    "dandd-5e-wiki",
+    "tasha-s-cauldron-of-everything",
+    "mythic-odysseys-of-theros",
+    "dnd5eapi"
   ],
-  "source": "custom",
-  "provider": "dnd5ewiki",
-  "providerId": "silver-tongue",
-  "variantOf": "",
-  "addons": {
-    "sourceDocument": {
-      "provider": "dnd5ewiki",
-      "title": "Tasha's Cauldron of Everything / Mythic Odysseys of Theros",
-      "type": "Feature",
-      "detailUrl": "https://dnd-5e.fandom.com/wiki/Bard_%28Class%29"
+  "variantOf": null,
+  "sourceReferences": [
+    {
+      "provider": "dnd5eapi",
+      "sourceId": "silver-tongue",
+      "url": "https://dnd-5e.fandom.com/wiki/Bard_%28Class%29",
+      "note": "Tasha's Cauldron of Everything / Mythic Odysseys of Theros"
+    }
+  ],
+  "features": {
+    "trait": {},
+    "rulesText": {
+      "description": "College of Eloquence-style feature. For Deception and Persuasion, d20 rolls of 9 or lower count as 10. This is a d20 floor of 10. Does not apply against player character Insight checks."
     }
   },
-  "createdAt": "2026-05-01T15:51:13.985Z",
-  "updatedAt": "2026-05-01T15:51:13.985Z",
-  "type": "feature",
-  "description": "College of Eloquence-style feature. For Deception and Persuasion, d20 rolls of 9 or lower count as 10. This is a d20 floor of 10. Does not apply against player character Insight checks.",
-  "active": true
+  "desc": "College of Eloquence-style feature. For Deception and Persuasion, d20 rolls of 9 or lower count as 10. This is a d20 floor of 10. Does not apply against player character Insight checks."
 }

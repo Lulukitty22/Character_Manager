@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "id": "spells.capella-spell-disguise-self",
+  "name": "Disguise Self",
+  "collections": [
+    "spells",
+    "spells/illusion",
+    "spells/level-1"
+  ],
+  "tags": [
+    "capella",
+    "social",
+    "disguise",
+    "dandd-5e-wiki",
+    "player-s-handbook",
+    "dnd5eapi"
+  ],
+  "variantOf": null,
+  "sourceReferences": [
+    {
+      "provider": "dnd5eapi",
+      "sourceId": "disguise-self",
+      "url": "https://dnd-5e.fandom.com/wiki/Disguise_Self",
+      "note": "Player's Handbook"
+    }
+  ],
+  "features": {
+    "spell": {
+      "level": 1,
+      "school": "illusion",
+      "isRitual": false,
+      "requiresConcentration": false
+    },
+    "spellcasting": {
+      "castingTime": {
+        "quantity": 1,
+        "unit": "action"
+      },
+      "range": {
+        "text": "Self"
+      },
+      "duration": {
+        "text": "1 hour"
+      },
+      "components": {
+        "verbal": true,
+        "somatic": true,
+        "material": false,
+        "materialDescription": ""
+      }
+    },
+    "rulesText": {
+      "description": "Quick social cover for a harmless, noble, wounded, or ordinary persona. This supports roleplay disguise; Mimic Anatomy still handles physical impersonation."
+    },
+    "mechanics": [
+      {
+        "label": "Inspect",
+        "kind": "negative",
+        "description": "Physical inspection reveals the illusion."
+      }
+    ]
+  },
+  "desc": "Quick social cover for a harmless, noble, wounded, or ordinary persona. This supports roleplay disguise; Mimic Anatomy still handles physical impersonation."
+}

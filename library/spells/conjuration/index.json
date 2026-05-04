@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "id": "index.spells.conjuration",
+  "name": "Conjuration",
+  "path": "library/spells/conjuration/index.json",
+  "directories": [],
+  "entries": [
+    {
+      "id": "spells.capella-spell-dimension-door",
+      "name": "Dimension Door",
+      "collections": [
+        "spells",
+        "spells/conjuration",
+        "spells/level-4"
+      ],
+      "tags": [
+        "capella",
+        "mobility",
+        "escape",
+        "dandd-5e-wiki",
+        "player-s-handbook",
+        "dnd5eapi"
+      ],
+      "path": "library/spells/conjuration/capella-spell-dimension-door.json"
+    },
+    {
+      "id": "spells.3aee59b4-649b-422b-9a06-1a6da700d624",
+      "name": "Plane Shift",
+      "collections": [
+        "spells",
+        "spells/conjuration",
+        "spells/level-7"
+      ],
+      "tags": [
+        "escape",
+        "boss",
+        "dandd-5e-wiki",
+        "player-s-handbook",
+        "dnd5eapi"
+      ],
+      "path": "library/spells/conjuration/3aee59b4-649b-422b-9a06-1a6da700d624.json"
+    }
+  ]
+}

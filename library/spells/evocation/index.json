@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "id": "index.spells.evocation",
+  "name": "Evocation",
+  "path": "library/spells/evocation/index.json",
+  "directories": [],
+  "entries": [
+    {
+      "id": "spells.open5e-spells-srd-2024-fireball",
+      "name": "Fireball",
+      "collections": [
+        "spells",
+        "spells/evocation",
+        "spells/level-3"
+      ],
+      "tags": [
+        "open5eapi",
+        "5e-2024-rules",
+        "srd",
+        "wizards-of-the-coast",
+        "5th-edition-2024"
+      ],
+      "path": "library/spells/evocation/open5e-spells-srd-2024-fireball.json"
+    }
+  ]
+}

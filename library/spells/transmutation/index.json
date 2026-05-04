@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "id": "index.spells.transmutation",
+  "name": "Transmutation",
+  "path": "library/spells/transmutation/index.json",
+  "directories": [],
+  "entries": [
+    {
+      "id": "spells.open5e-spells-wz-abrupt-hug",
+      "name": "Abrupt Hug",
+      "collections": [
+        "spells",
+        "spells/transmutation",
+        "spells/level-1"
+      ],
+      "tags": [
+        "open5eapi",
+        "warlock-zine",
+        "wz",
+        "kobold-press",
+        "5th-edition-2014",
+        "srd"
+      ],
+      "path": "library/spells/transmutation/open5e-spells-wz-abrupt-hug.json"
+    },
+    {
+      "id": "spells.capella-spell-alter-self",
+      "name": "Alter Self",
+      "collections": [
+        "spells",
+        "spells/transmutation",
+        "spells/level-2"
+      ],
+      "tags": [
+        "capella",
+        "shapechange",
+        "utility",
+        "dandd-5e-wiki",
+        "player-s-handbook",
+        "dnd5eapi"
+      ],
+      "path": "library/spells/transmutation/capella-spell-alter-self.json"
+    },
+    {
+      "id": "spells.4c177263-68ac-419d-84d5-d71d1c18bbbf",
+      "name": "Flesh Polymorph",
+      "collections": [
+        "spells",
+        "spells/transmutation",
+        "spells/level-4"
+      ],
+      "tags": [
+        "signature",
+        "homebrew"
+      ],
+      "path": "library/spells/transmutation/4c177263-68ac-419d-84d5-d71d1c18bbbf.json"
+    },
+    {
+      "id": "spells.open5e-spells-srd-2024-polymorph",
+      "name": "Polymorph",
+      "collections": [
+        "spells",
+        "spells/transmutation",
+        "spells/level-4"
+      ],
+      "tags": [
+        "open5eapi",
+        "5e-2024-rules",
+        "srd",
+        "wizards-of-the-coast",
+        "5th-edition-2024"
+      ],
+      "path": "library/spells/transmutation/open5e-spells-srd-2024-polymorph.json"
+    },
+    {
+      "id": "spells.open5e-spells-srd-2024-true-polymorph",
+      "name": "True Polymorph",
+      "collections": [
+        "spells",
+        "spells/transmutation",
+        "spells/level-9"
+      ],
+      "tags": [
+        "open5eapi",
+        "5e-2024-rules",
+        "srd",
+        "wizards-of-the-coast",
+        "5th-edition-2024"
+      ],
+      "path": "library/spells/transmutation/open5e-spells-srd-2024-true-polymorph.json"
+    }
+  ]
+}

@@ -1,26 +1,30 @@
 {
-  "id": "2236f92f-66db-42e9-a1ad-34544cd3919c",
-  "collection": "feats",
+  "schemaVersion": 1,
+  "id": "feats.2236f92f-66db-42e9-a1ad-34544cd3919c",
   "name": "Silver Tongue",
-  "tags": [
-    "D&D 5e Wiki",
-    "Tasha's Cauldron of Everything",
-    "Mythic Odysseys of Theros"
+  "collections": [
+    "feats"
   ],
-  "source": "custom",
-  "provider": "dnd5ewiki",
-  "providerId": "silver-tongue",
-  "variantOf": "",
-  "addons": {
-    "prerequisites": [],
-    "sourceDocument": {
-      "provider": "dnd5ewiki",
-      "title": "Tasha's Cauldron of Everything / Mythic Odysseys of Theros",
-      "type": "Feature",
-      "detailUrl": "https://dnd-5e.fandom.com/wiki/Bard_%28Class%29"
+  "tags": [
+    "dandd-5e-wiki",
+    "tasha-s-cauldron-of-everything",
+    "mythic-odysseys-of-theros",
+    "dnd5eapi"
+  ],
+  "variantOf": null,
+  "sourceReferences": [
+    {
+      "provider": "dnd5eapi",
+      "sourceId": "silver-tongue",
+      "url": "https://dnd-5e.fandom.com/wiki/Bard_%28Class%29",
+      "note": "Tasha's Cauldron of Everything / Mythic Odysseys of Theros"
+    }
+  ],
+  "features": {
+    "feat": {},
+    "rulesText": {
+      "description": "Official College of Eloquence feature: when you make a Charisma (Deception) or Charisma (Persuasion) check, a d20 roll of 9 or lower counts as a 10."
     }
   },
-  "createdAt": "2026-05-01T15:52:17.807Z",
-  "updatedAt": "2026-05-01T15:52:17.807Z",
-  "description": "Official College of Eloquence feature: when you make a Charisma (Deception) or Charisma (Persuasion) check, a d20 roll of 9 or lower counts as a 10."
+  "desc": "Official College of Eloquence feature: when you make a Charisma (Deception) or Charisma (Persuasion) check, a d20 roll of 9 or lower counts as a 10."
 }

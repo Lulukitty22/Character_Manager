@@ -1,47 +1,29 @@
 {
-  "id": "dnd5eapi-features-eldritch-invocation-beguiling-influence",
-  "collection": "traits",
+  "schemaVersion": 1,
+  "id": "traits.dnd5eapi-features-eldritch-invocation-beguiling-influence",
   "name": "Eldritch Invocation: Beguiling Influence",
+  "collections": [
+    "traits"
+  ],
   "tags": [
-    "D&D 5e API",
-    "SRD 2014",
+    "dnd5eapi",
+    "srd",
     "features"
   ],
-  "source": "external",
-  "provider": "dnd5eapi",
-  "providerId": "eldritch-invocation-beguiling-influence",
-  "variantOf": "",
-  "addons": {
-    "sourceDocument": {
+  "variantOf": null,
+  "sourceReferences": [
+    {
       "provider": "dnd5eapi",
-      "title": "D&D 5e SRD 2014",
-      "type": "features",
-      "detailUrl": "https://www.dnd5eapi.co/api/2014/features/eldritch-invocation-beguiling-influence"
-    },
-    "rawImport": {
-      "index": "eldritch-invocation-beguiling-influence",
-      "class": {
-        "index": "warlock",
-        "name": "Warlock",
-        "url": "/api/2014/classes/warlock"
-      },
-      "name": "Eldritch Invocation: Beguiling Influence",
-      "level": 2,
-      "prerequisites": [],
-      "desc": [
-        "You gain proficiency in the Deception and Persuasion skills."
-      ],
-      "parent": {
-        "index": "eldritch-invocations",
-        "name": "Eldritch Invocations",
-        "url": "/api/2014/features/eldritch-invocations"
-      },
-      "url": "/api/2014/features/eldritch-invocation-beguiling-influence",
-      "updated_at": "2026-04-01T20:35:37.430Z"
+      "sourceId": "eldritch-invocation-beguiling-influence",
+      "url": "https://www.dnd5eapi.co/api/2014/features/eldritch-invocation-beguiling-influence",
+      "note": "D&D 5e SRD 2014"
+    }
+  ],
+  "features": {
+    "trait": {},
+    "rulesText": {
+      "description": "You gain proficiency in the Deception and Persuasion skills."
     }
   },
-  "createdAt": "2026-05-01T16:38:37.562Z",
-  "updatedAt": "2026-05-01T16:38:37.562Z",
-  "type": "trait",
-  "description": "You gain proficiency in the Deception and Persuasion skills."
+  "desc": "You gain proficiency in the Deception and Persuasion skills."
 }

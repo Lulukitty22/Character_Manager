@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "index.spells.divination",
+  "name": "Divination",
+  "path": "library/spells/divination/index.json",
+  "directories": [],
+  "entries": [
+    {
+      "id": "spells.d249f049-b5c0-4dc0-87d6-3b755dc761ce",
+      "name": "Detect Thoughts",
+      "collections": [
+        "spells",
+        "spells/divination",
+        "spells/level-2"
+      ],
+      "tags": [
+        "social",
+        "dandd-5e-wiki",
+        "player-s-handbook",
+        "dnd5eapi"
+      ],
+      "path": "library/spells/divination/d249f049-b5c0-4dc0-87d6-3b755dc761ce.json"
+    }
+  ]
+}

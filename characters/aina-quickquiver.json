@@ -51,7 +51,7 @@
       "source": "library",
       "libraryCollection": "items",
       "librarySource": "custom",
-      "libraryRef": "item-shortbow-archery-test",
+      "libraryRef": "items.item-shortbow-archery-test",
       "quantity": 1,
       "active": true,
       "overrides": {}
@@ -61,7 +61,7 @@
       "source": "library",
       "libraryCollection": "items",
       "librarySource": "custom",
-      "libraryRef": "item-arrow-bundle-20-test",
+      "libraryRef": "items.item-arrow-bundle-20-test",
       "quantity": 2,
       "active": true,
       "overrides": {}
@@ -71,7 +71,7 @@
       "source": "library",
       "libraryCollection": "items",
       "librarySource": "external",
-      "libraryRef": "dnd5eapi-magic-items-potion-of-healing-common",
+      "libraryRef": "items.dnd5eapi-magic-items-potion-of-healing-common",
       "quantity": 1,
       "active": true,
       "overrides": {}
@@ -90,7 +90,7 @@
       "source": "library",
       "libraryCollection": "resources",
       "librarySource": "custom",
-      "libraryRef": "resource-arrows-20",
+      "libraryRef": "resources.resource-arrows-20",
       "current": 20,
       "max": 20,
       "log": [],

@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "id": "index.tags",
+  "name": "Tags",
+  "path": "library/tags/index.json",
+  "directories": [],
+  "entries": [
+    {
+      "id": "tag:aberrant-lich",
+      "name": "Aberrant Lich",
+      "collections": [
+        "tags"
+      ],
+      "tags": [],
+      "path": "library/tags/aberrant-lich.json"
+    },
+    {
+      "id": "tag:boss",
+      "name": "Boss",
+      "collections": [
+        "tags"
+      ],
+      "tags": [],
+      "path": "library/tags/boss.json"
+    },
+    {
+      "id": "tag:d-d-5e",
+      "name": "D&D 5e",
+      "collections": [
+        "tags"
+      ],
+      "tags": [],
+      "path": "library/tags/d-d-5e.json"
+    },
+    {
+      "id": "tag:debug",
+      "name": "Debug",
+      "collections": [
+        "tags"
+      ],
+      "tags": [],
+      "path": "library/tags/debug.json"
+    },
+    {
+      "id": "tag:dual-state-sheet",
+      "name": "Dual-State Sheet",
+      "collections": [
+        "tags"
+      ],
+      "tags": [],
+      "path": "library/tags/dual-state-sheet.json"
+    },
+    {
+      "id": "tag:shapechanger",
+      "name": "Shapechanger",
+      "collections": [
+        "tags"
+      ],
+      "tags": [],
+      "path": "library/tags/shapechanger.json"
+    },
+    {
+      "id": "tag:social-manipulator",
+      "name": "Social Manipulator",
+      "collections": [
+        "tags"
+      ],
+      "tags": [],
+      "path": "library/tags/social-manipulator.json"
+    },
+    {
+      "id": "tag:test",
+      "name": "Test",
+      "collections": [
+        "tags"
+      ],
+      "tags": [],
+      "path": "library/tags/test.json"
+    }
+  ]
+}

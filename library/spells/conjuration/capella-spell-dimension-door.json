@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "id": "spells.capella-spell-dimension-door",
+  "name": "Dimension Door",
+  "collections": [
+    "spells",
+    "spells/conjuration",
+    "spells/level-4"
+  ],
+  "tags": [
+    "capella",
+    "mobility",
+    "escape",
+    "dandd-5e-wiki",
+    "player-s-handbook",
+    "dnd5eapi"
+  ],
+  "variantOf": null,
+  "sourceReferences": [
+    {
+      "provider": "dnd5eapi",
+      "sourceId": "dimension-door",
+      "url": "https://dnd-5e.fandom.com/wiki/Dimension_Door",
+      "note": "Player's Handbook"
+    }
+  ],
+  "features": {
+    "spell": {
+      "level": 4,
+      "school": "conjuration",
+      "isRitual": false,
+      "requiresConcentration": false
+    },
+    "spellcasting": {
+      "castingTime": {
+        "quantity": 1,
+        "unit": "action"
+      },
+      "range": {
+        "quantity": 500,
+        "unit": "ft"
+      },
+      "duration": {
+        "text": "Instantaneous"
+      },
+      "components": {
+        "verbal": true,
+        "somatic": false,
+        "material": false,
+        "materialDescription": ""
+      }
+    },
+    "rulesText": {
+      "description": "Panic-button repositioning, dramatic exits, abduction staging, or returning from an impossible angle."
+    },
+    "mechanics": [
+      {
+        "label": "Carry",
+        "value": "1 willing creature",
+        "kind": "positive",
+        "description": "You can bring one willing creature of your size or smaller."
+      },
+      {
+        "label": "Collision",
+        "kind": "negative",
+        "description": "Arriving in an occupied space deals force damage and fails the teleport."
+      }
+    ]
+  },
+  "desc": "Panic-button repositioning, dramatic exits, abduction staging, or returning from an impossible angle."
+}

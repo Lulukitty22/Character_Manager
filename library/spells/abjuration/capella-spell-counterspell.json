@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "id": "spells.capella-spell-counterspell",
+  "name": "Counterspell",
+  "collections": [
+    "spells",
+    "spells/abjuration",
+    "spells/level-3"
+  ],
+  "tags": [
+    "capella",
+    "reaction",
+    "defense",
+    "dandd-5e-wiki",
+    "player-s-handbook",
+    "dnd5eapi"
+  ],
+  "variantOf": null,
+  "sourceReferences": [
+    {
+      "provider": "dnd5eapi",
+      "sourceId": "counterspell",
+      "url": "https://dnd-5e.fandom.com/wiki/Counterspell",
+      "note": "Player's Handbook"
+    }
+  ],
+  "features": {
+    "spell": {
+      "level": 3,
+      "school": "abjuration",
+      "isRitual": false,
+      "requiresConcentration": false
+    },
+    "spellcasting": {
+      "castingTime": {
+        "quantity": 1,
+        "unit": "reaction, which you take when you see a creature within 60 feet of you casting a spell"
+      },
+      "range": {
+        "quantity": 60,
+        "unit": "ft"
+      },
+      "duration": {
+        "text": "Instantaneous"
+      },
+      "components": {
+        "verbal": false,
+        "somatic": true,
+        "material": false,
+        "materialDescription": ""
+      }
+    },
+    "rulesText": {
+      "description": "Lets Capella interrupt magic that would pin, reveal, banish, or burst her down before the body horror engine gets rolling."
+    },
+    "mechanics": [
+      {
+        "label": "Interrupt",
+        "kind": "negative",
+        "description": "The target spell fails if your interruption succeeds."
+      },
+      {
+        "label": "Upcast",
+        "value": "4th+",
+        "kind": "positive",
+        "description": "Higher-level slots can shut down equal-or-lower spells."
+      }
+    ]
+  },
+  "desc": "Lets Capella interrupt magic that would pin, reveal, banish, or burst her down before the body horror engine gets rolling."
+}

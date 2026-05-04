@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "id": "items.item-arrow-bundle-20-test",
+  "name": "Arrow Bundle (20)",
+  "collections": [
+    "items",
+    "items/consumable",
+    "items/consumable/equipment-categories-ammunition"
+  ],
+  "tags": [
+    "ammo",
+    "ammunition",
+    "archery",
+    "consumable",
+    "ammo-test",
+    "equipment-categories-ammunition"
+  ],
+  "variantOf": null,
+  "sourceReferences": [],
+  "features": {
+    "item": {
+      "category": "consumable",
+      "subcategory": "equipment-categories-ammunition",
+      "rarity": "",
+      "requiresAttunement": false
+    },
+    "weight": {
+      "quantity": 1,
+      "unit": "lb"
+    },
+    "effects": {
+      "hp": {
+        "flatBonus": 0,
+        "perLevelBonus": 0,
+        "tempHp": 0
+      },
+      "spellSlots": {}
+    },
+    "actions": [
+      {
+        "label": "Reload 20",
+        "consumeQuantity": true,
+        "effects": {
+          "resources": [
+            {
+              "target": "Arrows",
+              "delta": 20,
+              "maxCap": 20,
+              "reason": "Loaded a fresh bundle of arrows"
+            }
+          ]
+        },
+        "description": "Consume this bundle to refill the Arrows resource."
+      }
+    ],
+    "inventory": {
+      "isStackable": true,
+      "defaultQuantity": 1,
+      "consumedOnUse": true
+    },
+    "mechanics": [
+      {
+        "label": "Reload",
+        "value": "+20 Arrows",
+        "kind": "positive",
+        "description": "Adds 20 arrows to the Arrows resource, up to its max."
+      }
+    ]
+  },
+  "desc": "A fresh bundle of twenty arrows for testing reload interactions."
+}

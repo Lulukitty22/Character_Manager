@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "index.library",
+  "name": "Library",
+  "path": "library/index.json",
+  "directories": [
+    {
+      "name": "Classes",
+      "path": "library/classes/index.json"
+    },
+    {
+      "name": "Feats",
+      "path": "library/feats/index.json"
+    },
+    {
+      "name": "Items",
+      "path": "library/items/index.json"
+    },
+    {
+      "name": "Resources",
+      "path": "library/resources/index.json"
+    },
+    {
+      "name": "Species",
+      "path": "library/species/index.json"
+    },
+    {
+      "name": "Spells",
+      "path": "library/spells/index.json"
+    },
+    {
+      "name": "Tags",
+      "path": "library/tags/index.json"
+    },
+    {
+      "name": "Traits",
+      "path": "library/traits/index.json"
+    }
+  ],
+  "entries": []
+}

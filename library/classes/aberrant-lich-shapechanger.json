@@ -1,22 +1,18 @@
 {
-  "id": "aberrant-lich-shapechanger",
-  "collection": "classes",
+  "schemaVersion": 1,
+  "id": "classes.aberrant-lich-shapechanger",
   "name": "Aberrant Lich / Shapechanger",
+  "collections": [
+    "classes"
+  ],
   "tags": [],
-  "source": "custom",
-  "provider": "",
-  "providerId": "",
-  "variantOf": "",
-  "addons": {
-    "mechanics": [],
-    "stats": {},
-    "speed": {},
-    "proficiencies": [],
-    "feats": []
+  "variantOf": null,
+  "sourceReferences": [],
+  "features": {
+    "class": {
+      "hitDie": "d10",
+      "primaryAbility": "Charisma"
+    }
   },
-  "createdAt": "2026-05-03T04:32:59.965Z",
-  "updatedAt": "2026-05-03T04:32:59.965Z",
-  "description": "Custom boss-class frame for aberrant lich shapechangers such as Capella.",
-  "hitDie": "d10",
-  "primaryAbility": "Charisma"
+  "desc": "Custom boss-class frame for aberrant lich shapechangers such as Capella."
 }

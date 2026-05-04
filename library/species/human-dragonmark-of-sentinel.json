@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "id": "species.human-dragonmark-of-sentinel",
+  "name": "Human (Dragonmark of Sentinel)",
+  "collections": [
+    "species"
+  ],
+  "tags": [
+    "dandd-5e",
+    "dragonmark",
+    "human",
+    "species"
+  ],
+  "variantOf": "human",
+  "sourceReferences": [],
+  "features": {
+    "species": {
+      "creatureType": "humanoid",
+      "defaultSize": "medium"
+    },
+    "movement": {
+      "walk": {
+        "quantity": 30,
+        "unit": "ft"
+      }
+    },
+    "abilityBonuses": {
+      "con": 2,
+      "wis": 1
+    },
+    "hp": {
+      "flatBonus": 0,
+      "perLevelBonus": 0
+    },
+    "traits": {
+      "traitIds": [
+        "Sentinel's Intuition",
+        "Guardian's Shield",
+        "Vigilant Guardian"
+      ]
+    },
+    "mechanics": [
+      {
+        "label": "CON",
+        "value": "+2",
+        "kind": "positive",
+        "description": "Dragonmark of Sentinel ability increase."
+      },
+      {
+        "label": "WIS",
+        "value": "+1",
+        "kind": "positive",
+        "description": "Dragonmark of Sentinel ability increase."
+      }
+    ]
+  },
+  "desc": "Protective human dragonmark lineage. The listed stat bonuses are tracked as ancestry math and should already be included in final ability scores."
+}

@@ -1,39 +1,29 @@
 {
-  "id": "capella-trait-flesh-polymorph",
-  "collection": "traits",
+  "schemaVersion": 1,
+  "id": "traits.capella-trait-flesh-polymorph",
   "name": "Flesh Polymorph",
+  "collections": [
+    "traits"
+  ],
   "tags": [
-    "Capella",
+    "capella",
     "shapechange",
     "combat"
   ],
-  "source": "custom",
-  "provider": "",
-  "providerId": "",
-  "variantOf": "",
-  "addons": {
-    "sourceDocument": {
-      "provider": "dnd5ewiki",
-      "title": "Monster Manual",
-      "type": "Trait",
-      "detailUrl": "https://dnd-5e.fandom.com/wiki/Gray_Slaad"
-    },
-    "sourceDocuments": [
-      {
-        "provider": "dnd5ewiki",
-        "title": "Player's Handbook",
-        "type": "Spell",
-        "detailUrl": "https://dnd-5e.fandom.com/wiki/Polymorph"
-      }
-    ],
-    "polymorph": {
-      "selfOnly": true,
-      "replacesStatBlock": false
+  "variantOf": null,
+  "sourceReferences": [
+    {
+      "provider": "internal",
+      "sourceId": "capella-trait-flesh-polymorph",
+      "url": "https://dnd-5e.fandom.com/wiki/Gray_Slaad",
+      "note": "Monster Manual"
+    }
+  ],
+  "features": {
+    "trait": {},
+    "rulesText": {
+      "description": "Modified self-only Polymorph. Capella changes body traits without replacing her stat block, HP, AC, or mental stats. It adds physical traits only."
     }
   },
-  "type": "bonus_action",
-  "description": "Modified self-only Polymorph. Capella changes body traits without replacing her stat block, HP, AC, or mental stats. It adds physical traits only.",
-  "active": true,
-  "createdAt": "2026-05-01T16:57:08.797Z",
-  "updatedAt": "2026-05-01T16:57:08.797Z"
+  "desc": "Modified self-only Polymorph. Capella changes body traits without replacing her stat block, HP, AC, or mental stats. It adds physical traits only."
 }

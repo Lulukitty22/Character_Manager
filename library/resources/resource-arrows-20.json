@@ -1,18 +1,20 @@
 {
-  "id": "resource-arrows-20",
-  "collection": "resources",
+  "schemaVersion": 1,
+  "id": "resources.resource-arrows-20",
   "name": "Arrows",
+  "collections": [
+    "resources"
+  ],
   "tags": [
     "ammo",
     "archery",
     "test"
   ],
-  "source": "custom",
-  "provider": "",
-  "providerId": "",
-  "variantOf": "",
-  "addons": {
+  "variantOf": null,
+  "sourceReferences": [],
+  "features": {
     "resource": {
+      "defaultMax": 20,
       "currentIsCharacterState": true,
       "logIsCharacterState": true
     },
@@ -24,8 +26,5 @@
       }
     ]
   },
-  "max": 20,
-  "description": "Tracks arrows currently available for ranged attacks.",
-  "createdAt": "2026-05-03T19:00:00.000Z",
-  "updatedAt": "2026-05-03T19:00:00.000Z"
+  "desc": "Tracks arrows currently available for ranged attacks."
 }

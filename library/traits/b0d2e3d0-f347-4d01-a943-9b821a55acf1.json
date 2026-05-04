@@ -1,18 +1,20 @@
 {
-  "id": "b0d2e3d0-f347-4d01-a943-9b821a55acf1",
-  "collection": "traits",
+  "schemaVersion": 1,
+  "id": "traits.b0d2e3d0-f347-4d01-a943-9b821a55acf1",
   "name": "Roll Calculator â€” Social / Casting",
+  "collections": [
+    "traits"
+  ],
   "tags": [
     "calculator"
   ],
-  "source": "custom",
-  "provider": "",
-  "providerId": "",
-  "variantOf": "",
-  "addons": {},
-  "createdAt": "2026-05-01T15:51:13.985Z",
-  "updatedAt": "2026-05-01T15:51:13.985Z",
-  "type": "feature",
-  "description": "Spell Save DC: 25. Spellcasting / Flesh Attack: Advantage 1d20+17. Proficient Charisma Skill: Advantage 1d20+15. Prepared Deception / Impersonation / Persuasion: 1d20+15; Silver Tongue d20 floor 10 applies. Player Improv Deception / Impersonation / Persuasion: 1d20+10; Expert Deceiver and Silver Tongue do not apply vs players.",
-  "active": true
+  "variantOf": null,
+  "sourceReferences": [],
+  "features": {
+    "trait": {},
+    "rulesText": {
+      "description": "Spell Save DC: 25. Spellcasting / Flesh Attack: Advantage 1d20+17. Proficient Charisma Skill: Advantage 1d20+15. Prepared Deception / Impersonation / Persuasion: 1d20+15; Silver Tongue d20 floor 10 applies. Player Improv Deception / Impersonation / Persuasion: 1d20+10; Expert Deceiver and Silver Tongue do not apply vs players."
+    }
+  },
+  "desc": "Spell Save DC: 25. Spellcasting / Flesh Attack: Advantage 1d20+17. Proficient Charisma Skill: Advantage 1d20+15. Prepared Deception / Impersonation / Persuasion: 1d20+15; Silver Tongue d20 floor 10 applies. Player Improv Deception / Impersonation / Persuasion: 1d20+10; Expert Deceiver and Silver Tongue do not apply vs players."
 }

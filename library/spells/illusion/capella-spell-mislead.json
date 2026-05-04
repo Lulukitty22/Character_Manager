@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "id": "spells.capella-spell-mislead",
+  "name": "Mislead",
+  "collections": [
+    "spells",
+    "spells/illusion",
+    "spells/level-5"
+  ],
+  "tags": [
+    "capella",
+    "illusion",
+    "escape",
+    "dandd-5e-wiki",
+    "player-s-handbook",
+    "dnd5eapi"
+  ],
+  "variantOf": null,
+  "sourceReferences": [
+    {
+      "provider": "dnd5eapi",
+      "sourceId": "mislead",
+      "url": "https://dnd-5e.fandom.com/wiki/Mislead",
+      "note": "Player's Handbook"
+    }
+  ],
+  "features": {
+    "spell": {
+      "level": 5,
+      "school": "illusion",
+      "isRitual": false,
+      "requiresConcentration": true
+    },
+    "spellcasting": {
+      "castingTime": {
+        "quantity": 1,
+        "unit": "action"
+      },
+      "range": {
+        "text": "Self"
+      },
+      "duration": {
+        "text": "Concentration, up to 1 hour"
+      },
+      "components": {
+        "verbal": false,
+        "somatic": true,
+        "material": false,
+        "materialDescription": ""
+      }
+    },
+    "rulesText": {
+      "description": "Lets her split attention between an innocent-looking decoy and the real monster body moving elsewhere."
+    },
+    "mechanics": [
+      {
+        "label": "Invisible",
+        "kind": "positive",
+        "description": "You become invisible while an illusory double remains."
+      },
+      {
+        "label": "Senses",
+        "kind": "neutral",
+        "description": "You can perceive through the double while using its senses."
+      }
+    ]
+  },
+  "desc": "Lets her split attention between an innocent-looking decoy and the real monster body moving elsewhere."
+}

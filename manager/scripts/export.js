@@ -55,6 +55,9 @@ const SheetExporter = (() => {
       baseCss:       `${repoBase}/manager/style/base.css`,
       sheetCss:      `${repoBase}/manager/style/sheet.css`,
       schema:        `${repoBase}/manager/scripts/schema.js`,
+      libraryRecords: `${repoBase}/manager/scripts/importers/library-records.js`,
+      open5eapi:     `${repoBase}/manager/scripts/importers/open5eapi.js`,
+      dnd5eapi:      `${repoBase}/manager/scripts/importers/dnd5eapi.js`,
       library:       `${repoBase}/manager/scripts/library.js`,
       dndCalculations: `${repoBase}/manager/scripts/dnd-calculations.js`,
       utils:         `${repoBase}/manager/scripts/views/view-character-utils.js`,
@@ -88,6 +91,9 @@ const SheetExporter = (() => {
     const escapedBaseCss      = escapeJsString(scriptUrls.baseCss);
     const escapedSheetCss      = escapeJsString(scriptUrls.sheetCss);
     const escapedSchema        = escapeJsString(scriptUrls.schema);
+    const escapedLibraryRecords = escapeJsString(scriptUrls.libraryRecords);
+    const escapedOpen5eApi      = escapeJsString(scriptUrls.open5eapi);
+    const escapedDnd5eApi       = escapeJsString(scriptUrls.dnd5eapi);
     const escapedLibrary       = escapeJsString(scriptUrls.library);
     const escapedDndCalculations = escapeJsString(scriptUrls.dndCalculations);
     const escapedUtils         = escapeJsString(scriptUrls.utils);
@@ -148,6 +154,9 @@ const SheetExporter = (() => {
   var BASE_CSS_URL       = "${escapedBaseCss}";
   var SHEET_CSS_URL      = "${escapedSheetCss}";
   var SCHEMA_URL         = "${escapedSchema}";
+  var LIBRARY_RECORDS_URL = "${escapedLibraryRecords}";
+  var OPEN5EAPI_URL      = "${escapedOpen5eApi}";
+  var DND5EAPI_URL       = "${escapedDnd5eApi}";
   var LIBRARY_URL        = "${escapedLibrary}";
   var DND_CALCULATIONS_URL = "${escapedDndCalculations}";
   var UTILS_URL          = "${escapedUtils}";
@@ -236,6 +245,9 @@ const SheetExporter = (() => {
       setStatus("Loading renderer…");
       var rendererScripts = [
         [SCHEMA_URL,         "schema.js"],
+        [LIBRARY_RECORDS_URL, "library-records.js"],
+        [OPEN5EAPI_URL,      "open5eapi.js"],
+        [DND5EAPI_URL,       "dnd5eapi.js"],
         [LIBRARY_URL,        "library.js"],
         [DND_CALCULATIONS_URL, "dnd-calculations.js"],
         [UTILS_URL,          "view-character-utils.js"],

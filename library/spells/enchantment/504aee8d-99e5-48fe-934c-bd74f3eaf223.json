@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "id": "spells.504aee8d-99e5-48fe-934c-bd74f3eaf223",
+  "name": "Suggestion",
+  "collections": [
+    "spells",
+    "spells/enchantment",
+    "spells/level-2"
+  ],
+  "tags": [
+    "social",
+    "dandd-5e-wiki",
+    "player-s-handbook",
+    "dnd5eapi"
+  ],
+  "variantOf": null,
+  "sourceReferences": [
+    {
+      "provider": "dnd5eapi",
+      "sourceId": "suggestion",
+      "url": "https://dnd-5e.fandom.com/wiki/Suggestion",
+      "note": "Player's Handbook"
+    }
+  ],
+  "features": {
+    "spell": {
+      "level": 2,
+      "school": "enchantment",
+      "isRitual": false,
+      "requiresConcentration": true
+    },
+    "spellcasting": {
+      "castingTime": {
+        "quantity": 1,
+        "unit": "action"
+      },
+      "range": {
+        "quantity": 30,
+        "unit": "ft"
+      },
+      "duration": {
+        "text": "Concentration, up to 8 hours"
+      },
+      "components": {
+        "verbal": true,
+        "somatic": false,
+        "material": true,
+        "materialDescription": ""
+      }
+    },
+    "rulesText": {
+      "description": "Social pressure option for manipulation scenes."
+    },
+    "mechanics": [
+      {
+        "label": "Save",
+        "value": "Wisdom",
+        "kind": "requirement",
+        "description": "Targets make a Wisdom saving throw."
+      },
+      {
+        "label": "Charm",
+        "kind": "condition",
+        "description": "Creatures that cannot be charmed are immune."
+      },
+      {
+        "label": "Harm Ends",
+        "kind": "negative",
+        "description": "If you or your companions damage the target, the spell ends."
+      }
+    ]
+  },
+  "desc": "Social pressure option for manipulation scenes."
+}

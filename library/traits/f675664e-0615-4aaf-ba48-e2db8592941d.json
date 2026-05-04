@@ -1,25 +1,27 @@
 {
-  "id": "f675664e-0615-4aaf-ba48-e2db8592941d",
-  "collection": "traits",
+  "schemaVersion": 1,
+  "id": "traits.f675664e-0615-4aaf-ba48-e2db8592941d",
   "name": "Extra Attack",
+  "collections": [
+    "traits"
+  ],
   "tags": [
     "combat"
   ],
-  "source": "custom",
-  "provider": "",
-  "providerId": "",
-  "variantOf": "",
-  "addons": {
-    "sourceDocument": {
-      "provider": "dnd5ewiki",
-      "title": "Player's Handbook",
-      "type": "Feature",
-      "detailUrl": "https://dnd-5e.fandom.com/wiki/Fighter"
+  "variantOf": null,
+  "sourceReferences": [
+    {
+      "provider": "internal",
+      "sourceId": "f675664e-0615-4aaf-ba48-e2db8592941d",
+      "url": "https://dnd-5e.fandom.com/wiki/Fighter",
+      "note": "Player's Handbook"
+    }
+  ],
+  "features": {
+    "trait": {},
+    "rulesText": {
+      "description": "When Capella takes the Attack action, she makes 2 attacks."
     }
   },
-  "createdAt": "2026-05-01T15:51:13.985Z",
-  "updatedAt": "2026-05-01T15:51:13.985Z",
-  "type": "feature",
-  "description": "When Capella takes the Attack action, she makes 2 attacks.",
-  "active": true
+  "desc": "When Capella takes the Attack action, she makes 2 attacks."
 }

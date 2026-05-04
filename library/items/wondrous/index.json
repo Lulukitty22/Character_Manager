@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "id": "index.items.wondrous",
+  "name": "Wondrous",
+  "path": "library/items/wondrous/index.json",
+  "directories": [
+    {
+      "name": "Record",
+      "path": "library/items/wondrous/record/index.json"
+    }
+  ],
+  "entries": []
+}

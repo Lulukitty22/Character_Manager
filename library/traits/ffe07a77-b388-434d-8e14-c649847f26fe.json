@@ -1,25 +1,27 @@
 {
-  "id": "ffe07a77-b388-434d-8e14-c649847f26fe",
-  "collection": "traits",
+  "schemaVersion": 1,
+  "id": "traits.ffe07a77-b388-434d-8e14-c649847f26fe",
   "name": "Soul Vessel / Far Realm Parasite",
+  "collections": [
+    "traits"
+  ],
   "tags": [
     "death"
   ],
-  "source": "custom",
-  "provider": "",
-  "providerId": "",
-  "variantOf": "",
-  "addons": {
-    "sourceDocument": {
-      "provider": "dnd5ewiki",
-      "title": "Monster Manual",
-      "type": "Monster",
-      "detailUrl": "https://dnd-5e.fandom.com/wiki/Lich"
+  "variantOf": null,
+  "sourceReferences": [
+    {
+      "provider": "internal",
+      "sourceId": "ffe07a77-b388-434d-8e14-c649847f26fe",
+      "url": "https://dnd-5e.fandom.com/wiki/Lich",
+      "note": "Monster Manual"
+    }
+  ],
+  "features": {
+    "trait": {},
+    "rulesText": {
+      "description": "When reduced to 0 HP, the current body collapses. Capella does not truly die unless the parasite/vessel anchor is found, contained, destroyed, or otherwise dealt with."
     }
   },
-  "createdAt": "2026-05-01T15:51:13.985Z",
-  "updatedAt": "2026-05-01T15:51:13.985Z",
-  "type": "trait",
-  "description": "When reduced to 0 HP, the current body collapses. Capella does not truly die unless the parasite/vessel anchor is found, contained, destroyed, or otherwise dealt with.",
-  "active": true
+  "desc": "When reduced to 0 HP, the current body collapses. Capella does not truly die unless the parasite/vessel anchor is found, contained, destroyed, or otherwise dealt with."
 }

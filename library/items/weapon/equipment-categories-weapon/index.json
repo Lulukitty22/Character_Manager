@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "index.items.weapon.equipment-categories-weapon",
+  "name": "Equipment Categories Weapon",
+  "path": "library/items/weapon/equipment-categories-weapon/index.json",
+  "directories": [],
+  "entries": [
+    {
+      "id": "items.item-shortbow-archery-test",
+      "name": "Field Shortbow",
+      "collections": [
+        "items",
+        "items/weapon",
+        "items/weapon/equipment-categories-weapon"
+      ],
+      "tags": [
+        "weapon",
+        "archery",
+        "ammo-test",
+        "equipment-categories-weapon",
+        "equipment-categories-martial-ranged-weapons",
+        "ammunition-using"
+      ],
+      "path": "library/items/weapon/equipment-categories-weapon/item-shortbow-archery-test.json"
+    }
+  ]
+}

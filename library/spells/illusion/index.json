@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 1,
+  "id": "index.spells.illusion",
+  "name": "Illusion",
+  "path": "library/spells/illusion/index.json",
+  "directories": [],
+  "entries": [
+    {
+      "id": "spells.capella-spell-disguise-self",
+      "name": "Disguise Self",
+      "collections": [
+        "spells",
+        "spells/illusion",
+        "spells/level-1"
+      ],
+      "tags": [
+        "capella",
+        "social",
+        "disguise",
+        "dandd-5e-wiki",
+        "player-s-handbook",
+        "dnd5eapi"
+      ],
+      "path": "library/spells/illusion/capella-spell-disguise-self.json"
+    },
+    {
+      "id": "spells.capella-spell-fear",
+      "name": "Fear",
+      "collections": [
+        "spells",
+        "spells/illusion",
+        "spells/level-3"
+      ],
+      "tags": [
+        "capella",
+        "control",
+        "psychic",
+        "dandd-5e-wiki",
+        "player-s-handbook",
+        "dnd5eapi"
+      ],
+      "path": "library/spells/illusion/capella-spell-fear.json"
+    },
+    {
+      "id": "spells.capella-spell-mirror-image",
+      "name": "Mirror Image",
+      "collections": [
+        "spells",
+        "spells/illusion",
+        "spells/level-2"
+      ],
+      "tags": [
+        "capella",
+        "defense",
+        "illusion",
+        "dandd-5e-wiki",
+        "player-s-handbook",
+        "dnd5eapi"
+      ],
+      "path": "library/spells/illusion/capella-spell-mirror-image.json"
+    },
+    {
+      "id": "spells.capella-spell-mislead",
+      "name": "Mislead",
+      "collections": [
+        "spells",
+        "spells/illusion",
+        "spells/level-5"
+      ],
+      "tags": [
+        "capella",
+        "illusion",
+        "escape",
+        "dandd-5e-wiki",
+        "player-s-handbook",
+        "dnd5eapi"
+      ],
+      "path": "library/spells/illusion/capella-spell-mislead.json"
+    },
+    {
+      "id": "spells.capella-spell-seeming",
+      "name": "Seeming",
+      "collections": [
+        "spells",
+        "spells/illusion",
+        "spells/level-5"
+      ],
+      "tags": [
+        "capella",
+        "social",
+        "mass-disguise",
+        "dandd-5e-wiki",
+        "player-s-handbook",
+        "dnd5eapi"
+      ],
+      "path": "library/spells/illusion/capella-spell-seeming.json"
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "id": "spells.capella-spell-modify-memory",
+  "name": "Modify Memory",
+  "collections": [
+    "spells",
+    "spells/enchantment",
+    "spells/level-5"
+  ],
+  "tags": [
+    "capella",
+    "social",
+    "memory",
+    "dandd-5e-wiki",
+    "player-s-handbook",
+    "dnd5eapi"
+  ],
+  "variantOf": null,
+  "sourceReferences": [
+    {
+      "provider": "dnd5eapi",
+      "sourceId": "modify-memory",
+      "url": "https://dnd-5e.fandom.com/wiki/Modify_Memory",
+      "note": "Player's Handbook"
+    }
+  ],
+  "features": {
+    "spell": {
+      "level": 5,
+      "school": "enchantment",
+      "isRitual": false,
+      "requiresConcentration": true
+    },
+    "spellcasting": {
+      "castingTime": {
+        "quantity": 1,
+        "unit": "action"
+      },
+      "range": {
+        "quantity": 30,
+        "unit": "ft"
+      },
+      "duration": {
+        "text": "Concentration, up to 1 minute"
+      },
+      "components": {
+        "verbal": true,
+        "somatic": true,
+        "material": false,
+        "materialDescription": ""
+      }
+    },
+    "rulesText": {
+      "description": "After-scene cleanup, interrogation horror, or social manipulation. Use with care around player agency."
+    },
+    "mechanics": [
+      {
+        "label": "Memory Window",
+        "value": "24h / 10m",
+        "kind": "requirement",
+        "description": "Only recent memories from the last 24 hours can be altered."
+      },
+      {
+        "label": "Restore",
+        "value": "Remove Curse / Greater Restoration / Wish",
+        "kind": "positive",
+        "description": "Those spells can restore the target's true memory."
+      }
+    ]
+  },
+  "desc": "After-scene cleanup, interrogation horror, or social manipulation. Use with care around player agency."
+}

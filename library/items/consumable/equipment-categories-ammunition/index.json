@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "index.items.consumable.equipment-categories-ammunition",
+  "name": "Equipment Categories Ammunition",
+  "path": "library/items/consumable/equipment-categories-ammunition/index.json",
+  "directories": [],
+  "entries": [
+    {
+      "id": "items.item-arrow-bundle-20-test",
+      "name": "Arrow Bundle (20)",
+      "collections": [
+        "items",
+        "items/consumable",
+        "items/consumable/equipment-categories-ammunition"
+      ],
+      "tags": [
+        "ammo",
+        "ammunition",
+        "archery",
+        "consumable",
+        "ammo-test",
+        "equipment-categories-ammunition"
+      ],
+      "path": "library/items/consumable/equipment-categories-ammunition/item-arrow-bundle-20-test.json"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "id": "index.items.weapon",
+  "name": "Weapon",
+  "path": "library/items/weapon/index.json",
+  "directories": [
+    {
+      "name": "Equipment Categories Weapon",
+      "path": "library/items/weapon/equipment-categories-weapon/index.json"
+    }
+  ],
+  "entries": []
+}

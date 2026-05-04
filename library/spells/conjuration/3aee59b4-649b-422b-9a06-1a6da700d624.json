@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "id": "spells.3aee59b4-649b-422b-9a06-1a6da700d624",
+  "name": "Plane Shift",
+  "collections": [
+    "spells",
+    "spells/conjuration",
+    "spells/level-7"
+  ],
+  "tags": [
+    "escape",
+    "boss",
+    "dandd-5e-wiki",
+    "player-s-handbook",
+    "dnd5eapi"
+  ],
+  "variantOf": null,
+  "sourceReferences": [
+    {
+      "provider": "dnd5eapi",
+      "sourceId": "plane-shift",
+      "url": "https://dnd-5e.fandom.com/wiki/Plane_Shift",
+      "note": "Player's Handbook"
+    }
+  ],
+  "features": {
+    "spell": {
+      "level": 7,
+      "school": "conjuration",
+      "isRitual": false,
+      "requiresConcentration": false
+    },
+    "spellcasting": {
+      "castingTime": {
+        "quantity": 1,
+        "unit": "action"
+      },
+      "range": {
+        "text": "Touch"
+      },
+      "duration": {
+        "text": "Instantaneous"
+      },
+      "components": {
+        "verbal": true,
+        "somatic": true,
+        "material": true,
+        "materialDescription": ""
+      }
+    },
+    "rulesText": {
+      "description": "Escape or story movement option. Usually used to leave or reposition rather than hard-delete players."
+    },
+    "mechanics": [
+      {
+        "label": "Willing",
+        "value": "Up to 8",
+        "kind": "positive",
+        "description": "You can transport up to eight willing creatures linked in a circle."
+      },
+      {
+        "label": "Banish",
+        "kind": "negative",
+        "description": "An unwilling creature can be banished with a melee spell attack."
+      }
+    ]
+  },
+  "desc": "Escape or story movement option. Usually used to leave or reposition rather than hard-delete players."
+}

@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "id": "spells.open5e-spells-deepm-kiss-of-the-succubus",
+  "name": "Kiss of the Succubus",
+  "collections": [
+    "spells",
+    "spells/necromancy",
+    "spells/level-5"
+  ],
+  "tags": [
+    "open5eapi",
+    "deep-magic-for-5th-edition",
+    "deepm",
+    "kobold-press",
+    "5th-edition-2014",
+    "srd"
+  ],
+  "variantOf": null,
+  "sourceReferences": [
+    {
+      "provider": "open5eapi",
+      "sourceId": "deepm_kiss-of-the-succubus",
+      "url": null,
+      "note": "Deep Magic for 5th Edition"
+    }
+  ],
+  "features": {
+    "spell": {
+      "level": 5,
+      "school": "necromancy",
+      "isRitual": false,
+      "requiresConcentration": false
+    },
+    "spellcasting": {
+      "castingTime": {
+        "text": "action"
+      },
+      "range": {
+        "text": "Touch"
+      },
+      "duration": {
+        "text": "instantaneous"
+      },
+      "components": {
+        "verbal": false,
+        "somatic": true,
+        "material": false,
+        "materialDescription": ""
+      }
+    },
+    "damage": {
+      "roll": "5d10",
+      "types": [
+        "psychic"
+      ],
+      "savingThrow": "constitution"
+    },
+    "area": {
+      "shape": "",
+      "size": null,
+      "unit": "feet"
+    },
+    "rulesText": {
+      "description": "You kiss a willing creature or one you have charmed or held spellbound through spells or abilities such as [dominate person](https://api.open5e.com/spells/dominate-person). The target must make a Constitution saving throw. A creature takes 5d10 psychic damage on a failed save, or half as much damage on a successful one. The targetÃƒÂ¢Ã‚Â€Ã‚Â™s hit point maximum is reduced by an amount equal to the damage taken; this reduction lasts until the target finishes a long rest. The target dies if this effect reduces its hit point maximum to 0.\n\n\nWhen you cast this spell using a spell slot of 6th level or higher, the damage increases by 1d10 for each slot level above 5th."
+    }
+  },
+  "desc": "You kiss a willing creature or one you have charmed or held spellbound through spells or abilities such as [dominate person](https://api.open5e.com/spells/dominate-person). The target must make a Constitution saving throw. A creature takes 5d10 psychic damage on a failed save, or half as much damage on a successful one. The targetÃƒÂ¢Ã‚Â€Ã‚Â™s hit point maximum is reduced by an amount equal to the damage taken; this reduction lasts until the target finishes a long rest. The target dies if this effect reduces its hit point maximum to 0.\n\n\nWhen you cast this spell using a spell slot of 6th level or higher, the damage increases by 1d10 for each slot level above 5th."
+}

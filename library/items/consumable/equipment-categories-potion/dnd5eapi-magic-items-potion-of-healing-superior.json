@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "id": "items.dnd5eapi-magic-items-potion-of-healing-superior",
+  "name": "Potion of Superior Healing",
+  "collections": [
+    "items",
+    "items/consumable",
+    "items/consumable/equipment-categories-potion"
+  ],
+  "tags": [
+    "dnd5eapi",
+    "srd",
+    "magic-items",
+    "equipment-categories-potion",
+    "potion",
+    "healing",
+    "consumable",
+    "rarity-rare",
+    "rare"
+  ],
+  "variantOf": "dnd5eapi-magic-items-potion-of-healing",
+  "sourceReferences": [
+    {
+      "provider": "dnd5eapi",
+      "sourceId": "potion-of-healing-superior",
+      "url": "https://www.dnd5eapi.co/api/2014/magic-items/potion-of-healing-superior",
+      "note": "D&D 5e SRD 2014"
+    }
+  ],
+  "features": {
+    "item": {
+      "category": "consumable",
+      "subcategory": "equipment-categories-potion",
+      "rarity": "rare",
+      "requiresAttunement": false
+    },
+    "healing": {
+      "dice": "8d4 + 8"
+    },
+    "actions": [
+      {
+        "label": "Drink",
+        "consumeQuantity": true,
+        "effects": {
+          "heal": {
+            "dice": "8d4 + 8"
+          }
+        },
+        "description": "Consume the potion and regain hit points."
+      }
+    ],
+    "inventory": {
+      "isStackable": false,
+      "defaultQuantity": 1,
+      "consumedOnUse": true
+    },
+    "mechanics": [
+      {
+        "label": "Type",
+        "value": "Potion",
+        "kind": "neutral"
+      },
+      {
+        "label": "Rarity",
+        "value": "Rare",
+        "kind": "positive"
+      },
+      {
+        "label": "Healing",
+        "value": "+8d4 + 8",
+        "kind": "positive",
+        "description": "Drink to regain hit points."
+      }
+    ]
+  },
+  "desc": "Potion, rare\n\nYou regain 8d4 + 8 hit points when you drink this potion. The potion's red liquid glimmers when agitated."
+}

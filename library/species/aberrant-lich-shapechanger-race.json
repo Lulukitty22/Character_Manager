@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "id": "species.aberrant-lich-shapechanger-race",
+  "name": "Aberrant Lich / Shapechanger",
+  "collections": [
+    "species"
+  ],
+  "tags": [
+    "boss",
+    "aberrant-lich",
+    "shapechanger",
+    "species"
+  ],
+  "variantOf": null,
+  "sourceReferences": [],
+  "features": {
+    "species": {
+      "creatureType": "humanoid",
+      "defaultSize": "medium"
+    },
+    "movement": {
+      "walk": {
+        "quantity": 30,
+        "unit": "ft"
+      }
+    },
+    "abilityBonuses": {},
+    "hp": {
+      "flatBonus": 0,
+      "perLevelBonus": 0
+    },
+    "traits": {
+      "traitIds": []
+    },
+    "mechanics": [
+      {
+        "label": "Boss Template",
+        "kind": "requirement",
+        "description": "Capella's boss HP is intentionally table-tuned; calculated HP is informational unless applied."
+      }
+    ]
+  },
+  "desc": "Custom boss ancestry/template for Capella-style aberrant lich shapechangers."
+}

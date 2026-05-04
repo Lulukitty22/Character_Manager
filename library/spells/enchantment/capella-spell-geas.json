@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "id": "spells.capella-spell-geas",
+  "name": "Geas",
+  "collections": [
+    "spells",
+    "spells/enchantment",
+    "spells/level-5"
+  ],
+  "tags": [
+    "capella",
+    "social",
+    "coercion",
+    "dandd-5e-wiki",
+    "player-s-handbook",
+    "dnd5eapi"
+  ],
+  "variantOf": null,
+  "sourceReferences": [
+    {
+      "provider": "dnd5eapi",
+      "sourceId": "geas",
+      "url": "https://dnd-5e.fandom.com/wiki/Geas",
+      "note": "Player's Handbook"
+    }
+  ],
+  "features": {
+    "spell": {
+      "level": 5,
+      "school": "enchantment",
+      "isRitual": false,
+      "requiresConcentration": false
+    },
+    "spellcasting": {
+      "castingTime": {
+        "quantity": 1,
+        "unit": "minute"
+      },
+      "range": {
+        "quantity": 60,
+        "unit": "ft"
+      },
+      "duration": {
+        "text": "30 days"
+      },
+      "components": {
+        "verbal": true,
+        "somatic": false,
+        "material": false,
+        "materialDescription": ""
+      }
+    },
+    "rulesText": {
+      "description": "Long-form coercion for NPC plots and offscreen manipulation, not a quick combat button."
+    },
+    "mechanics": [
+      {
+        "label": "Charmed",
+        "kind": "condition",
+        "description": "The target becomes charmed if it understands you."
+      },
+      {
+        "label": "Psychic",
+        "value": "5d10",
+        "kind": "damage",
+        "description": "Defying the command deals psychic damage once per day."
+      },
+      {
+        "label": "Long Rest",
+        "value": "30 days / 1 year / until ended",
+        "kind": "duration",
+        "description": "Higher slot levels extend the duration dramatically."
+      }
+    ]
+  },
+  "desc": "Long-form coercion for NPC plots and offscreen manipulation, not a quick combat button."
+}

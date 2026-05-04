@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "items.cdb0b5d2-8287-4f14-acdb-c5881df01916",
+  "name": "Rho's Heart",
+  "collections": [
+    "items",
+    "items/wondrous",
+    "items/wondrous/record"
+  ],
+  "tags": [],
+  "variantOf": null,
+  "sourceReferences": [],
+  "features": {
+    "item": {
+      "category": "wondrous",
+      "subcategory": "",
+      "rarity": "",
+      "requiresAttunement": true
+    },
+    "weight": {
+      "quantity": 67,
+      "unit": "lb"
+    },
+    "inventory": {
+      "isStackable": false,
+      "defaultQuantity": 1,
+      "consumedOnUse": false
+    }
+  },
+  "desc": "gives hp or something idk"
+}

@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "index.spells",
+  "name": "Spells",
+  "path": "library/spells/index.json",
+  "directories": [
+    {
+      "name": "Abjuration",
+      "path": "library/spells/abjuration/index.json"
+    },
+    {
+      "name": "Conjuration",
+      "path": "library/spells/conjuration/index.json"
+    },
+    {
+      "name": "Divination",
+      "path": "library/spells/divination/index.json"
+    },
+    {
+      "name": "Enchantment",
+      "path": "library/spells/enchantment/index.json"
+    },
+    {
+      "name": "Evocation",
+      "path": "library/spells/evocation/index.json"
+    },
+    {
+      "name": "Illusion",
+      "path": "library/spells/illusion/index.json"
+    },
+    {
+      "name": "Necromancy",
+      "path": "library/spells/necromancy/index.json"
+    },
+    {
+      "name": "Transmutation",
+      "path": "library/spells/transmutation/index.json"
+    }
+  ],
+  "entries": []
+}

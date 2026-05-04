@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "id": "spells.d249f049-b5c0-4dc0-87d6-3b755dc761ce",
+  "name": "Detect Thoughts",
+  "collections": [
+    "spells",
+    "spells/divination",
+    "spells/level-2"
+  ],
+  "tags": [
+    "social",
+    "dandd-5e-wiki",
+    "player-s-handbook",
+    "dnd5eapi"
+  ],
+  "variantOf": null,
+  "sourceReferences": [
+    {
+      "provider": "dnd5eapi",
+      "sourceId": "detect-thoughts",
+      "url": "https://dnd-5e.fandom.com/wiki/Detect_Thoughts",
+      "note": "Player's Handbook"
+    }
+  ],
+  "features": {
+    "spell": {
+      "level": 2,
+      "school": "divination",
+      "isRitual": false,
+      "requiresConcentration": true
+    },
+    "spellcasting": {
+      "castingTime": {
+        "quantity": 1,
+        "unit": "action"
+      },
+      "range": {
+        "text": "Self"
+      },
+      "duration": {
+        "text": "Concentration, up to 1 minute"
+      },
+      "components": {
+        "verbal": true,
+        "somatic": true,
+        "material": true,
+        "materialDescription": ""
+      }
+    },
+    "rulesText": {
+      "description": "Used to tailor lies, impersonation, and social manipulation."
+    },
+    "mechanics": [
+      {
+        "label": "Probe",
+        "value": "Deeper",
+        "kind": "requirement",
+        "description": "Probing deeper forces a Wisdom saving throw."
+      },
+      {
+        "label": "Low INT",
+        "value": "3 or lower",
+        "kind": "negative",
+        "description": "Creatures with Intelligence 3 or lower are unaffected."
+      },
+      {
+        "label": "Thoughts",
+        "kind": "positive",
+        "description": "You can read surface thoughts and search for thinking creatures."
+      }
+    ]
+  },
+  "desc": "Used to tailor lies, impersonation, and social manipulation."
+}

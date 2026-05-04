@@ -1,17 +1,18 @@
 {
-  "id": "dual-state-sheet",
-  "collection": "tags",
+  "schemaVersion": 1,
+  "id": "tag:dual-state-sheet",
   "name": "Dual-State Sheet",
+  "collections": [
+    "tags"
+  ],
   "tags": [],
-  "source": "custom",
-  "provider": "",
-  "providerId": "",
-  "variantOf": "",
-  "addons": {
-    "mechanics": []
+  "variantOf": null,
+  "sourceReferences": [],
+  "features": {
+    "tag": {},
+    "rulesText": {
+      "description": ""
+    }
   },
-  "createdAt": "2026-05-03T04:32:59.965Z",
-  "updatedAt": "2026-05-03T04:32:59.965Z",
-  "color": "",
-  "description": ""
+  "desc": ""
 }

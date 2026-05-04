@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "id": "index.resources",
+  "name": "Resources",
+  "path": "library/resources/index.json",
+  "directories": [],
+  "entries": [
+    {
+      "id": "resources.capella-resource-polymorph-traits",
+      "name": "Active Flesh Polymorph Traits",
+      "collections": [
+        "resources"
+      ],
+      "tags": [
+        "capella",
+        "shapechange"
+      ],
+      "path": "library/resources/capella-resource-polymorph-traits.json"
+    },
+    {
+      "id": "resources.resource-arrows-20",
+      "name": "Arrows",
+      "collections": [
+        "resources"
+      ],
+      "tags": [
+        "ammo",
+        "archery",
+        "test"
+      ],
+      "path": "library/resources/resource-arrows-20.json"
+    },
+    {
+      "id": "resources.capella-resource-legendary-action",
+      "name": "Legendary Action",
+      "collections": [
+        "resources"
+      ],
+      "tags": [
+        "capella",
+        "boss",
+        "action-economy"
+      ],
+      "path": "library/resources/capella-resource-legendary-action.json"
+    }
+  ]
+}

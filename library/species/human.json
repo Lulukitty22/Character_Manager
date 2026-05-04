@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "id": "species.human",
+  "name": "Human",
+  "collections": [
+    "species"
+  ],
+  "tags": [
+    "dandd-5e",
+    "species"
+  ],
+  "variantOf": null,
+  "sourceReferences": [],
+  "features": {
+    "species": {
+      "creatureType": "humanoid",
+      "defaultSize": "medium"
+    },
+    "movement": {
+      "walk": {
+        "quantity": 30,
+        "unit": "ft"
+      }
+    },
+    "abilityBonuses": {},
+    "hp": {
+      "flatBonus": 0,
+      "perLevelBonus": 0
+    },
+    "traits": {
+      "traitIds": []
+    },
+    "mechanics": [
+      {
+        "label": "Flexible Lineage",
+        "kind": "neutral",
+        "description": "Use the exact table-approved human variant for ability scores."
+      }
+    ]
+  },
+  "desc": "Generic human ancestry template."
+}

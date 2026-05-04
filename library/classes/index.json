@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "id": "index.classes",
+  "name": "Classes",
+  "path": "library/classes/index.json",
+  "directories": [],
+  "entries": [
+    {
+      "id": "classes.aberrant-lich-shapechanger",
+      "name": "Aberrant Lich / Shapechanger",
+      "collections": [
+        "classes"
+      ],
+      "tags": [],
+      "path": "library/classes/aberrant-lich-shapechanger.json"
+    },
+    {
+      "id": "classes.cleric",
+      "name": "Cleric",
+      "collections": [
+        "classes"
+      ],
+      "tags": [
+        "dandd-5e",
+        "full-caster"
+      ],
+      "path": "library/classes/cleric.json"
+    },
+    {
+      "id": "classes.fighter",
+      "name": "Fighter",
+      "collections": [
+        "classes"
+      ],
+      "tags": [],
+      "path": "library/classes/fighter.json"
+    },
+    {
+      "id": "classes.idk-what-class",
+      "name": "idk what class",
+      "collections": [
+        "classes"
+      ],
+      "tags": [],
+      "path": "library/classes/idk-what-class.json"
+    },
+    {
+      "id": "classes.sorcerer",
+      "name": "Sorcerer",
+      "collections": [
+        "classes"
+      ],
+      "tags": [
+        "dandd-5e",
+        "full-caster"
+      ],
+      "path": "library/classes/sorcerer.json"
+    },
+    {
+      "id": "classes.wizard",
+      "name": "Wizard",
+      "collections": [
+        "classes"
+      ],
+      "tags": [
+        "dandd-5e",
+        "full-caster"
+      ],
+      "path": "library/classes/wizard.json"
+    }
+  ]
+}

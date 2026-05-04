@@ -1,7 +1,7 @@
 /**
  * library.js
  * Shared repo-backed records for spells, items, resources, tags, feats,
- * traits, classes, and races. Character files store lightweight references; this
+ * traits, classes, and species. Character files store lightweight references; this
  * module resolves those references for editing, preview, and export.
  */
 
@@ -17,22 +17,8 @@ const Library = (() => {
     feats:     { folder: "feats",     label: "Feats" },
     traits:    { folder: "traits",    label: "Traits" },
     classes:   { folder: "classes",   label: "Classes" },
-    races:     { folder: "races",     label: "Races" },
+    species:   { folder: "species",   label: "Species", aliases: ["races"] },
   };
-
-  const DND5E_ENDPOINTS = [
-    "spells",
-    "equipment",
-    "magic-items",
-    "feats",
-    "features",
-    "traits",
-    "classes",
-    "races",
-    "subclasses",
-    "proficiencies",
-    "conditions",
-  ];
 
   const state = {
     collections: {},
@@ -43,7 +29,7 @@ const Library = (() => {
   };
 
   function getCollectionKey(collection, source = "custom") {
-    return collection;
+    return LibraryRecords?.canonicalCollection?.(collection) || collection;
   }
 
   function emptyCollection(collection) {
@@ -101,7 +87,8 @@ const Library = (() => {
 
   function createEmptyManifest() {
     return {
-      version: 1,
+      version: 2,
+      schemaVersion: LibraryRecords?.SCHEMA_VERSION || 1,
       collections: Object.keys(COLLECTIONS).reduce((map, key) => {
         map[key] = [];
         return map;
@@ -112,8 +99,12 @@ const Library = (() => {
   function normalizeManifest(data = {}) {
     const manifest = createEmptyManifest();
     Object.entries(data.collections || {}).forEach(([key, entries]) => {
-      if (!COLLECTIONS[key]) return;
-      manifest.collections[key] = Array.isArray(entries) ? entries.filter(entry => entry?.path) : [];
+      const canonicalKey = getCollectionKey(key);
+      if (!COLLECTIONS[canonicalKey]) return;
+      manifest.collections[canonicalKey] = [
+        ...(manifest.collections[canonicalKey] || []),
+        ...(Array.isArray(entries) ? entries.filter(entry => entry?.path) : []),
+      ];
     });
     return manifest;
   }
@@ -123,23 +114,23 @@ const Library = (() => {
     return {
       version: safe.version || 1,
       collection: safe.collection || collectionName,
-      entries: Array.isArray(safe.entries) ? safe.entries : [],
+      entries: (Array.isArray(safe.entries) ? safe.entries : [])
+        .map(entry => LibraryRecords.normalizeRecord(entry, collectionName)),
     };
   }
 
   function list(collection, options = {}) {
     const keys = [getCollectionKey(collection, options.source || "custom")];
 
-    return keys.flatMap(key => state.collections[key]?.entries || []);
+    return keys.flatMap(key => state.collections[key]?.entries || [])
+      .map(entry => LibraryRecords.toRuntimeRecord(entry, getCollectionKey(collection)));
   }
 
   function find(collection, ref, source = "custom") {
     if (!ref) return null;
-    if (collection === "spells") {
-      return list("spells").find(entry => entry.id === ref);
-    }
     const key = getCollectionKey(collection, source);
-    return (state.collections[key]?.entries || []).find(entry => entry.id === ref) || null;
+    const record = (state.collections[key]?.entries || []).find(entry => entry.id === ref) || null;
+    return record ? LibraryRecords.toRuntimeRecord(record, key) : null;
   }
 
   function createReference(collection, entry, statePatch = {}) {
@@ -149,13 +140,7 @@ const Library = (() => {
   async function upsert(collection, record, source = "custom") {
     const key = getCollectionKey(collection, source || record.source || "custom");
     const data = await loadCollection(key);
-    const normalized = {
-      ...Schema.createLibraryRecord(collection),
-      ...record,
-      collection,
-      source: source || record.source || "custom",
-      updatedAt: new Date().toISOString(),
-    };
+    const normalized = LibraryRecords.normalizeRecord(record, key);
     const index = data.entries.findIndex(entry => entry.id === normalized.id);
     if (index >= 0) data.entries[index] = { ...data.entries[index], ...normalized };
     else data.entries.push(normalized);
@@ -182,13 +167,13 @@ const Library = (() => {
   }
 
   async function saveRecord(key, record) {
-    const meta = COLLECTIONS[key];
-    const path = libraryRecordPath(meta.folder, record);
+    const path = libraryRecordPath(key, record);
     const sha = state.shaByRecord[path] || null;
     try {
       const result = await GitHub.writeJsonFile(path, record, sha, `Update ${path}`);
       state.shaByRecord[path] = result.sha;
       await upsertManifestEntry(key, record, path, result.sha);
+      await upsertIndexEntries(record, path);
       return result;
     } catch (error) {
       if (!isGitHubConflict(error)) throw error;
@@ -197,31 +182,28 @@ const Library = (() => {
       const result = await GitHub.writeJsonFile(path, record, state.shaByRecord[path], `Update ${path}`);
       state.shaByRecord[path] = result.sha;
       await upsertManifestEntry(key, record, path, result.sha);
+      await upsertIndexEntries(record, path);
       return result;
     }
   }
 
   async function deleteRecord(key, record) {
-    const meta = COLLECTIONS[key];
-    const path = libraryRecordPath(meta.folder, record);
+    const path = libraryRecordPath(key, record);
     delete state.shaByRecord[path];
     if (typeof GitHub.deleteCharacterFile === "function") {
       const latest = await GitHub.readJsonFile(path, null).catch(() => null);
       if (latest?.sha) await GitHub.deleteCharacterFile(path, latest.sha);
     }
     await removeManifestEntry(key, path);
+    await removeIndexEntries(record, path);
   }
 
   async function upsertManifestEntry(key, record, path, sha = "") {
     const manifest = state.manifest || await loadManifest();
     const entries = manifest.collections[key] || [];
     const entry = {
-      id: record.id,
-      name: record.name || "",
-      source: record.source || "custom",
-      path,
-      sha: sha || "",
-      updatedAt: record.updatedAt || new Date().toISOString(),
+      ...LibraryRecords.manifestEntry(record, path, sha),
+      updatedAt: new Date().toISOString(),
     };
     const index = entries.findIndex(item => item.path === path || item.id === record.id);
     if (index >= 0) entries[index] = entry;
@@ -254,6 +236,106 @@ const Library = (() => {
     }
   }
 
+  async function upsertIndexEntries(record, recordPath) {
+    const dirs = indexDirsForPath(recordPath);
+    await upsertRootIndex(dirs[0]);
+    for (const dir of dirs) {
+      const indexPath = `${dir}/index.json`;
+      const index = await readIndex(indexPath, dir);
+      const entry = {
+        id: record.id,
+        name: record.name || "",
+        collections: record.collections || [],
+        tags: record.tags || [],
+        path: recordPath,
+      };
+      const entryIndex = index.entries.findIndex(item => item.id === record.id || item.path === recordPath);
+      if (entryIndex >= 0) index.entries[entryIndex] = entry;
+      else index.entries.push(entry);
+      index.entries.sort((a, b) => String(a.name || a.id).localeCompare(String(b.name || b.id)));
+      addChildDirectories(index, dir, dirs);
+      await writeIndex(indexPath, index);
+    }
+  }
+
+  async function removeIndexEntries(record, recordPath) {
+    const dirs = indexDirsForPath(recordPath);
+    for (const dir of dirs) {
+      const indexPath = `${dir}/index.json`;
+      const index = await readIndex(indexPath, dir);
+      index.entries = index.entries.filter(item => item.id !== record.id && item.path !== recordPath);
+      await writeIndex(indexPath, index);
+    }
+  }
+
+  async function upsertRootIndex(firstDir) {
+    const index = await readIndex("library/index.json", "library");
+    if (firstDir && !index.directories.some(entry => entry.path === `${firstDir}/index.json`)) {
+      index.directories.push({
+        name: titleCase(firstDir.replace(/^library\//, "")),
+        path: `${firstDir}/index.json`,
+      });
+      index.directories.sort((a, b) => String(a.name).localeCompare(String(b.name)));
+      await writeIndex("library/index.json", index);
+    }
+  }
+
+  async function readIndex(indexPath, dir) {
+    const fallback = {
+      schemaVersion: 1,
+      id: `index.${dir.replace(/^library\/?/, "").replace(/\//g, ".") || "library"}`,
+      name: titleCase(dir.split("/").pop() || "Library"),
+      path: indexPath,
+      directories: [],
+      entries: [],
+    };
+    const result = await GitHub.readJsonFile(indexPath, fallback).catch(() => ({ data: fallback, sha: null }));
+    state.shaByRecord[indexPath] = result.sha || state.shaByRecord[indexPath] || null;
+    return {
+      ...fallback,
+      ...(result.data || {}),
+      directories: Array.isArray(result.data?.directories) ? result.data.directories : [],
+      entries: Array.isArray(result.data?.entries) ? result.data.entries : [],
+    };
+  }
+
+  async function writeIndex(indexPath, index) {
+    const result = await GitHub.writeJsonFile(indexPath, index, state.shaByRecord[indexPath] || null, `Update ${indexPath}`);
+    state.shaByRecord[indexPath] = result.sha;
+    return result;
+  }
+
+  function addChildDirectories(index, dir, dirs) {
+    const depth = dir.split("/").length;
+    dirs
+      .filter(other => other.startsWith(`${dir}/`) && other.split("/").length === depth + 1)
+      .forEach(child => {
+        const childPath = `${child}/index.json`;
+        if (index.directories.some(entry => entry.path === childPath)) return;
+        index.directories.push({
+          name: titleCase(child.split("/").pop() || ""),
+          path: childPath,
+        });
+      });
+    index.directories.sort((a, b) => String(a.name).localeCompare(String(b.name)));
+  }
+
+  function indexDirsForPath(recordPath) {
+    const parts = String(recordPath || "").split("/").filter(Boolean);
+    parts.pop();
+    const dirs = [];
+    for (let index = 1; index <= parts.length; index += 1) {
+      dirs.push(parts.slice(0, index).join("/"));
+    }
+    return dirs.filter(dir => dir && dir !== "library");
+  }
+
+  function titleCase(value) {
+    return String(value || "")
+      .replace(/[-_]/g, " ")
+      .replace(/\b\w/g, char => char.toUpperCase());
+  }
+
   function mergeManifests(base, overlay) {
     const merged = createEmptyManifest();
     Object.keys(COLLECTIONS).forEach(key => {
@@ -265,9 +347,8 @@ const Library = (() => {
     return merged;
   }
 
-  function libraryRecordPath(folder, record = {}) {
-    const id = comparableName(record.id || record.name || Schema.generateId());
-    return `library/${folder}/${id}.json`;
+  function libraryRecordPath(collection, record = {}) {
+    return LibraryRecords.recordPath(record, collection);
   }
 
   function isGitHubConflict(error) {
@@ -356,7 +437,7 @@ const Library = (() => {
       (character.dnd.multiclass || []).forEach(entry => syncNameRecord(entry.class, "classes", customChanged));
     }
 
-    syncNameRecord(character.identity?.race, "races", customChanged);
+    syncNameRecord(character.identity?.race, "species", customChanged);
     (character.identity?.tags || []).forEach(tag => syncNameRecord(tag, "tags", customChanged));
     collectNestedTags(character).forEach(tag => syncNameRecord(tag, "tags", customChanged));
 
@@ -527,75 +608,41 @@ const Library = (() => {
   }
 
   async function importOpen5eSpell(open5eRecord) {
-    const record = open5eRecord?.provider === "open5e" && open5eRecord?.collection === "spells"
-      ? open5eRecord
-      : Schema.normalizeOpen5eSpell(open5eRecord);
-    return upsert("spells", record, "srd");
+    const result = open5eRecord?.provider ? open5eRecord : {
+      provider: "open5eapi",
+      collection: "spells",
+      name: open5eRecord?.name || "",
+      raw: open5eRecord,
+    };
+    const record = Open5eApiImporter.toRecord(result, open5eRecord);
+    return upsert("spells", record, "external");
   }
 
   async function searchOpen5e(query) {
-    const clean = String(query || "").trim();
-    if (!clean) return [];
-
-    const endpoints = [
-      `https://api.open5e.com/v2/search/?query=${encodeURIComponent(clean)}&limit=50`,
-      `https://api.open5e.com/v1/search/?text=${encodeURIComponent(clean)}&limit=50`,
-      `https://api.open5e.com/search/?text=${encodeURIComponent(clean)}&limit=50`,
-    ];
-
-    let lastError = null;
-    for (const url of endpoints) {
-      try {
-        const response = await fetch(url);
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        const data = await response.json();
-        return dedupeSearchResults((data.results || []).map(normalizeOpen5eSearchResult));
-      } catch (error) {
-        lastError = error;
-      }
-    }
-
-    throw new Error(`Open5e search failed: ${lastError?.message || "unknown error"}`);
+    return Open5eApiImporter.search(query);
   }
 
   async function searchDnd5eApi(query) {
-    const clean = String(query || "").trim().toLowerCase();
-    if (!clean) return [];
-
-    const endpointResults = await Promise.all(DND5E_ENDPOINTS.map(async endpoint => {
-      const response = await fetch(`https://www.dnd5eapi.co/api/2014/${endpoint}`);
-      if (!response.ok) return [];
-      const data = await response.json();
-      return (data.results || [])
-        .filter(entry => entry.name?.toLowerCase().includes(clean) || entry.index?.toLowerCase().includes(clean))
-        .slice(0, 10)
-        .map(entry => normalizeDnd5eSearchResult(endpoint, entry));
-    }));
-
-    return dedupeSearchResults(endpointResults.flat())
-      .filter(result => !isGenericDndPotionTable(result))
-      .slice(0, 50);
+    return Dnd5eApiImporter.search(query);
   }
 
   async function importExternalResult(result) {
     if (!result) throw new Error("No import result selected.");
 
-    if (result.provider === "open5e") {
-      const detailed = await fetchExternalDetail(result).catch(() => result.raw || result);
-      const record = result.collection === "spells"
-        ? Schema.normalizeOpen5eSpell({ ...result.raw, ...detailed })
-        : normalizeGenericExternalRecord(result, detailed);
-      return upsert(record.collection, record, record.source || "external");
+    if (result.provider === "open5eapi" || result.provider === "open5e") {
+      const detailed = await Open5eApiImporter.detail(result).catch(() => result.raw || result);
+      const record = Open5eApiImporter.toRecord({ ...result, provider: "open5eapi" }, detailed);
+      return upsert(record.collections?.[0] || result.collection, record, "external");
     }
 
     if (result.provider === "dnd5eapi") {
-      const detailed = await fetchExternalDetail(result).catch(() => result.raw || result);
-      const record = normalizeDnd5eDetail(result, detailed);
-      return upsert(record.collection, record, record.source || "external");
+      const detailed = await Dnd5eApiImporter.detail(result).catch(() => result.raw || result);
+      const record = Dnd5eApiImporter.toRecord(result, detailed);
+      return upsert(record.collections?.[0] || result.collection, record, "external");
     }
 
     const record = normalizeGenericExternalRecord(result, result.raw || result);
-    return upsert(record.collection, record, record.source || "external");
+    return upsert(record.collections?.[0] || result.collection, record, "external");
   }
 
   async function importExternalResults(results = []) {
@@ -625,10 +672,10 @@ const Library = (() => {
     const routePath = String(route || "").replace(/^\/+|\/+$/g, "");
 
     return {
-      provider: "open5e",
+      provider: "open5eapi",
       providerLabel: "Open5e",
       collection,
-      id: `open5e-${collection}-${objectKey}`,
+      id: `open5eapi-${collection}-${objectKey}`,
       name: objectName || "(Unnamed)",
       typeLabel: raw.object_model || labelForCollection(collection),
       sourceLabel: [documentTitle || documentKey || "Open5e", subsource].filter(Boolean).join(" / "),
@@ -696,7 +743,7 @@ const Library = (() => {
       record.primaryAbility = (detail.proficiency_choices || []).map(choice => choice.desc).filter(Boolean).join("; ");
     }
 
-    if (result.collection === "races") {
+    if (result.collection === "species") {
       record.speed = { walk: detail.speed || 30 };
       record.addons.stats = normalizeAbilityBonuses(detail.ability_bonuses || []);
       record.addons.traits = (detail.traits || []).map(trait => trait.name || trait.index).filter(Boolean);
@@ -788,7 +835,7 @@ const Library = (() => {
       }
     }
 
-    if (["traits", "feats", "classes", "races"].includes(result.collection)) {
+    if (["traits", "feats", "classes", "species"].includes(result.collection)) {
       if (result.typeLabel) mechanics.push({ label: "Type", value: result.typeLabel, kind: "neutral" });
       if (result.sourceLabel) mechanics.push({ label: "Source", value: result.sourceLabel, kind: "neutral" });
     }
@@ -849,7 +896,7 @@ const Library = (() => {
     if (value.includes("item") || value.includes("equipment") || value.includes("weapon") || value.includes("armor")) return "items";
     if (value.includes("feat")) return "feats";
     if (value.includes("class") || value.includes("subclass")) return "classes";
-    if (value.includes("race") || value.includes("species") || value.includes("ancestr")) return "races";
+    if (value.includes("race") || value.includes("species") || value.includes("ancestr")) return "species";
     if (value.includes("trait") || value.includes("feature") || value.includes("condition")) return "traits";
     return "traits";
   }
@@ -859,7 +906,7 @@ const Library = (() => {
     if (["equipment", "magic-items"].includes(endpoint)) return "items";
     if (endpoint === "feats") return "feats";
     if (["classes", "subclasses"].includes(endpoint)) return "classes";
-    if (endpoint === "races") return "races";
+    if (endpoint === "races") return "species";
     if (["traits", "features", "conditions", "proficiencies"].includes(endpoint)) return "traits";
     return "traits";
   }
@@ -873,7 +920,7 @@ const Library = (() => {
       feats: "Feat",
       traits: "Trait",
       classes: "Class",
-      races: "Race",
+      species: "Species",
     };
     return labels[collection] || collection;
   }

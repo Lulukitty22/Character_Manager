@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "id": "spells.4c177263-68ac-419d-84d5-d71d1c18bbbf",
+  "name": "Flesh Polymorph",
+  "collections": [
+    "spells",
+    "spells/transmutation",
+    "spells/level-4"
+  ],
+  "tags": [
+    "signature",
+    "homebrew"
+  ],
+  "variantOf": null,
+  "sourceReferences": [
+    {
+      "provider": "internal",
+      "sourceId": "4c177263-68ac-419d-84d5-d71d1c18bbbf",
+      "url": "https://dnd-5e.fandom.com/wiki/Polymorph",
+      "note": "Player's Handbook"
+    }
+  ],
+  "features": {
+    "spell": {
+      "level": 4,
+      "school": "transmutation",
+      "isRitual": false,
+      "requiresConcentration": false
+    },
+    "spellcasting": {
+      "castingTime": {
+        "text": "Bonus Action or Reaction"
+      },
+      "range": {
+        "text": "Self"
+      },
+      "duration": {
+        "text": "Instant / sustained traits"
+      },
+      "components": {
+        "verbal": false,
+        "somatic": false,
+        "material": false,
+        "materialDescription": ""
+      }
+    },
+    "rulesText": {
+      "description": "Modified self-only Polymorph. Does not replace HP, AC, mental stats, or the sheet. Adds physical traits only. Usually keep up to 3 major traits active at once."
+    }
+  },
+  "desc": "Modified self-only Polymorph. Does not replace HP, AC, mental stats, or the sheet. Adds physical traits only. Usually keep up to 3 major traits active at once."
+}

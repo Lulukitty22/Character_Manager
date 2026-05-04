@@ -1,28 +1,24 @@
 {
-  "id": "cleric",
-  "collection": "classes",
+  "schemaVersion": 1,
+  "id": "classes.cleric",
   "name": "Cleric",
-  "tags": [
-    "D&D 5e",
-    "Full Caster"
+  "collections": [
+    "classes"
   ],
-  "source": "custom",
-  "provider": "",
-  "providerId": "",
-  "variantOf": "",
-  "addons": {
-    "mechanics": [],
-    "stats": {},
-    "speed": {},
-    "proficiencies": [],
-    "feats": [],
-    "spellcasting": {
+  "tags": [
+    "dandd-5e",
+    "full-caster"
+  ],
+  "variantOf": null,
+  "sourceReferences": [],
+  "features": {
+    "class": {
+      "hitDie": "d8",
+      "primaryAbility": "Wisdom"
+    },
+    "spellcastingProgression": {
       "progression": "full"
     }
   },
-  "createdAt": "2026-05-03T00:00:00.000Z",
-  "updatedAt": "2026-05-03T00:00:00.000Z",
-  "description": "Divine prepared full caster.",
-  "hitDie": "d8",
-  "primaryAbility": "Wisdom"
+  "desc": "Divine prepared full caster."
 }

@@ -1,0 +1,318 @@
+{
+  "schemaVersion": 1,
+  "id": "index.traits",
+  "name": "Traits",
+  "path": "library/traits/index.json",
+  "directories": [],
+  "entries": [
+    {
+      "id": "traits.c9bf4ca6-3342-4cfc-9589-8211d1d06736",
+      "name": "Aberrant Lich Bonus",
+      "collections": [
+        "traits"
+      ],
+      "tags": [
+        "lich"
+      ],
+      "path": "library/traits/c9bf4ca6-3342-4cfc-9589-8211d1d06736.json"
+    },
+    {
+      "id": "traits.e533c4f5-df28-4c54-8eb1-b0c3b0365e6d",
+      "name": "Advantage on All Rolls",
+      "collections": [
+        "traits"
+      ],
+      "tags": [
+        "boss"
+      ],
+      "path": "library/traits/e533c4f5-df28-4c54-8eb1-b0c3b0365e6d.json"
+    },
+    {
+      "id": "traits.08f36953-b9aa-4c81-aa37-78dbb191585d",
+      "name": "Arcane Mastery",
+      "collections": [
+        "traits"
+      ],
+      "tags": [
+        "magic"
+      ],
+      "path": "library/traits/08f36953-b9aa-4c81-aa37-78dbb191585d.json"
+    },
+    {
+      "id": "traits.05dd66db-ddc3-493d-a4b7-b446d2736e30",
+      "name": "Bonus Attack",
+      "collections": [
+        "traits"
+      ],
+      "tags": [
+        "combat"
+      ],
+      "path": "library/traits/05dd66db-ddc3-493d-a4b7-b446d2736e30.json"
+    },
+    {
+      "id": "traits.capella-trait-boss-presence",
+      "name": "Boss Presence",
+      "collections": [
+        "traits"
+      ],
+      "tags": [
+        "capella",
+        "boss",
+        "state"
+      ],
+      "path": "library/traits/capella-trait-boss-presence.json"
+    },
+    {
+      "id": "traits.open5e-traits-srd-abilities-charisma",
+      "name": "Charisma",
+      "collections": [
+        "traits"
+      ],
+      "tags": [
+        "open5eapi",
+        "srd"
+      ],
+      "path": "library/traits/open5e-traits-srd-abilities-charisma.json"
+    },
+    {
+      "id": "traits.69a33466-f911-4440-907d-bd020e7f0b77",
+      "name": "Charisma Spellcasting",
+      "collections": [
+        "traits"
+      ],
+      "tags": [
+        "spellcasting"
+      ],
+      "path": "library/traits/69a33466-f911-4440-907d-bd020e7f0b77.json"
+    },
+    {
+      "id": "traits.dnd5eapi-features-eldritch-invocation-beguiling-influence",
+      "name": "Eldritch Invocation: Beguiling Influence",
+      "collections": [
+        "traits"
+      ],
+      "tags": [
+        "dnd5eapi",
+        "srd",
+        "features"
+      ],
+      "path": "library/traits/dnd5eapi-features-eldritch-invocation-beguiling-influence.json"
+    },
+    {
+      "id": "traits.7f1b4dc6-32ad-46bf-88ad-d438e3cbe878",
+      "name": "Expert Deceiver",
+      "collections": [
+        "traits"
+      ],
+      "tags": [
+        "social"
+      ],
+      "path": "library/traits/7f1b4dc6-32ad-46bf-88ad-d438e3cbe878.json"
+    },
+    {
+      "id": "traits.f675664e-0615-4aaf-ba48-e2db8592941d",
+      "name": "Extra Attack",
+      "collections": [
+        "traits"
+      ],
+      "tags": [
+        "combat"
+      ],
+      "path": "library/traits/f675664e-0615-4aaf-ba48-e2db8592941d.json"
+    },
+    {
+      "id": "traits.4d354f04-d3ac-4ae0-bd35-42c91eb0542a",
+      "name": "Far Realm Mutation",
+      "collections": [
+        "traits"
+      ],
+      "tags": [
+        "defense"
+      ],
+      "path": "library/traits/4d354f04-d3ac-4ae0-bd35-42c91eb0542a.json"
+    },
+    {
+      "id": "traits.capella-trait-flesh-polymorph",
+      "name": "Flesh Polymorph",
+      "collections": [
+        "traits"
+      ],
+      "tags": [
+        "capella",
+        "shapechange",
+        "combat"
+      ],
+      "path": "library/traits/capella-trait-flesh-polymorph.json"
+    },
+    {
+      "id": "traits.capella-trait-flesh-reshape-escape",
+      "name": "Flesh Reshape Escape",
+      "collections": [
+        "traits"
+      ],
+      "tags": [
+        "capella",
+        "reaction",
+        "escape"
+      ],
+      "path": "library/traits/capella-trait-flesh-reshape-escape.json"
+    },
+    {
+      "id": "traits.capella-trait-impersonation",
+      "name": "Impersonation",
+      "collections": [
+        "traits"
+      ],
+      "tags": [
+        "capella",
+        "social",
+        "shapechange"
+      ],
+      "path": "library/traits/capella-trait-impersonation.json"
+    },
+    {
+      "id": "traits.38224464-3cbf-4e4b-a30a-f06d63742400",
+      "name": "Legendary Action",
+      "collections": [
+        "traits"
+      ],
+      "tags": [
+        "combat"
+      ],
+      "path": "library/traits/38224464-3cbf-4e4b-a30a-f06d63742400.json"
+    },
+    {
+      "id": "traits.open5e-traits-srd-2024-lich",
+      "name": "Lich",
+      "collections": [
+        "traits"
+      ],
+      "tags": [
+        "open5eapi",
+        "srd"
+      ],
+      "path": "library/traits/open5e-traits-srd-2024-lich.json"
+    },
+    {
+      "id": "traits.capella-trait-monstrous-regeneration",
+      "name": "Monstrous Regeneration",
+      "collections": [
+        "traits"
+      ],
+      "tags": [
+        "capella",
+        "boss",
+        "defense"
+      ],
+      "path": "library/traits/capella-trait-monstrous-regeneration.json"
+    },
+    {
+      "id": "traits.f14b5e09-2157-4bca-b7ac-fd36471f0a37",
+      "name": "Nonlethal Intent",
+      "collections": [
+        "traits"
+      ],
+      "tags": [
+        "roleplay"
+      ],
+      "path": "library/traits/f14b5e09-2157-4bca-b7ac-fd36471f0a37.json"
+    },
+    {
+      "id": "traits.capella-trait-polymorph-trait-limit",
+      "name": "Polymorph Trait Limit",
+      "collections": [
+        "traits"
+      ],
+      "tags": [
+        "capella",
+        "shapechange",
+        "balance"
+      ],
+      "path": "library/traits/capella-trait-polymorph-trait-limit.json"
+    },
+    {
+      "id": "traits.22aa3b43-201b-48e5-a393-79ccccd0c18e",
+      "name": "Roll Calculator â€” Boss Saves",
+      "collections": [
+        "traits"
+      ],
+      "tags": [
+        "calculator"
+      ],
+      "path": "library/traits/22aa3b43-201b-48e5-a393-79ccccd0c18e.json"
+    },
+    {
+      "id": "traits.b0d2e3d0-f347-4d01-a943-9b821a55acf1",
+      "name": "Roll Calculator â€” Social / Casting",
+      "collections": [
+        "traits"
+      ],
+      "tags": [
+        "calculator"
+      ],
+      "path": "library/traits/b0d2e3d0-f347-4d01-a943-9b821a55acf1.json"
+    },
+    {
+      "id": "traits.2ab2a7d6-bc03-4c5b-801f-9d9ac93633f9",
+      "name": "Silver Tongue",
+      "collections": [
+        "traits"
+      ],
+      "tags": [
+        "social",
+        "dandd-5e-wiki",
+        "tasha-s-cauldron-of-everything",
+        "mythic-odysseys-of-theros",
+        "dnd5eapi"
+      ],
+      "path": "library/traits/2ab2a7d6-bc03-4c5b-801f-9d9ac93633f9.json"
+    },
+    {
+      "id": "traits.ffe07a77-b388-434d-8e14-c649847f26fe",
+      "name": "Soul Vessel / Far Realm Parasite",
+      "collections": [
+        "traits"
+      ],
+      "tags": [
+        "death"
+      ],
+      "path": "library/traits/ffe07a77-b388-434d-8e14-c649847f26fe.json"
+    },
+    {
+      "id": "traits.capella-trait-telepathy",
+      "name": "Telepathy",
+      "collections": [
+        "traits"
+      ],
+      "tags": [
+        "capella",
+        "psychic",
+        "social"
+      ],
+      "path": "library/traits/capella-trait-telepathy.json"
+    },
+    {
+      "id": "traits.open5e-traits-srd-monsters-telepathy",
+      "name": "Telepathy",
+      "collections": [
+        "traits"
+      ],
+      "tags": [
+        "open5eapi",
+        "srd"
+      ],
+      "path": "library/traits/open5e-traits-srd-monsters-telepathy.json"
+    },
+    {
+      "id": "traits.fca2be53-1cce-4334-a412-0fedad0d6aae",
+      "name": "Unnatural Armor",
+      "collections": [
+        "traits"
+      ],
+      "tags": [
+        "defense"
+      ],
+      "path": "library/traits/fca2be53-1cce-4334-a412-0fedad0d6aae.json"
+    }
+  ]
+}

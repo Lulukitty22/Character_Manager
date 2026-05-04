@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "id": "spells.capella-spell-fear",
+  "name": "Fear",
+  "collections": [
+    "spells",
+    "spells/illusion",
+    "spells/level-3"
+  ],
+  "tags": [
+    "capella",
+    "control",
+    "psychic",
+    "dandd-5e-wiki",
+    "player-s-handbook",
+    "dnd5eapi"
+  ],
+  "variantOf": null,
+  "sourceReferences": [
+    {
+      "provider": "dnd5eapi",
+      "sourceId": "fear",
+      "url": "https://dnd-5e.fandom.com/wiki/Fear",
+      "note": "Player's Handbook"
+    }
+  ],
+  "features": {
+    "spell": {
+      "level": 3,
+      "school": "illusion",
+      "isRitual": false,
+      "requiresConcentration": true
+    },
+    "spellcasting": {
+      "castingTime": {
+        "quantity": 1,
+        "unit": "action"
+      },
+      "range": {
+        "text": "Self (30-foot cone)"
+      },
+      "duration": {
+        "text": "Concentration, up to 1 minute"
+      },
+      "components": {
+        "verbal": true,
+        "somatic": true,
+        "material": true,
+        "materialDescription": ""
+      }
+    },
+    "rulesText": {
+      "description": "Turns body horror and social dread into battlefield control. Use when the encounter wants panic, scattering, and loss of nerve instead of raw damage."
+    },
+    "mechanics": [
+      {
+        "label": "Frightened",
+        "kind": "condition",
+        "description": "Failed saves force the target to Dash away from you."
+      },
+      {
+        "label": "Drop Item",
+        "kind": "negative",
+        "description": "A failed save makes the target drop what it is holding."
+      }
+    ]
+  },
+  "desc": "Turns body horror and social dread into battlefield control. Use when the encounter wants panic, scattering, and loss of nerve instead of raw damage."
+}

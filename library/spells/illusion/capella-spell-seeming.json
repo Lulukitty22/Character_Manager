@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "id": "spells.capella-spell-seeming",
+  "name": "Seeming",
+  "collections": [
+    "spells",
+    "spells/illusion",
+    "spells/level-5"
+  ],
+  "tags": [
+    "capella",
+    "social",
+    "mass-disguise",
+    "dandd-5e-wiki",
+    "player-s-handbook",
+    "dnd5eapi"
+  ],
+  "variantOf": null,
+  "sourceReferences": [
+    {
+      "provider": "dnd5eapi",
+      "sourceId": "seeming",
+      "url": "https://dnd-5e.fandom.com/wiki/Seeming",
+      "note": "Player's Handbook"
+    }
+  ],
+  "features": {
+    "spell": {
+      "level": 5,
+      "school": "illusion",
+      "isRitual": false,
+      "requiresConcentration": false
+    },
+    "spellcasting": {
+      "castingTime": {
+        "quantity": 1,
+        "unit": "action"
+      },
+      "range": {
+        "quantity": 30,
+        "unit": "ft"
+      },
+      "duration": {
+        "text": "8 hours"
+      },
+      "components": {
+        "verbal": true,
+        "somatic": true,
+        "material": false,
+        "materialDescription": ""
+      }
+    },
+    "rulesText": {
+      "description": "Mass disguise for staged scenes, cult cover, hostage confusion, or making the room lie before she even speaks."
+    },
+    "mechanics": [
+      {
+        "label": "Inspection",
+        "kind": "negative",
+        "description": "Physical inspection can reveal the disguise."
+      },
+      {
+        "label": "Group",
+        "value": "Any number",
+        "kind": "positive",
+        "description": "You can disguise any number of creatures in range."
+      }
+    ]
+  },
+  "desc": "Mass disguise for staged scenes, cult cover, hostage confusion, or making the room lie before she even speaks."
+}

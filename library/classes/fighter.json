@@ -1,22 +1,18 @@
 {
-  "id": "fighter",
-  "collection": "classes",
+  "schemaVersion": 1,
+  "id": "classes.fighter",
   "name": "Fighter",
+  "collections": [
+    "classes"
+  ],
   "tags": [],
-  "source": "custom",
-  "provider": "",
-  "providerId": "",
-  "variantOf": "",
-  "addons": {
-    "mechanics": [],
-    "stats": {},
-    "speed": {},
-    "proficiencies": [],
-    "feats": []
+  "variantOf": null,
+  "sourceReferences": [],
+  "features": {
+    "class": {
+      "hitDie": "d10",
+      "primaryAbility": "Charisma"
+    }
   },
-  "createdAt": "2026-05-03T04:22:03.660Z",
-  "updatedAt": "2026-05-03T04:22:03.660Z",
-  "description": "",
-  "hitDie": "d10",
-  "primaryAbility": "Charisma"
+  "desc": ""
 }

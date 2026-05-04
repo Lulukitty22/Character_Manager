@@ -5,7 +5,7 @@
 
 const ViewLibrary = (() => {
 
-  const EDITABLE_COLLECTIONS = ["spells", "items", "resources", "tags", "feats", "traits", "classes", "races"];
+  const EDITABLE_COLLECTIONS = ["spells", "items", "resources", "tags", "feats", "traits", "classes", "species"];
 
   async function render(container) {
     container.innerHTML = `
@@ -13,7 +13,7 @@ const ViewLibrary = (() => {
         <div class="list-header flex-between">
           <div>
             <h2 class="list-title">Shared Library</h2>
-            <p class="text-muted text-sm">Reusable records for characters. Feature-specific details live in addons.</p>
+            <p class="text-muted text-sm">Reusable records for characters. Feature-specific details live in canonical features.</p>
           </div>
           <button id="btn-library-refresh" class="button button-ghost button-sm">Refresh</button>
         </div>
@@ -45,7 +45,7 @@ const ViewLibrary = (() => {
         <div class="list-header flex-between">
           <div>
             <h2 class="list-title">Shared Library</h2>
-            <p class="text-muted text-sm">Reusable records for spells, items, resources, tags, feats, traits, classes, and races.</p>
+            <p class="text-muted text-sm">Reusable records for spells, items, resources, tags, feats, traits, classes, and species.</p>
           </div>
           <button id="btn-library-refresh" class="button button-ghost button-sm">Refresh</button>
         </div>
@@ -157,7 +157,7 @@ const ViewLibrary = (() => {
   }
 
   function renderRecordRow(collection, entry) {
-    const addons = JSON.stringify(entry.addons || {}, null, 2);
+    const features = JSON.stringify(entry.features || {}, null, 2);
     const viewerRecord = typeof ViewCharacterUtils !== "undefined"
       ? ViewCharacterUtils.buildRecordViewerRecord(entry, { collection })
       : {};
@@ -206,8 +206,8 @@ const ViewLibrary = (() => {
             ${renderFeatureFields(collection, entry)}
             ${renderSourceSummary(sourceDocuments)}
             <details class="library-json-details" style="margin-top: var(--space-3);">
-              <summary class="field-label">Advanced Addons JSON</summary>
-              <textarea class="field-textarea library-record-addons" rows="4">${escapeHTML(addons)}</textarea>
+              <summary class="field-label">Advanced Features JSON</summary>
+              <textarea class="field-textarea library-record-features" rows="4">${escapeHTML(features)}</textarea>
             </details>
           </details>
         </div>
@@ -298,7 +298,7 @@ const ViewLibrary = (() => {
       `;
     }
 
-    if (collection === "races") {
+    if (collection === "species") {
       const speed = entry.speed?.walk ?? "";
       return `
         <div class="fields-grid-3" style="margin-top: var(--space-3);">
@@ -339,13 +339,13 @@ const ViewLibrary = (() => {
   function readRecordRow(collection, row) {
     const existing = Library.find(collection, row.dataset.recordId, row.dataset.recordSource) || Schema.createLibraryRecord(collection);
     const tags = (row.querySelector(".library-record-tags")?.value || "").split(",").map(tag => tag.trim()).filter(Boolean);
-    const addonsRaw = row.querySelector(".library-record-addons")?.value || "{}";
-    let addons = {};
+    const featuresRaw = row.querySelector(".library-record-features")?.value || "{}";
+    let features = {};
     try {
-      addons = JSON.parse(addonsRaw);
+      features = JSON.parse(featuresRaw);
     } catch {
-      App.showToast("Addons JSON was invalid, so addons were kept unchanged.", "error");
-      addons = existing.addons || {};
+      App.showToast("Features JSON was invalid, so features were kept unchanged.", "error");
+      features = existing.features || {};
     }
 
     const record = {
@@ -353,15 +353,29 @@ const ViewLibrary = (() => {
       name: row.querySelector(".library-record-name")?.value.trim() || "",
       tags,
       variantOf: row.querySelector(".library-record-variant")?.value.trim() || "",
-      addons,
+      features,
+      desc: existing.desc || existing.description || "",
     };
 
     if (collection === "spells") {
-      record.level = parseInt(row.querySelector(".library-spell-level")?.value, 10) || 0;
-      record.school = row.querySelector(".library-spell-school")?.value.trim() || "";
-      record.castingTime = row.querySelector(".library-spell-casting")?.value.trim() || "";
-      record.range = row.querySelector(".library-spell-range")?.value.trim() || "";
-      record.description = row.querySelector(".library-description")?.value || "";
+      const description = readDescription(row);
+      const castingTime = row.querySelector(".library-spell-casting")?.value.trim() || "";
+      const range = row.querySelector(".library-spell-range")?.value.trim() || "";
+      record.desc = description;
+      record.features.spell = {
+        ...(record.features.spell || {}),
+        level: parseInt(row.querySelector(".library-spell-level")?.value, 10) || 0,
+        school: LibraryRecords.optionalSlugify(row.querySelector(".library-spell-school")?.value.trim() || ""),
+      };
+      record.features.spellcasting = {
+        ...(record.features.spellcasting || {}),
+        castingTime: parseQuantityUnit(castingTime),
+        range: parseQuantityUnit(range),
+      };
+      record.features.rulesText = {
+        ...(record.features.rulesText || {}),
+        description,
+      };
     }
 
     if (collection === "items") {
@@ -375,42 +389,45 @@ const ViewLibrary = (() => {
       const slotBonuses = parseSlotBonusMap(row.querySelector(".library-item-slot-bonuses")?.value || "");
       const slotRestore = parseSlotRestore(row.querySelector(".library-item-slot-restore")?.value || "");
       const resourceEffects = parseResourceEffects(row.querySelector(".library-item-resource-effects")?.value || "");
-      record.type = row.querySelector(".library-item-type")?.value.trim() || "misc";
-      record.weight = Number.isNaN(weight) ? null : weight;
-      record.attuned = row.querySelector(".library-item-attuned")?.checked || false;
-      record.description = row.querySelector(".library-description")?.value || "";
-      record.addons = {
-        ...(record.addons || {}),
-        equipment: {
-          ...(record.addons?.equipment || {}),
+      const description = readDescription(row);
+      const itemType = row.querySelector(".library-item-type")?.value.trim() || "misc";
+      record.desc = description;
+      record.features.item = {
+        ...(record.features.item || {}),
+        category: LibraryRecords.optionalSlugify(itemType) || "misc",
+        requiresAttunement: row.querySelector(".library-item-attuned")?.checked || false,
+      };
+      if (Number.isNaN(weight)) {
+        delete record.features.weight;
+      } else {
+        record.features.weight = { quantity: weight, unit: "lb" };
+      }
+      record.features.effects = {
+        ...(record.features.effects || {}),
+        hp: {
+          ...(record.features.effects?.hp || {}),
+          flatBonus: flatHp,
+          perLevelBonus: perLevelHp,
+          tempHp,
         },
-        effects: {
-          ...(record.addons?.effects || {}),
-          hp: {
-            ...(record.addons?.effects?.hp || {}),
-            flatBonus: flatHp,
-            perLevelBonus: perLevelHp,
-            tempHp,
-          },
-          spellSlots: {
-            ...(record.addons?.effects?.spellSlots || {}),
-            bonusByLevel: slotBonuses,
-          },
+        spellSlots: {
+          ...(record.features.effects?.spellSlots || {}),
+          bonusByLevel: slotBonuses,
         },
       };
+      if (healDice || healAmount) {
+        record.features.healing = {
+          ...(record.features.healing || {}),
+          ...(healDice ? { dice: healDice } : {}),
+          ...(healAmount ? { amount: healAmount } : {}),
+        };
+      } else {
+        delete record.features.healing;
+      }
       if (healDice || healAmount || tempHp || slotRestore || resourceEffects.length) {
-        if (healDice || healAmount) {
-          record.addons.healing = {
-            ...(record.addons.healing || {}),
-            ...(healDice ? { dice: healDice } : {}),
-            ...(healAmount ? { amount: healAmount } : {}),
-          };
-        } else {
-          delete record.addons.healing;
-        }
-        record.addons.actions = [{
+        record.features.actions = [{
           label: actionLabel || "Use",
-          consumeQuantity: record.type === "consumable",
+          consumeQuantity: LibraryRecords.slugify(itemType) === "consumable",
           effects: {
             ...(healDice || healAmount ? {
               heal: {
@@ -422,46 +439,92 @@ const ViewLibrary = (() => {
             ...(slotRestore ? { spellSlots: slotRestore } : {}),
             ...(resourceEffects.length ? { resources: resourceEffects } : {}),
           },
-          description: record.description || "",
+          description,
         }];
       } else {
-        delete record.addons.healing;
-        delete record.addons.actions;
+        delete record.features.actions;
       }
+      record.features.rulesText = {
+        ...(record.features.rulesText || {}),
+        description,
+      };
     }
 
     if (collection === "resources") {
-      record.max = parseInt(row.querySelector(".library-resource-max")?.value, 10) || 0;
-      record.description = row.querySelector(".library-description")?.value || "";
+      const description = readDescription(row);
+      record.desc = description;
+      record.features.resource = {
+        ...(record.features.resource || {}),
+        defaultMax: parseInt(row.querySelector(".library-resource-max")?.value, 10) || 0,
+        currentIsCharacterState: true,
+        logIsCharacterState: true,
+      };
+      record.features.rulesText = {
+        ...(record.features.rulesText || {}),
+        description,
+      };
     }
 
     if (collection === "classes") {
-      record.hitDie = row.querySelector(".library-class-hit-die")?.value.trim() || "";
-      record.primaryAbility = row.querySelector(".library-class-primary")?.value.trim() || "";
-      record.description = row.querySelector(".library-description")?.value || "";
+      const description = readDescription(row);
+      record.desc = description;
+      record.features.class = {
+        ...(record.features.class || {}),
+        hitDie: row.querySelector(".library-class-hit-die")?.value.trim() || "",
+        primaryAbility: row.querySelector(".library-class-primary")?.value.trim() || "",
+      };
+      record.features.rulesText = {
+        ...(record.features.rulesText || {}),
+        description,
+      };
     }
 
-    if (collection === "races") {
-      record.speed = {
-        ...(record.speed || {}),
-        walk: parseInt(row.querySelector(".library-race-speed")?.value, 10) || 30,
-      };
-      record.addons = {
-        ...(record.addons || {}),
-        hp: {
-          ...(record.addons?.hp || {}),
-          flatBonus: parseInt(row.querySelector(".library-race-hp-flat")?.value, 10) || 0,
-          perLevelBonus: parseInt(row.querySelector(".library-race-hp-level")?.value, 10) || 0,
+    if (collection === "species") {
+      const description = readDescription(row);
+      record.desc = description;
+      record.features.movement = {
+        ...(record.features.movement || {}),
+        walk: {
+          ...(record.features.movement?.walk || {}),
+          quantity: parseInt(row.querySelector(".library-race-speed")?.value, 10) || 30,
+          unit: "ft",
         },
       };
-      record.description = row.querySelector(".library-description")?.value || "";
+      record.features.hp = {
+        ...(record.features.hp || {}),
+        flatBonus: parseInt(row.querySelector(".library-race-hp-flat")?.value, 10) || 0,
+        perLevelBonus: parseInt(row.querySelector(".library-race-hp-level")?.value, 10) || 0,
+      };
+      record.features.rulesText = {
+        ...(record.features.rulesText || {}),
+        description,
+      };
     }
 
     if (["feats", "traits", "tags"].includes(collection)) {
-      record.description = row.querySelector(".library-description")?.value || "";
+      const description = readDescription(row);
+      record.desc = description;
+      record.features[collection.slice(0, -1) || collection] = {
+        ...(record.features[collection.slice(0, -1) || collection] || {}),
+      };
+      record.features.rulesText = {
+        ...(record.features.rulesText || {}),
+        description,
+      };
     }
 
     return record;
+  }
+
+  function readDescription(row) {
+    return row.querySelector(".library-description")?.value || "";
+  }
+
+  function parseQuantityUnit(value = "") {
+    const text = String(value || "").trim();
+    const match = text.match(/^(\d+)\s*(.*)$/);
+    if (!match) return { text };
+    return { quantity: Number(match[1]), unit: match[2] || "" };
   }
 
   function renderImports(panel) {
@@ -476,7 +539,7 @@ const ViewLibrary = (() => {
         </p>
         <div class="list-controls">
           <select id="import-provider" class="type-filter-select">
-            <option value="open5e">Open5e</option>
+            <option value="open5eapi">Open5e</option>
             <option value="dnd5eapi">D&amp;D 5e API</option>
           </select>
           <input id="external-search" class="search-input" placeholder="Search spells, items, feats, classes..." />
@@ -497,7 +560,7 @@ const ViewLibrary = (() => {
 
   async function searchExternal(panel) {
     const query = panel.querySelector("#external-search")?.value || "";
-    const provider = panel.querySelector("#import-provider")?.value || "open5e";
+    const provider = panel.querySelector("#import-provider")?.value || "open5eapi";
     const resultsEl = panel.querySelector("#external-results");
     resultsEl.innerHTML = `<p class="text-muted text-sm">Searching...</p>`;
     try {
@@ -622,7 +685,7 @@ const ViewLibrary = (() => {
     dialog.showModal();
 
     try {
-      const detail = await Library.fetchExternalDetail(result).catch(() => result.raw || result);
+      const detail = await fetchExternalPreviewDetail(result).catch(() => result.raw || result);
       bodyEl.innerHTML = renderExternalRecordPreview(result, detail);
     } catch (error) {
       bodyEl.innerHTML = `<p class="text-danger text-sm">Preview failed: ${escapeHTML(error.message)}</p>`;
@@ -632,11 +695,34 @@ const ViewLibrary = (() => {
   function renderExternalRecordPreview(result, detail = {}) {
     const record = normalizePreviewRecord(result, detail);
     return typeof ViewCharacterUtils !== "undefined"
-      ? ViewCharacterUtils.renderRecordSummary(record, { collection: result.collection })
+      ? ViewCharacterUtils.renderRecordSummary(record, { collection: record.collection || result.collection })
       : renderExternalGenericPreview(result, detail);
   }
 
+  async function fetchExternalPreviewDetail(result) {
+    if (result.provider === "open5eapi" || result.provider === "open5e") {
+      return Open5eApiImporter.detail(result);
+    }
+    if (result.provider === "dnd5eapi") {
+      return Dnd5eApiImporter.detail(result);
+    }
+    return Library.fetchExternalDetail(result);
+  }
+
   function normalizePreviewRecord(result, detail = {}) {
+    try {
+      if (result.provider === "open5eapi" || result.provider === "open5e") {
+        const record = Open5eApiImporter.toRecord({ ...result, provider: "open5eapi" }, detail);
+        return LibraryRecords.toRuntimeRecord(record, record.collections?.[0] || result.collection);
+      }
+      if (result.provider === "dnd5eapi") {
+        const record = Dnd5eApiImporter.toRecord(result, detail);
+        return LibraryRecords.toRuntimeRecord(record, record.collections?.[0] || result.collection);
+      }
+    } catch {
+      // Fall through to the light preview shape if a provider returns an odd payload.
+    }
+
     const description = normalizePreviewDescription(detail.desc || detail.description || detail.text || "");
     if (result.collection === "spells") {
       return {
@@ -837,6 +923,7 @@ const ViewLibrary = (() => {
   }
 
   function singular(collection) {
+    if (collection === "species") return "species";
     return collection.endsWith("s") ? collection.slice(0, -1) : collection;
   }
 

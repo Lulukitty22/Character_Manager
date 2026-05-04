@@ -225,6 +225,9 @@ const ViewCharacterUtils = (() => {
     const chips = [];
     if (record.source) chips.push({ label: "Source", value: record.source, kind: "neutral" });
     if (record.provider) chips.push({ label: "Provider", value: record.provider, kind: "neutral" });
+    (record.sourceReferences || []).slice(0, 2).forEach(source => {
+      chips.push({ label: "Provider", value: source.provider, kind: "neutral" });
+    });
     if (record.type) chips.push({ label: "Type", value: record.type, kind: "neutral" });
     if (record.addons?.equipment?.rarity) chips.push({ label: "Rarity", value: record.addons.equipment.rarity, kind: "positive" });
     if (record.quantity != null && collection === "items") chips.push({ label: "Qty", value: record.quantity, kind: "quantity" });
@@ -259,7 +262,7 @@ const ViewCharacterUtils = (() => {
       feats: "Feat",
       traits: "Trait",
       classes: "Class",
-      races: "Race",
+      species: "Species",
     };
     return labels[collection] || "";
   }

@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "id": "spells.capella-spell-mirror-image",
+  "name": "Mirror Image",
+  "collections": [
+    "spells",
+    "spells/illusion",
+    "spells/level-2"
+  ],
+  "tags": [
+    "capella",
+    "defense",
+    "illusion",
+    "dandd-5e-wiki",
+    "player-s-handbook",
+    "dnd5eapi"
+  ],
+  "variantOf": null,
+  "sourceReferences": [
+    {
+      "provider": "dnd5eapi",
+      "sourceId": "mirror-image",
+      "url": "https://dnd-5e.fandom.com/wiki/Mirror_Image",
+      "note": "Player's Handbook"
+    }
+  ],
+  "features": {
+    "spell": {
+      "level": 2,
+      "school": "illusion",
+      "isRitual": false,
+      "requiresConcentration": false
+    },
+    "spellcasting": {
+      "castingTime": {
+        "quantity": 1,
+        "unit": "action"
+      },
+      "range": {
+        "text": "Self"
+      },
+      "duration": {
+        "text": "1 minute"
+      },
+      "components": {
+        "verbal": true,
+        "somatic": true,
+        "material": false,
+        "materialDescription": ""
+      }
+    },
+    "rulesText": {
+      "description": "Defensive misdirection for the elegant monster routine: attackers strike false angles while her real body keeps reshaping."
+    },
+    "mechanics": [
+      {
+        "label": "Duplicates",
+        "value": "3",
+        "kind": "positive",
+        "description": "Three illusory duplicates protect you from attacks."
+      },
+      {
+        "label": "Sight",
+        "kind": "requirement",
+        "description": "Blindsight, truesight, or not seeing you can bypass the spell."
+      }
+    ]
+  },
+  "desc": "Defensive misdirection for the elegant monster routine: attackers strike false angles while her real body keeps reshaping."
+}

@@ -1,33 +1,27 @@
 {
-  "id": "f14b5e09-2157-4bca-b7ac-fd36471f0a37",
-  "collection": "traits",
+  "schemaVersion": 1,
+  "id": "traits.f14b5e09-2157-4bca-b7ac-fd36471f0a37",
   "name": "Nonlethal Intent",
+  "collections": [
+    "traits"
+  ],
   "tags": [
     "roleplay"
   ],
-  "source": "custom",
-  "provider": "",
-  "providerId": "",
-  "variantOf": "",
-  "addons": {
-    "sourceDocument": {
-      "provider": "dnd5ewiki",
-      "title": "Player's Handbook",
-      "type": "Rule",
-      "detailUrl": "https://dnd-5e.fandom.com/wiki/Damage_and_Healing"
-    },
-    "sourceDocuments": [
-      {
-        "provider": "dnd5ewiki",
-        "title": "Player's Handbook",
-        "type": "Rule",
-        "detailUrl": "https://dnd-5e.fandom.com/wiki/Conditions"
-      }
-    ]
+  "variantOf": null,
+  "sourceReferences": [
+    {
+      "provider": "internal",
+      "sourceId": "f14b5e09-2157-4bca-b7ac-fd36471f0a37",
+      "url": "https://dnd-5e.fandom.com/wiki/Damage_and_Healing",
+      "note": "Player's Handbook"
+    }
+  ],
+  "features": {
+    "trait": {},
+    "rulesText": {
+      "description": "Capella usually avoids killing. Her attacks are meant to disable, maim, pin, terrify, transform, or humiliate rather than execute."
+    }
   },
-  "createdAt": "2026-05-01T15:51:13.985Z",
-  "updatedAt": "2026-05-01T15:51:13.985Z",
-  "type": "trait",
-  "description": "Capella usually avoids killing. Her attacks are meant to disable, maim, pin, terrify, transform, or humiliate rather than execute.",
-  "active": true
+  "desc": "Capella usually avoids killing. Her attacks are meant to disable, maim, pin, terrify, transform, or humiliate rather than execute."
 }

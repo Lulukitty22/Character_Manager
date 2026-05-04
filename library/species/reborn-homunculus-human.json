@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "id": "species.reborn-homunculus-human",
+  "name": "Reborn / Homunculus (Human)",
+  "collections": [
+    "species"
+  ],
+  "tags": [
+    "dandd-5e",
+    "reborn",
+    "human",
+    "homunculus",
+    "species"
+  ],
+  "variantOf": "human",
+  "sourceReferences": [],
+  "features": {
+    "species": {
+      "creatureType": "humanoid",
+      "defaultSize": "medium"
+    },
+    "movement": {
+      "walk": {
+        "quantity": 30,
+        "unit": "ft"
+      }
+    },
+    "abilityBonuses": {},
+    "hp": {
+      "flatBonus": 0,
+      "perLevelBonus": 0
+    },
+    "traits": {
+      "traitIds": []
+    },
+    "mechanics": [
+      {
+        "label": "Provisional",
+        "kind": "requirement",
+        "description": "Elfnein's ancestry is story-driven; keep exact stat origin table-approved."
+      }
+    ]
+  },
+  "desc": "Story-first Reborn/Homunculus ancestry template."
+}

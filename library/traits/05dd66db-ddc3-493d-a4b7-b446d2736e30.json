@@ -1,18 +1,20 @@
 {
-  "id": "05dd66db-ddc3-493d-a4b7-b446d2736e30",
-  "collection": "traits",
+  "schemaVersion": 1,
+  "id": "traits.05dd66db-ddc3-493d-a4b7-b446d2736e30",
   "name": "Bonus Attack",
+  "collections": [
+    "traits"
+  ],
   "tags": [
     "combat"
   ],
-  "source": "custom",
-  "provider": "",
-  "providerId": "",
-  "variantOf": "",
-  "addons": {},
-  "createdAt": "2026-05-01T15:51:13.985Z",
-  "updatedAt": "2026-05-01T15:51:13.985Z",
-  "type": "bonus_action",
-  "description": "If Capella takes the Attack action on her turn, she may make 1 additional natural attack as a Bonus Action.",
-  "active": true
+  "variantOf": null,
+  "sourceReferences": [],
+  "features": {
+    "trait": {},
+    "rulesText": {
+      "description": "If Capella takes the Attack action on her turn, she may make 1 additional natural attack as a Bonus Action."
+    }
+  },
+  "desc": "If Capella takes the Attack action on her turn, she may make 1 additional natural attack as a Bonus Action."
 }

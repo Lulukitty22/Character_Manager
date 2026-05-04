@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "id": "spells.capella-spell-alter-self",
+  "name": "Alter Self",
+  "collections": [
+    "spells",
+    "spells/transmutation",
+    "spells/level-2"
+  ],
+  "tags": [
+    "capella",
+    "shapechange",
+    "utility",
+    "dandd-5e-wiki",
+    "player-s-handbook",
+    "dnd5eapi"
+  ],
+  "variantOf": null,
+  "sourceReferences": [
+    {
+      "provider": "dnd5eapi",
+      "sourceId": "alter-self",
+      "url": "https://dnd-5e.fandom.com/wiki/Alter_Self",
+      "note": "Player's Handbook"
+    }
+  ],
+  "features": {
+    "spell": {
+      "level": 2,
+      "school": "transmutation",
+      "isRitual": false,
+      "requiresConcentration": true
+    },
+    "spellcasting": {
+      "castingTime": {
+        "quantity": 1,
+        "unit": "action"
+      },
+      "range": {
+        "text": "Self"
+      },
+      "duration": {
+        "text": "Concentration, up to 1 hour"
+      },
+      "components": {
+        "verbal": true,
+        "somatic": true,
+        "material": false,
+        "materialDescription": ""
+      }
+    },
+    "rulesText": {
+      "description": "A cleaner low-intensity transformation option when full Flesh Polymorph would be too loud. Good for gills, claws, texture changes, and unsettling physical tells."
+    },
+    "mechanics": [
+      {
+        "label": "Modes",
+        "value": "3 options",
+        "kind": "positive",
+        "description": "Aquatic adaptation, change appearance, or natural weapons."
+      }
+    ]
+  },
+  "desc": "A cleaner low-intensity transformation option when full Flesh Polymorph would be too loud. Good for gills, claws, texture changes, and unsettling physical tells."
+}

@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "id": "spells.capella-spell-hold-monster",
+  "name": "Hold Monster",
+  "collections": [
+    "spells",
+    "spells/enchantment",
+    "spells/level-5"
+  ],
+  "tags": [
+    "capella",
+    "control",
+    "disable",
+    "dandd-5e-wiki",
+    "player-s-handbook",
+    "dnd5eapi"
+  ],
+  "variantOf": null,
+  "sourceReferences": [
+    {
+      "provider": "dnd5eapi",
+      "sourceId": "hold-monster",
+      "url": "https://dnd-5e.fandom.com/wiki/Hold_Monster",
+      "note": "Player's Handbook"
+    }
+  ],
+  "features": {
+    "spell": {
+      "level": 5,
+      "school": "enchantment",
+      "isRitual": false,
+      "requiresConcentration": true
+    },
+    "spellcasting": {
+      "castingTime": {
+        "quantity": 1,
+        "unit": "action"
+      },
+      "range": {
+        "quantity": 90,
+        "unit": "ft"
+      },
+      "duration": {
+        "text": "Concentration, up to 1 minute"
+      },
+      "components": {
+        "verbal": true,
+        "somatic": true,
+        "material": true,
+        "materialDescription": ""
+      }
+    },
+    "rulesText": {
+      "description": "Single-target lockdown that fits her nonlethal disable/maim/control style. Particularly scary before a tendril, bite, or false mercy follow-up."
+    },
+    "mechanics": [
+      {
+        "label": "Paralyzed",
+        "kind": "condition",
+        "description": "A failed Wisdom save leaves the target paralyzed."
+      },
+      {
+        "label": "Repeat Save",
+        "kind": "requirement",
+        "description": "The target repeats the save at the end of each of its turns."
+      }
+    ]
+  },
+  "desc": "Single-target lockdown that fits her nonlethal disable/maim/control style. Particularly scary before a tendril, bite, or false mercy follow-up."
+}

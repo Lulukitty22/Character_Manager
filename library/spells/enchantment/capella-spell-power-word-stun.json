@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "id": "spells.capella-spell-power-word-stun",
+  "name": "Power Word Stun",
+  "collections": [
+    "spells",
+    "spells/enchantment",
+    "spells/level-8"
+  ],
+  "tags": [
+    "capella",
+    "control",
+    "nonlethal",
+    "dandd-5e-wiki",
+    "player-s-handbook",
+    "dnd5eapi"
+  ],
+  "variantOf": null,
+  "sourceReferences": [
+    {
+      "provider": "dnd5eapi",
+      "sourceId": "power-word-stun",
+      "url": "https://dnd-5e.fandom.com/wiki/Power_Word_Stun",
+      "note": "Player's Handbook"
+    }
+  ],
+  "features": {
+    "spell": {
+      "level": 8,
+      "school": "enchantment",
+      "isRitual": false,
+      "requiresConcentration": false
+    },
+    "spellcasting": {
+      "castingTime": {
+        "quantity": 1,
+        "unit": "action"
+      },
+      "range": {
+        "quantity": 60,
+        "unit": "ft"
+      },
+      "duration": {
+        "text": "Instantaneous"
+      },
+      "components": {
+        "verbal": true,
+        "somatic": false,
+        "material": false,
+        "materialDescription": ""
+      }
+    },
+    "rulesText": {
+      "description": "Clean nonlethal boss disable. It fits her preference for humiliation, capture, and control over immediate execution."
+    },
+    "mechanics": [
+      {
+        "label": "Threshold",
+        "value": "150 HP",
+        "kind": "requirement",
+        "description": "Only creatures with 150 hit points or fewer are affected."
+      },
+      {
+        "label": "Con Save",
+        "kind": "requirement",
+        "description": "The target repeats a Constitution saving throw at the end of each turn."
+      }
+    ]
+  },
+  "desc": "Clean nonlethal boss disable. It fits her preference for humiliation, capture, and control over immediate execution."
+}
