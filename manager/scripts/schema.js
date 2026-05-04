@@ -9,6 +9,11 @@
 
 const Schema = (() => {
 
+  const SCHEMA_VERSION = {
+    major: 2,
+    minor: 0,
+  };
+
   // ─── UUID Generation ───────────────────────────────────────────────────────
 
   function generateId() {
@@ -793,6 +798,8 @@ const Schema = (() => {
   // ─── Public API ────────────────────────────────────────────────────────────
 
   return {
+    SCHEMA_VERSION,
+
     generateId,
 
     CHARACTER_CLASSIFICATIONS,

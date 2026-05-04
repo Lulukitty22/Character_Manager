@@ -318,7 +318,7 @@
   flex-shrink:   0;
 }
 
-.sheet-spell-entry:not(.prepared) .sheet-spell-prepared-dot {
+.sheet-spell-prepared-dot:not(.prepared) {
   background-color: rgba(90, 85, 112, 0.4);
 }
 
@@ -478,6 +478,50 @@ details.sheet-mechanic-chip {
 .sheet-record-card:hover {
   border-color: rgba(201, 168, 76, 0.28);
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.16);
+}
+
+.sheet-compact-record {
+  display: block;
+  padding: 0;
+  overflow: hidden;
+}
+
+.sheet-compact-summary {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  padding: 0.75rem 0.9rem;
+  cursor: pointer;
+  list-style: none;
+}
+
+.sheet-compact-summary::-webkit-details-marker {
+  display: none;
+}
+
+.sheet-compact-summary::before {
+  content: ">";
+  color: #8a8399;
+  font-family: var(--font-ui, 'Inter', system-ui, sans-serif);
+  font-size: 0.85rem;
+  line-height: 1.35;
+  transition: transform 160ms ease, color 160ms ease;
+}
+
+.sheet-compact-record[open] > .sheet-compact-summary::before {
+  color: #d9b95d;
+  transform: rotate(90deg);
+}
+
+.sheet-compact-body {
+  border-top: 1px solid rgba(180, 160, 220, 0.1);
+  padding: 0.65rem 0.9rem 0.85rem 2.35rem;
+}
+
+.sheet-compact-record .sheet-spell-content,
+.sheet-compact-record .sheet-ability-content {
+  flex: 1;
+  min-width: 0;
 }
 
 .sheet-record-card-header {

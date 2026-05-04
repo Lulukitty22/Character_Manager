@@ -146,9 +146,15 @@ const ViewCharacter = (() => {
     ViewCharacterUtils.wireRecordCardViewers?.(containerEl);
   }
 
+  function mount(containerEl, character) {
+    containerEl.innerHTML = buildHTML(character);
+    wireInteractive(containerEl, character);
+  }
+
   return {
     buildHTML,
     wireInteractive,
+    mount,
   };
 
 })();

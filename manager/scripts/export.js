@@ -21,8 +21,13 @@
 
 const SheetExporter = (() => {
 
-  const EXPORT_BRANCH  = "staging";
-  const SCHEMA_VERSION = "2.0";
+  const EXPORT_BRANCH = "staging";
+
+  function getSchemaVersionString() {
+    const version = typeof Schema !== "undefined" ? Schema.SCHEMA_VERSION : null;
+    if (!version) return "2.0";
+    return `${version.major || 0}.${version.minor || 0}`;
+  }
 
   function exportCharacter(characterData, filePath) {
     const owner = localStorage.getItem("githubOwner") || "";
@@ -43,7 +48,7 @@ const SheetExporter = (() => {
       owner,
       repo,
       branch: EXPORT_BRANCH,
-      schemaVersion: SCHEMA_VERSION,
+      schemaVersion: getSchemaVersionString(),
       characterName: name,
     });
 
@@ -55,7 +60,8 @@ const SheetExporter = (() => {
   function buildExportHTML(opts) {
     const escapedName = escapeHtml(opts.characterName);
     const escapedJSON = JSON.stringify(opts.characterData).replace(/</g, "\\u003c");
-    const shellUrl    = `https://raw.githubusercontent.com/${opts.owner}/${opts.repo}/${opts.branch}/share/viewer/index.js`;
+    const shellUrl       = `https://raw.githubusercontent.com/${opts.owner}/${opts.repo}/${opts.branch}/share/viewer/index.js`;
+    const shellBootstrap = buildShellBootstrap(shellUrl);
 
     return `<!DOCTYPE html>
 <html lang="en">
@@ -103,9 +109,51 @@ const SheetExporter = (() => {
   <script>
     window.__EMBEDDED_CHARACTER__ = ${escapedJSON};
   </script>
-  <script src="${shellUrl}"></script>
+  ${shellBootstrap}
 </body>
 </html>`;
+  }
+
+  function buildShellBootstrap(shellUrl) {
+    const shellUrlJson = JSON.stringify(shellUrl);
+    return `<script>
+    (async function () {
+      const shellUrl = ${shellUrlJson};
+      const statusEl = document.getElementById("loading-status");
+      const loadingEl = document.getElementById("state-loading");
+      const errorEl = document.getElementById("state-error");
+      const messageEl = document.getElementById("error-message");
+      const urlEl = document.getElementById("error-url");
+
+      function setStatus(text) {
+        if (statusEl) statusEl.textContent = text;
+      }
+
+      function showError(message) {
+        if (loadingEl) loadingEl.hidden = true;
+        if (errorEl) errorEl.hidden = false;
+        if (messageEl) messageEl.textContent = message;
+        if (urlEl) {
+          urlEl.href = shellUrl;
+          urlEl.textContent = shellUrl;
+        }
+      }
+
+      try {
+        setStatus("Fetching viewer shell...");
+        const response = await fetch(shellUrl, { cache: "no-store" });
+        if (!response.ok) throw new Error("HTTP " + response.status + " loading viewer shell");
+
+        setStatus("Starting viewer shell...");
+        const script = document.createElement("script");
+        script.textContent = await response.text();
+        script.textContent += "\\n//# sourceURL=" + shellUrl;
+        document.head.appendChild(script);
+      } catch (error) {
+        showError(error && error.message ? error.message : String(error));
+      }
+    })();
+  </script>`;
   }
 
   // ─── Shell loading/error/fatal styles (inline so they show pre-fetch) ───

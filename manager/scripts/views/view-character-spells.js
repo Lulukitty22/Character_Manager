@@ -79,25 +79,29 @@ const ViewCharacterSpells = (() => {
     const tags = (spell.tags || []).map(t => `<span class="sheet-tag">${esc(t)}</span>`).join("");
 
     return `
-      <div class="sheet-spell-entry sheet-record-card" data-sheet-record="${ViewCharacterUtils.encodeDataAttr(buildSpellViewerRecord(spell, mechanics))}">
-        <div class="sheet-spell-prepared-dot ${spell.prepared ? "prepared" : ""}"></div>
-        <div class="sheet-spell-content">
-          <div class="sheet-record-card-header">
-            <div>
-              <div class="sheet-spell-name">
-                ${esc(spell.name || "(Unnamed spell)")}
-                ${spell.school ? `<span class="sheet-spell-school text-muted">${esc(spell.school)}</span>` : ""}
+      <details class="sheet-spell-entry sheet-record-card sheet-compact-record" data-sheet-record="${ViewCharacterUtils.encodeDataAttr(buildSpellViewerRecord(spell, mechanics))}">
+        <summary class="sheet-compact-summary">
+          <div class="sheet-spell-prepared-dot ${spell.prepared ? "prepared" : ""}"></div>
+          <div class="sheet-spell-content">
+            <div class="sheet-record-card-header">
+              <div>
+                <div class="sheet-spell-name">
+                  ${esc(spell.name || "(Unnamed spell)")}
+                  ${spell.school ? `<span class="sheet-spell-school text-muted">${esc(spell.school)}</span>` : ""}
+                </div>
+              </div>
+              <div class="sheet-record-card-actions">
+                <button type="button" class="sheet-inline-button sheet-open-record-viewer">View</button>
               </div>
             </div>
-            <div class="sheet-record-card-actions">
-              <button type="button" class="sheet-inline-button sheet-open-record-viewer">View</button>
-            </div>
+            ${mechanicChips}
           </div>
-          ${mechanicChips}
+        </summary>
+        <div class="sheet-compact-body">
           ${spell.description ? `<div class="sheet-spell-desc text-sm">${esc(spell.description)}</div>` : ""}
           ${tags ? `<div class="sheet-spell-tags">${tags}</div>` : ""}
         </div>
-      </div>`;
+      </details>`;
   }
 
   function spellDamageChips(spell) {
@@ -189,7 +193,9 @@ const ViewCharacterSpells = (() => {
 
   function wireInteractive(containerEl) {
     containerEl.querySelectorAll(".sheet-spell-entry .sheet-open-record-viewer").forEach(button => {
-      button.addEventListener("click", () => {
+      button.addEventListener("click", event => {
+        event.preventDefault();
+        event.stopPropagation();
         const row = button.closest(".sheet-spell-entry");
         ViewCharacterUtils.openRecordViewer(ViewCharacterUtils.decodeDataAttr(row?.dataset.sheetRecord, {}));
       });

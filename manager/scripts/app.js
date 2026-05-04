@@ -480,8 +480,6 @@ const CharacterEditor = (() => {
   // ─── Preview ─────────────────────────────────────────────────────────────────
 
   function openPreview(characterData) {
-    const sheetHTML = ViewCharacter.buildHTML(characterData);
-
     const overlay = document.createElement("div");
     overlay.className = "sheet-preview-overlay";
     overlay.innerHTML = `
@@ -490,13 +488,12 @@ const CharacterEditor = (() => {
           <span class="text-muted text-sm">Sheet Preview</span>
           <button class="button button-ghost button-sm" id="btn-close-editor-preview">✕ Close</button>
         </div>
-        <div class="sheet-preview-body">${sheetHTML}</div>
+        <div class="sheet-preview-body"></div>
       </div>
     `;
     document.body.appendChild(overlay);
 
-    // Wire interactive elements (boss toggle etc.)
-    ViewCharacter.wireInteractive(overlay.querySelector(".sheet-preview-body"), characterData);
+    ViewCharacter.mount(overlay.querySelector(".sheet-preview-body"), characterData);
 
     overlay.querySelector("#btn-close-editor-preview").addEventListener("click", () => overlay.remove());
     overlay.addEventListener("click", (event) => { if (event.target === overlay) overlay.remove(); });

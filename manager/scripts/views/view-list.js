@@ -244,8 +244,6 @@ const CharacterList = (() => {
       }
     }
 
-    const sheetHTML = ViewCharacter.buildHTML(characterData);
-
     const overlay = document.createElement("div");
     overlay.className = "sheet-preview-overlay";
     overlay.innerHTML = `
@@ -257,12 +255,12 @@ const CharacterList = (() => {
             <button class="button button-ghost button-sm" id="btn-close-preview">✕ Close</button>
           </div>
         </div>
-        <div class="sheet-preview-body">${sheetHTML}</div>
+        <div class="sheet-preview-body"></div>
       </div>
     `;
 
     document.body.appendChild(overlay);
-    ViewCharacter.wireInteractive(overlay.querySelector(".sheet-preview-body"), characterData);
+    ViewCharacter.mount(overlay.querySelector(".sheet-preview-body"), characterData);
     overlay.querySelector("#btn-close-preview").addEventListener("click", () => overlay.remove());
     overlay.querySelector("#btn-export-preview").addEventListener("click", () => {
       SheetExporter.exportCharacter(characterData, filePath);

@@ -20,17 +20,23 @@ const ViewCharacterAbilities = (() => {
       ].filter(Boolean);
 
       return `
-        <div class="sheet-ability-entry sheet-record-card" data-sheet-record="${ViewCharacterUtils.encodeDataAttr(buildAbilityViewerRecord(ability, mechanics))}">
-          <div class="sheet-ability-header sheet-record-card-header">
-            <span class="sheet-ability-name">${esc(ability.name || "(Unnamed)")}</span>
-            <div class="sheet-record-card-actions">
-              <button type="button" class="sheet-inline-button sheet-open-record-viewer">View</button>
+        <details class="sheet-ability-entry sheet-record-card sheet-compact-record" data-sheet-record="${ViewCharacterUtils.encodeDataAttr(buildAbilityViewerRecord(ability, mechanics))}">
+          <summary class="sheet-compact-summary">
+            <div class="sheet-ability-content">
+              <div class="sheet-ability-header sheet-record-card-header">
+                <span class="sheet-ability-name">${esc(ability.name || "(Unnamed)")}</span>
+                <div class="sheet-record-card-actions">
+                  <button type="button" class="sheet-inline-button sheet-open-record-viewer">View</button>
+                </div>
+              </div>
+              ${renderMechanicChips(mechanics)}
             </div>
+          </summary>
+          <div class="sheet-compact-body">
+            ${ability.description ? `<div class="sheet-ability-desc text-sm">${esc(ability.description)}</div>` : ""}
+            ${tags ? `<div class="sheet-ability-tags">${tags}</div>` : ""}
           </div>
-          ${renderMechanicChips(mechanics)}
-          ${ability.description ? `<div class="sheet-ability-desc text-sm">${esc(ability.description)}</div>` : ""}
-          ${tags ? `<div class="sheet-ability-tags">${tags}</div>` : ""}
-        </div>`;
+        </details>`;
     }).join("");
 
     return `
@@ -60,7 +66,9 @@ const ViewCharacterAbilities = (() => {
 
   function wireInteractive(containerEl) {
     containerEl.querySelectorAll(".sheet-ability-entry .sheet-open-record-viewer").forEach(button => {
-      button.addEventListener("click", () => {
+      button.addEventListener("click", event => {
+        event.preventDefault();
+        event.stopPropagation();
         const row = button.closest(".sheet-ability-entry");
         ViewCharacterUtils.openRecordViewer(ViewCharacterUtils.decodeDataAttr(row?.dataset.sheetRecord, {}));
       });

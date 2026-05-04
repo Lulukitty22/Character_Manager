@@ -212,12 +212,15 @@
 
     // 7. Render
     setStatus("Rendering…");
-    const html = ViewCharacter.buildHTML(characterData);
     if (loadingEl) loadingEl.hidden = true;
     if (contentEl) {
       contentEl.hidden = false;
-      contentEl.innerHTML = html;
-      ViewCharacter.wireInteractive(contentEl, characterData);
+      if (typeof ViewCharacter.mount === "function") {
+        ViewCharacter.mount(contentEl, characterData);
+      } else {
+        contentEl.innerHTML = ViewCharacter.buildHTML(characterData);
+        ViewCharacter.wireInteractive(contentEl, characterData);
+      }
     }
 
     // Title
