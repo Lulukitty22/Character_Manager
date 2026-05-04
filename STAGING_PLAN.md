@@ -23,26 +23,37 @@ Claude owns this viewer/editor shell lane:
 - future `share/editor/index.js`
 - future `share/editor/manifest.json`
 
-Codex owns this core/runtime lane:
+Codex owns this architecture/runtime lane:
 
 - schema contract placement in `core/scripts/schema.js`
 - shell/library API sanity checks
 - density fixes inside existing viewer panels
-- `/core` split and shared runtime loading paths
+- `/core`, `/app`, and `/editor` split and shared runtime loading paths
 
 Shared files need a quick note before either agent edits them:
 
 - `core/scripts/views/view-character.js`
 - `core/scripts/views/view-character-*.js`
 - `core/scripts/library.js`
+- `app/index.html`
+- `editor/scripts/*`
 - any future `share/editor/*`
 - any future `/core/*`
 
-## Next Architecture Step
+## Current Architecture Shape
 
-The thin `/core` split is now the intended shared shape:
+The repo is now split by responsibility:
+
+- `core/` is shared runtime used by the local app, exported viewer, and future shareable editor.
+- `app/` is the local GitHub-backed manager shell, character list, library manager, and export builder.
+- `editor/` is editor UI modules and editor-specific styles.
+- `share/` is maintained share shells, share manifests, and static visual mockups.
+- `library/` and `characters/` remain data.
+
+`core/` currently contains:
 
 - `core/scripts/schema.js`
+- `core/scripts/github.js`
 - `core/scripts/library.js`
 - `core/scripts/importers/*`
 - `core/scripts/dnd-calculations.js`
@@ -53,12 +64,23 @@ The thin `/core` split is now the intended shared shape:
 - `share/editor/index.js` becomes a shell that loads editor modules plus the same core viewer modules for preview
 - `ViewCharacter.mount(container, character)` is the current shared viewer seam. Exported sheets, list previews, and editor previews should use this same method until it moves into `/core/viewer`.
 
-Manager-only code remains under `manager/`: GitHub auth/API wrapper, export stub builder, app shell, editor modules, character list, and library management view. Claude can target the `core/...` paths directly in the editor shell manifest now.
+Local app/editor paths:
+
+- `app/index.html`
+- `app/scripts/export.js`
+- `app/scripts/app.js`
+- `app/scripts/views/view-list.js`
+- `app/scripts/views/view-library.js`
+- `editor/scripts/*`
+- `editor/style/editor.css`
+
+Claude can target `core/...` paths directly in the editor shell manifest, and can target `editor/...` for editor-only modules.
 
 ## Immediate Test Gate
 
 - `node --check share/viewer/index.js`
-- `node --check manager/scripts/export.js`
+- `node --check app/scripts/export.js`
+- `node --check app/scripts/app.js`
 - `node --check core/scripts/schema.js`
 - `node --check core/scripts/library.js`
 - `node --check core/scripts/views/view-character.js`
@@ -67,10 +89,24 @@ Manager-only code remains under `manager/`: GitHub auth/API wrapper, export stub
 
 ## Agent Notes
 
-- Codex moved the shared runtime into `/core` so exported viewer and future shareable editor can load the same renderer/calculation/library code.
-- Claude: please use `core/style/base.css`, `core/style/sheet.css`, and the ordered `core/scripts/...` list from `share/viewer/manifest.json` when drafting `share/editor/manifest.json`.
+- Codex moved shared runtime/viewer/GitHub client into `/core`, local app shell into `/app`, and editor modules/styles into `/editor`.
+- Claude: please use `core/style/base.css`, `core/style/sheet.css`, and the ordered `core/scripts/...` list from `share/viewer/manifest.json` when drafting `share/editor/manifest.json`; add `core/scripts/github.js` only to editor/app shells that need authenticated GitHub writes; use `editor/scripts/*` and `editor/style/editor.css` for editor-only pieces.
 - Future per-file progress bars should layer on the existing `library-progress` detail shape rather than changing the loader contract unless a real need appears.
 - Visual panel-content ports are still intentionally separate from this runtime split. Coordinate before editing `core/scripts/views/view-character-boss.js` because Capella relies heavily on it.
+
+## Mount Seams
+
+Shells should stay small and call explicit mount seams instead of reaching into section renderers directly:
+
+- `ViewCharacter.mount(container, character)` — existing shared viewer/preview entry point in `core/scripts/views/view-character.js`.
+- `Editor.mount(container, character, options)` — next editor entry point to add in `editor/scripts/editor-mount.js`.
+
+`Editor.mount` should own the single-character editing surface and emit changes through callbacks such as `onChange(character)` and `onSave(character)`. PAT drawers, Discord/fatal overlays, schema handshakes, and GitHub save orchestration belong to shells like `app/index.html` or future `share/editor/index.js`, not to editor section modules.
+
+## Future Compatibility Handshakes
+
+- Character/viewer compatibility uses `Schema.SCHEMA_VERSION` against share manifest `minCompatibleSchemaMajor`.
+- Library record compatibility is separate via `LibraryRecords.SCHEMA_VERSION`. Not blocking v1 editor shell, but future `share/editor/manifest.json` should add a `minCompatibleLibraryRecordSchemaMajor` handshake before allowing library-record editing.
 
 ## Visual Overhaul — Source of Truth
 
@@ -78,7 +114,7 @@ The two static HTML mockups in `share/` are the agreed visual target. Anything t
 
 - `share/style-example.html` — viewer target (Carol Elfnein, full data, all sections)
 - `share/style-example-tessa.html` — viewer target (Tessa Brightleaf, leaner sheet for comparison)
-- `share/style-example-editor.html` — editor target (left edit pane + right live-preview pane). NOTE this is a *separate* concept from the current `manager/index.html` (which is a list + modal preview). The editor revamp is a wholly separate undertaking from the viewer port.
+- `share/style-example-editor.html` — editor target (left edit pane + right live-preview pane). NOTE this is a *separate* concept from the current `app/index.html` (which is a list + modal preview). The editor revamp is a wholly separate undertaking from the viewer port.
 
 ### Visual port audit (as of `620423e`)
 
@@ -114,14 +150,14 @@ What's NOT yet ported (still mockup-only — section renderers still emit old `.
 
 ### Known bug
 
-- **List-preview modal sticky head clipping:** Codex applied the cheap compatibility fix by padding `.sheet-preview-body` with `var(--space-8)` in `manager/style/editor.css`. If future mockup work changes the preview modal, revisit whether an explicit `.ovh-tabbed.in-modal` variant is cleaner.
+- **List-preview modal sticky head clipping:** Codex applied the cheap compatibility fix by padding `.sheet-preview-body` with `var(--space-8)` in `editor/style/editor.css`. If future mockup work changes the preview modal, revisit whether an explicit `.ovh-tabbed.in-modal` variant is cleaner.
 
 ## Next Work Split — Visual Port (Pending Codex Confirmation)
 
 Proposed division for the panel-content port phase, contingent on `/core` split timing:
 
 **Codex (continues current ownership)**:
-- `/core` runtime split and path migration
+- `/core` + `/app` + `/editor` runtime split and path migration
 - Panel-content port for `core/scripts/views/view-character-dnd.js` and `core/scripts/views/view-character-spells.js` (already touched for density pass — keep the lane)
 
 **Claude (Step 2 onward)**:
@@ -131,6 +167,6 @@ Proposed division for the panel-content port phase, contingent on `/core` split 
 **Coordinated, neither owns yet**:
 - `core/scripts/views/view-character-boss.js` (Capella-heavy, complex toggles) — needs both agents to agree on data shape before porting
 - AC mode toggle UI — touches header.js + new CSS + character data shape
-- The editor-mockup revamp itself (current `manager/index.html` → left-edit + right-preview layout). This is a separate undertaking from the viewer port and should not start until the viewer port stabilises.
+- The editor-mockup revamp itself (`app/index.html` → left-edit + right-preview layout). This is a separate undertaking from the viewer port and should not start until the viewer port stabilises.
 
-**Trigger to start Step 2 (editor shell)**: `/core` has landed. Claude can target final core paths plus current `manager/scripts/editor/*` paths for editor-only modules.
+**Trigger to start Step 2 (editor shell)**: `/core`, `/app`, and `/editor` have landed. Claude can target final core paths plus `editor/scripts/*` for editor-only modules.
