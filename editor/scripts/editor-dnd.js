@@ -599,3 +599,5 @@ const EditorDnd = (() => {
   return { buildTab, readTab };
 
 })();
+
+if (typeof globalThis !== "undefined") globalThis.EditorDnd = EditorDnd;

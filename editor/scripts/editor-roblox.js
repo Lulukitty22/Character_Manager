@@ -347,3 +347,5 @@ const EditorRoblox = (() => {
   return { buildTab, readTab };
 
 })();
+
+if (typeof globalThis !== "undefined") globalThis.EditorRoblox = EditorRoblox;

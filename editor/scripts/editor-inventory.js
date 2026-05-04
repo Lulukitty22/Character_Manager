@@ -364,3 +364,5 @@ const EditorInventory = (() => {
   return { buildTab, readTab };
 
 })();
+
+if (typeof globalThis !== "undefined") globalThis.EditorInventory = EditorInventory;

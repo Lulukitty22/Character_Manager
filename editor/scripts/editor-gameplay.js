@@ -647,3 +647,5 @@ const EditorGameplay = (() => {
   return { buildTab, readTab };
 
 })();
+
+if (typeof globalThis !== "undefined") globalThis.EditorGameplay = EditorGameplay;

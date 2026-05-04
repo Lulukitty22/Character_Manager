@@ -791,3 +791,5 @@ const EditorSpells = (() => {
   };
 
 })();
+
+if (typeof globalThis !== "undefined") globalThis.EditorSpells = EditorSpells;

@@ -226,6 +226,11 @@ Token budget on Claude side ran out before completing these. Codex picks up from
 - `core/scripts/github.js` now defaults the local manager branch to `staging` during this migration, and the Settings copy was updated to say staging should be used until merge. If Lulu already has `githubBranch=main` saved in localStorage, Settings still needs to be changed manually to `staging`.
 - Verification: generated Capella HTML from both the repo character and Lulu's downloaded embedded snapshot now has zero `missing-library-ref` markers, includes the custom resources, and includes boss attacks.
 
+### Codex follow-up on editor mount + prototype bridge
+
+- `editor/scripts/editor-*.js` modules now explicitly attach themselves to `globalThis`. `Editor.mount()` was correctly looking up modules by name, but top-level `const EditorBase = ...` does not become `window.EditorBase`, so the app/editor shell could render "No editor modules loaded" even though the files were loaded.
+- `core/style/base.css` and `core/style/sheet.css` received a small prototype bridge pass: radial background, 1040px content width, and current old `.sheet-*` section/card markup restyled closer to `share/style-example.html`. This is not the full panel-content port; it is a compatibility restyle so staging stops looking completely pre-prototype while the renderers are replaced section by section.
+
 ### Reference files (for either agent)
 
 - Viewer mockup: `share/style-example.html` (full Carol data, all sections)

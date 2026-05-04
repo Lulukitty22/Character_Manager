@@ -645,3 +645,5 @@ const EditorBoss = (() => {
   return { buildTab, readTab };
 
 })();
+
+if (typeof globalThis !== "undefined") globalThis.EditorBoss = EditorBoss;

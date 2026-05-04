@@ -1581,3 +1581,102 @@ details.sheet-mechanic-chip {
     grid-template-columns: 1fr;
   }
 }
+
+/* ─────────────────────────────────────────────────────────────
+   Prototype bridge pass
+   These styles intentionally restyle the current old section markup so the
+   sheet moves toward share/style-example.html before the renderer rewrite.
+───────────────────────────────────────────────────────────── */
+
+.sheet-root.ovh-tabbed {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: var(--space-7, 2rem) var(--space-6, 1.5rem) 96px;
+}
+
+.ovh-panel .sheet-section {
+  margin-bottom: var(--space-6, 1.5rem);
+}
+
+.ovh-panel .sheet-section-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3, 0.75rem);
+  border-bottom: 0;
+  padding-bottom: 0;
+  margin-bottom: var(--space-3, 0.75rem);
+  color: var(--color-gold, #c9a84c);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.ovh-panel .sheet-section-title::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background:
+    linear-gradient(90deg,
+      rgba(201, 168, 76, 0.55),
+      rgba(201, 168, 76, 0.12) 46%,
+      transparent);
+}
+
+.ovh-panel .sheet-card,
+.ovh-panel .sheet-record-card,
+.ovh-panel .sheet-resource-block,
+.ovh-panel .sheet-hp-block,
+.ovh-panel .sheet-roll-card,
+.ovh-panel .sheet-compact-record,
+.ovh-panel details.sheet-compact-record {
+  background: linear-gradient(180deg, rgba(26, 18, 40, 0.96), rgba(19, 13, 31, 0.96));
+  border: 1px solid rgba(180, 140, 255, 0.12);
+  border-radius: 14px;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.02) inset, 0 8px 24px rgba(0, 0, 0, 0.28);
+}
+
+.ovh-panel .sheet-card:hover,
+.ovh-panel .sheet-record-card:hover,
+.ovh-panel .sheet-compact-record:hover,
+.ovh-panel details.sheet-compact-record:hover {
+  border-color: rgba(180, 140, 255, 0.24);
+}
+
+.ovh-panel .sheet-record-card-header,
+.ovh-panel .sheet-resource-header,
+.ovh-panel .sheet-compact-record > summary {
+  color: var(--color-text-bright, #f0eaf8);
+}
+
+.ovh-panel .sheet-inline-button,
+.ovh-panel .sheet-open-record-viewer,
+.ovh-panel .sheet-toggle-button {
+  border-radius: 999px;
+  border: 1px solid rgba(180, 140, 255, 0.22);
+  background: rgba(180, 140, 255, 0.08);
+  color: var(--color-text-bright, #f0eaf8);
+  font-family: var(--font-ui, system-ui, sans-serif);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.ovh-panel .sheet-inline-button:hover,
+.ovh-panel .sheet-open-record-viewer:hover,
+.ovh-panel .sheet-toggle-button:hover {
+  border-color: rgba(201, 168, 76, 0.45);
+  color: var(--color-gold-light, #e0c070);
+}
+
+.ovh-panel .mechanic-chip,
+.ovh-panel .sheet-tag,
+.ovh-panel .sheet-resistance-badge {
+  border-radius: 999px;
+  background: rgba(180, 140, 255, 0.07);
+  border-color: rgba(180, 140, 255, 0.18);
+}
+
+.ovh-panel .hp-bar-track {
+  background: rgba(6, 4, 11, 0.9);
+  border: 1px solid rgba(180, 140, 255, 0.12);
+}

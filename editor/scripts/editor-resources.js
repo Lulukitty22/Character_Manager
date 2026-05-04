@@ -294,3 +294,5 @@ const EditorResources = (() => {
   return { buildTab, readTab };
 
 })();
+
+if (typeof globalThis !== "undefined") globalThis.EditorResources = EditorResources;

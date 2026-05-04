@@ -458,3 +458,5 @@ const EditorBase = (() => {
   };
 
 })();
+
+if (typeof globalThis !== "undefined") globalThis.EditorBase = EditorBase;

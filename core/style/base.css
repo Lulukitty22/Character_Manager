@@ -110,7 +110,7 @@
 
   /* Layout */
   --sidebar-width:     260px;
-  --content-max-width: 900px;
+  --content-max-width: 1040px;
   --header-height:     56px;
 }
 
@@ -131,7 +131,9 @@ html {
 }
 
 body {
-  background-color: var(--color-bg-base);
+  background:
+    radial-gradient(ellipse at 20% 0%, rgba(45, 20, 74, 0.86) 0%, var(--color-bg-deepest) 55%) fixed,
+    var(--color-bg-deepest);
   color:            var(--color-text-primary);
   font-family:      var(--font-body);
   font-size:        var(--text-base);
