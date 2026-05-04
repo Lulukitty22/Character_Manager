@@ -1,116 +1,61 @@
 /**
  * export.js
- * Builds a self-contained shareable HTML file for a character.
+ * ────────────────────────────────────────────────────────────────────────
+ * Builds a tiny shareable HTML stub for a character.
  *
- * Architecture: the exported file contains NO embedded renderer code, but it
- * DOES embed the exact character snapshot being exported. That keeps preview
- * and shareable output aligned even when the user exports before saving.
- * The export still stores a set of raw.githubusercontent.com URLs and, on
- * open, fetches the renderer and shared library files it needs:
+ * The exported file contains:
+ *   - <meta> tags (character-id, character-path, schema-version,
+ *     github-owner, github-repo, github-branch)
+ *   - window.__EMBEDDED_CHARACTER__ — the character JSON snapshot at
+ *     export time (offline fallback if the latest can't be fetched)
+ *   - A <script src="…/share/viewer/index.js"> pointing at the maintained
+ *     loader on the configured branch
  *
- *   1. manager/style/base.css   — CSS variables + utilities
- *   2. manager/style/sheet.css  — sheet display styles
- *   3. manager/scripts/schema.js
- *   4. manager/scripts/views/view-character-utils.js
- *   5. manager/scripts/views/view-character-header.js
- *   6. manager/scripts/views/view-character-notes.js
- *   7. manager/scripts/views/view-character-*.js
- *   8. manager/scripts/views/view-character.js — unified coordinator
- *   10. Embedded character JSON snapshot — the exact state exported from editor
+ * All renderer code, styles, and library loading happens in the shell.
+ * Updating share/viewer/index.js or share/viewer/manifest.json
+ * automatically updates every previously-exported sheet on next open.
  *
- * Why this works:
- *   - raw.githubusercontent.com has open CORS headers (public repos)
- *   - fetch() to an HTTPS URL works from file:// pages in all major browsers
- *   - The renderer can update over time, but the exported sheet always uses the
- *     exact character data snapshot taken at export time.
- *
- * Exports: SheetExporter.exportCharacter(characterData, filePath) → void
+ * Public: SheetExporter.exportCharacter(characterData, filePath) → void
+ * ────────────────────────────────────────────────────────────────────────
  */
 
 const SheetExporter = (() => {
 
-  // ─── Public Entry Point ──────────────────────────────────────────────────────
+  const EXPORT_BRANCH  = "staging";
+  const SCHEMA_VERSION = "2.0";
 
-  /**
-   * Build and trigger a download of a shareable character sheet HTML file.
-   * @param {Object} characterData - The character's data object (used only for the filename + title)
-   * @param {string} filePath      - The repo path, e.g. "characters/capella.json"
-   */
   function exportCharacter(characterData, filePath) {
-    const owner  = localStorage.getItem("githubOwner")  || "";
-    const repo   = localStorage.getItem("githubRepo")   || "";
-    const branch = localStorage.getItem("githubBranch") || "main";
+    const owner = localStorage.getItem("githubOwner") || "";
+    const repo  = localStorage.getItem("githubRepo")  || "";
 
     if (!owner || !repo) {
       App.showToast("GitHub owner/repo not configured — set them in Settings first.", "error");
       return;
     }
 
-    // Base URL for all files in this repo
-    const repoBase    = `https://raw.githubusercontent.com/${owner}/${repo}/${branch}`;
-
-    // URL of the character JSON (what the sheet fetches for its data)
-    // URLs of the renderer assets (fetched at sheet-open time)
-    const scriptUrls = {
-      baseCss:       `${repoBase}/manager/style/base.css`,
-      sheetCss:      `${repoBase}/manager/style/sheet.css`,
-      schema:        `${repoBase}/manager/scripts/schema.js`,
-      libraryRecords: `${repoBase}/manager/scripts/importers/library-records.js`,
-      open5eapi:     `${repoBase}/manager/scripts/importers/open5eapi.js`,
-      dnd5eapi:      `${repoBase}/manager/scripts/importers/dnd5eapi.js`,
-      library:       `${repoBase}/manager/scripts/library.js`,
-      dndCalculations: `${repoBase}/manager/scripts/dnd-calculations.js`,
-      utils:         `${repoBase}/manager/scripts/views/view-character-utils.js`,
-      header:        `${repoBase}/manager/scripts/views/view-character-header.js`,
-      notes:         `${repoBase}/manager/scripts/views/view-character-notes.js`,
-      identity:      `${repoBase}/manager/scripts/views/view-character-identity.js`,
-      dnd:           `${repoBase}/manager/scripts/views/view-character-dnd.js`,
-      abilities:     `${repoBase}/manager/scripts/views/view-character-abilities.js`,
-      boss:          `${repoBase}/manager/scripts/views/view-character-boss.js`,
-      spells:        `${repoBase}/manager/scripts/views/view-character-spells.js`,
-      inventory:     `${repoBase}/manager/scripts/views/view-character-inventory.js`,
-      resources:     `${repoBase}/manager/scripts/views/view-character-resources.js`,
-      roblox:        `${repoBase}/manager/scripts/views/view-character-roblox.js`,
-      viewCharacter: `${repoBase}/manager/scripts/views/view-character.js`,
-      libraryManifest: `${repoBase}/library/manifest.json`,
-      libraryBase: `${repoBase}/`,
-    };
-
-    const name        = characterData.identity?.name || "Character";
+    const characterId = characterData?.id || "";
+    const name        = characterData?.identity?.name || "Character";
     const safeFile    = name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
-    const html        = buildExportHTML(characterData, filePath, scriptUrls, name);
+    const html        = buildExportHTML({
+      characterData,
+      characterId,
+      characterPath: filePath,
+      owner,
+      repo,
+      branch: EXPORT_BRANCH,
+      schemaVersion: SCHEMA_VERSION,
+      characterName: name,
+    });
 
     downloadHTML(html, `${safeFile}-sheet.html`);
   }
 
-  // ─── HTML Builder ─────────────────────────────────────────────────────────────
+  // ─── HTML Stub Builder ─────────────────────────────────────────────────
 
-  function buildExportHTML(characterData, filePath, scriptUrls, characterName) {
-    const escapedName        = escapeHtmlEntities(characterName);
-    const escapedCharacterUrl = escapeJsString(`${localStorage.getItem("githubOwner") && localStorage.getItem("githubRepo") ? `https://raw.githubusercontent.com/${localStorage.getItem("githubOwner")}/${localStorage.getItem("githubRepo")}/${localStorage.getItem("githubBranch") || "main"}/${filePath}` : filePath}`);
-    const escapedBaseCss      = escapeJsString(scriptUrls.baseCss);
-    const escapedSheetCss      = escapeJsString(scriptUrls.sheetCss);
-    const escapedSchema        = escapeJsString(scriptUrls.schema);
-    const escapedLibraryRecords = escapeJsString(scriptUrls.libraryRecords);
-    const escapedOpen5eApi      = escapeJsString(scriptUrls.open5eapi);
-    const escapedDnd5eApi       = escapeJsString(scriptUrls.dnd5eapi);
-    const escapedLibrary       = escapeJsString(scriptUrls.library);
-    const escapedDndCalculations = escapeJsString(scriptUrls.dndCalculations);
-    const escapedUtils         = escapeJsString(scriptUrls.utils);
-    const escapedHeader        = escapeJsString(scriptUrls.header);
-    const escapedNotes         = escapeJsString(scriptUrls.notes);
-    const escapedIdentity      = escapeJsString(scriptUrls.identity);
-    const escapedDnd           = escapeJsString(scriptUrls.dnd);
-    const escapedAbilities     = escapeJsString(scriptUrls.abilities);
-    const escapedBoss          = escapeJsString(scriptUrls.boss);
-    const escapedSpells        = escapeJsString(scriptUrls.spells);
-    const escapedInventory     = escapeJsString(scriptUrls.inventory);
-    const escapedResources     = escapeJsString(scriptUrls.resources);
-    const escapedRoblox        = escapeJsString(scriptUrls.roblox);
-    const escapedViewCharacter = escapeJsString(scriptUrls.viewCharacter);
-    const escapedLibraryManifest = escapeJsString(scriptUrls.libraryManifest);
-    const escapedLibraryBase = escapeJsString(scriptUrls.libraryBase);
-    const escapedCharacterData = JSON.stringify(characterData).replace(/</g, "\\u003c");
+  function buildExportHTML(opts) {
+    const escapedName = escapeHtml(opts.characterName);
+    const escapedJSON = JSON.stringify(opts.characterData).replace(/</g, "\\u003c");
+    const shellUrl    = `https://raw.githubusercontent.com/${opts.owner}/${opts.repo}/${opts.branch}/share/viewer/index.js`;
 
     return `<!DOCTYPE html>
 <html lang="en">
@@ -118,6 +63,14 @@ const SheetExporter = (() => {
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>${escapedName} — Character Sheet</title>
+
+  <meta name="character-id"    content="${escapeAttr(opts.characterId)}" />
+  <meta name="character-path"  content="${escapeAttr(opts.characterPath)}" />
+  <meta name="schema-version"  content="${escapeAttr(opts.schemaVersion)}" />
+  <meta name="github-owner"    content="${escapeAttr(opts.owner)}" />
+  <meta name="github-repo"     content="${escapeAttr(opts.repo)}" />
+  <meta name="github-branch"   content="${escapeAttr(opts.branch)}" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -125,7 +78,6 @@ const SheetExporter = (() => {
 </head>
 <body>
   <div id="sheet-app">
-
     <div id="state-loading" class="shell-loading">
       <div class="shell-spinner"></div>
       <p>Loading <strong>${escapedName}</strong>…</p>
@@ -135,203 +87,28 @@ const SheetExporter = (() => {
     <div id="state-error" class="shell-error" hidden>
       <h2>⚠ Could not load character</h2>
       <p id="error-message">Unknown error.</p>
-      <p class="shell-error-hint">Make sure the GitHub repository is public and the file path is correct.</p>
+      <p class="shell-error-hint">Make sure the GitHub repository is public and reachable.</p>
       <p class="shell-error-url"><a id="error-url" href="" target="_blank" rel="noopener noreferrer"></a></p>
     </div>
 
-    <main id="sheet-content" hidden></main>
+    <div id="state-fatal" class="shell-fatal" hidden>
+      <h2>⚠ This character file is out of date</h2>
+      <p id="fatal-reason">The behind-the-scenes setup that runs this file has changed since it was created, and it can no longer auto-update.</p>
+      <p class="shell-fatal-hint">Please ask <strong id="fatal-discord">#VRLulu</strong> on Discord for an updated file.</p>
+    </div>
 
+    <main id="sheet-content" hidden></main>
   </div>
 
   <script>
-/* ── Character Sheet Bootstrap ───────────────────────────────────────────── */
-(function () {
-  "use strict";
-
-  // ── URLs embedded at export time ──────────────────────────────────────────
-  var CHARACTER_URL      = "${escapedCharacterUrl}";
-  var EMBEDDED_CHARACTER = ${escapedCharacterData};
-  var BASE_CSS_URL       = "${escapedBaseCss}";
-  var SHEET_CSS_URL      = "${escapedSheetCss}";
-  var SCHEMA_URL         = "${escapedSchema}";
-  var LIBRARY_RECORDS_URL = "${escapedLibraryRecords}";
-  var OPEN5EAPI_URL      = "${escapedOpen5eApi}";
-  var DND5EAPI_URL       = "${escapedDnd5eApi}";
-  var LIBRARY_URL        = "${escapedLibrary}";
-  var DND_CALCULATIONS_URL = "${escapedDndCalculations}";
-  var UTILS_URL          = "${escapedUtils}";
-  var HEADER_URL         = "${escapedHeader}";
-  var NOTES_URL          = "${escapedNotes}";
-  var IDENTITY_URL       = "${escapedIdentity}";
-  var DND_URL            = "${escapedDnd}";
-  var ABILITIES_URL      = "${escapedAbilities}";
-  var BOSS_URL           = "${escapedBoss}";
-  var SPELLS_URL         = "${escapedSpells}";
-  var INVENTORY_URL      = "${escapedInventory}";
-  var RESOURCES_URL      = "${escapedResources}";
-  var ROBLOX_URL         = "${escapedRoblox}";
-  var VIEW_CHARACTER_URL = "${escapedViewCharacter}";
-  var LIBRARY_MANIFEST_URL = "${escapedLibraryManifest}";
-  var LIBRARY_BASE_URL     = "${escapedLibraryBase}";
-
-  // ── DOM refs ──────────────────────────────────────────────────────────────
-  var loadingEl = document.getElementById("state-loading");
-  var errorEl   = document.getElementById("state-error");
-  var contentEl = document.getElementById("sheet-content");
-  var statusEl  = document.getElementById("loading-status");
-
-  // ── Helpers ───────────────────────────────────────────────────────────────
-
-  function setStatus(text) {
-    if (statusEl) statusEl.textContent = text;
-  }
-
-  function showError(message, url) {
-    loadingEl.hidden = true;
-    errorEl.hidden   = false;
-    var msgEl = document.getElementById("error-message");
-    var urlEl = document.getElementById("error-url");
-    if (msgEl) msgEl.textContent = message;
-    if (urlEl) { urlEl.href = url || ""; urlEl.textContent = url || ""; }
-  }
-
-  /** Fetch a URL and return its text, or throw a descriptive error. */
-  async function fetchText(url, label) {
-    var response;
-    try {
-      response = await fetch(url);
-    } catch (networkError) {
-      throw new Error("Network error loading " + label + ": " + networkError.message);
-    }
-    if (!response.ok) {
-      throw new Error("HTTP " + response.status + " loading " + label + " — " + response.statusText);
-    }
-    return response.text();
-  }
-
-  /** Inject a CSS string into the document head. */
-  function injectCSS(cssText) {
-    var style = document.createElement("style");
-    style.textContent = cssText;
-    document.head.appendChild(style);
-  }
-
-  /** Inject a JS string as an inline script (executes synchronously). */
-  function injectScript(jsText, label) {
-    var script = document.createElement("script");
-    script.textContent = jsText;
-    try {
-      document.head.appendChild(script);
-    } catch (error) {
-      throw new Error("Error executing " + label + ": " + error.message);
-    }
-  }
-
-  // ── Main Loader ───────────────────────────────────────────────────────────
-
-  async function main() {
-    try {
-
-      // 1. Load CSS (parallel — order handled by separate inject calls)
-      setStatus("Loading styles…");
-      var [baseCssText, sheetCssText] = await Promise.all([
-        fetchText(BASE_CSS_URL,  "base.css"),
-        fetchText(SHEET_CSS_URL, "sheet.css"),
-      ]);
-      injectCSS(baseCssText);
-      injectCSS(sheetCssText);
-
-      // 2. Load renderer scripts in dependency order
-      setStatus("Loading renderer…");
-      var rendererScripts = [
-        [SCHEMA_URL,         "schema.js"],
-        [LIBRARY_RECORDS_URL, "library-records.js"],
-        [OPEN5EAPI_URL,      "open5eapi.js"],
-        [DND5EAPI_URL,       "dnd5eapi.js"],
-        [LIBRARY_URL,        "library.js"],
-        [DND_CALCULATIONS_URL, "dnd-calculations.js"],
-        [UTILS_URL,          "view-character-utils.js"],
-        [HEADER_URL,         "view-character-header.js"],
-        [NOTES_URL,          "view-character-notes.js"],
-        [IDENTITY_URL,       "view-character-identity.js"],
-        [DND_URL,            "view-character-dnd.js"],
-        [ABILITIES_URL,      "view-character-abilities.js"],
-        [BOSS_URL,           "view-character-boss.js"],
-        [SPELLS_URL,         "view-character-spells.js"],
-        [INVENTORY_URL,      "view-character-inventory.js"],
-        [RESOURCES_URL,      "view-character-resources.js"],
-        [ROBLOX_URL,         "view-character-roblox.js"],
-        [VIEW_CHARACTER_URL, "view-character.js"],
-      ];
-
-      for (var i = 0; i < rendererScripts.length; i++) {
-        var scriptUrl = rendererScripts[i][0];
-        var scriptLabel = rendererScripts[i][1];
-        var scriptText = await fetchText(scriptUrl, scriptLabel);
-        injectScript(scriptText, scriptLabel);
-      }
-
-      // 3. Use the embedded character snapshot
-      setStatus("Loading character data…");
-      var characterData = EMBEDDED_CHARACTER;
-
-      if (typeof Library !== "undefined") {
-        setStatus("Loading shared library...");
-        var manifest = await fetchText(LIBRARY_MANIFEST_URL, "library manifest").then(function (text) { return JSON.parse(text); });
-        var seeded = {};
-        var collections = manifest.collections || {};
-        var collectionNames = Object.keys(collections);
-        for (var j = 0; j < collectionNames.length; j++) {
-          var collectionName = collectionNames[j];
-          var entries = [];
-          var records = collections[collectionName] || [];
-          for (var k = 0; k < records.length; k++) {
-            var recordPath = records[k].path;
-            if (!recordPath) continue;
-            try {
-              var recordUrl = recordPath.indexOf("http") === 0 ? recordPath : LIBRARY_BASE_URL + recordPath;
-              entries.push(await fetchText(recordUrl, recordPath).then(function (text) { return JSON.parse(text); }));
-            } catch (recordError) {
-              // A missing library record should not break the whole exported sheet.
-            }
-          }
-          seeded[collectionName] = { version: 1, collection: collectionName, entries: entries };
-        }
-        Library.seedCollections(seeded);
-      }
-
-      // 4. Render
-      setStatus("Rendering…");
-      var html = ViewCharacter.buildHTML(characterData);
-
-      // 5. Display
-      loadingEl.hidden = true;
-      contentEl.hidden = false;
-      contentEl.innerHTML = html;
-
-      // Wire interactive elements (boss toggle, etc.)
-      ViewCharacter.wireInteractive(contentEl, characterData);
-
-      // Update page title
-      var name = characterData.identity && characterData.identity.name;
-      if (name) document.title = name + " — Character Sheet";
-
-    } catch (error) {
-      showError(error.message || String(error), CHARACTER_URL);
-    }
-  }
-
-  main();
-
-})();
+    window.__EMBEDDED_CHARACTER__ = ${escapedJSON};
   </script>
+  <script src="${shellUrl}"></script>
 </body>
 </html>`;
   }
 
-  // ─── Shell Styles (loading / error states only) ───────────────────────────
-  // These are minimal inline styles for the page before base.css + sheet.css load.
-  // They only need to cover the loading spinner and error box.
+  // ─── Shell loading/error/fatal styles (inline so they show pre-fetch) ───
 
   const SHELL_STYLES = `
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -342,81 +119,66 @@ const SheetExporter = (() => {
       min-height: 100vh;
     }
     #sheet-content {
-      max-width: 900px;
+      max-width: 1040px;
       margin: 0 auto;
-      padding: 2rem 1.5rem;
-    }
-    @media (max-width: 640px) {
-      #sheet-content { padding: 1rem 0.75rem; }
     }
     .shell-loading {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 70vh;
-      gap: 1rem;
-      color: #8a8299;
-      font-size: 0.95rem;
-      text-align: center;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      min-height: 70vh; gap: 1rem;
+      color: #8a8299; font-size: 0.95rem; text-align: center;
     }
     .shell-loading strong { color: #e8e4f0; }
     .shell-loading-sub { font-size: 0.8rem; color: #5a5570; }
     .shell-spinner {
-      width: 44px;
-      height: 44px;
+      width: 44px; height: 44px;
       border: 3px solid #2e2a3d;
-      border-top-color: #9b72cf;
+      border-top-color: #c9a84c;
       border-radius: 50%;
       animation: spin 0.8s linear infinite;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
-    .shell-error {
-      max-width: 580px;
-      margin: 5rem auto;
-      padding: 2.5rem;
+    .shell-error, .shell-fatal {
+      max-width: 580px; margin: 5rem auto; padding: 2.5rem;
       background: #13111a;
-      border: 1px solid #b94040;
       border-radius: 12px;
       text-align: center;
     }
+    .shell-error  { border: 1px solid #b94040; }
+    .shell-fatal  { border: 1px solid #c9a84c; }
     .shell-error h2 { color: #b94040; margin-bottom: 1rem; font-size: 1.2rem; }
-    .shell-error p  { color: #8a8299; font-size: 0.875rem; margin-bottom: 0.5rem; }
+    .shell-fatal h2 { color: #e0c070; margin-bottom: 1rem; font-size: 1.2rem; }
+    .shell-error p, .shell-fatal p { color: #b8b0c4; font-size: 0.875rem; margin-bottom: 0.5rem; line-height: 1.55; }
+    .shell-fatal-hint { margin-top: 1.5rem; }
+    .shell-fatal-hint strong { color: #c9a84c; font-weight: 600; }
     .shell-error-url { margin-top: 1.25rem; }
     .shell-error-url a { color: #9b72cf; font-size: 0.75rem; word-break: break-all; }
   `;
 
-  // ─── Escape Helpers ──────────────────────────────────────────────────────────
+  // ─── Escape Helpers ────────────────────────────────────────────────────
 
-  /** Escape text for safe use inside HTML content (not attributes). */
-  function escapeHtmlEntities(text) {
+  function escapeHtml(text) {
     return String(text ?? "")
       .replace(/&/g, "&amp;")
       .replace(/</g, "&lt;")
       .replace(/>/g, "&gt;");
   }
 
-  /**
-   * Escape a string for safe embedding in a JS string literal (quoted with double quotes).
-   * Handles backslashes, double quotes, template literal backticks, and newlines.
-   */
-  function escapeJsString(text) {
+  function escapeAttr(text) {
     return String(text ?? "")
-      .replace(/\\/g, "\\\\")
-      .replace(/"/g,  '\\"')
-      .replace(/`/g,  "\\`")
-      .replace(/\n/g, "\\n")
-      .replace(/\r/g, "\\r");
+      .replace(/&/g, "&amp;")
+      .replace(/"/g, "&quot;")
+      .replace(/</g, "&lt;");
   }
 
-  // ─── File Download Trigger ───────────────────────────────────────────────────
+  // ─── File Download Trigger ─────────────────────────────────────────────
 
   function downloadHTML(html, filename) {
     const blob   = new Blob([html], { type: "text/html;charset=utf-8" });
     const url    = URL.createObjectURL(blob);
     const anchor = document.createElement("a");
-    anchor.href      = url;
-    anchor.download  = filename;
+    anchor.href     = url;
+    anchor.download = filename;
     document.body.appendChild(anchor);
     anchor.click();
     document.body.removeChild(anchor);
