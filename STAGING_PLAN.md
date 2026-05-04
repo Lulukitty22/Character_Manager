@@ -11,6 +11,8 @@ This branch is forward-only while the new library, viewer, editor, and share-she
 - The editor preview must render through the same viewer loading/rendering path as exported sheets, so one preview test also tests the shareable viewer.
 - Library records are loaded from GitHub by manifest/index files, then handed to runtime code with `Library.seedCollections()`.
 - `Schema.SCHEMA_VERSION` is the app-level character/viewer contract. Library record schema versions remain separate and are owned by `LibraryRecords.SCHEMA_VERSION`.
+- `share/viewer/manifest.json` only declares the minimum compatible character schema major. It should not duplicate the current `Schema.SCHEMA_VERSION`.
+- Loading progress is emitted as factual steps plus current path/detail. The current UI shows one overall bar; the event shape leaves room for per-file bars later if large files need it.
 
 ## Short-Term File Ownership
 

@@ -30,7 +30,16 @@ const ViewLibrary = (() => {
     if (status) status.textContent = "Loading library...";
 
     try {
-      await Library.loadAll();
+      await Library.loadAll({
+        force: true,
+        onProgress: (detail) => {
+          if (!status) return;
+          const issueText = detail.errors?.length
+            ? ` (${detail.errors.length} issue${detail.errors.length === 1 ? "" : "s"})`
+            : "";
+          status.textContent = `${detail.message || "Loading library..."}${issueText}`;
+        },
+      });
       container.innerHTML = buildShell();
       wire(container);
       renderCollection(container, "spells");

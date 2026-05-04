@@ -88,6 +88,10 @@ const SheetExporter = (() => {
       <div class="shell-spinner"></div>
       <p>Loading <strong>${escapedName}</strong>…</p>
       <p class="shell-loading-sub" id="loading-status">Fetching renderer…</p>
+      <div class="shell-progress" aria-hidden="true">
+        <div class="shell-progress-fill" id="loading-progress-fill"></div>
+      </div>
+      <p class="shell-loading-detail" id="loading-detail"></p>
     </div>
 
     <div id="state-error" class="shell-error" hidden>
@@ -120,6 +124,8 @@ const SheetExporter = (() => {
     (async function () {
       const shellUrl = ${shellUrlJson};
       const statusEl = document.getElementById("loading-status");
+      const detailEl = document.getElementById("loading-detail");
+      const progressEl = document.getElementById("loading-progress-fill");
       const loadingEl = document.getElementById("state-loading");
       const errorEl = document.getElementById("state-error");
       const messageEl = document.getElementById("error-message");
@@ -127,6 +133,11 @@ const SheetExporter = (() => {
 
       function setStatus(text) {
         if (statusEl) statusEl.textContent = text;
+      }
+
+      function setProgress(value, detail) {
+        if (progressEl) progressEl.style.width = Math.max(0, Math.min(100, Math.round(value * 100))) + "%";
+        if (detailEl) detailEl.textContent = detail || "";
       }
 
       function showError(message) {
@@ -141,10 +152,12 @@ const SheetExporter = (() => {
 
       try {
         setStatus("Fetching viewer shell...");
+        setProgress(0.02, shellUrl);
         const response = await fetch(shellUrl, { cache: "no-store" });
         if (!response.ok) throw new Error("HTTP " + response.status + " loading viewer shell");
 
         setStatus("Starting viewer shell...");
+        setProgress(0.05, "Viewer shell downloaded.");
         const script = document.createElement("script");
         script.textContent = await response.text();
         script.textContent += "\\n//# sourceURL=" + shellUrl;
@@ -178,6 +191,29 @@ const SheetExporter = (() => {
     }
     .shell-loading strong { color: #e8e4f0; }
     .shell-loading-sub { font-size: 0.8rem; color: #5a5570; }
+    .shell-loading-detail {
+      max-width: 620px;
+      min-height: 1.2em;
+      font-size: 0.74rem;
+      color: #716a84;
+      line-height: 1.4;
+      word-break: break-word;
+    }
+    .shell-progress {
+      width: min(520px, 78vw);
+      height: 10px;
+      overflow: hidden;
+      border: 1px solid rgba(201, 168, 76, 0.35);
+      border-radius: 999px;
+      background: rgba(12, 10, 18, 0.82);
+      box-shadow: 0 0 18px rgba(201, 168, 76, 0.12);
+    }
+    .shell-progress-fill {
+      width: 0;
+      height: 100%;
+      background: linear-gradient(90deg, #8f6f24, #d9bd66, #f2df9a);
+      transition: width 160ms ease;
+    }
     .shell-spinner {
       width: 44px; height: 44px;
       border: 3px solid #2e2a3d;

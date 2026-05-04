@@ -7,7 +7,7 @@
  *   - <meta> tags: character-id, character-path, schema-version,
  *                  github-owner, github-repo, github-branch
  *   - window.__EMBEDDED_CHARACTER__ — offline-fallback snapshot
- *   - <script src="…/share/viewer/index.js"> — this file
+ *   - a tiny bootstrap that fetches and injects share/viewer/index.js
  *
  * On load, this script:
  *   1. Reads meta tags + embedded snapshot
@@ -18,8 +18,9 @@
  *   5. Tries to fetch the latest character JSON from the repo
  *      → on 404 (file deleted/renamed): fatal overlay with Discord contact
  *      → on network error: falls back to embedded snapshot
- *   6. Fetches the library manifest + record files, seeds Library
- *   7. Calls ViewCharacter.buildHTML() + wireInteractive()
+ *   6. Fetches the library manifest + record files with bounded concurrency,
+ *      then seeds Library
+ *   7. Calls ViewCharacter.mount()
  *
  * The shell intentionally has no GitHub auth — it uses raw.githubusercontent.com
  * which serves public repos without a token. Editor flows (which need writes)
@@ -37,8 +38,22 @@
   const fatalEl   = $("state-fatal");
   const contentEl = $("sheet-content");
   const statusEl  = $("loading-status");
+  const detailEl  = $("loading-detail");
+  const progressEl = $("loading-progress-fill");
 
   function setStatus(text) { if (statusEl) statusEl.textContent = text; }
+
+  function setProgress(value, detail) {
+    if (progressEl && typeof value === "number") {
+      progressEl.style.width = `${Math.max(0, Math.min(100, Math.round(value * 100)))}%`;
+    }
+    if (detailEl) detailEl.textContent = detail || "";
+  }
+
+  function updateLoading(value, status, detail) {
+    setStatus(status);
+    setProgress(value, detail);
+  }
 
   function showError(message, url) {
     if (loadingEl) loadingEl.hidden = true;
@@ -100,6 +115,31 @@
     return res.text();
   }
 
+  async function fetchJson(url, label) {
+    try {
+      return JSON.parse(await fetchText(url, label));
+    } catch (error) {
+      if (error.url) throw error;
+      const e = new Error(`Invalid JSON loading ${label}: ${error.message}`);
+      e.url = url;
+      throw e;
+    }
+  }
+
+  async function mapWithConcurrency(items, limit, worker) {
+    const results = new Array(items.length);
+    let nextIndex = 0;
+    const workerCount = Math.max(1, Math.min(limit || 12, items.length || 1));
+    await Promise.all(Array.from({ length: workerCount }, async () => {
+      while (nextIndex < items.length) {
+        const index = nextIndex;
+        nextIndex += 1;
+        results[index] = await worker(items[index], index);
+      }
+    }));
+    return results;
+  }
+
   function injectStyle(cssText) {
     const tag = document.createElement("style");
     tag.textContent = cssText;
@@ -128,10 +168,9 @@
   // ── Main loader ──────────────────────────────────────────────────────
   try {
     // 1. Fetch viewer manifest
-    setStatus("Fetching renderer manifest…");
     const manifestUrl = `${repoBase}/share/viewer/manifest.json`;
-    const manifestText = await fetchText(manifestUrl, "viewer manifest");
-    const manifest = JSON.parse(manifestText);
+    updateLoading(0.06, "Fetching renderer manifest...", manifestUrl);
+    const manifest = await fetchJson(manifestUrl, "viewer manifest");
 
     // 2. Schema-version handshake
     if (!compareSchemaMajor(cfg.schemaVersion, manifest.minCompatibleSchemaMajor || 0)) {
@@ -145,29 +184,34 @@
     }
 
     // 3. Load styles
-    setStatus("Loading styles…");
+    updateLoading(0.12, "Loading styles...", `${(manifest.styles || []).length} stylesheet(s)`);
     const styles = manifest.styles || [];
-    const styleTexts = await Promise.all(
-      styles.map(p => fetchText(asUrl(p), p))
-    );
+    let loadedStyles = 0;
+    const styleTexts = await Promise.all(styles.map(async p => {
+      const text = await fetchText(asUrl(p), p);
+      loadedStyles += 1;
+      updateLoading(0.12 + (styles.length ? (loadedStyles / styles.length) * 0.08 : 0.08), `Loading styles: ${loadedStyles}/${styles.length}`, p);
+      return text;
+    }));
     styleTexts.forEach(injectStyle);
 
     // 4. Load scripts in declared order
-    setStatus("Loading renderer…");
+    updateLoading(0.22, "Loading renderer...", `${(manifest.scripts || []).length} script(s)`);
     const scripts = manifest.scripts || [];
-    for (const scriptPath of scripts) {
+    for (let index = 0; index < scripts.length; index += 1) {
+      const scriptPath = scripts[index];
+      updateLoading(0.22 + (scripts.length ? (index / scripts.length) * 0.2 : 0), `Loading renderer: ${index + 1}/${scripts.length}`, scriptPath);
       const text = await fetchText(asUrl(scriptPath), scriptPath);
       injectScript(text, scriptPath);
     }
 
     // 5. Fetch latest character — fall back to embedded on network failure,
     //    but treat 404 (deliberately deleted/renamed) as fatal.
-    setStatus("Loading character data…");
+    updateLoading(0.45, "Loading character data...", cfg.characterPath || "Using embedded snapshot.");
     let characterData = embedded;
     if (cfg.characterPath) {
       try {
-        const charText = await fetchText(`${repoBase}/${cfg.characterPath}`, "character file");
-        characterData = JSON.parse(charText);
+        characterData = await fetchJson(`${repoBase}/${cfg.characterPath}`, "character file");
       } catch (charErr) {
         if (charErr.status === 404) {
           showFatal(
@@ -180,38 +224,70 @@
         // Other failures: silently fall back to embedded
       }
     }
-    if (!characterData) throw new Error("No character data — neither remote fetch nor embedded snapshot succeeded.");
+    if (!characterData) throw new Error("No character data - neither remote fetch nor embedded snapshot succeeded.");
 
     // 6. Seed library
     if (typeof Library !== "undefined" && manifest.library?.manifestPath) {
-      setStatus("Loading library…");
       const libManifestUrl = asUrl(manifest.library.manifestPath, manifest.library.basePath);
+      updateLoading(0.52, "Loading library manifest...", libManifestUrl);
       try {
-        const libManifest = JSON.parse(await fetchText(libManifestUrl, "library manifest"));
+        const libManifest = await fetchJson(libManifestUrl, "library manifest");
         const seeded = {};
         const collections = libManifest.collections || {};
-        for (const collectionName of Object.keys(collections)) {
-          const records = collections[collectionName] || [];
-          const entries = [];
-          for (const rec of records) {
-            if (!rec.path) continue;
-            try {
-              const recordUrl = /^https?:/.test(rec.path) ? rec.path : `${repoBase}/${rec.path}`;
-              entries.push(JSON.parse(await fetchText(recordUrl, rec.path)));
-            } catch (recErr) {
-              // Missing/broken record shouldn't kill the whole sheet
-            }
+        const recordTasks = Object.keys(collections).flatMap(collectionName => {
+          return (collections[collectionName] || [])
+            .filter(rec => rec?.path)
+            .map((rec, collectionIndex) => ({ collectionName, collectionIndex, path: rec.path }));
+        });
+        const entriesByCollection = {};
+        const libraryIssues = [];
+        let loadedRecords = 0;
+
+        updateLoading(0.55, `Loading library records: 0/${recordTasks.length}`, "Fetching records in parallel.");
+        await mapWithConcurrency(recordTasks, manifest.library.concurrency || 12, async task => {
+          try {
+            const recordUrl = /^https?:/.test(task.path) ? task.path : `${repoBase}/${task.path}`;
+            const record = await fetchJson(recordUrl, task.path);
+            if (!entriesByCollection[task.collectionName]) entriesByCollection[task.collectionName] = [];
+            entriesByCollection[task.collectionName][task.collectionIndex] = record;
+          } catch (recErr) {
+            libraryIssues.push({
+              collection: task.collectionName,
+              path: task.path,
+              message: recErr.message || String(recErr),
+            });
+          } finally {
+            loadedRecords += 1;
+            const issueText = libraryIssues.length
+              ? ` (${libraryIssues.length} issue${libraryIssues.length === 1 ? "" : "s"})`
+              : "";
+            updateLoading(
+              0.55 + (recordTasks.length ? (loadedRecords / recordTasks.length) * 0.34 : 0.34),
+              `Loading library records: ${loadedRecords}/${recordTasks.length}${issueText}`,
+              task.path
+            );
           }
-          seeded[collectionName] = { version: 1, collection: collectionName, entries };
-        }
+        });
+
+        Object.keys(collections).forEach(collectionName => {
+          seeded[collectionName] = {
+            version: 1,
+            collection: collectionName,
+            entries: (entriesByCollection[collectionName] || []).filter(Boolean),
+          };
+        });
         Library.seedCollections(seeded);
+        if (libraryIssues.length) {
+          console.warn("Character viewer loaded with library issues:", libraryIssues);
+        }
       } catch (libErr) {
-        // Library load failures degrade gracefully — sheet renders without library data
+        console.warn("Character viewer could not load library data:", libErr);
+        updateLoading(0.89, "Library unavailable; rendering with embedded character data.", libErr.message || String(libErr));
       }
     }
 
     // 7. Render
-    setStatus("Rendering…");
+    updateLoading(0.94, "Rendering...", "Mounting character sheet.");
     if (loadingEl) loadingEl.hidden = true;
     if (contentEl) {
       contentEl.hidden = false;

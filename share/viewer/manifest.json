@@ -1,5 +1,4 @@
 {
-  "schemaVersion": "2.0",
   "minCompatibleSchemaMajor": 2,
   "discord": "#VRLulu",
   "styles": [
@@ -28,6 +27,7 @@
   ],
   "library": {
     "manifestPath": "library/manifest.json",
-    "basePath": ""
+    "basePath": "",
+    "concurrency": 12
   }
 }

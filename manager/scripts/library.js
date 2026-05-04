@@ -8,6 +8,7 @@
 const Library = (() => {
 
   const MANIFEST_FILE = "manifest.json";
+  const LOAD_CONCURRENCY = 12;
 
   const COLLECTIONS = {
     spells:    { folder: "spells",    label: "Spells" },
@@ -25,6 +26,7 @@ const Library = (() => {
     shaByRecord: {},
     manifest: null,
     manifestSha: null,
+    lastLoadReport: null,
     loaded: false,
   };
 
@@ -36,11 +38,96 @@ const Library = (() => {
     return Schema.createLibraryCollection(collection);
   }
 
-  async function loadAll() {
+  async function loadAll(options = {}) {
+    if (state.loaded && !options.force) {
+      reportProgress(options, {
+        phase: "complete",
+        message: "Library already loaded.",
+        progress: 1,
+        loadedRecords: countLoadedRecords(),
+        totalRecords: countLoadedRecords(),
+        errors: [],
+      });
+      return state.collections;
+    }
+
     const keys = Object.keys(COLLECTIONS);
-    await loadManifest();
-    await Promise.all(keys.map(key => loadCollection(key)));
+    const errors = [];
+    const startedAt = Date.now();
+
+    reportProgress(options, {
+      phase: "manifest",
+      message: "Loading library manifest...",
+      progress: 0.04,
+      loadedRecords: 0,
+      totalRecords: 0,
+      errors,
+    });
+
+    const manifest = await loadManifest(options);
+    const totalRecords = countManifestRecords(manifest);
+    let loadedRecords = 0;
+
+    reportProgress(options, {
+      phase: "records",
+      message: totalRecords ? `Loading library records: 0/${totalRecords}` : "Loading library collections...",
+      progress: 0.08,
+      loadedRecords,
+      totalRecords,
+      errors,
+    });
+
+    await Promise.all(keys.map(key => loadCollection(key, {
+      ...options,
+      onRecordLoaded: (detail) => {
+        loadedRecords += 1;
+        const recordProgress = totalRecords ? loadedRecords / totalRecords : 1;
+        reportProgress(options, {
+          phase: "records",
+          message: `Loading library records: ${loadedRecords}/${totalRecords || "?"}`,
+          progress: 0.08 + (recordProgress * 0.84),
+          loadedRecords,
+          totalRecords,
+          collection: detail.collection,
+          path: detail.path,
+          errors,
+        });
+      },
+      onRecordError: (detail) => {
+        loadedRecords += 1;
+        errors.push(detail);
+        const recordProgress = totalRecords ? loadedRecords / totalRecords : 1;
+        reportProgress(options, {
+          phase: "records",
+          message: `Loading library records: ${loadedRecords}/${totalRecords || "?"} (${errors.length} issue${errors.length === 1 ? "" : "s"})`,
+          progress: 0.08 + (recordProgress * 0.84),
+          loadedRecords,
+          totalRecords,
+          collection: detail.collection,
+          path: detail.path,
+          errors,
+        });
+      },
+    })));
+
+    state.lastLoadReport = {
+      loadedRecords,
+      totalRecords,
+      errors,
+      durationMs: Date.now() - startedAt,
+    };
     state.loaded = true;
+    reportProgress(options, {
+      phase: "complete",
+      message: errors.length
+        ? `Library loaded with ${errors.length} issue${errors.length === 1 ? "" : "s"}.`
+        : `Library loaded: ${loadedRecords}/${totalRecords || loadedRecords} records.`,
+      progress: 1,
+      loadedRecords,
+      totalRecords,
+      errors,
+      durationMs: state.lastLoadReport.durationMs,
+    });
     return state.collections;
   }
 
@@ -58,11 +145,21 @@ const Library = (() => {
     const files = manifestFiles.length
       ? manifestFiles
       : await GitHub.listLibraryFolder(meta.folder);
-    const records = await Promise.all(files.map(async file => {
-      const result = await GitHub.readJsonFile(file.path, null);
-      state.shaByRecord[file.path] = result.sha;
-      return result.data;
-    }));
+    const records = (await mapWithConcurrency(files, options.concurrency || LOAD_CONCURRENCY, async (file) => {
+      try {
+        const result = await GitHub.readJsonFile(file.path, null);
+        state.shaByRecord[file.path] = result.sha;
+        options.onRecordLoaded?.({ collection: key, path: file.path });
+        return result.data;
+      } catch (error) {
+        options.onRecordError?.({
+          collection: key,
+          path: file.path,
+          message: error.message || String(error),
+        });
+        return null;
+      }
+    })).filter(Boolean);
     const data = normalizeCollection({ ...fallback, entries: records }, collectionName);
     state.collections[key] = data;
     return data;
@@ -107,6 +204,47 @@ const Library = (() => {
       ];
     });
     return manifest;
+  }
+
+  function countManifestRecords(manifest = {}) {
+    return Object.values(manifest.collections || {}).reduce((total, entries) => {
+      return total + (Array.isArray(entries) ? entries.filter(entry => entry?.path).length : 0);
+    }, 0);
+  }
+
+  function countLoadedRecords() {
+    return Object.values(state.collections || {}).reduce((total, collection) => {
+      return total + (Array.isArray(collection?.entries) ? collection.entries.length : 0);
+    }, 0);
+  }
+
+  function reportProgress(options, detail) {
+    const payload = {
+      source: "library",
+      progress: 0,
+      loadedRecords: 0,
+      totalRecords: 0,
+      errors: [],
+      ...detail,
+    };
+    options.onProgress?.(payload);
+    if (typeof window !== "undefined" && typeof window.dispatchEvent === "function") {
+      window.dispatchEvent(new CustomEvent("library-progress", { detail: payload }));
+    }
+  }
+
+  async function mapWithConcurrency(items, limit, worker) {
+    const results = new Array(items.length);
+    let nextIndex = 0;
+    const workerCount = Math.max(1, Math.min(limit || LOAD_CONCURRENCY, items.length || 1));
+    await Promise.all(Array.from({ length: workerCount }, async () => {
+      while (nextIndex < items.length) {
+        const index = nextIndex;
+        nextIndex += 1;
+        results[index] = await worker(items[index], index);
+      }
+    }));
+    return results;
   }
 
   function normalizeCollection(data, collectionName) {
@@ -1064,6 +1202,7 @@ const Library = (() => {
     loadCollection,
     loadManifest,
     seedCollections,
+    getLastLoadReport: () => state.lastLoadReport,
     list,
     find,
     upsert,

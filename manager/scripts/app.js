@@ -191,7 +191,8 @@ const App = (() => {
 
   function showLoading(message = "Loading…") {
     state.loading = true;
-    loadingOverlayEl.querySelector(".loading-message").textContent = message;
+    ensureLoadingProgress();
+    updateLoading(message, "", 0);
     loadingOverlayEl.classList.remove("hidden");
   }
 
@@ -199,6 +200,39 @@ const App = (() => {
     state.loading = false;
     loadingOverlayEl.classList.add("hidden");
   }
+
+  function updateLoading(message, detail = "", progress = null) {
+    if (!loadingOverlayEl) return;
+    ensureLoadingProgress();
+    const messageEl = loadingOverlayEl.querySelector(".loading-message");
+    const detailEl = loadingOverlayEl.querySelector(".loading-detail");
+    const fillEl = loadingOverlayEl.querySelector(".loading-progress-fill");
+    if (messageEl && message) messageEl.textContent = message;
+    if (detailEl) detailEl.textContent = detail || "";
+    if (fillEl && typeof progress === "number") {
+      fillEl.style.width = `${Math.max(0, Math.min(100, Math.round(progress * 100)))}%`;
+    }
+  }
+
+  function ensureLoadingProgress() {
+    if (!loadingOverlayEl || loadingOverlayEl.querySelector(".loading-progress")) return;
+    const progressEl = document.createElement("div");
+    progressEl.className = "loading-progress";
+    progressEl.innerHTML = `<div class="loading-progress-fill"></div>`;
+    const detailEl = document.createElement("p");
+    detailEl.className = "loading-detail";
+    loadingOverlayEl.appendChild(progressEl);
+    loadingOverlayEl.appendChild(detailEl);
+  }
+
+  window.addEventListener("library-progress", (event) => {
+    if (!state.loading || !event.detail) return;
+    updateLoading(event.detail.message || "Loading shared library...", event.detail.path || "", event.detail.progress);
+    if (event.detail.phase === "complete" && event.detail.errors?.length) {
+      showToast(`Library loaded with ${event.detail.errors.length} issue${event.detail.errors.length === 1 ? "" : "s"}. Check console/details if something looks missing.`, "info", 6000);
+      console.warn("Library loaded with issues:", event.detail.errors);
+    }
+  });
 
   // ─── Toasts ───────────────────────────────────────────────────────────────────
 
@@ -279,6 +313,7 @@ const App = (() => {
     showToast,
     showLoading,
     hideLoading,
+    updateLoading,
     loadCharacterList,
     loadCharacter,
     saveCharacter,

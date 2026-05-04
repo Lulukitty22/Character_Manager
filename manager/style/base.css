@@ -520,6 +520,34 @@ hr {
   to { transform: rotate(360deg); }
 }
 
+.loading-progress {
+  width:         min(420px, 78vw);
+  height:        10px;
+  overflow:      hidden;
+  border:        1px solid rgba(201, 168, 76, 0.35);
+  border-radius: 999px;
+  background:    rgba(12, 10, 18, 0.78);
+  box-shadow:    0 0 18px rgba(201, 168, 76, 0.12);
+}
+
+.loading-progress-fill {
+  width:      0;
+  height:     100%;
+  background: linear-gradient(90deg, #8f6f24, #d9bd66, #f2df9a);
+  transition: width 160ms ease;
+}
+
+.loading-detail {
+  max-width:    min(520px, 82vw);
+  min-height:   1.2em;
+  color:        var(--color-text-muted);
+  font-family:  var(--font-ui);
+  font-size:    var(--text-xs);
+  line-height:  1.4;
+  text-align:   center;
+  word-break:   break-word;
+}
+
 /* ─── Stat Box (used on sheets) ──────────────────────────────────────────────── */
 
 .stat-box {
