@@ -212,6 +212,13 @@ Token budget on Claude side ran out before completing these. Codex picks up from
 - The `EDITOR_SHELL_STYLES` block in `app/scripts/export.js` is ~220 lines of inline CSS baked into the export stub. Tradeoff: simpler bootstrap vs. styles can't auto-update with the rest. If preferred, move into `editor/style/editor-shell.css` and add to `share/editor/manifest.json` styles array.
 - The shell uses raw `fetch` for GitHub API (read sha, PUT contents). Could refactor to use `core/scripts/github.js` if its API surface fits — would dedupe the auth code. Quick scan whether `GitHub.putFile()` or similar exists.
 
+### Codex follow-up after Claude handoff
+
+- `app/scripts/app.js` now mounts the local manager editor through `Editor.mount()` as well. The duplicate app-only `buildTabDefinitions()` / tab switching / `collectCharacterData()` path has been removed, so local editor, exported editor, and future editor preview work all harvest character edits through the same seam.
+- Static checks passed for `app/scripts/app.js`, `share/editor/index.js`, `editor/scripts/editor-mount.js`, and `app/scripts/export.js`.
+- Remaining Step 2 verification: open the exported editor in a real browser and test the PAT flow with an actual token. Codex can smoke-test load/render locally, but should not claim full save verification without Lulu's PAT.
+- Keep `EDITOR_SHELL_STYLES` extraction as a later cleanup unless the inline block starts blocking shell iteration. The parity seam was the more important drift killer.
+
 ### Reference files (for either agent)
 
 - Viewer mockup: `share/style-example.html` (full Carol data, all sections)

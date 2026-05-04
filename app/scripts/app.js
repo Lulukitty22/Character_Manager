@@ -330,6 +330,7 @@ const CharacterEditor = (() => {
   let currentCharacter = null;
   let currentSha       = null;
   let currentFilePath  = null;
+  let editorHandle     = null;
 
   async function render(container, characterInfo) {
     if (!characterInfo) {
@@ -357,9 +358,6 @@ const CharacterEditor = (() => {
     const icon = presentation.icon;
     const label = presentation.label;
 
-    // Build tab definitions for the section-driven editor
-    const tabs = buildTabDefinitions(currentCharacter);
-
     // Shell
     container.innerHTML = `
       <div class="editor-view">
@@ -380,16 +378,7 @@ const CharacterEditor = (() => {
           </div>
         </div>
 
-        <div class="editor-tabs" id="editor-tabs">
-          ${tabs.map((tab, index) => `
-            <button class="editor-tab ${index === 0 ? "active" : ""}"
-              data-tab-index="${index}" data-tab-id="${tab.id}">
-              ${tab.icon} ${tab.label}
-            </button>
-          `).join("")}
-        </div>
-
-        <div id="editor-tab-panels"></div>
+        <div id="editor-mount-root"></div>
 
         <div class="editor-save-bar">
           <span class="editor-save-status" id="save-status"></span>
@@ -398,25 +387,12 @@ const CharacterEditor = (() => {
       </div>
     `;
 
-    // Render tab panels
-    const panelsContainer = container.querySelector("#editor-tab-panels");
-    tabs.forEach((tab, index) => {
-      const panel = tab.buildFn(currentCharacter);
-      if (index !== 0) panel.classList.remove("active");
-      panelsContainer.appendChild(panel);
-    });
-
-    // Wire tab switching
-    container.querySelectorAll(".editor-tab").forEach(tabBtn => {
-      tabBtn.addEventListener("click", () => {
-        container.querySelectorAll(".editor-tab").forEach(btn => btn.classList.remove("active"));
-        container.querySelectorAll(".editor-tab-panel").forEach(panel => panel.classList.remove("active"));
-
-        tabBtn.classList.add("active");
-        const index = parseInt(tabBtn.dataset.tabIndex, 10);
-        const panels = container.querySelectorAll(".editor-tab-panel");
-        if (panels[index]) panels[index].classList.add("active");
-      });
+    editorHandle?.destroy?.();
+    editorHandle = Editor.mount(container.querySelector("#editor-mount-root"), currentCharacter, {
+      onChange: (latest) => {
+        currentCharacter = latest;
+        updateEditorHeader(latest);
+      },
     });
 
     // Wire save buttons
@@ -425,64 +401,41 @@ const CharacterEditor = (() => {
     container.querySelector("#btn-back-to-list")?.addEventListener("click",   () => App.navigateTo("list"));
 
     container.querySelector("#btn-preview-sheet")?.addEventListener("click", () => {
-      const data = collectCharacterData();
+      const data = getCurrentEditorData();
       openPreview(data);
     });
 
     container.querySelector("#btn-export-sheet")?.addEventListener("click", () => {
-      const data = collectCharacterData();
+      const data = getCurrentEditorData();
       SheetExporter.exportCharacter(data, currentFilePath);
     });
 
     container.querySelector("#btn-export-editor")?.addEventListener("click", () => {
-      const data = collectCharacterData();
+      const data = getCurrentEditorData();
       SheetExporter.exportEditor(data, currentFilePath);
     });
   }
 
-  // ─── Tab Definitions ─────────────────────────────────────────────────────────
-
-  function buildTabDefinitions(character) {
-    // All tabs are always shown — sections have their own Enable/Remove UI.
-    return [
-      { id: "base",      icon: "🧾", label: "Identity",   buildFn: (char) => EditorBase.buildTab(char)      },
-      { id: "dnd",       icon: "⚔️",  label: "D&D Stats",  buildFn: (char) => EditorDnd.buildTab(char)       },
-      { id: "boss",      icon: "💀",  label: "Boss",       buildFn: (char) => EditorBoss.buildTab(char)      },
-      { id: "gameplay",  icon: "HP", label: "Gameplay",   buildFn: (char) => EditorGameplay.buildTab(char)  },
-      { id: "spells",    icon: "✨",  label: "Spells",     buildFn: (char) => EditorSpells.buildTab(char)    },
-      { id: "inventory", icon: "🎒",  label: "Inventory",  buildFn: (char) => EditorInventory.buildTab(char) },
-      { id: "resources", icon: "🔮",  label: "Resources",  buildFn: (char) => EditorResources.buildTab(char) },
-      { id: "roblox",    icon: "🎮",  label: "Roblox",     buildFn: (char) => EditorRoblox.buildTab(char)    },
-    ];
-  }
-
   // ─── Collect & Save ───────────────────────────────────────────────────────────
 
-  function collectCharacterData() {
-    const character = JSON.parse(JSON.stringify(currentCharacter)); // deep copy
+  function getCurrentEditorData() {
+    const character = editorHandle?.getCurrentCharacter
+      ? editorHandle.getCurrentCharacter()
+      : JSON.parse(JSON.stringify(currentCharacter));
+    updateEditorHeader(character);
+    return character;
+  }
 
-    // Read all editor modules — each skips gracefully if its section isn't enabled.
-    EditorBase.readTab(character);
-    EditorDnd.readTab(character);
-    EditorBoss.readTab(character);
-    EditorInventory.readTab(character);
-    EditorGameplay.readTab(character);
-    EditorSpells.readTab(character);
-    EditorResources.readTab(character);
-    EditorRoblox.readTab(character);
-
-    // Update name in header
+  function updateEditorHeader(character) {
     const headerH2 = document.querySelector(".editor-title h2");
     if (headerH2) headerH2.textContent = character.identity?.name || "New Character";
-
-    return character;
   }
 
   async function saveCurrentCharacter() {
     const statusEl = document.getElementById("save-status");
     if (statusEl) statusEl.textContent = "Saving…";
 
-    const data = collectCharacterData();
+    const data = getCurrentEditorData();
     const characterName = data.identity?.name?.trim() || "";
 
     if (!characterName) {
