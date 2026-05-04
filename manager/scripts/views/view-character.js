@@ -1,15 +1,18 @@
 /**
  * view-character.js
- * Thin coordinator for the sheet renderer.
+ * Coordinator for the sheet renderer. Wraps the existing section
+ * renderers in a tabbed structure with a sticky head + quickstats.
  */
 
 const ViewCharacter = (() => {
 
-  function buildHTML(character) {
-    if (typeof Library !== "undefined") {
-      character = Library.resolveCharacterSync(character);
-    }
-
+  /**
+   * Tab definitions. Each tab has an id (used as the panel/data-tab key)
+   * and a label. The `render` function receives the resolved character and
+   * returns the panel's inner HTML — empty strings collapse the tab away
+   * (it won't render at all).
+   */
+  function buildTabs(character) {
     const identity = character.identity || {};
     const appearance = character.appearance || {};
     const dnd = character.dnd || null;
@@ -24,35 +27,118 @@ const ViewCharacter = (() => {
     const currency = character.currency || {};
     const resources = character.customResources || [];
 
+    return [
+      {
+        id: "identity",
+        label: "Identity",
+        render: () => ViewCharacterIdentity.render(identity, appearance, character),
+      },
+      {
+        id: "stats",
+        label: "Stats",
+        render: () => [
+          dnd ? ViewCharacterDnd.renderCombatBlock(dnd, boss, character) : "",
+          dnd ? ViewCharacterDnd.renderAbilityScores(dnd, boss) : "",
+          dnd ? ViewCharacterDnd.renderSavingThrows(dnd, boss) : "",
+          dnd ? ViewCharacterDnd.renderSkills(dnd, boss) : "",
+          boss ? ViewCharacterBoss.renderBossDefences(boss) : "",
+        ].filter(Boolean).join(""),
+      },
+      {
+        id: "abilities",
+        label: "Abilities & Feats",
+        render: () => [
+          dnd ? ViewCharacterDnd.renderFeatsAndMulticlass(dnd) : "",
+          abilities.length ? ViewCharacterAbilities.render(abilities) : "",
+          boss ? ViewCharacterBoss.renderPolymorphTraits(boss) : "",
+          boss ? ViewCharacterBoss.renderBossSpecialRules(boss) : "",
+        ].filter(Boolean).join(""),
+      },
+      {
+        id: "spells",
+        label: "Spells",
+        render: () => spells.length ? ViewCharacterSpells.render(spells, spellSlots) : "",
+      },
+      {
+        id: "combat",
+        label: "Combat",
+        render: () => boss ? [
+          ViewCharacterBoss.renderToggleBar(boss),
+          ViewCharacterBoss.renderAttacks(boss, dnd),
+        ].filter(Boolean).join("") : "",
+      },
+      {
+        id: "inventory",
+        label: "Inventory",
+        render: () => ViewCharacterInventory.render(character, inventory, currency),
+      },
+      {
+        id: "resources",
+        label: "Resources",
+        render: () => ViewCharacterResources.render(character, resources),
+      },
+      {
+        id: "roblox",
+        label: "Roblox",
+        render: () => roblox ? ViewCharacterRoblox.render(roblox) : "",
+      },
+      {
+        id: "notes",
+        label: "Notes",
+        render: () => ViewCharacterNotes.render(character.notes),
+      },
+    ];
+  }
+
+  function buildHTML(character) {
+    if (typeof Library !== "undefined") {
+      character = Library.resolveCharacterSync(character);
+    }
+
+    const allTabs = buildTabs(character);
+    // Drop tabs whose render() returns an empty string — keeps the nav clean
+    // when sections don't apply (e.g. no spells, no boss block).
+    const tabs = allTabs
+      .map(t => ({ ...t, content: t.render() }))
+      .filter(t => t.content && t.content.trim().length > 0);
+
+    const headerHTML = ViewCharacterHeader.render(character, tabs);
+    const panelsHTML = tabs.map((t, i) => `
+      <section class="ovh-panel ${i === 0 ? "active" : ""}" data-ovh-panel="${t.id}">
+        ${t.content}
+      </section>
+    `).join("");
+
     return `
-      <div class="sheet-root ${boss?.bossActive ? "is-boss-active" : "is-tamed-active"}" data-boss-active="${boss?.bossActive ? "true" : "false"}">
-        ${ViewCharacterHeader.render(character)}
-        ${boss ? ViewCharacterBoss.renderToggleBar(boss) : ""}
-        ${ViewCharacterIdentity.render(identity, appearance, character)}
-        ${dnd ? ViewCharacterDnd.renderCombatBlock(dnd, boss, character) : ""}
-        ${dnd ? ViewCharacterDnd.renderAbilityScores(dnd, boss) : ""}
-        ${dnd ? ViewCharacterDnd.renderSavingThrows(dnd, boss) : ""}
-        ${dnd ? ViewCharacterDnd.renderSkills(dnd, boss) : ""}
-        ${boss ? ViewCharacterBoss.renderAttacks(boss, dnd) : ""}
-        ${boss ? ViewCharacterBoss.renderBossDefences(boss) : ""}
-        ${boss ? ViewCharacterBoss.renderPolymorphTraits(boss) : ""}
-        ${boss ? ViewCharacterBoss.renderBossSpecialRules(boss) : ""}
-        ${dnd ? ViewCharacterDnd.renderFeatsAndMulticlass(dnd) : ""}
-        ${roblox ? ViewCharacterRoblox.render(roblox) : ""}
-        ${spells.length ? ViewCharacterSpells.render(spells, spellSlots) : ""}
-        ${abilities.length ? ViewCharacterAbilities.render(abilities) : ""}
-        ${ViewCharacterInventory.render(character, inventory, currency)}
-        ${ViewCharacterResources.render(character, resources)}
-        ${ViewCharacterNotes.render(character.notes)}
+      <div class="sheet-root ovh-tabbed ${character.boss?.bossActive ? "is-boss-active" : "is-tamed-active"}"
+           data-boss-active="${character.boss?.bossActive ? "true" : "false"}">
+        ${headerHTML}
+        <div class="ovh-panels">
+          ${panelsHTML}
+        </div>
       </div>
     `;
   }
 
   /**
-   * Wire interactive elements after the HTML has been inserted into the DOM.
+   * Wire tab switching + delegate to existing section interactivity.
    */
   function wireInteractive(containerEl, character) {
-    ViewCharacterBoss.wireInteractive(containerEl, character);
+    // Tab switching — clicking a .ovh-tab activates its panel
+    const tabs = containerEl.querySelectorAll(".ovh-tab");
+    const panels = containerEl.querySelectorAll(".ovh-panel");
+    tabs.forEach(tab => {
+      tab.addEventListener("click", () => {
+        const target = tab.getAttribute("data-ovh-tab");
+        tabs.forEach(t => t.classList.toggle("active", t === tab));
+        panels.forEach(p => p.classList.toggle("active", p.getAttribute("data-ovh-panel") === target));
+      });
+    });
+
+    // Existing section wirings (unchanged)
+    if (character.boss && typeof ViewCharacterBoss?.wireInteractive === "function") {
+      ViewCharacterBoss.wireInteractive(containerEl, character);
+    }
     ViewCharacterSpells.wireInteractive?.(containerEl, character);
     ViewCharacterAbilities.wireInteractive?.(containerEl, character);
     ViewCharacterInventory.wireInteractive?.(containerEl, character);
