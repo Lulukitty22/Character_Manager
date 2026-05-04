@@ -1,0 +1,1421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Editor Mockup — Carol Elfnein</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-deepest: #06040b; --bg-deep: #0d0816; --bg-base: #130d1f;
+    --bg-raised: #1a1228; --bg-elevated: #221733;
+    --border-subtle: rgba(180,140,255,0.10);
+    --border-muted: rgba(180,140,255,0.22);
+    --border-strong: rgba(180,140,255,0.40);
+    --text-dim: #6b6478; --text-muted: #8a8399;
+    --text-primary: #cfc6dd; --text-bright: #f0eaf8;
+    --purple: #8c5dff; --purple-bright: #b48cff; --purple-soft: #6b4cb8;
+    --gold: #c9a84c; --gold-bright: #e8c970; --gold-deep: #8d7330;
+    --danger: #d96666; --warn: #d9a866; --success: #6dc28a; --info: #6ec3d9;
+    --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
+    --space-5: 20px; --space-6: 24px; --space-7: 32px; --space-8: 48px;
+    --radius-sm: 4px; --radius: 8px; --radius-lg: 14px;
+    --font-display: 'Cinzel','Times New Roman',serif;
+    --font-body: 'Crimson Text',Georgia,serif;
+    --font-ui: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+    --font-mono: 'JetBrains Mono',Menlo,Consolas,monospace;
+    --shadow-card: 0 1px 0 rgba(255,255,255,0.02) inset, 0 8px 24px rgba(0,0,0,0.35);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; height: 100%; }
+  body { font-family: var(--font-ui); font-size: 14px; line-height: 1.5; color: var(--text-primary); background: radial-gradient(ellipse at 20% 0%, #1a0d2a 0%, var(--bg-deepest) 55%) fixed; overflow-x: hidden; }
+  button { font-family: inherit; }
+
+  /* ── Toolbar ───────────────────────────────────────────────── */
+  .editor-toolbar { position: sticky; top: 0; z-index: 50; display: grid; grid-template-columns: auto 1fr auto auto auto; align-items: center; gap: var(--space-4); padding: var(--space-3) var(--space-5); background: linear-gradient(180deg, rgba(13,8,22,0.95), rgba(13,8,22,0.85)); backdrop-filter: blur(14px) saturate(140%); border-bottom: 1px solid var(--border-subtle); }
+  .back-btn { background: transparent; border: 1px solid var(--border-subtle); color: var(--text-muted); padding: var(--space-2) var(--space-3); border-radius: var(--radius); cursor: pointer; font-size: 12px; letter-spacing: 0.06em; }
+  .back-btn:hover { color: var(--text-bright); border-color: var(--border-muted); }
+  .editing-info { display: flex; flex-direction: column; gap: 2px; }
+  .editing-info .label { font-size: 10px; color: var(--text-muted); letter-spacing: 0.12em; text-transform: uppercase; }
+  .editing-info .name { font-family: var(--font-display); font-size: 18px; font-weight: 700; letter-spacing: 0.04em;
+    background-image: repeating-linear-gradient(115deg, transparent 0, transparent 18px, rgba(190,150,255,0.55) 26px, rgba(240,220,255,0.95) 30px, rgba(190,150,255,0.55) 34px, transparent 42px, transparent 80px), linear-gradient(0deg, var(--gold), var(--gold-bright));
+    background-size: 320px 100%, 100% 100%; background-repeat: repeat-x, no-repeat;
+    -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent;
+    animation: glint 3.5s linear infinite; }
+  @keyframes glint { from { background-position: 0 0, 0 0; } to { background-position: 320px 0, 0 0; } }
+  @media (prefers-reduced-motion: reduce) { .editing-info .name { animation: none; } }
+  .save-status { font-size: 12px; color: var(--text-muted); transition: color .2s; }
+  .save-status.dirty { color: var(--warn); }
+  .save-status.dirty::before { content: '● '; color: var(--warn); }
+  .save-status.saved::before { content: '✓ '; color: var(--success); }
+  .save-status.saving::before { content: '↻ '; color: var(--info); }
+  .toolbar-btn { background: var(--bg-elevated); border: 1px solid var(--border-subtle); color: var(--text-primary); padding: var(--space-2) var(--space-4); border-radius: var(--radius); cursor: pointer; font-size: 12px; letter-spacing: 0.06em; display: inline-flex; align-items: center; gap: 6px; transition: all .15s; }
+  .toolbar-btn:hover { border-color: var(--border-muted); background: var(--bg-raised); color: var(--text-bright); }
+  .toolbar-btn.primary { background: linear-gradient(180deg, var(--gold-bright), var(--gold)); color: var(--bg-deepest); border-color: var(--gold); font-weight: 700; }
+  .toolbar-btn.primary:hover { filter: brightness(1.1); }
+  .toolbar-btn.warn { background: rgba(217,168,102,0.10); border-color: rgba(217,168,102,0.40); color: var(--warn); }
+
+  /* ── Tooltips ──────────────────────────────────────────────── */
+  [data-tip] { position: relative; }
+  [data-tip]:hover::after, [data-tip].pinned::after {
+    content: attr(data-tip); position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%);
+    padding: var(--space-2) var(--space-3); background: var(--bg-deepest); border: 1px solid var(--border-muted);
+    border-radius: var(--radius); font-family: var(--font-ui); font-size: 12px; line-height: 1.45;
+    color: var(--text-bright); white-space: pre-line; width: max-content; max-width: 320px;
+    z-index: 1000; box-shadow: 0 8px 24px rgba(0,0,0,0.6); pointer-events: none; }
+
+  /* ── Layout ────────────────────────────────────────────────── */
+  .editor-layout { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: var(--space-5); padding: var(--space-5); max-width: 1700px; margin: 0 auto; }
+  @media (max-width: 980px) { .editor-layout { grid-template-columns: 1fr; } }
+  .editor-pane { min-width: 0; }
+  .preview-pane { position: sticky; top: 80px; align-self: start; max-height: calc(100vh - 100px); overflow-y: auto; border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); background: var(--bg-base); }
+  .preview-pane-header { display: flex; align-items: center; gap: var(--space-2); padding: var(--space-3) var(--space-4); border-bottom: 1px solid var(--border-subtle); background: var(--bg-deep); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); }
+  .preview-pane-header .live-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--success); box-shadow: 0 0 6px var(--success); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
+  .preview-pane-header .links { margin-left: auto; }
+  .preview-pane-header .links a { color: var(--purple-bright); text-decoration: none; font-size: 11px; }
+  .preview-pane-header .links a:hover { color: var(--gold-bright); }
+
+  .preview-frame { padding: var(--space-4); font-family: var(--font-body); font-size: 13px; line-height: 1.5; color: var(--text-primary); }
+  .preview-frame .pname { font-family: var(--font-display); font-size: 18px; font-weight: 700; color: var(--gold-bright); letter-spacing: 0.04em; }
+  .preview-frame .psub { font-family: var(--font-ui); font-size: 11px; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 2px; margin-bottom: var(--space-3); }
+  .preview-frame .pquickstats { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-2); margin-bottom: var(--space-3); }
+  .preview-frame .pquickstat { background: var(--bg-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius); padding: var(--space-2); text-align: center; transition: border-color .2s, box-shadow .2s; }
+  .preview-frame .pquickstat.flash { border-color: var(--gold); box-shadow: 0 0 12px rgba(232,201,112,0.4); }
+  .preview-frame .pquickstat .l { font-size: 9px; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; }
+  .preview-frame .pquickstat .v { font-family: var(--font-mono); font-size: 14px; font-weight: 700; color: var(--text-bright); margin-top: 2px; }
+  .preview-frame .pquickstat.hp .v { color: var(--success); }
+  .preview-frame .psection-title { font-family: var(--font-display); font-size: 13px; color: var(--gold); letter-spacing: 0.10em; text-transform: uppercase; border-bottom: 1px solid var(--border-subtle); padding-bottom: 2px; margin-top: var(--space-3); margin-bottom: var(--space-2); }
+  .preview-frame .psection-title.active { color: var(--gold-bright); border-bottom-color: var(--gold); }
+  .preview-frame .pability-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; margin-bottom: var(--space-2); }
+  .preview-frame .pability { background: var(--bg-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 4px; text-align: center; }
+  .preview-frame .pability .a { font-size: 9px; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; }
+  .preview-frame .pability .m { font-family: var(--font-mono); font-size: 14px; font-weight: 700; color: var(--text-bright); }
+  .preview-frame .pchip-row { display: flex; flex-wrap: wrap; gap: 4px; margin-top: var(--space-2); }
+  .preview-frame .pchip { font-size: 10px; padding: 2px 6px; border-radius: 999px; background: var(--bg-elevated); border: 1px solid var(--border-subtle); color: var(--text-bright); }
+  .preview-frame .pchip.ac-active { border-color: var(--gold); color: var(--gold-bright); background: rgba(201,168,76,0.08); }
+
+  /* ── Editor tabs ───────────────────────────────────────────── */
+  .editor-tabs { display: flex; gap: var(--space-1); padding: var(--space-2); background: var(--bg-base); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); margin-bottom: var(--space-4); overflow-x: auto; }
+  .etab { background: transparent; border: 0; padding: var(--space-2) var(--space-4); font-size: 12px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); cursor: pointer; border-radius: var(--radius); white-space: nowrap; transition: all .15s; }
+  .etab:hover { color: var(--text-bright); background: var(--bg-raised); }
+  .etab.active { color: var(--gold-bright); background: var(--bg-elevated); border: 1px solid var(--border-muted); }
+  .epanel { display: none; }
+  .epanel.active { display: block; }
+
+  /* ── Cards ─────────────────────────────────────────────────── */
+  .ecard { background: linear-gradient(180deg, var(--bg-raised), var(--bg-base)); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: var(--space-4) var(--space-5); margin-bottom: var(--space-3); }
+  .ecard-title { display: flex; align-items: center; gap: var(--space-2); font-family: var(--font-display); font-size: 14px; color: var(--gold); letter-spacing: 0.08em; text-transform: uppercase; margin: 0 0 var(--space-3); padding-bottom: var(--space-2); border-bottom: 1px solid var(--border-subtle); }
+  .ecard-title .actions { margin-left: auto; display: flex; gap: var(--space-2); }
+  .ecard-title .add-btn { background: transparent; border: 1px solid var(--border-muted); color: var(--purple-bright); padding: 2px 10px; border-radius: 999px; font-size: 11px; cursor: pointer; letter-spacing: 0.06em; font-family: var(--font-ui); text-transform: uppercase; transition: all .15s; }
+  .ecard-title .add-btn:hover { color: var(--gold-bright); border-color: var(--gold); }
+  .ecard-title .add-btn.lib { color: var(--info); border-color: rgba(110,195,217,0.40); }
+  .ecard-title .add-btn.lib:hover { color: var(--gold-bright); border-color: var(--gold); }
+
+  .add-inline { display: block; width: 100%; margin-top: var(--space-2); background: transparent; border: 1px dashed var(--border-muted); color: var(--text-muted); font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; padding: var(--space-2) var(--space-4); border-radius: var(--radius); cursor: pointer; transition: all .15s; }
+  .add-inline:hover { color: var(--gold-bright); border-color: var(--gold); background: rgba(201,168,76,0.04); }
+
+  /* ── Form fields ───────────────────────────────────────────── */
+  .field { display: flex; flex-direction: column; gap: 4px; margin-bottom: var(--space-3); }
+  .field label { font-size: 11px; color: var(--text-muted); letter-spacing: 0.10em; text-transform: uppercase; }
+  .field .hint { font-size: 11px; color: var(--text-dim); margin-top: 2px; }
+  .field input[type="text"], .field input[type="number"], .field input[type="password"], .field textarea, .field select {
+    background: var(--bg-deep); border: 1px solid var(--border-subtle); border-radius: var(--radius);
+    padding: var(--space-2) var(--space-3); color: var(--text-bright); font-family: inherit; font-size: 14px;
+    transition: border-color .15s; }
+  .field input:focus, .field textarea:focus, .field select:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 2px rgba(201,168,76,0.15); }
+  .field textarea { font-family: var(--font-body); resize: vertical; min-height: 70px; }
+  .field-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: var(--space-3); }
+
+  .stepper { display: inline-flex; align-items: center; border: 1px solid var(--border-subtle); border-radius: var(--radius); background: var(--bg-deep); }
+  .stepper button { width: 28px; height: 28px; background: transparent; border: 0; color: var(--text-muted); font-size: 16px; cursor: pointer; transition: color .15s; }
+  .stepper button:hover { color: var(--gold-bright); }
+  .stepper input { width: 48px; text-align: center; background: transparent; border: 0; color: var(--text-bright); font-family: var(--font-mono); font-size: 14px; -moz-appearance: textfield; }
+  .stepper input::-webkit-outer-spin-button, .stepper input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+
+  /* ── Ability editor ────────────────────────────────────────── */
+  .ability-edit-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: var(--space-2); }
+  @media (max-width: 720px) { .ability-edit-grid { grid-template-columns: repeat(3, 1fr); } }
+  .ability-edit { background: var(--bg-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius); padding: var(--space-2); text-align: center; cursor: help; transition: border-color .15s; }
+  .ability-edit:hover { border-color: var(--border-muted); }
+  .ability-edit .ab { font-size: 10px; color: var(--text-muted); letter-spacing: 0.14em; text-transform: uppercase; }
+  .ability-edit input { width: 100%; background: var(--bg-deep); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 4px; color: var(--text-bright); font-family: var(--font-mono); font-size: 18px; text-align: center; margin-top: 4px; }
+  .ability-edit .mod { font-family: var(--font-mono); font-size: 11px; color: var(--gold-bright); margin-top: 2px; }
+
+  /* ── Save throw row (matches skill row pattern) ────────────── */
+  .stat-prof-row { display: grid; grid-template-columns: auto 1fr auto auto; gap: var(--space-3); align-items: center; padding: var(--space-2) var(--space-3); border-bottom: 1px solid var(--border-subtle); }
+  .stat-prof-row:last-child { border-bottom: none; }
+  .stat-prof-row .label { font-size: 13px; color: var(--text-bright); }
+  .stat-prof-row .label .sub { display: block; font-size: 11px; color: var(--text-muted); margin-top: 1px; }
+  .stat-prof-row .ab-tag { font-family: var(--font-mono); font-size: 10px; color: var(--text-dim); letter-spacing: 0.08em; text-transform: uppercase; }
+  .stat-prof-row .mod { font-family: var(--font-mono); font-size: 13px; color: var(--text-bright); min-width: 36px; text-align: right; cursor: help; }
+  .stat-prof-row.proficient .mod { color: var(--gold-bright); }
+
+  /* ── 3-state skill pip ─────────────────────────────────────── */
+  .skill-pip { width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--border-strong); background: transparent; cursor: pointer; transition: all .15s; flex-shrink: 0; padding: 0; position: relative; }
+  .skill-pip[data-state="prof"] { background: var(--gold); border-color: var(--gold); box-shadow: 0 0 8px rgba(232,201,112,0.5); }
+  .skill-pip[data-state="expertise"] { background: var(--purple-bright); border-color: var(--purple-bright); box-shadow: 0 0 8px var(--purple-bright); }
+  .skill-pip[data-state="expertise"]::after { content: ''; position: absolute; inset: 4px; border-radius: 50%; background: var(--gold-bright); }
+  .skill-pip:hover { transform: scale(1.1); }
+  .skill-legend-row { display: flex; gap: var(--space-3); flex-wrap: wrap; font-size: 11px; color: var(--text-muted); margin-bottom: var(--space-3); padding-bottom: var(--space-3); border-bottom: 1px solid var(--border-subtle); }
+  .skill-legend-row .item { display: inline-flex; align-items: center; gap: 6px; }
+  .skill-legend-row .skill-pip { width: 14px; height: 14px; border-width: 1px; cursor: default; }
+  .skill-legend-row .skill-pip[data-state="expertise"]::after { inset: 2px; }
+  .skill-legend-row .skill-pip:hover { transform: none; }
+
+  /* ── AC modes ──────────────────────────────────────────────── */
+  .ac-mode-edit { display: grid; grid-template-columns: 1fr auto auto auto; gap: var(--space-3); align-items: center; padding: var(--space-3); background: var(--bg-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius); margin-bottom: var(--space-2); transition: opacity .25s, transform .25s, max-height .25s; }
+  .ac-mode-edit.removing { opacity: 0; transform: translateX(-12px); max-height: 0 !important; padding: 0; margin: 0; }
+  .ac-mode-edit input[type="text"] { background: var(--bg-deep); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); color: var(--text-bright); padding: 4px 8px; font-size: 13px; }
+  .ac-mode-edit .stepper { background: var(--bg-deep); }
+  .icon-btn { background: transparent; border: 1px solid var(--border-subtle); color: var(--text-muted); width: 28px; height: 28px; border-radius: var(--radius); cursor: pointer; font-size: 14px; transition: all .15s; }
+  .icon-btn:hover { color: var(--gold-bright); border-color: var(--border-muted); }
+  .icon-btn.remove:hover { color: var(--danger); border-color: rgba(217,102,102,0.4); }
+  .icon-btn.cog.editing { color: var(--gold-bright); border-color: var(--gold); background: rgba(201,168,76,0.08); }
+  .icon-btn.active-toggle.on { color: var(--gold-bright); border-color: var(--gold); background: rgba(201,168,76,0.10); }
+
+  /* ───────────────────────────────────────────────────────────────
+     UNIFIED LIST ROW — used everywhere: classes, variants, relationships,
+     feats, spells, items, resources. Same shape, same chips, same chrome.
+     Source-of-record (library vs inline) is a chip, not a layout change.
+  ─────────────────────────────────────────────────────────────── */
+  .list-row { background: var(--bg-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius); margin-bottom: var(--space-2); transition: opacity .25s, transform .25s, max-height .25s, border-color .15s; overflow: hidden; }
+  .list-row:hover { border-color: var(--border-muted); }
+  .list-row.removing { opacity: 0; transform: translateX(-12px); max-height: 0; margin: 0; padding: 0; border-width: 0; }
+  .list-row .row-main { display: grid; grid-template-columns: 1fr auto auto; gap: var(--space-3); align-items: center; padding: var(--space-3); }
+  .list-row .row-content { min-width: 0; }
+  .list-row .row-title-line { display: flex; align-items: center; gap: var(--space-2); flex-wrap: wrap; }
+  .list-row .row-title { font-family: var(--font-display); font-size: 14px; color: var(--text-bright); letter-spacing: 0.04em; }
+  .list-row .row-chips { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
+  .row-chip {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-family: var(--font-ui); font-size: 11px;
+    padding: 2px 8px; border-radius: 999px;
+    background: rgba(180,140,255,0.06);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-primary);
+  }
+  .row-chip .k { color: var(--text-muted); font-size: 10px; letter-spacing: 0.05em; }
+  .row-chip .v { color: var(--text-bright); font-weight: 600; }
+  .row-chip.tone-info { border-color: rgba(110,195,217,0.30); color: var(--info); }
+  .row-chip.tone-save { border-color: rgba(217,168,102,0.30); }
+  .row-chip.tone-dmg { border-color: rgba(217,102,102,0.30); }
+  .row-chip.tone-heal { border-color: rgba(109,194,138,0.30); }
+  .row-chip.tone-rest { border-color: rgba(180,140,255,0.30); color: var(--purple-bright); }
+  .row-chip.tone-attune { border-color: rgba(232,201,112,0.40); background: rgba(232,201,112,0.06); color: var(--gold-bright); }
+  .row-chip.tone-warn { border-color: rgba(217,168,102,0.40); color: var(--warn); }
+  .row-chip.has-bar { gap: 6px; padding-right: 4px; }
+
+  .row-mini-bar {
+    display: inline-block; width: 36px; height: 5px; vertical-align: middle;
+    background: var(--bg-deepest); border: 1px solid var(--border-subtle);
+    border-radius: 999px; overflow: hidden;
+  }
+  .row-mini-bar > i { display: block; height: 100%; background: linear-gradient(90deg, var(--gold), var(--gold-bright)); }
+  .row-mini-bar.purple > i { background: linear-gradient(90deg, var(--purple-soft), var(--purple-bright)); }
+
+  .source-badge { font-size: 9px; padding: 2px 6px; border-radius: 999px; background: rgba(110,195,217,0.10); border: 1px solid rgba(110,195,217,0.30); color: var(--info); letter-spacing: 0.08em; text-transform: uppercase; }
+  .source-badge.inline { background: rgba(180,140,255,0.10); border-color: rgba(180,140,255,0.30); color: var(--purple-bright); }
+  .source-badge.new { background: rgba(109,194,138,0.10); border-color: rgba(109,194,138,0.30); color: var(--success); }
+
+  /* inline edit drawer */
+  .row-edit { max-height: 0; overflow: hidden; transition: max-height .3s ease; border-top: 0; }
+  .list-row.editing .row-edit { max-height: 800px; border-top: 1px solid var(--border-subtle); }
+  .row-edit-inner { padding: var(--space-3) var(--space-4); background: var(--bg-deep); }
+  .row-edit-inner .field { margin-bottom: var(--space-2); }
+  .row-edit-inner .field label { font-size: 10px; }
+  .row-edit-inner .field input, .row-edit-inner .field select, .row-edit-inner .field textarea { font-size: 13px; padding: 4px 8px; }
+  .row-edit-inner .field-row { gap: var(--space-2); }
+  .linked-banner {
+    display: flex; align-items: center; gap: var(--space-2);
+    font-size: 11px; color: var(--info);
+    background: rgba(110,195,217,0.06); border: 1px solid rgba(110,195,217,0.20);
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius);
+    margin-bottom: var(--space-3);
+  }
+  .linked-banner code { background: var(--bg-deepest); padding: 1px 5px; border-radius: 3px; color: var(--gold-bright); font-family: var(--font-mono); font-size: 11px; }
+  .linked-banner .right { margin-left: auto; }
+  .linked-banner button {
+    background: transparent; border: 1px solid var(--border-subtle); color: var(--text-muted);
+    font-size: 10px; padding: 2px 8px; border-radius: 999px;
+    cursor: pointer; letter-spacing: 0.06em;
+    text-transform: uppercase; transition: all .15s;
+  }
+  .linked-banner button:hover { color: var(--text-bright); border-color: var(--border-muted); }
+
+  /* image edit grid (variants) */
+  .img-edit-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: var(--space-2); }
+  .img-edit-tile { aspect-ratio: 1; border-radius: var(--radius); border: 1px solid var(--border-subtle); position: relative; background: var(--bg-deep); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .img-edit-tile img, .img-edit-tile video { width: 100%; height: 100%; object-fit: cover; }
+  .img-edit-tile.add { background: var(--bg-elevated); border-style: dashed; color: var(--text-muted); font-size: 24px; cursor: pointer; transition: all .15s; }
+  .img-edit-tile.add:hover { border-color: var(--gold); color: var(--gold-bright); background: var(--bg-raised); }
+  .img-edit-tile .url-tag { position: absolute; bottom: 4px; left: 4px; right: 4px; background: rgba(0,0,0,0.65); padding: 2px 6px; border-radius: 4px; font-family: var(--font-mono); font-size: 9px; color: var(--text-bright); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; pointer-events: none; }
+  .img-edit-tile .video-badge { position: absolute; top: 4px; left: 4px; background: rgba(0,0,0,0.65); padding: 2px 6px; border-radius: 4px; font-family: var(--font-ui); font-size: 9px; color: var(--text-bright); letter-spacing: 0.06em; pointer-events: none; }
+  .img-edit-tile .remove { position: absolute; top: 4px; right: 4px; width: 22px; height: 22px; border-radius: 50%; background: rgba(0,0,0,0.7); border: 0; color: var(--danger); cursor: pointer; opacity: 0; transition: opacity .15s; }
+  .img-edit-tile:hover .remove { opacity: 1; }
+
+  /* ── Conversions ───────────────────────────────────────────── */
+  .conversion-row { display: grid; grid-template-columns: 1fr auto 1fr auto; gap: var(--space-3); align-items: stretch; padding: var(--space-3); background: rgba(140,90,255,0.05); border: 1px solid rgba(140,90,255,0.20); border-radius: var(--radius); margin-bottom: var(--space-2); transition: border-color .15s, background .15s, opacity .25s, max-height .25s; }
+  .conversion-row.removing { opacity: 0; max-height: 0 !important; padding: 0; margin: 0; border-width: 0; overflow: hidden; }
+  .conversion-row.saved { border-color: var(--success); background: rgba(109,194,138,0.06); }
+  .conversion-row .src, .conversion-row .dst { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+  .conversion-row .src strong, .conversion-row .dst strong { font-size: 13px; color: var(--text-bright); font-family: var(--font-ui); font-weight: 700; letter-spacing: 0.04em; }
+  .conversion-row .pool-row { display: flex; flex-wrap: wrap; gap: 4px; }
+  .conversion-row .arrow { color: var(--purple-bright); font-size: 18px; align-self: center; }
+  .conversion-row .convert-btn { background: var(--purple-soft); border: 1px solid var(--purple-bright); color: var(--text-bright); padding: 4px 12px; border-radius: var(--radius); cursor: pointer; font-size: 11px; letter-spacing: 0.06em; transition: all .15s; font-family: var(--font-ui); align-self: center; white-space: nowrap; }
+  .conversion-row .convert-btn:hover { background: var(--purple-bright); }
+  .conversion-row.saved .convert-btn { background: var(--success); border-color: var(--success); color: var(--bg-deepest); }
+  .conversion-row.disabled { opacity: 0.5; }
+  .conversion-row.disabled .convert-btn { cursor: not-allowed; }
+
+  /* ── PAT drawer ────────────────────────────────────────────── */
+  .pat-drawer { position: fixed; top: 0; right: 0; bottom: 0; width: 420px; max-width: 100%; background: var(--bg-base); border-left: 1px solid var(--border-muted); transform: translateX(100%); transition: transform .25s ease; z-index: 200; padding: var(--space-5); overflow-y: auto; box-shadow: -8px 0 32px rgba(0,0,0,0.6); }
+  .pat-drawer.open { transform: translateX(0); }
+  .pat-drawer h2 { font-family: var(--font-display); font-size: 18px; color: var(--gold-bright); margin: 0 0 var(--space-2); letter-spacing: 0.06em; }
+  .pat-drawer h2 .close { float: right; background: transparent; border: 0; color: var(--text-muted); font-size: 20px; cursor: pointer; line-height: 1; }
+  .pat-drawer p { font-size: 13px; color: var(--text-primary); margin: 0 0 var(--space-3); }
+  .pat-status { padding: var(--space-3); border-radius: var(--radius); background: var(--bg-elevated); border: 1px solid var(--border-subtle); margin: var(--space-3) 0; }
+  .pat-status.connected { border-color: rgba(109,194,138,0.40); background: rgba(109,194,138,0.06); }
+  .pat-status.testing { border-color: rgba(110,195,217,0.4); background: rgba(110,195,217,0.06); }
+  .pat-status.error { border-color: rgba(217,102,102,0.4); background: rgba(217,102,102,0.06); }
+  .pat-status .status { font-size: 11px; letter-spacing: 0.10em; text-transform: uppercase; color: var(--success); }
+  .pat-status.testing .status { color: var(--info); }
+  .pat-status.error .status { color: var(--danger); }
+  .pat-status .who-row { display: grid; grid-template-columns: 32px 1fr; gap: var(--space-3); align-items: center; margin-top: var(--space-2); }
+  .pat-status .avatar { width: 32px; height: 32px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, var(--purple-bright), var(--purple-soft)); border: 1px solid var(--border-muted); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 14px; color: var(--gold-bright); }
+  .pat-status .who { font-family: var(--font-display); font-size: 16px; color: var(--text-bright); }
+  .pat-status .scope { font-size: 11px; color: var(--text-muted); margin-top: 2px; font-family: var(--font-mono); }
+  .pat-status .clarify { font-size: 11px; color: var(--text-dim); margin-top: var(--space-2); font-style: italic; }
+  .pat-drawer code { background: var(--bg-deepest); padding: 1px 6px; border-radius: 3px; font-family: var(--font-mono); font-size: 12px; color: var(--gold-bright); }
+  .pat-drawer ol { font-size: 12px; line-height: 1.6; color: var(--text-primary); padding-left: 18px; }
+  .pat-drawer ol li { margin-bottom: 6px; }
+
+  .scrim { position: fixed; inset: 0; background: rgba(6,4,11,0.6); backdrop-filter: blur(2px); opacity: 0; pointer-events: none; transition: opacity .2s; z-index: 150; }
+  .scrim.active { opacity: 1; pointer-events: auto; }
+
+  /* ── Library Picker ────────────────────────────────────────── */
+  .picker { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.95); width: min(960px, calc(100vw - 40px)); height: min(680px, calc(100vh - 80px)); background: var(--bg-base); border: 1px solid var(--border-muted); border-radius: var(--radius-lg); box-shadow: 0 24px 64px rgba(0,0,0,0.7); z-index: 250; display: none; grid-template-rows: auto auto 1fr auto; grid-template-columns: 240px 1fr; grid-template-areas: 'header header' 'search search' 'tree results' 'footer footer'; }
+  .picker.open { display: grid; transform: translate(-50%, -50%) scale(1); }
+  .picker-header { grid-area: header; display: flex; align-items: center; gap: var(--space-3); padding: var(--space-4) var(--space-5); border-bottom: 1px solid var(--border-subtle); }
+  .picker-header h3 { font-family: var(--font-display); font-size: 16px; color: var(--gold-bright); margin: 0; letter-spacing: 0.06em; }
+  .picker-header .close { margin-left: auto; background: transparent; border: 0; color: var(--text-muted); font-size: 20px; cursor: pointer; line-height: 1; }
+  .picker-search { grid-area: search; padding: var(--space-3) var(--space-5); border-bottom: 1px solid var(--border-subtle); display: flex; gap: var(--space-2); align-items: center; }
+  .picker-search input { flex: 1; background: var(--bg-deep); border: 1px solid var(--border-subtle); border-radius: var(--radius); padding: var(--space-2) var(--space-3); color: var(--text-bright); font-size: 13px; }
+  .picker-search .filter-chip { font-size: 10px; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--border-subtle); background: var(--bg-elevated); color: var(--text-muted); cursor: pointer; letter-spacing: 0.08em; text-transform: uppercase; transition: all .15s; }
+  .picker-search .filter-chip:hover { color: var(--text-bright); border-color: var(--border-muted); }
+  .picker-search .filter-chip.on { color: var(--gold-bright); border-color: var(--gold); background: rgba(201,168,76,0.10); }
+
+  .picker-tree { grid-area: tree; border-right: 1px solid var(--border-subtle); overflow-y: auto; padding: var(--space-2); }
+  .tree-item { display: flex; align-items: center; gap: var(--space-2); padding: var(--space-2) var(--space-3); border-radius: var(--radius); cursor: pointer; font-size: 13px; color: var(--text-primary); transition: all .1s; }
+  .tree-item:hover { background: var(--bg-raised); color: var(--text-bright); }
+  .tree-item.active { background: var(--bg-elevated); color: var(--gold-bright); }
+  .tree-item .icon { width: 14px; flex-shrink: 0; color: var(--text-muted); font-size: 11px; }
+  .tree-item .count { margin-left: auto; font-size: 11px; color: var(--text-dim); font-family: var(--font-mono); }
+  .tree-children { padding-left: var(--space-4); }
+  .tree-breadcrumb { font-size: 11px; color: var(--text-muted); padding: var(--space-2) var(--space-3); border-bottom: 1px solid var(--border-subtle); letter-spacing: 0.06em; }
+  .tree-breadcrumb a { color: var(--purple-bright); cursor: pointer; }
+  .tree-breadcrumb a:hover { color: var(--gold-bright); text-decoration: underline; }
+
+  .picker-results { grid-area: results; overflow-y: auto; position: relative; }
+  .result-row { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: var(--space-3); padding: var(--space-3) var(--space-4); border-bottom: 1px solid var(--border-subtle); cursor: pointer; transition: background .1s; position: relative; }
+  .result-row.hidden-by-filter { display: none; }
+  .result-row:hover { background: var(--bg-raised); }
+  .result-row .check { width: 18px; height: 18px; border-radius: var(--radius-sm); border: 1px solid var(--border-strong); background: var(--bg-deep); display: flex; align-items: center; justify-content: center; font-size: 12px; color: transparent; flex-shrink: 0; }
+  .result-row.selected .check { background: var(--gold); border-color: var(--gold); color: var(--bg-deepest); }
+  .result-row.selected .check::after { content: '✓'; }
+  .result-row .name { font-family: var(--font-display); font-size: 14px; color: var(--text-bright); letter-spacing: 0.04em; }
+  .result-row .meta { font-size: 11px; color: var(--text-muted); margin-top: 2px; display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+  .result-row .meta .tag { background: rgba(140,90,255,0.10); border: 1px solid rgba(140,90,255,0.22); border-radius: 999px; padding: 1px 6px; color: var(--purple-bright); font-size: 10px; }
+  .result-row .meta .tag.source { border-color: rgba(110,195,217,0.30); color: var(--info); background: rgba(110,195,217,0.06); }
+  .result-row .preview-btn { background: transparent; border: 1px solid var(--border-subtle); color: var(--text-muted); padding: 2px 8px; border-radius: var(--radius); font-size: 11px; cursor: pointer; font-family: var(--font-ui); }
+  .result-row .preview-btn:hover { color: var(--gold-bright); border-color: var(--gold); }
+
+  /* preview popover redesigned to match viewer style */
+  .preview-popover {
+    position: absolute; right: var(--space-4); top: 0; transform: translateY(-8px);
+    width: 320px;
+    padding: var(--space-3) var(--space-4);
+    background: linear-gradient(180deg, var(--bg-raised), var(--bg-base));
+    border: 1px solid var(--gold);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.7);
+    z-index: 10;
+  }
+  .preview-popover h4 { margin: 0; font-family: var(--font-display); font-size: 16px; color: var(--text-bright); letter-spacing: 0.04em; }
+  .preview-popover .pop-chips { display: flex; flex-wrap: wrap; gap: 4px; margin: var(--space-2) 0 var(--space-3); }
+  .preview-popover .pop-chip {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-family: var(--font-ui); font-size: 11px; padding: 2px 8px; border-radius: 999px;
+    background: var(--bg-elevated); border: 1px solid var(--border-subtle); color: var(--text-primary);
+  }
+  .preview-popover .pop-chip .k { color: var(--text-muted); font-size: 10px; }
+  .preview-popover .pop-chip .v { color: var(--text-bright); font-weight: 600; }
+  .preview-popover .pop-chip.tone-save { border-color: rgba(217,168,102,0.30); }
+  .preview-popover .pop-chip.tone-dmg { border-color: rgba(217,102,102,0.30); }
+  .preview-popover .pop-chip.tone-heal { border-color: rgba(109,194,138,0.30); }
+  .preview-popover .pop-chip.tone-info { border-color: rgba(110,195,217,0.30); }
+  .preview-popover .desc { font-family: var(--font-body); font-size: 13px; line-height: 1.5; color: var(--text-primary); margin: 0 0 var(--space-2); }
+  .preview-popover .source-strip { padding-top: var(--space-2); border-top: 1px solid var(--border-subtle); font-size: 10px; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; display: flex; gap: var(--space-2); }
+  .preview-popover .source-strip span { background: var(--bg-elevated); padding: 2px 6px; border-radius: 999px; border: 1px solid var(--border-subtle); }
+  .preview-popover .pop-close { position: absolute; top: 6px; right: 8px; background: transparent; border: 0; color: var(--text-muted); font-size: 16px; cursor: pointer; }
+
+  .picker-footer { grid-area: footer; padding: var(--space-3) var(--space-5); border-top: 1px solid var(--border-subtle); display: flex; align-items: center; gap: var(--space-3); background: var(--bg-deep); }
+  .picker-footer .summary { font-size: 12px; color: var(--text-muted); }
+  .picker-footer .summary strong { color: var(--gold-bright); }
+  .picker-footer .actions { margin-left: auto; display: flex; gap: var(--space-2); }
+  .picker-footer .actions button { padding: var(--space-2) var(--space-4); border-radius: var(--radius); font-size: 12px; letter-spacing: 0.06em; cursor: pointer; font-family: var(--font-ui); }
+  .picker-footer .actions .secondary { background: transparent; border: 1px solid var(--border-subtle); color: var(--text-muted); }
+  .picker-footer .actions .secondary:hover { color: var(--text-bright); border-color: var(--border-muted); }
+  .picker-footer .actions .primary { background: linear-gradient(180deg, var(--gold-bright), var(--gold)); border: 1px solid var(--gold); color: var(--bg-deepest); font-weight: 700; }
+
+  .help-tip { font-size: 11px; color: var(--text-muted); margin: var(--space-2) 0; padding: var(--space-2) var(--space-3); background: rgba(110,195,217,0.05); border-left: 2px solid var(--info); border-radius: 0 var(--radius) var(--radius) 0; font-style: italic; }
+  .help-tip code { font-family: var(--font-mono); font-size: 11px; color: var(--gold-bright); background: var(--bg-deepest); padding: 1px 4px; border-radius: 3px; font-style: normal; }
+  .help-tip strong { color: var(--text-bright); font-style: normal; }
+
+  .toast { position: fixed; bottom: 20px; left: 50%; transform: translate(-50%, 80px); padding: var(--space-3) var(--space-5); background: var(--bg-deepest); border: 1px solid var(--gold); border-radius: var(--radius); color: var(--text-bright); font-size: 13px; box-shadow: 0 12px 32px rgba(0,0,0,0.6); transition: transform .25s ease; z-index: 500; }
+  .toast.show { transform: translate(-50%, 0); }
+
+  .mockup-note { margin: var(--space-5) 0 0; padding: var(--space-4) var(--space-5); border: 1px dashed var(--border-muted); border-radius: var(--radius); font-size: 12px; line-height: 1.6; color: var(--text-muted); background: rgba(180,140,255,0.04); }
+  .mockup-note strong { color: var(--purple-bright); }
+
+  /* spell-slot summary block at top of Spells tab */
+  .slot-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: var(--space-2); margin-bottom: var(--space-3); }
+  .slot-summary-cell { background: var(--bg-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius); padding: var(--space-2); text-align: center; }
+  .slot-summary-cell .l { font-size: 10px; letter-spacing: 0.10em; color: var(--text-muted); text-transform: uppercase; }
+  .slot-summary-cell .v { font-family: var(--font-mono); font-size: 16px; font-weight: 700; color: var(--text-bright); margin-top: 2px; }
+  .slot-summary-cell .bar { display: block; width: 100%; height: 4px; margin-top: 4px; background: var(--bg-deepest); border-radius: 999px; overflow: hidden; border: 1px solid var(--border-subtle); }
+  .slot-summary-cell .bar > i { display: block; height: 100%; background: linear-gradient(90deg, var(--gold), var(--gold-bright)); }
+</style>
+</head>
+<body>
+
+<header class="editor-toolbar">
+  <button class="back-btn">← Characters</button>
+  <div class="editing-info"><span class="label">Editing</span><span class="name">Carol Elfnein</span></div>
+  <span class="save-status saved" id="save-status">✓ saved · 2m ago</span>
+  <button class="toolbar-btn" id="pat-toggle">🔑 GitHub</button>
+  <button class="toolbar-btn primary" id="save-btn">Save to GitHub</button>
+</header>
+
+<main class="editor-layout">
+  <section class="editor-pane">
+    <nav class="editor-tabs">
+      <button class="etab" data-etab="identity">Identity</button>
+      <button class="etab active" data-etab="stats">Stats</button>
+      <button class="etab" data-etab="abilities">Abilities</button>
+      <button class="etab" data-etab="spells">Spells</button>
+      <button class="etab" data-etab="inventory">Inventory</button>
+      <button class="etab" data-etab="resources">Resources</button>
+      <button class="etab" data-etab="notes">Notes</button>
+    </nav>
+
+    <!-- ━━━━━━━━━━━━━━━━━━━ IDENTITY ━━━━━━━━━━━━━━━━━━━ -->
+    <div class="epanel" id="ep-identity">
+      <div class="ecard">
+        <h3 class="ecard-title">Identity</h3>
+        <div class="field"><label>Display Name</label><input type="text" value="Carol Elfnein" data-bind="name"></div>
+        <div class="field"><label>Aliases <span class="hint">(comma-separated)</span></label><input type="text" value="Elfnein, Killer Harp, Dur Da Bla wielder"></div>
+        <div class="field-row">
+          <div class="field"><label>Race / Species</label><select><option>Reborn / Homunculus (Human)</option><option>Lightfoot Halfling</option><option>+ pick from library…</option></select></div>
+          <div class="field"><label>Background</label><select><option>Sage</option><option>Entertainer</option></select></div>
+          <div class="field"><label>Alignment</label><select><option>—</option><option>Chaotic Good</option><option>Lawful Neutral</option></select></div>
+        </div>
+      </div>
+
+      <div class="ecard">
+        <h3 class="ecard-title">Classes <div class="actions">
+          <button class="add-btn lib" data-action="open-picker" data-picker-kind="classes">+ from library</button>
+          <button class="add-btn" data-action="add" data-list="class-list" data-template="class">+ inline</button>
+        </div></h3>
+        <div class="help-tip">All class entries use the same shape — primary class and multiclass are just rows in this list. Add as many or as few as you want; remove all to have a class-less character (NPC / non-combat). The two buttons above are different actions: <strong>+ from library</strong> opens the class browser; <strong>+ inline</strong> creates a one-off custom class on this sheet only.</div>
+        <div id="class-list"></div>
+      </div>
+
+      <div class="ecard">
+        <h3 class="ecard-title">Appearance Variants <div class="actions">
+          <button class="add-btn" data-action="add" data-list="variant-list" data-template="variant">+ variant</button>
+        </div></h3>
+        <div class="help-tip">Each variant has its own image set. The viewer's appearance tab will swap the entire gallery when a viewer picks a variant. Variants are character-specific so there's no library — just inline.</div>
+        <div id="variant-list"></div>
+      </div>
+
+      <div class="ecard">
+        <h3 class="ecard-title">Relationships <div class="actions">
+          <button class="add-btn" data-action="add" data-list="relationship-list" data-template="relationship">+ relationship</button>
+        </div></h3>
+        <div id="relationship-list"></div>
+      </div>
+    </div>
+
+    <!-- ━━━━━━━━━━━━━━━━━━━ STATS ━━━━━━━━━━━━━━━━━━━ -->
+    <div class="epanel active" id="ep-stats">
+      <div class="ecard">
+        <h3 class="ecard-title">Ability Scores</h3>
+        <div class="ability-edit-grid" id="ability-grid">
+          <div class="ability-edit" data-stat-block="str" data-tip="STR 8 → −1&#10;Used by: Athletics, STR saves, melee atk/dmg w/o Finesse&#10;Carol uses DEX for melee via Finesse weapon (Dur Da Bla)."><div class="ab">Str</div><input type="number" value="8" data-stat="str"><div class="mod">−1</div></div>
+          <div class="ability-edit" data-stat-block="dex" data-tip="DEX 16 → +3&#10;Used by: Acrobatics, Sleight, Stealth, DEX saves, ranged atk, finesse melee, AC, Initiative"><div class="ab">Dex</div><input type="number" value="16" data-stat="dex"><div class="mod">+3</div></div>
+          <div class="ability-edit" data-stat-block="con" data-tip="CON 14 → +2&#10;Used by: HP per level, CON saves, concentration saves"><div class="ab">Con</div><input type="number" value="14" data-stat="con"><div class="mod">+2</div></div>
+          <div class="ability-edit" data-stat-block="int" data-tip="INT 22 → +6 ★ spellcasting&#10;Spell DC = 8 + prof + INT = 16&#10;Spell Attack = prof + INT = +10&#10;Bladesong AC bonus (table ruling: INT not CHA)"><div class="ab">Int</div><input type="number" value="22" data-stat="int"><div class="mod">+6</div></div>
+          <div class="ability-edit" data-stat-block="wis" data-tip="WIS 10 → +0&#10;Used by: Insight, Perception, Survival, WIS saves"><div class="ab">Wis</div><input type="number" value="10" data-stat="wis"><div class="mod">+0</div></div>
+          <div class="ability-edit" data-stat-block="cha" data-tip="CHA 11 → +0&#10;Used by: Deception, Persuasion, Performance, CHA saves&#10;Affects: # of Bardic Inspiration uses, Sorcery Points (Quandrix)"><div class="ab">Cha</div><input type="number" value="11" data-stat="cha"><div class="mod">+0</div></div>
+        </div>
+        <div class="help-tip">Hover any ability for the breakdown of where that mod applies. The live preview's ability grid updates as you edit any score.</div>
+      </div>
+
+      <div class="ecard">
+        <h3 class="ecard-title">Saving Throws</h3>
+        <div class="help-tip">Click each pip to toggle proficiency. The displayed mod and the live preview update as you toggle.</div>
+        <div id="saves-list">
+          <div class="stat-prof-row" data-save="str"><button class="skill-pip" data-state="untrained"></button><div class="label">Strength<span class="sub">−1 untrained · +3 with prof</span></div><span class="ab-tag">Str</span><span class="mod" data-tip="STR save: roll d20 + STR mod. Resists shoves, restraints, raw force.">−1</span></div>
+          <div class="stat-prof-row" data-save="dex"><button class="skill-pip" data-state="untrained"></button><div class="label">Dexterity<span class="sub">+3 untrained · +7 with prof</span></div><span class="ab-tag">Dex</span><span class="mod" data-tip="DEX save: dodge AOEs, escape grapples, resist trap effects. The most-rolled save in 5e.">+3</span></div>
+          <div class="stat-prof-row" data-save="con"><button class="skill-pip" data-state="untrained"></button><div class="label">Constitution<span class="sub">+2 untrained · +6 with prof</span></div><span class="ab-tag">Con</span><span class="mod" data-tip="CON save: maintain concentration when damaged (DC 10 or half damage). Resist poison/death.">+2</span></div>
+          <div class="stat-prof-row proficient" data-save="int"><button class="skill-pip" data-state="prof"></button><div class="label">Intelligence<span class="sub">+6 untrained · +10 with prof</span></div><span class="ab-tag">Int</span><span class="mod" data-tip="INT save: resist mind-reading, illusions, intellectual subversion. Proficient (Wizard).">+10</span></div>
+          <div class="stat-prof-row proficient" data-save="wis"><button class="skill-pip" data-state="prof"></button><div class="label">Wisdom<span class="sub">+0 untrained · +4 with prof</span></div><span class="ab-tag">Wis</span><span class="mod" data-tip="WIS save: resist charm, fear, hold spells. Proficient (Wizard).">+4</span></div>
+          <div class="stat-prof-row" data-save="cha"><button class="skill-pip" data-state="untrained"></button><div class="label">Charisma<span class="sub">+0 untrained · +4 with prof</span></div><span class="ab-tag">Cha</span><span class="mod" data-tip="CHA save: resist banishment, possession, identity-altering effects.">+0</span></div>
+        </div>
+      </div>
+
+      <div class="ecard">
+        <h3 class="ecard-title">AC Modes <div class="actions"><button class="add-btn" data-action="add-ac">+ mode</button></div></h3>
+        <div class="help-tip">Click ★ to set the active mode (shown in sticky header + live preview). Conditional modes (Bladesong, Shield) toggle on during play. Adding a new mode also appends it to the live preview's chip row.</div>
+        <div id="ac-modes-list">
+          <div class="ac-mode-edit" data-ac-id="base"><input type="text" value="Base / Mage Armor"><div class="stepper"><button>−</button><input type="number" value="16" data-ac-value><button>+</button></div><button class="icon-btn active-toggle on" title="Currently active">★</button><button class="icon-btn remove">×</button></div>
+          <div class="ac-mode-edit" data-ac-id="bladesong"><input type="text" value="Bladesong"><div class="stepper"><button>−</button><input type="number" value="22" data-ac-value><button>+</button></div><button class="icon-btn active-toggle" title="Make active">★</button><button class="icon-btn remove">×</button></div>
+          <div class="ac-mode-edit" data-ac-id="shield-blade"><input type="text" value="Shield + Bladesong"><div class="stepper"><button>−</button><input type="number" value="25" data-ac-value><button>+</button></div><button class="icon-btn active-toggle" title="Make active">★</button><button class="icon-btn remove">×</button></div>
+          <div class="ac-mode-edit" data-ac-id="otherworldly"><input type="text" value="Otherworldly Guise"><div class="stepper"><button>−</button><input type="number" value="29" data-ac-value><button>+</button></div><button class="icon-btn active-toggle" title="Make active">★</button><button class="icon-btn remove">×</button></div>
+        </div>
+      </div>
+
+      <div class="ecard">
+        <h3 class="ecard-title">Skills</h3>
+        <div class="help-tip">Click each pip to cycle: Untrained → Proficient → Expertise → back to Untrained.</div>
+        <div class="skill-legend-row">
+          <span class="item"><span class="skill-pip" data-state="untrained"></span> Untrained <span style="color:var(--text-dim)">— ability mod only</span></span>
+          <span class="item"><span class="skill-pip" data-state="prof"></span> Proficient <span style="color:var(--text-dim)">— +prof bonus</span></span>
+          <span class="item"><span class="skill-pip" data-state="expertise"></span> Expertise <span style="color:var(--text-dim)">— +2× prof</span></span>
+        </div>
+        <div id="skills-grid">
+          <div class="stat-prof-row proficient" data-skill="arcana"><button class="skill-pip" data-state="prof"></button><div class="label">Arcana<span class="sub">Int · 6/10/14</span></div><span class="ab-tag">Int</span><span class="mod" data-tip="Arcana: knowledge of magic, eldritch lore, planar knowledge.">+10</span></div>
+          <div class="stat-prof-row proficient" data-skill="history"><button class="skill-pip" data-state="prof"></button><div class="label">History<span class="sub">Int · 6/10/14</span></div><span class="ab-tag">Int</span><span class="mod" data-tip="History: recall historical events, kingdoms, wars, customs.">+10</span></div>
+          <div class="stat-prof-row proficient" data-skill="investigation"><button class="skill-pip" data-state="prof"></button><div class="label">Investigation<span class="sub">Int · 6/10/14</span></div><span class="ab-tag">Int</span><span class="mod" data-tip="Investigation: deduce, find clues, search a scene.">+10</span></div>
+          <div class="stat-prof-row proficient" data-skill="nature"><button class="skill-pip" data-state="prof"></button><div class="label">Nature<span class="sub">Int · 6/10/14</span></div><span class="ab-tag">Int</span><span class="mod">+10</span></div>
+          <div class="stat-prof-row proficient" data-skill="religion"><button class="skill-pip" data-state="prof"></button><div class="label">Religion<span class="sub">Int · 6/10/14</span></div><span class="ab-tag">Int</span><span class="mod">+10</span></div>
+          <div class="stat-prof-row" data-skill="acrobatics"><button class="skill-pip" data-state="untrained"></button><div class="label">Acrobatics<span class="sub">Dex · 3/7/11</span></div><span class="ab-tag">Dex</span><span class="mod">+3</span></div>
+          <div class="stat-prof-row" data-skill="persuasion"><button class="skill-pip" data-state="untrained"></button><div class="label">Persuasion<span class="sub">Cha · 0/4/8</span></div><span class="ab-tag">Cha</span><span class="mod">+0</span></div>
+          <div class="stat-prof-row" data-skill="stealth"><button class="skill-pip" data-state="untrained"></button><div class="label">Stealth<span class="sub">Dex · 3/7/11</span></div><span class="ab-tag">Dex</span><span class="mod">+3</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ━━━━━━━━━━━━━━━━━━━ ABILITIES ━━━━━━━━━━━━━━━━━━━ -->
+    <div class="epanel" id="ep-abilities">
+      <div class="ecard">
+        <h3 class="ecard-title">Feats <div class="actions">
+          <button class="add-btn lib" data-action="open-picker" data-picker-kind="feats">+ from library</button>
+          <button class="add-btn" data-action="add" data-list="feat-list" data-template="feat">+ inline</button>
+        </div></h3>
+        <div id="feat-list"></div>
+      </div>
+      <div class="ecard">
+        <h3 class="ecard-title">Class Features</h3>
+        <div class="help-tip">Pulled from your Classes list automatically. Override per-feature here if your table runs a variant ruling. <strong>+ from library</strong> below would let you add a homebrew feature that isn't tied to a class entry.</div>
+        <div id="class-feature-list"></div>
+        <button class="add-inline" data-action="add" data-list="class-feature-list" data-template="feat">+ add custom feature</button>
+      </div>
+    </div>
+
+    <!-- ━━━━━━━━━━━━━━━━━━━ SPELLS ━━━━━━━━━━━━━━━━━━━ -->
+    <div class="epanel" id="ep-spells">
+      <div class="ecard">
+        <h3 class="ecard-title">Spell Slots <span class="hint" style="margin-left: var(--space-2); font-size: 11px; color: var(--text-muted); letter-spacing: 0; text-transform: none;">(view only — edit max in Resources tab)</span></h3>
+        <div class="slot-summary">
+          <div class="slot-summary-cell"><div class="l">Tier 1</div><div class="v">4 / 4</div><span class="bar"><i style="width: 100%"></i></span></div>
+          <div class="slot-summary-cell"><div class="l">Tier 2</div><div class="v">3 / 3</div><span class="bar"><i style="width: 100%"></i></span></div>
+          <div class="slot-summary-cell"><div class="l">Tier 3</div><div class="v">2 / 3</div><span class="bar"><i style="width: 66%"></i></span></div>
+          <div class="slot-summary-cell"><div class="l">Tier 4</div><div class="v">1 / 2</div><span class="bar"><i style="width: 50%"></i></span></div>
+          <div class="slot-summary-cell"><div class="l">Tier 5</div><div class="v">0 / 1</div><span class="bar"><i style="width: 0%"></i></span></div>
+        </div>
+      </div>
+      <div class="ecard">
+        <h3 class="ecard-title">Spells <div class="actions">
+          <button class="add-btn lib" data-action="open-picker" data-picker-kind="spells">+ from library</button>
+          <button class="add-btn" data-action="add" data-list="spell-list" data-template="spell">+ inline</button>
+        </div></h3>
+        <div class="help-tip">Library entries link to <code>library/spells/</code> by ID. If the source spell is moved or renamed, this character still resolves it via the new index. Inline spells live only on this sheet.</div>
+        <div id="spell-list"></div>
+      </div>
+    </div>
+
+    <!-- ━━━━━━━━━━━━━━━━━━━ INVENTORY ━━━━━━━━━━━━━━━━━━━ -->
+    <div class="epanel" id="ep-inventory">
+      <div class="ecard">
+        <h3 class="ecard-title">Inventory <div class="actions">
+          <button class="add-btn lib" data-action="open-picker" data-picker-kind="items">+ from library</button>
+          <button class="add-btn" data-action="add" data-list="item-list" data-template="item">+ inline</button>
+        </div></h3>
+        <div id="item-list"></div>
+      </div>
+    </div>
+
+    <!-- ━━━━━━━━━━━━━━━━━━━ RESOURCES ━━━━━━━━━━━━━━━━━━━ -->
+    <div class="epanel" id="ep-resources">
+      <div class="ecard">
+        <h3 class="ecard-title">Spell Slots</h3>
+        <div class="field-row">
+          <div class="field"><label>Tier 1 max</label><div class="stepper"><button>−</button><input type="number" value="4"><button>+</button></div></div>
+          <div class="field"><label>Tier 2 max</label><div class="stepper"><button>−</button><input type="number" value="3"><button>+</button></div></div>
+          <div class="field"><label>Tier 3 max</label><div class="stepper"><button>−</button><input type="number" value="3"><button>+</button></div></div>
+          <div class="field"><label>Tier 4 max</label><div class="stepper"><button>−</button><input type="number" value="2"><button>+</button></div></div>
+          <div class="field"><label>Tier 5 max</label><div class="stepper"><button>−</button><input type="number" value="1"><button>+</button></div></div>
+        </div>
+      </div>
+      <div class="ecard">
+        <h3 class="ecard-title">Class &amp; Feat Resources <div class="actions">
+          <button class="add-btn lib" data-action="open-picker" data-picker-kind="resources">+ from library</button>
+          <button class="add-btn" data-action="add" data-list="resource-list" data-template="resource">+ inline</button>
+        </div></h3>
+        <div id="resource-list"></div>
+      </div>
+
+      <div class="ecard">
+        <h3 class="ecard-title">Conversions <div class="actions">
+          <button class="add-btn" data-action="add-conversion">+ rule</button>
+        </div></h3>
+        <div class="help-tip"><strong>What this is:</strong> conversion rules let resources transmute into each other in play. Each rule defines a source → destination cost. <strong>How it works:</strong> editor-side you save rules here; viewer-side, players see clickable <em>Convert</em> buttons next to the affected resource. Click <em>Save rule</em> to commit a row; <em>Re-save</em> to update an existing one. Used for: Sorcerer Flexible Casting (SP ↔ slots), Carol's Memory Burn (Spell Memories → any slot), or any custom alchemical rule.</div>
+        <div id="conversion-list"></div>
+      </div>
+    </div>
+
+    <!-- ━━━━━━━━━━━━━━━━━━━ NOTES ━━━━━━━━━━━━━━━━━━━ -->
+    <div class="epanel" id="ep-notes">
+      <div class="ecard"><h3 class="ecard-title">Personality</h3><div class="field"><textarea>Hostile, extremely guarded, and nearly mute unless forced to speak. Elfnein assumes others want to hurt her, exploit her, or steal from her.</textarea></div></div>
+      <div class="ecard"><h3 class="ecard-title">Backstory</h3><div class="field"><textarea style="min-height: 200px;">Elfnein was born in Arnica more than 600 years ago. Her father, an alchemist and doctor, cured a plague through science and alchemy, but the state branded him a witch and burned him alive in front of her…</textarea></div></div>
+      <div class="ecard"><h3 class="ecard-title">DM Notes <span class="source-badge inline" style="margin-left: var(--space-2);">visible to player</span></h3><div class="field"><textarea>Provisional sheet. Bladesong AC uses INT not CHA per table ruling.</textarea></div></div>
+    </div>
+
+    <div class="mockup-note">
+      <strong>Editor mockup — round 3:</strong>
+      <br>• <strong>Unified row layout</strong> — every list row (class, variant, relationship, feat, spell, item, resource) uses the same template: title + source-badge + chip-row + ⚙/× icons + collapsible edit drawer. Library-linked vs inline differs only in the source badge and the edit-drawer contents (override fields vs full edit form). New rows added via + button or library picker use the same template.
+      <br>• <strong>Saving throw pips</strong> wire to the displayed modifier and the live preview.
+      <br>• <strong>Hover ability blocks + save mods</strong> for tooltip breakdowns of where each stat is used.
+      <br>• <strong>Real images / video</strong> in the 144cm Form variant editor (Discord URLs you supplied).
+      <br>• <strong>AC mode</strong> — adding a new mode now appends a chip in the live preview's AC Modes row.
+      <br>• <strong>Library picker</strong> filters by <em>kind</em> on open: spells tab gets only spells, items tab only items, etc. Each kind has its own tree + result set. Filter chips (Library/Custom/Open5e/DnD5eAPI) actually filter.
+      <br>• <strong>Spell preview popover</strong> redesigned to match the viewer's spell card style — chips for school/save/dmg/range/components, full description, source strip.
+      <br>• <strong>Spells tab</strong> now shows a slot summary block at the top with current/max + bars per tier. Editing the maxes is in Resources.
+      <br>• <strong>Conversion rule</strong> rows include cost/yield chips, and the help-tip above explains what saving does, what "Re-save" means, and what shows up in the viewer.
+      <br>• <strong>Resource rows</strong> show progress bars in their chip row (current/max).
+      <br>• <strong>Two add buttons per card</strong> (where applicable): <em>+ from library</em> and <em>+ inline</em> — distinct actions, kept separate on purpose.
+      <br>• Open in a real browser to actually click around — the launch preview is static.
+    </div>
+  </section>
+
+  <aside class="preview-pane">
+    <div class="preview-pane-header">
+      <span class="live-dot"></span><span>Live preview</span>
+      <div class="links"><a href="style-example.html" target="_blank">↗ open full</a></div>
+    </div>
+    <div class="preview-frame">
+      <div class="pname" id="pv-name">Carol Elfnein</div>
+      <div class="psub" id="pv-sub">Reborn Human • Wizard 9 / Sorcerer 1</div>
+      <div class="pquickstats">
+        <div class="pquickstat hp"><div class="l">HP</div><div class="v" id="pv-hp">58/58</div></div>
+        <div class="pquickstat" id="pv-ac-block"><div class="l">AC</div><div class="v" id="pv-ac">16</div></div>
+        <div class="pquickstat"><div class="l">Init</div><div class="v" id="pv-init">+3</div></div>
+        <div class="pquickstat"><div class="l">Spd</div><div class="v">30</div></div>
+      </div>
+      <div class="psection-title" data-pv-section="stats">Ability Scores</div>
+      <div class="pability-grid">
+        <div class="pability"><div class="a">Str</div><div class="m" id="pv-mod-str">−1</div></div>
+        <div class="pability"><div class="a">Dex</div><div class="m" id="pv-mod-dex">+3</div></div>
+        <div class="pability"><div class="a">Con</div><div class="m" id="pv-mod-con">+2</div></div>
+        <div class="pability"><div class="a">Int</div><div class="m" id="pv-mod-int">+6</div></div>
+        <div class="pability"><div class="a">Wis</div><div class="m" id="pv-mod-wis">+0</div></div>
+        <div class="pability"><div class="a">Cha</div><div class="m" id="pv-mod-cha">+0</div></div>
+      </div>
+      <div class="psection-title" data-pv-section="stats">Saves</div>
+      <div class="pchip-row" id="pv-saves">
+        <span class="pchip" data-pv-save="str">Str −1</span>
+        <span class="pchip" data-pv-save="dex">Dex +3</span>
+        <span class="pchip" data-pv-save="con">Con +2</span>
+        <span class="pchip" data-pv-save="int" style="border-color: var(--gold); color: var(--gold-bright);">Int +10 ★</span>
+        <span class="pchip" data-pv-save="wis" style="border-color: var(--gold); color: var(--gold-bright);">Wis +4 ★</span>
+        <span class="pchip" data-pv-save="cha">Cha +0</span>
+      </div>
+      <div class="psection-title" data-pv-section="stats">AC Modes</div>
+      <div class="pchip-row" id="pv-ac-modes"></div>
+      <div class="psection-title" data-pv-section="spells">Spells</div>
+      <div class="pchip-row" id="pv-spell-chips"></div>
+      <div class="psection-title" data-pv-section="inventory">Inventory</div>
+      <div class="pchip-row" id="pv-item-chips"></div>
+      <div class="psection-title" data-pv-section="resources">Resources</div>
+      <div class="pchip-row" id="pv-resource-chips"></div>
+    </div>
+  </aside>
+</main>
+
+<div class="toast" id="toast">Saved.</div>
+
+<!-- PAT Drawer -->
+<div class="scrim" id="scrim"></div>
+<aside class="pat-drawer" id="pat-drawer">
+  <h2>GitHub Connection <button class="close" id="pat-close">×</button></h2>
+  <p>This editor commits character changes to your GitHub repo. Each player uses their own personal access token (PAT), so commits are attributed correctly.</p>
+  <div class="pat-status connected" id="pat-status">
+    <div class="status">✓ Connected to GitHub as</div>
+    <div class="who-row">
+      <div class="avatar">L</div>
+      <div><div class="who">Lulukitty22</div><div class="scope">repo: Character_Manager · scope: contents:write</div></div>
+    </div>
+    <div class="clarify">This is the GitHub user account the PAT belongs to. Commits made by this editor will be attributed to this user.</div>
+  </div>
+  <div class="field"><label>Personal Access Token</label><input type="password" value="github_pat_••••••••••••••••" style="font-family: var(--font-mono);"><div class="hint">Stored in this browser's localStorage. Never sent anywhere except api.github.com.</div></div>
+  <div class="field"><label>Repository Branch</label><input type="text" value="main"></div>
+  <div style="display: flex; gap: var(--space-2); margin-top: var(--space-3); flex-wrap: wrap;">
+    <button class="toolbar-btn primary" style="flex: 1;" id="pat-test">Test Connection</button>
+    <button class="toolbar-btn">Save</button>
+    <button class="toolbar-btn warn">Disconnect</button>
+  </div>
+  <h3 style="font-family: var(--font-display); font-size: 14px; color: var(--gold-bright); margin: var(--space-5) 0 var(--space-2); letter-spacing: 0.06em;">How to get a PAT</h3>
+  <ol>
+    <li>Visit <code>github.com/settings/personal-access-tokens</code></li>
+    <li>Click <strong>"Generate new token (fine-grained)"</strong></li>
+    <li>Repository access: <strong>Only select repositories</strong> → Character_Manager</li>
+    <li>Permissions: <strong>Contents: Read and write</strong></li>
+    <li>Copy token, paste above, click Test Connection</li>
+  </ol>
+</aside>
+
+<!-- Library Picker -->
+<div class="picker" id="picker">
+  <div class="picker-header"><h3 id="picker-title">Add from library</h3><button class="close" id="picker-close">×</button></div>
+  <div class="picker-search">
+    <input type="text" id="picker-search-input" placeholder="Search…">
+    <span class="filter-chip on" data-filter="library">Library</span>
+    <span class="filter-chip on" data-filter="custom">Custom</span>
+    <span class="filter-chip on" data-filter="open5e">Open5e</span>
+    <span class="filter-chip on" data-filter="dnd5eapi">DnD5eAPI</span>
+  </div>
+  <div class="picker-tree" id="picker-tree"></div>
+  <div class="picker-results" id="picker-results"></div>
+  <div class="picker-footer">
+    <span class="summary"><strong id="picker-count">0</strong> selected · adds linked reference (auto-updates if library changes)</span>
+    <div class="actions">
+      <button class="secondary" id="picker-add-inline">Add as inline copy</button>
+      <button class="secondary" id="picker-cancel">Cancel</button>
+      <button class="primary" id="picker-confirm">Add</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(() => {
+const $ = (s, r=document) => r.querySelector(s);
+const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
+const dirty = () => { const s = $('#save-status'); s.className = 'save-status dirty'; s.textContent = '● unsaved changes'; };
+const toast = (msg) => { const t = $('#toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove('show'), 1800); };
+
+// ── Unified row template ─────────────────────────────────────
+function renderRow({ id, kind, title, source = 'inline', chips = [], description = '', linkedTo = null, extraFields = '', extraChipsForEdit = [] }) {
+  const sourceClass = source === 'library' ? '' : source === 'inline' ? 'inline' : 'new';
+  const sourceText = source === 'library' ? 'library' : source === 'inline' ? 'inline' : 'new';
+  const linkedBanner = linkedTo ? `<div class="linked-banner">🔗 Linked to <code>${linkedTo}</code><span class="right"><button>Unlink (make inline)</button></span></div>` : '';
+  return `
+    <div class="list-row" data-id="${id}" data-kind="${kind}">
+      <div class="row-main">
+        <div class="row-content">
+          <div class="row-title-line">
+            <span class="row-title">${title}</span>
+            <span class="source-badge ${sourceClass}">${sourceText}</span>
+          </div>
+          ${chips.length ? `<div class="row-chips">${chips.map(c => chipHTML(c)).join('')}</div>` : ''}
+        </div>
+        <button class="icon-btn cog">⚙</button>
+        <button class="icon-btn remove">×</button>
+      </div>
+      <div class="row-edit"><div class="row-edit-inner">
+        ${linkedBanner}
+        <div class="field"><label>Title</label><input type="text" value="${title.replace(/"/g, '&quot;')}"></div>
+        ${description ? `<div class="field"><label>Description</label><textarea>${description}</textarea></div>` : ''}
+        ${extraFields}
+      </div></div>
+    </div>`;
+}
+function chipHTML(c) {
+  if (typeof c === 'string') return `<span class="row-chip">${c}</span>`;
+  const tone = c.tone ? ' tone-' + c.tone : '';
+  const bar = c.bar != null ? `<span class="row-mini-bar ${c.barColor || ''}"><i style="width: ${c.bar}%"></i></span>` : '';
+  const k = c.k ? `<span class="k">${c.k}</span>` : '';
+  const v = c.v ? `<span class="v">${c.v}</span>` : '';
+  return `<span class="row-chip${tone}${c.bar != null ? ' has-bar' : ''}">${k}${v}${bar}</span>`;
+}
+
+// ── Seed data ────────────────────────────────────────────────
+const SEED = {
+  classes: [
+    { id: 'cls-wiz', title: 'Wizard · Bladesinging · Lv 9', source: 'library', linkedTo: 'library/classes/wizard.json',
+      chips: [{ k: 'role', v: 'Primary' }, { k: 'spell', v: 'INT' }, { k: 'prof', v: '+4' }, { k: 'hit die', v: 'd6' }],
+      description: '',
+      extraFields: `<div class="field-row">
+        <div class="field"><label>Class</label><input type="text" value="Wizard"></div>
+        <div class="field"><label>Subclass</label><input type="text" value="Bladesinging"></div>
+        <div class="field"><label>Level</label><div class="stepper"><button>−</button><input type="number" value="9"><button>+</button></div></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Hit Die</label><select><option>d6</option><option>d8</option><option>d10</option><option>d12</option></select></div>
+        <div class="field"><label>Spellcasting Ability</label><select><option>INT</option><option>WIS</option><option>CHA</option><option>(none)</option></select></div>
+      </div>` },
+    { id: 'cls-sor', title: 'Sorcerer · Mage of Quandrix · Lv 1', source: 'library', linkedTo: 'library/classes/sorcerer.json',
+      chips: [{ k: 'role', v: 'Multiclass' }, { k: 'spell', v: 'CHA' }, { k: 'prof', v: '+4' }, { k: 'hit die', v: 'd6' }],
+      extraFields: `<div class="field-row">
+        <div class="field"><label>Class</label><input type="text" value="Sorcerer"></div>
+        <div class="field"><label>Subclass</label><input type="text" value="Mage of Quandrix"></div>
+        <div class="field"><label>Level</label><div class="stepper"><button>−</button><input type="number" value="1"><button>+</button></div></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Hit Die</label><select><option>d6</option><option>d8</option><option>d10</option><option>d12</option></select></div>
+        <div class="field"><label>Spellcasting Ability</label><select><option>CHA</option><option>INT</option><option>WIS</option></select></div>
+      </div>` },
+  ],
+  variants: [
+    { id: 'var-1', title: '144cm Form', source: 'inline',
+      chips: [{ k: 'default', v: 'yes', tone: 'attune' }, { k: 'images', v: '3' }, { k: 'video', v: '1' }],
+      description: 'A small reborn homunculus, presenting roughly age 10. Pale, archaic, and skittish.',
+      extraFields: `<label style="font-size:10px; color:var(--text-muted); letter-spacing:0.10em; text-transform:uppercase; display:block; margin: var(--space-2) 0 4px;">Images &amp; Video</label>
+        <div class="img-edit-grid">
+          <div class="img-edit-tile"><img src="https://cdn.discordapp.com/attachments/427341536812990464/1500633248181653524/content.png" alt=""><div class="url-tag">…/content.png</div><button class="remove">×</button></div>
+          <div class="img-edit-tile"><img src="https://media.discordapp.net/attachments/1174150686259302431/1446350062354567238/download_15.jpg" alt=""><div class="url-tag">…/download_15.jpg</div><button class="remove">×</button></div>
+          <div class="img-edit-tile"><img src="https://cdn.discordapp.com/attachments/1280315564660887572/1324220450800140288/image.png" alt=""><div class="url-tag">…/image.png</div><button class="remove">×</button></div>
+          <div class="img-edit-tile"><video src="https://cdn.discordapp.com/attachments/1280315564660887572/1280353386042097684/Elfneins_Transformation___Symphogear_XV_-_Trim.mp4" muted loop autoplay playsinline></video><div class="video-badge">VIDEO</div><div class="url-tag">…/Elfneins_Transformation.mp4</div><button class="remove">×</button></div>
+          <button class="img-edit-tile add">+</button>
+        </div>` },
+    { id: 'var-2', title: '182cm Form', source: 'inline',
+      chips: [{ k: 'images', v: '2' }],
+      description: 'The 182cm presentation — closer to the adult body she lost.' },
+    { id: 'var-3', title: 'Faust Robe', source: 'inline',
+      chips: [{ k: 'provisional', v: 'yes', tone: 'warn' }, { k: 'images', v: '1' }, { k: 'video', v: '1' }],
+      description: 'Dur Da Bla becomes the Faust Robe. Provisional / DM-fiat.' },
+  ],
+  relationships: [
+    { id: 'rel-1', title: "Carol's Father", source: 'inline',
+      chips: [{ k: 'role', v: 'Father' }, { k: 'status', v: 'Deceased', tone: 'warn' }, { v: 'unlinked' }],
+      description: 'Cured a plague through alchemy; was burned for it. The reason she is what she is.',
+      extraFields: `<div class="field"><label>Linked Character</label><select><option selected>(unlinked NPC)</option><option>characters/capella-emerada-lugnica.json</option></select></div>` },
+    { id: 'rel-2', title: 'Capella Emerada Lugnica', source: 'library', linkedTo: 'characters/capella-emerada-lugnica.json',
+      chips: [{ k: 'role', v: 'Boss NPC' }, { k: 'race', v: 'Aberrant Lich' }, { v: 'linked', tone: 'info' }] },
+  ],
+  feats: [
+    { id: 'feat-dual', title: 'Dual Wielder', source: 'inline',
+      chips: [{ k: 'type', v: 'Feat' }, { k: 'effect', v: '+1 AC dual-wield' }],
+      description: '+1 AC while dual wielding. Can dual wield non-light one-handed weapons.' },
+    { id: 'feat-mma', title: 'Metamagic Adept', source: 'library', linkedTo: 'library/feats/metamagic-adept.json',
+      chips: [{ k: 'type', v: 'Feat' }, { k: 'sorcery', v: '2 / 2', bar: 100 }, { k: 'opts', v: 'Quickened, Transmuted' }] },
+  ],
+  classFeatures: [
+    { id: 'cf-bs', title: 'Bladesong', source: 'library', linkedTo: 'library/classes/wizard.json#bladesong',
+      chips: [{ k: 'class', v: 'Wizard 6+' }, { k: 'action', v: 'Bonus' }, { k: 'uses', v: '4 / 4', bar: 100 }, { k: 'recharge', v: 'SR', tone: 'rest' }, { k: 'override', v: 'INT not CHA', tone: 'warn' }] },
+    { id: 'cf-ar', title: 'Arcane Recovery', source: 'library', linkedTo: 'library/classes/wizard.json#arcane-recovery',
+      chips: [{ k: 'class', v: 'Wizard' }, { k: 'uses', v: '1 / 1', bar: 100 }, { k: 'recharge', v: 'LR', tone: 'rest' }] },
+    { id: 'cf-rb', title: 'Knowledge from a Past Life', source: 'library', linkedTo: 'library/races/reborn.json#knowledge',
+      chips: [{ k: 'race', v: 'Reborn' }, { k: 'uses', v: '3 / 3', bar: 100 }, { k: 'recharge', v: 'LR', tone: 'rest' }] },
+  ],
+  spells: [
+    { id: 'sp-fb', title: 'Fire Bolt', source: 'inline',
+      chips: [{ k: 'tier', v: 'cantrip' }, { k: 'school', v: 'Evocation' }, { k: 'dmg', v: '2d10 fire', tone: 'dmg' }, { k: 'range', v: '120 ft' }, { k: 'flavour', v: 'alchemy', tone: 'info' }],
+      description: 'Wizard cantrip, flavored as directed thermal transmutation.' },
+    { id: 'sp-fbll', title: 'Fireball', source: 'library', linkedTo: 'library/spells/evocation/fireball.json',
+      chips: [{ k: 'tier', v: '3' }, { k: 'save', v: 'DEX 16', tone: 'save' }, { k: 'dmg', v: '8d6 fire', tone: 'dmg' }, { k: 'aoe', v: '20 ft' }, { k: 'prepared', v: 'yes', tone: 'heal' }] },
+    { id: 'sp-ma', title: 'Mage Armor', source: 'inline',
+      chips: [{ k: 'tier', v: '1' }, { k: 'school', v: 'Abjuration' }, { k: 'duration', v: '8 hr' }, { k: 'prepared', v: 'yes', tone: 'heal' }] },
+    { id: 'sp-cs', title: 'Counterspell', source: 'library', linkedTo: 'library/spells/abjuration/counterspell.json',
+      chips: [{ k: 'tier', v: '3' }, { k: 'school', v: 'Abjuration' }, { k: 'action', v: 'Reaction' }, { k: 'range', v: '60 ft' }] },
+  ],
+  items: [
+    { id: 'it-ddb', title: 'Dur Da Bla', source: 'inline',
+      chips: [{ k: 'attune', v: 'Reborn', tone: 'attune' }, { k: 'rarity', v: 'Legendary' }, { k: 'type', v: 'Alchemical Harp' }, { k: 'transforms', v: 'Faust Robe', tone: 'warn' }],
+      description: 'A legendary alchemical harp Carol has carried since Arnica.' },
+    { id: 'it-sb', title: 'Spellbook', source: 'library', linkedTo: 'library/items/wondrous/spellbook.json',
+      chips: [{ k: 'spells', v: '28 / —' }, { k: 'type', v: 'Wizard focus' }] },
+    { id: 'it-hp', title: 'Healing Potion', source: 'library', linkedTo: 'library/items/potions/healing-potion.json',
+      chips: [{ k: 'qty', v: '2 / —', bar: 100 }, { k: 'heal', v: '2d4 + 2', tone: 'heal' }, { k: 'action', v: 'Bonus' }] },
+  ],
+  resources: [
+    { id: 'rs-bs', title: 'Bladesong Uses', source: 'inline',
+      chips: [{ k: 'current', v: '4 / 4', bar: 100 }, { k: 'recharge', v: 'SR', tone: 'rest' }, { k: 'class', v: 'Bladesinger' }] },
+    { id: 'rs-sp', title: 'Sorcery Points', source: 'library', linkedTo: 'library/feats/metamagic-adept.json#resource',
+      chips: [{ k: 'current', v: '2 / 2', bar: 100, barColor: 'purple' }, { k: 'recharge', v: 'LR', tone: 'rest' }, { k: 'feat', v: 'Metamagic Adept' }] },
+    { id: 'rs-mem', title: 'Spell Memories', source: 'inline',
+      chips: [{ k: 'current', v: '74 / 100', bar: 74, barColor: 'purple' }, { k: 'recharge', v: 'Manual / Fiat', tone: 'warn' }, { k: 'flavour', v: 'memory-burn pool', tone: 'info' }] },
+  ],
+};
+
+// ── Initial render ───────────────────────────────────────────
+function mount(listId, items) {
+  const el = $('#' + listId);
+  if (!el) return;
+  el.innerHTML = items.map(renderRow).join('');
+}
+mount('class-list', SEED.classes);
+mount('variant-list', SEED.variants);
+mount('relationship-list', SEED.relationships);
+mount('feat-list', SEED.feats);
+mount('class-feature-list', SEED.classFeatures);
+mount('spell-list', SEED.spells);
+mount('item-list', SEED.items);
+mount('resource-list', SEED.resources);
+
+// AC Modes preview chips
+const AC_MODES_INITIAL = [
+  { id: 'base', label: 'Base / Mage Armor', shortLabel: 'Base 16', value: 16, active: true },
+  { id: 'bladesong', label: 'Bladesong', shortLabel: 'Bladesong 22', value: 22, active: false },
+  { id: 'shield-blade', label: 'Shield + Bladesong', shortLabel: 'Shield+Blade 25', value: 25, active: false },
+  { id: 'otherworldly', label: 'Otherworldly Guise', shortLabel: 'Otherworldly 29', value: 29, active: false },
+];
+function renderACPreview(modes) {
+  const row = $('#pv-ac-modes');
+  row.innerHTML = modes.map(m => `<span class="pchip ${m.active ? 'ac-active' : ''}" data-ac-id="${m.id}">${m.shortLabel}${m.active ? ' ★' : ''}</span>`).join('');
+}
+renderACPreview(AC_MODES_INITIAL);
+
+// Spells preview chips
+$('#pv-spell-chips').innerHTML = SEED.spells.map(s => `<span class="pchip">${s.title}</span>`).join('');
+$('#pv-item-chips').innerHTML = SEED.items.map(i => {
+  const attune = i.chips.find(c => c.k === 'attune');
+  const star = attune ? ' ⚜' : '';
+  const style = attune ? 'color: var(--gold-bright); border-color: rgba(232,201,112,0.4);' : '';
+  return `<span class="pchip" style="${style}">${i.title}${star}</span>`;
+}).join('');
+$('#pv-resource-chips').innerHTML = SEED.resources.map(r => {
+  const cur = r.chips.find(c => c.k === 'current');
+  return `<span class="pchip">${r.title} ${cur ? cur.v : ''}</span>`;
+}).join('');
+
+// ── Tabs ─────────────────────────────────────────────────────
+$$('.etab').forEach(t => t.addEventListener('click', () => {
+  $$('.etab').forEach(x => x.classList.toggle('active', x === t));
+  $$('.epanel').forEach(p => p.classList.toggle('active', p.id === 'ep-' + t.dataset.etab));
+  $$('.preview-frame .psection-title').forEach(s => s.classList.toggle('active', s.dataset.pvSection === t.dataset.etab));
+}));
+
+// ── Skill / save 3-state pip cycler ──────────────────────────
+const SKILL_STATES = ['untrained', 'prof', 'expertise'];
+function cyclePip(p) {
+  const cur = p.dataset.state || 'untrained';
+  const next = SKILL_STATES[(SKILL_STATES.indexOf(cur) + 1) % 3];
+  p.dataset.state = next;
+  const row = p.closest('.stat-prof-row');
+  row.classList.toggle('proficient', next !== 'untrained');
+  // Update displayed mod from sub line
+  const sub = row.querySelector('.label .sub');
+  const modEl = row.querySelector('.mod');
+  if (sub && modEl) {
+    const parts = sub.textContent.match(/([+-]?\d+)\/([+-]?\d+)\/([+-]?\d+)/);
+    if (parts) {
+      const idx = SKILL_STATES.indexOf(next);
+      const v = idx === 0 ? parts[1] : idx === 1 ? '+' + parts[2] : '+' + parts[3];
+      modEl.textContent = v.startsWith('+') || v.startsWith('-') ? v : '+' + v;
+    } else {
+      // Saves use "−1 untrained · +3 with prof" pattern
+      const m = sub.textContent.match(/([+-−]?\d+)\s+untrained\s*·\s*([+-−]?\d+)/);
+      if (m) {
+        const v = SKILL_STATES.indexOf(next) === 0 ? m[1] : '+' + m[2].replace('+', '');
+        modEl.textContent = v.replace('−', '−');
+      }
+    }
+  }
+  // Sync save chip in preview if applicable
+  if (row.dataset.save) {
+    const saveId = row.dataset.save;
+    const chip = $(`#pv-saves .pchip[data-pv-save="${saveId}"]`);
+    if (chip) {
+      const newMod = modEl.textContent;
+      const star = next !== 'untrained' ? ' ★' : '';
+      const sname = saveId.charAt(0).toUpperCase() + saveId.slice(1);
+      chip.textContent = `${sname} ${newMod}${star}`;
+      chip.style = next !== 'untrained' ? 'border-color: var(--gold); color: var(--gold-bright);' : '';
+    }
+  }
+  dirty();
+}
+
+// Wire pips (delegated)
+document.addEventListener('click', e => {
+  const pip = e.target.closest('.skill-pip');
+  if (!pip || pip.closest('.skill-legend-row')) return;
+  cyclePip(pip);
+});
+
+// ── Cog buttons & remove buttons (delegated) ─────────────────
+document.addEventListener('click', e => {
+  const cog = e.target.closest('.icon-btn.cog');
+  if (cog) {
+    const row = cog.closest('.list-row');
+    if (row) { row.classList.toggle('editing'); cog.classList.toggle('editing', row.classList.contains('editing')); }
+    return;
+  }
+  const rm = e.target.closest('.icon-btn.remove, .img-edit-tile .remove');
+  if (rm) {
+    const row = rm.closest('.list-row, .ac-mode-edit, .conversion-row, .img-edit-tile');
+    if (!row) return;
+    if (row.classList.contains('img-edit-tile')) {
+      row.remove();
+      dirty();
+      return;
+    }
+    if (!confirm('Remove this entry?')) return;
+    row.classList.add('removing');
+    row.style.maxHeight = row.offsetHeight + 'px';
+    requestAnimationFrame(() => row.style.maxHeight = '0');
+    setTimeout(() => row.remove(), 280);
+    dirty();
+  }
+});
+
+// ── Add buttons (delegated) ──────────────────────────────────
+const TEMPLATES = {
+  class: () => ({ id: 'cls-' + Date.now(), title: 'New Class · Lv 1', source: 'new', chips: [{ k: 'role', v: 'Multiclass' }, { k: 'spell', v: '(none)' }, { k: 'hit die', v: 'd8' }], description: '' }),
+  variant: () => ({ id: 'var-' + Date.now(), title: 'New Variant', source: 'new', chips: [{ k: 'images', v: '0' }], description: '(describe)' }),
+  relationship: () => ({ id: 'rel-' + Date.now(), title: 'New Relationship', source: 'new', chips: [{ k: 'role', v: '?' }, { v: 'unlinked' }], description: '' }),
+  feat: () => ({ id: 'feat-' + Date.now(), title: 'New Feat', source: 'new', chips: [{ k: 'type', v: 'Feat' }], description: '(describe)' }),
+  spell: () => ({ id: 'sp-' + Date.now(), title: 'New Spell', source: 'new', chips: [{ k: 'tier', v: 'cantrip' }, { k: 'school', v: 'Evocation' }], description: '(describe)' }),
+  item: () => ({ id: 'it-' + Date.now(), title: 'New Item', source: 'new', chips: [{ k: 'qty', v: '1' }, { k: 'type', v: 'Misc' }], description: '(describe)' }),
+  resource: () => ({ id: 'rs-' + Date.now(), title: 'New Resource', source: 'new', chips: [{ k: 'current', v: '0 / 0', bar: 0 }, { k: 'recharge', v: 'LR', tone: 'rest' }], description: '' }),
+};
+document.addEventListener('click', e => {
+  const t = e.target.closest('[data-action]');
+  if (!t) return;
+  const a = t.dataset.action;
+  if (a === 'add') {
+    const list = $('#' + t.dataset.list);
+    const tpl = TEMPLATES[t.dataset.template];
+    if (!list || !tpl) return;
+    const data = tpl();
+    const wrap = document.createElement('div');
+    wrap.innerHTML = renderRow(data);
+    const node = wrap.firstElementChild;
+    node.classList.add('editing');
+    node.querySelector('.icon-btn.cog').classList.add('editing');
+    list.appendChild(node);
+    node.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    dirty();
+  } else if (a === 'add-ac') {
+    const list = $('#ac-modes-list');
+    const id = 'ac-' + Date.now();
+    const html = `<div class="ac-mode-edit" data-ac-id="${id}"><input type="text" value="New Mode"><div class="stepper"><button>−</button><input type="number" value="10" data-ac-value><button>+</button></div><button class="icon-btn active-toggle" title="Make active">★</button><button class="icon-btn remove">×</button></div>`;
+    const wrap = document.createElement('div'); wrap.innerHTML = html;
+    const node = wrap.firstElementChild;
+    list.appendChild(node);
+    // Append matching chip in preview
+    const previewRow = $('#pv-ac-modes');
+    const chip = document.createElement('span');
+    chip.className = 'pchip';
+    chip.dataset.acId = id;
+    chip.textContent = 'New Mode 10';
+    previewRow.appendChild(chip);
+    node.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    dirty();
+    // Wire input changes for this new node
+    node.querySelector('input[type="text"]').addEventListener('input', e => {
+      chip.textContent = e.target.value + ' ' + node.querySelector('[data-ac-value]').value;
+      if (node.querySelector('.active-toggle.on')) chip.textContent += ' ★';
+    });
+    node.querySelector('[data-ac-value]').addEventListener('input', e => {
+      chip.textContent = node.querySelector('input[type="text"]').value + ' ' + e.target.value;
+      if (node.querySelector('.active-toggle.on')) chip.textContent += ' ★';
+    });
+  } else if (a === 'add-conversion') {
+    const list = $('#conversion-list');
+    const html = `<div class="conversion-row">
+      <div class="src">
+        <strong>Resource A</strong>
+        <div class="pool-row"><span class="row-chip"><span class="k">avail</span><span class="v">0 / 0</span></span></div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="dst">
+        <strong>Resource B</strong>
+        <div class="pool-row"><span class="row-chip"><span class="k">cost</span><span class="v">?</span></span></div>
+      </div>
+      <button class="convert-btn" data-tip="Saves this conversion rule. The viewer will render a 'Convert' button next to Resource A.">Save rule</button>
+    </div>`;
+    const wrap = document.createElement('div'); wrap.innerHTML = html;
+    list.appendChild(wrap.firstElementChild);
+    dirty();
+  } else if (a === 'open-picker') {
+    openPicker(t.dataset.pickerKind);
+  }
+});
+
+// ── Steppers (delegated) ─────────────────────────────────────
+document.addEventListener('click', e => {
+  const btn = e.target.closest('.stepper button');
+  if (!btn) return;
+  const stepper = btn.parentElement;
+  const input = stepper.querySelector('input');
+  if (!input) return;
+  const cur = parseInt(input.value, 10) || 0;
+  const isMinus = btn.textContent === '−';
+  input.value = isMinus ? cur - 1 : cur + 1;
+  input.dispatchEvent(new Event('input', { bubbles: true }));
+  dirty();
+});
+
+// ── Ability stats → preview ──────────────────────────────────
+const STATS = ['str','dex','con','int','wis','cha'];
+STATS.forEach(stat => {
+  const input = $(`[data-stat="${stat}"]`);
+  if (!input) return;
+  input.addEventListener('input', () => {
+    const score = parseInt(input.value, 10) || 10;
+    const mod = Math.floor((score - 10) / 2);
+    const sign = mod >= 0 ? '+' : '';
+    const display = (mod < 0 ? '−' + Math.abs(mod) : sign + mod);
+    input.parentElement.querySelector('.mod').textContent = display;
+    const pv = $(`#pv-mod-${stat}`);
+    if (pv) {
+      pv.textContent = display;
+      pv.style.transition = 'color .2s';
+      pv.style.color = 'var(--gold-bright)';
+      setTimeout(() => pv.style.color = '', 400);
+    }
+    dirty();
+  });
+});
+
+// ── Name → preview ───────────────────────────────────────────
+$('[data-bind="name"]').addEventListener('input', e => { $('#pv-name').textContent = e.target.value || '(unnamed)'; dirty(); });
+
+// ── AC mode active toggle ────────────────────────────────────
+document.addEventListener('click', e => {
+  const star = e.target.closest('.ac-mode-edit .active-toggle');
+  if (!star) return;
+  $$('#ac-modes-list .active-toggle').forEach(s => s.classList.remove('on'));
+  star.classList.add('on');
+  const modeEl = star.closest('.ac-mode-edit');
+  const id = modeEl.dataset.acId;
+  const label = modeEl.querySelector('input[type="text"]').value;
+  const value = modeEl.querySelector('[data-ac-value]').value;
+  $('#pv-ac').textContent = value;
+  $('#pv-ac-block').classList.add('flash');
+  setTimeout(() => $('#pv-ac-block').classList.remove('flash'), 600);
+  $$('#pv-ac-modes .pchip').forEach(c => {
+    const isThis = c.dataset.acId === id;
+    c.classList.toggle('ac-active', isThis);
+    if (isThis) {
+      c.textContent = label.split('/')[0].trim() + ' ' + value + ' ★';
+    } else {
+      c.textContent = c.textContent.replace(' ★', '');
+    }
+  });
+  dirty();
+});
+
+// ── Convert / Save rule ──────────────────────────────────────
+document.addEventListener('click', e => {
+  const btn = e.target.closest('.conversion-row .convert-btn');
+  if (!btn) return;
+  const row = btn.closest('.conversion-row');
+  if (row.classList.contains('disabled')) return;
+  row.classList.add('saved');
+  btn.textContent = '✓ Saved';
+  toast('Conversion rule saved · viewer will show a Convert button next to the source resource');
+  setTimeout(() => btn.textContent = 'Re-save', 1400);
+  dirty();
+});
+
+// ── Save button ──────────────────────────────────────────────
+$('#save-btn').addEventListener('click', () => {
+  const s = $('#save-status'); s.className = 'save-status saving'; s.textContent = '↻ saving…';
+  setTimeout(() => { s.className = 'save-status saved'; s.textContent = '✓ saved · just now'; toast('Committed to GitHub'); }, 1100);
+});
+
+// ── PAT drawer ───────────────────────────────────────────────
+const drawer = $('#pat-drawer'); const scrim = $('#scrim');
+$('#pat-toggle').addEventListener('click', () => { drawer.classList.add('open'); scrim.classList.add('active'); });
+$('#pat-close').addEventListener('click', () => { drawer.classList.remove('open'); scrim.classList.remove('active'); });
+$('#pat-test').addEventListener('click', () => {
+  const status = $('#pat-status');
+  status.className = 'pat-status testing';
+  status.querySelector('.status').textContent = '↻ Testing connection…';
+  setTimeout(() => {
+    status.className = 'pat-status connected';
+    status.querySelector('.status').textContent = '✓ Connected to GitHub as';
+    toast('PAT verified · contents:write OK');
+  }, 1200);
+});
+
+// ── Library Picker ───────────────────────────────────────────
+const PICKER_DATA = {
+  spells: {
+    title: 'Add spells from library',
+    tree: [
+      { path: 'library/spells', label: 'Spells', count: 214, icon: '📁' },
+      { path: 'library/spells/abjuration', label: 'Abjuration', count: 28, icon: '📁', child: true },
+      { path: 'library/spells/conjuration', label: 'Conjuration', count: 31, icon: '📁', child: true },
+      { path: 'library/spells/evocation', label: 'Evocation', count: 42, icon: '📂', child: true, active: true },
+      { path: 'library/spells/illusion', label: 'Illusion', count: 17, icon: '📁', child: true },
+      { path: 'library/spells/enchantment', label: 'Enchantment', count: 22, icon: '📁', child: true },
+      { path: 'library/spells/by-tier', label: 'By Tier', count: 9, icon: '📁', spacer: true },
+      { path: 'library/spells/cantrip', label: 'Cantrip', count: 31, icon: '⊕', child: true },
+      { path: 'library/spells/tier-1', label: 'Tier 1', count: 28, icon: '⊕', child: true },
+      { path: 'library/spells/tier-2', label: 'Tier 2', count: 26, icon: '⊕', child: true },
+    ],
+    results: [
+      { name: 'Fireball', desc: 'A bright streak from your finger blossoms into an explosion. Each creature in a 20-ft sphere takes 8d6 fire (DEX save for half).', tags: ['library', 'open5e'], chips: [{k:'tier',v:'3'},{k:'school',v:'Evocation'},{k:'save',v:'DEX 16',tone:'save'},{k:'dmg',v:'8d6 fire',tone:'dmg'},{k:'aoe',v:'20 ft'}] },
+      { name: 'Magic Missile', desc: 'Three glowing darts, each doing 1d4+1 force damage. Auto-hit, no save.', tags: ['library', 'open5e'], chips: [{k:'tier',v:'1'},{k:'school',v:'Evocation'},{k:'dmg',v:'3 × (1d4+1) force',tone:'dmg'},{k:'auto-hit',v:'yes',tone:'info'}] },
+      { name: 'Ray of Frost', desc: 'A frigid beam streaks toward a target. 2d8 cold on hit, target speed −10 ft until next turn.', tags: ['library', 'open5e'], chips: [{k:'tier',v:'cantrip'},{k:'dmg',v:'2d8 cold',tone:'dmg'},{k:'effect',v:'−10 ft speed',tone:'info'}] },
+      { name: 'Booming Blade', desc: 'Bladesinger combat cantrip. Make a melee weapon attack; on hit deal +1d8 thunder. Target takes 1d8 thunder if it moves.', tags: ['library', 'dnd5eapi'], chips: [{k:'tier',v:'cantrip'},{k:'dmg',v:'+1d8 thunder',tone:'dmg'},{k:'comp',v:'S, M'}] },
+      { name: 'Fire Bolt', desc: 'A mote of fire streaks toward a creature within 120 ft. Ranged spell attack, 2d10 fire on hit.', tags: ['library', 'open5e'], chips: [{k:'tier',v:'cantrip'},{k:'school',v:'Evocation'},{k:'dmg',v:'2d10 fire',tone:'dmg'},{k:'range',v:'120 ft'}] },
+      { name: 'Memory Burn', desc: "Carol's homebrew. Burn a Spell Memory to cast any spell as if you had a slot of that level. Cost: 1d4 × 1d8 − CHA mod.", tags: ['library', 'custom'], chips: [{k:'tier',v:'any'},{k:'school',v:'Alchemy'},{k:'cost',v:'1d4×1d8−CHA',tone:'warn'}] },
+    ],
+    breadcrumb: 'Library › Spells › Evocation',
+  },
+  items: {
+    title: 'Add items from library',
+    tree: [
+      { path: 'library/items', label: 'Items', count: 312, icon: '📁' },
+      { path: 'library/items/weapons', label: 'Weapons', count: 38, icon: '📁', child: true },
+      { path: 'library/items/armor', label: 'Armor', count: 21, icon: '📁', child: true },
+      { path: 'library/items/wondrous', label: 'Wondrous', count: 84, icon: '📂', child: true, active: true },
+      { path: 'library/items/potions', label: 'Potions', count: 22, icon: '📁', child: true },
+      { path: 'library/items/by-rarity', label: 'By Rarity', count: 6, icon: '📁', spacer: true },
+      { path: 'library/items/legendary', label: 'Legendary', count: 17, icon: '⊕', child: true },
+      { path: 'library/items/rare', label: 'Rare', count: 48, icon: '⊕', child: true },
+    ],
+    results: [
+      { name: 'Healing Potion', desc: 'Standard red potion. Drink as a Bonus Action to regain 2d4 + 2 HP.', tags: ['library', 'open5e'], chips: [{k:'rarity',v:'Common'},{k:'heal',v:'2d4 + 2',tone:'heal'},{k:'action',v:'Bonus'}] },
+      { name: 'Spellbook', desc: 'Bound book where wizards record their known spells. Required to prepare on Long Rest.', tags: ['library', 'open5e'], chips: [{k:'type',v:'Wizard focus'},{k:'weight',v:'3 lb'}] },
+      { name: 'Studded Leather +1', desc: 'Light armor reinforced with rivets. +1 magical bonus.', tags: ['library', 'open5e'], chips: [{k:'rarity',v:'Uncommon'},{k:'AC',v:'13 + DEX'},{k:'enchant',v:'+1'}] },
+      { name: 'Lute of Charming', desc: 'A finely crafted lute. While playing, you can cast Charm Person without expending a spell slot.', tags: ['library', 'custom'], chips: [{k:'attune',v:'Bard',tone:'attune'},{k:'rarity',v:'Rare'},{k:'charges',v:'3 / dawn'}] },
+    ],
+    breadcrumb: 'Library › Items › Wondrous',
+  },
+  feats: {
+    title: 'Add feats from library',
+    tree: [
+      { path: 'library/feats', label: 'Feats', count: 47, icon: '📁' },
+      { path: 'library/feats/combat', label: 'Combat', count: 18, icon: '📂', child: true, active: true },
+      { path: 'library/feats/magic', label: 'Magic', count: 12, icon: '📁', child: true },
+      { path: 'library/feats/utility', label: 'Utility', count: 11, icon: '📁', child: true },
+      { path: 'library/feats/race', label: 'Racial', count: 6, icon: '📁', child: true },
+    ],
+    results: [
+      { name: 'Lucky', desc: 'Three luck points per long rest. Spend one to roll an additional d20 on an attack/check/save.', tags: ['library', 'open5e'], chips: [{k:'type',v:'Feat'},{k:'uses',v:'3 / LR'},{k:'recharge',v:'LR',tone:'rest'}] },
+      { name: 'Resilient (Constitution)', desc: '+1 CON, gain proficiency in CON saving throws.', tags: ['library', 'open5e'], chips: [{k:'type',v:'Feat'},{k:'asi',v:'+1 CON'},{k:'gain',v:'CON save prof'}] },
+      { name: 'War Caster', desc: 'Adv. on CON saves to maintain conc. Cast a spell as opp. attack. Somatic w/ weapon in hand.', tags: ['library', 'open5e'], chips: [{k:'type',v:'Feat'},{k:'effect',v:'Adv. conc saves',tone:'info'}] },
+      { name: 'Crossbow Expert', desc: 'Ignore loading on crossbows you\'re prof in. No disadv. on ranged in melee. Bonus-action shot.', tags: ['library', 'dnd5eapi'], chips: [{k:'type',v:'Feat'},{k:'effect',v:'no loading'}] },
+      { name: 'Metamagic Adept', desc: 'Gain 2 Sorcery Points (LR). Learn 2 metamagic options.', tags: ['library', 'open5e'], chips: [{k:'type',v:'Feat'},{k:'sorcery',v:'2 / LR'}] },
+    ],
+    breadcrumb: 'Library › Feats › Combat',
+  },
+  resources: {
+    title: 'Add resources from library',
+    tree: [
+      { path: 'library/resources', label: 'Resources', count: 18, icon: '📁' },
+      { path: 'library/resources/class', label: 'Class', count: 9, icon: '📂', child: true, active: true },
+      { path: 'library/resources/feat', label: 'Feat', count: 4, icon: '📁', child: true },
+      { path: 'library/resources/item', label: 'Item Charges', count: 5, icon: '📁', child: true },
+    ],
+    results: [
+      { name: 'Bardic Inspiration', desc: 'd6 die granted as Bonus Action; recipient adds it to a roll within 10 min.', tags: ['library', 'open5e'], chips: [{k:'die',v:'1d6'},{k:'uses',v:'CHA mod'},{k:'recharge',v:'SR',tone:'rest'}] },
+      { name: 'Sorcery Points', desc: 'Spent on Metamagic. Convert to spell slots via Flexible Casting.', tags: ['library', 'open5e'], chips: [{k:'pool',v:'sorcerer level'},{k:'recharge',v:'LR',tone:'rest'}] },
+      { name: 'Wild Shape Uses', desc: 'Druid resource. Spend a use to transform into a beast.', tags: ['library', 'open5e'], chips: [{k:'uses',v:'2 / SR'},{k:'class',v:'Druid'}] },
+    ],
+    breadcrumb: 'Library › Resources › Class',
+  },
+  classes: {
+    title: 'Add class from library',
+    tree: [
+      { path: 'library/classes', label: 'Classes', count: 13, icon: '📂', active: true },
+    ],
+    results: [
+      { name: 'Wizard', desc: 'Spellbook-based prepared caster. INT-based.', tags: ['library', 'open5e'], chips: [{k:'spell',v:'INT'},{k:'hit die',v:'d6'},{k:'subclasses',v:'8'}] },
+      { name: 'Sorcerer', desc: 'Innate caster with Sorcery Points and Metamagic. CHA-based.', tags: ['library', 'open5e'], chips: [{k:'spell',v:'CHA'},{k:'hit die',v:'d6'},{k:'subclasses',v:'7'}] },
+      { name: 'Bard', desc: 'CHA-based caster, Bardic Inspiration, College subclasses.', tags: ['library', 'open5e'], chips: [{k:'spell',v:'CHA'},{k:'hit die',v:'d8'}] },
+      { name: 'Fighter', desc: 'Martial class with Action Surge, Second Wind, Fighting Style.', tags: ['library', 'open5e'], chips: [{k:'spell',v:'(none / EK)'},{k:'hit die',v:'d10'}] },
+    ],
+    breadcrumb: 'Library › Classes',
+  },
+};
+
+const picker = $('#picker'); let pickerKind = 'spells';
+function openPicker(kind) {
+  pickerKind = kind || 'spells';
+  const data = PICKER_DATA[pickerKind] || PICKER_DATA.spells;
+  $('#picker-title').textContent = data.title;
+  // Render tree
+  let bcHtml = data.breadcrumb.split(' › ').map((p, i, arr) => i === arr.length - 1 ? `<strong>${p}</strong>` : `<a>${p}</a>`).join(' › ');
+  let treeHTML = `<div class="tree-breadcrumb">${bcHtml}</div>`;
+  let inChildren = false;
+  data.tree.forEach((t, i) => {
+    if (t.spacer) {
+      if (inChildren) treeHTML += '</div>';
+      treeHTML += `<div class="tree-item" style="margin-top: var(--space-3);"><span class="icon">${t.icon}</span>${t.label}<span class="count">${t.count}</span></div>`;
+      treeHTML += '<div class="tree-children">';
+      inChildren = true;
+    } else if (t.child) {
+      if (!inChildren) { treeHTML += '<div class="tree-children">'; inChildren = true; }
+      treeHTML += `<div class="tree-item${t.active ? ' active' : ''}" data-tree-path="${t.path}"><span class="icon">${t.icon}</span>${t.label}<span class="count">${t.count}</span></div>`;
+    } else {
+      if (inChildren) { treeHTML += '</div>'; inChildren = false; }
+      treeHTML += `<div class="tree-item${t.active ? ' active' : ''}" data-tree-path="${t.path}"><span class="icon">${t.icon}</span>${t.label}<span class="count">${t.count}</span></div>`;
+    }
+  });
+  if (inChildren) treeHTML += '</div>';
+  $('#picker-tree').innerHTML = treeHTML;
+  // Render results
+  $('#picker-results').innerHTML = data.results.map(r => `
+    <div class="result-row" data-tags="${r.tags.join(' ')}" data-name="${r.name}" data-desc="${r.desc}">
+      <div class="check"></div>
+      <div>
+        <div class="name">${r.name}</div>
+        <div class="meta">${r.chips.slice(0, 3).map(c => `<span class="tag">${c.v}</span>`).join('')}${r.tags.map(t => `<span class="tag source">${t}</span>`).join('')}</div>
+      </div>
+      <button class="preview-btn" data-chips='${JSON.stringify(r.chips)}'>preview</button>
+    </div>`).join('');
+  picker.classList.add('open'); scrim.classList.add('active');
+  updatePickerCount();
+}
+function closePicker() { picker.classList.remove('open'); scrim.classList.remove('active'); hidePopover(); }
+$('#picker-close').addEventListener('click', closePicker);
+$('#picker-cancel').addEventListener('click', closePicker);
+scrim.addEventListener('click', () => { drawer.classList.remove('open'); scrim.classList.remove('active'); closePicker(); });
+
+function updatePickerCount() {
+  const n = $$('.result-row.selected:not(.hidden-by-filter)').length;
+  $('#picker-count').textContent = n;
+  $('#picker-confirm').textContent = `Add ${n}`;
+}
+
+// Picker click handling (delegated since results re-render)
+$('#picker-results').addEventListener('click', e => {
+  if (e.target.closest('.preview-btn')) return;
+  const row = e.target.closest('.result-row');
+  if (!row) return;
+  row.classList.toggle('selected');
+  updatePickerCount();
+});
+
+// Filter chips
+$$('.picker-search .filter-chip').forEach(chip => chip.addEventListener('click', () => {
+  chip.classList.toggle('on');
+  applyPickerFilter();
+}));
+function applyPickerFilter() {
+  const active = $$('.picker-search .filter-chip.on').map(c => c.dataset.filter);
+  const q = $('#picker-search-input').value.toLowerCase().trim();
+  $$('.result-row').forEach(r => {
+    const tags = (r.dataset.tags || '').split(/\s+/);
+    const sourceVisible = active.some(f => tags.includes(f));
+    const text = (r.dataset.name + ' ' + r.dataset.desc).toLowerCase();
+    const search = !q || text.includes(q);
+    r.classList.toggle('hidden-by-filter', !sourceVisible || !search);
+  });
+  updatePickerCount();
+}
+$('#picker-search-input').addEventListener('input', applyPickerFilter);
+
+// Tree navigation
+$('#picker-tree').addEventListener('click', e => {
+  const t = e.target.closest('.tree-item');
+  if (!t) return;
+  $$('#picker-tree .tree-item').forEach(x => {
+    x.classList.toggle('active', x === t);
+    const icon = x.querySelector('.icon');
+    if (icon && (icon.textContent === '📂' || icon.textContent === '📁')) icon.textContent = x === t ? '📂' : '📁';
+  });
+  const path = t.dataset.treePath || '';
+  const parts = path.split('/');
+  $('.tree-breadcrumb', $('#picker-tree')).innerHTML = parts.map((p, i) => {
+    const isLast = i === parts.length - 1;
+    const label = p.charAt(0).toUpperCase() + p.slice(1).replace(/-/g, ' ');
+    return isLast ? `<strong>${label}</strong>` : `<a>${label}</a>`;
+  }).join(' › ');
+});
+
+// Preview popover (delegated)
+let activePopover = null;
+function hidePopover() { if (activePopover) { activePopover.remove(); activePopover = null; } }
+$('#picker-results').addEventListener('click', e => {
+  const btn = e.target.closest('.preview-btn');
+  if (!btn) return;
+  e.stopPropagation();
+  hidePopover();
+  const row = btn.closest('.result-row');
+  const chips = JSON.parse(btn.dataset.chips || '[]');
+  const tags = (row.dataset.tags || '').split(/\s+/).filter(Boolean);
+  const pop = document.createElement('div');
+  pop.className = 'preview-popover';
+  pop.innerHTML = `
+    <button class="pop-close">×</button>
+    <h4>${row.dataset.name}</h4>
+    <div class="pop-chips">${chips.map(c => {
+      const tone = c.tone ? ' tone-' + c.tone : '';
+      return `<span class="pop-chip${tone}">${c.k ? `<span class="k">${c.k}</span>` : ''}<span class="v">${c.v}</span></span>`;
+    }).join('')}</div>
+    <p class="desc">${row.dataset.desc}</p>
+    <div class="source-strip">${tags.map(t => `<span>${t}</span>`).join('')}</div>`;
+  row.appendChild(pop);
+  activePopover = pop;
+  pop.querySelector('.pop-close').addEventListener('click', e => { e.stopPropagation(); hidePopover(); });
+  setTimeout(() => document.addEventListener('click', e => { if (!e.target.closest('.preview-popover')) hidePopover(); }, { once: true }), 0);
+});
+
+// Confirm picker → adds rows
+$('#picker-confirm').addEventListener('click', () => {
+  const selected = $$('.result-row.selected:not(.hidden-by-filter)');
+  const targetMap = { spells: 'spell-list', items: 'item-list', feats: 'feat-list', resources: 'resource-list', classes: 'class-list' };
+  const targetList = targetMap[pickerKind] || 'spell-list';
+  selected.forEach(r => {
+    const list = $('#' + targetList);
+    const chips = JSON.parse(r.querySelector('.preview-btn').dataset.chips || '[]');
+    const data = {
+      id: 'lib-' + Date.now() + '-' + Math.random().toString(36).slice(2,7),
+      title: r.dataset.name,
+      source: 'library',
+      linkedTo: 'library/' + pickerKind + '/' + r.dataset.name.toLowerCase().replace(/\s+/g, '-') + '.json',
+      chips: chips,
+      description: r.dataset.desc,
+    };
+    const wrap = document.createElement('div');
+    wrap.innerHTML = renderRow(data);
+    list.appendChild(wrap.firstElementChild);
+  });
+  toast(`Added ${selected.length} ${pickerKind} from library`);
+  closePicker();
+  dirty();
+});
+$('#picker-add-inline').addEventListener('click', () => {
+  const selected = $$('.result-row.selected:not(.hidden-by-filter)');
+  const targetMap = { spells: 'spell-list', items: 'item-list', feats: 'feat-list', resources: 'resource-list', classes: 'class-list' };
+  const targetList = targetMap[pickerKind] || 'spell-list';
+  selected.forEach(r => {
+    const list = $('#' + targetList);
+    const chips = JSON.parse(r.querySelector('.preview-btn').dataset.chips || '[]');
+    const data = {
+      id: 'inl-' + Date.now() + '-' + Math.random().toString(36).slice(2,7),
+      title: r.dataset.name,
+      source: 'inline',
+      chips: chips,
+      description: r.dataset.desc,
+    };
+    const wrap = document.createElement('div');
+    wrap.innerHTML = renderRow(data);
+    list.appendChild(wrap.firstElementChild);
+  });
+  toast(`Added ${selected.length} as inline copy (no library link)`);
+  closePicker();
+  dirty();
+});
+
+// Initial active section in preview
+const activeTab = $('.etab.active');
+if (activeTab) $$('.preview-frame .psection-title').forEach(s => s.classList.toggle('active', s.dataset.pvSection === activeTab.dataset.etab));
+
+})();
+</script>
+
+</body>
+</html>

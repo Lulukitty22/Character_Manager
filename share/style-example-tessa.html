@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Style Mockup — Tessa Brightleaf</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-deepest: #06040b; --bg-deep: #0d0816; --bg-base: #130d1f;
+    --bg-raised: #1a1228; --bg-elevated: #221733;
+    --border-subtle: rgba(180,140,255,0.10);
+    --border-muted: rgba(180,140,255,0.22);
+    --border-strong: rgba(180,140,255,0.40);
+    --text-dim: #6b6478; --text-muted: #8a8399;
+    --text-primary: #cfc6dd; --text-bright: #f0eaf8;
+    --purple: #8c5dff; --purple-bright: #b48cff; --purple-soft: #6b4cb8;
+    --gold: #c9a84c; --gold-bright: #e8c970; --gold-deep: #8d7330;
+    --danger: #d96666; --warn: #d9a866; --success: #6dc28a; --info: #6ec3d9;
+    --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
+    --space-5: 20px; --space-6: 24px; --space-7: 32px; --space-8: 48px;
+    --radius-sm: 4px; --radius: 8px; --radius-lg: 14px;
+    --font-display: 'Cinzel','Times New Roman',serif;
+    --font-body: 'Crimson Text',Georgia,serif;
+    --font-ui: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+    --font-mono: 'JetBrains Mono',Menlo,Consolas,monospace;
+    --shadow-card: 0 1px 0 rgba(255,255,255,0.02) inset, 0 8px 24px rgba(0,0,0,0.35);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: var(--font-body); font-size: 16px; line-height: 1.55;
+    color: var(--text-primary);
+    background: radial-gradient(ellipse at 20% 0%, #1a0d2a 0%, var(--bg-deepest) 55%) fixed;
+    min-height: 100vh;
+  }
+  button { font-family: inherit; }
+  a { color: var(--purple-bright); text-decoration: none; }
+  a:hover { color: var(--gold-bright); text-decoration: underline; }
+
+  /* Sticky header */
+  .sticky-head { position: sticky; top: 0; z-index: 50; backdrop-filter: blur(14px) saturate(140%); background: linear-gradient(180deg, rgba(13,8,22,0.92), rgba(13,8,22,0.78)); border-bottom: 1px solid var(--border-subtle); }
+  .head-row1 { display: flex; align-items: center; gap: var(--space-5); padding: var(--space-4) var(--space-6); flex-wrap: wrap; }
+  .head-row1 .name { font-family: var(--font-display); font-size: 26px; letter-spacing: 0.04em; font-weight: 700; margin: 0; line-height: 1.1; }
+  .head-row1 .subtitle { font-family: var(--font-ui); font-size: 12px; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 3px; }
+  .quickstats { margin-left: auto; display: flex; gap: var(--space-3); }
+  .quickstat { display: flex; flex-direction: column; align-items: center; min-width: 56px; padding: var(--space-2) var(--space-3); border: 1px solid var(--border-subtle); border-radius: var(--radius); background: rgba(26,18,40,0.55); cursor: help; position: relative; }
+  .quickstat .label { font-family: var(--font-ui); font-size: 10px; letter-spacing: 0.12em; color: var(--text-muted); text-transform: uppercase; }
+  .quickstat .value { font-family: var(--font-mono); font-size: 18px; font-weight: 700; color: var(--text-bright); margin-top: 2px; }
+  .quickstat.hp .value { color: var(--success); }
+  .currency-strip { display: flex; gap: var(--space-1); margin-left: var(--space-4); }
+  .currency-strip .coin { font-family: var(--font-mono); font-size: 13px; font-weight: 600; padding: 2px 8px; border-radius: 999px; background: var(--bg-elevated); border: 1px solid var(--border-subtle); color: var(--text-bright); display: inline-flex; align-items: center; gap: 5px; }
+  .currency-strip .coin .denom { font-size: 9px; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; }
+  .head-row2 { display: flex; gap: var(--space-1); padding: 0 var(--space-6) var(--space-2); overflow-x: auto; }
+  .tab { background: transparent; border: 0; padding: var(--space-2) var(--space-4); font-family: var(--font-ui); font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); cursor: pointer; border-bottom: 2px solid transparent; transition: color .15s, border-color .15s; white-space: nowrap; }
+  .tab:hover { color: var(--text-bright); }
+  .tab.active { color: var(--gold-bright); border-bottom-color: var(--gold); }
+
+  /* Shimmer */
+  @keyframes glint-1 { from { background-position: 0px 0, 0px 0, 0 0; } to { background-position: 320px 0,-260px 0, 0 0; } }
+  .shimmer-gold {
+    background-image:
+      repeating-linear-gradient(115deg, transparent 0, transparent 18px, rgba(190,150,255,0.55) 26px, rgba(240,220,255,0.95) 30px, rgba(190,150,255,0.55) 34px, transparent 42px, transparent 80px),
+      repeating-linear-gradient(95deg, transparent 0, transparent 26px, rgba(140,90,255,0.40) 36px, rgba(220,200,255,0.85) 42px, rgba(140,90,255,0.40) 48px, transparent 56px, transparent 110px),
+      linear-gradient(0deg, var(--gold), var(--gold-bright));
+    background-size: 320px 100%, 260px 100%, 100% 100%;
+    background-repeat: repeat-x, repeat-x, no-repeat;
+    -webkit-background-clip: text; background-clip: text;
+    color: transparent; -webkit-text-fill-color: transparent;
+    animation: glint-1 2.6s linear infinite;
+  }
+  @media (prefers-reduced-motion: reduce) { .shimmer-gold { animation: none; } }
+
+  /* Tooltips */
+  [data-tip] { position: relative; }
+  [data-tip]:not(.pinned):hover::after, [data-tip].pinned::after {
+    content: attr(data-tip); position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%);
+    padding: var(--space-2) var(--space-3); background: var(--bg-deepest);
+    border: 1px solid var(--border-muted); border-radius: var(--radius);
+    font-family: var(--font-ui); font-size: 12px; line-height: 1.45;
+    color: var(--text-bright); white-space: pre-line; width: max-content;
+    max-width: 300px; z-index: 1000; box-shadow: 0 8px 24px rgba(0,0,0,0.6); pointer-events: none;
+  }
+  [data-tip].pinned::after { border-color: var(--gold); box-shadow: 0 0 0 1px rgba(201,168,76,0.3), 0 8px 24px rgba(0,0,0,0.7); }
+  [data-tip].pinned::before { content: '📌'; position: absolute; top: -8px; right: -8px; font-size: 11px; z-index: 1001; }
+
+  /* Sheet/panels */
+  .sheet { max-width: 1040px; margin: 0 auto; padding: var(--space-7) var(--space-6) 96px; }
+  .panel { display: none; }
+  .panel.active { display: block; animation: fade-in .2s ease; }
+  @keyframes fade-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+  .section { margin-bottom: var(--space-6); }
+  .section-header { display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-3); }
+  .section-header h2 { font-family: var(--font-display); font-size: 18px; font-weight: 500; letter-spacing: 0.10em; text-transform: uppercase; color: var(--gold); margin: 0; }
+  .section-divider { flex: 1; height: 14px; opacity: 0.5; }
+  .section-divider svg { width: 100%; height: 100%; display: block; }
+  .card { background: linear-gradient(180deg, var(--bg-raised), var(--bg-base)); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); padding: var(--space-5) var(--space-6); }
+  .card + .card { margin-top: var(--space-3); }
+
+  /* Gallery */
+  .appearance-tabs { display: flex; gap: var(--space-1); margin-bottom: var(--space-3); flex-wrap: wrap; }
+  .appearance-tab { font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; background: transparent; color: var(--text-muted); border: 1px solid var(--border-subtle); padding: 4px 10px; border-radius: 999px; cursor: pointer; transition: all .15s; }
+  .appearance-tab:hover { color: var(--text-bright); border-color: var(--border-muted); }
+  .appearance-tab.active { color: var(--gold-bright); border-color: var(--gold); background: rgba(201,168,76,0.08); }
+  .gallery { display: grid; grid-template-columns: 280px 1fr; gap: var(--space-5); align-items: start; }
+  @media (max-width: 720px) { .gallery { grid-template-columns: 1fr; } }
+  .gallery-set { display: none; }
+  .gallery-set.active { display: contents; }
+  .gallery-main { width: 100%; aspect-ratio: 1; max-width: 280px; border-radius: var(--radius-lg); border: 1px solid var(--border-muted); overflow: hidden; position: relative; background: var(--bg-deep); display: flex; align-items: center; justify-content: center; }
+  .gallery-main .stage { width: 100%; height: 100%; display: none; align-items: center; justify-content: center; }
+  .gallery-main .stage.active { display: flex; }
+  .gallery-main .stage.placeholder { color: var(--gold-bright); font-family: var(--font-display); }
+  .gallery-main .stage.placeholder.alt-1 { background: radial-gradient(circle at 35% 30%, var(--purple-bright), var(--purple-soft) 60%, var(--bg-elevated)); }
+  .gallery-main .stage.placeholder.alt-2 { background: radial-gradient(circle at 60% 40%, #c8a4ff, #4b2e8a 60%, #1a0d2a); }
+  .gallery-main .stage.placeholder.alt-3 { background: radial-gradient(circle at 40% 60%, #ffd28a, #8d6f30 55%, #1a0d22); }
+  .gallery-main .stage.placeholder.video { background: linear-gradient(135deg, #2a1840, #0a0510); color: transparent; }
+  .gallery-main .stage.placeholder.video::before { content: '▶'; font-size: 64px; color: var(--text-bright); text-shadow: 0 4px 14px rgba(0,0,0,0.7); background: rgba(0,0,0,0.45); padding: 18px 26px 18px 30px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.7); }
+  .gallery-main .stage.placeholder .ph-label { font-family: var(--font-display); font-size: 14px; letter-spacing: 0.08em; color: var(--text-bright); background: rgba(0,0,0,0.55); padding: 8px 14px; border-radius: var(--radius); border: 1px solid rgba(255,255,255,0.18); text-shadow: 0 2px 6px rgba(0,0,0,0.5); backdrop-filter: blur(2px); text-align: center; }
+  .gallery-main .stage.placeholder .ph-label .sub { display: block; font-family: var(--font-ui); font-size: 10px; color: var(--text-muted); margin-top: 4px; letter-spacing: 0.14em; text-transform: uppercase; }
+  .gallery-main .stage.placeholder.video .ph-label { display: none; }
+  .gallery-thumbs { display: flex; gap: 6px; flex-wrap: wrap; margin-top: var(--space-3); }
+  .thumb { width: 56px; height: 56px; border-radius: var(--radius); border: 1px solid var(--border-subtle); background: var(--bg-elevated); cursor: pointer; padding: 0; overflow: hidden; position: relative; transition: border-color .15s, transform .15s; }
+  .thumb:hover { transform: translateY(-2px); border-color: var(--border-muted); }
+  .thumb.active { border-color: var(--gold); box-shadow: 0 0 0 2px rgba(201,168,76,0.25); }
+  .thumb.placeholder.alt-1 { background: radial-gradient(circle at 35% 30%, var(--purple-bright), var(--purple-soft) 60%, var(--bg-elevated)); }
+  .thumb.placeholder.alt-2 { background: radial-gradient(circle at 60% 40%, #c8a4ff, #4b2e8a 60%, #1a0d2a); }
+  .thumb.placeholder.alt-3 { background: radial-gradient(circle at 40% 60%, #ffd28a, #8d6f30 55%, #1a0d22); }
+  .thumb.video::after { content: '▶'; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: var(--text-bright); font-size: 18px; text-shadow: 0 2px 6px rgba(0,0,0,0.7); background: rgba(0,0,0,0.35); }
+  .gallery-meta { margin-top: var(--space-2); font-family: var(--font-ui); font-size: 11px; color: var(--text-muted); letter-spacing: 0.06em; }
+  .appearance-desc { margin-top: var(--space-4); font-size: 15px; color: var(--text-primary); }
+  .appearance-desc.set { display: none; }
+  .appearance-desc.set.active { display: block; }
+
+  /* Identity */
+  .identity-rows .row { display: grid; grid-template-columns: 110px 1fr; padding: var(--space-2) 0; border-top: 1px solid var(--border-subtle); font-size: 15px; }
+  .identity-rows .row:first-child { border-top: none; padding-top: 0; }
+  .identity-rows .row .k { font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.10em; color: var(--text-muted); text-transform: uppercase; align-self: center; }
+  .identity-rows .row .v { color: var(--text-bright); }
+  .tag-row { display: flex; flex-wrap: wrap; gap: var(--space-1); margin-top: var(--space-3); }
+  .tag { font-family: var(--font-ui); font-size: 11px; color: var(--purple-bright); background: rgba(140,90,255,0.10); border: 1px solid rgba(140,90,255,0.22); border-radius: 999px; padding: 2px 8px; cursor: help; }
+  .tag:hover { background: rgba(140,90,255,0.18); }
+
+  /* Relationships */
+  .relationship-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: var(--space-3); }
+  .relationship { display: grid; grid-template-columns: 48px 1fr auto; align-items: center; gap: var(--space-3); padding: var(--space-3); background: var(--bg-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius); text-decoration: none; color: inherit; transition: border-color .15s, background .15s, transform .15s; }
+  .relationship:hover { border-color: var(--gold); background: var(--bg-raised); transform: translateY(-1px); }
+  .relationship.unlinked { cursor: default; }
+  .relationship.unlinked:hover { border-color: var(--border-subtle); background: var(--bg-elevated); transform: none; }
+  .relationship .portrait { width: 48px; height: 48px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, var(--purple-bright), var(--purple-soft)); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 22px; color: var(--gold-bright); border: 1px solid var(--border-muted); flex-shrink: 0; }
+  .relationship .portrait.b { background: radial-gradient(circle at 35% 30%, #ffd28a, #8d6f30); }
+  .relationship .portrait.c { background: radial-gradient(circle at 35% 30%, #6dc28a, #1f5e3a); }
+  .relationship .portrait.d { background: radial-gradient(circle at 35% 30%, #d96666, #5a2424); }
+  .relationship .name { font-family: var(--font-display); font-size: 15px; font-weight: 500; color: var(--text-bright); letter-spacing: 0.04em; }
+  .relationship .role { font-family: var(--font-ui); font-size: 11px; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 2px; }
+  .relationship .note { color: var(--text-primary); font-size: 13px; line-height: 1.4; margin-top: 4px; }
+  .relationship .arrow { font-size: 18px; color: var(--text-muted); align-self: start; }
+  .relationship.unlinked .arrow { color: var(--text-dim); }
+
+  /* Stats */
+  .combat-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: var(--space-3); }
+  .stat-block { background: var(--bg-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius); padding: var(--space-3); text-align: center; cursor: help; }
+  .stat-block .label { font-family: var(--font-ui); font-size: 10px; letter-spacing: 0.12em; color: var(--text-muted); text-transform: uppercase; }
+  .stat-block .value { font-family: var(--font-mono); font-size: 22px; font-weight: 700; color: var(--text-bright); margin-top: var(--space-2); }
+  .stat-block .sub { font-family: var(--font-ui); font-size: 11px; color: var(--text-dim); margin-top: 4px; }
+  .ability-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: var(--space-3); }
+  @media (max-width: 720px) { .ability-grid { grid-template-columns: repeat(3, 1fr); } }
+  .ability { background: var(--bg-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius); padding: var(--space-3); text-align: center; }
+  .ability .abbr { font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.14em; color: var(--text-muted); text-transform: uppercase; }
+  .ability .mod { font-family: var(--font-mono); font-size: 26px; font-weight: 700; color: var(--text-bright); margin: var(--space-2) 0 0; line-height: 1; }
+  .ability .score { font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); margin-top: var(--space-2); }
+  .saves-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-2); }
+  @media (max-width: 540px) { .saves-grid { grid-template-columns: repeat(2, 1fr); } }
+  .save { display: flex; align-items: center; gap: var(--space-2); padding: var(--space-2) var(--space-3); background: var(--bg-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius); }
+  .save .pip { width: 9px; height: 9px; border-radius: 50%; border: 1px solid var(--border-strong); flex-shrink: 0; }
+  .save.proficient .pip { background: var(--gold); border-color: var(--gold); box-shadow: 0 0 6px rgba(232,201,112,0.5); }
+  .save .name { font-family: var(--font-ui); font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.10em; flex: 1; }
+  .save.proficient .name { color: var(--text-bright); }
+  .save .mod { font-family: var(--font-mono); font-size: 14px; font-weight: 700; color: var(--text-bright); }
+  .skill-legend { display: flex; gap: var(--space-4); flex-wrap: wrap; font-family: var(--font-ui); font-size: 11px; color: var(--text-muted); margin-bottom: var(--space-3); padding-bottom: var(--space-3); border-bottom: 1px solid var(--border-subtle); }
+  .skill-legend .item { display: inline-flex; align-items: center; gap: 6px; }
+  .skill-legend .pip { width: 8px; height: 8px; border-radius: 50%; border: 1px solid var(--border-strong); }
+  .skill-legend .pip.prof { background: var(--gold); border-color: var(--gold); }
+  .skill-legend .pip.expertise { background: var(--purple-bright); border-color: var(--purple-bright); }
+  .skill-legend .pip.mastery { background: var(--gold-bright); border-color: var(--gold-bright); box-shadow: 0 0 8px var(--gold-bright); }
+  .skills-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-1) var(--space-3); }
+  @media (max-width: 540px) { .skills-grid { grid-template-columns: 1fr; } }
+  .skill { display: flex; align-items: center; gap: var(--space-2); padding: var(--space-2) var(--space-3); border-bottom: 1px solid var(--border-subtle); }
+  .skill .pip { width: 8px; height: 8px; border-radius: 50%; border: 1px solid var(--border-strong); flex-shrink: 0; }
+  .skill.prof .pip { background: var(--gold); border-color: var(--gold); }
+  .skill.expertise .pip { background: var(--purple-bright); border-color: var(--purple-bright); box-shadow: 0 0 6px var(--purple-bright); }
+  .skill .name { flex: 1; font-size: 14px; color: var(--text-primary); }
+  .skill.prof .name, .skill.expertise .name { color: var(--text-bright); }
+  .skill .ability-tag { font-family: var(--font-ui); font-size: 10px; color: var(--text-dim); letter-spacing: 0.1em; text-transform: uppercase; }
+  .skill .mod { font-family: var(--font-mono); font-size: 13px; color: var(--text-bright); min-width: 28px; text-align: right; }
+
+  /* Chips */
+  .chips { display: flex; flex-wrap: wrap; gap: var(--space-2); align-items: center; }
+  .chip { font-family: var(--font-ui); font-size: 12px; color: var(--text-primary); background: var(--bg-elevated); border: 1px solid var(--border-subtle); border-radius: 999px; padding: 4px 10px; display: inline-flex; align-items: center; gap: 6px; cursor: default; transition: border-color .15s, background .15s; }
+  .chip:hover { border-color: var(--border-muted); background: var(--bg-raised); }
+  .chip[data-tip] { cursor: help; }
+  .chip .k { color: var(--text-muted); font-size: 11px; letter-spacing: 0.05em; }
+  .chip .v { color: var(--text-bright); font-weight: 600; }
+  .chip.tone-save { border-color: rgba(217,168,102,0.30); }
+  .chip.tone-dmg { border-color: rgba(217,102,102,0.30); }
+  .chip.tone-heal { border-color: rgba(109,194,138,0.30); }
+  .chip.tone-info { border-color: rgba(110,195,217,0.30); }
+  .chip.tone-rest { border-color: rgba(180,140,255,0.30); color: var(--purple-bright); }
+  .chip.tone-attune { border-color: rgba(232,201,112,0.40); background: linear-gradient(180deg, rgba(232,201,112,0.06), transparent); }
+  .chip.tone-warn { border-color: rgba(217,168,102,0.40); color: var(--warn); }
+  .chip.calc { padding: 4px 10px 4px 8px; }
+  .chip.calc .v { font-family: var(--font-mono); font-size: 13px; }
+  .chip.calc .calc-detail { font-family: var(--font-mono); font-size: 10px; color: var(--text-dim); margin-left: 4px; border-left: 1px solid var(--border-subtle); padding-left: 6px; }
+  .chip.link { cursor: pointer; background: transparent; border-color: rgba(180,140,255,0.30); color: var(--purple-bright); font-family: inherit; }
+  .chip.link::after { content: '↗'; margin-left: 4px; opacity: 0.7; font-size: 11px; }
+  .chip.link:hover { background: rgba(140,90,255,0.10); border-color: var(--gold); color: var(--gold-bright); transform: translateY(-1px); }
+
+  .mini-bar { display: inline-block; width: 50px; height: 5px; vertical-align: middle; background: var(--bg-deepest); border: 1px solid var(--border-subtle); border-radius: 999px; overflow: hidden; margin-left: 4px; }
+  .mini-bar > i { display: block; height: 100%; background: linear-gradient(90deg, var(--gold), var(--gold-bright)); }
+  .mini-bar.purple > i { background: linear-gradient(90deg, var(--purple-soft), var(--purple-bright)); }
+
+  .group-label { font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); margin: var(--space-4) 0 var(--space-2); display: flex; align-items: center; gap: var(--space-3); }
+  .group-label:first-child { margin-top: 0; }
+  .group-label .label-bar { flex: 1; max-width: 120px; display: inline-block; height: 5px; background: var(--bg-deepest); border: 1px solid var(--border-subtle); border-radius: 999px; overflow: hidden; }
+  .group-label .label-bar > i { display: block; height: 100%; background: linear-gradient(90deg, var(--gold), var(--gold-bright)); }
+  .group-label .count { font-family: var(--font-mono); color: var(--text-bright); font-size: 12px; letter-spacing: 0.04em; }
+
+  /* Records */
+  details.record { background: linear-gradient(180deg, var(--bg-raised), var(--bg-base)); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); overflow: visible; }
+  details.record + details.record { margin-top: var(--space-2); }
+  details.record > summary { list-style: none; padding: var(--space-3) var(--space-4); cursor: pointer; display: flex; align-items: center; gap: var(--space-3); transition: background .15s; }
+  details.record > summary::-webkit-details-marker { display: none; }
+  details.record > summary::before { content: '›'; width: 14px; flex-shrink: 0; color: var(--text-muted); font-family: var(--font-ui); font-size: 18px; line-height: 1; transition: transform .2s; }
+  details.record[open] > summary::before { transform: rotate(90deg); }
+  details.record > summary:hover { background: rgba(255,255,255,0.02); }
+  details.record > summary .title-block { flex: 1; min-width: 0; }
+  details.record > summary .title { font-family: var(--font-display); font-size: 16px; color: var(--text-bright); letter-spacing: 0.04em; }
+  details.record > summary .title .sub { font-family: var(--font-ui); font-size: 11px; color: var(--text-muted); margin-left: 6px; letter-spacing: 0.04em; }
+  details.record > summary .quick-chips { display: flex; flex-wrap: wrap; gap: var(--space-1); margin-top: 4px; }
+  details.record > .body { padding: 0 var(--space-4) var(--space-4); border-top: 1px solid var(--border-subtle); }
+  details.record > .body > * + * { margin-top: var(--space-3); }
+  details.record > .body p { margin: 0; }
+  details.record > .body .desc { color: var(--text-primary); font-size: 15px; line-height: 1.55; }
+  details.record.flash { animation: flash-record 1.2s ease; }
+  @keyframes flash-record { 0% { box-shadow: 0 0 0 0 rgba(232,201,112,0); } 20% { box-shadow: 0 0 0 4px rgba(232,201,112,0.6); } 100% { box-shadow: 0 0 0 0 rgba(232,201,112,0); } }
+
+  /* Notes */
+  .player-note { background: rgba(140,90,255,0.07); border-left: 3px solid var(--purple-bright); padding: var(--space-3) var(--space-3) var(--space-3) var(--space-4); border-radius: 0 var(--radius) var(--radius) 0; font-size: 14px; color: var(--text-primary); font-style: italic; }
+  .player-note::before { content: '📝 Player Note'; display: block; font-style: normal; font-family: var(--font-ui); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--purple-bright); margin-bottom: 4px; }
+  .player-note.gm::before { content: '🛡 DM Note'; color: var(--gold-bright); }
+  .player-note.warn { border-left-color: var(--warn); background: rgba(217,168,102,0.08); }
+  .player-note.warn::before { content: '⚠ Warning'; color: var(--warn); }
+
+  /* Resources */
+  .resource-track { display: grid; grid-template-columns: 200px 1fr auto; align-items: center; gap: var(--space-3); padding: var(--space-3) var(--space-4); border-bottom: 1px solid var(--border-subtle); }
+  .resource-track:last-child { border-bottom: none; }
+  .resource-track .rname { font-family: var(--font-ui); font-size: 13px; color: var(--text-bright); }
+  .resource-track .rname .meta { display: block; font-size: 10px; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2px; }
+  .pips { display: flex; flex-wrap: wrap; gap: 4px; }
+  .pip-btn { width: 18px; height: 18px; border-radius: 4px; border: 1px solid var(--gold); background: linear-gradient(180deg, var(--gold-bright), var(--gold)); cursor: pointer; padding: 0; transition: transform .1s, opacity .15s, background .15s, border-color .15s; }
+  .pip-btn:hover { transform: scale(1.12); }
+  .pip-btn.used { background: transparent; border-color: var(--text-dim); box-shadow: inset 0 0 0 1px rgba(0,0,0,0.4); }
+  .pip-btn.used:hover { border-color: var(--text-muted); }
+  .resource-track .rest-tag { font-family: var(--font-ui); font-size: 10px; color: var(--purple-bright); background: rgba(140,90,255,0.12); border: 1px solid rgba(140,90,255,0.30); border-radius: 999px; padding: 2px 8px; letter-spacing: 0.1em; text-transform: uppercase; cursor: help; }
+
+  .prose { color: var(--text-primary); font-size: 16px; }
+  .prose p { margin: 0 0 var(--space-3); }
+  .prose .truncated { display: block; }
+  .prose .full { display: none; white-space: pre-line; }
+  .prose.expanded .truncated { display: none; }
+  .prose.expanded .full { display: block; }
+  .more-toggle { font-family: var(--font-ui); font-size: 12px; color: var(--purple-bright); cursor: pointer; user-select: none; border: 0; background: none; padding: 0; border-bottom: 1px dotted var(--border-muted); margin-top: var(--space-2); }
+  .more-toggle:hover { color: var(--gold-bright); }
+
+  .mockup-note { margin-top: var(--space-7); padding: var(--space-4) var(--space-5); border: 1px dashed var(--border-muted); border-radius: var(--radius); font-family: var(--font-ui); font-size: 12px; line-height: 1.6; color: var(--text-muted); background: rgba(180,140,255,0.04); }
+  .mockup-note strong { color: var(--purple-bright); }
+</style>
+</head>
+<body>
+
+<header class="sticky-head">
+  <div class="head-row1">
+    <div>
+      <h1 class="name shimmer-gold">Tessa Brightleaf</h1>
+      <div class="subtitle">Halfling • Bard 3 • College of Lore</div>
+    </div>
+    <div class="quickstats">
+      <div class="quickstat hp" data-tip="Hit Points: 24 / 24&#10;Hit Dice: 3d8 (CON +2 each)"><span class="label">HP</span><span class="value">24/24</span></div>
+      <div class="quickstat" data-tip="Armor Class: 14&#10;= 12 (Studded Leather +1) + 2 DEX cap"><span class="label">AC</span><span class="value">14</span></div>
+      <div class="quickstat" data-tip="Initiative: +3&#10;= DEX modifier"><span class="label">Init</span><span class="value">+3</span></div>
+      <div class="quickstat" data-tip="Speed: 25 ft (Halfling base)"><span class="label">Spd</span><span class="value">25</span></div>
+    </div>
+    <div class="currency-strip">
+      <span class="coin">2 <span class="denom">PP</span></span>
+      <span class="coin">47 <span class="denom">GP</span></span>
+      <span class="coin">14 <span class="denom">SP</span></span>
+      <span class="coin">36 <span class="denom">CP</span></span>
+    </div>
+  </div>
+  <div class="head-row2">
+    <button class="tab active" data-tab="identity">Identity</button>
+    <button class="tab" data-tab="stats">Stats</button>
+    <button class="tab" data-tab="abilities">Abilities &amp; Feats</button>
+    <button class="tab" data-tab="spells">Spells</button>
+    <button class="tab" data-tab="inventory">Inventory</button>
+    <button class="tab" data-tab="resources">Resources</button>
+    <button class="tab" data-tab="notes">Notes</button>
+  </div>
+</header>
+
+<main class="sheet">
+
+  <!-- IDENTITY -->
+  <div class="panel active" id="panel-identity">
+    <section class="section">
+      <div class="section-header">
+        <h2>Appearance</h2>
+        <div class="section-divider"><svg viewBox="0 0 600 14" preserveAspectRatio="none"><path d="M0 7 L240 7 M260 7 Q300 -1 340 7 L600 7" stroke="rgba(201,168,76,0.55)" stroke-width="1" fill="none"/><circle cx="300" cy="7" r="2" fill="rgba(201,168,76,0.85)"/></svg></div>
+      </div>
+      <div class="card">
+        <div class="appearance-tabs" id="appearance-tabs">
+          <button class="appearance-tab active" data-appearance="standard">Standard</button>
+          <button class="appearance-tab" data-appearance="performance">Performance</button>
+          <button class="appearance-tab" data-appearance="disguised">Disguised</button>
+        </div>
+        <div class="gallery">
+          <div class="gallery-set active" data-set="standard">
+            <div class="gallery-main">
+              <div class="stage placeholder alt-1 active" data-img="s-0"><div class="ph-label">Standard · Travel<span class="sub">image placeholder</span></div></div>
+              <div class="stage placeholder alt-2" data-img="s-1"><div class="ph-label">Standard · Closeup<span class="sub">image placeholder</span></div></div>
+              <div class="stage placeholder video" data-img="s-2"></div>
+            </div>
+            <div>
+              <div class="gallery-thumbs">
+                <button class="thumb placeholder alt-1 active" data-img="s-0" title="Standard travel"></button>
+                <button class="thumb placeholder alt-2" data-img="s-1" title="Closeup"></button>
+                <button class="thumb placeholder alt-1 video" data-img="s-2" title="Performance reel"></button>
+              </div>
+              <div class="gallery-meta">2 references · 1 video</div>
+              <p class="appearance-desc set active" data-set="standard">Lithe, copper-haired, sharp-eyed. Wears travelling clothes that look better than they have any right to. Lute always slung in reach.</p>
+            </div>
+          </div>
+          <div class="gallery-set" data-set="performance">
+            <div class="gallery-main">
+              <div class="stage placeholder alt-3 active" data-img="p-0"><div class="ph-label">Stage Costume<span class="sub">image placeholder</span></div></div>
+            </div>
+            <div>
+              <div class="gallery-thumbs">
+                <button class="thumb placeholder alt-3 active" data-img="p-0" title="Stage costume"></button>
+              </div>
+              <div class="gallery-meta">1 reference</div>
+              <p class="appearance-desc set" data-set="performance">Stage costume — gold-thread halfling vest, ribbons in her hair, makeup tuned for candlelight. Worn when performing for a crowd or a court.</p>
+            </div>
+          </div>
+          <div class="gallery-set" data-set="disguised">
+            <div class="gallery-main">
+              <div class="stage placeholder alt-2 active" data-img="d-0"><div class="ph-label">Disguised · Servant<span class="sub">image placeholder</span></div></div>
+            </div>
+            <div>
+              <div class="gallery-thumbs">
+                <button class="thumb placeholder alt-2 active" data-img="d-0" title="Disguised"></button>
+              </div>
+              <div class="gallery-meta">1 reference</div>
+              <p class="appearance-desc set" data-set="disguised">Generic servant garb, hair pinned. Used when the situation calls for being unmemorable. Disguise Kit + Stealth.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <h2>Identity</h2>
+        <div class="section-divider"><svg viewBox="0 0 600 14" preserveAspectRatio="none"><path d="M0 7 L240 7 M260 7 Q300 -1 340 7 L600 7" stroke="rgba(201,168,76,0.55)" stroke-width="1" fill="none"/><circle cx="300" cy="7" r="2" fill="rgba(201,168,76,0.85)"/></svg></div>
+      </div>
+      <div class="card">
+        <div class="identity-rows">
+          <div class="row"><span class="k">Race</span><span class="v">Lightfoot Halfling</span></div>
+          <div class="row"><span class="k">Class</span><span class="v">Bard 3 (College of Lore)</span></div>
+          <div class="row"><span class="k">Background</span><span class="v">Entertainer</span></div>
+          <div class="row"><span class="k">Alignment</span><span class="v">Chaotic Good</span></div>
+          <div class="row"><span class="k">Age</span><span class="v">28</span></div>
+          <div class="row"><span class="k">Height</span><span class="v">3'2"</span></div>
+          <div class="row"><span class="k">Languages</span><span class="v">Common, Halfling, Elvish, Sylvan</span></div>
+        </div>
+        <div class="tag-row">
+          <span class="tag" data-tip="Performer: gains advantage on Performance checks in front of an audience that knows you.">Performer</span>
+          <span class="tag" data-tip="Charmer: NPCs are 1 step friendlier on first meeting unless hostile.">Charmer</span>
+          <span class="tag" data-tip="Spellcaster: can cast prepared/known spells using spell slots.">Spellcaster</span>
+          <span class="tag" data-tip="Lucky (Halfling racial): may reroll any natural 1 on a d20.">Lucky</span>
+          <span class="tag" data-tip="Lore: knowledgeable about regional history, gossip, and rumour.">Lore</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <h2>Relationships</h2>
+        <div class="section-divider"><svg viewBox="0 0 600 14" preserveAspectRatio="none"><path d="M0 7 L240 7 M260 7 Q300 -1 340 7 L600 7" stroke="rgba(201,168,76,0.55)" stroke-width="1" fill="none"/><circle cx="300" cy="7" r="2" fill="rgba(201,168,76,0.85)"/></svg></div>
+      </div>
+      <div class="card">
+        <div class="relationship-grid">
+          <a class="relationship" href="#" onclick="event.preventDefault(); alert('In real build: opens shareable viewer for Old Wren.');">
+            <div class="portrait b">W</div>
+            <div>
+              <div class="name">Old Wren</div>
+              <div class="role">Foster Mother · Caravan</div>
+              <div class="note">Taught Tessa the lute. Still travels with the troupe.</div>
+            </div>
+            <div class="arrow">↗</div>
+          </a>
+          <a class="relationship" href="#" onclick="event.preventDefault(); alert('In real build: opens shareable viewer for Bram.');">
+            <div class="portrait c">B</div>
+            <div>
+              <div class="name">Bram</div>
+              <div class="role">Foster Father · Caravan</div>
+              <div class="note">Taught her to read a room. Currently somewhere south.</div>
+            </div>
+            <div class="arrow">↗</div>
+          </a>
+          <div class="relationship unlinked" data-tip="No linked character. The hag who tried to barter for her voice. Tessa won't speak of her except in vague terms.">
+            <div class="portrait d">?</div>
+            <div>
+              <div class="name">The Hollowmere Hag</div>
+              <div class="role">Antagonist · Unknown</div>
+              <div class="note">Tried to take Tessa's voice. Tessa fled. The hag is still out there.</div>
+            </div>
+            <div class="arrow">—</div>
+          </div>
+          <a class="relationship" href="#" onclick="event.preventDefault(); alert('In real build: opens shareable viewer for Pip.');">
+            <div class="portrait">P</div>
+            <div>
+              <div class="name">Pip</div>
+              <div class="role">Party Member · Rogue</div>
+              <div class="note">Travelling companion since Hollowmere.</div>
+            </div>
+            <div class="arrow">↗</div>
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- STATS -->
+  <div class="panel" id="panel-stats">
+    <section class="section">
+      <div class="section-header"><h2>Combat Stats</h2><div class="section-divider"><svg viewBox="0 0 600 14" preserveAspectRatio="none"><path d="M0 7 L240 7 M260 7 Q300 -1 340 7 L600 7" stroke="rgba(201,168,76,0.55)" stroke-width="1" fill="none"/><circle cx="300" cy="7" r="2" fill="rgba(201,168,76,0.85)"/></svg></div></div>
+      <div class="card">
+        <div class="combat-stats">
+          <div class="stat-block" data-tip="Proficiency Bonus: +2&#10;Scales every 4 levels."><div class="label">Prof Bonus</div><div class="value">+2</div><div class="sub">level 3</div></div>
+          <div class="stat-block" data-tip="Spell Save DC: 13&#10;= 8 + Prof (+2) + CHA (+3)"><div class="label">Spell DC</div><div class="value">13</div><div class="sub">8 + prof + CHA</div></div>
+          <div class="stat-block" data-tip="Spell Attack: +5&#10;= Prof (+2) + CHA (+3)"><div class="label">Spell Atk</div><div class="value">+5</div><div class="sub">prof + CHA</div></div>
+          <div class="stat-block" data-tip="Initiative: +3 (DEX)."><div class="label">Init</div><div class="value">+3</div><div class="sub">DEX</div></div>
+          <div class="stat-block" data-tip="Speed: 25 ft per round (Halfling base)."><div class="label">Speed</div><div class="value">25</div><div class="sub">halfling</div></div>
+          <div class="stat-block" data-tip="Hit Dice: 3d8 available. Spent on Short Rest. Half recover on Long Rest."><div class="label">Hit Dice</div><div class="value">3 / 3</div><div class="sub">d8</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header"><h2>Ability Scores</h2><div class="section-divider"><svg viewBox="0 0 600 14" preserveAspectRatio="none"><path d="M0 7 L240 7 M260 7 Q300 -1 340 7 L600 7" stroke="rgba(201,168,76,0.55)" stroke-width="1" fill="none"/><circle cx="300" cy="7" r="2" fill="rgba(201,168,76,0.85)"/></svg></div></div>
+      <div class="card">
+        <div class="ability-grid">
+          <div class="ability"><div class="abbr">Str</div><div class="mod">−1</div><div class="score">8</div></div>
+          <div class="ability"><div class="abbr">Dex</div><div class="mod">+3</div><div class="score">16</div></div>
+          <div class="ability"><div class="abbr">Con</div><div class="mod">+2</div><div class="score">14</div></div>
+          <div class="ability"><div class="abbr">Int</div><div class="mod">+0</div><div class="score">10</div></div>
+          <div class="ability"><div class="abbr">Wis</div><div class="mod">+1</div><div class="score">12</div></div>
+          <div class="ability"><div class="abbr">Cha</div><div class="mod">+3</div><div class="score">16</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header"><h2>Saving Throws</h2><div class="section-divider"><svg viewBox="0 0 600 14" preserveAspectRatio="none"><path d="M0 7 L240 7 M260 7 Q300 -1 340 7 L600 7" stroke="rgba(201,168,76,0.55)" stroke-width="1" fill="none"/><circle cx="300" cy="7" r="2" fill="rgba(201,168,76,0.85)"/></svg></div></div>
+      <div class="card">
+        <div class="saves-grid">
+          <div class="save"><span class="pip"></span><span class="name">Str</span><span class="mod">−1</span></div>
+          <div class="save proficient"><span class="pip"></span><span class="name">Dex</span><span class="mod">+5</span></div>
+          <div class="save"><span class="pip"></span><span class="name">Con</span><span class="mod">+2</span></div>
+          <div class="save"><span class="pip"></span><span class="name">Int</span><span class="mod">+0</span></div>
+          <div class="save"><span class="pip"></span><span class="name">Wis</span><span class="mod">+1</span></div>
+          <div class="save proficient"><span class="pip"></span><span class="name">Cha</span><span class="mod">+5</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header"><h2>Skills</h2><div class="section-divider"><svg viewBox="0 0 600 14" preserveAspectRatio="none"><path d="M0 7 L240 7 M260 7 Q300 -1 340 7 L600 7" stroke="rgba(201,168,76,0.55)" stroke-width="1" fill="none"/><circle cx="300" cy="7" r="2" fill="rgba(201,168,76,0.85)"/></svg></div></div>
+      <div class="card">
+        <div class="skill-legend">
+          <span class="item"><span class="pip"></span> Untrained</span>
+          <span class="item"><span class="pip prof"></span> Proficient (+prof)</span>
+          <span class="item"><span class="pip expertise"></span> Expertise (+2× prof)</span>
+          <span class="item" data-tip="No masteries on this sheet."><span class="pip mastery"></span> Mastery (optional)</span>
+        </div>
+        <div class="skills-grid">
+          <div class="skill expertise"><span class="pip"></span><span class="name">Performance</span><span class="ability-tag">Cha</span><span class="mod">+7</span></div>
+          <div class="skill expertise"><span class="pip"></span><span class="name">Persuasion</span><span class="ability-tag">Cha</span><span class="mod">+7</span></div>
+          <div class="skill prof"><span class="pip"></span><span class="name">Acrobatics</span><span class="ability-tag">Dex</span><span class="mod">+5</span></div>
+          <div class="skill prof"><span class="pip"></span><span class="name">Deception</span><span class="ability-tag">Cha</span><span class="mod">+5</span></div>
+          <div class="skill prof"><span class="pip"></span><span class="name">Sleight of Hand</span><span class="ability-tag">Dex</span><span class="mod">+5</span></div>
+          <div class="skill"><span class="pip"></span><span class="name">Athletics</span><span class="ability-tag">Str</span><span class="mod">−1</span></div>
+          <div class="skill"><span class="pip"></span><span class="name">Arcana</span><span class="ability-tag">Int</span><span class="mod">+0</span></div>
+          <div class="skill"><span class="pip"></span><span class="name">Perception</span><span class="ability-tag">Wis</span><span class="mod">+1</span></div>
+          <div class="skill"><span class="pip"></span><span class="name">Stealth</span><span class="ability-tag">Dex</span><span class="mod">+3</span></div>
+          <div class="skill"><span class="pip"></span><span class="name">Investigation</span><span class="ability-tag">Int</span><span class="mod">+0</span></div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ABILITIES -->
+  <div class="panel" id="panel-abilities">
+    <p class="group-label">Feats</p>
+    <details class="record" open>
+      <summary>
+        <div class="title-block">
+          <div class="title">Lucky</div>
+          <div class="quick-chips">
+            <span class="chip tone-info"><span class="k">type</span><span class="v">Feat</span></span>
+            <span class="chip" data-link-resource="lucky"><span class="k">uses</span><span class="v">3 / 3</span><span class="mini-bar"><i style="width:100%"></i></span></span>
+            <span class="chip tone-rest" data-tip="Long Rest: 8 hours of sleep / downtime.">recharge: Long Rest</span>
+          </div>
+        </div>
+      </summary>
+      <div class="body"><p class="desc">When you roll a d20 for an attack, ability check, or saving throw, you may spend a luck point to roll an additional d20 and choose which to use. You may also force an attacker to roll an additional d20 and use the lower.</p></div>
+    </details>
+
+    <p class="group-label">Class Features — Bard</p>
+    <details class="record">
+      <summary>
+        <div class="title-block">
+          <div class="title">Bardic Inspiration</div>
+          <div class="quick-chips">
+            <span class="chip tone-info"><span class="k">type</span><span class="v">Class</span></span>
+            <span class="chip" data-tip="Inspiration die size scales with Bard level: d6 → d8 (5) → d10 (10) → d12 (15)."><span class="k">die</span><span class="v">1d6</span></span>
+            <span class="chip" data-link-resource="bardic"><span class="k">uses</span><span class="v">3 / 3</span><span class="mini-bar"><i style="width:100%"></i></span></span>
+            <span class="chip tone-rest" data-tip="Short Rest: ≥1 hour of light activity.">recharge: Short Rest</span>
+          </div>
+        </div>
+      </summary>
+      <div class="body">
+        <p class="desc">As a bonus action, grant a creature within 60ft an Inspiration die (1d6). They can add it to one ability check, attack roll, or saving throw made within 10 minutes.</p>
+        <div class="chips">
+          <span class="chip"><span class="k">action</span><span class="v">Bonus</span></span>
+          <span class="chip"><span class="k">range</span><span class="v">60 ft</span></span>
+          <span class="chip" data-tip="Duration: 10 minutes. Recipient discards the die when used or duration ends."><span class="k">duration</span><span class="v">10 min</span></span>
+          <span class="chip" data-tip="Number of uses scales with CHA modifier (+3 → 3 uses)."><span class="k">uses scale w/</span><span class="v">CHA</span></span>
+        </div>
+      </div>
+    </details>
+
+    <details class="record">
+      <summary>
+        <div class="title-block">
+          <div class="title">Cutting Words</div>
+          <div class="quick-chips">
+            <span class="chip tone-info"><span class="k">type</span><span class="v">Lore</span></span>
+            <span class="chip" data-tip="Reaction: a special action you can take outside your turn."><span class="k">action</span><span class="v">Reaction</span></span>
+            <span class="chip" data-link-resource="bardic"><span class="k">cost</span><span class="v">3 / 3</span><span class="mini-bar"><i style="width:100%"></i></span></span>
+          </div>
+        </div>
+      </summary>
+      <div class="body">
+        <p class="desc">When a creature you can see within 60ft makes an attack roll, ability check, or damage roll, expend one Bardic Inspiration die. The target subtracts the rolled value (1d6) from their roll.</p>
+        <div class="chips">
+          <span class="chip tone-dmg" data-tip="Roll 1d6. The target reduces their roll by that amount. Can turn a hit into a miss."><span class="k">target subtracts</span><span class="v">1d6</span></span>
+          <span class="chip"><span class="k">range</span><span class="v">60 ft</span></span>
+        </div>
+      </div>
+    </details>
+
+    <details class="record">
+      <summary>
+        <div class="title-block">
+          <div class="title">Jack of All Trades</div>
+          <div class="quick-chips">
+            <span class="chip tone-info"><span class="k">type</span><span class="v">Class</span></span>
+            <span class="chip"><span class="k">passive</span><span class="v">+1 to non-prof checks</span></span>
+          </div>
+        </div>
+      </summary>
+      <div class="body"><p class="desc">Add half your proficiency bonus (rounded down) to any ability check that doesn't already include your proficiency bonus.</p></div>
+    </details>
+
+    <p class="group-label">Race — Halfling</p>
+    <details class="record">
+      <summary>
+        <div class="title-block">
+          <div class="title">Lucky <span class="sub">(Halfling racial)</span></div>
+          <div class="quick-chips">
+            <span class="chip tone-info"><span class="k">type</span><span class="v">Race</span></span>
+            <span class="chip"><span class="k">passive</span><span class="v">Reroll natural 1s</span></span>
+          </div>
+        </div>
+      </summary>
+      <div class="body"><p class="desc">When you roll a 1 on the d20 for an attack, ability check, or save, you can reroll the die and must use the new roll.</p></div>
+    </details>
+
+    <details class="record">
+      <summary>
+        <div class="title-block">
+          <div class="title">Brave</div>
+          <div class="quick-chips">
+            <span class="chip tone-info"><span class="k">type</span><span class="v">Race</span></span>
+            <span class="chip"><span class="k">passive</span><span class="v">Adv. vs Frightened</span></span>
+          </div>
+        </div>
+      </summary>
+      <div class="body"><p class="desc">You have advantage on saving throws against being Frightened.</p></div>
+    </details>
+  </div>
+
+  <!-- SPELLS -->
+  <div class="panel" id="panel-spells">
+    <p class="group-label">Cantrips · always available</p>
+    <details class="record" id="spell-vicious-mockery" open>
+      <summary>
+        <div class="title-block">
+          <div class="title">Vicious Mockery</div>
+          <div class="quick-chips">
+            <span class="chip"><span class="k">school</span><span class="v">Enchantment</span></span>
+            <span class="chip tone-save"><span class="k">save</span><span class="v">WIS DC 13</span></span>
+            <span class="chip tone-dmg"><span class="k">dmg</span><span class="v">1d4 psychic</span></span>
+            <span class="chip"><span class="k">range</span><span class="v">60 ft</span></span>
+          </div>
+        </div>
+      </summary>
+      <div class="body"><p class="desc">A creature within range that can hear you must make a Wisdom save or take psychic damage and have disadvantage on the next attack roll it makes.</p></div>
+    </details>
+
+    <details class="record" id="spell-minor-illusion">
+      <summary>
+        <div class="title-block">
+          <div class="title">Minor Illusion</div>
+          <div class="quick-chips">
+            <span class="chip"><span class="k">school</span><span class="v">Illusion</span></span>
+            <span class="chip"><span class="k">range</span><span class="v">30 ft</span></span>
+            <span class="chip" data-tip="Lasts 1 minute. Ends if you dismiss it as an action or cast this spell again."><span class="k">duration</span><span class="v">1 min</span></span>
+          </div>
+        </div>
+      </summary>
+      <div class="body"><p class="desc">Create a sound or an image of an object within range that lasts for 1 minute.</p></div>
+    </details>
+
+    <p class="group-label" data-link-resource="t1" data-link-suffix=" slots">
+      Tier 1
+      <span class="label-bar"><i style="width:100%"></i></span>
+      <span class="count">4 / 4 slots</span>
+    </p>
+
+    <details class="record" id="spell-healing-word" open>
+      <summary>
+        <div class="title-block">
+          <div class="title">Healing Word</div>
+          <div class="quick-chips">
+            <span class="chip"><span class="k">tier</span><span class="v">1</span></span>
+            <span class="chip tone-heal"><span class="k">heal</span><span class="v">1d4 + 3</span></span>
+            <span class="chip" data-tip="Bonus Action: a smaller action alongside your main action."><span class="k">action</span><span class="v">Bonus</span></span>
+            <span class="chip"><span class="k">range</span><span class="v">60 ft</span></span>
+          </div>
+        </div>
+      </summary>
+      <div class="body"><p class="desc">A creature of your choice within range regains 1d4 + spellcasting modifier (+3) HP. No effect on undead or constructs.</p></div>
+    </details>
+
+    <details class="record" id="spell-faerie-fire">
+      <summary>
+        <div class="title-block">
+          <div class="title">Faerie Fire</div>
+          <div class="quick-chips">
+            <span class="chip"><span class="k">tier</span><span class="v">1</span></span>
+            <span class="chip tone-save"><span class="k">save</span><span class="v">DEX DC 13</span></span>
+            <span class="chip tone-info"><span class="k">effect</span><span class="v">Adv. on attacks</span></span>
+            <span class="chip" data-tip="Concentration: only one conc spell at a time. Ends if damaged and fail CON save, or cast another conc spell."><span class="k">conc.</span><span class="v">1 min</span></span>
+          </div>
+        </div>
+      </summary>
+      <div class="body"><p class="desc">Each object in a 20-ft cube is outlined in coloured light. Creatures in the area must make a DEX save or also be outlined. Outlined creatures can't be invisible; attacks against them have advantage.</p></div>
+    </details>
+
+    <details class="record" id="spell-charm-person">
+      <summary>
+        <div class="title-block">
+          <div class="title">Charm Person</div>
+          <div class="quick-chips">
+            <span class="chip"><span class="k">tier</span><span class="v">1</span></span>
+            <span class="chip tone-save"><span class="k">save</span><span class="v">WIS DC 13</span></span>
+            <span class="chip" data-tip="Lasts 1 hour real time. Ends early if you/your allies harm the target. The target knows it was charmed when the spell ends."><span class="k">duration</span><span class="v">1 hour</span></span>
+          </div>
+        </div>
+      </summary>
+      <div class="body"><p class="desc">One humanoid within range must make a WIS save (advantage if you/allies are fighting it). On fail, charmed by you until the spell ends or harmful action is taken.</p></div>
+    </details>
+
+    <details class="record" id="spell-dissonant-whispers">
+      <summary>
+        <div class="title-block">
+          <div class="title">Dissonant Whispers</div>
+          <div class="quick-chips">
+            <span class="chip"><span class="k">tier</span><span class="v">1</span></span>
+            <span class="chip tone-save"><span class="k">save</span><span class="v">WIS DC 13</span></span>
+            <span class="chip tone-dmg"><span class="k">dmg</span><span class="v">3d6 psychic</span></span>
+          </div>
+        </div>
+      </summary>
+      <div class="body"><p class="desc">You whisper a discordant melody to one creature within range. 3d6 psychic on fail, half on success. On fail, the target uses its reaction to move away.</p></div>
+    </details>
+
+    <p class="group-label" data-link-resource="t2" data-link-suffix=" slots">
+      Tier 2
+      <span class="label-bar"><i style="width:100%"></i></span>
+      <span class="count">2 / 2 slots</span>
+    </p>
+
+    <details class="record" id="spell-invisibility">
+      <summary>
+        <div class="title-block">
+          <div class="title">Invisibility</div>
+          <div class="quick-chips">
+            <span class="chip"><span class="k">tier</span><span class="v">2</span></span>
+            <span class="chip" data-tip="Concentration up to 1 hour. Ends if target attacks or casts a spell."><span class="k">duration</span><span class="v">1 hr (conc)</span></span>
+            <span class="chip"><span class="k">range</span><span class="v">Touch</span></span>
+          </div>
+        </div>
+      </summary>
+      <div class="body"><p class="desc">A creature you touch becomes invisible until the spell ends. Anything they wear/carry is invisible while on their person. Ends if the target attacks or casts a spell.</p></div>
+    </details>
+
+    <details class="record" id="spell-shatter">
+      <summary>
+        <div class="title-block">
+          <div class="title">Shatter</div>
+          <div class="quick-chips">
+            <span class="chip"><span class="k">tier</span><span class="v">2</span></span>
+            <span class="chip tone-save"><span class="k">save</span><span class="v">CON DC 13</span></span>
+            <span class="chip tone-dmg"><span class="k">dmg</span><span class="v">3d8 thunder</span></span>
+            <span class="chip"><span class="k">aoe</span><span class="v">10 ft sphere</span></span>
+          </div>
+        </div>
+      </summary>
+      <div class="body"><p class="desc">A loud ringing noise erupts from a point in range. Each creature in a 10-ft sphere makes a CON save: 3d8 thunder on fail, half on success.</p></div>
+    </details>
+  </div>
+
+  <!-- INVENTORY -->
+  <div class="panel" id="panel-inventory">
+    <p class="group-label">Equipped &amp; Attuned</p>
+    <details class="record" open>
+      <summary>
+        <div class="title-block">
+          <div class="title shimmer-gold">Lute of Charming</div>
+          <div class="quick-chips">
+            <span class="chip tone-attune"><span class="k">attune</span><span class="v">Bard</span></span>
+            <span class="chip tone-info"><span class="k">rarity</span><span class="v">Rare</span></span>
+            <span class="chip" data-link-resource="lute"><span class="k">charges</span><span class="v">3 / 3</span><span class="mini-bar"><i style="width:100%"></i></span></span>
+            <span class="chip tone-rest" data-tip="Recharges at in-world dawn.">recharge: Dawn</span>
+          </div>
+        </div>
+      </summary>
+      <div class="body">
+        <p class="desc">A finely crafted lute. While playing, you can cast Charm Person without expending a spell slot. You can expend charges to cast Suggestion (1) or Mass Suggestion (2) through the music.</p>
+        <div class="chips">
+          <button class="chip link" data-go-to-spell="spell-charm-person"><span class="k">cast</span><span class="v">Charm Person — free</span></button>
+          <button class="chip link" data-go-to-spell="spell-charm-person"><span class="k">cast</span><span class="v">Suggestion — 1 charge</span></button>
+          <button class="chip link" data-go-to-spell="spell-charm-person"><span class="k">cast</span><span class="v">Mass Suggestion — 2 charges</span></button>
+          <span class="chip tone-save"><span class="k">save</span><span class="v">WIS DC 15</span></span>
+        </div>
+        <p class="player-note">Found in a dragon's hoard during the Hollowmere Caverns arc. Tessa is convinced it has its own opinions.</p>
+      </div>
+    </details>
+
+    <details class="record">
+      <summary>
+        <div class="title-block">
+          <div class="title">Studded Leather +1</div>
+          <div class="quick-chips">
+            <span class="chip tone-info"><span class="k">type</span><span class="v">Light Armor</span></span>
+            <span class="chip tone-info"><span class="k">rarity</span><span class="v">Uncommon</span></span>
+            <span class="chip calc" data-tip="Light Armor: 12 base + DEX modifier (no cap, but DEX is +3 here) + magic bonus.&#10;Tessa: 12 + 2 (DEX cap interpretation) = 14"><span class="v">AC 14</span><span class="calc-detail">12 +2 DEX +1 ench.</span></span>
+            <span class="chip" data-tip="Magical +1 bonus. Counts as magical for resistance bypass."><span class="k">enchant</span><span class="v">+1</span></span>
+          </div>
+        </div>
+      </summary>
+      <div class="body"><p class="desc">Tough leather reinforced with close-set rivets. The +1 enchantment grants increased AC versus mundane equivalents.</p></div>
+    </details>
+
+    <details class="record">
+      <summary>
+        <div class="title-block">
+          <div class="title">Rapier</div>
+          <div class="quick-chips">
+            <span class="chip tone-info"><span class="k">type</span><span class="v">Martial Melee</span></span>
+            <span class="chip calc" data-tip="To hit: d20 + DEX (+3) + Prof (+2) = +5"><span class="v">Atk +5</span><span class="calc-detail">+3 DEX +2 prof</span></span>
+            <span class="chip tone-dmg" data-tip="Damage: 1d8 + DEX (+3) piercing. Crit: 2d8 + 3."><span class="k">dmg</span><span class="v">1d8 + 3 piercing</span></span>
+            <span class="chip" data-tip="Finesse: use STR or DEX for attack and damage rolls. Required for Sneak Attack."><span class="k">prop</span><span class="v">Finesse</span></span>
+          </div>
+        </div>
+      </summary>
+      <div class="body"><p class="desc">A slender, sharply pointed sword. Finesse weapons let you use DEX.</p></div>
+    </details>
+
+    <details class="record">
+      <summary>
+        <div class="title-block">
+          <div class="title">Hand Crossbow</div>
+          <div class="quick-chips">
+            <span class="chip tone-info"><span class="k">type</span><span class="v">Martial Ranged</span></span>
+            <span class="chip calc" data-tip="To hit: d20 + DEX (+3) + Prof (+2) = +5"><span class="v">Atk +5</span><span class="calc-detail">+3 DEX +2 prof</span></span>
+            <span class="chip tone-dmg" data-tip="Damage: 1d6 + DEX (+3) piercing."><span class="k">dmg</span><span class="v">1d6 + 3 piercing</span></span>
+            <span class="chip" data-tip="Range: 30 ft normal, 120 ft long. Disadvantage past normal."><span class="k">range</span><span class="v">30 / 120</span></span>
+            <button class="chip link" data-go-to-item="inv-bolts" data-link-resource="bolts"><span class="k">ammo</span><span class="v">18 / 20</span><span class="mini-bar"><i style="width:90%"></i></span></button>
+          </div>
+        </div>
+      </summary>
+      <div class="body"><p class="desc">Small crossbow held in one hand. Loading restricts you to one shot per attack action without Crossbow Expert.</p></div>
+    </details>
+
+    <p class="group-label">Ammunition</p>
+    <details class="record" id="inv-bolts">
+      <summary>
+        <div class="title-block">
+          <div class="title">Crossbow Bolts</div>
+          <div class="quick-chips">
+            <span class="chip" data-link-resource="bolts"><span class="k">qty</span><span class="v">18 / 20</span><span class="mini-bar"><i style="width:90%"></i></span></span>
+            <span class="chip tone-info"><span class="k">used by</span><span class="v">Hand Crossbow</span></span>
+            <span class="chip"><span class="k">weight</span><span class="v">1.5 lb</span></span>
+          </div>
+        </div>
+      </summary>
+      <div class="body"><p class="desc">Standard wooden bolts with steel tips. Recover roughly half from a battlefield after combat.</p></div>
+    </details>
+
+    <p class="group-label">Stash</p>
+    <details class="record">
+      <summary>
+        <div class="title-block">
+          <div class="title">Adventuring Kit</div>
+          <div class="quick-chips">
+            <span class="chip"><span class="k">qty</span><span class="v">1</span></span>
+            <span class="chip"><span class="k">weight</span><span class="v">8 lb</span></span>
+          </div>
+        </div>
+      </summary>
+      <div class="body"><p class="desc">Backpack, bedroll, mess kit, tinderbox, 10 torches, 10 days of rations, waterskin, 50 ft hempen rope.</p></div>
+    </details>
+    <details class="record">
+      <summary>
+        <div class="title-block">
+          <div class="title">Disguise Kit</div>
+          <div class="quick-chips">
+            <span class="chip tone-info"><span class="k">tool</span><span class="v">Proficient</span></span>
+            <span class="chip"><span class="k">weight</span><span class="v">3 lb</span></span>
+          </div>
+        </div>
+      </summary>
+      <div class="body"><p class="desc">Costumes, cosmetics, prosthetics, dye. Allows you to alter your appearance.</p></div>
+    </details>
+    <details class="record">
+      <summary>
+        <div class="title-block">
+          <div class="title">Deck of Many Things</div>
+          <div class="quick-chips">
+            <span class="chip tone-info"><span class="k">rarity</span><span class="v">Legendary</span></span>
+            <span class="chip"><span class="k">qty</span><span class="v">1</span></span>
+          </div>
+        </div>
+      </summary>
+      <div class="body">
+        <p class="desc">Found in a barrow during the Saltmarsh arc. Has 22 cards.</p>
+        <p class="player-note warn">Tessa has been advised by her party never to draw from this thing. The last person who did is, presumably, currently a frog.</p>
+      </div>
+    </details>
+  </div>
+
+  <!-- RESOURCES -->
+  <div class="panel" id="panel-resources">
+    <div class="card">
+      <div class="resource-track">
+        <div class="rname">Bardic Inspiration<span class="meta">d6 die</span></div>
+        <div class="pips" data-resource="bardic"><button class="pip-btn"></button><button class="pip-btn"></button><button class="pip-btn"></button></div>
+        <span class="rest-tag" data-tip="Recharges on Short Rest or Long Rest.">Short Rest</span>
+      </div>
+      <div class="resource-track">
+        <div class="rname">Lucky Points<span class="meta">Feat</span></div>
+        <div class="pips" data-resource="lucky"><button class="pip-btn"></button><button class="pip-btn"></button><button class="pip-btn"></button></div>
+        <span class="rest-tag" data-tip="Recharges only on Long Rest.">Long Rest</span>
+      </div>
+      <div class="resource-track">
+        <div class="rname">Spell Slots — Tier 1<span class="meta">4 max</span></div>
+        <div class="pips" data-resource="t1"><button class="pip-btn"></button><button class="pip-btn"></button><button class="pip-btn"></button><button class="pip-btn"></button></div>
+        <span class="rest-tag" data-tip="Spell slots restore on a Long Rest (≥8 hours).">Long Rest</span>
+      </div>
+      <div class="resource-track">
+        <div class="rname">Spell Slots — Tier 2<span class="meta">2 max</span></div>
+        <div class="pips" data-resource="t2"><button class="pip-btn"></button><button class="pip-btn"></button></div>
+        <span class="rest-tag" data-tip="Spell slots restore on a Long Rest (≥8 hours).">Long Rest</span>
+      </div>
+      <div class="resource-track">
+        <div class="rname">Lute of Charming<span class="meta">Item charges</span></div>
+        <div class="pips" data-resource="lute"><button class="pip-btn"></button><button class="pip-btn"></button><button class="pip-btn"></button></div>
+        <span class="rest-tag" data-tip="Recharges at in-world dawn.">Dawn</span>
+      </div>
+      <div class="resource-track">
+        <div class="rname">Crossbow Bolts<span class="meta">Ammo · linked to Hand Crossbow</span></div>
+        <div class="pips" data-resource="bolts">
+          <button class="pip-btn used"></button><button class="pip-btn used"></button>
+          <button class="pip-btn"></button><button class="pip-btn"></button><button class="pip-btn"></button>
+          <button class="pip-btn"></button><button class="pip-btn"></button><button class="pip-btn"></button>
+          <button class="pip-btn"></button><button class="pip-btn"></button><button class="pip-btn"></button>
+          <button class="pip-btn"></button><button class="pip-btn"></button><button class="pip-btn"></button>
+          <button class="pip-btn"></button><button class="pip-btn"></button><button class="pip-btn"></button>
+          <button class="pip-btn"></button><button class="pip-btn"></button><button class="pip-btn"></button>
+        </div>
+        <span class="rest-tag" data-tip="Manual: only changes when you set it (recover after combat, buy more).">Manual</span>
+      </div>
+    </div>
+    <p style="font-family: var(--font-ui); font-size: 12px; color: var(--text-muted); margin-top: var(--space-3);">
+      Click any pip to expend or restore. Pip changes here update the linked chip mini-bars and the Tier 1 / Tier 2 slot counts on the Spells tab. Try toggling a Tier 1 pip and switching to Spells.
+    </p>
+  </div>
+
+  <!-- NOTES -->
+  <div class="panel" id="panel-notes">
+    <div class="card">
+      <p class="group-label" style="margin-top:0;">Backstory</p>
+      <div class="prose">
+        <span class="truncated">Tessa grew up in a traveling caravan where she learned to charm coin from pockets and applause from crowds in equal measure. After a brush with a hag who tried to barter for her voice, she swore off bargains with anything that doesn't first take a deep breath.</span>
+        <span class="full">Tessa grew up in a traveling caravan where she learned to charm coin from pockets and applause from crowds in equal measure. After a brush with a hag who tried to barter for her voice, she swore off bargains with anything that doesn't first take a deep breath.
+
+The caravan was her family in everything but blood — her actual parents had given her up to the troupe at five, and she remembers them only as silhouettes against firelight. Her foster mother, Old Wren, taught her the lute; her foster father, Bram, taught her how to read a room. By the time she was sixteen she was the troupe's headline act. By eighteen she'd been charged with theft in two duchies and acquitted in both — the second time by performing for the judge.
+
+The hag was the turning point. She had been camped alone outside a village called Hollowmere when an old woman approached her fire and offered three songs in exchange for a single one of Tessa's. Tessa, half-asleep, almost said yes. Something — luck, instinct, the tug of her grandmother's old halfling charm against her chest — made her hesitate. She declined, fled, and woke the next morning to find every bird in a half-mile radius dead in the grass around her bedroll.
+
+She has not slept easy since.</span>
+        <button class="more-toggle">Read more</button>
+      </div>
+
+      <p class="group-label">Personality</p>
+      <p>Quick-witted, performatively flippant, deeply guarded. Tessa flirts to deflect, jokes to disarm, and only opens up to people who have proven they aren't keeping score.</p>
+
+      <p class="group-label">Bonds, Ideals, Flaws</p>
+      <ul style="margin: 0; padding-left: 1.2em;">
+        <li><strong style="color: var(--text-bright);">Bond:</strong> Old Wren raised her. If Wren ever needs her, no contract or obligation comes first.</li>
+        <li><strong style="color: var(--text-bright);">Ideal:</strong> Honesty is overrated. Performance is honest enough.</li>
+        <li><strong style="color: var(--text-bright);">Flaw:</strong> When cornered, she lies even to allies — a reflex from a decade of running.</li>
+      </ul>
+    </div>
+
+    <div class="mockup-note">
+      <strong>Tessa Brightleaf</strong> — fictional example character (not from your repo). Halfling Bard 3 / College of Lore. A leaner sheet to compare against Carol's heavy one.<br><br>
+      Same design system, all interactive features:<br>
+      • Tabs swap content. Right-click any chip / stat / tag / rest tag to pin its tooltip (📌). Pip toggles in Resources auto-update Bardic Inspiration, Lucky, Lute charges, ammo, and Tier 1 / Tier 2 slot counts on their cards. Cross-link chips on the Lute jump to Charm Person. Read More on the backstory works. Appearance variants swap image sets.<br><br>
+      Open in a real browser to actually exercise it.
+    </div>
+  </div>
+
+</main>
+
+<script>
+  function switchTab(target) {
+    document.querySelectorAll('.tab').forEach(b => b.classList.toggle('active', b.dataset.tab === target));
+    document.querySelectorAll('.panel').forEach(p => p.classList.toggle('active', p.id === 'panel-' + target));
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }
+  document.querySelectorAll('.tab').forEach(btn => btn.addEventListener('click', () => switchTab(btn.dataset.tab)));
+
+  document.querySelectorAll('.more-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const prose = btn.closest('.prose');
+      const expanded = prose.classList.toggle('expanded');
+      btn.textContent = expanded ? 'Read less' : 'Read more';
+    });
+  });
+
+  function syncResource(resourceId) {
+    const pipsEl = document.querySelector(`.pips[data-resource="${resourceId}"]`);
+    if (!pipsEl) return;
+    const total = pipsEl.querySelectorAll('.pip-btn').length;
+    const used = pipsEl.querySelectorAll('.pip-btn.used').length;
+    const remaining = total - used;
+    const pct = total > 0 ? (remaining / total * 100) : 0;
+    document.querySelectorAll(`[data-link-resource="${resourceId}"]`).forEach(el => {
+      el.querySelectorAll(':scope > .v').forEach(x => x.textContent = `${remaining} / ${total}`);
+      const count = el.querySelector('.count');
+      if (count) {
+        const suffix = el.dataset.linkSuffix || '';
+        count.textContent = `${remaining} / ${total}${suffix}`;
+      }
+      const fill = el.querySelector('.mini-bar > i, .label-bar > i');
+      if (fill) fill.style.width = pct + '%';
+    });
+  }
+  document.querySelectorAll('.pip-btn').forEach(p => {
+    p.addEventListener('click', () => {
+      p.classList.toggle('used');
+      const pipsEl = p.closest('.pips');
+      if (pipsEl && pipsEl.dataset.resource) syncResource(pipsEl.dataset.resource);
+    });
+  });
+  document.querySelectorAll('.pips[data-resource]').forEach(p => syncResource(p.dataset.resource));
+
+  document.querySelectorAll('[data-go-to-spell]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetId = btn.dataset.goToSpell;
+      switchTab('spells');
+      const target = document.getElementById(targetId);
+      if (target) {
+        target.open = true;
+        target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        target.classList.remove('flash'); void target.offsetWidth; target.classList.add('flash');
+      }
+    });
+  });
+  document.querySelectorAll('[data-go-to-item]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetId = btn.dataset.goToItem;
+      switchTab('inventory');
+      const target = document.getElementById(targetId);
+      if (target) {
+        target.open = true;
+        target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        target.classList.remove('flash'); void target.offsetWidth; target.classList.add('flash');
+      }
+    });
+  });
+
+  document.querySelectorAll('#appearance-tabs .appearance-tab').forEach(t => {
+    t.addEventListener('click', () => {
+      const set = t.dataset.appearance;
+      document.querySelectorAll('#appearance-tabs .appearance-tab').forEach(x => x.classList.toggle('active', x === t));
+      document.querySelectorAll('.gallery-set').forEach(g => g.classList.toggle('active', g.dataset.set === set));
+      document.querySelectorAll('.appearance-desc.set').forEach(d => d.classList.toggle('active', d.dataset.set === set));
+    });
+  });
+  document.querySelectorAll('.thumb').forEach(t => {
+    t.addEventListener('click', () => {
+      const idx = t.dataset.img;
+      const set = t.closest('.gallery-set');
+      set.querySelectorAll('.thumb').forEach(x => x.classList.toggle('active', x === t));
+      set.querySelectorAll('.stage').forEach(s => s.classList.toggle('active', s.dataset.img === idx));
+    });
+  });
+
+  document.querySelectorAll('[data-tip]').forEach(el => {
+    el.addEventListener('contextmenu', (e) => {
+      e.preventDefault();
+      document.querySelectorAll('[data-tip].pinned').forEach(o => { if (o !== el) o.classList.remove('pinned'); });
+      el.classList.toggle('pinned');
+    });
+  });
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('[data-tip].pinned')) {
+      document.querySelectorAll('[data-tip].pinned').forEach(o => o.classList.remove('pinned'));
+    }
+  });
+</script>
+
+</body>
+</html>
