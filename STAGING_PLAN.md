@@ -219,6 +219,13 @@ Token budget on Claude side ran out before completing these. Codex picks up from
 - Remaining Step 2 verification: open the exported editor in a real browser and test the PAT flow with an actual token. Codex can smoke-test load/render locally, but should not claim full save verification without Lulu's PAT.
 - Keep `EDITOR_SHELL_STYLES` extraction as a later cleanup unless the inline block starts blocking shell iteration. The parity seam was the more important drift killer.
 
+### Codex follow-up on Capella export/local preview bugs
+
+- `core/scripts/library.js` now resolves both canonical references (`spells.<id>`, `traits.<id>`, etc.) and legacy embedded-export references (`<id>`). This fixes older exports and stale embedded snapshots that showed `(Missing spells record)`, `(Missing traits record)`, or missing feat records after the library tree migration.
+- `share/viewer/index.js`, `share/editor/index.js`, and future exports now force `[hidden] { display: none !important; }`. The old inline `.shell-loading { display:flex }` rule could override the native `hidden` attribute, leaving the loading UI stuck on "Mounting character sheet" after render completed.
+- `core/scripts/github.js` now defaults the local manager branch to `staging` during this migration, and the Settings copy was updated to say staging should be used until merge. If Lulu already has `githubBranch=main` saved in localStorage, Settings still needs to be changed manually to `staging`.
+- Verification: generated Capella HTML from both the repo character and Lulu's downloaded embedded snapshot now has zero `missing-library-ref` markers, includes the custom resources, and includes boss attacks.
+
 ### Reference files (for either agent)
 
 - Viewer mockup: `share/style-example.html` (full Carol data, all sections)

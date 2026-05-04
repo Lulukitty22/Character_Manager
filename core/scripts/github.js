@@ -7,7 +7,8 @@
  *   githubToken  — Personal Access Token with repo scope
  *   githubOwner  — Repository owner (username or org)
  *   githubRepo   — Repository name
- *   githubBranch — Branch to read/write (default: "main")
+ *   githubBranch — Branch to read/write (default: "staging" while this
+ *                  forward-only migration is being stabilized)
  */
 
 const GitHub = (() => {
@@ -21,7 +22,7 @@ const GitHub = (() => {
       token:  localStorage.getItem("githubToken")  || "",
       owner:  localStorage.getItem("githubOwner")  || "",
       repo:   localStorage.getItem("githubRepo")   || "",
-      branch: localStorage.getItem("githubBranch") || "main",
+      branch: localStorage.getItem("githubBranch") || "staging",
     };
   }
 

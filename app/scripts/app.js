@@ -103,9 +103,9 @@ const App = (() => {
 
           <div class="settings-field">
             <label class="field-label" for="setting-branch">Branch</label>
-            <p class="field-hint">Which branch to use (almost always "main")</p>
+            <p class="field-hint">Use "staging" while testing the new core/share/editor migration. Switch back to "main" only after staging is merged.</p>
             <input type="text" id="setting-branch" class="field-input"
-              placeholder="main" value="${config.branch}" />
+              placeholder="staging" value="${config.branch}" />
           </div>
 
           <div class="settings-field">
@@ -144,7 +144,7 @@ const App = (() => {
   function saveSettings() {
     const owner  = document.getElementById("setting-owner").value.trim();
     const repo   = document.getElementById("setting-repo").value.trim();
-    const branch = document.getElementById("setting-branch").value.trim() || "main";
+    const branch = document.getElementById("setting-branch").value.trim() || "staging";
     const token  = document.getElementById("setting-token").value.trim();
 
     if (!owner || !repo || !token) {

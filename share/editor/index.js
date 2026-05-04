@@ -34,6 +34,16 @@
   const rootEl    = $("editor-root");
   const statusEl  = $("loading-status");
 
+  ensureHiddenAttributeWins();
+
+  function ensureHiddenAttributeWins() {
+    if (document.getElementById("shell-hidden-override")) return;
+    const tag = document.createElement("style");
+    tag.id = "shell-hidden-override";
+    tag.textContent = "[hidden] { display: none !important; }";
+    document.head.appendChild(tag);
+  }
+
   function setStatus(text) { if (statusEl) statusEl.textContent = text; }
 
   function showError(message, url) {

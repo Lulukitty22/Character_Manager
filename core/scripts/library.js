@@ -267,8 +267,20 @@ const Library = (() => {
   function find(collection, ref, source = "custom") {
     if (!ref) return null;
     const key = getCollectionKey(collection, source);
-    const record = (state.collections[key]?.entries || []).find(entry => entry.id === ref) || null;
+    const candidates = referenceCandidates(key, ref);
+    const record = (state.collections[key]?.entries || []).find(entry => candidates.includes(entry.id)) || null;
     return record ? LibraryRecords.toRuntimeRecord(record, key) : null;
+  }
+
+  function referenceCandidates(collection, ref) {
+    const clean = String(ref || "").trim();
+    if (!clean) return [];
+    const canonical = getCollectionKey(collection);
+    const prefix = `${canonical}.`;
+    const candidates = [clean];
+    if (!clean.startsWith(prefix)) candidates.push(`${prefix}${clean}`);
+    else candidates.push(clean.slice(prefix.length));
+    return [...new Set(candidates)];
   }
 
   function createReference(collection, entry, statePatch = {}) {

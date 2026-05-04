@@ -269,6 +269,7 @@ const SheetExporter = (() => {
 
   const SHELL_STYLES = `
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    [hidden] { display: none !important; }
     body {
       background: #0a090d;
       color: #e8e4f0;
