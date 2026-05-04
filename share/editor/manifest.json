@@ -1,0 +1,44 @@
+{
+  "minCompatibleSchemaMajor": 2,
+  "discord": "#VRLulu",
+  "styles": [
+    "core/style/base.css",
+    "core/style/sheet.css",
+    "editor/style/editor.css"
+  ],
+  "scripts": [
+    "core/scripts/schema.js",
+    "core/scripts/importers/library-records.js",
+    "core/scripts/importers/open5eapi.js",
+    "core/scripts/importers/dnd5eapi.js",
+    "core/scripts/library.js",
+    "core/scripts/github.js",
+    "core/scripts/dnd-calculations.js",
+    "core/scripts/views/view-character-utils.js",
+    "core/scripts/views/view-character-header.js",
+    "core/scripts/views/view-character-notes.js",
+    "core/scripts/views/view-character-identity.js",
+    "core/scripts/views/view-character-dnd.js",
+    "core/scripts/views/view-character-abilities.js",
+    "core/scripts/views/view-character-boss.js",
+    "core/scripts/views/view-character-spells.js",
+    "core/scripts/views/view-character-inventory.js",
+    "core/scripts/views/view-character-resources.js",
+    "core/scripts/views/view-character-roblox.js",
+    "core/scripts/views/view-character.js",
+    "editor/scripts/editor-base.js",
+    "editor/scripts/editor-dnd.js",
+    "editor/scripts/editor-boss.js",
+    "editor/scripts/editor-gameplay.js",
+    "editor/scripts/editor-spells.js",
+    "editor/scripts/editor-inventory.js",
+    "editor/scripts/editor-resources.js",
+    "editor/scripts/editor-roblox.js",
+    "editor/scripts/editor-mount.js"
+  ],
+  "library": {
+    "manifestPath": "library/manifest.json",
+    "basePath": "",
+    "concurrency": 12
+  }
+}

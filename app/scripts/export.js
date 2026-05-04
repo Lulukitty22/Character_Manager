@@ -15,7 +15,9 @@
  * Updating share/viewer/index.js or share/viewer/manifest.json
  * automatically updates every previously-exported sheet on next open.
  *
- * Public: SheetExporter.exportCharacter(characterData, filePath) → void
+ * Public:
+ *   SheetExporter.exportCharacter(characterData, filePath) → void
+ *   SheetExporter.exportEditor(characterData, filePath)    → void
  * ────────────────────────────────────────────────────────────────────────
  */
 
@@ -53,6 +55,39 @@ const SheetExporter = (() => {
     });
 
     downloadHTML(html, `${safeFile}-sheet.html`);
+  }
+
+  /**
+   * Build and download a tiny shareable EDITOR HTML stub.
+   * Same cascade pattern as the viewer; loads share/editor/index.js, which
+   * mounts the live editor + preview and supports PAT-based save to GitHub.
+   * @param {Object} characterData
+   * @param {string} filePath - e.g. "characters/capella.json"
+   */
+  function exportEditor(characterData, filePath) {
+    const owner = localStorage.getItem("githubOwner") || "";
+    const repo  = localStorage.getItem("githubRepo")  || "";
+
+    if (!owner || !repo) {
+      App.showToast("GitHub owner/repo not configured — set them in Settings first.", "error");
+      return;
+    }
+
+    const characterId = characterData?.id || "";
+    const name        = characterData?.identity?.name || "Character";
+    const safeFile    = name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+    const html        = buildEditorExportHTML({
+      characterData,
+      characterId,
+      characterPath: filePath,
+      owner,
+      repo,
+      branch: EXPORT_BRANCH,
+      schemaVersion: getSchemaVersionString(),
+      characterName: name,
+    });
+
+    downloadHTML(html, `${safeFile}-editor.html`);
   }
 
   // ─── HTML Stub Builder ─────────────────────────────────────────────────
@@ -108,6 +143,67 @@ const SheetExporter = (() => {
     </div>
 
     <main id="sheet-content" hidden></main>
+  </div>
+
+  <script>
+    window.__EMBEDDED_CHARACTER__ = ${escapedJSON};
+  </script>
+  ${shellBootstrap}
+</body>
+</html>`;
+  }
+
+  function buildEditorExportHTML(opts) {
+    const escapedName = escapeHtml(opts.characterName);
+    const escapedJSON = JSON.stringify(opts.characterData).replace(/</g, "\\u003c");
+    const shellUrl       = `https://raw.githubusercontent.com/${opts.owner}/${opts.repo}/${opts.branch}/share/editor/index.js`;
+    const shellBootstrap = buildShellBootstrap(shellUrl);
+
+    return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>${escapedName} — Editor</title>
+
+  <meta name="character-id"    content="${escapeAttr(opts.characterId)}" />
+  <meta name="character-path"  content="${escapeAttr(opts.characterPath)}" />
+  <meta name="schema-version"  content="${escapeAttr(opts.schemaVersion)}" />
+  <meta name="github-owner"    content="${escapeAttr(opts.owner)}" />
+  <meta name="github-repo"     content="${escapeAttr(opts.repo)}" />
+  <meta name="github-branch"   content="${escapeAttr(opts.branch)}" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>${SHELL_STYLES}${EDITOR_SHELL_STYLES}</style>
+</head>
+<body>
+  <div id="sheet-app">
+    <div id="editor-loading" class="shell-loading">
+      <div class="shell-spinner"></div>
+      <p>Loading editor for <strong>${escapedName}</strong>…</p>
+      <p class="shell-loading-sub" id="loading-status">Fetching editor shell…</p>
+      <div class="shell-progress" aria-hidden="true">
+        <div class="shell-progress-fill" id="loading-progress-fill"></div>
+      </div>
+      <p class="shell-loading-detail" id="loading-detail"></p>
+    </div>
+
+    <div id="editor-error" class="shell-error" hidden>
+      <h2>⚠ Could not load editor</h2>
+      <p id="error-message">Unknown error.</p>
+      <p class="shell-error-hint">Make sure the GitHub repository is public and reachable.</p>
+      <p class="shell-error-url"><a id="error-url" href="" target="_blank" rel="noopener noreferrer"></a></p>
+    </div>
+
+    <div id="editor-fatal" class="shell-fatal" hidden>
+      <h2>⚠ This character file is out of date</h2>
+      <p id="fatal-reason">The behind-the-scenes setup that runs this file has changed since it was created, and it can no longer auto-update.</p>
+      <p class="shell-fatal-hint">Please ask <strong id="fatal-discord">#VRLulu</strong> on Discord for an updated file.</p>
+    </div>
+
+    <div id="editor-root" hidden></div>
   </div>
 
   <script>
@@ -239,6 +335,116 @@ const SheetExporter = (() => {
     .shell-error-url a { color: #9b72cf; font-size: 0.75rem; word-break: break-all; }
   `;
 
+  // ─── Editor chrome styles (used by share/editor/index.js render) ────────
+  // These cover the toolbar / edit-pane / preview-pane / PAT drawer layout.
+  // The shell injects core/style/* + editor/style/* on top of these for the
+  // inner editor and viewer rendering.
+
+  const EDITOR_SHELL_STYLES = `
+    #editor-root { min-height: 100vh; display: flex; flex-direction: column; }
+    .se-toolbar {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 0.75rem 1.25rem;
+      background: linear-gradient(180deg, rgba(13,11,22,0.95), rgba(13,11,22,0.85));
+      backdrop-filter: blur(14px) saturate(140%);
+      border-bottom: 1px solid rgba(180,140,255,0.10);
+      position: sticky; top: 0; z-index: 50;
+    }
+    .se-toolbar .se-title { display: flex; flex-direction: column; gap: 2px; }
+    .se-toolbar .se-label { font-size: 10px; color: #8a8399; letter-spacing: 0.12em; text-transform: uppercase; }
+    .se-toolbar .se-name { font-family: 'Cinzel', serif; font-size: 18px; font-weight: 700; color: #e8c970; letter-spacing: 0.04em; }
+    .se-toolbar .se-status { margin-left: auto; font-size: 12px; color: #8a8399; }
+    .se-toolbar .se-status[data-state="dirty"] { color: #d9a866; }
+    .se-btn {
+      background: #221733; border: 1px solid rgba(180,140,255,0.10);
+      color: #cfc6dd; padding: 0.5rem 1rem;
+      border-radius: 8px; cursor: pointer; font-size: 12px;
+      letter-spacing: 0.06em; font-family: inherit;
+      transition: all .15s;
+    }
+    .se-btn:hover { border-color: rgba(180,140,255,0.22); background: #1a1228; color: #f0eaf8; }
+    .se-btn-primary {
+      background: linear-gradient(180deg, #e8c970, #c9a84c);
+      color: #06040b; border-color: #c9a84c; font-weight: 700;
+    }
+    .se-btn-primary:hover { filter: brightness(1.1); }
+    .se-btn-warn { background: rgba(217,168,102,0.10); border-color: rgba(217,168,102,0.40); color: #d9a866; }
+
+    .se-main {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: 1.25rem; padding: 1.25rem;
+      max-width: 1700px; margin: 0 auto; width: 100%;
+      flex: 1; align-items: start;
+    }
+    @media (max-width: 980px) { .se-main { grid-template-columns: 1fr; } }
+    .se-edit-pane { min-width: 0; }
+    .se-preview-pane {
+      position: sticky; top: 80px;
+      border: 1px solid rgba(180,140,255,0.10);
+      border-radius: 14px; background: #130d1f;
+      max-height: calc(100vh - 100px); overflow-y: auto;
+    }
+    .se-preview-header {
+      display: flex; align-items: center; gap: 0.5rem;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid rgba(180,140,255,0.10);
+      background: #0d0816;
+      font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #8a8399;
+    }
+    .se-live-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: #6dc28a; box-shadow: 0 0 6px #6dc28a;
+      animation: se-pulse 2s infinite;
+    }
+    @keyframes se-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+    .se-preview-body { padding: 1rem; }
+
+    .se-pat-drawer {
+      position: fixed; top: 0; right: 0; bottom: 0;
+      width: 420px; max-width: 100vw;
+      background: #130d1f;
+      border-left: 1px solid rgba(180,140,255,0.22);
+      padding: 1.25rem;
+      overflow-y: auto;
+      box-shadow: -8px 0 32px rgba(0,0,0,0.6);
+      z-index: 200;
+    }
+    .se-pat-drawer h3 {
+      font-family: 'Cinzel', serif; font-size: 18px; color: #e8c970;
+      margin: 0 0 0.5rem; letter-spacing: 0.06em;
+    }
+    .se-close {
+      float: right; background: transparent; border: 0;
+      color: #8a8399; font-size: 20px; cursor: pointer; line-height: 1;
+    }
+    .se-pat-drawer p { font-size: 13px; color: #cfc6dd; margin: 0 0 0.75rem; }
+    .se-pat-drawer code { background: #06040b; padding: 1px 6px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #e8c970; }
+    .se-pat-drawer label { display: block; font-size: 11px; color: #8a8399; letter-spacing: 0.10em; text-transform: uppercase; margin: 0.75rem 0 0.25rem; }
+    .se-pat-drawer input[type="password"] {
+      width: 100%; background: #0d0816; border: 1px solid rgba(180,140,255,0.10);
+      border-radius: 8px; padding: 0.5rem 0.75rem;
+      color: #f0eaf8; font-family: 'JetBrains Mono', monospace; font-size: 13px;
+    }
+    .se-pat-status {
+      display: flex; gap: 0.5rem; align-items: center;
+      padding: 0.75rem; margin: 0.75rem 0;
+      background: #221733; border: 1px solid rgba(180,140,255,0.10);
+      border-radius: 8px; font-size: 12px;
+    }
+    .se-pat-status-label { color: #8a8399; letter-spacing: 0.10em; text-transform: uppercase; font-size: 10px; }
+    .se-pat-status-value { color: #f0eaf8; }
+    .se-pat-actions { display: flex; gap: 0.5rem; margin: 0.75rem 0; flex-wrap: wrap; }
+    .se-pat-help { font-size: 11px; color: #6b6478; line-height: 1.5; }
+
+    .se-error-inline {
+      padding: 1rem; margin: 1rem;
+      border: 1px solid #b94040; border-radius: 8px;
+      background: rgba(185,64,64,0.08); color: #d96060;
+      font-size: 13px; text-align: center;
+    }
+  `;
+
   // ─── Escape Helpers ────────────────────────────────────────────────────
 
   function escapeHtml(text) {
@@ -270,6 +476,6 @@ const SheetExporter = (() => {
     App.showToast(`Exported "${filename}" — open it in any browser.`, "success");
   }
 
-  return { exportCharacter };
+  return { exportCharacter, exportEditor };
 
 })();

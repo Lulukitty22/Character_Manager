@@ -375,6 +375,7 @@ const CharacterEditor = (() => {
             <button id="btn-back-to-list" class="button button-ghost">← Back</button>
             <button id="btn-preview-sheet" class="button button-ghost">👁 Preview</button>
             <button id="btn-export-sheet" class="button button-ghost">📤 Export</button>
+            <button id="btn-export-editor" class="button button-ghost">✏️ Export Editor</button>
             <button id="btn-save-character" class="button button-primary">💾 Save to GitHub</button>
           </div>
         </div>
@@ -431,6 +432,11 @@ const CharacterEditor = (() => {
     container.querySelector("#btn-export-sheet")?.addEventListener("click", () => {
       const data = collectCharacterData();
       SheetExporter.exportCharacter(data, currentFilePath);
+    });
+
+    container.querySelector("#btn-export-editor")?.addEventListener("click", () => {
+      const data = collectCharacterData();
+      SheetExporter.exportEditor(data, currentFilePath);
     });
   }
 
