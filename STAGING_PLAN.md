@@ -16,47 +16,61 @@ This branch is forward-only while the new library, viewer, editor, and share-she
 
 ## Short-Term File Ownership
 
-Claude owns this first viewer-shell chunk:
+Claude owns this viewer/editor shell lane:
 
 - `share/viewer/index.js`
 - `share/viewer/manifest.json`
-- `manager/scripts/export.js`, while the tiny viewer stub is still settling
+- future `share/editor/index.js`
+- future `share/editor/manifest.json`
 
-Codex owns this first stabilization chunk:
+Codex owns this core/runtime lane:
 
-- schema contract placement in `manager/scripts/schema.js`
+- schema contract placement in `core/scripts/schema.js`
 - shell/library API sanity checks
 - density fixes inside existing viewer panels
-- the first `/core` split proposal and migration path
+- `/core` split and shared runtime loading paths
 
 Shared files need a quick note before either agent edits them:
 
-- `manager/scripts/views/view-character.js`
-- `manager/scripts/views/view-character-*.js`
-- `manager/scripts/library.js`
+- `core/scripts/views/view-character.js`
+- `core/scripts/views/view-character-*.js`
+- `core/scripts/library.js`
 - any future `share/editor/*`
 - any future `/core/*`
 
 ## Next Architecture Step
 
-Do a thin `/core` split first, not a whole-repo move:
+The thin `/core` split is now the intended shared shape:
 
-- `core/schema/schema.js` or `core/scripts/schema.js`
-- `core/library/*` for shared library loading and record normalization
-- `core/viewer/*` for the renderers used by both app preview and exported sheets
+- `core/scripts/schema.js`
+- `core/scripts/library.js`
+- `core/scripts/importers/*`
+- `core/scripts/dnd-calculations.js`
+- `core/scripts/views/*` for renderers used by both app preview and exported sheets
+- `core/style/base.css`
+- `core/style/sheet.css`
 - `share/viewer/index.js` becomes a shell that loads core viewer modules
 - `share/editor/index.js` becomes a shell that loads editor modules plus the same core viewer modules for preview
 - `ViewCharacter.mount(container, character)` is the current shared viewer seam. Exported sheets, list previews, and editor previews should use this same method until it moves into `/core/viewer`.
 
-After that works, move the manager app around the proven core instead of moving every script path at once.
+Manager-only code remains under `manager/`: GitHub auth/API wrapper, export stub builder, app shell, editor modules, character list, and library management view. Claude can target the `core/...` paths directly in the editor shell manifest now.
 
 ## Immediate Test Gate
 
 - `node --check share/viewer/index.js`
 - `node --check manager/scripts/export.js`
-- `node --check manager/scripts/schema.js`
+- `node --check core/scripts/schema.js`
+- `node --check core/scripts/library.js`
+- `node --check core/scripts/views/view-character.js`
 - export Capella from the current staging manager
 - open the fresh exported file and confirm it passes the shell states: manifest, styles, renderer, character, library, render
+
+## Agent Notes
+
+- Codex moved the shared runtime into `/core` so exported viewer and future shareable editor can load the same renderer/calculation/library code.
+- Claude: please use `core/style/base.css`, `core/style/sheet.css`, and the ordered `core/scripts/...` list from `share/viewer/manifest.json` when drafting `share/editor/manifest.json`.
+- Future per-file progress bars should layer on the existing `library-progress` detail shape rather than changing the loader contract unless a real need appears.
+- Visual panel-content ports are still intentionally separate from this runtime split. Coordinate before editing `core/scripts/views/view-character-boss.js` because Capella relies heavily on it.
 
 ## Visual Overhaul — Source of Truth
 
@@ -72,14 +86,14 @@ What's live in the manager viewer:
 
 | Mockup feature | Status | Where |
 |---|---|---|
-| Sticky character head + tab nav | ✅ live | `view-character-header.js` emits `.ovh-sticky-head` + `.ovh-tab-row` |
-| Shimmer-gold on character name | ✅ live | `.ovh-shimmer-gold` — `base.css:647` |
-| Quickstats (HP/AC/Init/Spd) in head | ✅ live | header.js:57 |
-| Tabbed panels with auto-drop empty tabs | ✅ live | `view-character.js:101-110` |
-| Tab switching JS | ✅ live | `view-character.js:128` |
-| Compact/collapsible spell + ability records | ✅ live | `sheet.css:483` `.sheet-compact-record` |
+| Sticky character head + tab nav | ✅ live | `core/scripts/views/view-character-header.js` emits `.ovh-sticky-head` + `.ovh-tab-row` |
+| Shimmer-gold on character name | ✅ live | `.ovh-shimmer-gold` in `core/style/base.css` |
+| Quickstats (HP/AC/Init/Spd) in head | ✅ live | `core/scripts/views/view-character-header.js` |
+| Tabbed panels with auto-drop empty tabs | ✅ live | `core/scripts/views/view-character.js` |
+| Tab switching JS | ✅ live | `core/scripts/views/view-character.js` |
+| Compact/collapsible spell + ability records | ✅ live | `core/style/sheet.css` `.sheet-compact-record` |
 | `ViewCharacter.mount()` shared seam | ✅ live | used by list preview, app preview, exported shell |
-| Active-AC value in head | ⚠️ partial — picks active mode, no toggle UI yet | header.js:13 |
+| Active-AC value in head | ⚠️ partial — picks active mode, no toggle UI yet | `core/scripts/views/view-character-header.js` |
 
 What's NOT yet ported (still mockup-only — section renderers still emit old `.sheet-section`/`.sheet-card`/`.sheet-spell-entry` markup):
 
@@ -100,24 +114,23 @@ What's NOT yet ported (still mockup-only — section renderers still emit old `.
 
 ### Known bug
 
-- **List-preview modal clips the sticky head.** `view-list.js:247` opens `.sheet-preview-modal` and mounts the sheet inside. `.ovh-sticky-head` uses `margin: calc(var(--space-8) * -1) …` tuned for the manager's main layout padding, which the modal body doesn't have. Result: head extends past modal padding and looks misaligned. Fix is either (a) pad `.sheet-preview-body` with `var(--space-8)` to satisfy the negative-margin assumption, or (b) introduce `.ovh-tabbed.in-modal` CSS variant with zero head margins.
+- **List-preview modal sticky head clipping:** Codex applied the cheap compatibility fix by padding `.sheet-preview-body` with `var(--space-8)` in `manager/style/editor.css`. If future mockup work changes the preview modal, revisit whether an explicit `.ovh-tabbed.in-modal` variant is cleaner.
 
 ## Next Work Split — Visual Port (Pending Codex Confirmation)
 
 Proposed division for the panel-content port phase, contingent on `/core` split timing:
 
 **Codex (continues current ownership)**:
-- Thin `/core` split per "Next Architecture Step" above
-- Panel-content port for `view-character-dnd.js` and `view-character-spells.js` (already touched for density pass — keep the lane)
+- `/core` runtime split and path migration
+- Panel-content port for `core/scripts/views/view-character-dnd.js` and `core/scripts/views/view-character-spells.js` (already touched for density pass — keep the lane)
 
 **Claude (Step 2 onward)**:
 - `share/editor/index.js` + `share/editor/manifest.json` (mirror viewer cascade pattern, plus PAT drawer + write paths)
-- Panel-content port for `view-character-{identity, inventory, resources, notes}.js`
-- Quick fix on the list-preview modal sticky-head clipping (above)
+- Panel-content port for `core/scripts/views/view-character-{identity, inventory, resources, notes}.js`
 
 **Coordinated, neither owns yet**:
-- `view-character-boss.js` (Capella-heavy, complex toggles) — needs both agents to agree on data shape before porting
+- `core/scripts/views/view-character-boss.js` (Capella-heavy, complex toggles) — needs both agents to agree on data shape before porting
 - AC mode toggle UI — touches header.js + new CSS + character data shape
 - The editor-mockup revamp itself (current `manager/index.html` → left-edit + right-preview layout). This is a separate undertaking from the viewer port and should not start until the viewer port stabilises.
 
-**Trigger to start Step 2 (editor shell)**: either (a) `/core` lands and Claude can target final paths, or (b) Codex green-lights writing editor manifest against current `manager/scripts/editor/*` paths with a known rename later.
+**Trigger to start Step 2 (editor shell)**: `/core` has landed. Claude can target final core paths plus current `manager/scripts/editor/*` paths for editor-only modules.
