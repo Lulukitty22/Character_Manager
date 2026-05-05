@@ -10,8 +10,11 @@
 const ViewCharacterDnd = (() => {
 
   const esc = ViewCharacterUtils.esc;
+  const escAttr = ViewCharacterUtils.escAttr;
   const renderMechanicChips = ViewCharacterUtils.renderMechanicChips;
   const ABILITY_ORDER = ["str", "dex", "con", "int", "wis", "cha"];
+
+  const SVG_DIV = `<svg viewBox="0 0 600 14" preserveAspectRatio="none" aria-hidden="true"><path d="M0 7 L240 7 M260 7 Q300 -1 340 7 L600 7" stroke="rgba(201,168,76,0.55)" stroke-width="1" fill="none"/><circle cx="300" cy="7" r="2" fill="rgba(201,168,76,0.85)"/></svg>`;
 
   function renderCombatBlock(dnd, boss, character = null) {
     const bossActive = boss?.bossActive ?? false;
@@ -44,60 +47,67 @@ const ViewCharacterDnd = (() => {
       : "";
 
     return `
-      <section class="sheet-section">
-        <h2 class="sheet-section-title">Combat</h2>
-
-        <div class="sheet-hp-block">
-          <div class="sheet-hp-numbers">
-            <span class="sheet-hp-current">${hp.current}</span>
-            <span class="sheet-hp-sep">/</span>
-            <span class="sheet-hp-max">${hp.max}</span>
-            <span class="sheet-hp-label">HP</span>
-            ${dnd.hp?.temp > 0 ? `<span class="sheet-hp-temp">+${dnd.hp.temp} temp</span>` : ""}
-          </div>
-          <div class="hp-bar-track sheet-hp-bar">
-            <div class="hp-bar-fill ${hpClass}" style="width:${percent}%"></div>
-          </div>
-          ${boss ? `
-          <div class="sheet-state-mini-row text-sm">
-            <span>Boss HP ${boss.bossHp?.max ?? 0}</span>
-            <span>Tamed HP ${tamedHp.max ?? 0}</span>
-          </div>` : ""}
-          ${hpCalcChips ? `<div class="sheet-hp-calculated">${hpCalcChips}</div>` : ""}
+      <section class="ovh-section ovh-combat-section">
+        <div class="ovh-section-header">
+          <h2>Combat</h2>
+          <div class="ovh-section-divider">${SVG_DIV}</div>
         </div>
 
-        ${stateOverview}
-
-        <div class="sheet-combat-row">
-          ${renderStateStatBox("Armor Class", acPair.tamed?.value, acPair.boss?.value, bossActive, boss)}
-          ${renderStateStatBox("Initiative", formatSigned(initiativePair.tamed), formatSigned(initiativePair.boss), bossActive, boss)}
-          <div class="sheet-stat-box">
-            <div class="sheet-stat-value">${formatSigned(profBonus)}</div>
-            <div class="sheet-stat-label">Prof. Bonus</div>
+        <div class="ovh-card">
+          <div class="ovh-hp-readout">
+            <div class="nums">
+              <span class="current">${hp.current}</span>
+              <span class="sep">/</span>
+              <span class="max">${hp.max}</span>
+              <span class="label">HP</span>
+              ${dnd.hp?.temp > 0 ? `<span class="temp">+${dnd.hp.temp} temp</span>` : ""}
+            </div>
+            <div class="ovh-hp-bar-wrap">
+              <div class="ovh-hp-bar-fill ${hpClass}" style="width:${percent}%"></div>
+            </div>
+            ${boss ? `
+            <div class="sheet-state-mini-row text-sm">
+              <span>Boss HP ${boss.bossHp?.max ?? 0}</span>
+              <span>Tamed HP ${tamedHp.max ?? 0}</span>
+            </div>` : ""}
+            ${hpCalcChips ? `<div class="ovh-hp-calc">${hpCalcChips}</div>` : ""}
           </div>
-          ${spellcasting ? `
-          ${renderStateStatBox("Spell Save DC", spellcasting.tamedDc, spellcasting.bossDc, bossActive, boss)}
-          ${renderStateStatBox("Spell/Flesh Attack", formatSigned(spellcasting.tamedAttack), formatSigned(spellcasting.bossAttack), bossActive, boss)}
-          ` : ""}
-          ${legendaryCount > 0 ? `
-          <div class="sheet-stat-box sheet-boss-only" style="${stateStyle(bossActive, true)}">
-            <div class="sheet-stat-value">${legendaryCount}</div>
-            <div class="sheet-stat-label">Legendary Actions</div>
-          </div>` : ""}
-          ${regenAmount > 0 ? `
-          <div class="sheet-stat-box sheet-boss-only" style="${stateStyle(bossActive, true)}">
-            <div class="sheet-stat-value">${regenAmount}</div>
-            <div class="sheet-stat-label">Regen / Turn</div>
-          </div>` : ""}
         </div>
 
-        ${acModesHTML}
-        ${speedParts}
-        ${hpBreakdown}
-        ${rollCalculator}
+        ${stateOverview ? `<div class="ovh-card">${stateOverview}</div>` : ""}
+
+        <div class="ovh-card">
+          <div class="ovh-combat-stats">
+            ${renderStateStatBox("Armor Class", acPair.tamed?.value, acPair.boss?.value, bossActive, boss)}
+            ${renderStateStatBox("Initiative", formatSigned(initiativePair.tamed), formatSigned(initiativePair.boss), bossActive, boss)}
+            <div class="ovh-stat-block">
+              <div class="label">Prof. Bonus</div>
+              <div class="value">${formatSigned(profBonus)}</div>
+            </div>
+            ${spellcasting ? `
+            ${renderStateStatBox("Spell Save DC", spellcasting.tamedDc, spellcasting.bossDc, bossActive, boss)}
+            ${renderStateStatBox("Spell/Flesh Attack", formatSigned(spellcasting.tamedAttack), formatSigned(spellcasting.bossAttack), bossActive, boss)}
+            ` : ""}
+            ${legendaryCount > 0 ? `
+            <div class="ovh-stat-block sheet-boss-only" style="${stateStyle(bossActive, true)}">
+              <div class="label">Legendary Actions</div>
+              <div class="value">${legendaryCount}</div>
+            </div>` : ""}
+            ${regenAmount > 0 ? `
+            <div class="ovh-stat-block sheet-boss-only" style="${stateStyle(bossActive, true)}">
+              <div class="label">Regen / Turn</div>
+              <div class="value">${regenAmount}</div>
+            </div>` : ""}
+          </div>
+          ${acModesHTML}
+          ${speedParts}
+        </div>
+
+        ${hpBreakdown ? `<div class="ovh-card">${hpBreakdown}</div>` : ""}
+        ${rollCalculator ? `<div class="ovh-card">${rollCalculator}</div>` : ""}
 
         ${boss?.regeneration?.disabledBy?.length ? `
-        <div class="sheet-boss-only text-sm text-muted" style="${stateStyle(bossActive, true)};margin-top:var(--space-2)">
+        <div class="ovh-card text-sm text-muted sheet-boss-only" style="${stateStyle(bossActive, true)}">
           Regeneration disabled by: ${esc(boss.regeneration.disabledBy.join(", "))}
         </div>` : ""}
       </section>
@@ -121,14 +131,10 @@ const ViewCharacterDnd = (() => {
       const hasBossDelta = boss && bossBonus !== 0;
 
       return `
-        <div class="sheet-ability-box ${isSpell ? "sheet-ability-spellcasting" : ""}" title="${esc(label)}">
-          <div class="sheet-ability-abbr">${abbr}</div>
-          <div class="sheet-ability-score">
-            ${renderStateValue(baseScore, bossScore, bossActive, boss)}
-          </div>
-          <div class="sheet-ability-mod">
-            ${renderStateValue(formatSigned(baseMod), formatSigned(bossMod), bossActive, boss)}
-          </div>
+        <div class="ovh-ability ${isSpell ? "spotlight" : ""}" title="${esc(label)}">
+          <div class="abbr">${abbr}</div>
+          <div class="score">${renderStateValue(baseScore, bossScore, bossActive, boss)}</div>
+          <div class="mod">${renderStateValue(formatSigned(baseMod), formatSigned(bossMod), bossActive, boss)}</div>
           ${boss ? `
           <div class="sheet-ability-breakdown">
             <span class="sheet-mode-line sheet-mode-tamed">Base ${baseScore} (${formatSigned(baseMod)})</span>
@@ -136,15 +142,20 @@ const ViewCharacterDnd = (() => {
               Boss ${formatSigned(bossBonus)} = ${bossScore} (${formatSigned(bossMod)})
             </span>
           </div>` : ""}
-          ${isSpell ? `<div class="sheet-ability-spellmark">Spellcasting</div>` : ""}
+          ${isSpell ? `<div class="spellmark">Spellcasting</div>` : ""}
         </div>`;
     }).join("");
 
     return `
-      <section class="sheet-section">
-        <h2 class="sheet-section-title">Ability Scores</h2>
-        <div class="sheet-ability-grid">${boxes}</div>
-        ${spellAbil ? `<p class="text-muted text-sm" style="margin-top:var(--space-2)">Spellcasting ability: ${esc(Schema.ABILITY_NAMES[spellAbil] || spellAbil)}</p>` : ""}
+      <section class="ovh-section ovh-ability-scores-section">
+        <div class="ovh-section-header">
+          <h2>Ability Scores</h2>
+          <div class="ovh-section-divider">${SVG_DIV}</div>
+        </div>
+        <div class="ovh-card">
+          <div class="ovh-ability-grid">${boxes}</div>
+          ${spellAbil ? `<p class="text-muted text-sm" style="margin-top:var(--space-2)">Spellcasting ability: ${esc(Schema.ABILITY_NAMES[spellAbil] || spellAbil)}</p>` : ""}
+        </div>
       </section>
     `;
   }
@@ -167,19 +178,24 @@ const ViewCharacterDnd = (() => {
       const bossTotal = bossMod + (proficient ? profBonus : 0);
 
       return `
-        <div class="sheet-save-row">
-          <span class="sheet-prof-dot ${proficient ? "proficient" : ""}"></span>
-          <span class="sheet-save-bonus">${renderStateValue(formatSigned(baseTotal), formatSigned(bossTotal), bossActive, boss)}</span>
-          <span class="sheet-save-label">${label}</span>
+        <div class="ovh-save ${proficient ? "proficient" : ""}">
+          <span class="ovh-pip ${proficient ? "prof" : ""}"></span>
+          <span class="mod">${renderStateValue(formatSigned(baseTotal), formatSigned(bossTotal), bossActive, boss)}</span>
+          <span class="name">${label}</span>
           ${boss && allAdvantage ? `<span class="sheet-state-chip sheet-boss-only" style="${stateStyle(bossActive, true)}">Advantage</span>` : ""}
-          ${boss ? `<span class="sheet-save-breakdown text-muted">Base ${formatSigned(baseMod)}${proficient ? ` + prof ${formatSigned(profBonus)}` : ""}; Boss ${formatSigned(bossMod)}${proficient ? ` + prof ${formatSigned(profBonus)}` : ""}</span>` : ""}
+          ${boss ? `<span class="note text-muted">Base ${formatSigned(baseMod)}${proficient ? ` + prof ${formatSigned(profBonus)}` : ""}; Boss ${formatSigned(bossMod)}${proficient ? ` + prof ${formatSigned(profBonus)}` : ""}</span>` : ""}
         </div>`;
     }).join("");
 
     return `
-      <section class="sheet-section sheet-section-half">
-        <h2 class="sheet-section-title">Saving Throws</h2>
-        <div class="sheet-save-list">${rows}</div>
+      <section class="ovh-section ovh-saves-section">
+        <div class="ovh-section-header">
+          <h2>Saving Throws</h2>
+          <div class="ovh-section-divider">${SVG_DIV}</div>
+        </div>
+        <div class="ovh-card">
+          <div class="ovh-saves-grid">${rows}</div>
+        </div>
       </section>
     `;
   }
@@ -205,25 +221,30 @@ const ViewCharacterDnd = (() => {
       const override = skillOverrides[name] || null;
       const displayBase = override?.tamedBonus ?? baseBonus;
       const displayBoss = override?.bossBonus ?? bossBonus;
-      const dotClass = isExpert ? "expert" : isProficient ? "proficient" : "";
+      const pipClass = isExpert ? "expertise" : isProficient ? "prof" : "";
       const abilAbbr = Schema.ABILITY_ABBREVIATIONS[ability];
       const advantage = override?.advantageWhenBoss ?? (allAdvantage && isProficient);
 
       return `
-        <div class="sheet-skill-row">
-          <span class="sheet-prof-dot ${dotClass}"></span>
-          <span class="sheet-skill-bonus">${renderStateValue(formatSigned(displayBase), formatSigned(displayBoss), bossActive, boss)}</span>
-          <span class="sheet-skill-label">${name}</span>
-          <span class="sheet-skill-ability text-muted">${abilAbbr}</span>
+        <div class="ovh-skill ${pipClass}">
+          <span class="ovh-pip ${pipClass}"></span>
+          <span class="mod">${renderStateValue(formatSigned(displayBase), formatSigned(displayBoss), bossActive, boss)}</span>
+          <span class="name">${name}</span>
+          <span class="ability-tag">${abilAbbr}</span>
           ${boss && advantage ? `<span class="sheet-state-chip sheet-boss-only" style="${stateStyle(bossActive, true)}">Adv</span>` : ""}
-          ${override?.note ? `<span class="sheet-skill-note text-muted">${esc(override.note)}</span>` : ""}
+          ${override?.note ? `<span class="note text-muted">${esc(override.note)}</span>` : ""}
         </div>`;
     }).join("");
 
     return `
-      <section class="sheet-section sheet-section-half">
-        <h2 class="sheet-section-title">Skills</h2>
-        <div class="sheet-skill-list">${rows}</div>
+      <section class="ovh-section ovh-skills-section">
+        <div class="ovh-section-header">
+          <h2>Skills</h2>
+          <div class="ovh-section-divider">${SVG_DIV}</div>
+        </div>
+        <div class="ovh-card">
+          <div class="ovh-skills-grid">${rows}</div>
+        </div>
       </section>
     `;
   }
@@ -233,25 +254,34 @@ const ViewCharacterDnd = (() => {
     const multiclass = dnd.multiclass || [];
     if (!feats.length && !multiclass.length) return "";
 
-    const featEntries = feats.map(feat => `
-      <div class="sheet-feat-entry">
-        <span class="sheet-feat-name">${esc(feat.name || "(Unnamed)")}</span>
-        ${feat.description ? `<div class="sheet-feat-desc text-sm text-muted">${esc(feat.description)}</div>` : ""}
-      </div>
-    `).join("");
+    const featEntries = feats.map(feat => {
+      const mechanics = Array.isArray(feat.addons?.mechanics) ? feat.addons.mechanics : [];
+      return `
+        <div class="ovh-record ovh-feat-record">
+          <div class="title-block">
+            <span class="title">${esc(feat.name || "(Unnamed)")}</span>
+            ${ViewCharacterUtils.renderOvhChips(mechanics, { className: "quick-chips" })}
+          </div>
+          ${feat.description ? `<div class="body"><div class="desc">${esc(feat.description)}</div></div>` : ""}
+        </div>`;
+    }).join("");
 
     const multiEntries = multiclass.map(mc => `
-      <div class="sheet-multiclass-entry">
-        <span class="sheet-multiclass-class">${esc(mc.class || "")}</span>
-        ${mc.subclass ? `<span class="text-muted"> / ${esc(mc.subclass)}</span>` : ""}
-        ${mc.level ? `<span class="sheet-multiclass-level"> - Lv.${mc.level}</span>` : ""}
-      </div>
-    `).join("");
+      <div class="ovh-row">
+        <span class="k">${esc(mc.class || "")}${mc.subclass ? ` / ${esc(mc.subclass)}` : ""}</span>
+        ${mc.level ? `<span class="v">Lv.${mc.level}</span>` : ""}
+      </div>`).join("");
 
     return `
-      <section class="sheet-section">
-        ${multiclass.length ? `<h2 class="sheet-section-title">Multiclass</h2><div class="sheet-multiclass-list">${multiEntries}</div>` : ""}
-        ${feats.length ? `<h2 class="sheet-section-title" style="margin-top:var(--space-4)">Feats</h2><div class="sheet-feat-list">${featEntries}</div>` : ""}
+      <section class="ovh-section ovh-feats-section">
+        <div class="ovh-section-header">
+          <h2>Feats &amp; Classes</h2>
+          <div class="ovh-section-divider">${SVG_DIV}</div>
+        </div>
+        <div class="ovh-card">
+          ${multiclass.length ? `<p class="ovh-group-label">Multiclass</p><div class="ovh-identity-rows">${multiEntries}</div>` : ""}
+          ${feats.length ? `${multiclass.length ? `<p class="ovh-group-label" style="margin-top:var(--space-4)">Feats</p>` : ""}<div class="ovh-feat-list">${featEntries}</div>` : ""}
+        </div>
       </section>
     `;
   }
@@ -394,38 +424,31 @@ const ViewCharacterDnd = (() => {
       const state = mode.state || "all";
       const stateClass = state === "boss" ? "sheet-boss-only" : state === "tamed" ? "sheet-tamed-only" : "";
       const style = state === "boss" ? stateStyle(bossActive, true) : state === "tamed" ? stateStyle(!bossActive, true) : "";
-      const conditional = mode.conditional ? `<span class="sheet-state-chip">Conditional</span>` : "";
       return `
-        <div class="sheet-ac-mode ${mode.active ? "active" : ""} ${stateClass}" style="${style}">
-          <span class="sheet-ac-value">${mode.value}</span>
-          <span class="sheet-ac-label">${esc(mode.label)}</span>
-          ${mode.formula ? `<span class="sheet-ac-formula text-muted">${esc(mode.formula)}</span>` : ""}
-          ${conditional}
-        </div>
+        <button type="button" class="ovh-ac-mode ${mode.active ? "active" : ""} ${mode.conditional ? "conditional" : ""} ${stateClass}"
+                style="${style}" data-ac-id="${escAttr(mode.id || "")}">
+          <span class="value">${esc(String(mode.value))}</span>
+          <span class="name">${esc(mode.label)}</span>
+          ${mode.formula ? `<span class="note">${esc(mode.formula)}</span>` : ""}
+        </button>
       `;
     }).join("");
 
-    return `<div class="sheet-ac-modes">${rows}</div>`;
+    return `<div class="ovh-ac-modes">${rows}</div>`;
   }
 
   function renderSpeed(speed) {
-    const parts = Object.entries(speed)
+    const chips = Object.entries(speed)
       .filter(([, value]) => Number(value) > 0)
-      .map(([key, value]) => `
-        <span class="sheet-speed-item">
-          <span class="sheet-speed-value">${value}</span>
-          <span class="sheet-speed-label">${esc(key)}</span>
-        </span>
-      `).join("");
-
-    return parts ? `<div class="sheet-speed-row">${parts}</div>` : "";
+      .map(([key, value]) => ({ label: key, value: `${value}ft`, kind: "action" }));
+    return chips.length ? ViewCharacterUtils.renderOvhChips(chips, { className: "ovh-chips ovh-speed-chips" }) : "";
   }
 
   function renderStateStatBox(label, tamedValue, bossValue, bossActive, boss) {
     return `
-      <div class="sheet-stat-box">
-        <div class="sheet-stat-value">${renderStateValue(tamedValue ?? "-", bossValue ?? tamedValue ?? "-", bossActive, boss)}</div>
-        <div class="sheet-stat-label">${esc(label)}</div>
+      <div class="ovh-stat-block">
+        <div class="label">${esc(label)}</div>
+        <div class="value">${renderStateValue(tamedValue ?? "-", bossValue ?? tamedValue ?? "-", bossActive, boss)}</div>
       </div>
     `;
   }
@@ -506,47 +529,33 @@ const ViewCharacterDnd = (() => {
     const abilityAbbr = Schema.ABILITY_ABBREVIATIONS[ability] || ability.toUpperCase();
 
     const tamedDcBreakdown = buildSpellcastingBreakdown({
-      baseLabel: "Base",
-      baseValue: 8,
-      abilityLabel: abilityName,
-      abilityValue: baseMod,
-      profBonus,
-      bonusLabel,
-      bonusValue: dcBonus,
+      baseLabel: "Base", baseValue: 8,
+      abilityLabel: abilityName, abilityValue: baseMod,
+      profBonus, bonusLabel, bonusValue: dcBonus,
       bonusDescription: `${bonusLabel} bonus from the spellcasting package.`,
       baseDescription: "Standard spell save DC base.",
       abilityDescription: `${abilityName} modifier from score ${baseScore}.`,
       profDescription: "Proficiency bonus.",
     });
     const bossDcBreakdown = buildSpellcastingBreakdown({
-      baseLabel: "Base",
-      baseValue: 8,
-      abilityLabel: abilityName,
-      abilityValue: bossMod,
-      profBonus,
-      bonusLabel,
-      bonusValue: dcBonus,
+      baseLabel: "Base", baseValue: 8,
+      abilityLabel: abilityName, abilityValue: bossMod,
+      profBonus, bonusLabel, bonusValue: dcBonus,
       bonusDescription: `${bonusLabel} bonus from the spellcasting package.`,
       baseDescription: "Standard spell save DC base.",
       abilityDescription: `${abilityName} modifier from score ${bossScore}.`,
       profDescription: "Proficiency bonus.",
     });
     const tamedAttackBreakdown = buildSpellcastingBreakdown({
-      abilityLabel: abilityName,
-      abilityValue: baseMod,
-      profBonus,
-      bonusLabel,
-      bonusValue: attackBonus,
+      abilityLabel: abilityName, abilityValue: baseMod,
+      profBonus, bonusLabel, bonusValue: attackBonus,
       bonusDescription: `${bonusLabel} bonus from the spellcasting package.`,
       abilityDescription: `${abilityName} modifier from score ${baseScore}.`,
       profDescription: "Proficiency bonus.",
     });
     const bossAttackBreakdown = buildSpellcastingBreakdown({
-      abilityLabel: abilityName,
-      abilityValue: bossMod,
-      profBonus,
-      bonusLabel,
-      bonusValue: attackBonus,
+      abilityLabel: abilityName, abilityValue: bossMod,
+      profBonus, bonusLabel, bonusValue: attackBonus,
       bonusDescription: `${bonusLabel} bonus from the spellcasting package.`,
       abilityDescription: `${abilityName} modifier from score ${bossScore}.`,
       profDescription: "Proficiency bonus.",
@@ -558,14 +567,8 @@ const ViewCharacterDnd = (() => {
       bossDc: 8 + profBonus + bossMod + dcBonus,
       tamedAttack: profBonus + baseMod + attackBonus,
       bossAttack: profBonus + bossMod + attackBonus,
-      dcBreakdown: {
-        tamed: tamedDcBreakdown,
-        boss: bossDcBreakdown,
-      },
-      attackBreakdown: {
-        tamed: tamedAttackBreakdown,
-        boss: bossAttackBreakdown,
-      },
+      dcBreakdown: { tamed: tamedDcBreakdown, boss: bossDcBreakdown },
+      attackBreakdown: { tamed: tamedAttackBreakdown, boss: bossAttackBreakdown },
       dcNote: `8 + ${abilityAbbr} + proficiency${dcBonus ? ` + ${bonusLabel} ${formatSigned(dcBonus)}` : ""}`,
       attackNote: `${abilityAbbr} + proficiency${attackBonus ? ` + ${bonusLabel} ${formatSigned(attackBonus)}` : ""}`,
     };
@@ -575,39 +578,16 @@ const ViewCharacterDnd = (() => {
     const chips = [];
 
     if (options.baseLabel) {
-      chips.push({
-        label: options.baseLabel,
-        value: options.baseValue,
-        kind: "neutral",
-        description: options.baseDescription || "",
-      });
+      chips.push({ label: options.baseLabel, value: options.baseValue, kind: "neutral", description: options.baseDescription || "" });
     }
-
     if (options.abilityLabel) {
-      chips.push({
-        label: options.abilityLabel,
-        value: formatSigned(options.abilityValue),
-        kind: chipKindForValue(options.abilityValue),
-        description: options.abilityDescription || "",
-      });
+      chips.push({ label: options.abilityLabel, value: formatSigned(options.abilityValue), kind: chipKindForValue(options.abilityValue), description: options.abilityDescription || "" });
     }
-
     if (options.profBonus) {
-      chips.push({
-        label: "Proficiency",
-        value: formatSigned(options.profBonus),
-        kind: "positive",
-        description: options.profDescription || "Proficiency bonus.",
-      });
+      chips.push({ label: "Proficiency", value: formatSigned(options.profBonus), kind: "positive", description: options.profDescription || "Proficiency bonus." });
     }
-
     if (options.bonusValue) {
-      chips.push({
-        label: options.bonusLabel || "Bonus",
-        value: formatSigned(options.bonusValue),
-        kind: chipKindForValue(options.bonusValue),
-        description: options.bonusDescription || "",
-      });
+      chips.push({ label: options.bonusLabel || "Bonus", value: formatSigned(options.bonusValue), kind: chipKindForValue(options.bonusValue), description: options.bonusDescription || "" });
     }
 
     return chips;
@@ -618,9 +598,7 @@ const ViewCharacterDnd = (() => {
     for (let i = 0; i < left.length; i += 1) {
       const a = left[i] || {};
       const b = right[i] || {};
-      if (a.kind !== b.kind || a.label !== b.label || String(a.value ?? "") !== String(b.value ?? "")) {
-        return false;
-      }
+      if (a.kind !== b.kind || a.label !== b.label || String(a.value ?? "") !== String(b.value ?? "")) return false;
     }
     return true;
   }
@@ -650,12 +628,34 @@ const ViewCharacterDnd = (() => {
     return isVisible ? "" : "display:none";
   }
 
+  function wireInteractive(containerEl) {
+    containerEl.querySelectorAll(".ovh-ac-modes").forEach(row => {
+      row.querySelectorAll(".ovh-ac-mode").forEach(btn => {
+        if (btn.dataset.wired === "true") return;
+        btn.dataset.wired = "true";
+        btn.addEventListener("click", () => {
+          row.querySelectorAll(".ovh-ac-mode").forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          const newAc = btn.querySelector(".value")?.textContent?.trim();
+          if (!newAc) return;
+          containerEl.querySelectorAll(".ovh-quickstat").forEach(qs => {
+            if (qs.querySelector(".label")?.textContent?.trim() === "AC") {
+              const valEl = qs.querySelector(".value");
+              if (valEl) valEl.textContent = newAc;
+            }
+          });
+        });
+      });
+    });
+  }
+
   return {
     renderCombatBlock,
     renderAbilityScores,
     renderSavingThrows,
     renderSkills,
     renderFeatsAndMulticlass,
+    wireInteractive,
   };
 
 })();

@@ -85,7 +85,7 @@ const ViewCharacter = (() => {
       {
         id: "notes",
         label: "Notes",
-        render: () => ViewCharacterNotes.render(character.notes),
+        render: () => ViewCharacterNotes.render(character),
       },
     ];
   }
@@ -139,6 +139,8 @@ const ViewCharacter = (() => {
     if (character.boss && typeof ViewCharacterBoss?.wireInteractive === "function") {
       ViewCharacterBoss.wireInteractive(containerEl, character);
     }
+    ViewCharacterNotes.wireInteractive?.(containerEl);
+    ViewCharacterDnd.wireInteractive?.(containerEl);
     ViewCharacterSpells.wireInteractive?.(containerEl, character);
     ViewCharacterAbilities.wireInteractive?.(containerEl, character);
     ViewCharacterInventory.wireInteractive?.(containerEl, character);

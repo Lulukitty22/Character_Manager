@@ -6,43 +6,42 @@
 const ViewCharacterAbilities = (() => {
 
   const esc = ViewCharacterUtils.esc;
-  const renderMechanicChips = ViewCharacterUtils.renderMechanicChips;
+
+  const SVG_DIV = `<svg viewBox="0 0 600 14" preserveAspectRatio="none" aria-hidden="true"><path d="M0 7 L240 7 M260 7 Q300 -1 340 7 L600 7" stroke="rgba(201,168,76,0.55)" stroke-width="1" fill="none"/><circle cx="300" cy="7" r="2" fill="rgba(201,168,76,0.85)"/></svg>`;
 
   function render(abilities) {
     if (!abilities || !abilities.length) return "";
 
     const entries = abilities.map(ability => {
-      const tags = (ability.tags || []).map(t => `<span class="sheet-tag">${esc(t)}</span>`).join("");
       const mechanics = [
         ability.type ? { label: "Type", value: ability.type.replace(/_/g, " "), kind: abilityKind(ability.type) } : null,
         ability.active ? { label: "Active", kind: "positive" } : null,
-        ...(ability.addons?.mechanics || []),
+        ...(Array.isArray(ability.addons?.mechanics) ? ability.addons.mechanics : []),
       ].filter(Boolean);
 
+      const tags = (ability.tags || []).map(t => ({ label: t, kind: "neutral" }));
+
       return `
-        <details class="sheet-ability-entry sheet-record-card sheet-compact-record" data-sheet-record="${ViewCharacterUtils.encodeDataAttr(buildAbilityViewerRecord(ability, mechanics))}">
-          <summary class="sheet-compact-summary">
-            <div class="sheet-ability-content">
-              <div class="sheet-ability-header sheet-record-card-header">
-                <span class="sheet-ability-name">${esc(ability.name || "(Unnamed)")}</span>
-                <div class="sheet-record-card-actions">
-                  <button type="button" class="sheet-inline-button sheet-open-record-viewer">View</button>
-                </div>
-              </div>
-              ${renderMechanicChips(mechanics)}
-            </div>
+        <details class="ovh-record ovh-ability-record sheet-record-card" data-sheet-record="${ViewCharacterUtils.encodeDataAttr(buildAbilityViewerRecord(ability, mechanics))}">
+          <summary class="title-block">
+            <span class="title">${esc(ability.name || "(Unnamed)")}</span>
+            ${ViewCharacterUtils.renderOvhChips(mechanics, { className: "quick-chips" })}
+            <button type="button" class="ovh-view-button sheet-open-record-viewer">View</button>
           </summary>
-          <div class="sheet-compact-body">
-            ${ability.description ? `<div class="sheet-ability-desc text-sm">${esc(ability.description)}</div>` : ""}
-            ${tags ? `<div class="sheet-ability-tags">${tags}</div>` : ""}
+          <div class="body">
+            ${ability.description ? `<div class="desc">${esc(ability.description)}</div>` : ""}
+            ${tags.length ? ViewCharacterUtils.renderOvhChips(tags) : ""}
           </div>
         </details>`;
     }).join("");
 
     return `
-      <section class="sheet-section">
-        <h2 class="sheet-section-title">⚡ Abilities &amp; Traits</h2>
-        <div class="sheet-ability-list">${entries}</div>
+      <section class="ovh-section ovh-abilities-section">
+        <div class="ovh-section-header">
+          <h2>Abilities &amp; Traits</h2>
+          <div class="ovh-section-divider">${SVG_DIV}</div>
+        </div>
+        <div class="ovh-ability-list">${entries}</div>
       </section>
     `;
   }
@@ -64,16 +63,7 @@ const ViewCharacterAbilities = (() => {
     };
   }
 
-  function wireInteractive(containerEl) {
-    containerEl.querySelectorAll(".sheet-ability-entry .sheet-open-record-viewer").forEach(button => {
-      button.addEventListener("click", event => {
-        event.preventDefault();
-        event.stopPropagation();
-        const row = button.closest(".sheet-ability-entry");
-        ViewCharacterUtils.openRecordViewer(ViewCharacterUtils.decodeDataAttr(row?.dataset.sheetRecord, {}));
-      });
-    });
-  }
+  function wireInteractive(_containerEl) {}
 
   return { render, wireInteractive };
 

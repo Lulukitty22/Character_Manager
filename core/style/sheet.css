@@ -2161,3 +2161,534 @@ details.sheet-mechanic-chip {
     padding-left: var(--space-4, 1rem);
   }
 }
+
+/* ── Notes: callout blocks ─────────────────────────────────────── */
+
+.ovh-callout {
+  margin: 0;
+  padding: 0.6rem 0.85rem;
+  border-left: 3px solid rgba(201, 168, 76, 0.4);
+  border-radius: 0 6px 6px 0;
+  background: rgba(201, 168, 76, 0.06);
+  color: var(--color-text, #d8d0e8);
+  font-size: 0.85rem;
+  line-height: 1.55;
+}
+
+.ovh-callout.gm {
+  border-left-color: rgba(100, 180, 255, 0.45);
+  background: rgba(100, 180, 255, 0.06);
+  color: #a8d4f5;
+}
+
+.ovh-callout.warn {
+  border-left-color: rgba(255, 160, 60, 0.45);
+  background: rgba(255, 160, 60, 0.06);
+  color: #f5c87a;
+}
+
+/* ── Notes: collapsible prose (backstory read-more) ────────────── */
+
+.ovh-prose {
+  position: relative;
+}
+
+.ovh-prose .full {
+  display: none;
+}
+
+.ovh-prose.expanded .truncated {
+  display: none;
+}
+
+.ovh-prose.expanded .full {
+  display: inline;
+}
+
+.ovh-prose-toggle {
+  display: inline-block;
+  margin-left: 0.35rem;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--color-gold, #c9a84c);
+  font-size: 0.8rem;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.ovh-prose-toggle:hover {
+  color: var(--color-gold-bright, #e0c060);
+}
+
+/* ── Abilities list ─────────────────────────────────────────────── */
+
+.ovh-ability-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2, 0.5rem);
+}
+
+/* ── Identity: deferred shim ────────────────────────────────────── */
+
+.ovh-deferred-note {
+  margin: var(--space-3, 0.75rem) 0;
+  color: var(--color-text-muted, #8a8399);
+  font-size: 0.78rem;
+  font-style: italic;
+}
+
+/* ── Identity: info rows ─────────────────────────────────────────── */
+
+.ovh-identity-rows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1, 0.25rem);
+  margin-bottom: var(--space-3, 0.75rem);
+}
+
+.ovh-row {
+  display: flex;
+  gap: var(--space-2, 0.5rem);
+  align-items: baseline;
+  font-size: 0.85rem;
+}
+
+.ovh-row .k {
+  min-width: 6rem;
+  color: var(--color-text-muted, #8a8399);
+  font-size: 0.73rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.ovh-row .v {
+  color: var(--color-text, #d8d0e8);
+}
+
+/* ── Identity: tags ──────────────────────────────────────────────── */
+
+.ovh-tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1, 0.25rem);
+  margin-bottom: var(--space-2, 0.5rem);
+}
+
+.ovh-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.15rem 0.5rem;
+  border: 1px solid rgba(180, 140, 255, 0.2);
+  border-radius: 999px;
+  background: rgba(180, 140, 255, 0.08);
+  color: var(--color-text-muted, #8a8399);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.ovh-tag.tone-warn {
+  border-color: rgba(255, 160, 60, 0.3);
+  background: rgba(255, 160, 60, 0.08);
+  color: #f5c87a;
+}
+
+/* ── Identity: appearance gallery ───────────────────────────────── */
+
+.ovh-appearance-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1, 0.25rem);
+  margin-bottom: var(--space-3, 0.75rem);
+}
+
+.ovh-appearance-tab {
+  padding: 0.25rem 0.75rem;
+  border: 1px solid rgba(201, 168, 76, 0.25);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--color-text-muted, #8a8399);
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.ovh-appearance-tab.active,
+.ovh-appearance-tab:hover {
+  border-color: rgba(201, 168, 76, 0.55);
+  color: var(--color-gold, #c9a84c);
+}
+
+.ovh-gallery {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2, 0.5rem);
+  margin-bottom: var(--space-3, 0.75rem);
+}
+
+.ovh-gallery-main img {
+  width: 100%;
+  max-height: 360px;
+  object-fit: contain;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.ovh-gallery-thumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1, 0.25rem);
+}
+
+.ovh-gallery-thumb {
+  padding: 0;
+  border: 2px solid rgba(180, 140, 255, 0.15);
+  border-radius: 4px;
+  background: none;
+  cursor: pointer;
+  overflow: hidden;
+  transition: border-color 0.15s;
+}
+
+.ovh-gallery-thumb img {
+  display: block;
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+}
+
+.ovh-gallery-thumb.active {
+  border-color: rgba(201, 168, 76, 0.6);
+}
+
+.ovh-appearance-desc {
+  margin: 0 0 var(--space-3, 0.75rem);
+  color: var(--color-text-muted, #8a8399);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  font-style: italic;
+}
+
+/* ── D&D: HP readout ────────────────────────────────────────────── */
+
+.ovh-hp-readout {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2, 0.5rem);
+}
+
+.ovh-hp-readout .nums {
+  display: flex;
+  align-items: baseline;
+  gap: 0.25rem;
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.ovh-hp-readout .current { color: var(--color-text-bright, #f0eaf8); }
+
+.ovh-hp-readout .sep,
+.ovh-hp-readout .max { color: var(--color-text-muted, #8a8399); font-size: 1rem; }
+
+.ovh-hp-readout .label {
+  color: var(--color-text-muted, #8a8399);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-left: 0.25rem;
+}
+
+.ovh-hp-readout .temp {
+  color: #7ec8e3;
+  font-size: 0.8rem;
+  margin-left: 0.5rem;
+}
+
+.ovh-hp-calc {
+  margin-top: var(--space-1, 0.25rem);
+}
+
+/* ── D&D: combat stat tiles ─────────────────────────────────────── */
+
+.ovh-combat-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3, 0.75rem);
+  margin-bottom: var(--space-3, 0.75rem);
+}
+
+.ovh-stat-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 72px;
+  padding: var(--space-2, 0.5rem) var(--space-3, 0.75rem);
+  border: 1px solid rgba(180, 140, 255, 0.15);
+  border-radius: 8px;
+  background: rgba(6, 4, 11, 0.3);
+  text-align: center;
+}
+
+.ovh-stat-block .label {
+  color: var(--color-text-muted, #8a8399);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.25rem;
+}
+
+.ovh-stat-block .value {
+  color: var(--color-text-bright, #f0eaf8);
+  font-size: 1.25rem;
+  font-weight: 800;
+  line-height: 1.1;
+  font-family: var(--font-mono, monospace);
+}
+
+/* ── D&D: AC mode toggle ────────────────────────────────────────── */
+
+.ovh-ac-modes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2, 0.5rem);
+  margin: var(--space-3, 0.75rem) 0 var(--space-2, 0.5rem);
+}
+
+.ovh-ac-mode {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 64px;
+  padding: 0.4rem 0.75rem;
+  border: 2px solid rgba(180, 140, 255, 0.2);
+  border-radius: 8px;
+  background: rgba(6, 4, 11, 0.3);
+  color: var(--color-text-muted, #8a8399);
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+
+.ovh-ac-mode .value {
+  font-size: 1.15rem;
+  font-weight: 800;
+  font-family: var(--font-mono, monospace);
+  line-height: 1.1;
+}
+
+.ovh-ac-mode .name {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.ovh-ac-mode .note {
+  font-size: 0.65rem;
+  color: var(--color-text-muted, #8a8399);
+}
+
+.ovh-ac-mode.active {
+  border-color: rgba(201, 168, 76, 0.6);
+  background: rgba(201, 168, 76, 0.08);
+  color: var(--color-text-bright, #f0eaf8);
+}
+
+.ovh-ac-mode.conditional {
+  border-style: dashed;
+}
+
+.ovh-ac-mode:hover:not(.active) {
+  border-color: rgba(180, 140, 255, 0.4);
+  color: var(--color-text, #d8d0e8);
+}
+
+/* ── D&D: ability score grid ────────────────────────────────────── */
+
+.ovh-ability-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: var(--space-2, 0.5rem);
+}
+
+.ovh-ability {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-2, 0.5rem);
+  border: 1px solid rgba(180, 140, 255, 0.15);
+  border-radius: 8px;
+  background: rgba(6, 4, 11, 0.3);
+  text-align: center;
+  gap: 0.2rem;
+}
+
+.ovh-ability.spotlight {
+  border-color: rgba(201, 168, 76, 0.45);
+  background: rgba(201, 168, 76, 0.06);
+}
+
+.ovh-ability .abbr {
+  color: var(--color-text-muted, #8a8399);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.ovh-ability .score {
+  color: var(--color-text-bright, #f0eaf8);
+  font-size: 1.15rem;
+  font-weight: 800;
+  font-family: var(--font-mono, monospace);
+}
+
+.ovh-ability .mod {
+  color: var(--color-gold, #c9a84c);
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: var(--font-mono, monospace);
+}
+
+.ovh-ability .spellmark {
+  color: var(--color-gold, #c9a84c);
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ── D&D: proficiency pips ──────────────────────────────────────── */
+
+.ovh-pip {
+  flex: 0 0 auto;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid rgba(180, 140, 255, 0.25);
+  background: transparent;
+}
+
+.ovh-pip.prof {
+  border-color: rgba(76, 175, 128, 0.7);
+  background: rgba(76, 175, 128, 0.35);
+}
+
+.ovh-pip.expertise {
+  border-color: rgba(201, 168, 76, 0.7);
+  background: rgba(201, 168, 76, 0.35);
+}
+
+.ovh-pip.mastery {
+  border-color: rgba(130, 180, 255, 0.7);
+  background: rgba(130, 180, 255, 0.35);
+}
+
+/* ── D&D: saving throws ─────────────────────────────────────────── */
+
+.ovh-saves-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.ovh-save {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2, 0.5rem);
+  padding: 0.25rem 0;
+  font-size: 0.85rem;
+}
+
+.ovh-save .mod {
+  min-width: 2.5rem;
+  font-family: var(--font-mono, monospace);
+  font-weight: 700;
+  color: var(--color-text-bright, #f0eaf8);
+  text-align: right;
+}
+
+.ovh-save .name {
+  flex: 1;
+  color: var(--color-text, #d8d0e8);
+}
+
+.ovh-save .note {
+  font-size: 0.72rem;
+  color: var(--color-text-muted, #8a8399);
+}
+
+.ovh-save.proficient .name {
+  color: var(--color-text-bright, #f0eaf8);
+}
+
+/* ── D&D: skills ────────────────────────────────────────────────── */
+
+.ovh-skills-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.ovh-skill {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2, 0.5rem);
+  padding: 0.2rem 0;
+  font-size: 0.82rem;
+}
+
+.ovh-skill .mod {
+  min-width: 2.5rem;
+  font-family: var(--font-mono, monospace);
+  font-weight: 700;
+  color: var(--color-text-bright, #f0eaf8);
+  text-align: right;
+}
+
+.ovh-skill .name {
+  flex: 1;
+  color: var(--color-text, #d8d0e8);
+}
+
+.ovh-skill .ability-tag {
+  color: var(--color-text-muted, #8a8399);
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.ovh-skill .note {
+  font-size: 0.7rem;
+  color: var(--color-text-muted, #8a8399);
+}
+
+.ovh-skill.prof .name,
+.ovh-skill.expertise .name {
+  color: var(--color-text-bright, #f0eaf8);
+}
+
+/* ── D&D: feats list ────────────────────────────────────────────── */
+
+.ovh-feat-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2, 0.5rem);
+}
+
+/* ── Responsive ─────────────────────────────────────────────────── */
+
+@media (max-width: 760px) {
+  .ovh-ability-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .ovh-combat-stats {
+    gap: var(--space-2, 0.5rem);
+  }
+}
