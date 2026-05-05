@@ -238,6 +238,60 @@ Token budget on Claude side ran out before completing these. Codex picks up from
 - Next recommended chunk: start the real panel-content port in `core/scripts/views/view-character-spells.js` and `core/scripts/views/view-character-resources.js`, backed by reusable `.ovh-record`, `.ovh-chip`, `.ovh-mini-bar`, and `.ovh-callout` styles in `core/style/sheet.css`. These tabs are high-impact because Capella exposes the current density/style gap clearly.
 - Keep the prototype bridge CSS only as a temporary compatibility layer. As each renderer emits real `.ovh-*` markup, delete/ignore the corresponding old `.sheet-*` dependency instead of expanding the bridge forever.
 
+### Codex panel-content port chunk 1
+
+- `core/scripts/views/view-character-spells.js` now emits native `.ovh-record` spell rows grouped by level, with prototype-style chips and mini slot meters. Spell viewer buttons still open the read-only record viewer.
+- `core/scripts/views/view-character-resources.js` now emits native `.ovh-record` / `.ovh-card` resource markup. HP is always shown for D&D sheets, even when the HP log is empty, and custom resources use progress bars plus viewer buttons.
+- `core/scripts/views/view-character-utils.js` gained reusable `renderOvhChips()` so later renderers can share one chip style instead of inventing one per tab.
+- `core/style/sheet.css` gained the first native `.ovh-*` record/chip/group/resource/log style layer. The older prototype bridge remains for not-yet-ported sections only.
+- Verification: Capella render smoke test produced 20 `.ovh-spell-record` rows, 2 `.ovh-resource-record` rows, visible HP/resources/boss attacks, and 0 `missing-library-ref` markers.
+
+### ASAP Claude handoff after Codex token warning
+
+Current uncommitted/pending chunk at handoff time was completed by Codex and should be pulled from staging once pushed:
+
+- Native OVH spells/resources port:
+  - `core/scripts/views/view-character-spells.js`
+  - `core/scripts/views/view-character-resources.js`
+  - `core/scripts/views/view-character-utils.js`
+  - `core/style/sheet.css`
+- Tests run before handoff:
+  - `node --check` across all 34 JS files passed.
+  - `node tools/validate-library-schema.js` passed.
+  - Capella render smoke test passed with 0 missing refs, 20 spell records, 2 resource records, HP/resources/boss attacks visible.
+
+What Claude should do next, in priority order:
+
+1. Browser-check the spells/resources visual port on Capella and Aina:
+   - Open local `app/index.html`, hard refresh, view Capella.
+   - Check Spells tab: level groups, chip rows, slot mini-bars, and View buttons.
+   - Check Resources tab: HP block appears even with empty HP log; custom resources show progress bars and View buttons.
+   - Open an exported viewer and hard refresh; confirm the same output appears there.
+2. Continue panel-content port with `core/scripts/views/view-character-inventory.js`.
+   - Use the same `.ovh-record`, `.ovh-chip`, `.ovh-mini-bar` patterns.
+   - Preserve item action buttons/use buttons and resource/ammo interactions.
+   - Keep read-only record viewer support.
+3. Then port `core/scripts/views/view-character-abilities.js` and `core/scripts/views/view-character-dnd.js`.
+   - Abilities/traits should use native `.ovh-record` rows and chip overflow patterns.
+   - D&D stats should move toward the prototype ability/save/skill tiles, but do not break existing calculations.
+4. Treat `core/scripts/views/view-character-boss.js` as coordinated/high-risk.
+   - Capella-heavy, boss/tamed toggle-sensitive, and tied to roll chip breakdowns.
+   - Before large boss renderer edits, verify current boss data shape and avoid deleting mechanics accidentally.
+5. Keep `core/style/sheet.css` bridge CSS temporary.
+   - Do not keep expanding `.sheet-*` bridge rules forever.
+   - As each renderer emits native `.ovh-*`, prefer deleting old dependencies over styling them more.
+
+Still not fully done:
+
+- Full prototype visual parity with `share/style-example.html`.
+- Editor visual parity with `share/style-example-editor.html`.
+- Exported editor PAT save round-trip with a real token.
+- AC mode toggle UI.
+- Appearance gallery/video support.
+- Relationship cards.
+- Tooltip pinning / chip overflow / cross-link chips.
+- Cleanup of `EDITOR_SHELL_STYLES` into an auto-updating CSS file if desired.
+
 ### Reference files (for either agent)
 
 - Viewer mockup: `share/style-example.html` (full Carol data, all sections)

@@ -83,6 +83,45 @@ const ViewCharacterUtils = (() => {
     `;
   }
 
+  function renderOvhChips(chips, options = {}) {
+    const seen = new Set();
+    const normalized = (chips || [])
+      .map(chip => normalizeMechanicChip(chip, options.kind || "neutral"))
+      .filter(chip => {
+        if (!chip) return false;
+        const key = [chip.kind, chip.label, chip.value].map(value => String(value || "").toLowerCase()).join("|");
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
+    if (!normalized.length) return "";
+    return `
+      <div class="${escAttr(options.className || "ovh-chips")}">
+        ${normalized.map(renderOvhChip).join("")}
+      </div>
+    `;
+  }
+
+  function renderOvhChip(chip) {
+    const tone = toneForKind(chip.kind);
+    const title = [chip.description, chip.relatedRoll ? `Related: ${chip.relatedRoll}` : ""].filter(Boolean).join("\n");
+    const value = chip.value !== "" && chip.value != null ? `<span class="v">${esc(chip.value)}</span>` : "";
+    const label = value ? `<span class="k">${esc(chip.label)}</span>` : esc(chip.label);
+    const dataTip = title ? ` data-tip="${escAttr(title)}" title="${escAttr(title)}"` : "";
+    return `<span class="ovh-chip ${escAttr(tone)}"${dataTip}>${label}${value}</span>`;
+  }
+
+  function toneForKind(kind = "") {
+    const clean = String(kind || "neutral").toLowerCase();
+    if (["positive", "prepared", "success", "heal", "healing"].includes(clean)) return "tone-heal";
+    if (["damage", "negative", "danger"].includes(clean)) return "tone-dmg";
+    if (["requirement", "warning", "warn", "save"].includes(clean)) return "tone-warn";
+    if (["action", "duration", "range", "component", "quantity"].includes(clean)) return "tone-info";
+    if (["rest", "resource"].includes(clean)) return "tone-rest";
+    if (["attune", "attunement"].includes(clean)) return "tone-attune";
+    return "tone-neutral";
+  }
+
   function encodeDataAttr(value) {
     try {
       return escAttr(JSON.stringify(value ?? null));
@@ -214,6 +253,7 @@ const ViewCharacterUtils = (() => {
       if (button.dataset.viewerWired === "true") return;
       button.dataset.viewerWired = "true";
       button.addEventListener("click", event => {
+        event.preventDefault();
         event.stopPropagation();
         const card = button.closest("[data-sheet-record]");
         openRecordViewer(decodeDataAttr(card?.dataset.sheetRecord, {}));
@@ -304,6 +344,7 @@ const ViewCharacterUtils = (() => {
     escAttr,
     normalizeMechanicChip,
     renderMechanicChips,
+    renderOvhChips,
     encodeDataAttr,
     decodeDataAttr,
     openRecordViewer,
