@@ -231,6 +231,13 @@ Token budget on Claude side ran out before completing these. Codex picks up from
 - `editor/scripts/editor-*.js` modules now explicitly attach themselves to `globalThis`. `Editor.mount()` was correctly looking up modules by name, but top-level `const EditorBase = ...` does not become `window.EditorBase`, so the app/editor shell could render "No editor modules loaded" even though the files were loaded.
 - `core/style/base.css` and `core/style/sheet.css` received a small prototype bridge pass: radial background, 1040px content width, and current old `.sheet-*` section/card markup restyled closer to `share/style-example.html`. This is not the full panel-content port; it is a compatibility restyle so staging stops looking completely pre-prototype while the renderers are replaced section by section.
 
+### Lulu verification after `930fcac`
+
+- Lulu confirmed the local editor loads again and character viewers render. Treat Step 2's basic load/edit surface as unblocked.
+- Not yet verified: PAT test/save from exported editor. Do not mark GitHub write flow fully done until Lulu tests with an actual PAT.
+- Next recommended chunk: start the real panel-content port in `core/scripts/views/view-character-spells.js` and `core/scripts/views/view-character-resources.js`, backed by reusable `.ovh-record`, `.ovh-chip`, `.ovh-mini-bar`, and `.ovh-callout` styles in `core/style/sheet.css`. These tabs are high-impact because Capella exposes the current density/style gap clearly.
+- Keep the prototype bridge CSS only as a temporary compatibility layer. As each renderer emits real `.ovh-*` markup, delete/ignore the corresponding old `.sheet-*` dependency instead of expanding the bridge forever.
+
 ### Reference files (for either agent)
 
 - Viewer mockup: `share/style-example.html` (full Carol data, all sections)
