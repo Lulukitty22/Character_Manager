@@ -246,6 +246,35 @@ Token budget on Claude side ran out before completing these. Codex picks up from
 - `core/style/sheet.css` gained the first native `.ovh-*` record/chip/group/resource/log style layer. The older prototype bridge remains for not-yet-ported sections only.
 - Verification: Capella render smoke test produced 20 `.ovh-spell-record` rows, 2 `.ovh-resource-record` rows, visible HP/resources/boss attacks, and 0 `missing-library-ref` markers.
 
+### Codex panel-content port chunk 2
+
+- `core/scripts/views/view-character-inventory.js` now emits native `.ovh-record` item rows and `.ovh-card` currency rows instead of the old `.sheet-item-row` section markup.
+- Inventory rows use the shared `ViewCharacterUtils.renderOvhChips()` chip system for quantity, active state, item type, rarity, healing, HP effects, and resource/ammo effects.
+- Read-only item viewer support is preserved through `data-sheet-record` plus `.sheet-open-record-viewer`.
+- Item action buttons are preserved as `.sheet-use-item-action`, but visually moved to `.ovh-action-button`; click handlers now stop propagation so using an item does not accidentally toggle/open the item record.
+- Aina remains the canary character for item effects:
+  - Field Shortbow exposes `Shoot`, spending `Arrows -1`.
+  - Arrow Bundle (20) exposes `Reload 20`, restoring `Arrows +20` up to max 20 and consuming one bundle.
+  - Potion of Healing exposes `Drink`, healing `2d4 + 2` and consuming one potion.
+- Verification:
+  - `node --check` across all 34 JS files passed.
+  - `node tools/validate-library-schema.js` passed.
+  - Aina render smoke test passed with 0 missing refs, 3 `.ovh-item-record` rows, 3 item action buttons, visible currency, and expected item names/effects.
+
+Browser work still needed for this chunk:
+
+1. Open Aina in `app/index.html`, go to Inventory, and click:
+   - Field Shortbow / Shoot: confirm Arrows drops from 20 to 19 and a resource log entry appears.
+   - Arrow Bundle (20) / Reload 20: confirm Arrows caps at 20 and bundle quantity drops.
+   - Potion of Healing / Drink: confirm HP/log/quantity behavior, preferably after damaging Aina first.
+2. Export Aina viewer and repeat enough of the check to confirm exported viewer parity.
+
+Next recommended panel port after inventory:
+
+1. `core/scripts/views/view-character-abilities.js`: high visual impact for Capella, but keep missing-ref handling intact.
+2. `core/scripts/views/view-character-dnd.js`: stats/saves/skills should move toward prototype tiles/pips, but calculations are sensitive, so keep smoke tests around Capella and Aina.
+3. `core/scripts/views/view-character-boss.js`: save for a coordinated pass because it is Capella-heavy and boss/tamed-toggle sensitive.
+
 ### ASAP Claude handoff after Codex token warning
 
 Current uncommitted/pending chunk at handoff time was completed by Codex and should be pulled from staging once pushed:
@@ -267,10 +296,10 @@ What Claude should do next, in priority order:
    - Check Spells tab: level groups, chip rows, slot mini-bars, and View buttons.
    - Check Resources tab: HP block appears even with empty HP log; custom resources show progress bars and View buttons.
    - Open an exported viewer and hard refresh; confirm the same output appears there.
-2. Continue panel-content port with `core/scripts/views/view-character-inventory.js`.
-   - Use the same `.ovh-record`, `.ovh-chip`, `.ovh-mini-bar` patterns.
-   - Preserve item action buttons/use buttons and resource/ammo interactions.
-   - Keep read-only record viewer support.
+2. Browser-check the inventory port on Aina:
+   - Verify item View buttons.
+   - Verify Shortbow/Arrow Bundle/Potion action buttons.
+   - Verify resource/HP logs after actions.
 3. Then port `core/scripts/views/view-character-abilities.js` and `core/scripts/views/view-character-dnd.js`.
    - Abilities/traits should use native `.ovh-record` rows and chip overflow patterns.
    - D&D stats should move toward the prototype ability/save/skill tiles, but do not break existing calculations.
@@ -300,6 +329,13 @@ Still not fully done:
 - Plan doc: `C:\Users\Nicol\.claude\plans\can-you-help-me-majestic-robin.md` (original architecture plan)
 
 ### Lulu-facing summary
+
+Current status correction:
+- The older bullets below are partially stale.
+- Step 2 basic editor/viewer load is browser-confirmed by Lulu, but exported-editor PAT save still needs a real-token test.
+- The local manager editor now uses `Editor.mount()` for parity.
+- Native OVH panel-content ports are done for Spells, Resources, and Inventory.
+- Remaining panel-content ports are Abilities, D&D stats, Boss, Identity, Notes, and Roblox.
 
 ✅ Done on staging:
 - Library reorganized into indexed tree (Codex)

@@ -6,7 +6,7 @@
 const ViewCharacterInventory = (() => {
 
   const esc = ViewCharacterUtils.esc;
-  const renderMechanicChips = ViewCharacterUtils.renderMechanicChips;
+  const renderOvhChips = ViewCharacterUtils.renderOvhChips;
 
   function render(character, inventory, currency) {
     const items = inventory || [];
@@ -21,73 +21,99 @@ const ViewCharacterInventory = (() => {
       }, {})
       : {};
 
-    const rows = items.map(item => {
-      const tags = (item.tags || []).map(t => `<span class="sheet-tag">${esc(t)}</span>`).join("");
-      const actions = actionableById[item.id] || [];
-      const resourceChips = actions.flatMap(actionEntry => (actionEntry.action?.effects?.resources || []).map(effect => ({
-        label: effect.target || effect.resourceName || "Resource",
-        value: Schema.formatModifier(Number(effect.delta || 0)),
-        kind: Number(effect.delta || 0) >= 0 ? "positive" : "negative",
-        description: effect.reason || actionEntry.action?.description || "",
-      })));
-      const mechanics = [
-        item.quantity != null && item.quantity !== 1 ? { label: "Qty", value: item.quantity, kind: "quantity" } : null,
-        item.type ? { label: "Type", value: item.type, kind: "neutral" } : null,
-        item.weight != null && item.weight !== "" ? { label: "Weight", value: item.weight, kind: "neutral" } : null,
-        item.active === false ? { label: "Inactive", kind: "negative", description: "This item is currently not equipped or not applying passive effects." } : { label: "Active", kind: "positive" },
-        item.attuned ? {
-          label: "Attuned",
-          kind: "requirement",
-          description: "This item is attuned or requires attunement for its full effects.",
-        } : null,
-        item.addons?.equipment?.slot ? { label: "Slot", value: item.addons.equipment.slot, kind: "neutral" } : null,
-        item.addons?.equipment?.rarity ? { label: "Rarity", value: item.addons.equipment.rarity, kind: "positive" } : null,
-        item.addons?.effects?.hp?.flatBonus ? { label: "Max HP", value: Schema.formatModifier(Number(item.addons.effects.hp.flatBonus || 0)), kind: "positive" } : null,
-        item.addons?.effects?.hp?.perLevelBonus ? { label: "HP / Lv", value: Schema.formatModifier(Number(item.addons.effects.hp.perLevelBonus || 0)), kind: "positive" } : null,
-        item.addons?.effects?.hp?.tempHp ? { label: "Temp HP", value: `+${Number(item.addons.effects.hp.tempHp || 0)}`, kind: "positive" } : null,
-        item.addons?.healing ? { label: "Healing", value: `+${DndCalculations.healingAmount(item)}`, kind: "positive" } : null,
-        ...resourceChips,
-        ...(item.addons?.mechanics || []),
-      ].filter(Boolean);
-      const mechanicChips = renderMechanicChips(mechanics);
-      const actionButtons = actions.map((actionEntry, index) => `
-        <button type="button" class="sheet-inline-button sheet-use-item-action" data-item-id="${ViewCharacterUtils.escAttr(item.id)}" data-action-index="${index}">
-          ${esc(actionEntry.action?.label || "Use")}
-        </button>
-      `).join("");
-
-      return `
-        <div class="sheet-item-row sheet-record-card" data-sheet-record="${ViewCharacterUtils.encodeDataAttr(buildItemViewerRecord(item, mechanics, actions))}">
-          <div class="sheet-item-main sheet-record-card-header">
-            <span class="sheet-item-name">${esc(item.name || "(Unnamed)")}</span>
-            <div class="sheet-record-card-actions">
-              <button type="button" class="sheet-inline-button sheet-open-record-viewer">View</button>
-            </div>
-          </div>
-          ${mechanicChips}
-          ${item.description ? `<div class="sheet-item-desc text-sm text-muted">${esc(item.description)}</div>` : ""}
-          ${actionButtons ? `<div class="sheet-item-actions-row">${actionButtons}</div>` : ""}
-          ${tags ? `<div class="sheet-item-tags">${tags}</div>` : ""}
-        </div>`;
-    }).join("");
-
-    const currencyOrder = [["pp", "Platinum"], ["gp", "Gold"], ["ep", "Electrum"], ["sp", "Silver"], ["cp", "Copper"]];
-    const currencyPills = currencyOrder
-      .filter(([key]) => (funds[key] || 0) > 0)
-      .map(([key, label]) => `
-        <span class="sheet-currency-pill">
-          <span class="sheet-currency-amount">${funds[key]}</span>
-          <span class="sheet-currency-label">${label}</span>
-        </span>
-      `).join("");
+    const rows = items.map((item, index) => renderItemRow(item, actionableById[item.id] || [], index)).join("");
+    const currencyPills = renderCurrency(funds);
 
     return `
-      <section class="sheet-section">
-        <h2 class="sheet-section-title">🎒 Inventory</h2>
-        ${currencyPills ? `<div class="sheet-currency-row">${currencyPills}</div>` : ""}
-        ${rows ? `<div class="sheet-item-list">${rows}</div>` : ""}
+      <section class="ovh-section ovh-inventory-section">
+        <div class="ovh-section-header">
+          <h2>Inventory</h2>
+        </div>
+        ${currencyPills ? `<div class="ovh-card ovh-currency-row">${currencyPills}</div>` : ""}
+        ${rows ? `
+          <div class="ovh-record-group">
+            <p class="ovh-group-label">Carried Items <span class="count">${items.length}</span></p>
+            ${rows}
+          </div>
+        ` : ""}
       </section>
     `;
+  }
+
+  function renderItemRow(item, actions, index) {
+    const resourceChips = actions.flatMap(actionEntry => (actionEntry.action?.effects?.resources || []).map(effect => ({
+      label: effect.target || effect.resourceName || "Resource",
+      value: Schema.formatModifier(Number(effect.delta || 0)),
+      kind: Number(effect.delta || 0) >= 0 ? "positive" : "negative",
+      description: effect.reason || actionEntry.action?.description || "",
+    })));
+
+    const mechanics = [
+      item.quantity != null && item.quantity !== 1 ? { label: "Qty", value: item.quantity, kind: "quantity" } : null,
+      item.type ? { label: "Type", value: item.type, kind: "neutral" } : null,
+      item.weight != null && item.weight !== "" ? { label: "Weight", value: item.weight, kind: "neutral" } : null,
+      item.active === false ? { label: "Inactive", kind: "negative", description: "This item is currently not equipped or not applying passive effects." } : { label: "Active", kind: "positive" },
+      item.attuned ? {
+        label: "Attuned",
+        kind: "requirement",
+        description: "This item is attuned or requires attunement for its full effects.",
+      } : null,
+      item.addons?.equipment?.slot ? { label: "Slot", value: item.addons.equipment.slot, kind: "neutral" } : null,
+      item.addons?.equipment?.rarity ? { label: "Rarity", value: item.addons.equipment.rarity, kind: "positive" } : null,
+      item.addons?.effects?.hp?.flatBonus ? { label: "Max HP", value: Schema.formatModifier(Number(item.addons.effects.hp.flatBonus || 0)), kind: "positive" } : null,
+      item.addons?.effects?.hp?.perLevelBonus ? { label: "HP / Lv", value: Schema.formatModifier(Number(item.addons.effects.hp.perLevelBonus || 0)), kind: "positive" } : null,
+      item.addons?.effects?.hp?.tempHp ? { label: "Temp HP", value: `+${Number(item.addons.effects.hp.tempHp || 0)}`, kind: "positive" } : null,
+      item.addons?.healing ? { label: "Healing", value: `+${DndCalculations.healingAmount(item)}`, kind: "positive" } : null,
+      ...resourceChips,
+      ...(item.addons?.mechanics || []),
+    ].filter(Boolean);
+
+    const subtitle = [item.type || "Item", item.addons?.equipment?.rarity || "", item.attuned ? "Attuned" : ""]
+      .filter(Boolean)
+      .join(" | ");
+    const quantity = Number(item.quantity ?? 1);
+    const openAttr = actions.length || index < 2 ? " open" : "";
+    const stateClass = item.active === false ? "" : "prepared";
+    const actionButtons = actions.map((actionEntry, actionIndex) => `
+      <button type="button" class="ovh-view-button ovh-action-button sheet-use-item-action" data-item-id="${ViewCharacterUtils.escAttr(item.id)}" data-action-index="${actionIndex}">
+        ${esc(actionEntry.action?.label || "Use")}
+      </button>
+    `).join("");
+    const tags = renderOvhChips((item.tags || []).map(tag => ({ label: tag, kind: "neutral" })), { className: "ovh-chips tag-row" });
+
+    return `
+      <details class="ovh-record ovh-item-record sheet-record-card" data-sheet-record="${ViewCharacterUtils.encodeDataAttr(buildItemViewerRecord(item, mechanics, actions))}"${openAttr}>
+        <summary>
+          <span class="ovh-status-dot ${stateClass}"></span>
+          <div class="title-block">
+            <div class="title">
+              ${esc(item.name || "(Unnamed Item)")}
+              ${subtitle ? `<span class="sub">${esc(subtitle)}</span>` : ""}
+            </div>
+            ${renderOvhChips(mechanics, { className: "ovh-chips quick-chips" })}
+          </div>
+          ${quantity > 1 ? `<span class="ovh-quantity-badge">x${esc(quantity)}</span>` : ""}
+          <button type="button" class="ovh-view-button sheet-open-record-viewer">View</button>
+        </summary>
+        <div class="body">
+          ${item.description ? `<p class="desc">${esc(item.description)}</p>` : ""}
+          ${actionButtons ? `<div class="ovh-action-row">${actionButtons}</div>` : ""}
+          ${tags}
+        </div>
+      </details>
+    `;
+  }
+
+  function renderCurrency(funds = {}) {
+    const currencyOrder = [["pp", "Platinum"], ["gp", "Gold"], ["ep", "Electrum"], ["sp", "Silver"], ["cp", "Copper"]];
+    return currencyOrder
+      .filter(([key]) => (funds[key] || 0) > 0)
+      .map(([key, label]) => `
+        <span class="ovh-currency-pill">
+          <span class="amount">${esc(funds[key])}</span>
+          <span class="label">${esc(label)}</span>
+        </span>
+      `).join("");
   }
 
   function buildItemViewerRecord(item, mechanics, actions) {
@@ -121,15 +147,23 @@ const ViewCharacterInventory = (() => {
   }
 
   function wireInteractive(containerEl, character) {
-    containerEl.querySelectorAll(".sheet-item-row .sheet-open-record-viewer").forEach(button => {
-      button.addEventListener("click", () => {
-        const row = button.closest(".sheet-item-row");
+    containerEl.querySelectorAll(".ovh-item-record .sheet-open-record-viewer").forEach(button => {
+      if (button.dataset.viewerWired === "true") return;
+      button.dataset.viewerWired = "true";
+      button.addEventListener("click", event => {
+        event.preventDefault();
+        event.stopPropagation();
+        const row = button.closest(".ovh-item-record");
         ViewCharacterUtils.openRecordViewer(ViewCharacterUtils.decodeDataAttr(row?.dataset.sheetRecord, {}));
       });
     });
 
     containerEl.querySelectorAll(".sheet-use-item-action").forEach(button => {
-      button.addEventListener("click", () => {
+      if (button.dataset.actionWired === "true") return;
+      button.dataset.actionWired = "true";
+      button.addEventListener("click", event => {
+        event.preventDefault();
+        event.stopPropagation();
         const itemId = button.dataset.itemId || "";
         const actionIndex = parseInt(button.dataset.actionIndex || "0", 10) || 0;
         useItemAction(containerEl, character, itemId, actionIndex);

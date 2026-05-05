@@ -2076,6 +2076,74 @@ details.sheet-mechanic-chip {
   color: var(--color-danger, #c05050);
 }
 
+.ovh-currency-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2, 0.5rem);
+  padding: var(--space-3, 0.75rem) var(--space-4, 1rem);
+  margin-bottom: var(--space-4, 1rem);
+}
+
+.ovh-currency-pill {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.3rem;
+  border: 1px solid rgba(201, 168, 76, 0.22);
+  border-radius: 999px;
+  background: rgba(201, 168, 76, 0.08);
+  padding: 0.2rem 0.6rem;
+  font-family: var(--font-ui, system-ui, sans-serif);
+}
+
+.ovh-currency-pill .amount {
+  color: var(--color-text-bright, #f0eaf8);
+  font-family: var(--font-mono, monospace);
+  font-weight: 800;
+}
+
+.ovh-currency-pill .label {
+  color: var(--color-text-muted, #8a8399);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.ovh-quantity-badge {
+  flex: 0 0 auto;
+  min-width: 34px;
+  border: 1px solid rgba(180, 140, 255, 0.2);
+  border-radius: 999px;
+  background: rgba(6, 4, 11, 0.45);
+  color: var(--color-text-bright, #f0eaf8);
+  padding: 0.18rem 0.5rem;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-align: center;
+}
+
+.ovh-action-row,
+.ovh-chips.tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2, 0.5rem);
+}
+
+.ovh-action-button {
+  border-color: rgba(76, 175, 128, 0.3);
+  background: rgba(76, 175, 128, 0.09);
+}
+
+.ovh-action-button:hover {
+  border-color: rgba(76, 175, 128, 0.5);
+  color: #82e4aa;
+}
+
+.ovh-item-record .body {
+  padding-left: calc(var(--space-4, 1rem) + 29px);
+}
+
 @media (max-width: 760px) {
   .ovh-resource-track {
     grid-template-columns: 1fr;
@@ -2087,5 +2155,9 @@ details.sheet-mechanic-chip {
 
   .ovh-group-meter {
     margin-left: 0;
+  }
+
+  .ovh-item-record .body {
+    padding-left: var(--space-4, 1rem);
   }
 }
