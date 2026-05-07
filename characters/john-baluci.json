@@ -2,7 +2,7 @@
   "id": "7853c477-4ba2-4882-af6f-3a4404f0380e",
   "meta": {
     "repoPath": "characters/john-baluci.json",
-    "lastUpdated": "2026-05-03T23:02:30.819Z"
+    "lastUpdated": "2026-05-07T08:30:26.249Z"
   },
   "identity": {
     "name": "John Baluci",
@@ -63,10 +63,10 @@
         "score": 15
       },
       "int": {
-        "score": 2
+        "score": 5
       },
       "wis": {
-        "score": 5
+        "score": 3
       },
       "cha": {
         "score": 30
