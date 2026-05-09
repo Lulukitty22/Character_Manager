@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "aina-trait-archery-test",
+  "name": "Ammo Test Setup",
+  "collections": [
+    "traits"
+  ],
+  "tags": [
+    "test"
+  ],
+  "variantOf": null,
+  "sourceReferences": [],
+  "features": {},
+  "desc": "",
+  "source": "custom",
+  "type": "feature",
+  "description": "This character is wired to demonstrate shortbow shots consuming arrows and arrow bundles restoring the ammo resource.",
+  "collection": "traits",
+  "updatedAt": "2026-05-09T08:03:11.344Z"
+}
