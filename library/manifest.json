@@ -1284,6 +1284,17 @@
         "updatedAt": "2026-05-03T15:10:50.038Z"
       },
       {
+        "id": "ranger",
+        "name": "Ranger",
+        "collections": [
+          "classes"
+        ],
+        "tags": [],
+        "path": "library/records/classes/ranger.json",
+        "sha": "6fc40eac84a5bb994dd76d8604f90b68a654a511",
+        "updatedAt": "2026-05-09T08:03:16.797Z"
+      },
+      {
         "id": "classes.sorcerer",
         "name": "Sorcerer",
         "collections": [
