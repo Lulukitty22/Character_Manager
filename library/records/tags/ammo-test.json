@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "id": "ammo-test",
+  "name": "Ammo Test",
+  "collections": [
+    "tags"
+  ],
+  "tags": [],
+  "variantOf": null,
+  "sourceReferences": [],
+  "features": {},
+  "desc": ""
+}
