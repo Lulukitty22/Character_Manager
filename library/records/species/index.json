@@ -1,4 +1,4 @@
-﻿{
+{
   "schemaVersion": 1,
   "id": "index.species",
   "name": "Species",
@@ -59,7 +59,15 @@
         "species"
       ],
       "path": "library/records/species/reborn-homunculus-human.json"
+    },
+    {
+      "id": "wood-elf",
+      "name": "Wood Elf",
+      "collections": [
+        "species"
+      ],
+      "tags": [],
+      "path": "library/records/species/wood-elf.json"
     }
   ]
 }
-
