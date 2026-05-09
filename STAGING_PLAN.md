@@ -48,6 +48,8 @@ The D&D stats visual port is already done and browser-verified. This restructuri
 - Replaced the repo-tracked editor HTML with an ultra-thin shim that boots `data/editor/boot.js`.
 - Updated the main runtime to load characters from `library/characters/`.
 - Updated GitHub path helpers, library record path helpers, and validation tooling to understand the new layout.
+- Fixed the post-refactor manager shell so GitHub reads honor the configured branch instead of silently reading the repo default branch.
+- Cleaned the manager shell text after the refactor exposed old mojibake UI strings.
 - Removed the empty legacy `core/`, `editor/`, `manager/`, `characters/`, `share/editor/`, and `share/viewer/` directories.
 - Ran syntax checks on the moved loader/export/helper files.
 - Ran the library validation pass successfully after teaching the validator to skip `library/characters/` and tolerate UTF-8 BOM on JSON input.

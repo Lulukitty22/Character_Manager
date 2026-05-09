@@ -1,20 +1,15 @@
-﻿/**
+/**
  * view-list.js
- * Character dashboard â€” shows all characters loaded from GitHub as cards.
- * Allows creating new characters, opening the editor, exporting sheets,
- * and deleting characters.
+ * Character dashboard shown in the manager shell.
  */
 
 const CharacterList = (() => {
-
-  // â”€â”€â”€ Render Entry Point â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-
   async function render(container) {
     container.innerHTML = renderShell();
 
-    const listEl       = document.getElementById("character-card-grid");
+    const listEl = document.getElementById("character-card-grid");
     const emptyStateEl = document.getElementById("empty-state");
-    const searchInput  = document.getElementById("search-input");
+    const searchInput = document.getElementById("search-input");
 
     document.getElementById("btn-new-character").addEventListener("click", openNewCharacterDialog);
     document.getElementById("btn-empty-create")?.addEventListener("click", openNewCharacterDialog);
@@ -29,17 +24,14 @@ const CharacterList = (() => {
       return;
     }
 
-    // Skeleton placeholders
-    files.forEach(file => {
-      const cardEl = createSkeletonCard(file.path);
-      listEl.appendChild(cardEl);
+    files.forEach((file) => {
+      listEl.appendChild(createSkeletonCard(file.path));
     });
 
-    // Load each character and replace skeleton
     await Promise.all(files.map(async (file) => {
       try {
         const { data, sha } = await GitHub.readCharacterFile(file.path);
-        const placeholder   = listEl.querySelector(`[data-file-path="${file.path}"]`);
+        const placeholder = listEl.querySelector(`[data-file-path="${file.path}"]`);
         if (placeholder) {
           const temp = document.createElement("div");
           temp.innerHTML = renderCharacterCard(data, sha, file.path);
@@ -50,45 +42,43 @@ const CharacterList = (() => {
       } catch {
         const placeholder = listEl.querySelector(`[data-file-path="${file.path}"]`);
         if (placeholder) {
-          placeholder.innerHTML = `<p class="text-danger text-sm" style="padding: var(--space-3);">âš  Failed to load ${file.name}</p>`;
+          placeholder.innerHTML = `<p class="text-danger text-sm" style="padding: var(--space-3);">Failed to load ${file.name}</p>`;
         }
       }
     }));
   }
-
-  // â”€â”€â”€ Shell HTML â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   function renderShell() {
     return `
       <div class="list-view">
         <div class="list-header flex-between">
           <div>
-            <h2 class="list-title">ðŸ“œ Characters</h2>
+            <h2 class="list-title">Characters</h2>
             <p class="text-muted text-sm">All characters stored in your GitHub repository. Search by name, alias, tag, or classification.</p>
           </div>
-          <button id="btn-new-character" class="button button-primary">âœ¦ New Character</button>
+          <button id="btn-new-character" class="button button-primary">New Character</button>
         </div>
 
         <div class="list-controls">
-          <input id="search-input" type="search" class="search-input" placeholder="Search charactersâ€¦" />
-          <button id="btn-refresh" class="button button-ghost button-sm">ðŸ”„ Refresh</button>
+          <input id="search-input" type="search" class="search-input" placeholder="Search characters..." />
+          <button id="btn-refresh" class="button button-ghost button-sm">Refresh</button>
         </div>
 
         <div id="character-card-grid" class="character-card-grid"></div>
 
         <div id="empty-state" class="empty-state hidden">
-          <div class="empty-icon">ðŸ“­</div>
+          <div class="empty-icon">-</div>
           <h3>No characters yet</h3>
           <p class="text-muted">Create your first character, or make sure your GitHub repo has a <code>library/characters/</code> folder.</p>
-          <button class="button button-primary mt-4" id="btn-empty-create">âœ¦ Create First Character</button>
+          <button class="button button-primary mt-4" id="btn-empty-create">Create First Character</button>
         </div>
       </div>
 
       <dialog id="new-character-dialog" class="modal-dialog">
         <div class="modal-content card-elevated">
           <div class="modal-header flex-between">
-            <h3>âœ¦ New Character</h3>
-            <button class="button button-icon button-ghost" id="btn-close-new-dialog">âœ•</button>
+            <h3>New Character</h3>
+            <button class="button button-icon button-ghost" id="btn-close-new-dialog">X</button>
           </div>
           <div class="modal-body">
             <div class="settings-field">
@@ -105,8 +95,6 @@ const CharacterList = (() => {
     `;
   }
 
-  // â”€â”€â”€ Card Rendering â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-
   function createSkeletonCard(filePath) {
     const card = document.createElement("div");
     card.className = "character-card skeleton";
@@ -120,11 +108,11 @@ const CharacterList = (() => {
   }
 
   function renderCharacterCard(characterData, sha, filePath) {
-    const identity  = characterData.identity || {};
+    const identity = characterData.identity || {};
     const presentation = Schema.getCharacterPresentation(characterData);
-    const name      = identity.name || "(Unnamed)";
-    const race      = identity.race || "";
-    const tags      = (identity.tags || []).slice(0, 4);
+    const name = identity.name || "(Unnamed)";
+    const race = identity.race || "";
+    const tags = (identity.tags || []).slice(0, 4);
     const sectionSummary = buildSectionSummary(characterData);
     const searchText = [
       name,
@@ -139,9 +127,9 @@ const CharacterList = (() => {
     if (characterData.dnd) {
       const dnd = characterData.dnd;
       const classLevel = [dnd.class, dnd.level ? `Lv.${dnd.level}` : ""].filter(Boolean).join(" ");
-      subtitle = [classLevel, race].filter(Boolean).join(" â€” ");
+      subtitle = [classLevel, race].filter(Boolean).join(" - ");
     } else if (characterData.boss) {
-      subtitle = [race, "Boss"].filter(Boolean).join(" â€” ");
+      subtitle = [race, "Boss"].filter(Boolean).join(" - ");
     }
 
     let hpDisplay = "";
@@ -150,8 +138,8 @@ const CharacterList = (() => {
         ? DndCalculations.getActiveHp(characterData)
         : (characterData.boss.bossActive ? characterData.boss.bossHp : characterData.boss.defaultHp);
       const hp = activeHp || { max: 0, current: 0 };
-      const percent  = hp.max > 0 ? Math.round((hp.current / hp.max) * 100) : 0;
-      const hpClass  = percent >= 60 ? "" : percent >= 30 ? "medium" : "low";
+      const percent = hp.max > 0 ? Math.round((hp.current / hp.max) * 100) : 0;
+      const hpClass = percent >= 60 ? "" : percent >= 30 ? "medium" : "low";
       const bossFlag = characterData.boss.bossActive ? `<span class="badge badge-crimson">Boss Mode</span>` : "";
       hpDisplay = `
         <div class="card-hp">
@@ -171,7 +159,7 @@ const CharacterList = (() => {
         </div>`;
     }
 
-    const tagBadges = tags.map(tag => `<span class="badge">${escapeHTML(tag)}</span>`).join("");
+    const tagBadges = tags.map((tag) => `<span class="badge">${escapeHTML(tag)}</span>`).join("");
 
     return `
       <div class="character-card" data-file-path="${escapeAttr(filePath)}" data-sha="${escapeAttr(sha || "")}" data-search="${escapeAttr(searchText)}">
@@ -182,16 +170,14 @@ const CharacterList = (() => {
         ${hpDisplay}
         ${tagBadges ? `<div class="card-tags">${tagBadges}</div>` : ""}
         <div class="card-actions">
-          <button class="button button-primary button-sm btn-edit-char">âœï¸ Edit</button>
-          <button class="button button-ghost button-sm btn-view-sheet">ðŸ‘ View</button>
-          <button class="button button-ghost button-sm btn-export-sheet">ðŸ“¤ Export</button>
-          <button class="button button-danger button-sm btn-delete-char">ðŸ—‘ï¸</button>
+          <button class="button button-primary button-sm btn-edit-char">Edit</button>
+          <button class="button button-ghost button-sm btn-view-sheet">View</button>
+          <button class="button button-ghost button-sm btn-export-sheet">Export</button>
+          <button class="button button-danger button-sm btn-delete-char">Delete</button>
         </div>
       </div>
     `;
   }
-
-  // â”€â”€â”€ Card Button Wiring â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   function wireCardEl(cardEl, filePath, sha) {
     cardEl.querySelector(".btn-edit-char")?.addEventListener("click", async () => {
@@ -216,7 +202,7 @@ const CharacterList = (() => {
       const name = cardEl.querySelector(".card-name")?.textContent || filePath;
       if (!confirm(`Delete "${name}"? This removes the file from GitHub and cannot be undone.`)) return;
 
-      App.showLoading("Deletingâ€¦");
+      App.showLoading("Deleting...");
       try {
         await GitHub.deleteCharacterFile(filePath, sha);
         App.showToast(`"${name}" deleted.`, "success");
@@ -229,8 +215,6 @@ const CharacterList = (() => {
       }
     });
   }
-
-  // â”€â”€â”€ Sheet Preview â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   async function openSheetPreview(characterData, filePath) {
     if (characterUsesLibrary(characterData) && typeof Library !== "undefined") {
@@ -249,10 +233,10 @@ const CharacterList = (() => {
     overlay.innerHTML = `
       <div class="sheet-preview-modal">
         <div class="sheet-preview-toolbar flex-between">
-          <span class="text-muted text-sm">Preview â€” ${escapeHTML(filePath)}</span>
+          <span class="text-muted text-sm">Preview - ${escapeHTML(filePath)}</span>
           <div class="flex gap-2">
-            <button class="button button-ghost button-sm" id="btn-export-preview">ðŸ“¤ Export</button>
-            <button class="button button-ghost button-sm" id="btn-close-preview">âœ• Close</button>
+            <button class="button button-ghost button-sm" id="btn-export-preview">Export</button>
+            <button class="button button-ghost button-sm" id="btn-close-preview">Close</button>
           </div>
         </div>
         <div class="sheet-preview-body"></div>
@@ -265,10 +249,10 @@ const CharacterList = (() => {
     overlay.querySelector("#btn-export-preview").addEventListener("click", () => {
       SheetExporter.exportCharacter(characterData, filePath);
     });
-    overlay.addEventListener("click", (event) => { if (event.target === overlay) overlay.remove(); });
+    overlay.addEventListener("click", (event) => {
+      if (event.target === overlay) overlay.remove();
+    });
   }
-
-  // â”€â”€â”€ New Character Dialog â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   function openNewCharacterDialog() {
     const dialog = document.getElementById("new-character-dialog");
@@ -278,15 +262,18 @@ const CharacterList = (() => {
     dialog.showModal();
 
     document.getElementById("btn-close-new-dialog").onclick = () => dialog.close();
-    document.getElementById("btn-cancel-new").onclick       = () => dialog.close();
+    document.getElementById("btn-cancel-new").onclick = () => dialog.close();
 
-    const createBtn    = document.getElementById("btn-create-character");
+    const createBtn = document.getElementById("btn-create-character");
     const newCreateBtn = createBtn.cloneNode(true);
     createBtn.replaceWith(newCreateBtn);
 
     newCreateBtn.addEventListener("click", () => {
       const name = document.getElementById("new-char-name").value.trim();
-      if (!name) { App.showToast("Enter a name for the character.", "error"); return; }
+      if (!name) {
+        App.showToast("Enter a name for the character.", "error");
+        return;
+      }
 
       const character = Schema.createCharacter();
       character.identity.name = name;
@@ -297,17 +284,14 @@ const CharacterList = (() => {
     });
   }
 
-  // â”€â”€â”€ Filtering â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-
   function filterCards(searchQuery) {
     const query = searchQuery.toLowerCase().trim();
-    const grid  = document.getElementById("character-card-grid");
+    const grid = document.getElementById("character-card-grid");
     if (!grid) return;
 
-    grid.querySelectorAll(".character-card").forEach(card => {
+    grid.querySelectorAll(".character-card").forEach((card) => {
       const searchable = (card.dataset.search || card.textContent || "").toLowerCase();
       const matchesSearch = !query || searchable.includes(query);
-
       card.style.display = matchesSearch ? "" : "none";
     });
 
@@ -315,22 +299,20 @@ const CharacterList = (() => {
   }
 
   function checkEmptyState() {
-    const grid  = document.getElementById("character-card-grid");
+    const grid = document.getElementById("character-card-grid");
     const empty = document.getElementById("empty-state");
     if (!grid || !empty) return;
     const visible = Array.from(grid.querySelectorAll(".character-card"))
-      .filter(card => card.style.display !== "none")
+      .filter((card) => card.style.display !== "none")
       .length;
     empty.classList.toggle("hidden", visible > 0);
-    grid.classList.toggle("hidden",  visible === 0);
+    grid.classList.toggle("hidden", visible === 0);
   }
 
   async function refresh() {
     const content = document.getElementById("main-content");
     if (content) await render(content);
   }
-
-  // â”€â”€â”€ Escape Helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   function escapeHTML(text) {
     return String(text).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -354,8 +336,9 @@ const CharacterList = (() => {
 
   function characterUsesLibrary(character) {
     function hasRefs(entries) {
-      return Array.isArray(entries) && entries.some(entry => entry?.source === "library");
+      return Array.isArray(entries) && entries.some((entry) => entry?.source === "library");
     }
+
     return hasRefs(character.spells) ||
       hasRefs(character.inventory) ||
       hasRefs(character.customResources) ||
@@ -364,6 +347,4 @@ const CharacterList = (() => {
   }
 
   return { render, refresh, openNewCharacterDialog };
-
 })();
-

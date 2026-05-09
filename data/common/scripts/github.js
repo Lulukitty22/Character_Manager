@@ -44,9 +44,11 @@ const GitHub = (() => {
     };
   }
 
-  function buildUrl(path) {
+  function buildUrl(path, includeRef = false) {
     const config = getConfig();
-    return `${BASE_URL}/repos/${config.owner}/${config.repo}/contents/${path}`;
+    const base = `${BASE_URL}/repos/${config.owner}/${config.repo}/contents/${path}`;
+    if (!includeRef || !config.branch) return base;
+    return `${base}?ref=${encodeURIComponent(config.branch)}`;
   }
 
   // â”€â”€â”€ Core API Methods â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
@@ -58,7 +60,7 @@ const GitHub = (() => {
   async function listCharacterFiles() {
     if (!isConfigured()) throw new Error("GitHub is not configured. Please set your token, owner, and repo in Settings.");
 
-    const response = await fetch(buildUrl(CHARACTER_ROOT), {
+    const response = await fetch(buildUrl(CHARACTER_ROOT, true), {
       headers: buildHeaders(),
     });
 
@@ -91,7 +93,7 @@ const GitHub = (() => {
   async function readCharacterFile(filePath) {
     if (!isConfigured()) throw new Error("GitHub is not configured.");
 
-    const response = await fetch(buildUrl(filePath), {
+    const response = await fetch(buildUrl(filePath, true), {
       headers: buildHeaders(),
     });
 
@@ -119,7 +121,7 @@ const GitHub = (() => {
     if (!isConfigured()) throw new Error("GitHub is not configured.");
 
     const filePath = `${LIBRARY_ROOT}/${fileName}`;
-    const response = await fetch(buildUrl(filePath), {
+    const response = await fetch(buildUrl(filePath, true), {
       headers: buildHeaders(),
     });
 
@@ -154,7 +156,7 @@ const GitHub = (() => {
     if (!isConfigured()) throw new Error("GitHub is not configured.");
 
     const folderPath = `${RECORDS_ROOT}/${folderName}`;
-    const response = await fetch(buildUrl(folderPath), {
+    const response = await fetch(buildUrl(folderPath, true), {
       headers: buildHeaders(),
     });
 
@@ -179,7 +181,7 @@ const GitHub = (() => {
   async function readJsonFile(filePath, fallbackData = null) {
     if (!isConfigured()) throw new Error("GitHub is not configured.");
 
-    const response = await fetch(buildUrl(filePath), {
+    const response = await fetch(buildUrl(filePath, true), {
       headers: buildHeaders(),
     });
 

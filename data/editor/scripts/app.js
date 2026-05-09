@@ -1,26 +1,22 @@
 /**
  * app.js
  * Main application entry point.
- * Handles: view routing, settings panel, toast notifications,
- * GitHub config persistence, and the global character cache.
+ * Handles view routing, settings, loading/toast UI, and character I/O.
  */
 
 const App = (() => {
-
   const state = {
-    currentView:      "list",
+    currentView: "list",
     editingCharacter: null,
-    loading:          false,
+    loading: false,
   };
 
-  let mainContentEl    = null;
+  let mainContentEl = null;
   let loadingOverlayEl = null;
   let toastContainerEl = null;
 
-  // ─── Init ────────────────────────────────────────────────────────────────────
-
   function init() {
-    mainContentEl    = document.getElementById("main-content");
+    mainContentEl = document.getElementById("main-content");
     loadingOverlayEl = document.getElementById("loading-overlay");
     toastContainerEl = document.getElementById("toast-container");
 
@@ -33,12 +29,10 @@ const App = (() => {
     }
   }
 
-  // ─── Navigation ──────────────────────────────────────────────────────────────
-
   function navigateTo(viewName, options = {}) {
     state.currentView = viewName;
 
-    document.querySelectorAll("[data-nav-target]").forEach(item => {
+    document.querySelectorAll("[data-nav-target]").forEach((item) => {
       item.classList.toggle("active", item.dataset.navTarget === viewName);
     });
 
@@ -64,12 +58,10 @@ const App = (() => {
   }
 
   function setupNavigation() {
-    document.querySelectorAll("[data-nav-target]").forEach(item => {
+    document.querySelectorAll("[data-nav-target]").forEach((item) => {
       item.addEventListener("click", () => navigateTo(item.dataset.navTarget));
     });
   }
-
-  // ─── Settings View ────────────────────────────────────────────────────────────
 
   function renderSettingsView(container) {
     const config = GitHub.getConfig();
@@ -77,119 +69,117 @@ const App = (() => {
     container.innerHTML = `
       <div class="settings-view">
         <div class="settings-header">
-          <h2>⚙️ Settings</h2>
+          <h2>Settings</h2>
           <p class="text-muted">Configure your GitHub repository. Your token is stored only in this browser's localStorage.</p>
         </div>
 
         <div class="settings-card card">
           <div class="section-header">
-            <span class="section-icon">🐙</span>
+            <span class="section-icon">GitHub</span>
             <h3>GitHub Repository</h3>
           </div>
 
           <div class="settings-field">
             <label class="field-label" for="setting-owner">Repository Owner</label>
-            <p class="field-hint">Your GitHub username (e.g. Lulukitty22)</p>
+            <p class="field-hint">Your GitHub username (for example Lulukitty22).</p>
             <input type="text" id="setting-owner" class="field-input"
-              placeholder="e.g. Lulukitty22" value="${config.owner}" />
+              placeholder="e.g. Lulukitty22" value="${escapeHTML(config.owner)}" />
           </div>
 
           <div class="settings-field">
             <label class="field-label" for="setting-repo">Repository Name</label>
-            <p class="field-hint">The name of your public repo (e.g. Character_Manager)</p>
+            <p class="field-hint">The name of your public repo (for example Character_Manager).</p>
             <input type="text" id="setting-repo" class="field-input"
-              placeholder="e.g. Character_Manager" value="${config.repo}" />
+              placeholder="e.g. Character_Manager" value="${escapeHTML(config.repo)}" />
           </div>
 
           <div class="settings-field">
             <label class="field-label" for="setting-branch">Branch</label>
             <p class="field-hint">Use the branch that contains the thin-shim library/data/share layout. Keep this aligned with the branch your exported HTML shims point at.</p>
             <input type="text" id="setting-branch" class="field-input"
-              placeholder="staging" value="${config.branch}" />
+              placeholder="staging" value="${escapeHTML(config.branch)}" />
           </div>
 
           <div class="settings-field">
             <label class="field-label" for="setting-token">Personal Access Token (PAT)</label>
             <p class="field-hint">
-              Create at <a href="https://github.com/settings/tokens" target="_blank" rel="noreferrer">github.com/settings/tokens</a>.
+              Create one at <a href="https://github.com/settings/tokens" target="_blank" rel="noreferrer">github.com/settings/tokens</a>.
               Choose <strong>Fine-grained token</strong>, set Repository access to your repo,
               and grant <strong>Contents: Read and Write</strong> permission only.
-              Stored locally — never sent anywhere except GitHub.
+              Stored locally and only sent to GitHub.
             </p>
             <input type="password" id="setting-token" class="field-input"
               placeholder="github_pat_xxxxxxxxxxxxxxxx"
-              value="${config.token}" autocomplete="off" />
+              value="${escapeHTML(config.token)}" autocomplete="off" />
           </div>
 
           <div class="settings-actions">
-            <button id="btn-save-settings" class="button button-primary">💾 Save Settings</button>
-            <button id="btn-test-connection" class="button button-ghost">🔌 Test Connection</button>
+            <button id="btn-save-settings" class="button button-primary">Save Settings</button>
+            <button id="btn-test-connection" class="button button-ghost">Test Connection</button>
             <span id="connection-status" class="settings-status"></span>
           </div>
         </div>
 
         <div class="settings-card card" style="margin-top: var(--space-6);">
-          <div class="section-header"><span class="section-icon">⚠️</span><h3>Danger Zone</h3></div>
+          <div class="section-header"><span class="section-icon">Warning</span><h3>Danger Zone</h3></div>
           <p class="text-muted" style="margin-bottom: var(--space-4);">Clear all locally stored settings. Does not touch GitHub.</p>
-          <button id="btn-clear-settings" class="button button-danger button-sm">🗑️ Clear All Local Settings</button>
+          <button id="btn-clear-settings" class="button button-danger button-sm">Clear All Local Settings</button>
         </div>
       </div>
     `;
 
-    document.getElementById("btn-save-settings").addEventListener("click",   saveSettings);
+    document.getElementById("btn-save-settings").addEventListener("click", saveSettings);
     document.getElementById("btn-test-connection").addEventListener("click", testConnection);
-    document.getElementById("btn-clear-settings").addEventListener("click",  clearSettings);
+    document.getElementById("btn-clear-settings").addEventListener("click", clearSettings);
   }
 
   function saveSettings() {
-    const owner  = document.getElementById("setting-owner").value.trim();
-    const repo   = document.getElementById("setting-repo").value.trim();
+    const owner = document.getElementById("setting-owner").value.trim();
+    const repo = document.getElementById("setting-repo").value.trim();
     const branch = document.getElementById("setting-branch").value.trim() || "staging";
-    const token  = document.getElementById("setting-token").value.trim();
+    const token = document.getElementById("setting-token").value.trim();
 
     if (!owner || !repo || !token) {
       showToast("Owner, repository, and token are all required.", "error");
       return;
     }
 
-    localStorage.setItem("githubOwner",  owner);
-    localStorage.setItem("githubRepo",   repo);
+    localStorage.setItem("githubOwner", owner);
+    localStorage.setItem("githubRepo", repo);
     localStorage.setItem("githubBranch", branch);
-    localStorage.setItem("githubToken",  token);
+    localStorage.setItem("githubToken", token);
 
-    showToast("Settings saved!", "success");
+    showToast("Settings saved.", "success");
   }
 
   async function testConnection() {
-    const statusEl   = document.getElementById("connection-status");
-    statusEl.textContent = "Testing…";
-    statusEl.className   = "settings-status";
+    const statusEl = document.getElementById("connection-status");
+    statusEl.textContent = "Testing...";
+    statusEl.className = "settings-status";
 
     saveSettings();
 
     const result = await GitHub.verifyConfig();
 
     if (result.ok) {
-      statusEl.textContent = "✅ Connected successfully!";
-      statusEl.className   = "settings-status text-success";
-      showToast("GitHub connection verified!", "success");
+      statusEl.textContent = "Connected successfully.";
+      statusEl.className = "settings-status text-success";
+      showToast("GitHub connection verified.", "success");
     } else {
-      statusEl.textContent = `❌ ${result.error}`;
-      statusEl.className   = "settings-status text-danger";
+      statusEl.textContent = `Error: ${result.error}`;
+      statusEl.className = "settings-status text-danger";
       showToast(result.error, "error");
     }
   }
 
   function clearSettings() {
     if (!confirm("Clear all local settings?")) return;
-    ["githubToken", "githubOwner", "githubRepo", "githubBranch"].forEach(key => localStorage.removeItem(key));
+    ["githubToken", "githubOwner", "githubRepo", "githubBranch"].forEach((key) => localStorage.removeItem(key));
     showToast("Settings cleared.", "info");
     renderSettingsView(mainContentEl);
   }
 
-  // ─── Loading ──────────────────────────────────────────────────────────────────
-
-  function showLoading(message = "Loading…") {
+  function showLoading(message = "Loading...") {
     state.loading = true;
     ensureLoadingProgress();
     updateLoading(message, "", 0);
@@ -229,31 +219,31 @@ const App = (() => {
     if (!state.loading || !event.detail) return;
     updateLoading(event.detail.message || "Loading shared library...", event.detail.path || "", event.detail.progress);
     if (event.detail.phase === "complete" && event.detail.errors?.length) {
-      showToast(`Library loaded with ${event.detail.errors.length} issue${event.detail.errors.length === 1 ? "" : "s"}. Check console/details if something looks missing.`, "info", 6000);
+      showToast(
+        `Library loaded with ${event.detail.errors.length} issue${event.detail.errors.length === 1 ? "" : "s"}. Check details if something looks missing.`,
+        "info",
+        6000
+      );
       console.warn("Library loaded with issues:", event.detail.errors);
     }
   });
 
-  // ─── Toasts ───────────────────────────────────────────────────────────────────
-
   function showToast(message, type = "info", durationMs = 3500) {
-    const toast       = document.createElement("div");
-    toast.className   = `toast toast-${type}`;
+    const toast = document.createElement("div");
+    toast.className = `toast toast-${type}`;
     toast.textContent = message;
     toastContainerEl.appendChild(toast);
 
     setTimeout(() => {
-      toast.style.opacity    = "0";
-      toast.style.transform  = "translateX(20px)";
+      toast.style.opacity = "0";
+      toast.style.transform = "translateX(20px)";
       toast.style.transition = "opacity 200ms, transform 200ms";
       setTimeout(() => toast.remove(), 210);
     }, durationMs);
   }
 
-  // ─── Character I/O ────────────────────────────────────────────────────────────
-
   async function loadCharacterList() {
-    showLoading("Loading characters from GitHub…");
+    showLoading("Loading characters from GitHub...");
     try {
       return await GitHub.listCharacterFiles();
     } catch (error) {
@@ -265,7 +255,7 @@ const App = (() => {
   }
 
   async function loadCharacter(repoPath) {
-    showLoading("Loading character…");
+    showLoading("Loading character...");
     try {
       return await GitHub.readCharacterFile(repoPath);
     } catch (error) {
@@ -278,24 +268,27 @@ const App = (() => {
 
   async function saveCharacter(characterData, sha = null, previousRepoPath = null) {
     const repoPath = characterData.meta?.repoPath;
-    if (!repoPath) { showToast("Character has no repo path. Cannot save.", "error"); return null; }
+    if (!repoPath) {
+      showToast("Character has no repo path. Cannot save.", "error");
+      return null;
+    }
 
     const renameFrom = previousRepoPath && previousRepoPath !== repoPath && sha ? previousRepoPath : null;
     characterData.meta.lastUpdated = new Date().toISOString();
 
-    showLoading("Saving to GitHub…");
+    showLoading("Saving to GitHub...");
     try {
       const result = await GitHub.writeCharacterFile(repoPath, characterData, renameFrom ? null : sha);
 
       if (renameFrom) {
         try {
           await GitHub.deleteCharacterFile(renameFrom, sha);
-          showToast("Character renamed and saved!", "success");
+          showToast("Character renamed and saved.", "success");
         } catch (cleanupError) {
           showToast(`Saved, but could not remove old file ${renameFrom}: ${cleanupError.message}`, "info");
         }
       } else {
-        showToast("Character saved!", "success");
+        showToast("Character saved.", "success");
       }
 
       return result.sha;
@@ -319,18 +312,13 @@ const App = (() => {
     saveCharacter,
     getState: () => state,
   };
-
 })();
 
-// ─── Character Editor ─────────────────────────────────────────────────────────
-// Ties all editor tab modules together into a single tabbed view.
-
 const CharacterEditor = (() => {
-
   let currentCharacter = null;
-  let currentSha       = null;
-  let currentFilePath  = null;
-  let editorHandle     = null;
+  let currentSha = null;
+  let currentFilePath = null;
+  let editorHandle = null;
 
   async function render(container, characterInfo) {
     if (!characterInfo) {
@@ -339,8 +327,8 @@ const CharacterEditor = (() => {
     }
 
     currentCharacter = Schema.applyDefaults(characterInfo.data);
-    currentSha       = characterInfo.sha       || null;
-    currentFilePath  = characterInfo.filePath  || currentCharacter.meta?.repoPath || "";
+    currentSha = characterInfo.sha || null;
+    currentFilePath = characterInfo.filePath || currentCharacter.meta?.repoPath || "";
 
     if (typeof Library !== "undefined" && GitHub.isConfigured()) {
       App.showLoading("Loading shared library...");
@@ -355,25 +343,22 @@ const CharacterEditor = (() => {
 
     const name = currentCharacter.identity?.name || "New Character";
     const presentation = Schema.getCharacterPresentation(currentCharacter);
-    const icon = presentation.icon;
-    const label = presentation.label;
 
-    // Shell
     container.innerHTML = `
       <div class="editor-view">
         <div class="editor-header">
           <div class="editor-title">
-            <span style="font-size: var(--text-2xl);">${icon}</span>
+            <span style="font-size: var(--text-2xl);">${presentation.icon}</span>
             <div>
               <h2>${escapeHTML(name)}</h2>
-              <span class="badge badge-accent">${label}</span>
+              <span class="badge badge-accent">${presentation.label}</span>
             </div>
           </div>
           <div class="editor-actions">
-            <button id="btn-back-to-list" class="button button-ghost">← Back</button>
-            <button id="btn-preview-sheet" class="button button-ghost">👁 Preview</button>
-            <button id="btn-export-sheet" class="button button-ghost">📤 Export</button>
-            <button id="btn-save-character" class="button button-primary">💾 Save to GitHub</button>
+            <button id="btn-back-to-list" class="button button-ghost">Back</button>
+            <button id="btn-preview-sheet" class="button button-ghost">Preview</button>
+            <button id="btn-export-sheet" class="button button-ghost">Export</button>
+            <button id="btn-save-character" class="button button-primary">Save to GitHub</button>
           </div>
         </div>
 
@@ -381,7 +366,7 @@ const CharacterEditor = (() => {
 
         <div class="editor-save-bar">
           <span class="editor-save-status" id="save-status"></span>
-          <button id="btn-save-bar" class="button button-primary">💾 Save to GitHub</button>
+          <button id="btn-save-bar" class="button button-primary">Save to GitHub</button>
         </div>
       </div>
     `;
@@ -394,10 +379,9 @@ const CharacterEditor = (() => {
       },
     });
 
-    // Wire save buttons
     container.querySelector("#btn-save-character")?.addEventListener("click", saveCurrentCharacter);
-    container.querySelector("#btn-save-bar")?.addEventListener("click",       saveCurrentCharacter);
-    container.querySelector("#btn-back-to-list")?.addEventListener("click",   () => App.navigateTo("list"));
+    container.querySelector("#btn-save-bar")?.addEventListener("click", saveCurrentCharacter);
+    container.querySelector("#btn-back-to-list")?.addEventListener("click", () => App.navigateTo("list"));
 
     container.querySelector("#btn-preview-sheet")?.addEventListener("click", () => {
       const data = getCurrentEditorData();
@@ -409,8 +393,6 @@ const CharacterEditor = (() => {
       SheetExporter.exportCharacter(data, currentFilePath);
     });
   }
-
-  // ─── Collect & Save ───────────────────────────────────────────────────────────
 
   function getCurrentEditorData() {
     const character = editorHandle?.getCurrentCharacter
@@ -427,7 +409,7 @@ const CharacterEditor = (() => {
 
   async function saveCurrentCharacter() {
     const statusEl = document.getElementById("save-status");
-    if (statusEl) statusEl.textContent = "Saving…";
+    if (statusEl) statusEl.textContent = "Saving...";
 
     const data = getCurrentEditorData();
     const characterName = data.identity?.name?.trim() || "";
@@ -454,18 +436,14 @@ const CharacterEditor = (() => {
     const newSha = await App.saveCharacter(data, currentSha, previousRepoPath);
 
     if (newSha) {
-      currentSha       = newSha;
+      currentSha = newSha;
       currentCharacter = data;
-      currentFilePath  = data.meta.repoPath;
-      if (statusEl) {
-        statusEl.textContent = `Saved ${new Date().toLocaleTimeString()}`;
-      }
-    } else {
-      if (statusEl) statusEl.textContent = "Save failed.";
+      currentFilePath = data.meta.repoPath;
+      if (statusEl) statusEl.textContent = `Saved ${new Date().toLocaleTimeString()}`;
+    } else if (statusEl) {
+      statusEl.textContent = "Save failed.";
     }
   }
-
-  // ─── Preview ─────────────────────────────────────────────────────────────────
 
   function openPreview(characterData) {
     const overlay = document.createElement("div");
@@ -474,7 +452,7 @@ const CharacterEditor = (() => {
       <div class="sheet-preview-modal">
         <div class="sheet-preview-toolbar flex-between">
           <span class="text-muted text-sm">Sheet Preview</span>
-          <button class="button button-ghost button-sm" id="btn-close-editor-preview">✕ Close</button>
+          <button class="button button-ghost button-sm" id="btn-close-editor-preview">Close</button>
         </div>
         <div class="sheet-preview-body"></div>
       </div>
@@ -484,7 +462,9 @@ const CharacterEditor = (() => {
     ViewCharacter.mount(overlay.querySelector(".sheet-preview-body"), characterData);
 
     overlay.querySelector("#btn-close-editor-preview").addEventListener("click", () => overlay.remove());
-    overlay.addEventListener("click", (event) => { if (event.target === overlay) overlay.remove(); });
+    overlay.addEventListener("click", (event) => {
+      if (event.target === overlay) overlay.remove();
+    });
   }
 
   function escapeHTML(text) {
@@ -492,9 +472,6 @@ const CharacterEditor = (() => {
   }
 
   return { render };
-
 })();
 
-// Boot
 document.addEventListener("DOMContentLoaded", () => App.init());
-
