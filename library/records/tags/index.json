@@ -1,4 +1,4 @@
-﻿{
+{
   "schemaVersion": 1,
   "id": "index.tags",
   "name": "Tags",
@@ -51,6 +51,15 @@
       "path": "library/records/tags/dual-state-sheet.json"
     },
     {
+      "id": "ranger",
+      "name": "Ranger",
+      "collections": [
+        "tags"
+      ],
+      "tags": [],
+      "path": "library/records/tags/ranger.json"
+    },
+    {
       "id": "tag:shapechanger",
       "name": "Shapechanger",
       "collections": [
@@ -79,4 +88,3 @@
     }
   ]
 }
-
