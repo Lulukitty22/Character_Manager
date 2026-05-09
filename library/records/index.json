@@ -7,6 +7,10 @@
     {
       "name": "Spells",
       "path": "library/records/spells/index.json"
+    },
+    {
+      "name": "Traits",
+      "path": "library/records/traits/index.json"
     }
   ],
   "entries": [
@@ -45,6 +49,17 @@
         "dnd5eapi"
       ],
       "path": "library/records/spells/transmutation/capella-spell-alter-self.json"
+    },
+    {
+      "id": "aina-trait-archery-test",
+      "name": "Ammo Test Setup",
+      "collections": [
+        "traits"
+      ],
+      "tags": [
+        "test"
+      ],
+      "path": "library/records/traits/aina-trait-archery-test.json"
     }
   ]
 }
