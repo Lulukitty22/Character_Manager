@@ -24,6 +24,13 @@ const EditorGameplay = (() => {
       return panel;
     }
 
+    renderInteractiveGameplay(panel, character);
+    return panel;
+  }
+
+  function renderInteractiveGameplay(panel, character) {
+    if (!character.dnd) return;
+
     if (!character.dnd.hp) character.dnd.hp = { mode: "calculated", max: 0, current: 0, temp: 0, log: [] };
     if (!character.spellSlots) character.spellSlots = {};
     if (!character.spellSlotLog) character.spellSlotLog = [];
@@ -52,8 +59,6 @@ const EditorGameplay = (() => {
     wireHpSection(panel, character, hpState, healingItems);
     wireSpellSlots(panel, character, slotState);
     wireItemActions(panel, character, actionableItems);
-
-    return panel;
   }
 
   function renderHpSection(character, hpState, healingItems) {
@@ -378,6 +383,7 @@ const EditorGameplay = (() => {
       }
       applyHpAdjust(panelEl, character, "heal", amount, item.name || "Healing item");
       decrementInventoryItem(character, itemId);
+      refreshGameplayPanel(panelEl, character);
       App.showToast(`Used ${item.name || "healing item"}.`, "success");
     });
 
@@ -521,6 +527,7 @@ const EditorGameplay = (() => {
       decrementInventoryItem(character, item.id);
     }
 
+    refreshGameplayPanel(panelEl, character);
     App.showToast(`${item.action?.label || "Used"} ${item.name || "item"}.`, "success");
   }
 
@@ -543,6 +550,7 @@ const EditorGameplay = (() => {
     resource.current = Math.max(0, maxCap > 0 ? Math.min(current + delta, maxCap) : current + delta);
     if (!resource.log) resource.log = [];
     resource.log.push(Schema.createDefaultResourceLogEntry(delta, effect.reason || "Item action"));
+    syncResourceDom(resource);
   }
 
   function addHpLog(panelEl, character, delta, reason) {
@@ -575,6 +583,33 @@ const EditorGameplay = (() => {
       .find(entry => entry.dataset.itemId === itemId);
     const quantityEl = row?.querySelector(".item-quantity");
     if (quantityEl) quantityEl.value = Math.max(0, Number(quantityEl.value || 1) - 1);
+  }
+
+  function syncResourceDom(resource) {
+    const pools = Array.from(document.querySelectorAll("#resources-list .resource-pool"));
+    const pool = pools.find(entry => {
+      const name = entry.querySelector(".resource-name")?.value || "";
+      return [
+        entry.dataset.resourceId,
+        entry.dataset.libraryRef,
+        name,
+      ].filter(Boolean).some(value => String(value).trim().toLowerCase() === String(resource.id || resource.libraryRef || resource.name || "").trim().toLowerCase())
+      || String(name).trim().toLowerCase() === String(resource.name || "").trim().toLowerCase();
+    });
+    if (!pool) return;
+    const currentEl = pool.querySelector(".resource-current");
+    const maxEl = pool.querySelector(".resource-max");
+    const logEl = pool.querySelector(".resource-log-entries");
+    if (currentEl) currentEl.value = Number(resource.current ?? 0);
+    if (maxEl && resource.max != null) maxEl.value = Number(resource.max ?? 0);
+    if (logEl) {
+      const rows = (resource.log || []).slice().reverse().map(renderLogEntry).join("");
+      logEl.innerHTML = rows || `<p class="text-faint text-sm" style="padding: var(--space-2);">No entries yet.</p>`;
+    }
+  }
+
+  function refreshGameplayPanel(panelEl, character) {
+    renderInteractiveGameplay(panelEl, character);
   }
 
   function readTab(character) {

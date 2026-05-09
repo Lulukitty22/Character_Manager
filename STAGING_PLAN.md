@@ -61,6 +61,24 @@ The D&D stats visual port is already done and browser-verified. This restructuri
 - Delete the now-empty top-level `app/` directory once the external process lock is gone.
 - Do a final browser parity pass on the refactored manager shim and exported viewer shims. The in-app browser verification attempt was blocked by `net::ERR_BLOCKED_BY_CLIENT`, so this still needs a manual follow-up in a normal browser session.
 
+## Backend Follow-Ups
+
+- Gameplay state should stay local and coherent during a session:
+  - inventory actions like shooting, drinking, and reloading should update local character state immediately
+  - ammo/resource counts should stay visible and in sync without needing a GitHub round-trip per click
+  - save should persist the final local result once, not perform one remote write per gameplay action
+- Inventory/action UX follow-up:
+  - add clearer real-time visibility for ammo, durability, and other consumable state tied to item actions
+  - review potion/healing action limits so quantity and usability stay consistent after each use
+- D&D/DM backend roadmap:
+  - add explicit dice and damage calculation support for spells and actions
+  - support DM-side rolling on behalf of party members for AFK/slow turns
+  - keep a trustworthy log trail for rolls and action outcomes
+  - review how GitHub/raw caching affects action/roll logs versus initial HTML boot loading, and decide what must stay local/live versus what can tolerate delayed propagation
+- Editor content follow-up:
+  - appearance coverage is still incomplete in the maintained editor shell
+  - emoji/icon regressions are currently considered polish/UI work and can be handled separately from backend correctness
+
 ## Shim Contract
 
 Viewer export HTML should contain only:

@@ -450,9 +450,19 @@ const Library = (() => {
   }
 
   async function writeIndex(indexPath, index) {
-    const result = await GitHub.writeJsonFile(indexPath, index, state.shaByRecord[indexPath] || null, `Update ${indexPath}`);
-    state.shaByRecord[indexPath] = result.sha;
-    return result;
+    const write = async (payload) => {
+      const result = await GitHub.writeJsonFile(indexPath, payload, state.shaByRecord[indexPath] || null, `Update ${indexPath}`);
+      state.shaByRecord[indexPath] = result.sha;
+      return result;
+    };
+    try {
+      return await write(index);
+    } catch (error) {
+      if (!isGitHubConflict(error)) throw error;
+      const latest = await readIndex(indexPath, index.path?.replace(/\/index\.json$/i, "") || indexPath.replace(/\/index\.json$/i, ""));
+      const merged = mergeIndexData(latest, index);
+      return write(merged);
+    }
   }
 
   function addChildDirectories(index, dir, dirs) {
@@ -494,6 +504,25 @@ const Library = (() => {
       (overlay.collections[key] || []).forEach(entry => byPath.set(entry.path, entry));
       merged.collections[key] = Array.from(byPath.values()).sort((a, b) => String(a.name || a.id).localeCompare(String(b.name || b.id)));
     });
+    return merged;
+  }
+
+  function mergeIndexData(base = {}, overlay = {}) {
+    const merged = {
+      ...base,
+      ...overlay,
+      directories: [],
+      entries: [],
+    };
+    const byDirPath = new Map();
+    (base.directories || []).forEach(entry => entry?.path && byDirPath.set(entry.path, entry));
+    (overlay.directories || []).forEach(entry => entry?.path && byDirPath.set(entry.path, entry));
+    merged.directories = Array.from(byDirPath.values()).sort((a, b) => String(a.name || a.path).localeCompare(String(b.name || b.path)));
+
+    const byEntryPath = new Map();
+    (base.entries || []).forEach(entry => entry?.path && byEntryPath.set(entry.path, entry));
+    (overlay.entries || []).forEach(entry => entry?.path && byEntryPath.set(entry.path, entry));
+    merged.entries = Array.from(byEntryPath.values()).sort((a, b) => String(a.name || a.id).localeCompare(String(b.name || b.id)));
     return merged;
   }
 
@@ -573,7 +602,7 @@ const Library = (() => {
 
   async function syncCharacter(character) {
     await loadAll();
-    const customChanged = new Set();
+    const customChanged = new Map();
     const characterName = character.identity?.name?.trim() || "Character";
 
     character.spells = await syncArray(character.spells || [], "spells", customChanged, spellState, characterName);
@@ -591,8 +620,12 @@ const Library = (() => {
     (character.identity?.tags || []).forEach(tag => syncNameRecord(tag, "tags", customChanged));
     collectNestedTags(character).forEach(tag => syncNameRecord(tag, "tags", customChanged));
 
-    for (const key of customChanged) {
-      await saveCollection(key);
+    for (const [key, ids] of customChanged.entries()) {
+      const data = state.collections[key] || emptyCollection(key);
+      const records = (data.entries || []).filter(entry => ids.has(entry.id));
+      for (const record of records) {
+        await saveRecord(key, record);
+      }
     }
 
     return character;
@@ -638,11 +671,31 @@ const Library = (() => {
     const index = data.entries.findIndex(entry => entry.id === record.id || comparableName(entry.name) === comparableName(record.name));
     if (index >= 0) {
       record.id = data.entries[index].id;
-      data.entries[index] = { ...data.entries[index], ...record, updatedAt: new Date().toISOString() };
+      const existing = data.entries[index];
+      const merged = { ...existing, ...record, updatedAt: new Date().toISOString() };
+      if (!recordsEqual(existing, merged)) {
+        data.entries[index] = merged;
+        markCollectionChanged(changedKeys, key, merged.id);
+      }
     } else {
       data.entries.push(record);
+      markCollectionChanged(changedKeys, key, record.id);
     }
-    changedKeys.add(key);
+  }
+
+  function markCollectionChanged(changedKeys, key, id) {
+    if (!changedKeys.has(key)) changedKeys.set(key, new Set());
+    changedKeys.get(key).add(id);
+  }
+
+  function recordsEqual(left = {}, right = {}) {
+    const sanitize = (record) => {
+      const copy = JSON.parse(JSON.stringify(record || {}));
+      delete copy.updatedAt;
+      delete copy.createdAt;
+      return copy;
+    };
+    return JSON.stringify(sanitize(left)) === JSON.stringify(sanitize(right));
   }
 
   function recordFromCharacterEntry(collection, entry) {
