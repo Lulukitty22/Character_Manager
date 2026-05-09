@@ -13,6 +13,10 @@
       "path": "library/records/spells/index.json"
     },
     {
+      "name": "Tags",
+      "path": "library/records/tags/index.json"
+    },
+    {
       "name": "Traits",
       "path": "library/records/traits/index.json"
     }
@@ -64,6 +68,15 @@
         "test"
       ],
       "path": "library/records/traits/aina-trait-archery-test.json"
+    },
+    {
+      "id": "ranger",
+      "name": "Ranger",
+      "collections": [
+        "tags"
+      ],
+      "tags": [],
+      "path": "library/records/tags/ranger.json"
     },
     {
       "id": "wood-elf",
