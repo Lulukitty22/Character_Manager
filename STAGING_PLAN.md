@@ -73,6 +73,8 @@ The D&D stats visual port is already done and browser-verified. This restructuri
   - review whether gameplay healing should stay average-only, become roll-driven, or support DM-confirmed results
   - decide and document the ammo model explicitly: inventory should represent owned stock, while gameplay resources should represent immediately spendable/loaded state; do not duplicate the same number in both places unless one is derived from the other
   - the current stress-test model is now: `Arrow Bundle (20)` -> `Loose Arrow` inventory stock -> `Field Quiver` ready-ammo resource -> `Field Shortbow` spend action; keep validating this as the baseline shared ammo loop before generalizing it to bolts, thrown consumables, durability, or DM-facing turn tools
+  - current quiver UX works but is still a little clunky: `Field Quiver` shows two separate inverse actions (`Ready 1 Arrow` and `Stow 1 Arrow`). Revisit whether that should collapse into one contextual control, a signed stepper, or a richer ammo widget before calling the ammo UX settled.
+  - rebundling loose arrows back into `Arrow Bundle (20)` is not modeled yet; treat that as a later inventory/backend design decision instead of sneaking in a one-off conversion rule
 - D&D/DM backend roadmap:
   - add explicit dice and damage calculation support for spells and actions
   - support DM-side rolling on behalf of party members for AFK/slow turns
