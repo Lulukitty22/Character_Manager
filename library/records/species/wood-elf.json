@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "id": "wood-elf",
+  "name": "Wood Elf",
+  "collections": [
+    "species"
+  ],
+  "tags": [],
+  "variantOf": null,
+  "sourceReferences": [],
+  "features": {},
+  "desc": ""
+}
