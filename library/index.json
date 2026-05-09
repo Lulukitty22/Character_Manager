@@ -1,4 +1,4 @@
-﻿{
+{
   "schemaVersion": 1,
   "id": "index.library",
   "name": "Library",
@@ -15,6 +15,10 @@
     {
       "name": "Items",
       "path": "library/records/items/index.json"
+    },
+    {
+      "name": "Records",
+      "path": "library/records/index.json"
     },
     {
       "name": "Resources",
@@ -39,4 +43,3 @@
   ],
   "entries": []
 }
-
