@@ -77,6 +77,13 @@ The D&D stats visual port is already done and browser-verified. This restructuri
   - support DM-side rolling on behalf of party members for AFK/slow turns
   - keep a trustworthy log trail for rolls and action outcomes
   - review how GitHub/raw caching affects action/roll logs versus initial HTML boot loading, and decide what must stay local/live versus what can tolerate delayed propagation
+- Library/backend architecture follow-up:
+  - seriously test and theorize the shared backend model for items, spells, resources, and tags as one connected system instead of treating each surface as isolated UI work
+  - add a clean authoring path for tags and other library records; right now raw JSON editing is effectively reserved for repo maintainers and LLM-assisted changes
+  - decide what level of in-app authoring regular users should have for tags, records, and linked mechanics versus what should stay maintainer-only
+  - add a dedicated tag viewer/editor path if tags remain a first-class part of filtering, mechanics, and presentation
+  - validate import parity between Open5e, D&D 5e API, and any future importers so the same concept does not arrive with materially different fields or missing data depending on source
+  - define a normalization and review workflow for imported records so auto-import does not silently create mismatched or incomplete gameplay data
 - Editor content follow-up:
   - appearance coverage is still incomplete in the maintained editor shell
   - emoji/icon regressions are currently considered polish/UI work and can be handled separately from backend correctness
