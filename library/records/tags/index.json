@@ -15,6 +15,15 @@
       "path": "library/records/tags/aberrant-lich.json"
     },
     {
+      "id": "ammo-test",
+      "name": "Ammo Test",
+      "collections": [
+        "tags"
+      ],
+      "tags": [],
+      "path": "library/records/tags/ammo-test.json"
+    },
+    {
       "id": "tag:boss",
       "name": "Boss",
       "collections": [
