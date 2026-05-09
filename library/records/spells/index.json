@@ -1,4 +1,4 @@
-﻿{
+{
   "schemaVersion": 1,
   "id": "index.spells",
   "name": "Spells",
@@ -37,6 +37,24 @@
       "path": "library/records/spells/transmutation/index.json"
     }
   ],
-  "entries": []
+  "entries": [
+    {
+      "id": "spells.open5e-spells-wz-abrupt-hug",
+      "name": "Abrupt Hug",
+      "collections": [
+        "spells",
+        "spells/transmutation",
+        "spells/level-1"
+      ],
+      "tags": [
+        "open5eapi",
+        "warlock-zine",
+        "wz",
+        "kobold-press",
+        "5th-edition-2014",
+        "srd"
+      ],
+      "path": "library/records/spells/transmutation/open5e-spells-wz-abrupt-hug.json"
+    }
+  ]
 }
-
