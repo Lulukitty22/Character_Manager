@@ -1,0 +1,1229 @@
+﻿{
+  "id": "93b6bd4a-9f95-4788-a309-a75def5d3a7c",
+  "meta": {
+    "repoPath": "library/characters/capella-emerada-lugnica.json",
+    "lastUpdated": "2026-05-03T04:33:02.778Z"
+  },
+  "identity": {
+    "name": "Capella Emerada Lugnica",
+    "classification": "boss_npc",
+    "aliases": [
+      "Capella",
+      "Lust",
+      "Elegant Aberrant Lich",
+      "Shapechanger Boss"
+    ],
+    "race": "Aberrant Lich / Shapechanger",
+    "height": "Variable",
+    "age": "Unknown",
+    "origin": "RE:ZERO-inspired D&D boss adaptation",
+    "tags": [
+      "D&D 5e",
+      "Boss",
+      "Aberrant Lich",
+      "Shapechanger",
+      "Social Manipulator",
+      "Dual-State Sheet"
+    ]
+  },
+  "appearance": {
+    "description": "A beautiful, elegant, and deliberately disarming shapechanger whose body is never fixed. She can appear harmless, wounded, noble, monstrous, or perfectly ordinary, then unravel into claws, tendrils, wings, mouths, and impossible flesh.",
+    "images": [
+      {
+        "id": "b464a316-9338-4e67-b523-3a10a65aeb5e",
+        "label": "Capella Image 1",
+        "url": "https://witchculttranslation.com/wp-content/uploads/2019/04/71340004_p0-768x913.jpg"
+      }
+    ]
+  },
+  "personality": "Elegant manipulator. Cruel, theatrical, adaptive, and socially predatory. She prefers control, humiliation, injury, and fear over killing outright.",
+  "backstory": "Capella is written as a D&D boss adaptation of a near-unkillable shapechanger: an aberrant lich-like creature with a soul anchor, monstrous regeneration, Far Realm mutation, and self-only flesh polymorph.",
+  "notes": "Use Boss Presence only while Capella is being run as an enemy boss or DMPC boss. If she is tamed, pacified, recruited, purified, weakened, or otherwise removed from boss status, turn Boss Presence off and use the tamed/default stats and HP. Player-facing Deception / Impersonation / Persuasion uses the special social rules in the Roll Calculator: no prepared deception package against party members, and no Silver Tongue or Expert Deceiver against player Insight checks.",
+  "spells": [
+    {
+      "id": "b1110647-0639-41c8-9074-1785ec977e6a",
+      "source": "library",
+      "libraryCollection": "spells",
+      "librarySource": "custom",
+      "libraryRef": "spells.4c177263-68ac-419d-84d5-d71d1c18bbbf",
+      "prepared": true,
+      "access": {},
+      "overrides": {}
+    },
+    {
+      "id": "fceb8d95-826d-4e31-acb5-196c282f2f54",
+      "source": "library",
+      "libraryCollection": "spells",
+      "librarySource": "custom",
+      "libraryRef": "spells.7b6931ed-1049-4d02-8590-78936898e3cc",
+      "prepared": true,
+      "access": {},
+      "overrides": {}
+    },
+    {
+      "id": "da949096-fa92-4d18-a204-4558e6c87e17",
+      "source": "library",
+      "libraryCollection": "spells",
+      "librarySource": "custom",
+      "libraryRef": "spells.7e97d247-569e-4b1e-a1ae-309711acd5e5",
+      "prepared": false,
+      "access": {
+        "label": "Boss Only",
+        "kind": "requirement",
+        "showKnown": false,
+        "description": "Capella can cast this directly while Boss Presence is active. Outside boss mode, treat it as Tier 8 casting that needs explicit story/DM permission.",
+        "chips": [
+          {
+            "label": "Tier 8",
+            "kind": "requirement",
+            "description": "Higher-tier access than her tamed/default sheet should assume."
+          }
+        ]
+      },
+      "overrides": {}
+    },
+    {
+      "id": "f6d3f787-b4cd-4eec-b200-a8ad648250f9",
+      "source": "library",
+      "libraryCollection": "spells",
+      "librarySource": "custom",
+      "libraryRef": "spells.3aee59b4-649b-422b-9a06-1a6da700d624",
+      "prepared": false,
+      "access": {},
+      "overrides": {}
+    },
+    {
+      "id": "d813bcd5-3ac0-480a-82a1-6e8b25194fe9",
+      "source": "library",
+      "libraryCollection": "spells",
+      "librarySource": "custom",
+      "libraryRef": "spells.d249f049-b5c0-4dc0-87d6-3b755dc761ce",
+      "prepared": true,
+      "access": {},
+      "overrides": {}
+    },
+    {
+      "id": "9d4b668a-34d6-49c5-bbe5-53b978637659",
+      "source": "library",
+      "libraryCollection": "spells",
+      "librarySource": "custom",
+      "libraryRef": "spells.504aee8d-99e5-48fe-934c-bd74f3eaf223",
+      "prepared": true,
+      "access": {},
+      "overrides": {}
+    },
+    {
+      "id": "capella-ref-disguise-self",
+      "source": "library",
+      "libraryCollection": "spells",
+      "librarySource": "custom",
+      "libraryRef": "spells.capella-spell-disguise-self",
+      "prepared": true,
+      "access": {},
+      "overrides": {}
+    },
+    {
+      "id": "capella-ref-alter-self",
+      "source": "library",
+      "libraryCollection": "spells",
+      "librarySource": "custom",
+      "libraryRef": "spells.capella-spell-alter-self",
+      "prepared": true,
+      "access": {},
+      "overrides": {}
+    },
+    {
+      "id": "capella-ref-mirror-image",
+      "source": "library",
+      "libraryCollection": "spells",
+      "librarySource": "custom",
+      "libraryRef": "spells.capella-spell-mirror-image",
+      "prepared": true,
+      "access": {},
+      "overrides": {}
+    },
+    {
+      "id": "capella-ref-fear",
+      "source": "library",
+      "libraryCollection": "spells",
+      "librarySource": "custom",
+      "libraryRef": "spells.capella-spell-fear",
+      "prepared": true,
+      "access": {},
+      "overrides": {}
+    },
+    {
+      "id": "capella-ref-counterspell",
+      "source": "library",
+      "libraryCollection": "spells",
+      "librarySource": "custom",
+      "libraryRef": "spells.capella-spell-counterspell",
+      "prepared": true,
+      "access": {},
+      "overrides": {}
+    },
+    {
+      "id": "capella-ref-dimension-door",
+      "source": "library",
+      "libraryCollection": "spells",
+      "librarySource": "custom",
+      "libraryRef": "spells.capella-spell-dimension-door",
+      "prepared": true,
+      "access": {},
+      "overrides": {}
+    },
+    {
+      "id": "capella-ref-hold-monster",
+      "source": "library",
+      "libraryCollection": "spells",
+      "librarySource": "custom",
+      "libraryRef": "spells.capella-spell-hold-monster",
+      "prepared": true,
+      "access": {},
+      "overrides": {}
+    },
+    {
+      "id": "capella-ref-modify-memory",
+      "source": "library",
+      "libraryCollection": "spells",
+      "librarySource": "custom",
+      "libraryRef": "spells.capella-spell-modify-memory",
+      "prepared": true,
+      "access": {},
+      "overrides": {}
+    },
+    {
+      "id": "capella-ref-mislead",
+      "source": "library",
+      "libraryCollection": "spells",
+      "librarySource": "custom",
+      "libraryRef": "spells.capella-spell-mislead",
+      "prepared": false,
+      "access": {},
+      "overrides": {}
+    },
+    {
+      "id": "capella-ref-seeming",
+      "source": "library",
+      "libraryCollection": "spells",
+      "librarySource": "custom",
+      "libraryRef": "spells.capella-spell-seeming",
+      "prepared": false,
+      "access": {},
+      "overrides": {}
+    },
+    {
+      "id": "capella-ref-geas",
+      "source": "library",
+      "libraryCollection": "spells",
+      "librarySource": "custom",
+      "libraryRef": "spells.capella-spell-geas",
+      "prepared": false,
+      "access": {},
+      "overrides": {}
+    },
+    {
+      "id": "capella-ref-mass-suggestion",
+      "source": "library",
+      "libraryCollection": "spells",
+      "librarySource": "custom",
+      "libraryRef": "spells.capella-spell-mass-suggestion",
+      "prepared": true,
+      "access": {},
+      "overrides": {}
+    },
+    {
+      "id": "capella-ref-power-word-stun",
+      "source": "library",
+      "libraryCollection": "spells",
+      "librarySource": "custom",
+      "libraryRef": "spells.capella-spell-power-word-stun",
+      "prepared": true,
+      "access": {},
+      "overrides": {}
+    },
+    {
+      "id": "2d922568-021a-468f-aff5-4d3eefd61403",
+      "source": "library",
+      "libraryCollection": "spells",
+      "librarySource": "custom",
+      "libraryRef": "spells.19168ae2-b26b-4b5a-a3c3-aaef9c3d8047",
+      "overrides": {},
+      "prepared": false
+    }
+  ],
+  "spellSlots": {
+    "1": {
+      "max": 4,
+      "current": 4
+    },
+    "2": {
+      "max": 3,
+      "current": 3
+    },
+    "3": {
+      "max": 3,
+      "current": 3
+    },
+    "4": {
+      "max": 3,
+      "current": 3
+    },
+    "5": {
+      "max": 2,
+      "current": 2
+    },
+    "6": {
+      "max": 1,
+      "current": 1
+    },
+    "7": {
+      "max": 1,
+      "current": 1
+    },
+    "8": {
+      "max": 1,
+      "current": 1
+    },
+    "9": {
+      "max": 1,
+      "current": 1
+    }
+  },
+  "abilities": [
+    {
+      "id": "e8a6a59f-deab-42da-a691-46c0e119eaa7",
+      "source": "library",
+      "libraryCollection": "traits",
+      "librarySource": "custom",
+      "libraryRef": "traits.22aa3b43-201b-48e5-a393-79ccccd0c18e",
+      "overrides": {},
+      "active": true
+    },
+    {
+      "id": "f77e2880-ca9e-4737-956a-7f47c8699c53",
+      "source": "library",
+      "libraryCollection": "traits",
+      "librarySource": "custom",
+      "libraryRef": "traits.b0d2e3d0-f347-4d01-a943-9b821a55acf1",
+      "overrides": {},
+      "active": true
+    },
+    {
+      "id": "6b10ef1c-a09f-416b-8d73-a7aeafcc858f",
+      "source": "library",
+      "libraryCollection": "traits",
+      "librarySource": "custom",
+      "libraryRef": "traits.e533c4f5-df28-4c54-8eb1-b0c3b0365e6d",
+      "overrides": {},
+      "active": true
+    },
+    {
+      "id": "2f1843b3-288f-4149-b311-e3859ef903fa",
+      "source": "library",
+      "libraryCollection": "traits",
+      "librarySource": "custom",
+      "libraryRef": "traits.69a33466-f911-4440-907d-bd020e7f0b77",
+      "overrides": {},
+      "active": true
+    },
+    {
+      "id": "a787660f-43e5-43ed-b5b4-9d10a163ecd2",
+      "source": "library",
+      "libraryCollection": "traits",
+      "librarySource": "custom",
+      "libraryRef": "traits.7f1b4dc6-32ad-46bf-88ad-d438e3cbe878",
+      "overrides": {},
+      "active": true
+    },
+    {
+      "id": "5e5268cb-8a2a-4b91-9285-d445a1457484",
+      "source": "library",
+      "libraryCollection": "traits",
+      "librarySource": "custom",
+      "libraryRef": "traits.2ab2a7d6-bc03-4c5b-801f-9d9ac93633f9",
+      "overrides": {},
+      "active": true
+    },
+    {
+      "id": "5881b1ac-4cf8-432b-b46d-df7f99f54307",
+      "source": "library",
+      "libraryCollection": "traits",
+      "librarySource": "custom",
+      "libraryRef": "traits.08f36953-b9aa-4c81-aa37-78dbb191585d",
+      "overrides": {},
+      "active": true
+    },
+    {
+      "id": "713d21ca-4ad8-458c-afb8-96dbd0ecf3a4",
+      "source": "library",
+      "libraryCollection": "traits",
+      "librarySource": "custom",
+      "libraryRef": "traits.fca2be53-1cce-4334-a412-0fedad0d6aae",
+      "overrides": {},
+      "active": true
+    },
+    {
+      "id": "0b27cda4-0111-44f4-9d55-72ca0b9151c7",
+      "source": "library",
+      "libraryCollection": "traits",
+      "librarySource": "custom",
+      "libraryRef": "traits.c9bf4ca6-3342-4cfc-9589-8211d1d06736",
+      "overrides": {},
+      "active": true
+    },
+    {
+      "id": "45dba3ae-b355-4759-885c-4044b3ce1141",
+      "source": "library",
+      "libraryCollection": "traits",
+      "librarySource": "custom",
+      "libraryRef": "traits.4d354f04-d3ac-4ae0-bd35-42c91eb0542a",
+      "overrides": {},
+      "active": true
+    },
+    {
+      "id": "b76e7b69-756e-4253-96dd-658173663858",
+      "source": "library",
+      "libraryCollection": "traits",
+      "librarySource": "custom",
+      "libraryRef": "traits.ffe07a77-b388-434d-8e14-c649847f26fe",
+      "overrides": {},
+      "active": true
+    },
+    {
+      "id": "41b2503f-a90a-4683-9b92-58474ffd355e",
+      "source": "library",
+      "libraryCollection": "traits",
+      "librarySource": "custom",
+      "libraryRef": "traits.f675664e-0615-4aaf-ba48-e2db8592941d",
+      "overrides": {},
+      "active": true
+    },
+    {
+      "id": "9a8fe175-8c25-44f9-a687-b0545e04fcb4",
+      "source": "library",
+      "libraryCollection": "traits",
+      "librarySource": "custom",
+      "libraryRef": "traits.05dd66db-ddc3-493d-a4b7-b446d2736e30",
+      "overrides": {},
+      "active": true
+    },
+    {
+      "id": "b00d25b7-cf92-477c-a7a4-c602ea4dbdb2",
+      "source": "library",
+      "libraryCollection": "traits",
+      "librarySource": "custom",
+      "libraryRef": "traits.38224464-3cbf-4e4b-a30a-f06d63742400",
+      "overrides": {},
+      "active": true
+    },
+    {
+      "id": "e73378c4-68f7-4684-b6b7-5e80ca285deb",
+      "source": "library",
+      "libraryCollection": "traits",
+      "librarySource": "custom",
+      "libraryRef": "traits.f14b5e09-2157-4bca-b7ac-fd36471f0a37",
+      "overrides": {},
+      "active": true
+    },
+    {
+      "id": "capella-ref-capella-trait-boss-presence",
+      "source": "library",
+      "libraryCollection": "traits",
+      "librarySource": "custom",
+      "libraryRef": "traits.capella-trait-boss-presence",
+      "overrides": {},
+      "active": true
+    },
+    {
+      "id": "capella-ref-capella-trait-monstrous-regeneration",
+      "source": "library",
+      "libraryCollection": "traits",
+      "librarySource": "custom",
+      "libraryRef": "traits.capella-trait-monstrous-regeneration",
+      "overrides": {},
+      "active": true
+    },
+    {
+      "id": "capella-ref-capella-trait-flesh-polymorph",
+      "source": "library",
+      "libraryCollection": "traits",
+      "librarySource": "custom",
+      "libraryRef": "traits.capella-trait-flesh-polymorph",
+      "overrides": {},
+      "active": true
+    },
+    {
+      "id": "capella-ref-capella-trait-flesh-reshape-escape",
+      "source": "library",
+      "libraryCollection": "traits",
+      "librarySource": "custom",
+      "libraryRef": "traits.capella-trait-flesh-reshape-escape",
+      "overrides": {},
+      "active": true
+    },
+    {
+      "id": "capella-ref-capella-trait-impersonation",
+      "source": "library",
+      "libraryCollection": "traits",
+      "librarySource": "custom",
+      "libraryRef": "traits.capella-trait-impersonation",
+      "overrides": {},
+      "active": true
+    },
+    {
+      "id": "capella-ref-capella-trait-telepathy",
+      "source": "library",
+      "libraryCollection": "traits",
+      "librarySource": "custom",
+      "libraryRef": "traits.capella-trait-telepathy",
+      "overrides": {},
+      "active": true
+    },
+    {
+      "id": "capella-ref-capella-trait-polymorph-trait-limit",
+      "source": "library",
+      "libraryCollection": "traits",
+      "librarySource": "custom",
+      "libraryRef": "traits.capella-trait-polymorph-trait-limit",
+      "overrides": {},
+      "active": true
+    }
+  ],
+  "inventory": [],
+  "currency": {
+    "pp": 0,
+    "gp": 0,
+    "ep": 0,
+    "sp": 0,
+    "cp": 0
+  },
+  "customResources": [
+    {
+      "id": "capella-resource-state-polymorph-traits",
+      "source": "library",
+      "libraryCollection": "resources",
+      "librarySource": "custom",
+      "libraryRef": "resources.capella-resource-polymorph-traits",
+      "current": 2,
+      "max": 3,
+      "log": [],
+      "overrides": {}
+    },
+    {
+      "id": "capella-resource-state-legendary-action",
+      "source": "library",
+      "libraryCollection": "resources",
+      "librarySource": "custom",
+      "libraryRef": "resources.capella-resource-legendary-action",
+      "current": 1,
+      "max": 1,
+      "log": [],
+      "overrides": {}
+    }
+  ],
+  "dnd": {
+    "class": "Aberrant Lich / Shapechanger",
+    "subclass": "College of Eloquence / Eldritch Lich Traits",
+    "level": 20,
+    "multiclass": [],
+    "background": "Elegant Manipulator",
+    "alignment": "Chaotic Evil",
+    "proficiencyBonus": 5,
+    "spellcastingAbility": "cha",
+    "stats": {
+      "str": {
+        "score": 6
+      },
+      "dex": {
+        "score": 5
+      },
+      "con": {
+        "score": 8
+      },
+      "int": {
+        "score": 1
+      },
+      "wis": {
+        "score": 9
+      },
+      "cha": {
+        "score": 10
+      }
+    },
+    "savingThrowProficiencies": [
+      "str",
+      "dex",
+      "con",
+      "int",
+      "wis",
+      "cha"
+    ],
+    "skillProficiencies": [
+      {
+        "skill": "Deception",
+        "expertise": true
+      },
+      {
+        "skill": "Insight",
+        "expertise": false
+      },
+      {
+        "skill": "Perception",
+        "expertise": false
+      },
+      {
+        "skill": "Persuasion",
+        "expertise": true
+      },
+      {
+        "skill": "Stealth",
+        "expertise": false
+      }
+    ],
+    "hp": {
+      "max": 66,
+      "current": 66,
+      "temp": 0,
+      "log": []
+    },
+    "acModes": [
+      {
+        "id": "capella-ac-default-body",
+        "label": "Default Body",
+        "value": 11,
+        "active": false,
+        "state": "tamed",
+        "formula": "10 + default DEX +1"
+      },
+      {
+        "id": "capella-ac-boss-dex",
+        "label": "Boss DEX AC",
+        "value": 14,
+        "active": false,
+        "state": "boss",
+        "formula": "10 + boss DEX modifier"
+      },
+      {
+        "id": "capella-ac-unnatural-armor",
+        "label": "Unnatural Armor",
+        "value": 19,
+        "active": true,
+        "state": "boss",
+        "formula": "15 + boss DEX modifier"
+      },
+      {
+        "id": "capella-ac-armored-flesh",
+        "label": "Armored Flesh",
+        "value": 21,
+        "active": false,
+        "state": "boss",
+        "conditional": true,
+        "formula": "Unnatural Armor +2 until start of next turn"
+      }
+    ],
+    "speed": {
+      "walk": 30,
+      "fly": 40,
+      "swim": 30,
+      "climb": 30,
+      "burrow": 0
+    },
+    "initiative": 1,
+    "feats": [
+      {
+        "id": "5c29633b-532b-4cd5-9fbe-8f7e01727533",
+        "source": "library",
+        "libraryCollection": "feats",
+        "librarySource": "custom",
+        "libraryRef": "feats.931a6347-81ac-48d0-b499-cbf2c914eb60",
+        "overrides": {}
+      },
+      {
+        "id": "c95dff8a-ca0d-4da4-b3e6-73f81ccbc535",
+        "source": "library",
+        "libraryCollection": "feats",
+        "librarySource": "custom",
+        "libraryRef": "feats.b4205c6e-c27e-44d8-aeb9-7b9bb474a4e0",
+        "overrides": {}
+      },
+      {
+        "id": "98444575-ed56-4576-b021-b93593d9165b",
+        "source": "library",
+        "libraryCollection": "feats",
+        "librarySource": "custom",
+        "libraryRef": "feats.73f591ce-f655-4898-943c-37e896a0d1eb",
+        "overrides": {}
+      },
+      {
+        "id": "b40bae05-7d14-4123-a130-0ef50c605df3",
+        "source": "library",
+        "libraryCollection": "feats",
+        "librarySource": "custom",
+        "libraryRef": "feats.2236f92f-66db-42e9-a1ad-34544cd3919c",
+        "overrides": {}
+      }
+    ],
+    "addons": {
+      "initiative": {
+        "ability": "dex",
+        "bonus": 0,
+        "bossAdvantage": true
+      },
+      "spellcasting": {
+        "ability": "cha",
+        "dcBonus": 2,
+        "attackBonus": 2,
+        "bonusLabel": "Arcane Mastery"
+      }
+    }
+  },
+  "boss": {
+    "bossActive": true,
+    "bossHp": {
+      "max": 210,
+      "current": 210
+    },
+    "defaultHp": {
+      "max": 66,
+      "current": 66
+    },
+    "bossStatBonuses": {
+      "str": 6,
+      "dex": 5,
+      "con": 8,
+      "int": 1,
+      "wis": 9,
+      "cha": 10
+    },
+    "regeneration": {
+      "amount": 30,
+      "disabledBy": [
+        "Radiant damage",
+        "Critical hit"
+      ]
+    },
+    "legendaryActions": 1,
+    "resistances": [
+      "Psychic",
+      "Cold",
+      "Necrotic",
+      "Acid"
+    ],
+    "immunities": [
+      "Poison damage",
+      "Lightning damage",
+      "Nonmagical bludgeoning",
+      "Nonmagical piercing",
+      "Nonmagical slashing"
+    ],
+    "conditionImmunities": [
+      "Disease",
+      "Poisoned",
+      "Charmed unless she chooses to play along",
+      {
+        "label": "False Surrender",
+        "kind": "condition",
+        "description": "She can act extremely convincingly that she wishes to surrender and stop, but in reality she is just playing.",
+        "relatedRoll": "Improv Deception / Impersonation / Persuasion +10 in boss mode, +5 tamed"
+      }
+    ],
+    "weaknesses": [
+      {
+        "id": "capella-weakness-radiant",
+        "label": "Radiant Damage",
+        "kind": "negative",
+        "description": "Radiant damage disables regeneration for 1 round."
+      },
+      {
+        "id": "capella-weakness-critical",
+        "label": "Critical Hit",
+        "kind": "negative",
+        "description": "Critical hits disable regeneration for 1 round."
+      },
+      {
+        "id": "capella-weakness-vessel",
+        "label": "Soul Vessel",
+        "kind": "requirement",
+        "description": "Soul Vessel / Far Realm Parasite must be found, contained, destroyed, or otherwise dealt with to truly kill her."
+      }
+    ],
+    "attacks": [
+      {
+        "id": "05f69782-6b6d-4223-b840-c74a0778d5c2",
+        "name": "Claw / Talon / Hooked Limb",
+        "toHitBonus": 17,
+        "advantage": true,
+        "reach": "5 ft, or 10 ft while elongated",
+        "damage": [
+          {
+            "dice": "2d8",
+            "bonus": 10,
+            "type": "slashing"
+          }
+        ],
+        "avgDamage": 19,
+        "onHit": "",
+        "description": "Primary natural attack.",
+        "tamedToHitBonus": 12,
+        "toHitFormula": {
+          "ability": "cha",
+          "proficiency": true,
+          "bonuses": [
+            {
+              "label": "Arcane Mastery",
+              "value": 2
+            }
+          ],
+          "advantageWhenBoss": true
+        }
+      },
+      {
+        "id": "a879d87e-6a39-4e62-b50a-c4335b4ce703",
+        "name": "Tendril Lash",
+        "toHitBonus": 17,
+        "advantage": true,
+        "reach": "15 ft, or 20 ft while elongated",
+        "damage": [
+          {
+            "dice": "2d6",
+            "bonus": 10,
+            "type": "bludgeoning"
+          },
+          {
+            "dice": "1d6",
+            "bonus": 0,
+            "type": "acid"
+          }
+        ],
+        "avgDamage": 21,
+        "onHit": "DC 20 STR save or choose one: pulled 10 ft, knocked prone, or grappled.",
+        "description": "Reach control attack.",
+        "tamedToHitBonus": 12,
+        "toHitFormula": {
+          "ability": "cha",
+          "proficiency": true,
+          "bonuses": [
+            {
+              "label": "Arcane Mastery",
+              "value": 2
+            }
+          ],
+          "advantageWhenBoss": true
+        }
+      },
+      {
+        "id": "0060bf3f-8511-4a92-8a02-cc4683170d66",
+        "name": "Piercing Flesh Spike",
+        "toHitBonus": 17,
+        "advantage": true,
+        "reach": "30/90 ft if fired; 10 ft if grown from body",
+        "damage": [
+          {
+            "dice": "2d10",
+            "bonus": 10,
+            "type": "piercing"
+          }
+        ],
+        "avgDamage": 21,
+        "onHit": "",
+        "description": "Ranged or body-grown spike attack.",
+        "tamedToHitBonus": 12,
+        "toHitFormula": {
+          "ability": "cha",
+          "proficiency": true,
+          "bonuses": [
+            {
+              "label": "Arcane Mastery",
+              "value": 2
+            }
+          ],
+          "advantageWhenBoss": true
+        }
+      },
+      {
+        "id": "edc291dd-c964-4a58-a359-9b3edccbb074",
+        "name": "Bite / Devouring Mouth",
+        "toHitBonus": 17,
+        "advantage": true,
+        "reach": "5 ft",
+        "damage": [
+          {
+            "dice": "2d10",
+            "bonus": 10,
+            "type": "piercing"
+          },
+          {
+            "dice": "1d8",
+            "bonus": 0,
+            "type": "necrotic"
+          }
+        ],
+        "avgDamage": 26,
+        "onHit": "If target is already grappled by Capella, add +1d8 necrotic.",
+        "description": "Maw attack unlocked or improved by Bestial Maw.",
+        "tamedToHitBonus": 12,
+        "toHitFormula": {
+          "ability": "cha",
+          "proficiency": true,
+          "bonuses": [
+            {
+              "label": "Arcane Mastery",
+              "value": 2
+            }
+          ],
+          "advantageWhenBoss": true
+        }
+      },
+      {
+        "id": "4d36d898-1e57-42dd-bb51-375fa7945472",
+        "name": "False Mercy Touch",
+        "toHitBonus": 17,
+        "advantage": true,
+        "reach": "5 ft",
+        "damage": [
+          {
+            "dice": "3d8",
+            "bonus": 10,
+            "type": "necrotic"
+          }
+        ],
+        "avgDamage": 24,
+        "onHit": "DC 25 WIS save or target has disadvantage on its next attack roll, ability check, or saving throw before end of its next turn.",
+        "description": "Cruel touch/control attack; may be flavored as necrotic or psychic.",
+        "tamedToHitBonus": 12,
+        "toHitFormula": {
+          "ability": "cha",
+          "proficiency": true,
+          "bonuses": [
+            {
+              "label": "Arcane Mastery",
+              "value": 2
+            }
+          ],
+          "advantageWhenBoss": true
+        }
+      },
+      {
+        "id": "722edec4-e2d9-492c-8712-57cb9f2b08ce",
+        "name": "Beautiful Monster's Grasp",
+        "toHitBonus": 17,
+        "advantage": true,
+        "reach": "10 ft",
+        "damage": [
+          {
+            "dice": "2d6",
+            "bonus": 10,
+            "type": "bludgeoning"
+          }
+        ],
+        "avgDamage": 17,
+        "onHit": "DC 20 STR or DEX save, target's choice, or grappled. Escape DC 20.",
+        "description": "Grapple-focused restraint attack.",
+        "tamedToHitBonus": 12,
+        "toHitFormula": {
+          "ability": "cha",
+          "proficiency": true,
+          "bonuses": [
+            {
+              "label": "Arcane Mastery",
+              "value": 2
+            }
+          ],
+          "advantageWhenBoss": true
+        }
+      }
+    ],
+    "polymorphTraits": [
+      {
+        "id": "e830dcee-aaba-409a-a6d1-c97173157d28",
+        "name": "Winged Form",
+        "description": "Gain 40 ft flying speed.",
+        "active": true
+      },
+      {
+        "id": "aaf933ae-ec9f-4a4d-81f1-1f5b87226ff7",
+        "name": "Elongated Limbs",
+        "description": "Melee reach +5 ft. Tendril Lash can reach 20 ft.",
+        "active": true
+      },
+      {
+        "id": "fbd484b5-1dee-4169-9932-6871da24e710",
+        "name": "Armored Flesh",
+        "description": "Gain +2 AC until start of her next turn.",
+        "active": false
+      },
+      {
+        "id": "e6db5174-cbc3-4f40-9d0e-3cb7678b2d00",
+        "name": "Many-Limbed Shape",
+        "description": "May grapple one additional creature.",
+        "active": false
+      },
+      {
+        "id": "9760c378-edc7-4d07-bb40-63a308d7274e",
+        "name": "Fluid Body",
+        "description": "May attempt immediate escape from grapple or restraint.",
+        "active": false
+      },
+      {
+        "id": "23367eec-cdb2-404a-a2e6-fafbb14e2a81",
+        "name": "Bestial Maw",
+        "description": "Bite becomes available. If already available, Bite gains +1d8 necrotic once per turn.",
+        "active": false
+      },
+      {
+        "id": "4847db7d-4513-403d-a185-392dc0643f5e",
+        "name": "False Innocent Body",
+        "description": "Appears harmless, wounded, noble, childlike, or socially disarming.",
+        "active": false
+      },
+      {
+        "id": "1ed363b3-c5bd-45dc-b060-7ab0f20891e1",
+        "name": "Horrid Beauty",
+        "description": "Chosen creatures within 15 ft make DC 25 WIS save or lose reactions until start of their next turn. Once per round max.",
+        "active": false
+      },
+      {
+        "id": "4e5d402f-75f6-4936-aa65-2b51d840f88d",
+        "name": "Spider Body",
+        "description": "Gain 30 ft climb speed and can climb difficult surfaces.",
+        "active": false
+      },
+      {
+        "id": "ad940e1c-8c68-44a1-8798-f625be881c62",
+        "name": "Burrowing Flesh",
+        "description": "Gain 20 ft burrow speed through soft matter.",
+        "active": false
+      },
+      {
+        "id": "8f297ef5-f9dd-4408-a515-5d13835dc880",
+        "name": "Aquatic Shape",
+        "description": "Gain 30 ft swim speed and water breathing.",
+        "active": false
+      },
+      {
+        "id": "9d36825e-4617-458f-ab9d-b8f1345b06f2",
+        "name": "Mimic Anatomy",
+        "description": "Makes impersonation physically convincing. Each form change prompts a new Insight or Investigation contest.",
+        "active": false
+      }
+    ],
+    "deathRule": "When Capella drops to 0 HP, her current body collapses, laughs, speaks through the corpse, or melts away. She does not make death saves. The encounter ends unless the party can track, contain, destroy, or otherwise deal with the Soul Vessel / Far Realm Parasite. Optional mid-fight reform: after 1 full round, reform 60 ft away with 105 HP and keep regeneration.",
+    "tamedRule": "If Capella is tamed, pacified, recruited, purified, weakened, or otherwise removed from boss status, remove Boss Presence bonuses and use default/tamed stats and HP unless she later regains boss status.",
+    "addons": {
+      "stateModel": {
+        "tamedLabel": "Tamed / Default",
+        "bossLabel": "Boss Presence"
+      },
+      "hpBreakdown": [
+        {
+          "state": "boss",
+          "label": "Boss HP",
+          "total": 210,
+          "parts": [
+            {
+              "label": "Boss body hit dice",
+              "value": "20d10 avg = 110"
+            },
+            {
+              "label": "CON bonus",
+              "value": "+100 (CON +5 x 20)"
+            }
+          ],
+          "note": "Use only while Capella is an enemy boss / DMPC boss."
+        },
+        {
+          "state": "tamed",
+          "label": "Tamed HP",
+          "total": 66,
+          "parts": [
+            {
+              "label": "Default body hit dice",
+              "value": "12d8 avg = 54"
+            },
+            {
+              "label": "CON bonus",
+              "value": "+12 (CON +1 x 12)"
+            }
+          ],
+          "note": "Use after Boss Presence is removed."
+        }
+      ],
+      "calculations": {
+        "allRollsAdvantage": true,
+        "polymorphTraitLimit": 3,
+        "initiative": {
+          "ability": "dex",
+          "bonus": 0,
+          "bossAdvantage": true
+        },
+        "spellcasting": {
+          "ability": "cha",
+          "dcBonus": 2,
+          "attackBonus": 2,
+          "bonusLabel": "Arcane Mastery"
+        },
+        "skillOverrides": {
+          "Deception": {
+            "tamedBonus": 5,
+            "bossBonus": 10,
+            "note": "Player-facing improv only; prepared package is separate."
+          },
+          "Persuasion": {
+            "tamedBonus": 5,
+            "bossBonus": 10,
+            "note": "Player-facing improv only; prepared package is separate."
+          }
+        },
+        "rolls": [
+          {
+            "label": "Prepared Deception / Impersonation / Persuasion",
+            "tamed": "+15",
+            "boss": "+15",
+            "floor": "10",
+            "breakdown": {
+              "tamed": [
+                {
+                  "label": "Charisma",
+                  "value": "+5",
+                  "kind": "positive",
+                  "description": "Capella's Charisma modifier."
+                },
+                {
+                  "label": "Expert Deceiver Trait",
+                  "value": "+10",
+                  "kind": "positive",
+                  "description": "Prepared deception package bonus."
+                }
+              ],
+              "boss": [
+                {
+                  "label": "Charisma",
+                  "value": "+5",
+                  "kind": "positive",
+                  "description": "Capella's Charisma modifier."
+                },
+                {
+                  "label": "Expert Deceiver Trait",
+                  "value": "+10",
+                  "kind": "positive",
+                  "description": "Prepared deception package bonus."
+                }
+              ]
+            },
+            "note": "Cannot apply to members of the player party. Must spend a day or long rest studying the target first. Uses CHA +5 and Expert Deceiver +10; Silver Tongue floors the d20 at 10.",
+            "mechanics": [
+              {
+                "label": "Study Target",
+                "value": "Day / Long Rest",
+                "kind": "requirement",
+                "description": "Capella must spend a day or long rest studying a target before using the prepared deception package.",
+                "relatedRoll": "Prepared Deception / Impersonation / Persuasion +15; Silver Tongue floor 10"
+              },
+              {
+                "label": "Not vs Party",
+                "kind": "negative",
+                "description": "Prepared Deception cannot apply to members of the player party."
+              }
+            ]
+          },
+          {
+            "label": "Improv Deception / Impersonation / Persuasion",
+            "tamed": "+5",
+            "boss": "+10",
+            "breakdown": {
+              "tamed": [
+                {
+                  "label": "Charisma",
+                  "value": "+5",
+                  "kind": "positive",
+                  "description": "Tamed social checks use Capella's Charisma modifier."
+                }
+              ],
+              "boss": [
+                {
+                  "label": "Charisma",
+                  "value": "+5",
+                  "kind": "positive",
+                  "description": "Capella's Charisma modifier."
+                },
+                {
+                  "label": "Boss Presence",
+                  "value": "+5",
+                  "kind": "positive",
+                  "description": "Boss Presence trait bonus for improv social checks."
+                }
+              ]
+            },
+            "note": "Player-facing social checks use Charisma only. No Expert Deceiver and no Silver Tongue versus player Insight checks."
+          },
+          {
+            "label": "Insight / Perception / Stealth",
+            "tamed": "+4 to +6",
+            "boss": "+9",
+            "breakdown": {
+              "tamed": [
+                {
+                  "label": "Insight",
+                  "value": "+4",
+                  "kind": "neutral",
+                  "description": "Wisdom -1 plus proficiency +5."
+                },
+                {
+                  "label": "Perception",
+                  "value": "+4",
+                  "kind": "neutral",
+                  "description": "Wisdom -1 plus proficiency +5."
+                },
+                {
+                  "label": "Stealth",
+                  "value": "+6",
+                  "kind": "neutral",
+                  "description": "Dexterity +1 plus proficiency +5."
+                }
+              ],
+              "boss": [
+                {
+                  "label": "Insight",
+                  "value": "+9",
+                  "kind": "positive",
+                  "description": "Wisdom +4 plus proficiency +5."
+                },
+                {
+                  "label": "Perception",
+                  "value": "+9",
+                  "kind": "positive",
+                  "description": "Wisdom +4 plus proficiency +5."
+                },
+                {
+                  "label": "Stealth",
+                  "value": "+9",
+                  "kind": "positive",
+                  "description": "Dexterity +4 plus proficiency +5."
+                }
+              ]
+            },
+            "note": "Use the relevant base ability in tamed mode; Boss Presence pushes the combat-useful read/stealth checks to +9."
+          }
+        ],
+        "actionEconomy": {
+          "attackAction": 2,
+          "bonusAttack": 1,
+          "legendaryActionAttacks": 2,
+          "maxPressure": 5
+        }
+      },
+      "balanceKnobs": [
+        {
+          "label": "If Too Weak",
+          "description": "Use HP 260, regeneration 40, or Armored Flesh more often."
+        },
+        {
+          "label": "DM Note",
+          "description": "The RP is mostly separate. At the table, prioritize HP, AC, saves, attacks, damage, regeneration, and the few rules that matter in combat."
+        }
+      ]
+    }
+  }
+}
+

@@ -1,0 +1,34 @@
+﻿{
+  "minCompatibleSchemaMajor": 2,
+  "discord": "#VRLulu",
+  "styles": [
+    "data/common/style/base.css",
+    "data/common/style/sheet.css"
+  ],
+  "scripts": [
+    "data/common/scripts/schema.js",
+    "data/common/scripts/importers/library-records.js",
+    "data/common/scripts/importers/open5eapi.js",
+    "data/common/scripts/importers/dnd5eapi.js",
+    "data/common/scripts/library.js",
+    "data/common/scripts/dnd-calculations.js",
+    "data/common/scripts/views/view-character-utils.js",
+    "data/common/scripts/views/view-character-header.js",
+    "data/common/scripts/views/view-character-notes.js",
+    "data/common/scripts/views/view-character-identity.js",
+    "data/common/scripts/views/view-character-dnd.js",
+    "data/common/scripts/views/view-character-abilities.js",
+    "data/common/scripts/views/view-character-boss.js",
+    "data/common/scripts/views/view-character-spells.js",
+    "data/common/scripts/views/view-character-inventory.js",
+    "data/common/scripts/views/view-character-resources.js",
+    "data/common/scripts/views/view-character-roblox.js",
+    "data/common/scripts/views/view-character.js"
+  ],
+  "library": {
+    "manifestPath": "library/manifest.json",
+    "basePath": "",
+    "concurrency": 12
+  }
+}
+

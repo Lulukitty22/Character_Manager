@@ -1,0 +1,22 @@
+﻿{
+  "schemaVersion": 1,
+  "id": "index.items",
+  "name": "Items",
+  "path": "library/records/items/index.json",
+  "directories": [
+    {
+      "name": "Consumable",
+      "path": "library/records/items/consumable/index.json"
+    },
+    {
+      "name": "Weapon",
+      "path": "library/records/items/weapon/index.json"
+    },
+    {
+      "name": "Wondrous",
+      "path": "library/records/items/wondrous/index.json"
+    }
+  ],
+  "entries": []
+}
+

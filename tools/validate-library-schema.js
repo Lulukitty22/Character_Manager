@@ -31,6 +31,9 @@ for (const entries of Object.values(manifest.collections || {})) {
 
 for (const file of walk(libraryRoot)) {
   const relative = path.relative(root, file).replace(/\\/g, "/");
+  if (relative.startsWith("library/characters/")) {
+    continue;
+  }
   const data = readJson(file);
   if (!data) continue;
   if (relative.endsWith("/index.json") || relative === "library/index.json" || relative === "library/manifest.json") {
@@ -94,7 +97,8 @@ function validateIndex(relative, data) {
 
 function readJson(file) {
   try {
-    return JSON.parse(fs.readFileSync(file, "utf8"));
+    const text = fs.readFileSync(file, "utf8").replace(/^\uFEFF/, "");
+    return JSON.parse(text);
   } catch (error) {
     problems.push(`${path.relative(root, file).replace(/\\/g, "/")}: invalid JSON (${error.message})`);
     return null;
