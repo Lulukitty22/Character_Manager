@@ -71,6 +71,7 @@ The D&D stats visual port is already done and browser-verified. This restructuri
 - Inventory/action UX follow-up:
   - add clearer real-time visibility for ammo, durability, and other consumable state tied to item actions
   - review whether gameplay healing should stay average-only, become roll-driven, or support DM-confirmed results
+  - decide and document the ammo model explicitly: inventory should represent owned stock, while gameplay resources should represent immediately spendable/loaded state; do not duplicate the same number in both places unless one is derived from the other
 - D&D/DM backend roadmap:
   - add explicit dice and damage calculation support for spells and actions
   - support DM-side rolling on behalf of party members for AFK/slow turns

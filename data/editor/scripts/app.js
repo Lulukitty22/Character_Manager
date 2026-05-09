@@ -287,7 +287,7 @@ const App = (() => {
 
     showLoading("Saving to GitHub...");
     try {
-      const result = await GitHub.writeCharacterFile(repoPath, characterData, renameFrom ? null : sha);
+      const result = await writeCharacterWithRetries(repoPath, characterData, renameFrom ? null : sha);
 
       if (renameFrom) {
         try {
@@ -307,6 +307,23 @@ const App = (() => {
     } finally {
       hideLoading();
     }
+  }
+
+  async function writeCharacterWithRetries(repoPath, characterData, initialSha, maxAttempts = 3) {
+    let sha = initialSha;
+    for (let attempt = 0; attempt < maxAttempts; attempt += 1) {
+      try {
+        return await GitHub.writeCharacterFile(repoPath, characterData, sha);
+      } catch (error) {
+        const message = String(error?.message || "");
+        if (!/409|does not match|sha/i.test(message) || attempt >= maxAttempts - 1) {
+          throw error;
+        }
+        const latest = await GitHub.readCharacterFile(repoPath).catch(() => null);
+        sha = latest?.sha || null;
+      }
+    }
+    throw new Error(`Could not save ${repoPath}.`);
   }
 
   return {

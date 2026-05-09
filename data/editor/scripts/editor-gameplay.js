@@ -82,7 +82,7 @@ const EditorGameplay = (() => {
     const sourceLabel = overrideActive ? "Manual Override" : hasCalculatedMax ? "Calculated HP" : "Manual HP";
     const healingOptions = healingItems.map(item => {
       const amount = DndCalculations.healingAmount(item);
-      const label = `${item.name || "Healing Item"} x${item.quantity ?? 1}${amount ? ` (${amount} avg)` : ""}`;
+      const label = `${item.name || "Healing Item"} x${item.quantity ?? 1}`;
       return `<option value="${EditorBase.escapeAttr(item.id)}" data-amount="${amount}">${EditorBase.escapeHTML(label)}</option>`;
     }).join("");
 
@@ -157,9 +157,9 @@ const EditorGameplay = (() => {
           </div>
 
           ${healingItems.length ? `
-            <div class="fields-grid-3" style="margin-bottom: var(--space-4);">
+            <div class="fields-grid-3" style="margin-bottom: var(--space-2);">
               <select id="gp-healing-item" class="field-select">${healingOptions}</select>
-              <input type="number" min="0" id="gp-healing-amount" class="field-input field-number" placeholder="Avg Heal" readonly />
+              <div id="gp-healing-summary" class="card" style="padding: var(--space-3); display: flex; align-items: center; color: var(--color-text-muted); font-size: var(--text-sm);">Uses average healing.</div>
               <button class="button button-primary button-sm" id="btn-use-healing-item">Use Healing Item</button>
             </div>
           ` : ""}
@@ -270,6 +270,9 @@ const EditorGameplay = (() => {
           })),
         ].filter(Boolean))
         : "";
+      const resourceBars = actionState.resources
+        .map(renderActionResourceBar)
+        .join("");
 
       return `
         <div class="array-item" data-item-action-index="${index}">
@@ -278,6 +281,7 @@ const EditorGameplay = (() => {
             <div class="array-item-subtitle">${EditorBase.escapeHTML(item.action?.description || item.description || "")}</div>
             ${!actionState.ok && actionState.message ? `<p class="text-danger text-sm" style="margin-top: var(--space-2);">${EditorBase.escapeHTML(actionState.message)}</p>` : ""}
             ${chips}
+            ${resourceBars ? `<div style="display: flex; flex-direction: column; gap: var(--space-2); margin-top: var(--space-3);">${resourceBars}</div>` : ""}
           </div>
           <div class="array-item-actions">
             <button class="button button-primary button-sm btn-use-item-action" ${actionState.ok ? "" : "disabled"}>${EditorBase.escapeHTML(item.action?.label || "Use")}</button>
@@ -377,17 +381,22 @@ const EditorGameplay = (() => {
     panelEl.querySelector("#btn-gp-full-rest")?.addEventListener("click", () => applyFullRest(panelEl, character));
 
     const healingSelect = panelEl.querySelector("#gp-healing-item");
-    const healingAmount = panelEl.querySelector("#gp-healing-amount");
+    const healingSummary = panelEl.querySelector("#gp-healing-summary");
     healingSelect?.addEventListener("change", () => {
       const option = healingSelect.selectedOptions[0];
-      if (healingAmount) healingAmount.value = option?.dataset.amount || "";
+      const amount = parseInt(option?.dataset.amount || "0", 10) || 0;
+      if (healingSummary) {
+        healingSummary.textContent = amount > 0
+          ? `Uses average healing: ${amount} HP`
+          : "No healing amount detected for this item.";
+      }
     });
     healingSelect?.dispatchEvent(new Event("change"));
 
     panelEl.querySelector("#btn-use-healing-item")?.addEventListener("click", () => {
       const itemId = healingSelect?.value || "";
       const item = healingItems.find(entry => entry.id === itemId);
-      const amount = parseInt(healingSelect?.selectedOptions?.[0]?.dataset.amount || healingAmount?.value, 10) || 0;
+      const amount = parseInt(healingSelect?.selectedOptions?.[0]?.dataset.amount || "0", 10) || 0;
       if (!item || amount <= 0) {
         App.showToast("Choose a healing item and amount.", "error");
         return;
@@ -648,6 +657,23 @@ const EditorGameplay = (() => {
     }
 
     return { ok: true, resources, message: "" };
+  }
+
+  function renderActionResourceBar(resource) {
+    const max = Math.max(0, Number(resource.max || 0));
+    const current = Math.max(0, Number(resource.current || 0));
+    const pct = max > 0 ? Math.round((current / max) * 100) : 0;
+    const tone = resource.shortage ? "danger" : pct <= 25 ? "danger" : pct <= 50 ? "warn" : "purple";
+    const note = resource.required > 0 ? `Needs ${resource.required}` : "Tracked resource";
+    return `
+      <div class="ovh-resource-track" style="padding: var(--space-3);">
+        <div class="rname">${EditorBase.escapeHTML(resource.name)}<span class="meta">${EditorBase.escapeHTML(note)}</span></div>
+        <div class="ovh-hp-bar-wrap">
+          <div class="ovh-hp-bar"><span class="ovh-hp-bar-fill ${tone}" style="width:${Math.max(0, Math.min(100, pct))}%"></span></div>
+          <span class="hp-readout">${current} / ${max}</span>
+        </div>
+      </div>
+    `;
   }
 
   function resolveResourceEffectTarget(character, effect = {}) {
