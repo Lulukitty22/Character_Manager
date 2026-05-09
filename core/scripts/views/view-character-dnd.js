@@ -46,7 +46,7 @@ const ViewCharacterDnd = (() => {
       ])
       : "";
 
-    return `
+    const combatSection = `
       <section class="ovh-section ovh-combat-section">
         <div class="ovh-section-header">
           <h2>Combat</h2>
@@ -75,7 +75,33 @@ const ViewCharacterDnd = (() => {
         </div>
 
         ${stateOverview ? `<div class="ovh-card">${stateOverview}</div>` : ""}
+        ${hpBreakdown ? `<div class="ovh-card">${hpBreakdown}</div>` : ""}
+        ${rollCalculator ? `<div class="ovh-card">${rollCalculator}</div>` : ""}
+        ${boss?.regeneration?.disabledBy?.length ? `
+        <div class="ovh-card text-sm text-muted sheet-boss-only" style="${stateStyle(bossActive, true)}">
+          Regeneration disabled by: ${esc(boss.regeneration.disabledBy.join(", "))}
+        </div>` : ""}
+      </section>
+    `;
 
+    const acSection = acModesHTML ? `
+      <section class="ovh-section ovh-ac-modes-section">
+        <div class="ovh-section-header">
+          <h2>Armor Class Modes</h2>
+          <div class="ovh-section-divider">${SVG_DIV}</div>
+        </div>
+        <div class="ovh-card">
+          ${acModesHTML}
+        </div>
+      </section>
+    ` : "";
+
+    const combatStatsSection = `
+      <section class="ovh-section ovh-combat-stats-section">
+        <div class="ovh-section-header">
+          <h2>Combat Stats</h2>
+          <div class="ovh-section-divider">${SVG_DIV}</div>
+        </div>
         <div class="ovh-card">
           <div class="ovh-combat-stats">
             ${renderStateStatBox("Armor Class", acPair.tamed?.value, acPair.boss?.value, bossActive, boss)}
@@ -84,6 +110,11 @@ const ViewCharacterDnd = (() => {
               <div class="label">Prof. Bonus</div>
               <div class="value">${formatSigned(profBonus)}</div>
             </div>
+            ${dnd.hitDice ? `
+            <div class="ovh-stat-block">
+              <div class="label">Hit Dice</div>
+              <div class="value">${esc(String(dnd.hitDice))}</div>
+            </div>` : ""}
             ${spellcasting ? `
             ${renderStateStatBox("Spell Save DC", spellcasting.tamedDc, spellcasting.bossDc, bossActive, boss)}
             ${renderStateStatBox("Spell/Flesh Attack", formatSigned(spellcasting.tamedAttack), formatSigned(spellcasting.bossAttack), bossActive, boss)}
@@ -99,19 +130,12 @@ const ViewCharacterDnd = (() => {
               <div class="value">${regenAmount}</div>
             </div>` : ""}
           </div>
-          ${acModesHTML}
           ${speedParts}
         </div>
-
-        ${hpBreakdown ? `<div class="ovh-card">${hpBreakdown}</div>` : ""}
-        ${rollCalculator ? `<div class="ovh-card">${rollCalculator}</div>` : ""}
-
-        ${boss?.regeneration?.disabledBy?.length ? `
-        <div class="ovh-card text-sm text-muted sheet-boss-only" style="${stateStyle(bossActive, true)}">
-          Regeneration disabled by: ${esc(boss.regeneration.disabledBy.join(", "))}
-        </div>` : ""}
       </section>
     `;
+
+    return combatSection + acSection + combatStatsSection;
   }
 
   function renderAbilityScores(dnd, boss = null) {
@@ -133,8 +157,8 @@ const ViewCharacterDnd = (() => {
       return `
         <div class="ovh-ability ${isSpell ? "spotlight" : ""}" title="${esc(label)}">
           <div class="abbr">${abbr}</div>
-          <div class="score">${renderStateValue(baseScore, bossScore, bossActive, boss)}</div>
           <div class="mod">${renderStateValue(formatSigned(baseMod), formatSigned(bossMod), bossActive, boss)}</div>
+          <div class="score">${renderStateValue(baseScore, bossScore, bossActive, boss)}</div>
           ${boss ? `
           <div class="sheet-ability-breakdown">
             <span class="sheet-mode-line sheet-mode-tamed">Base ${baseScore} (${formatSigned(baseMod)})</span>
@@ -427,8 +451,8 @@ const ViewCharacterDnd = (() => {
       return `
         <button type="button" class="ovh-ac-mode ${mode.active ? "active" : ""} ${mode.conditional ? "conditional" : ""} ${stateClass}"
                 style="${style}" data-ac-id="${escAttr(mode.id || "")}">
-          <span class="value">${esc(String(mode.value))}</span>
           <span class="name">${esc(mode.label)}</span>
+          <span class="value">${esc(String(mode.value))}</span>
           ${mode.formula ? `<span class="note">${esc(mode.formula)}</span>` : ""}
         </button>
       `;

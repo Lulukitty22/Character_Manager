@@ -53,12 +53,8 @@ const ViewCharacterSpells = (() => {
     const maxSafe = Math.max(0, Number(max || 0));
     const pct = maxSafe > 0 ? Math.round((currentSafe / maxSafe) * 100) : 0;
     const tone = pct <= 25 ? "danger" : pct <= 50 ? "warn" : "";
-    return `
-      <span class="ovh-group-meter" title="${currentSafe}/${maxSafe} slots">
-        <span class="ovh-mini-bar ${tone}"><i style="width:${pct}%"></i></span>
-        <span class="count">${currentSafe} / ${maxSafe} slots</span>
-      </span>
-    `;
+    const toneClass = tone ? ` ${tone}` : "";
+    return `<span class="count${toneClass}" title="${currentSafe}/${maxSafe} slots">${currentSafe} / ${maxSafe} slots</span>`;
   }
 
   function renderSpellEntry(spell) {

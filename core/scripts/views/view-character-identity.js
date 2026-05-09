@@ -12,12 +12,36 @@ const ViewCharacterIdentity = (() => {
 
   const SVG_DIV = `<svg viewBox="0 0 600 14" preserveAspectRatio="none" aria-hidden="true"><path d="M0 7 L240 7 M260 7 Q300 -1 340 7 L600 7" stroke="rgba(201,168,76,0.55)" stroke-width="1" fill="none"/><circle cx="300" cy="7" r="2" fill="rgba(201,168,76,0.85)"/></svg>`;
 
+  function buildClassLabel(dnd) {
+    if (!dnd) return null;
+    const primary = [
+      dnd.class,
+      dnd.subclass ? `/ ${dnd.subclass}` : null,
+      dnd.level ? `Lv.${dnd.level}` : null,
+    ].filter(Boolean).join(" ");
+    if (!primary && !dnd.multiclass?.length) return null;
+    const extras = (dnd.multiclass || []).map(mc =>
+      [mc.class, mc.subclass ? `/ ${mc.subclass}` : null, mc.level ? `Lv.${mc.level}` : null].filter(Boolean).join(" ")
+    ).filter(Boolean);
+    return [primary, ...extras].filter(Boolean).join("  +  ") || null;
+  }
+
   function render(identity, appearance, character) {
+    const dnd = character.dnd || null;
+    const classLabel = buildClassLabel(dnd);
+    const aliases = Array.isArray(identity.aliases)
+      ? identity.aliases.join(", ")
+      : identity.aliases || null;
+
     const infoFields = [
-      ["Race",   identity.race],
-      ["Age",    identity.age],
-      ["Height", identity.height],
-      ["Origin", identity.origin],
+      ["Aliases",    aliases],
+      ["Race",       identity.race],
+      ["Class",      classLabel],
+      ["Background", dnd?.background],
+      ["Alignment",  identity.alignment],
+      ["Age",        identity.age],
+      ["Height",     identity.height],
+      ["Origin",     identity.origin],
     ].filter(([, value]) => value);
 
     const tags = identity.tags || [];
@@ -60,7 +84,6 @@ const ViewCharacterIdentity = (() => {
           ${descHTML}
           ${identityRowsHTML}
           ${tagRowHTML}
-          <p class="ovh-deferred-note">Relationships — coming as a dedicated tab</p>
         </div>
       </section>
     `;

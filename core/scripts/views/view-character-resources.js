@@ -46,10 +46,7 @@ const ViewCharacterResources = (() => {
       <div class="ovh-record-group">
         <p class="ovh-group-label">
           <span>Hit Points</span>
-          <span class="ovh-group-meter">
-            <span class="ovh-mini-bar ${pct <= 25 ? "danger" : pct <= 50 ? "warn" : ""}"><i style="width:${Math.max(0, Math.min(100, pct))}%"></i></span>
-            <span class="count">${current} / ${max}</span>
-          </span>
+          <span class="count">${current} / ${max}</span>
         </p>
         <div class="ovh-card ovh-resource-card">
           <div class="ovh-resource-track">

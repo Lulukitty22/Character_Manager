@@ -38,9 +38,9 @@ const ViewCharacterNotes = (() => {
           <div class="ovh-section-divider">${SVG_DIV}</div>
         </div>
         <div class="ovh-card">
-          ${personality ? `<p class="ovh-group-label">Personality</p><p>${esc(personality)}</p>` : ""}
-          ${backstory ? `<p class="ovh-group-label">Backstory</p>${buildProseBlock(backstory)}` : ""}
-          ${notes ? `<p class="ovh-group-label">DM Notes</p><p class="ovh-callout gm">${esc(notes)}</p>` : ""}
+          ${personality ? `<p class="ovh-notes-label">Personality</p><p>${esc(personality)}</p>` : ""}
+          ${backstory ? `<p class="ovh-notes-label">Backstory</p>${buildProseBlock(backstory)}` : ""}
+          ${notes ? `<p class="ovh-notes-label">DM Notes</p><p class="ovh-callout gm">${esc(notes)}</p>` : ""}
         </div>
       </section>
     `;

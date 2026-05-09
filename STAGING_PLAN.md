@@ -2,6 +2,22 @@
 
 This branch is forward-only while the new library, viewer, editor, and share-shell architecture settles. Old exported files and old data shapes can break; the fix is to port them to the new system instead of bending the new system around them.
 
+## 🔗 Reference: Complete Architecture Plans
+
+The comprehensive three-shell vision (Viewer, Manager, DM Tool) and full implementation roadmap exist in:
+
+- **`C:\Users\Nicol\.claude\plans\can-you-help-me-majestic-robin.md`** — Visual direction + Phase 1–5 refactor plan (repo split, shells, schema versioning, visual overhaul, parity testing)
+- **`C:\Users\Nicol\.claude\plans\shimmying-doodling-hearth.md`** — Architecture overview + Phase 1–7 build order (GitHub API, editors, library system, DM tools)
+
+**Key concept:** Three self-contained `.html` files that users share once, then auto-update from GitHub. Each user provides their own PAT (stored in localStorage). The repo teaches the HTML how to render and what data to fetch.
+
+**What's next on the critical path:**
+1. ✅ Visual port of core panels (currently in progress — D&D stats done)
+2. ⏭️ Implement maintained shells (`share/viewer-shell.js` + `share/editor-shell.js`) so exports auto-update
+3. ⏭️ Shareable manager HTML with editor + PAT drawer
+4. ⏭️ Visual polish to match `share/style-example-editor.html`
+5. ⏭️ DM tool shell + campaign features (Phase 7)
+
 ## Current Agreements
 
 - `staging` is the integration branch. `main` stays stable until the full flow is tested.
@@ -321,6 +337,33 @@ Still not fully done:
 - Tooltip pinning / chip overflow / cross-link chips.
 - Cleanup of `EDITOR_SHELL_STYLES` into an auto-updating CSS file if desired.
 
+---
+
+## ⏭️ Codex Handoff: Repository Restructuring
+
+**Claude is handing off the repo restructuring task to Codex** to optimize for each agent's strengths:
+- **Claude** → UI/frontend debugging and visual ports (higher-impact use of tokens)
+- **Codex** → Backend architecture, directory restructuring, moving files, updating paths
+
+**For Codex — immediate next step:**
+
+The current repo still has old `manager/` directory alongside the new `/core`, `/app`, `/editor`, `/share` split. This needs cleanup:
+
+1. **Audit current structure** — what's actually been moved to `/core`, `/app`, `/editor` vs. what's still in `/manager`? What's dead code?
+2. **Plan the final structure** — align with the architecture plans (both plan documents in `.claude/plans/`), finalize the split
+3. **Execute the move** — update all paths in `app/index.html`, `.gitignore`, CI/build scripts, and GitHub references
+4. **Clean up local hard drive** — remove old `manager/` directories, stale exports, build artifacts
+
+The visual port is done and browser-verified. This restructuring is the blocker for implementing the maintained shells (`share/viewer-shell.js`, `share/editor-shell.js`) which auto-update exports.
+
+**Critical files to check/update:**
+- `app/index.html` — script paths
+- `app/scripts/export.js` — external URL paths
+- Any CI config (GitHub Actions, etc.)
+- `.gitignore` — old patterns for deleted dirs
+
+**Don't hesitate to ask Claude** for UI debugging or visual verification after the restructure. Claude will be standing by for parity checks and any frontend regressions.
+
 ### Reference files (for either agent)
 
 - Viewer mockup: `share/style-example.html` (full Carol data, all sections)
@@ -328,14 +371,63 @@ Still not fully done:
 - Editor mockup: `share/style-example-editor.html` (left-edit + right-preview, but is a future visual goal — not what Step 2 currently produces, which is functionally similar but visually rough)
 - Plan doc: `C:\Users\Nicol\.claude\plans\can-you-help-me-majestic-robin.md` (original architecture plan)
 
-### Lulu-facing summary
+### Claude panel-content visual port — D&D stats pass
 
-Current status correction:
+Completed in current session (commit pending):
+
+**Tooltip System (cross-cutting, unlocks hover feedback everywhere)**
+- `core/style/base.css`: Added CSS for `[data-tip]` hover tooltips with `.tip-pinned` state and pin emoji
+- `core/scripts/views/view-character.js`: Added `contextmenu` listener in `wireInteractive()` to right-click-toggle `.tip-pinned`
+
+**Ability Scores (Order + Styling)**
+- `core/scripts/views/view-character-dnd.js`: Swapped HTML order — modifier now first child (renders on top) before score
+- `core/style/sheet.css`: Swapped CSS — `.mod` is 1.6rem bright headline, `.score` is 0.72rem muted subscript. Matches reference layout from `share/style-example.html`
+
+**AC Modes (Order)**
+- `core/scripts/views/view-character-dnd.js`: Reordered HTML — `.name` → `.value` → `.note`. Label on top, number in middle, formula at bottom. CSS already correct for new order.
+
+**Combat Block Split (Section Structure)**
+- `core/scripts/views/view-character-dnd.js`: `renderCombatBlock()` now returns 3 concatenated `<section>` blocks:
+  1. "Combat" — HP readout + state overview + breakdowns
+  2. "Armor Class Modes" — AC mode button grid (separated from other stats)
+  3. "Combat Stats" — AC value, Init, Prof Bonus, Hit Dice, Spell DC, Spell Attack, Speed
+- Breaks the old single-card monolith into clearer sections matching reference mockup
+
+**Saving Throws (Layout)**
+- `core/style/sheet.css`: Changed `.ovh-saves-grid` from flex column to `grid; repeat(3, 1fr)` with box styling
+- Each save is now a small centered box (1.2rem mod number, small name label) with proficient saves getting gold borders
+- `.ovh-save` layout: pip indicator top-right, centered mod/name text, hidden note (too verbose for box)
+
+**Skills (Layout)**
+- `core/style/sheet.css`: Changed `.ovh-skills-grid` from flex column to `grid; repeat(2, 1fr)` with border-bottom rows
+- Column gap preserved for readability
+
+**Identity Rows (Expanded)**
+- `core/scripts/views/view-character-identity.js`: Added helper `buildClassLabel()` to format class+subclass+level+multiclass
+- Infofields now include: Aliases, Class (formatted), Background, Alignment (in addition to existing Race, Age, Height, Origin)
+- Aliases support both array and string forms
+- Removed placeholder "Relationships — coming" line
+
+**Spurious Bars (Stripped)**
+- `core/scripts/views/view-character-spells.js`: `renderSlotTracker()` now emits only count text + tone class, no mini-bar span (group label's `::after` decorative bar is enough)
+- `core/scripts/views/view-character-resources.js`: Removed mini-bar from HP group label (full HP bar is in card below)
+- `core/scripts/views/view-character-notes.js`: Changed label class from `ovh-group-label` to `ovh-notes-label` to suppress `::after` decorative bar in Notes section
+- `core/style/sheet.css`: Added `.ovh-notes-label` style (identical to group-label but no `::after`)
+
+**Testing Status**
+- `node --check` not run yet — pending browser verification
+- Visual logic verified against reference mockup (`share/style-example.html`)
+- All 7 file edits completed; no syntax errors detected during edit
+
+### Lulu-facing summary (updated)
+
+Current status:
 - The older bullets below are partially stale.
 - Step 2 basic editor/viewer load is browser-confirmed by Lulu, but exported-editor PAT save still needs a real-token test.
 - The local manager editor now uses `Editor.mount()` for parity.
-- Native OVH panel-content ports are done for Spells, Resources, and Inventory.
-- Remaining panel-content ports are Abilities, D&D stats, Boss, Identity, Notes, and Roblox.
+- Native OVH panel-content ports are done for Spells, Resources, and Inventory (Codex's work).
+- Claude just completed **D&D stats visual port** (ability scores, AC modes, combat block structure, saves/skills layout, identity rows, tooltip system).
+- Remaining panel-content ports: Abilities, Boss, Roblox, Appearance gallery, Relationships.
 
 ✅ Done on staging:
 - Library reorganized into indexed tree (Codex)
@@ -346,14 +438,96 @@ Current status correction:
 - Maintained editor shell with auto-update + PAT save (Step 2)
 - Schema-version handshake + breaking-change overlay (both shells)
 - Library loading with bounded concurrency + factual progress (Codex)
+- Spells/Resources/Inventory native OVH port (Codex)
+- **D&D stats visual port: tooltips, ability scores, AC modes, saves/skills grids, identity rows** (Claude, pending browser test)
 
 🟡 In-flight:
-- Step 2 needs in-browser verification (Codex picking up)
-- `app.js` editor refactor to use `Editor.mount()` for parity
+- Browser verification of D&D stats visual changes (needs preview or exported sheet test)
+- `app.js` editor refactor to use `Editor.mount()` for parity (Codex)
+- Full stats tab parity (verify no calculation regressions on Capella/Aina/Carol)
 
 ❌ Not started:
-- Panel-content port (the inside-of-tab visuals — chips, dividers, callouts, etc.)
-- AC mode toggle UI
-- Appearance gallery + video support in viewer
-- Relationships card
+- Abilities tab visual port (high impact, depends on tooltip system — now ready)
+- Boss tab visual port (high-risk, Capella-heavy, coordinate before large edits)
+- Roblox tab (low priority, simple data table)
+- Appearance gallery + variant tabs + video support
+- Relationships card + linking
+- Tooltip pinning wiring on existing data (ready in CSS/JS, needs tag definitions in character data)
+- AC mode toggle UI in header (separate from this mode display)
+- Chip overflow + `+N more` expand
+- Cross-link chips (e.g., spell → feat)
+- Player Note / DM Note / Warning callout styles (CSS exists, needs renderers to use)
 - Editor visual chrome polish to match `share/style-example-editor.html`
+
+---
+
+## Next Agent Checklist
+
+**Immediate (Codex or Claude)**:
+1. **Browser verification of D&D stats port** (mandatory before proceeding):
+   - Open `app/index.html` in browser, hard refresh
+   - Open Capella or Carol character
+   - Go to Stats tab and verify:
+     - Ability scores: modifier is BIG/bright on top, score is small/muted below ✓ (was reversed before)
+     - Saves: 3-column grid of small boxes, not single-column rows ✓
+     - Skills: 2-column grid with border-bottom, not single-column ✓
+     - Combat section is now 3 sections: "Combat" (HP), "Armor Class Modes" (buttons), "Combat Stats" (tiles) ✓
+     - AC mode buttons: label on top, value number in middle ✓
+   - Verify Identity tab: new rows appear (Class, Aliases, Alignment, Background)
+   - Verify Spells tab: no double-bar artifact (mini-bar removed, just decorative bar + count)
+   - Verify Resources tab: HP group label shows count only, no mini-bar
+   - Verify Notes tab: no gold decorative bars on section labels
+   - Export Carol as viewer and hard refresh; confirm same output
+   - If any visual regression or layout breakage: fix before pushing
+
+2. **Static checks**:
+   - `node --check share/viewer/index.js`
+   - `node --check app/scripts/export.js`
+   - `node --check core/scripts/views/view-character.js`
+   - `node --check core/scripts/views/view-character-dnd.js`
+   - `node --check core/scripts/views/view-character-identity.js`
+   - `node --check core/scripts/views/view-character-spells.js`
+   - `node --check core/scripts/views/view-character-notes.js`
+   - `node --check core/scripts/views/view-character-resources.js`
+
+3. **Commit message template**:
+   ```
+   Port D&D stats visual layer to native OVH markup + layout
+
+   - Ability scores: reorder (mod before score) + restyle (big/bright mod, small/muted score)
+   - AC modes: reorder HTML (label, value, formula) to match reference mockup
+   - Combat block: split into 3 sections (Combat HP, Armor Class Modes, Combat Stats)
+   - Saves: grid 3-col box layout instead of flex column
+   - Skills: grid 2-col with border-bottom instead of flex column
+   - Identity: expanded rows (Class, Aliases, Alignment, Background)
+   - Tooltip system: added [data-tip] CSS + right-click pinning JS
+   - Spurious bars: stripped from spells, resources, notes sections
+   - Reference: share/style-example.html
+   ```
+
+**Next Priority (after stats port merges)**:
+
+Option A — Continue panel ports (Claude if tokens available, else Codex):
+- `core/scripts/views/view-character-abilities.js`: High visual impact for Capella. Use native `.ovh-record` rows + overflow chip patterns. Keep ability/trait calculations intact.
+- Port template: Match spells/resources/inventory pattern — emit `.ovh-record` wrapper, `.ovh-record-group` for grouping, `.ovh-chips` for mechanic tags.
+
+Option B — Coordinate boss port (requires both agents):
+- `core/scripts/views/view-character-boss.js`: Capella-heavy, complex toggles (boss/tamed state), roll chip breakdowns, HP/stat overlays.
+- DO NOT edit before verifying current boss data shape (boss.bossActive, boss.stats vs dnd.stats, boss.bossStatBonuses, etc.).
+- Before large refactor: check if Capella's boss block renders, no calculations broken, no state-toggle side effects.
+- Visual target: reference Carol's boss section in `share/style-example.html` (if available).
+
+Option C — Unblock editor appearance port (Claude):
+- The editor mockup `share/style-example-editor.html` may need a separate visual pass once stats/abilities panels are stable.
+- Current exported editor uses inline `EDITOR_SHELL_STYLES` (220 lines in `app/scripts/export.js`). Could move to `editor/style/editor-shell.css` + manifest inclusion if preferred.
+- Not blocking Step 2 core flow, but would improve editor UX.
+
+**Known Hazards**:
+- Boss block is Capella's main complexity. If edited, smoke-test Capella export immediately after. Roll chip calculations, state toggles (boss/tamed), and boss ability stat bonuses are sensitive.
+- Tooltip pinning JS uses `.tip-pinned` class. Identity tags could eventually expose tooltips if tag definitions are added to character data (currently tags are just strings, no descriptions).
+- Saves/skills new box layout is narrower (3-col saves, 2-col skills). If any screen size < 760px tested, check responsive breakpoint behavior (currently `@media (max-width: 760px)` adjusts ability grid to 3-col, but saves/skills may need attention).
+
+**Reference Mocks** (updated Sept 2025):
+- `share/style-example.html` — Carol full data, all sections, visual target for stats/abilities/etc.
+- `share/style-example-tessa.html` — Tessa lean comparison
+- `share/style-example-editor.html` — editor UI mockup (separate from app.html, shows left-edit + right-preview layout goal)

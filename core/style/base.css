@@ -774,3 +774,27 @@ hr {
   flex: 1; height: 14px; opacity: 0.5;
 }
 .ovh-section-divider svg { width: 100%; height: 100%; display: block; }
+
+/* ── Universal tooltip (data-tip attribute) ──────────────────── */
+[data-tip] { position: relative; }
+[data-tip]:not(.tip-pinned):hover::after,
+[data-tip].tip-pinned::after {
+  content: attr(data-tip);
+  position: absolute;
+  bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%);
+  padding: var(--space-2, 0.5rem) var(--space-3, 0.75rem);
+  background: var(--color-bg-deepest, #0a0812);
+  border: 1px solid var(--color-border-muted, rgba(255,255,255,0.1));
+  border-radius: var(--radius-base, 6px);
+  font-family: var(--font-ui, system-ui, sans-serif); font-size: 12px; line-height: 1.45;
+  color: var(--color-text-bright, #f0eaf8);
+  white-space: pre-line; width: max-content; max-width: 300px;
+  z-index: 1000;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+  pointer-events: none;
+}
+[data-tip].tip-pinned::after { border-color: var(--color-gold, #c9a84c); }
+[data-tip].tip-pinned::before {
+  content: '📌'; position: absolute;
+  top: -8px; right: -8px; font-size: 11px; z-index: 1001;
+}

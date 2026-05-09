@@ -135,6 +135,14 @@ const ViewCharacter = (() => {
       });
     });
 
+    // Tooltip pinning — right-click any [data-tip] element to toggle pin
+    containerEl.addEventListener("contextmenu", e => {
+      const tip = e.target.closest("[data-tip]");
+      if (!tip) return;
+      e.preventDefault();
+      tip.classList.toggle("tip-pinned");
+    });
+
     // Existing section wirings (unchanged)
     if (character.boss && typeof ViewCharacterBoss?.wireInteractive === "function") {
       ViewCharacterBoss.wireInteractive(containerEl, character);
