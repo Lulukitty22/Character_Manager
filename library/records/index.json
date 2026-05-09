@@ -59,6 +59,15 @@
       "path": "library/records/spells/transmutation/capella-spell-alter-self.json"
     },
     {
+      "id": "ammo-test",
+      "name": "Ammo Test",
+      "collections": [
+        "tags"
+      ],
+      "tags": [],
+      "path": "library/records/tags/ammo-test.json"
+    },
+    {
       "id": "aina-trait-archery-test",
       "name": "Ammo Test Setup",
       "collections": [
