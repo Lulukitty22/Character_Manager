@@ -32,14 +32,14 @@
 const Editor = (() => {
 
   const ALL_TABS = [
-    { id: "base",      icon: "ðŸ§¾", label: "Identity",  module: "EditorBase"      },
-    { id: "dnd",       icon: "âš”ï¸",  label: "D&D Stats", module: "EditorDnd"       },
-    { id: "boss",      icon: "ðŸ’€",  label: "Boss",      module: "EditorBoss"      },
-    { id: "gameplay",  icon: "HP", label: "Gameplay",  module: "EditorGameplay"  },
-    { id: "spells",    icon: "âœ¨",  label: "Spells",    module: "EditorSpells"    },
-    { id: "inventory", icon: "ðŸŽ’",  label: "Inventory", module: "EditorInventory" },
-    { id: "resources", icon: "ðŸ”®",  label: "Resources", module: "EditorResources" },
-    { id: "roblox",    icon: "ðŸŽ®",  label: "Roblox",    module: "EditorRoblox"    },
+    { id: "base",      icon: "ID",   label: "Identity",    module: "EditorBase"      },
+    { id: "dnd",       icon: "DND",  label: "D&D Stats",   module: "EditorDnd"       },
+    { id: "boss",      icon: "BOSS", label: "Boss",        module: "EditorBoss"      },
+    { id: "gameplay",  icon: "HP",   label: "Gameplay",    module: "EditorGameplay"  },
+    { id: "spells",    icon: "MAG",  label: "Spells",      module: "EditorSpells"    },
+    { id: "inventory", icon: "INV",  label: "Inventory",   module: "EditorInventory" },
+    { id: "resources", icon: "RES",  label: "Resources",   module: "EditorResources" },
+    { id: "roblox",    icon: "RBX",  label: "Roblox",      module: "EditorRoblox"    },
   ];
 
   function getModule(name) {

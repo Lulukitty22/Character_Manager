@@ -45,7 +45,10 @@ const EditorGameplay = (() => {
       ? DndCalculations.getHealingItems(character)
       : [];
     const actionableItems = typeof DndCalculations !== "undefined"
-      ? DndCalculations.getActionableItems(character)
+      ? DndCalculations.getActionableItems(character).map(item => ({
+        ...item,
+        actionState: evaluateItemActionState(character, item),
+      }))
       : [];
 
     panel.innerHTML = `
@@ -156,7 +159,7 @@ const EditorGameplay = (() => {
           ${healingItems.length ? `
             <div class="fields-grid-3" style="margin-bottom: var(--space-4);">
               <select id="gp-healing-item" class="field-select">${healingOptions}</select>
-              <input type="number" min="0" id="gp-healing-amount" class="field-input field-number" placeholder="Healing" />
+              <input type="number" min="0" id="gp-healing-amount" class="field-input field-number" placeholder="Avg Heal" readonly />
               <button class="button button-primary button-sm" id="btn-use-healing-item">Use Healing Item</button>
             </div>
           ` : ""}
@@ -241,6 +244,7 @@ const EditorGameplay = (() => {
     if (!actionableItems.length) return "";
 
     const rows = actionableItems.map((item, index) => {
+      const actionState = item.actionState || { ok: true, resources: [], message: "" };
       const healAmount = DndCalculations.healingAmount(item);
       const tempHp = Number(item.action?.effects?.tempHp?.amount || item.action?.effects?.tempHp || 0);
       const slotEffect = item.action?.effects?.spellSlots || null;
@@ -252,6 +256,12 @@ const EditorGameplay = (() => {
           tempHp ? { label: "Temp HP", value: `+${tempHp}`, kind: "positive" } : null,
           slotEffect?.all ? { label: "Slots", value: "Restore All", kind: "positive" } : null,
           slotEffect?.level ? { label: "Slot", value: `Lv ${slotEffect.level} +${slotEffect.amount || 1}`, kind: "positive" } : null,
+          ...actionState.resources.map(resource => ({
+            label: resource.name,
+            value: `${resource.current}/${resource.max}`,
+            kind: resource.current > 0 ? "quantity" : "negative",
+            description: resource.shortage ? `Need ${resource.required}, only ${resource.current} available.` : "Live resource state for this action.",
+          })),
           ...resourceEffects.map(effect => ({
             label: effect.target || effect.resourceName || "Resource",
             value: Schema.formatModifier(Number(effect.delta || 0)),
@@ -266,10 +276,11 @@ const EditorGameplay = (() => {
           <div class="array-item-content">
             <div class="array-item-title">${EditorBase.escapeHTML(item.name || "Item")}</div>
             <div class="array-item-subtitle">${EditorBase.escapeHTML(item.action?.description || item.description || "")}</div>
+            ${!actionState.ok && actionState.message ? `<p class="text-danger text-sm" style="margin-top: var(--space-2);">${EditorBase.escapeHTML(actionState.message)}</p>` : ""}
             ${chips}
           </div>
           <div class="array-item-actions">
-            <button class="button button-primary button-sm btn-use-item-action">${EditorBase.escapeHTML(item.action?.label || "Use")}</button>
+            <button class="button button-primary button-sm btn-use-item-action" ${actionState.ok ? "" : "disabled"}>${EditorBase.escapeHTML(item.action?.label || "Use")}</button>
           </div>
         </div>
       `;
@@ -376,7 +387,7 @@ const EditorGameplay = (() => {
     panelEl.querySelector("#btn-use-healing-item")?.addEventListener("click", () => {
       const itemId = healingSelect?.value || "";
       const item = healingItems.find(entry => entry.id === itemId);
-      const amount = parseInt(healingAmount?.value, 10) || 0;
+      const amount = parseInt(healingSelect?.selectedOptions?.[0]?.dataset.amount || healingAmount?.value, 10) || 0;
       if (!item || amount <= 0) {
         App.showToast("Choose a healing item and amount.", "error");
         return;
@@ -500,6 +511,12 @@ const EditorGameplay = (() => {
   }
 
   function applyItemAction(panelEl, character, item) {
+    const actionState = evaluateItemActionState(character, item);
+    if (!actionState.ok) {
+      App.showToast(actionState.message || `Cannot use ${item.name || "item"} right now.`, "error");
+      return;
+    }
+
     const effects = item.action?.effects || {};
     const healAmount = effects.heal ? DndCalculations.healingAmount({ action: { effects }, addons: { healing: effects.heal }, description: item.description }) : 0;
     const tempHp = Number(effects.tempHp?.amount || effects.tempHp || 0);
@@ -610,6 +627,57 @@ const EditorGameplay = (() => {
 
   function refreshGameplayPanel(panelEl, character) {
     renderInteractiveGameplay(panelEl, character);
+  }
+
+  function evaluateItemActionState(character, item) {
+    const resourceEffects = Array.isArray(item?.action?.effects?.resources)
+      ? item.action.effects.resources
+      : [];
+    const resources = resourceEffects
+      .map(effect => resolveResourceEffectTarget(character, effect))
+      .filter(Boolean);
+    const shortages = resources.filter(resource => resource.shortage);
+
+    if (shortages.length) {
+      const shortage = shortages[0];
+      return {
+        ok: false,
+        resources,
+        message: `${item?.name || "This action"} needs ${shortage.required} ${shortage.name.toLowerCase()} but only ${shortage.current} remain.`,
+      };
+    }
+
+    return { ok: true, resources, message: "" };
+  }
+
+  function resolveResourceEffectTarget(character, effect = {}) {
+    const delta = Number(effect.delta || 0);
+    const required = delta < 0 ? Math.abs(delta) : 0;
+    const resource = findResourceForEffect(character, effect);
+    if (!resource) return null;
+    const resolved = typeof Library !== "undefined" ? Library.resolveRef(resource) : resource;
+    const max = Number(resource.max ?? resolved?.max ?? 0);
+    const current = Number(resource.current ?? resolved?.current ?? 0);
+    return {
+      name: resolved?.name || effect.target || effect.resourceName || "Resource",
+      current,
+      max,
+      required,
+      shortage: required > 0 && current < required,
+    };
+  }
+
+  function findResourceForEffect(character, effect = {}) {
+    const target = String(effect.target || effect.resourceName || "").trim().toLowerCase();
+    if (!target) return null;
+    return (character.customResources || []).find(entry => {
+      const resolved = typeof Library !== "undefined" ? Library.resolveRef(entry) : entry;
+      return [
+        entry.id,
+        entry.libraryRef,
+        resolved?.name,
+      ].filter(Boolean).some(value => String(value).trim().toLowerCase() === target);
+    }) || null;
   }
 
   function readTab(character) {

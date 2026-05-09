@@ -22,7 +22,7 @@ const EditorInventory = (() => {
         <!-- ── Currency ──────────────────────────────────────────── -->
         <section>
           <div class="section-header">
-            <span class="section-icon">💰</span>
+            <span class="section-icon">GOLD</span>
             <h3>Currency</h3>
           </div>
 
@@ -72,7 +72,7 @@ const EditorInventory = (() => {
         <!-- ── Items ─────────────────────────────────────────────── -->
         <section>
           <div class="section-header">
-            <span class="section-icon">🎒</span>
+            <span class="section-icon">ITEM</span>
             <h3>Items &amp; Equipment</h3>
           </div>
 
@@ -81,7 +81,7 @@ const EditorInventory = (() => {
           </div>
 
           <div class="array-add-row">
-            <button class="button button-primary button-sm" id="btn-add-item">✦ Add Item</button>
+            <button class="button button-primary button-sm" id="btn-add-item">Add Item</button>
             <button class="button button-ghost button-sm" id="btn-browse-items">Browse Library</button>
           </div>
         </section>
@@ -130,7 +130,7 @@ const EditorInventory = (() => {
               ${attuned}
               ${tags}
             </div>
-            <span class="text-muted text-sm">×${item.quantity ?? 1}</span>
+            <span class="text-muted text-sm">x${item.quantity ?? 1}</span>
           </div>
 
           <!-- Expandable detail form -->
@@ -163,12 +163,12 @@ const EditorInventory = (() => {
                 <div class="field-group" style="margin-bottom:0">
                   <label class="field-label">Weight (lb)</label>
                   <input type="number" min="0" step="0.1" class="field-input field-number item-weight"
-                    value="${item.weight ?? ""}" placeholder="—" />
+                    value="${item.weight ?? ""}" placeholder="-" />
                 </div>
                 <div class="field-group" style="margin-bottom:0">
                   <label class="field-label">Tags (comma-separated)</label>
                   <input type="text" class="field-input item-tags"
-                    placeholder="legendary, magical…"
+                    placeholder="legendary, magical..."
                     value="${EditorBase.escapeAttr((item.tags || []).join(", "))}" />
                 </div>
               </div>
@@ -176,7 +176,7 @@ const EditorInventory = (() => {
               <div class="field-group" style="margin-bottom:0">
                 <label class="field-label">Description</label>
                 <textarea class="field-textarea item-description" rows="3"
-                  placeholder="Item description, abilities, lore…">${EditorBase.escapeHTML(item.description || "")}</textarea>
+                  placeholder="Item description, abilities, lore...">${EditorBase.escapeHTML(item.description || "")}</textarea>
               </div>
 
               <label class="field-checkbox-row">
@@ -192,11 +192,11 @@ const EditorInventory = (() => {
             </div>
           </div>
 
-          <button class="expand-toggle" data-expanded="false">▸ Show details</button>
+          <button class="expand-toggle" data-expanded="false">Show details</button>
         </div>
 
         <div class="array-item-actions">
-          <button class="button button-icon button-danger btn-remove-item" title="Remove item">🗑️</button>
+          <button class="button button-icon button-danger btn-remove-item" title="Remove item">X</button>
         </div>
       </div>
     `;
@@ -214,7 +214,7 @@ const EditorInventory = (() => {
     toggleBtn?.addEventListener("click", () => {
       const expanded = toggleBtn.dataset.expanded === "true";
       toggleBtn.dataset.expanded = String(!expanded);
-      toggleBtn.textContent      = expanded ? "▸ Show details" : "▾ Hide details";
+      toggleBtn.textContent      = expanded ? "Show details" : "Hide details";
       detailForm?.classList.toggle("collapsed", expanded);
     });
 
@@ -239,7 +239,7 @@ const EditorInventory = (() => {
     const detailForm = rowEl.querySelector(".item-detail-form");
     if (toggleBtn && detailForm) {
       toggleBtn.dataset.expanded = "true";
-      toggleBtn.textContent      = "▾ Hide details";
+      toggleBtn.textContent      = "Hide details";
       detailForm.classList.remove("collapsed");
     }
 

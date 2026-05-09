@@ -32,10 +32,10 @@ const Schema = (() => {
   // â”€â”€â”€ Character Types â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   const CHARACTER_CLASSIFICATIONS = {
-    player_character:   { icon: "âš”ï¸", label: "Player Character" },
-    boss_npc:           { icon: "ðŸ’€", label: "Boss / NPC" },
-    original_character: { icon: "âœ¨", label: "Original Character" },
-    roblox_oc:          { icon: "ðŸŽ®", label: "Roblox OC" },
+    player_character:   { icon: "PC",   label: "Player Character" },
+    boss_npc:           { icon: "BOSS", label: "Boss / NPC" },
+    original_character: { icon: "OC",   label: "Original Character" },
+    roblox_oc:          { icon: "RBX",  label: "Roblox OC" },
   };
 
   function createBaseCharacter() {
@@ -649,13 +649,13 @@ const Schema = (() => {
 
     if (!hasAnySection) {
       return {
-        icon: "âœ¨",
+        icon: "NEW",
         label: "Blank Character",
       };
     }
 
     return {
-      icon: "âœ¨",
+      icon: "CHAR",
       label: "Custom Character",
     };
   }

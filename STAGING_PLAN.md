@@ -67,9 +67,10 @@ The D&D stats visual port is already done and browser-verified. This restructuri
   - inventory actions like shooting, drinking, and reloading should update local character state immediately
   - ammo/resource counts should stay visible and in sync without needing a GitHub round-trip per click
   - save should persist the final local result once, not perform one remote write per gameplay action
+  - bow/item actions must hard-stop when a required resource is empty instead of merely clamping the bar at 0
 - Inventory/action UX follow-up:
   - add clearer real-time visibility for ammo, durability, and other consumable state tied to item actions
-  - review potion/healing action limits so quantity and usability stay consistent after each use
+  - review whether gameplay healing should stay average-only, become roll-driven, or support DM-confirmed results
 - D&D/DM backend roadmap:
   - add explicit dice and damage calculation support for spells and actions
   - support DM-side rolling on behalf of party members for AFK/slow turns
@@ -78,6 +79,16 @@ The D&D stats visual port is already done and browser-verified. This restructuri
 - Editor content follow-up:
   - appearance coverage is still incomplete in the maintained editor shell
   - emoji/icon regressions are currently considered polish/UI work and can be handled separately from backend correctness
+  - the current Gameplay tab likely needs a larger "D&D Gameplay" redesign pass; do not silently reshuffle spell-slot, spell-log, and item-action responsibilities without a design discussion first
+
+## Latest Fixes
+
+- Verified `origin/staging` after live manager testing: Aina Quickquiver currently saves with `15` arrows, `1` arrow bundle, and the user-confirmed potion quantity edit of `15`.
+- Hardened gameplay item actions so resource-backed actions surface live resource chips and refuse to fire when the required pool is empty.
+- Locked healing-item use to the computed item amount shown by the gameplay UI instead of letting the amount field drift arbitrarily.
+- Serialized manager saves so repeated clicks do not stack overlapping save requests.
+- Upgraded library record/index/manifest writes to retry GitHub `409` conflicts multiple times instead of giving up after a single collision.
+- Replaced the most visible busted live-shell emoji/icon labels with ASCII-safe labels in the maintained editor shell and character presentation badges.
 
 ## Shim Contract
 

@@ -318,23 +318,17 @@ const Library = (() => {
 
   async function saveRecord(key, record) {
     const path = libraryRecordPath(key, record);
-    const sha = state.shaByRecord[path] || null;
-    try {
-      const result = await GitHub.writeJsonFile(path, record, sha, `Update ${path}`);
-      state.shaByRecord[path] = result.sha;
-      await upsertManifestEntry(key, record, path, result.sha);
-      await upsertIndexEntries(record, path);
-      return result;
-    } catch (error) {
-      if (!isGitHubConflict(error)) throw error;
-      const latest = await GitHub.readJsonFile(path, null).catch(() => ({ sha: null }));
-      state.shaByRecord[path] = latest.sha || null;
-      const result = await GitHub.writeJsonFile(path, record, state.shaByRecord[path], `Update ${path}`);
-      state.shaByRecord[path] = result.sha;
-      await upsertManifestEntry(key, record, path, result.sha);
-      await upsertIndexEntries(record, path);
-      return result;
-    }
+    const result = await withConflictRetries(
+      async () => GitHub.writeJsonFile(path, record, state.shaByRecord[path] || null, `Update ${path}`),
+      async () => {
+        const latest = await GitHub.readJsonFile(path, null).catch(() => ({ sha: null }));
+        state.shaByRecord[path] = latest.sha || null;
+      }
+    );
+    state.shaByRecord[path] = result.sha;
+    await upsertManifestEntry(key, record, path, result.sha);
+    await upsertIndexEntries(record, path);
+    return result;
   }
 
   async function deleteRecord(key, record) {
@@ -369,21 +363,19 @@ const Library = (() => {
   }
 
   async function saveManifest() {
-    const write = async () => {
-      const result = await GitHub.writeLibraryFile(MANIFEST_FILE, state.manifest || createEmptyManifest(), state.manifestSha);
-      state.manifestSha = result.sha;
-      return result;
-    };
-    try {
-      return await write();
-    } catch (error) {
-      if (!isGitHubConflict(error)) throw error;
-      const latest = await GitHub.readLibraryFile(MANIFEST_FILE, createEmptyManifest());
-      const local = state.manifest || createEmptyManifest();
-      state.manifest = mergeManifests(normalizeManifest(latest.data), local);
-      state.manifestSha = latest.sha;
-      return write();
-    }
+    return withConflictRetries(
+      async () => {
+        const result = await GitHub.writeLibraryFile(MANIFEST_FILE, state.manifest || createEmptyManifest(), state.manifestSha);
+        state.manifestSha = result.sha;
+        return result;
+      },
+      async () => {
+        const latest = await GitHub.readLibraryFile(MANIFEST_FILE, createEmptyManifest());
+        const local = state.manifest || createEmptyManifest();
+        state.manifest = mergeManifests(normalizeManifest(latest.data), local);
+        state.manifestSha = latest.sha;
+      }
+    );
   }
 
   async function upsertIndexEntries(record, recordPath) {
@@ -450,18 +442,29 @@ const Library = (() => {
   }
 
   async function writeIndex(indexPath, index) {
-    const write = async (payload) => {
-      const result = await GitHub.writeJsonFile(indexPath, payload, state.shaByRecord[indexPath] || null, `Update ${indexPath}`);
-      state.shaByRecord[indexPath] = result.sha;
-      return result;
-    };
-    try {
-      return await write(index);
-    } catch (error) {
-      if (!isGitHubConflict(error)) throw error;
-      const latest = await readIndex(indexPath, index.path?.replace(/\/index\.json$/i, "") || indexPath.replace(/\/index\.json$/i, ""));
-      const merged = mergeIndexData(latest, index);
-      return write(merged);
+    return withConflictRetries(
+      async () => {
+        const result = await GitHub.writeJsonFile(indexPath, index, state.shaByRecord[indexPath] || null, `Update ${indexPath}`);
+        state.shaByRecord[indexPath] = result.sha;
+        return result;
+      },
+      async () => {
+        const latest = await readIndex(indexPath, index.path?.replace(/\/index\.json$/i, "") || indexPath.replace(/\/index\.json$/i, ""));
+        Object.assign(index, mergeIndexData(latest, index));
+      }
+    );
+  }
+
+  async function withConflictRetries(work, onConflict, maxAttempts = 4) {
+    let attempt = 0;
+    while (true) {
+      try {
+        return await work(attempt);
+      } catch (error) {
+        if (!isGitHubConflict(error) || attempt >= maxAttempts - 1) throw error;
+        attempt += 1;
+        await onConflict?.(error, attempt);
+      }
     }
   }
 

@@ -328,6 +328,7 @@ const CharacterEditor = (() => {
   let currentSha = null;
   let currentFilePath = null;
   let editorHandle = null;
+  let saveInFlight = false;
 
   async function render(container, characterInfo) {
     if (!characterInfo) {
@@ -418,40 +419,59 @@ const CharacterEditor = (() => {
 
   async function saveCurrentCharacter() {
     const statusEl = document.getElementById("save-status");
-    if (statusEl) statusEl.textContent = "Saving...";
-
-    const data = getCurrentEditorData();
-    const characterName = data.identity?.name?.trim() || "";
-
-    if (!characterName) {
-      if (statusEl) statusEl.textContent = "Name required.";
-      App.showToast("Character name is required before saving.", "error");
+    if (saveInFlight) {
+      if (statusEl && !statusEl.textContent) statusEl.textContent = "Save already in progress...";
+      App.showToast("Save already in progress.", "info");
       return;
     }
 
-    const previousRepoPath = currentFilePath || currentCharacter?.meta?.repoPath || "";
-    data.meta.repoPath = Schema.deriveRepoPath(characterName);
+    saveInFlight = true;
+    setSaveButtonsDisabled(true);
+    if (statusEl) statusEl.textContent = "Saving...";
 
-    if (typeof Library !== "undefined") {
-      try {
-        await Library.syncCharacter(data);
-      } catch (error) {
-        App.showToast(`Library sync failed: ${error.message}`, "error");
-        if (statusEl) statusEl.textContent = "Library sync failed.";
+    try {
+      const data = getCurrentEditorData();
+      const characterName = data.identity?.name?.trim() || "";
+
+      if (!characterName) {
+        if (statusEl) statusEl.textContent = "Name required.";
+        App.showToast("Character name is required before saving.", "error");
         return;
       }
-    }
 
-    const newSha = await App.saveCharacter(data, currentSha, previousRepoPath);
+      const previousRepoPath = currentFilePath || currentCharacter?.meta?.repoPath || "";
+      data.meta.repoPath = Schema.deriveRepoPath(characterName);
 
-    if (newSha) {
-      currentSha = newSha;
-      currentCharacter = data;
-      currentFilePath = data.meta.repoPath;
-      if (statusEl) statusEl.textContent = `Saved ${new Date().toLocaleTimeString()}`;
-    } else if (statusEl) {
-      statusEl.textContent = "Save failed.";
+      if (typeof Library !== "undefined") {
+        try {
+          await Library.syncCharacter(data);
+        } catch (error) {
+          App.showToast(`Library sync failed: ${error.message}`, "error");
+          if (statusEl) statusEl.textContent = "Library sync failed.";
+          return;
+        }
+      }
+
+      const newSha = await App.saveCharacter(data, currentSha, previousRepoPath);
+
+      if (newSha) {
+        currentSha = newSha;
+        currentCharacter = data;
+        currentFilePath = data.meta.repoPath;
+        if (statusEl) statusEl.textContent = `Saved ${new Date().toLocaleTimeString()}`;
+      } else if (statusEl) {
+        statusEl.textContent = "Save failed.";
+      }
+    } finally {
+      saveInFlight = false;
+      setSaveButtonsDisabled(false);
     }
+  }
+
+  function setSaveButtonsDisabled(disabled) {
+    document.querySelectorAll("#btn-save-character, #btn-save-bar").forEach((button) => {
+      button.disabled = disabled;
+    });
   }
 
   function openPreview(characterData) {
