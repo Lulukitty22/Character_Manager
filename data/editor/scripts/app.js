@@ -179,6 +179,15 @@ const App = (() => {
     renderSettingsView(mainContentEl);
   }
 
+  function escapeHTML(text) {
+    return String(text ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+  }
+
   function showLoading(message = "Loading...") {
     state.loading = true;
     ensureLoadingProgress();
