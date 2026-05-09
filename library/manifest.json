@@ -704,6 +704,17 @@
         "updatedAt": "2026-05-03T15:10:50.038Z"
       },
       {
+        "id": "tag:ammo-test",
+        "name": "Ammo Test",
+        "collections": [
+          "tags"
+        ],
+        "tags": [],
+        "path": "library/records/tags/ammo-test.json",
+        "sha": "78bf6e361caf641aa5c19d498ff519f6e8b2c1f0",
+        "updatedAt": "2026-05-09T08:44:35.997Z"
+      },
+      {
         "id": "tag:archery",
         "name": "Archery",
         "collections": [
