@@ -704,6 +704,17 @@
         "updatedAt": "2026-05-03T15:10:50.038Z"
       },
       {
+        "id": "tag:archery",
+        "name": "Archery",
+        "collections": [
+          "tags"
+        ],
+        "tags": [],
+        "path": "library/records/tags/archery.json",
+        "sha": "87e20dbae5003fe94d1916e2146531aa3ea4f2ae",
+        "updatedAt": "2026-05-09T08:32:05.060Z"
+      },
+      {
         "id": "tag:boss",
         "name": "Boss",
         "collections": [
