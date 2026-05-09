@@ -5,6 +5,10 @@
   "path": "library/records/index.json",
   "directories": [
     {
+      "name": "Species",
+      "path": "library/records/species/index.json"
+    },
+    {
       "name": "Spells",
       "path": "library/records/spells/index.json"
     },
@@ -60,6 +64,15 @@
         "test"
       ],
       "path": "library/records/traits/aina-trait-archery-test.json"
+    },
+    {
+      "id": "wood-elf",
+      "name": "Wood Elf",
+      "collections": [
+        "species"
+      ],
+      "tags": [],
+      "path": "library/records/species/wood-elf.json"
     }
   ]
 }
