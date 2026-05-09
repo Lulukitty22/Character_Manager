@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "id": "archery",
+  "name": "Archery",
+  "collections": [
+    "tags"
+  ],
+  "tags": [],
+  "variantOf": null,
+  "sourceReferences": [],
+  "features": {},
+  "desc": ""
+}
