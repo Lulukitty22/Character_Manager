@@ -88,6 +88,7 @@ The D&D stats visual port is already done and browser-verified. This restructuri
   - appearance coverage is still incomplete in the maintained editor shell
   - emoji/icon regressions are currently considered polish/UI work and can be handled separately from backend correctness
   - the current Gameplay tab likely needs a larger "D&D Gameplay" redesign pass; do not silently reshuffle spell-slot, spell-log, and item-action responsibilities without a design discussion first
+  - the small bottom-right debug/status surface should become more visible, styled, and intentional instead of reading like hidden implementation leftovers
 
 ## Latest Fixes
 
@@ -95,6 +96,7 @@ The D&D stats visual port is already done and browser-verified. This restructuri
 - Hardened gameplay item actions so resource-backed actions surface live resource chips and refuse to fire when the required pool is empty.
 - Locked healing-item use to the computed item amount shown by the gameplay UI instead of letting the amount field drift arbitrarily.
 - Fixed HP gameplay logging so it records the actual applied heal/damage after clamping to max/min HP, instead of logging impossible deltas like `+7` when only `+4` or `+0` really happened.
+- Fixed a deeper gameplay-state bug where potion/item-action rerenders could repopulate HP and slot UI from stale character state, snapping HP back to full even though the on-screen log showed recent damage.
 - Serialized manager saves so repeated clicks do not stack overlapping save requests.
 - Upgraded library record/index/manifest writes to retry GitHub `409` conflicts multiple times instead of giving up after a single collision.
 - Replaced the most visible busted live-shell emoji/icon labels with ASCII-safe labels in the maintained editor shell and character presentation badges.

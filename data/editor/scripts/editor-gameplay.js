@@ -462,6 +462,8 @@ const EditorGameplay = (() => {
   }
 
   function applyHpAdjust(panelEl, character, mode, forcedAmount = null, forcedReason = "") {
+    if (!character.dnd) character.dnd = {};
+    if (!character.dnd.hp) character.dnd.hp = { mode: "calculated", max: 0, current: 0, temp: 0, log: [] };
     const amount = forcedAmount ?? parseInt(panelEl.querySelector("#gp-hp-adjust-amount")?.value, 10);
     const reason = forcedReason || panelEl.querySelector("#gp-hp-adjust-reason")?.value.trim() || "";
     const currentInput = panelEl.querySelector("#gp-hp-current-input");
@@ -484,6 +486,8 @@ const EditorGameplay = (() => {
     }
 
     if (currentInput) currentInput.value = newHP;
+    character.dnd.hp.current = newHP;
+    character.dnd.hp.max = Math.max(0, Number(character.dnd.hp.max || max || 0));
     currentInput?.dispatchEvent(new Event("input"));
     addHpLog(panelEl, character, appliedDelta, reason || (mode === "damage" ? "Damage" : "Healing"));
     const amountEl = panelEl.querySelector("#gp-hp-adjust-amount");
@@ -506,6 +510,10 @@ const EditorGameplay = (() => {
     const previous = parseInt(currentInput?.value, 10) || 0;
     if (currentInput) currentInput.value = max;
     if (tempInput) tempInput.value = 0;
+    if (character.dnd?.hp) {
+      character.dnd.hp.current = max;
+      character.dnd.hp.temp = 0;
+    }
     currentInput?.dispatchEvent(new Event("input"));
     restoreAllSlots(panelEl, character, "Full rest");
     addHpLog(panelEl, character, Math.max(0, max - previous), "Full rest");
@@ -517,14 +525,28 @@ const EditorGameplay = (() => {
     const current = parseInt(currentEl?.value, 10) || 0;
     const next = Math.max(0, Math.min(max || 20, current + delta));
     if (currentEl) currentEl.value = next;
+    if (!character.spellSlots) character.spellSlots = {};
+    character.spellSlots[level] = {
+      ...(character.spellSlots[level] || {}),
+      max,
+      current: next,
+    };
     addSpellLog(panelEl, character, level, delta < 0 ? `Used level ${level} slot` : `Restored level ${level} slot`);
   }
 
   function restoreAllSlots(panelEl, character, reason = "Restored all spell slots") {
+    if (!character.spellSlots) character.spellSlots = {};
     [1,2,3,4,5,6,7,8,9].forEach(level => {
       const max = parseInt(panelEl.querySelector(`.gp-spell-slot-max[data-level="${level}"]`)?.value, 10) || 0;
       const currentEl = panelEl.querySelector(`.gp-spell-slot-current[data-level="${level}"]`);
       if (currentEl) currentEl.value = max;
+      if (max > 0 || character.spellSlots[level]) {
+        character.spellSlots[level] = {
+          ...(character.spellSlots[level] || {}),
+          max,
+          current: max,
+        };
+      }
     });
     addSpellLog(panelEl, character, 0, reason);
   }
@@ -551,6 +573,7 @@ const EditorGameplay = (() => {
       const currentTemp = parseInt(tempEl?.value, 10) || 0;
       const nextTemp = Math.max(currentTemp, tempHp);
       if (tempEl) tempEl.value = nextTemp;
+      if (character.dnd?.hp) character.dnd.hp.temp = nextTemp;
       if (nextTemp !== currentTemp) {
         addHpLog(panelEl, character, 0, `${item.name || "Item"} granted ${tempHp} temp HP`);
         didAnything = true;
