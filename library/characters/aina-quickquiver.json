@@ -2,7 +2,7 @@
   "id": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
   "meta": {
     "repoPath": "library/characters/aina-quickquiver.json",
-    "lastUpdated": "2026-05-09T08:47:07.786Z"
+    "lastUpdated": "2026-05-09T08:51:57.871Z"
   },
   "identity": {
     "name": "Aina Quickquiver",
@@ -76,7 +76,7 @@
       "librarySource": "external",
       "libraryRef": "items.dnd5eapi-magic-items-potion-of-healing-common",
       "active": true,
-      "quantity": 13,
+      "quantity": 12,
       "overrides": {}
     }
   ],
@@ -98,541 +98,541 @@
       "max": 20,
       "log": [
         {
-          "id": "954723a5-aab1-4cc2-8cfb-6b8336cd39a3",
+          "id": "e26c51ce-ad45-48a4-a601-dc271f54c13c",
           "date": "2026-05-09",
           "delta": -1,
           "reason": "Field Shortbow shot"
         },
         {
-          "id": "c5731590-afb4-4a68-86ed-f25de76ec55a",
+          "id": "53457ea4-a740-4668-8b78-cde2ee2e7355",
           "date": "2026-05-09",
           "delta": -1,
           "reason": "Field Shortbow shot"
         },
         {
-          "id": "c52c86a6-291b-4bde-b143-b37e064a8527",
+          "id": "9fa33bbb-34f1-469f-ae1d-fc66b0780265",
           "date": "2026-05-09",
           "delta": -1,
           "reason": "Field Shortbow shot"
         },
         {
-          "id": "6359610c-78f7-438c-8cc3-ad9df3066036",
+          "id": "88e81096-3c8a-4f42-b5c6-887a4acc0d2d",
           "date": "2026-05-09",
           "delta": -1,
           "reason": "Field Shortbow shot"
         },
         {
-          "id": "e81e2d6b-b69e-4be8-9716-6d8867593b15",
+          "id": "c667d36f-59b0-42fe-b89b-5315c80fbab7",
           "date": "2026-05-09",
           "delta": -1,
           "reason": "Field Shortbow shot"
         },
         {
-          "id": "69e01a4c-d317-4234-8f16-17ef90be0bd0",
+          "id": "7bc11100-76b1-4b7e-b5a4-5a6dfe3f1902",
           "date": "2026-05-09",
           "delta": -1,
           "reason": "Field Shortbow shot"
         },
         {
-          "id": "1ce2f5a7-da10-4b27-a5c7-80a6ddba2a75",
+          "id": "d013e42c-aad5-48b5-bd02-597a11245ccc",
           "date": "2026-05-09",
           "delta": -1,
           "reason": "Field Shortbow shot"
         },
         {
-          "id": "d762e994-9365-4122-a742-dcebec226a0e",
+          "id": "ec2da10c-6c0f-4aa9-a501-b81596836558",
           "date": "2026-05-09",
           "delta": -1,
           "reason": "Field Shortbow shot"
         },
         {
-          "id": "dd2fa9b9-ce6d-4dde-a817-99bea4415753",
+          "id": "0389e32a-1f78-44d7-8ace-63dabac440e1",
           "date": "2026-05-09",
           "delta": -1,
           "reason": "Field Shortbow shot"
         },
         {
-          "id": "24e1d4f9-f7d3-4877-9e23-d11b76cd11dc",
+          "id": "48b79c1f-19bc-4ef2-b3b3-e474178a99ff",
           "date": "2026-05-09",
           "delta": -1,
           "reason": "Field Shortbow shot"
         },
         {
-          "id": "63827e79-05b5-4a8d-8574-0288e1dd4246",
+          "id": "64fc6593-474a-4811-8d16-538f63ac2c14",
           "date": "2026-05-09",
           "delta": -1,
           "reason": "Field Shortbow shot"
         },
         {
-          "id": "56464c85-ae8a-4144-a020-0165b0f54272",
+          "id": "e30594de-9c20-4139-84a0-ebb5842f27df",
           "date": "2026-05-09",
           "delta": -1,
           "reason": "Field Shortbow shot"
         },
         {
-          "id": "0b3aa8ac-c4ef-4368-87e3-d117125ae52a",
+          "id": "ba44317d-836e-4a5a-a88d-8e87b22f068d",
           "date": "2026-05-09",
           "delta": -1,
           "reason": "Field Shortbow shot"
         },
         {
-          "id": "9b53eb5c-f069-47ff-8d16-3e5dc9e4d0ef",
+          "id": "b99e0b12-af04-4f04-a089-3f032314b616",
           "date": "2026-05-09",
           "delta": -1,
           "reason": "Field Shortbow shot"
         },
         {
-          "id": "20f553b1-59d6-4153-8585-20731bf716fd",
+          "id": "ac7a4ee6-f8fb-4224-a064-7a135079784c",
           "date": "2026-05-09",
           "delta": -1,
           "reason": "Field Shortbow shot"
         },
         {
-          "id": "4c8c376f-737d-4cf5-8b84-c357d8fac31d",
+          "id": "66139312-a59c-4b71-8d3b-2e6524599202",
           "date": "2026-05-09",
           "delta": -1,
           "reason": "Field Shortbow shot"
         },
         {
-          "id": "8271500d-94ce-4d5a-a147-ef20e8dbbbd5",
+          "id": "18696d7d-f9e2-4372-bf52-c0cbcc60dc88",
           "date": "2026-05-09",
           "delta": -1,
           "reason": "Field Shortbow shot"
         },
         {
-          "id": "4ef22e79-595d-4f89-bbca-2414aab0a9ec",
+          "id": "da398024-2816-4d3b-94e6-ce8bb345d1d3",
           "date": "2026-05-09",
           "delta": -1,
           "reason": "Field Shortbow shot"
         },
         {
-          "id": "378341e4-44aa-4efd-b34d-fd8e96e37b56",
+          "id": "dccaf6b9-e5ff-4095-ae06-8baf4decbafd",
           "date": "2026-05-09",
           "delta": -1,
           "reason": "Field Shortbow shot"
         },
         {
-          "id": "4a8ef9ee-40f4-4cf4-b260-c4f827b17082",
+          "id": "145d97e2-45d9-43f1-9239-8b38703e5fab",
           "date": "2026-05-09",
           "delta": -1,
           "reason": "Field Shortbow shot"
         },
         {
-          "id": "bcb5de10-6bdb-4bfa-b57e-7ac0d4e78930",
+          "id": "07d2053a-7d23-43bf-a0ba-0d1f3e51e741",
           "date": "2026-05-09",
           "delta": -1,
           "reason": "Field Shortbow shot"
         },
         {
-          "id": "8aa8b6cf-08c2-4033-83bd-81af8fd1ee8d",
+          "id": "2ec2b159-577a-48d6-b4d6-f97673f2171e",
           "date": "2026-05-09",
           "delta": -1,
           "reason": "Field Shortbow shot"
         },
         {
-          "id": "009ecb65-26f8-4692-8ab5-f534b47a292a",
+          "id": "0ff673da-929b-4ece-ae2c-f3e5c1d65ba7",
           "date": "2026-05-09",
           "delta": -1,
           "reason": "Field Shortbow shot"
         },
         {
-          "id": "f75fb668-05fe-42b8-8e29-37c1fbc3ebe3",
+          "id": "9243f784-d260-4028-9557-a42c72033a39",
           "date": "2026-05-09",
           "delta": -1,
           "reason": "Field Shortbow shot"
         },
         {
-          "id": "65295089-2d4b-459c-9bc0-1c6ee50491b8",
+          "id": "438b3af5-b771-41ab-9d2a-adee0edd7c19",
           "date": "2026-05-09",
           "delta": -1,
           "reason": "Field Shortbow shot"
         },
         {
-          "id": "2e8885df-5f9a-4016-848a-adbe03a236eb",
+          "id": "e6bbd3ba-9041-414e-aa21-72862b1d27ab",
           "date": "2026-05-09",
           "delta": -1,
           "reason": "Field Shortbow shot"
         },
         {
-          "id": "2722f95d-f55f-4cb5-ad10-3e0dbe437a48",
+          "id": "1a2adbed-c35c-4217-ae23-dbe88e7dd1a4",
           "date": "2026-05-09",
           "delta": -1,
           "reason": "Field Shortbow shot"
         },
         {
-          "id": "c56ea579-bcf9-4215-a188-08d1d2ba92bc",
+          "id": "d8498144-1c22-43c4-83c1-1ce4bba0977b",
           "date": "2026-05-09",
           "delta": -1,
           "reason": "Field Shortbow shot"
         },
         {
-          "id": "09c885db-483e-4fbe-b672-5215df878468",
+          "id": "e3b1f8b6-848e-43b1-8e6b-dfb27bf47d55",
           "date": "2026-05-09",
           "delta": -1,
           "reason": "Field Shortbow shot"
         },
         {
-          "id": "68b4b2c0-b7aa-4783-8338-a9a733d88558",
+          "id": "ab5009d0-fc77-42d2-a583-1e69215dcfe6",
           "date": "2026-05-09",
           "delta": -1,
           "reason": "Field Shortbow shot"
         },
         {
-          "id": "f21c5114-842a-4b89-a9ce-6c5c42b8437e",
+          "id": "e98c7552-bfbb-4de9-abc5-d72e15e10aa1",
           "date": "2026-05-09",
           "delta": -1,
           "reason": "Field Shortbow shot"
         },
         {
-          "id": "2b878bcc-3c04-49d6-9566-b63b368293ad",
+          "id": "da1e0dc2-d094-4c1b-855f-cd8e4003d91b",
           "date": "2026-05-09",
           "delta": -1,
           "reason": "Field Shortbow shot"
         },
         {
-          "id": "a5b8d93a-ce4d-45a9-8169-b5d29946dcab",
+          "id": "f6595177-9277-45b7-8738-8d20a7bdc008",
           "date": "2026-05-09",
           "delta": -1,
           "reason": "Field Shortbow shot"
         },
         {
-          "id": "ae8f926d-7878-4cc1-a7c6-6ca6834b264f",
+          "id": "c6061125-2173-43fa-8185-98f127b713f7",
           "date": "2026-05-09",
           "delta": -1,
           "reason": "Field Shortbow shot"
         },
         {
-          "id": "f8197f17-c841-4393-ba34-ce8bf5354651",
+          "id": "b33d338b-54a3-4225-9d5e-cd6ee9fb5736",
           "date": "2026-05-09",
           "delta": -1,
           "reason": "Field Shortbow shot"
         },
         {
-          "id": "a3ae38b8-a2a5-4b73-8806-096b1a2252fe",
-          "date": "2026-05-09",
-          "delta": 20,
-          "reason": "Loaded a fresh bundle of arrows"
-        },
-        {
-          "id": "162ad5f6-bd1f-44b1-9ca1-08da4f0a0a53",
-          "date": "2026-05-09",
-          "delta": -1,
-          "reason": "Field Shortbow shot"
-        },
-        {
-          "id": "f2c39bef-160c-4546-b488-d258ad0ecf7b",
-          "date": "2026-05-09",
-          "delta": -1,
-          "reason": "Field Shortbow shot"
-        },
-        {
-          "id": "5e47fd58-be14-4dde-ad79-9f477e485774",
-          "date": "2026-05-09",
-          "delta": -1,
-          "reason": "Field Shortbow shot"
-        },
-        {
-          "id": "1a5d03b1-11f5-4547-a846-bff25205c3d3",
-          "date": "2026-05-09",
-          "delta": -1,
-          "reason": "Field Shortbow shot"
-        },
-        {
-          "id": "d8ea1071-bfa7-4ce0-b4b5-7ac03df37597",
-          "date": "2026-05-09",
-          "delta": -1,
-          "reason": "Field Shortbow shot"
-        },
-        {
-          "id": "337217c1-56d2-4698-aa1f-2034d36d259a",
-          "date": "2026-05-09",
-          "delta": -1,
-          "reason": "Field Shortbow shot"
-        },
-        {
-          "id": "64178fbd-9c42-41ea-86c3-90b8c485db1f",
-          "date": "2026-05-09",
-          "delta": -1,
-          "reason": "Field Shortbow shot"
-        },
-        {
-          "id": "74cb6f16-13dd-4ecf-b6ee-ef36fae5bc03",
-          "date": "2026-05-09",
-          "delta": -1,
-          "reason": "Field Shortbow shot"
-        },
-        {
-          "id": "9f22fcc0-3cb9-4208-9e16-c3fd3c5c2544",
-          "date": "2026-05-09",
-          "delta": -1,
-          "reason": "Field Shortbow shot"
-        },
-        {
-          "id": "621a6b9f-6aa3-48a7-81e2-4999c9d8b9ba",
-          "date": "2026-05-09",
-          "delta": -1,
-          "reason": "Field Shortbow shot"
-        },
-        {
-          "id": "5c9afb3c-07e1-40ab-93e6-56251b893a85",
-          "date": "2026-05-09",
-          "delta": -1,
-          "reason": "Field Shortbow shot"
-        },
-        {
-          "id": "d95d2547-bf15-45dc-9a09-d96cbe0262a3",
-          "date": "2026-05-09",
-          "delta": -1,
-          "reason": "Field Shortbow shot"
-        },
-        {
-          "id": "64b097b0-8c37-4922-934b-038aab438442",
-          "date": "2026-05-09",
-          "delta": -1,
-          "reason": "Field Shortbow shot"
-        },
-        {
-          "id": "bf07ec07-930a-499b-b5cb-cd8ddb2afc73",
-          "date": "2026-05-09",
-          "delta": -1,
-          "reason": "Field Shortbow shot"
-        },
-        {
-          "id": "6b69f816-e8a7-41c9-840a-fc40b8486c7e",
-          "date": "2026-05-09",
-          "delta": -1,
-          "reason": "Field Shortbow shot"
-        },
-        {
-          "id": "5048ab41-524d-4e4e-9104-b01e825cee0e",
-          "date": "2026-05-09",
-          "delta": -1,
-          "reason": "Field Shortbow shot"
-        },
-        {
-          "id": "335f7036-4bb9-48a6-9aa0-f9543956c080",
-          "date": "2026-05-09",
-          "delta": -1,
-          "reason": "Field Shortbow shot"
-        },
-        {
-          "id": "fa18c3ec-816d-4ead-a7de-4715014a1624",
-          "date": "2026-05-09",
-          "delta": -1,
-          "reason": "Field Shortbow shot"
-        },
-        {
-          "id": "e53cd1b7-d505-44eb-8692-1c96325ff18c",
-          "date": "2026-05-09",
-          "delta": -1,
-          "reason": "Field Shortbow shot"
-        },
-        {
-          "id": "cff5b7fb-b744-43cf-9c97-b7ebfa493a89",
-          "date": "2026-05-09",
-          "delta": -1,
-          "reason": "Field Shortbow shot"
-        },
-        {
-          "id": "ad58e4e1-7e9f-47df-81d9-70cab99a2c6c",
+          "id": "c3e21474-5ac9-4968-b521-cbaedd144233",
           "date": "2026-05-09",
           "delta": 20,
           "reason": "Loaded a fresh bundle of arrows"
         },
         {
-          "id": "5f9b107e-b669-4b44-ac83-533162967631",
+          "id": "b44ad8bc-3df7-4597-8522-b668f509b21c",
           "date": "2026-05-09",
           "delta": -1,
           "reason": "Field Shortbow shot"
         },
         {
-          "id": "9d04b1ad-e8c3-4d8c-8f86-e6fe03a2edb4",
+          "id": "c17c94d8-e055-42c9-9759-ab12c2a13e64",
           "date": "2026-05-09",
           "delta": -1,
           "reason": "Field Shortbow shot"
         },
         {
-          "id": "9bbf8fbb-8caf-48e1-808d-4cee2cdb9102",
+          "id": "99cbb649-b1a0-4747-8fa2-0adb05b81e3e",
           "date": "2026-05-09",
           "delta": -1,
           "reason": "Field Shortbow shot"
         },
         {
-          "id": "19f9fc35-4944-4b9f-8c76-96e0c31d8ca5",
+          "id": "ab8ff189-e9e9-437a-8027-b1c211ee0d6d",
           "date": "2026-05-09",
           "delta": -1,
           "reason": "Field Shortbow shot"
         },
         {
-          "id": "1c6797cf-4210-4daf-b3e0-aac02b8d1f3e",
+          "id": "f01e420e-b53d-46eb-ba33-0b0d143ce44a",
           "date": "2026-05-09",
           "delta": -1,
           "reason": "Field Shortbow shot"
         },
         {
-          "id": "4aee4f45-fd0b-4d41-b79e-532f54726ad7",
+          "id": "accbc69f-f248-4ecc-9b32-759cbf0f2b60",
           "date": "2026-05-09",
           "delta": -1,
           "reason": "Field Shortbow shot"
         },
         {
-          "id": "b1979099-7a9c-4ebc-b873-358baa5b5987",
+          "id": "bd460537-95fb-451d-bb18-a2d42bfe50e3",
           "date": "2026-05-09",
           "delta": -1,
           "reason": "Field Shortbow shot"
         },
         {
-          "id": "836901a6-3f7d-4465-bee7-d6cde9437d2b",
+          "id": "4b6ebccc-f0a2-46d1-90d1-7345c8bc9ab0",
           "date": "2026-05-09",
           "delta": -1,
           "reason": "Field Shortbow shot"
         },
         {
-          "id": "7d85e8c6-ab1d-4b71-b6cc-2a5b36fe58bf",
+          "id": "ed8caafd-bf93-43d8-b5ba-cd6a9aa95bee",
           "date": "2026-05-09",
           "delta": -1,
           "reason": "Field Shortbow shot"
         },
         {
-          "id": "cfd59928-0bfa-4bcd-ad7d-9cdde6b8daf4",
+          "id": "5d6406f1-c1d0-435b-a173-7e108f7457c3",
           "date": "2026-05-09",
           "delta": -1,
           "reason": "Field Shortbow shot"
         },
         {
-          "id": "c09356f7-dc65-474e-99ba-abde8e4cb0f2",
+          "id": "3790a4d2-e307-4fc0-9afc-dbe66db44235",
           "date": "2026-05-09",
           "delta": -1,
           "reason": "Field Shortbow shot"
         },
         {
-          "id": "148db3ee-e8b6-4661-b05e-27262b0f9012",
+          "id": "3433ec43-d311-46a7-b9c4-ff95979b49dd",
           "date": "2026-05-09",
           "delta": -1,
           "reason": "Field Shortbow shot"
         },
         {
-          "id": "1df2850c-2800-4db2-8d17-33690231c9d1",
+          "id": "3d87c912-c625-4f05-bc13-dd0f0dc6d560",
+          "date": "2026-05-09",
+          "delta": -1,
+          "reason": "Field Shortbow shot"
+        },
+        {
+          "id": "5b3f9a4b-4a21-4e7f-9cd1-ddfa148785b8",
+          "date": "2026-05-09",
+          "delta": -1,
+          "reason": "Field Shortbow shot"
+        },
+        {
+          "id": "eb52e5e9-bee5-40bd-915c-4e7214161a6e",
+          "date": "2026-05-09",
+          "delta": -1,
+          "reason": "Field Shortbow shot"
+        },
+        {
+          "id": "195335cc-f980-42de-8ab3-1423a3d07c78",
+          "date": "2026-05-09",
+          "delta": -1,
+          "reason": "Field Shortbow shot"
+        },
+        {
+          "id": "d37eb7a0-e888-40cb-9dc8-42b15dc0ea27",
+          "date": "2026-05-09",
+          "delta": -1,
+          "reason": "Field Shortbow shot"
+        },
+        {
+          "id": "1e63a086-1368-4657-bd2d-41235b1d0b0f",
+          "date": "2026-05-09",
+          "delta": -1,
+          "reason": "Field Shortbow shot"
+        },
+        {
+          "id": "463c6fc1-ceae-43ec-8c33-6239eb768e8f",
+          "date": "2026-05-09",
+          "delta": -1,
+          "reason": "Field Shortbow shot"
+        },
+        {
+          "id": "b06f1448-6155-4426-9c40-c67c290bfbc6",
+          "date": "2026-05-09",
+          "delta": -1,
+          "reason": "Field Shortbow shot"
+        },
+        {
+          "id": "e146f60f-edd1-4317-8ec6-21e2b837cf77",
           "date": "2026-05-09",
           "delta": 20,
           "reason": "Loaded a fresh bundle of arrows"
         },
         {
-          "id": "415b2508-6dbf-41a1-b740-c83d24b1322d",
+          "id": "b960c293-2073-49cf-aabc-2d07a28290e6",
           "date": "2026-05-09",
           "delta": -1,
           "reason": "Field Shortbow shot"
         },
         {
-          "id": "c6c91e2c-c103-48df-b54e-085da35a2337",
+          "id": "a1af0aeb-a00c-4404-98e0-81ec86a2ee59",
           "date": "2026-05-09",
           "delta": -1,
           "reason": "Field Shortbow shot"
         },
         {
-          "id": "20460b44-6a8a-46d0-b7d1-06576553585b",
+          "id": "4809e64a-1aa7-4ec2-bbaa-a95e45db28bf",
           "date": "2026-05-09",
           "delta": -1,
           "reason": "Field Shortbow shot"
         },
         {
-          "id": "e0b8e1b5-8ed5-4cb3-b575-f69fe6c6f83f",
+          "id": "61ae6338-c02d-43ac-93f5-99c29d7e9c9c",
           "date": "2026-05-09",
           "delta": -1,
           "reason": "Field Shortbow shot"
         },
         {
-          "id": "a8e3a12d-c190-4c07-9700-f15ce7b27ee0",
+          "id": "0dd6b799-d152-43a9-85c5-2bb0a2f80e2b",
           "date": "2026-05-09",
           "delta": -1,
           "reason": "Field Shortbow shot"
         },
         {
-          "id": "cee88c83-7614-4aaa-b4d7-d03981ecdd5e",
+          "id": "8964632d-cb58-452b-847b-da90739a50e1",
           "date": "2026-05-09",
           "delta": -1,
           "reason": "Field Shortbow shot"
         },
         {
-          "id": "02dddbb0-6103-449f-b94a-648b8ba5b7a3",
+          "id": "6b127aaf-2be7-455a-b30b-2badf96d90d5",
           "date": "2026-05-09",
           "delta": -1,
           "reason": "Field Shortbow shot"
         },
         {
-          "id": "72823fa7-4cef-49ee-bf80-0c74b2e5a860",
+          "id": "32f0b557-3c68-4efe-b959-88c1c5957228",
           "date": "2026-05-09",
           "delta": -1,
           "reason": "Field Shortbow shot"
         },
         {
-          "id": "49296b43-445b-47fc-9443-f243380df9bd",
+          "id": "df544094-74fd-4cd8-934d-67c324990c1d",
           "date": "2026-05-09",
           "delta": -1,
           "reason": "Field Shortbow shot"
         },
         {
-          "id": "f06a59b0-a6e0-4c46-a4a8-ec7c51300015",
+          "id": "2d297734-215d-4928-8a25-eeb6d489bdcf",
           "date": "2026-05-09",
           "delta": -1,
           "reason": "Field Shortbow shot"
         },
         {
-          "id": "3402ae6a-ecf8-4b1a-afe4-95b522b97816",
+          "id": "6dff4747-a922-426f-94ae-fc4ca92bf384",
           "date": "2026-05-09",
           "delta": -1,
           "reason": "Field Shortbow shot"
         },
         {
-          "id": "d8f511da-55af-4466-8178-9335e49a9e89",
+          "id": "8d4343a7-f9de-4d84-b8a7-7b2c2f65c6b5",
           "date": "2026-05-09",
           "delta": -1,
           "reason": "Field Shortbow shot"
         },
         {
-          "id": "b8e77b98-2028-4c0e-8308-335c8480141f",
-          "date": "2026-05-09",
-          "delta": -1,
-          "reason": "Field Shortbow shot"
-        },
-        {
-          "id": "2b921c53-a94d-49f0-a47f-0d448ec564f2",
-          "date": "2026-05-09",
-          "delta": -1,
-          "reason": "Field Shortbow shot"
-        },
-        {
-          "id": "f0b9b0ac-eae8-4113-a894-980b91512db7",
-          "date": "2026-05-09",
-          "delta": -1,
-          "reason": "Field Shortbow shot"
-        },
-        {
-          "id": "76a61b04-0700-4dca-96c4-f868d7ba4a47",
-          "date": "2026-05-09",
-          "delta": -1,
-          "reason": "Field Shortbow shot"
-        },
-        {
-          "id": "3994a26c-b266-4b9e-b101-abf69845580d",
-          "date": "2026-05-09",
-          "delta": -1,
-          "reason": "Field Shortbow shot"
-        },
-        {
-          "id": "9fab43cf-d0ac-4b16-8cc2-7fca18f6bef4",
-          "date": "2026-05-09",
-          "delta": -1,
-          "reason": "Field Shortbow shot"
-        },
-        {
-          "id": "98e7feaa-7a4f-4d82-8b83-3b9b8134f088",
+          "id": "2d663373-f3f8-4d10-a93d-0193a4bafd76",
           "date": "2026-05-09",
           "delta": 20,
           "reason": "Loaded a fresh bundle of arrows"
         },
         {
-          "id": "f6d09b6f-6ff2-40a1-89b9-ff6a8ee98e27",
+          "id": "edcca7dc-0004-46b4-a96d-c56cddc3e6f5",
+          "date": "2026-05-09",
+          "delta": -1,
+          "reason": "Field Shortbow shot"
+        },
+        {
+          "id": "24a1e85d-d5a8-466c-ac5d-9a1875c7fc50",
+          "date": "2026-05-09",
+          "delta": -1,
+          "reason": "Field Shortbow shot"
+        },
+        {
+          "id": "97c4a2b6-917d-4562-a87a-9ddfdbb6cca0",
+          "date": "2026-05-09",
+          "delta": -1,
+          "reason": "Field Shortbow shot"
+        },
+        {
+          "id": "2cedf015-70a9-42d0-ac44-8391f2e05caa",
+          "date": "2026-05-09",
+          "delta": -1,
+          "reason": "Field Shortbow shot"
+        },
+        {
+          "id": "90dc5269-0037-45e4-afb2-6367912800d3",
+          "date": "2026-05-09",
+          "delta": -1,
+          "reason": "Field Shortbow shot"
+        },
+        {
+          "id": "5ed61705-1e08-48a9-b371-ee52b036b6a5",
+          "date": "2026-05-09",
+          "delta": -1,
+          "reason": "Field Shortbow shot"
+        },
+        {
+          "id": "b0045a73-e745-4a78-91de-4fa494f03ab7",
+          "date": "2026-05-09",
+          "delta": -1,
+          "reason": "Field Shortbow shot"
+        },
+        {
+          "id": "6eae1113-0e88-4e0d-a305-9243691aeaf0",
+          "date": "2026-05-09",
+          "delta": -1,
+          "reason": "Field Shortbow shot"
+        },
+        {
+          "id": "6465a115-d5d3-44a9-8173-7f19f5831684",
+          "date": "2026-05-09",
+          "delta": -1,
+          "reason": "Field Shortbow shot"
+        },
+        {
+          "id": "d9b9bd83-838b-4baf-988d-16e9791dcca1",
+          "date": "2026-05-09",
+          "delta": -1,
+          "reason": "Field Shortbow shot"
+        },
+        {
+          "id": "e315efb7-ca8e-4a10-ab07-f5d5fc68a50b",
+          "date": "2026-05-09",
+          "delta": -1,
+          "reason": "Field Shortbow shot"
+        },
+        {
+          "id": "fbd03e76-28a8-4c60-88ba-362c2a810f3d",
+          "date": "2026-05-09",
+          "delta": -1,
+          "reason": "Field Shortbow shot"
+        },
+        {
+          "id": "c06f35f2-69ba-4c47-8bbb-eacb6ac9678d",
+          "date": "2026-05-09",
+          "delta": -1,
+          "reason": "Field Shortbow shot"
+        },
+        {
+          "id": "d8922e16-7659-4248-84ab-d4328d2da8e4",
+          "date": "2026-05-09",
+          "delta": -1,
+          "reason": "Field Shortbow shot"
+        },
+        {
+          "id": "1984e2d6-3dd2-46e5-82fc-9df839b9a108",
+          "date": "2026-05-09",
+          "delta": -1,
+          "reason": "Field Shortbow shot"
+        },
+        {
+          "id": "6f1b2c5f-b41d-4acd-a184-68578813365c",
+          "date": "2026-05-09",
+          "delta": -1,
+          "reason": "Field Shortbow shot"
+        },
+        {
+          "id": "f2eedc0c-2c4e-4fca-b367-1098c5a266c8",
+          "date": "2026-05-09",
+          "delta": -1,
+          "reason": "Field Shortbow shot"
+        },
+        {
+          "id": "045dafb9-fa11-4cfa-aa0a-9aa2fc565b1f",
+          "date": "2026-05-09",
+          "delta": -1,
+          "reason": "Field Shortbow shot"
+        },
+        {
+          "id": "b42cee2b-d45d-4db1-bfe7-914fb3a33a10",
+          "date": "2026-05-09",
+          "delta": 20,
+          "reason": "Loaded a fresh bundle of arrows"
+        },
+        {
+          "id": "2283188e-494e-428c-ba1a-bb684c49d388",
           "date": "2026-05-09",
           "delta": -1,
           "reason": "Field Shortbow shot"
@@ -691,7 +691,7 @@
     "hp": {
       "mode": "calculated",
       "max": 44,
-      "current": 44,
+      "current": 21,
       "temp": 0,
       "log": [
         {
@@ -720,6 +720,18 @@
         },
         {
           "id": "2bcaa34d-cdeb-46dc-8625-1ca06e644fae",
+          "date": "2026-05-09",
+          "delta": 7,
+          "reason": "Potion of Healing"
+        },
+        {
+          "id": "6de104d7-52a5-4b9c-b6d8-7cce886d8d34",
+          "date": "2026-05-09",
+          "delta": -30,
+          "reason": "another crack, but not as big!"
+        },
+        {
+          "id": "ec501917-6ed4-4158-9667-4045b43d4b75",
           "date": "2026-05-09",
           "delta": 7,
           "reason": "Potion of Healing"
