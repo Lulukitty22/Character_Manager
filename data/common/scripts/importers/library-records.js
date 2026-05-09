@@ -245,6 +245,7 @@ const LibraryRecords = (() => {
         rarity: features.item.rarity || "",
         category: features.item.subcategory || "",
       } : undefined,
+      inventory: features.inventory,
       healing: features.healing,
       effects: features.effects,
       actions: features.actions || [],

@@ -38,19 +38,19 @@
     },
     "actions": [
       {
-        "label": "Reload 20",
+        "label": "Open Bundle",
         "consumeQuantity": true,
         "effects": {
-          "resources": [
+          "inventory": [
             {
-              "target": "Arrows",
+              "itemRef": "items.item-loose-arrow-test",
+              "itemName": "Loose Arrow",
               "delta": 20,
-              "maxCap": 20,
-              "reason": "Loaded a fresh bundle of arrows"
+              "reason": "Opened an arrow bundle into loose arrows"
             }
           ]
         },
-        "description": "Consume this bundle to refill the Arrows resource."
+        "description": "Consume this bundle to add 20 loose arrows to inventory."
       }
     ],
     "inventory": {
@@ -60,10 +60,10 @@
     },
     "mechanics": [
       {
-        "label": "Reload",
-        "value": "+20 Arrows",
+        "label": "Open",
+        "value": "+20 Loose Arrows",
         "kind": "positive",
-        "description": "Adds 20 arrows to the Arrows resource, up to its max."
+        "description": "Adds 20 loose arrows to inventory so they can be readied into the quiver."
       }
     ]
   },

@@ -41,15 +41,25 @@
         "label": "Shoot",
         "consumeQuantity": false,
         "effects": {
+          "inventory": [
+            {
+              "itemRef": "items.item-field-quiver-archery-test",
+              "itemName": "Field Quiver",
+              "delta": 0,
+              "mustExist": true,
+              "reason": "Requires a quiver to ready arrows."
+            }
+          ],
           "resources": [
             {
-              "target": "Arrows",
+              "target": "resources.resource-arrows-20",
+              "resourceName": "Quiver Arrows",
               "delta": -1,
               "reason": "Field Shortbow shot"
             }
           ]
         },
-        "description": "Spend 1 arrow from the Arrows resource when firing."
+        "description": "Requires a quiver and spends 1 ready arrow from the quiver when firing."
       }
     ],
     "inventory": {
@@ -71,9 +81,9 @@
       },
       {
         "label": "Ammo",
-        "value": "Arrows -1",
+        "value": "Quiver Arrows -1",
         "kind": "requirement",
-        "description": "Each shot spends 1 arrow from the Arrows resource."
+        "description": "Each shot requires a Field Quiver and spends 1 ready arrow from the quiver resource."
       }
     ]
   },

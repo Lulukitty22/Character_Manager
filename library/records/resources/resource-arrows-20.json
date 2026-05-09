@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "resources.resource-arrows-20",
-  "name": "Arrows",
+  "name": "Quiver Arrows",
   "collections": [
     "resources"
   ],
@@ -20,11 +20,11 @@
     },
     "mechanics": [
       {
-        "label": "Ammo",
+        "label": "Ready Ammo",
         "kind": "neutral",
         "description": "Tracks arrows currently ready in the quiver."
       }
     ]
   },
-  "desc": "Tracks arrows currently available for ranged attacks."
+  "desc": "Tracks arrows currently readied inside the active quiver."
 }

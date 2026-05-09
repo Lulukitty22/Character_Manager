@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 1,
+  "id": "items.item-field-quiver-archery-test",
+  "name": "Field Quiver",
+  "collections": [
+    "items",
+    "items/wondrous",
+    "items/wondrous/record"
+  ],
+  "tags": [
+    "archery",
+    "ammo-test",
+    "quiver"
+  ],
+  "variantOf": null,
+  "sourceReferences": [],
+  "features": {
+    "item": {
+      "category": "wondrous",
+      "subcategory": "record",
+      "rarity": "",
+      "requiresAttunement": false
+    },
+    "weight": {
+      "quantity": 1,
+      "unit": "lb"
+    },
+    "effects": {
+      "hp": {
+        "flatBonus": 0,
+        "perLevelBonus": 0,
+        "tempHp": 0
+      },
+      "spellSlots": {}
+    },
+    "actions": [
+      {
+        "label": "Ready 1 Arrow",
+        "consumeQuantity": false,
+        "effects": {
+          "inventory": [
+            {
+              "itemRef": "items.item-loose-arrow-test",
+              "itemName": "Loose Arrow",
+              "delta": -1,
+              "reason": "Readied 1 loose arrow into the quiver"
+            }
+          ],
+          "resources": [
+            {
+              "target": "resources.resource-arrows-20",
+              "resourceName": "Quiver Arrows",
+              "delta": 1,
+              "maxCap": 20,
+              "reason": "Readied 1 loose arrow into the quiver"
+            }
+          ]
+        },
+        "description": "Move 1 loose arrow into the quiver's ready ammo pool."
+      },
+      {
+        "label": "Stow 1 Arrow",
+        "consumeQuantity": false,
+        "effects": {
+          "resources": [
+            {
+              "target": "resources.resource-arrows-20",
+              "resourceName": "Quiver Arrows",
+              "delta": -1,
+              "reason": "Removed 1 ready arrow from the quiver"
+            }
+          ],
+          "inventory": [
+            {
+              "itemRef": "items.item-loose-arrow-test",
+              "itemName": "Loose Arrow",
+              "delta": 1,
+              "reason": "Removed 1 ready arrow from the quiver"
+            }
+          ]
+        },
+        "description": "Move 1 readied arrow back out of the quiver and into loose stock."
+      }
+    ],
+    "inventory": {
+      "isStackable": false,
+      "defaultQuantity": 1,
+      "consumedOnUse": false
+    },
+    "mechanics": [
+      {
+        "label": "Capacity",
+        "value": "20 arrows",
+        "kind": "quantity",
+        "description": "This quiver's ready-ammo resource tops out at 20 arrows."
+      },
+      {
+        "label": "Ammo Flow",
+        "value": "Loose -> Ready",
+        "kind": "neutral",
+        "description": "Use quiver actions to move arrows between loose inventory stock and the ready-ammo pool."
+      }
+    ]
+  },
+  "desc": "A practical field quiver used to ready loose arrows before they can be fired."
+}

@@ -72,6 +72,7 @@ The D&D stats visual port is already done and browser-verified. This restructuri
   - add clearer real-time visibility for ammo, durability, and other consumable state tied to item actions
   - review whether gameplay healing should stay average-only, become roll-driven, or support DM-confirmed results
   - decide and document the ammo model explicitly: inventory should represent owned stock, while gameplay resources should represent immediately spendable/loaded state; do not duplicate the same number in both places unless one is derived from the other
+  - the current stress-test model is now: `Arrow Bundle (20)` -> `Loose Arrow` inventory stock -> `Field Quiver` ready-ammo resource -> `Field Shortbow` spend action; keep validating this as the baseline shared ammo loop before generalizing it to bolts, thrown consumables, durability, or DM-facing turn tools
 - D&D/DM backend roadmap:
   - add explicit dice and damage calculation support for spells and actions
   - support DM-side rolling on behalf of party members for AFK/slow turns
@@ -100,6 +101,9 @@ The D&D stats visual port is already done and browser-verified. This restructuri
 - Serialized manager saves so repeated clicks do not stack overlapping save requests.
 - Upgraded library record/index/manifest writes to retry GitHub `409` conflicts multiple times instead of giving up after a single collision.
 - Replaced the most visible busted live-shell emoji/icon labels with ASCII-safe labels in the maintained editor shell and character presentation badges.
+- Shared editor/viewer item actions now understand inventory-transfer effects in addition to HP, spell-slot, and resource effects, so ammo can move between bundles, loose stock, and ready-ammo pools without inventing a second one-off action path.
+- Added an explicit Aina Quickquiver stress-test loop built around `Field Quiver`, `Loose Arrow`, and `Quiver Arrows` so we can keep proving out the ammo backend with a real character instead of only abstract records.
+- Spell-slot gameplay rows now hard-stop when a character has no access to that slot level, and impossible stored slot counts are clamped away instead of lingering as usable UI state.
 
 ## Shim Contract
 

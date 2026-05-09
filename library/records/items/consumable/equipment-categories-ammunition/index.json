@@ -22,6 +22,24 @@
         "equipment-categories-ammunition"
       ],
       "path": "library/records/items/consumable/equipment-categories-ammunition/item-arrow-bundle-20-test.json"
+    },
+    {
+      "id": "items.item-loose-arrow-test",
+      "name": "Loose Arrow",
+      "collections": [
+        "items",
+        "items/consumable",
+        "items/consumable/equipment-categories-ammunition"
+      ],
+      "tags": [
+        "ammo",
+        "ammunition",
+        "archery",
+        "ammo-test",
+        "equipment-categories-ammunition",
+        "loose-ammo"
+      ],
+      "path": "library/records/items/consumable/equipment-categories-ammunition/item-loose-arrow-test.json"
     }
   ]
 }

@@ -520,6 +520,43 @@
         "updatedAt": "2026-05-03T15:10:50.038Z"
       },
       {
+        "id": "items.item-field-quiver-archery-test",
+        "name": "Field Quiver",
+        "collections": [
+          "items",
+          "items/wondrous",
+          "items/wondrous/record"
+        ],
+        "tags": [
+          "archery",
+          "ammo-test",
+          "quiver"
+        ],
+        "path": "library/records/items/wondrous/record/item-field-quiver-archery-test.json",
+        "sha": "",
+        "updatedAt": "2026-05-09T00:00:00.000Z"
+      },
+      {
+        "id": "items.item-loose-arrow-test",
+        "name": "Loose Arrow",
+        "collections": [
+          "items",
+          "items/consumable",
+          "items/consumable/equipment-categories-ammunition"
+        ],
+        "tags": [
+          "ammo",
+          "ammunition",
+          "archery",
+          "ammo-test",
+          "equipment-categories-ammunition",
+          "loose-ammo"
+        ],
+        "path": "library/records/items/consumable/equipment-categories-ammunition/item-loose-arrow-test.json",
+        "sha": "",
+        "updatedAt": "2026-05-09T00:00:00.000Z"
+      },
+      {
         "id": "items.item-shortbow-archery-test",
         "name": "Field Shortbow",
         "collections": [
@@ -662,7 +699,7 @@
       },
       {
         "id": "resources.resource-arrows-20",
-        "name": "Arrows",
+        "name": "Quiver Arrows",
         "collections": [
           "resources"
         ],

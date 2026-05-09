@@ -47,7 +47,7 @@ const EditorGameplay = (() => {
     const actionableItems = typeof DndCalculations !== "undefined"
       ? DndCalculations.getActionableItems(character).map(item => ({
         ...item,
-        actionState: evaluateItemActionState(character, item),
+        actionState: DndCalculations.evaluateItemActionState(character, item),
       }))
       : [];
 
@@ -183,6 +183,7 @@ const EditorGameplay = (() => {
     const slotRows = [1,2,3,4,5,6,7,8,9].map(level => {
       const slot = slotState?.slots?.[level] || { max: 0, current: 0, calculatedMax: 0, overrideMax: 0 };
       const calculated = slot.calculatedMax || 0;
+      const unavailable = Number(slot.max || 0) <= 0;
       return `
         <div class="spell-slot-row" data-slot-level="${level}">
           <span class="spell-slot-level">Lv ${level}</span>
@@ -193,8 +194,8 @@ const EditorGameplay = (() => {
           </div>
           ${calculated ? `<span class="text-faint text-xs">Calc ${calculated}</span>` : ""}
           <div class="flex gap-2">
-            <button class="button button-ghost button-sm btn-slot-use">Use</button>
-            <button class="button button-ghost button-sm btn-slot-restore">Restore</button>
+            <button class="button button-ghost button-sm btn-slot-use" ${unavailable ? "disabled" : ""}>Use</button>
+            <button class="button button-ghost button-sm btn-slot-restore" ${unavailable ? "disabled" : ""}>Restore</button>
           </div>
         </div>
       `;
@@ -244,11 +245,12 @@ const EditorGameplay = (() => {
     if (!actionableItems.length) return "";
 
     const rows = actionableItems.map((item, index) => {
-      const actionState = item.actionState || { ok: true, resources: [], message: "" };
+      const actionState = item.actionState || { ok: true, resources: [], inventory: [], message: "" };
       const healAmount = DndCalculations.healingAmount(item);
       const tempHp = Number(item.action?.effects?.tempHp?.amount || item.action?.effects?.tempHp || 0);
       const slotEffect = item.action?.effects?.spellSlots || null;
       const resourceEffects = Array.isArray(item.action?.effects?.resources) ? item.action.effects.resources : [];
+      const inventoryEffects = Array.isArray(item.action?.effects?.inventory) ? item.action.effects.inventory : [];
       const chips = typeof ViewCharacterUtils !== "undefined"
         ? ViewCharacterUtils.renderMechanicChips([
           item.quantity != null ? { label: "Qty", value: item.quantity, kind: "quantity" } : null,
@@ -262,9 +264,29 @@ const EditorGameplay = (() => {
             kind: resource.current > 0 ? "quantity" : "negative",
             description: resource.shortage ? `Need ${resource.required}, only ${resource.current} available.` : "Live resource state for this action.",
           })),
+          ...actionState.inventory.map(entry => ({
+            label: entry.name,
+            value: `${entry.current}`,
+            kind: entry.current > 0 ? "quantity" : "negative",
+            description: entry.missing
+              ? "This inventory item must exist for the action to work."
+              : entry.shortage
+                ? `Need ${entry.required}, only ${entry.current} available.`
+                : entry.mustExist
+                  ? "Must be present in inventory."
+                  : "Live inventory state for this action.",
+          })),
           ...resourceEffects.map(effect => ({
-            label: effect.target || effect.resourceName || "Resource",
+            label: effect.resourceName || effect.target || "Resource",
             value: Schema.formatModifier(Number(effect.delta || 0)),
+            kind: Number(effect.delta || 0) >= 0 ? "positive" : "negative",
+            description: effect.reason || "",
+          })),
+          ...inventoryEffects.map(effect => ({
+            label: effect.itemName || effect.target || effect.itemRef || "Item",
+            value: effect.delta
+              ? Schema.formatModifier(Number(effect.delta || 0))
+              : (effect.mustExist || effect.requirePresence ? "Required" : ""),
             kind: Number(effect.delta || 0) >= 0 ? "positive" : "negative",
             description: effect.reason || "",
           })),
@@ -420,6 +442,8 @@ const EditorGameplay = (() => {
       [1,2,3,4,5,6,7,8,9].forEach(level => {
         const maxEl = panelEl.querySelector(`.gp-spell-slot-max[data-level="${level}"]`);
         const currentEl = panelEl.querySelector(`.gp-spell-slot-current[data-level="${level}"]`);
+        const useButton = panelEl.querySelector(`.spell-slot-row[data-slot-level="${level}"] .btn-slot-use`);
+        const restoreButton = panelEl.querySelector(`.spell-slot-row[data-slot-level="${level}"] .btn-slot-restore`);
         if (!maxEl) return;
         const calculatedMax = parseInt(maxEl.dataset.calculatedMax || "0", 10) || 0;
         const current = parseInt(currentEl?.value, 10) || 0;
@@ -429,8 +453,11 @@ const EditorGameplay = (() => {
         } else {
           maxEl.readOnly = true;
           maxEl.value = calculatedMax;
-          if (currentEl) currentEl.value = Math.min(current, calculatedMax || current);
+          if (currentEl) currentEl.value = Math.min(current, calculatedMax);
         }
+        const max = parseInt(maxEl.value, 10) || 0;
+        if (useButton) useButton.disabled = max <= 0;
+        if (restoreButton) restoreButton.disabled = max <= 0;
       });
       if (modeNote) {
         modeNote.textContent = overrideActive
@@ -523,7 +550,15 @@ const EditorGameplay = (() => {
     const currentEl = panelEl.querySelector(`.gp-spell-slot-current[data-level="${level}"]`);
     const max = parseInt(panelEl.querySelector(`.gp-spell-slot-max[data-level="${level}"]`)?.value, 10) || 0;
     const current = parseInt(currentEl?.value, 10) || 0;
-    const next = Math.max(0, Math.min(max || 20, current + delta));
+    if (max <= 0) {
+      App.showToast(`Level ${level} slots are not available for this character.`, "info");
+      return 0;
+    }
+    const next = Math.max(0, Math.min(max, current + delta));
+    if (next === current) {
+      App.showToast(delta < 0 ? `No level ${level} slots remain.` : `Level ${level} slots are already full.`, "info");
+      return 0;
+    }
     if (currentEl) currentEl.value = next;
     if (!character.spellSlots) character.spellSlots = {};
     character.spellSlots[level] = {
@@ -532,6 +567,7 @@ const EditorGameplay = (() => {
       current: next,
     };
     addSpellLog(panelEl, character, level, delta < 0 ? `Used level ${level} slot` : `Restored level ${level} slot`);
+    return next - current;
   }
 
   function restoreAllSlots(panelEl, character, reason = "Restored all spell slots") {
@@ -552,7 +588,9 @@ const EditorGameplay = (() => {
   }
 
   function applyItemAction(panelEl, character, item) {
-    const actionState = evaluateItemActionState(character, item);
+    const actionState = typeof DndCalculations !== "undefined"
+      ? DndCalculations.evaluateItemActionState(character, item)
+      : { ok: true, resources: [], inventory: [], message: "" };
     if (!actionState.ok) {
       App.showToast(actionState.message || `Cannot use ${item.name || "item"} right now.`, "error");
       return;
@@ -583,11 +621,15 @@ const EditorGameplay = (() => {
       restoreAllSlots(panelEl, character, item.name || "Item restored all spell slots");
       didAnything = true;
     } else if (slotEffect?.level) {
-      adjustSpellSlot(panelEl, character, Number(slotEffect.level || 0), Math.max(1, Number(slotEffect.amount || 1)));
-      didAnything = true;
+      const slotDelta = adjustSpellSlot(panelEl, character, Number(slotEffect.level || 0), Math.max(1, Number(slotEffect.amount || 1)));
+      didAnything = didAnything || slotDelta !== 0;
     }
     (effects.resources || []).forEach(effect => {
       applyResourceEffect(character, effect);
+      didAnything = true;
+    });
+    (effects.inventory || []).forEach(effect => {
+      applyInventoryEffect(character, effect);
       didAnything = true;
     });
 
@@ -626,6 +668,17 @@ const EditorGameplay = (() => {
     syncResourceDom(resource);
   }
 
+  function applyInventoryEffect(character, effect = {}) {
+    const item = findInventoryEntryForEffect(character, effect);
+    if (!item) return;
+    const resolved = typeof Library !== "undefined" ? Library.resolveRef(item) : item;
+    const delta = Number(effect.delta || 0);
+    const current = Number(item.quantity ?? resolved?.quantity ?? 0);
+    const next = Math.max(0, current + delta);
+    item.quantity = next;
+    syncInventoryDom(item);
+  }
+
   function addHpLog(panelEl, character, delta, reason) {
     if (!character.dnd.hp.log) character.dnd.hp.log = [];
     const entry = Schema.createDefaultHpLogEntry(delta, reason);
@@ -651,11 +704,32 @@ const EditorGameplay = (() => {
 
   function decrementInventoryItem(character, itemId) {
     const item = (character.inventory || []).find(entry => entry.id === itemId);
-    if (item) item.quantity = Math.max(0, Number(item.quantity ?? 1) - 1);
+    if (!item) return;
+    item.quantity = Math.max(0, Number(item.quantity ?? 1) - 1);
+    syncInventoryDom(item);
+  }
+
+  function findInventoryEntryForEffect(character, effect = {}) {
+    const target = String(effect.target || effect.itemName || effect.itemRef || "").trim().toLowerCase();
+    if (!target) return null;
+    return (character.inventory || []).find(entry => {
+      const resolved = typeof Library !== "undefined" ? Library.resolveRef(entry) : entry;
+      return [
+        entry.id,
+        entry.libraryRef,
+        entry.name,
+        resolved?.id,
+        resolved?.libraryRef,
+        resolved?.name,
+      ].filter(Boolean).some(value => String(value).trim().toLowerCase() === target);
+    }) || null;
+  }
+
+  function syncInventoryDom(item) {
     const row = Array.from(document.querySelectorAll("#inventory-list .item-row"))
-      .find(entry => entry.dataset.itemId === itemId);
+      .find(entry => entry.dataset.itemId === item.id);
     const quantityEl = row?.querySelector(".item-quantity");
-    if (quantityEl) quantityEl.value = Math.max(0, Number(quantityEl.value || 1) - 1);
+    if (quantityEl) quantityEl.value = Math.max(0, Number(item.quantity ?? 0));
   }
 
   function syncResourceDom(resource) {
@@ -685,27 +759,6 @@ const EditorGameplay = (() => {
     renderInteractiveGameplay(panelEl, character);
   }
 
-  function evaluateItemActionState(character, item) {
-    const resourceEffects = Array.isArray(item?.action?.effects?.resources)
-      ? item.action.effects.resources
-      : [];
-    const resources = resourceEffects
-      .map(effect => resolveResourceEffectTarget(character, effect))
-      .filter(Boolean);
-    const shortages = resources.filter(resource => resource.shortage);
-
-    if (shortages.length) {
-      const shortage = shortages[0];
-      return {
-        ok: false,
-        resources,
-        message: `${item?.name || "This action"} needs ${shortage.required} ${shortage.name.toLowerCase()} but only ${shortage.current} remain.`,
-      };
-    }
-
-    return { ok: true, resources, message: "" };
-  }
-
   function renderActionResourceBar(resource) {
     const max = Math.max(0, Number(resource.max || 0));
     const current = Math.max(0, Number(resource.current || 0));
@@ -721,36 +774,6 @@ const EditorGameplay = (() => {
         </div>
       </div>
     `;
-  }
-
-  function resolveResourceEffectTarget(character, effect = {}) {
-    const delta = Number(effect.delta || 0);
-    const required = delta < 0 ? Math.abs(delta) : 0;
-    const resource = findResourceForEffect(character, effect);
-    if (!resource) return null;
-    const resolved = typeof Library !== "undefined" ? Library.resolveRef(resource) : resource;
-    const max = Number(resource.max ?? resolved?.max ?? 0);
-    const current = Number(resource.current ?? resolved?.current ?? 0);
-    return {
-      name: resolved?.name || effect.target || effect.resourceName || "Resource",
-      current,
-      max,
-      required,
-      shortage: required > 0 && current < required,
-    };
-  }
-
-  function findResourceForEffect(character, effect = {}) {
-    const target = String(effect.target || effect.resourceName || "").trim().toLowerCase();
-    if (!target) return null;
-    return (character.customResources || []).find(entry => {
-      const resolved = typeof Library !== "undefined" ? Library.resolveRef(entry) : entry;
-      return [
-        entry.id,
-        entry.libraryRef,
-        resolved?.name,
-      ].filter(Boolean).some(value => String(value).trim().toLowerCase() === target);
-    }) || null;
   }
 
   function readTab(character) {
@@ -785,10 +808,10 @@ const EditorGameplay = (() => {
       const max = character.spellSlotMode === "override" ? (parseInt(input.value, 10) || 0) : calculatedMax;
       const current = parseInt(document.querySelector(`.gp-spell-slot-current[data-level="${level}"]`)?.value, 10) || 0;
       if (character.spellSlotMode === "override" && max > 0) character.spellSlotOverrides[level] = max;
-      if (max > 0 || current > 0 || calculatedMax > 0) {
+      if (max > 0 || calculatedMax > 0) {
         character.spellSlots[level] = {
           max: character.spellSlotMode === "override" ? max : calculatedMax,
-          current: Math.max(0, Math.min(current, max || calculatedMax || current)),
+          current: Math.max(0, Math.min(current, max)),
         };
       }
     });

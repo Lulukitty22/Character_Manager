@@ -240,11 +240,13 @@ const DndCalculations = (() => {
       const max = mode === "override" ? Math.max(overrideMax, calcMax, storedSlots[level]?.max || 0) : calcMax;
       const storedCurrent = storedSlots[level]?.current;
       const storedMax = storedSlots[level]?.max;
-      const current = storedCurrent == null
-        ? max
-        : Math.max(0, Math.min(Number(storedCurrent || 0), max || Number(storedMax || 0) || max));
+      const current = max <= 0
+        ? 0
+        : storedCurrent == null
+          ? max
+          : Math.max(0, Math.min(Number(storedCurrent || 0), max || Number(storedMax || 0) || max));
 
-      if (max > 0 || current > 0 || overrideMax > 0 || calcMax > 0) {
+      if (max > 0 || overrideMax > 0 || calcMax > 0) {
         slots[level] = {
           max,
           current: current || 0,
@@ -376,8 +378,125 @@ const DndCalculations = (() => {
         }
 
         const inferred = inferDefaultItemAction(item);
-        return inferred ? [{ ...item, action: inferred }] : [];
+      return inferred ? [{ ...item, action: inferred }] : [];
       });
+  }
+
+  function evaluateItemActionState(character = {}, item = {}) {
+    const resourceEffects = Array.isArray(item?.action?.effects?.resources)
+      ? item.action.effects.resources
+      : [];
+    const inventoryEffects = Array.isArray(item?.action?.effects?.inventory)
+      ? item.action.effects.inventory
+      : [];
+
+    const resources = resourceEffects
+      .map(effect => resolveResourceEffectTarget(character, effect))
+      .filter(Boolean);
+    const inventory = inventoryEffects
+      .map(effect => resolveInventoryEffectTarget(character, effect))
+      .filter(Boolean);
+
+    const resourceBlocker = resources.find(entry => entry.shortage || entry.missing || entry.blocked);
+    if (resourceBlocker) {
+      return {
+        ok: false,
+        resources,
+        inventory,
+        message: resourceBlocker.missing
+          ? `${item?.name || "This action"} requires ${resourceBlocker.name.toLowerCase()}, but it is not available.`
+          : resourceBlocker.blocked
+            ? `${resourceBlocker.name} is already full.`
+            : `${item?.name || "This action"} needs ${resourceBlocker.required} ${resourceBlocker.name.toLowerCase()} but only ${resourceBlocker.current} remain.`,
+      };
+    }
+
+    const inventoryShortage = inventory.find(entry => entry.shortage || entry.missing);
+    if (inventoryShortage) {
+      return {
+        ok: false,
+        resources,
+        inventory,
+        message: inventoryShortage.missing
+          ? `${item?.name || "This action"} requires ${inventoryShortage.name.toLowerCase()}, but it is not in inventory.`
+          : `${item?.name || "This action"} needs ${inventoryShortage.required} ${inventoryShortage.name.toLowerCase()} but only ${inventoryShortage.current} are available.`,
+      };
+    }
+
+    return { ok: true, resources, inventory, message: "" };
+  }
+
+  function resolveResourceEffectTarget(character = {}, effect = {}) {
+    const target = String(effect.target || effect.resourceName || "").trim().toLowerCase();
+    if (!target) return null;
+    const delta = Number(effect.delta || 0);
+    const required = delta < 0 ? Math.abs(delta) : 0;
+    const resource = (character.customResources || []).find(entry => {
+      const resolved = typeof Library !== "undefined" ? Library.resolveRef(entry) : entry;
+      return [entry.id, entry.libraryRef, entry.name, resolved?.name]
+        .filter(Boolean)
+        .some(value => String(value).trim().toLowerCase() === target);
+    }) || null;
+    if (!resource) {
+      return {
+        name: effect.target || effect.resourceName || "Resource",
+        current: 0,
+        max: 0,
+        required,
+        shortage: required > 0,
+        missing: true,
+      };
+    }
+    const resolved = typeof Library !== "undefined" ? Library.resolveRef(resource) : resource;
+    const max = Number(resource.max ?? resolved?.max ?? 0);
+    const cap = effect.maxCap != null ? Number(effect.maxCap) : max;
+    const current = Number(resource.current ?? resolved?.current ?? 0);
+    return {
+      name: resolved?.name || effect.target || effect.resourceName || "Resource",
+      current,
+      max,
+      cap,
+      required,
+      shortage: required > 0 && current < required,
+      blocked: Number(effect.delta || 0) > 0 && cap > 0 && current >= cap,
+      missing: false,
+      resource,
+    };
+  }
+
+  function resolveInventoryEffectTarget(character = {}, effect = {}) {
+    const target = String(effect.target || effect.itemName || effect.itemRef || "").trim().toLowerCase();
+    if (!target) return null;
+    const delta = Number(effect.delta || 0);
+    const mustExist = Boolean(effect.mustExist || effect.requirePresence);
+    const required = effect.required != null
+      ? Math.max(0, Number(effect.required || 0))
+      : delta < 0 ? Math.abs(delta) : 0;
+    const inventoryItem = getResolvedInventory(character).find(entry => {
+      return [entry.id, entry.libraryRef, entry.name]
+        .filter(Boolean)
+        .some(value => String(value).trim().toLowerCase() === target);
+    }) || null;
+    if (!inventoryItem) {
+      return {
+        name: effect.target || effect.itemName || effect.itemRef || "Item",
+        current: 0,
+        required,
+        shortage: required > 0 || mustExist,
+        missing: true,
+        mustExist,
+      };
+    }
+    const current = Number(inventoryItem.quantity ?? 0);
+    return {
+      name: inventoryItem.name || effect.target || "Item",
+      current,
+      required,
+      shortage: required > 0 && current < required,
+      missing: false,
+      mustExist,
+      item: inventoryItem,
+    };
   }
 
   function normalizeItemAction(item, action = {}) {
@@ -397,6 +516,7 @@ const DndCalculations = (() => {
   }
 
   function inferDefaultItemAction(item = {}) {
+    if (item.addons?.inventory?.suppressGameplayAction) return null;
     const heal = item.addons?.healing ? { ...item.addons.healing } : null;
     const passiveHp = item.addons?.effects?.hp || {};
     const tempHp = Number(passiveHp.tempHp || 0);
@@ -516,6 +636,9 @@ const DndCalculations = (() => {
     getClassLevels,
     getHealingItems,
     getActionableItems,
+    evaluateItemActionState,
+    resolveResourceEffectTarget,
+    resolveInventoryEffectTarget,
     healingAmount,
     resolveTamedHp,
     getActiveHp,

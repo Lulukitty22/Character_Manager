@@ -42,8 +42,16 @@ const ViewCharacterInventory = (() => {
 
   function renderItemRow(item, actions, index) {
     const resourceChips = actions.flatMap(actionEntry => (actionEntry.action?.effects?.resources || []).map(effect => ({
-      label: effect.target || effect.resourceName || "Resource",
+      label: effect.resourceName || effect.target || "Resource",
       value: Schema.formatModifier(Number(effect.delta || 0)),
+      kind: Number(effect.delta || 0) >= 0 ? "positive" : "negative",
+      description: effect.reason || actionEntry.action?.description || "",
+    })));
+    const inventoryChips = actions.flatMap(actionEntry => (actionEntry.action?.effects?.inventory || []).map(effect => ({
+      label: effect.itemName || effect.target || effect.itemRef || "Item",
+      value: effect.delta
+        ? Schema.formatModifier(Number(effect.delta || 0))
+        : (effect.mustExist || effect.requirePresence ? "Required" : ""),
       kind: Number(effect.delta || 0) >= 0 ? "positive" : "negative",
       description: effect.reason || actionEntry.action?.description || "",
     })));
@@ -65,6 +73,7 @@ const ViewCharacterInventory = (() => {
       item.addons?.effects?.hp?.tempHp ? { label: "Temp HP", value: `+${Number(item.addons.effects.hp.tempHp || 0)}`, kind: "positive" } : null,
       item.addons?.healing ? { label: "Healing", value: `+${DndCalculations.healingAmount(item)}`, kind: "positive" } : null,
       ...resourceChips,
+      ...inventoryChips,
       ...(item.addons?.mechanics || []),
     ].filter(Boolean);
 
@@ -126,7 +135,12 @@ const ViewCharacterInventory = (() => {
           if (entry.action?.effects?.heal) effects.push(`Healing: +${DndCalculations.healingAmount(entry)}`);
           if (entry.action?.effects?.tempHp) effects.push(`Temp HP: +${Number(entry.action.effects.tempHp.amount || entry.action.effects.tempHp || 0)}`);
           (entry.action?.effects?.resources || []).forEach(effect => {
-            effects.push(`${effect.target || effect.resourceName || "Resource"} ${Schema.formatModifier(Number(effect.delta || 0))}`);
+            effects.push(`${effect.resourceName || effect.target || "Resource"} ${Schema.formatModifier(Number(effect.delta || 0))}`);
+          });
+          (entry.action?.effects?.inventory || []).forEach(effect => {
+            const label = effect.itemName || effect.target || effect.itemRef || "Item";
+            if (Number(effect.delta || 0)) effects.push(`${label} ${Schema.formatModifier(Number(effect.delta || 0))}`);
+            else if (effect.mustExist || effect.requirePresence) effects.push(`Requires ${label}`);
           });
           if (entry.action?.effects?.spellSlots?.all) effects.push("Restore all spell slots");
           if (entry.action?.effects?.spellSlots?.level) effects.push(`Restore level ${entry.action.effects.spellSlots.level} slots by ${entry.action.effects.spellSlots.amount || 1}`);
@@ -177,13 +191,15 @@ const ViewCharacterInventory = (() => {
     const item = actionable[actionIndex];
     if (!item) return;
 
-    const effects = item.action?.effects || {};
-    const resourceError = applyResourceEffects(character, effects.resources || []);
-    if (resourceError) {
-      ViewCharacterUtils.showToast(resourceError, "error");
+    const actionState = DndCalculations.evaluateItemActionState(character, item);
+    if (!actionState.ok) {
+      ViewCharacterUtils.showToast(actionState.message || `Cannot use ${item.name || "item"} right now.`, "error");
       return;
     }
 
+    const effects = item.action?.effects || {};
+    applyResourceEffects(character, effects.resources || []);
+    applyInventoryEffects(character, effects.inventory || []);
     applyHpEffects(character, effects);
     applySpellSlotEffects(character, effects);
 
@@ -202,20 +218,14 @@ const ViewCharacterInventory = (() => {
   function applyResourceEffects(character, effects = []) {
     for (const effect of effects) {
       const resource = findResource(character, effect);
-      if (!resource) {
-        return `Could not find resource "${effect.target || effect.resourceName || "resource"}".`;
-      }
+      if (!resource) continue;
       const delta = Number(effect.delta || 0);
       const maxCap = effect.maxCap != null ? Number(effect.maxCap) : Number(resource.max || 0);
       const next = Number(resource.current || 0) + delta;
-      if (delta < 0 && next < 0) {
-        return `${resource.name || "Resource"} is too low.`;
-      }
       resource.current = Math.max(0, maxCap > 0 ? Math.min(next, maxCap) : next);
       if (!resource.log) resource.log = [];
       resource.log.push(Schema.createDefaultResourceLogEntry(delta, effect.reason || "Item action"));
     }
-    return "";
   }
 
   function findResource(character, effect = {}) {
@@ -259,10 +269,30 @@ const ViewCharacterInventory = (() => {
     const level = Number(slotEffect.level || 0);
     const amount = Number(slotEffect.amount || 1);
     const slot = character.spellSlots[level] || { current: 0, max: 0 };
+    if (Number(slot.max || 0) <= 0) return;
     character.spellSlots[level] = {
       ...slot,
-      current: Math.max(0, Math.min(Number(slot.current || 0) + amount, Number(slot.max || 0) || Number(slot.current || 0) + amount)),
+      current: Math.max(0, Math.min(Number(slot.current || 0) + amount, Number(slot.max || 0))),
     };
+  }
+
+  function applyInventoryEffects(character, effects = []) {
+    for (const effect of effects) {
+      const item = findInventoryItem(character, effect);
+      if (!item) continue;
+      const delta = Number(effect.delta || 0);
+      item.quantity = Math.max(0, Number(item.quantity ?? 0) + delta);
+    }
+  }
+
+  function findInventoryItem(character, effect = {}) {
+    const target = String(effect.target || effect.itemName || effect.itemRef || "").trim().toLowerCase();
+    return (character.inventory || []).find(entry => {
+      const resolved = typeof Library !== "undefined" ? Library.resolveRef(entry) : entry;
+      return [entry.id, entry.libraryRef, entry.name, resolved?.id, resolved?.libraryRef, resolved?.name]
+        .filter(Boolean)
+        .some(value => String(value).trim().toLowerCase() === target);
+    }) || null;
   }
 
   function rerenderSheet(containerEl, character) {

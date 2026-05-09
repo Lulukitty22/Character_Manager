@@ -27,7 +27,7 @@
   },
   "personality": "Focused, practical, and ideal for verifying inventory/resource loops without a ton of narrative clutter.",
   "backstory": "Aina exists to test whether inventory actions, ammo resources, and read-only sheet viewers all play nicely together.",
-  "notes": "Use the Field Shortbow action to spend arrows. Use Arrow Bundle (20) to refill the Arrows resource up to its max. Exported sheet should match preview exactly.",
+  "notes": "Use the Field Shortbow action to spend ready arrows. Open Arrow Bundle (20) into loose arrows, then use Field Quiver actions to ready or stow arrows. Exported sheet should match preview exactly.",
   "spells": [],
   "spellSlotMode": "calculated",
   "spellSlotOverrides": {},
@@ -67,6 +67,26 @@
       "libraryRef": "items.item-arrow-bundle-20-test",
       "active": true,
       "quantity": 7,
+      "overrides": {}
+    },
+    {
+      "id": "aina-item-loose-arrows",
+      "source": "library",
+      "libraryCollection": "items",
+      "librarySource": "custom",
+      "libraryRef": "items.item-loose-arrow-test",
+      "active": true,
+      "quantity": 0,
+      "overrides": {}
+    },
+    {
+      "id": "aina-item-quiver",
+      "source": "library",
+      "libraryCollection": "items",
+      "librarySource": "custom",
+      "libraryRef": "items.item-field-quiver-archery-test",
+      "active": true,
+      "quantity": 1,
       "overrides": {}
     },
     {
