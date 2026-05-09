@@ -75,6 +75,7 @@ The D&D stats visual port is already done and browser-verified. This restructuri
   - the current stress-test model is now: `Arrow Bundle (20)` -> `Loose Arrow` inventory stock -> `Field Quiver` ready-ammo resource -> `Field Shortbow` spend action; keep validating this as the baseline shared ammo loop before generalizing it to bolts, thrown consumables, durability, or DM-facing turn tools
   - current quiver UX works but is still a little clunky: `Field Quiver` shows two separate inverse actions (`Ready 1 Arrow` and `Stow 1 Arrow`). Revisit whether that should collapse into one contextual control, a signed stepper, or a richer ammo widget before calling the ammo UX settled.
   - rebundling loose arrows back into `Arrow Bundle (20)` is not modeled yet; treat that as a later inventory/backend design decision instead of sneaking in a one-off conversion rule
+  - exported/shareable viewer sheets should stay meaningfully read-only for now: do not surface gameplay action buttons there unless the full viewer-side interaction model, persistence rules, and DM-facing expectations are deliberately designed together
 - D&D/DM backend roadmap:
   - add explicit dice and damage calculation support for spells and actions
   - support DM-side rolling on behalf of party members for AFK/slow turns
@@ -106,6 +107,8 @@ The D&D stats visual port is already done and browser-verified. This restructuri
 - Shared editor/viewer item actions now understand inventory-transfer effects in addition to HP, spell-slot, and resource effects, so ammo can move between bundles, loose stock, and ready-ammo pools without inventing a second one-off action path.
 - Added an explicit Aina Quickquiver stress-test loop built around `Field Quiver`, `Loose Arrow`, and `Quiver Arrows` so we can keep proving out the ammo backend with a real character instead of only abstract records.
 - Spell-slot gameplay rows now hard-stop when a character has no access to that slot level, and impossible stored slot counts are clamped away instead of lingering as usable UI state.
+- Inventory-tab quantity badges in the editor now update immediately when the quantity input changes instead of waiting for a save/reload cycle.
+- Shared/exported viewer inventory rows no longer render nonfunctional item-action buttons; gameplay actions remain an editor/runtime concern until a real viewer/DM interaction surface exists.
 
 ## Shim Contract
 

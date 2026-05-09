@@ -130,7 +130,7 @@ const EditorInventory = (() => {
               ${attuned}
               ${tags}
             </div>
-            <span class="text-muted text-sm">x${item.quantity ?? 1}</span>
+            <span class="text-muted text-sm item-quantity-display">x${item.quantity ?? 1}</span>
           </div>
 
           <!-- Expandable detail form -->
@@ -223,6 +223,12 @@ const EditorInventory = (() => {
     rowEl.querySelector(".item-name")?.addEventListener("input", (event) => {
       const titleEl = rowEl.querySelector(".array-item-title");
       if (titleEl) titleEl.textContent = event.target.value || "(Unnamed Item)";
+    });
+
+    rowEl.querySelector(".item-quantity")?.addEventListener("input", event => {
+      const quantityDisplay = rowEl.querySelector(".item-quantity-display");
+      const quantity = Math.max(0, parseInt(event.target.value, 10) || 0);
+      if (quantityDisplay) quantityDisplay.textContent = `x${quantity}`;
     });
   }
 
