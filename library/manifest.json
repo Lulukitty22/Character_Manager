@@ -1386,6 +1386,17 @@
         "path": "library/records/species/reborn-homunculus-human.json",
         "sha": "",
         "updatedAt": "2026-05-03T15:10:50.039Z"
+      },
+      {
+        "id": "wood-elf",
+        "name": "Wood Elf",
+        "collections": [
+          "species"
+        ],
+        "tags": [],
+        "path": "library/records/species/wood-elf.json",
+        "sha": "fb87b1f5dcd5b939ab6f4079f9755435a165f93c",
+        "updatedAt": "2026-05-09T08:07:28.811Z"
       }
     ]
   }
