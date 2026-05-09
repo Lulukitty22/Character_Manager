@@ -401,7 +401,8 @@ const EditorGameplay = (() => {
         App.showToast("Choose a healing item and amount.", "error");
         return;
       }
-      applyHpAdjust(panelEl, character, "heal", amount, item.name || "Healing item");
+      const appliedDelta = applyHpAdjust(panelEl, character, "heal", amount, item.name || "Healing item");
+      if (appliedDelta <= 0) return;
       decrementInventoryItem(character, itemId);
       refreshGameplayPanel(panelEl, character);
       App.showToast(`Used ${item.name || "healing item"}.`, "success");
@@ -474,13 +475,22 @@ const EditorGameplay = (() => {
 
     const delta = mode === "damage" ? -amount : amount;
     const newHP = Math.max(0, Math.min(max, current + delta));
+    const appliedDelta = newHP - current;
+
+    if (appliedDelta === 0) {
+      if (mode === "heal") App.showToast("HP is already full.", "info");
+      else if (mode === "damage") App.showToast("HP is already at 0.", "info");
+      return 0;
+    }
+
     if (currentInput) currentInput.value = newHP;
     currentInput?.dispatchEvent(new Event("input"));
-    addHpLog(panelEl, character, delta, reason || (mode === "damage" ? "Damage" : "Healing"));
+    addHpLog(panelEl, character, appliedDelta, reason || (mode === "damage" ? "Damage" : "Healing"));
     const amountEl = panelEl.querySelector("#gp-hp-adjust-amount");
     const reasonEl = panelEl.querySelector("#gp-hp-adjust-reason");
     if (amountEl) amountEl.value = "";
     if (reasonEl) reasonEl.value = "";
+    return appliedDelta;
   }
 
   function applyShortRest(panelEl, character) {
@@ -530,24 +540,38 @@ const EditorGameplay = (() => {
     const healAmount = effects.heal ? DndCalculations.healingAmount({ action: { effects }, addons: { healing: effects.heal }, description: item.description }) : 0;
     const tempHp = Number(effects.tempHp?.amount || effects.tempHp || 0);
     const slotEffect = effects.spellSlots || null;
+    let didAnything = false;
 
     if (healAmount > 0) {
-      applyHpAdjust(panelEl, character, "heal", healAmount, item.name || "Item");
+      const appliedDelta = applyHpAdjust(panelEl, character, "heal", healAmount, item.name || "Item");
+      didAnything = didAnything || appliedDelta !== 0;
     }
     if (tempHp > 0) {
       const tempEl = panelEl.querySelector("#gp-hp-temp");
       const currentTemp = parseInt(tempEl?.value, 10) || 0;
-      if (tempEl) tempEl.value = Math.max(currentTemp, tempHp);
-      addHpLog(panelEl, character, 0, `${item.name || "Item"} granted ${tempHp} temp HP`);
+      const nextTemp = Math.max(currentTemp, tempHp);
+      if (tempEl) tempEl.value = nextTemp;
+      if (nextTemp !== currentTemp) {
+        addHpLog(panelEl, character, 0, `${item.name || "Item"} granted ${tempHp} temp HP`);
+        didAnything = true;
+      }
     }
     if (slotEffect?.all) {
       restoreAllSlots(panelEl, character, item.name || "Item restored all spell slots");
+      didAnything = true;
     } else if (slotEffect?.level) {
       adjustSpellSlot(panelEl, character, Number(slotEffect.level || 0), Math.max(1, Number(slotEffect.amount || 1)));
+      didAnything = true;
     }
     (effects.resources || []).forEach(effect => {
       applyResourceEffect(character, effect);
+      didAnything = true;
     });
+
+    if (!didAnything) {
+      App.showToast(`${item.name || "Item"} had no effect.`, "info");
+      return;
+    }
 
     if (item.action?.consumeQuantity) {
       decrementInventoryItem(character, item.id);
