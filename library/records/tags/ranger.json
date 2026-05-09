@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "id": "ranger",
+  "name": "Ranger",
+  "collections": [
+    "tags"
+  ],
+  "tags": [],
+  "variantOf": null,
+  "sourceReferences": [],
+  "features": {},
+  "desc": ""
+}
