@@ -1,4 +1,4 @@
-﻿{
+{
   "schemaVersion": 1,
   "id": "index.traits",
   "name": "Traits",
@@ -26,6 +26,17 @@
         "boss"
       ],
       "path": "library/records/traits/e533c4f5-df28-4c54-8eb1-b0c3b0365e6d.json"
+    },
+    {
+      "id": "aina-trait-archery-test",
+      "name": "Ammo Test Setup",
+      "collections": [
+        "traits"
+      ],
+      "tags": [
+        "test"
+      ],
+      "path": "library/records/traits/aina-trait-archery-test.json"
     },
     {
       "id": "traits.08f36953-b9aa-4c81-aa37-78dbb191585d",
@@ -316,4 +327,3 @@
     }
   ]
 }
-
