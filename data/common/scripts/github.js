@@ -51,6 +51,13 @@ const GitHub = (() => {
     return `${base}?ref=${encodeURIComponent(config.branch)}`;
   }
 
+  function decodeBase64Utf8(base64Text) {
+    const binary = atob(String(base64Text || "").replace(/\n/g, ""));
+    const bytes = Uint8Array.from(binary, (char) => char.charCodeAt(0));
+    const text = new TextDecoder("utf-8").decode(bytes);
+    return text.replace(/^\uFEFF/, "");
+  }
+
   // â”€â”€â”€ Core API Methods â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   /**
@@ -103,8 +110,7 @@ const GitHub = (() => {
     }
 
     const fileInfo = await response.json();
-    const decoded  = atob(fileInfo.content.replace(/\n/g, ""));
-    const parsed   = JSON.parse(decoded);
+    const parsed = JSON.parse(decodeBase64Utf8(fileInfo.content));
 
     return {
       data: parsed,
@@ -139,8 +145,7 @@ const GitHub = (() => {
     }
 
     const fileInfo = await response.json();
-    const decoded  = atob(fileInfo.content.replace(/\n/g, ""));
-    const parsed   = JSON.parse(decoded);
+    const parsed = JSON.parse(decodeBase64Utf8(fileInfo.content));
 
     return {
       data: parsed,
@@ -195,9 +200,8 @@ const GitHub = (() => {
     }
 
     const fileInfo = await response.json();
-    const decoded = atob(fileInfo.content.replace(/\n/g, ""));
     return {
-      data: JSON.parse(decoded),
+      data: JSON.parse(decodeBase64Utf8(fileInfo.content)),
       sha: fileInfo.sha,
       path: filePath,
     };
