@@ -40,8 +40,8 @@
           "dnd5eapi"
         ],
         "path": "library/records/spells/transmutation/capella-spell-alter-self.json",
-        "sha": "",
-        "updatedAt": "2026-05-03T15:10:50.038Z"
+        "sha": "324bd53c322594e1f95be231a8d387373fb6247c",
+        "updatedAt": "2026-05-09T07:53:05.886Z"
       },
       {
         "id": "spells.capella-spell-counterspell",
