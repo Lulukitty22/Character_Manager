@@ -27,6 +27,24 @@
         "srd"
       ],
       "path": "library/records/spells/transmutation/open5e-spells-wz-abrupt-hug.json"
+    },
+    {
+      "id": "spells.capella-spell-alter-self",
+      "name": "Alter Self",
+      "collections": [
+        "spells",
+        "spells/transmutation",
+        "spells/level-2"
+      ],
+      "tags": [
+        "capella",
+        "shapechange",
+        "utility",
+        "dandd-5e-wiki",
+        "player-s-handbook",
+        "dnd5eapi"
+      ],
+      "path": "library/records/spells/transmutation/capella-spell-alter-self.json"
     }
   ]
 }
