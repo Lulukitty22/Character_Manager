@@ -1,4 +1,4 @@
-﻿{
+{
   "version": 2,
   "schemaVersion": 1,
   "collections": {
@@ -1525,8 +1525,8 @@
           "table-test"
         ],
         "path": "library/records/sessions/quickquiver-shakedown-active.json",
-        "sha": "",
-        "updatedAt": "2026-05-09T10:00:00.000Z"
+        "sha": "48fd8ac62a97fb338318153296b4e597057cdb68",
+        "updatedAt": "2026-05-10T01:43:17.931Z"
       }
     ],
     "encounters": [
@@ -1548,4 +1548,3 @@
     ]
   }
 }
-
