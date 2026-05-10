@@ -29,7 +29,31 @@
         ],
         "recipeRefs": []
       },
-      "queuedActions": [],
+      "queuedActions": [
+        {
+          "id": "d653f3b9-604b-41aa-9774-49ae2fc4c1bb",
+          "kind": "utility",
+          "mode": "session_utility",
+          "status": "queued",
+          "actorId": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
+          "requestedById": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
+          "targetIds": [],
+          "payload": {
+            "summary": "Open Bundle Arrow Bundle (20)",
+            "note": "",
+            "itemRef": "items.consumable.ammunition.arrow_bundle_20"
+          },
+          "roll": null,
+          "proposedDeltas": [],
+          "resultingDeltas": [],
+          "requestedAt": "2026-05-10T20:40:08.182Z",
+          "resolution": null,
+          "audit": {
+            "sourceSurface": "session_view",
+            "sourceSurfaceVersion": "v1"
+          }
+        }
+      ],
       "actionLog": [
         {
           "id": "action.applied.ready-volley",
@@ -311,7 +335,7 @@
       ],
       "poll": {
         "refreshMs": 10000,
-        "lastSyncedAt": "2026-05-10T20:34:40.915Z"
+        "lastSyncedAt": "2026-05-10T20:40:08.182Z"
       }
     }
   },
