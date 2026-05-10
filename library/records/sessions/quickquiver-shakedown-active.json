@@ -54,7 +54,7 @@
           }
         },
         {
-          "id": "d993b04f-4366-4972-8cef-ef2a513e11af",
+          "id": "329b4d66-99f0-42b4-80cc-3d0285ff75b8",
           "kind": "short_rest",
           "mode": "session_utility",
           "status": "queued",
@@ -70,7 +70,7 @@
           "roll": null,
           "proposedDeltas": [],
           "resultingDeltas": [],
-          "requestedAt": "2026-05-10T21:17:03.330Z",
+          "requestedAt": "2026-05-10T21:17:06.019Z",
           "resolution": null,
           "audit": {
             "sourceSurface": "session_view",
@@ -78,7 +78,7 @@
           }
         },
         {
-          "id": "7b44c71e-b951-4f4f-ac00-d51ec38bee18",
+          "id": "ff1f6a9f-ae1f-4280-9884-2d62f4a51847",
           "kind": "spend_spell_slot",
           "mode": "session_utility",
           "status": "queued",
@@ -95,7 +95,7 @@
           "roll": null,
           "proposedDeltas": [],
           "resultingDeltas": [],
-          "requestedAt": "2026-05-10T21:17:03.330Z",
+          "requestedAt": "2026-05-10T21:17:06.019Z",
           "resolution": null,
           "audit": {
             "sourceSurface": "session_view",
@@ -413,7 +413,7 @@
       ],
       "poll": {
         "refreshMs": 10000,
-        "lastSyncedAt": "2026-05-10T21:17:03.330Z"
+        "lastSyncedAt": "2026-05-10T21:17:06.019Z"
       }
     }
   },
