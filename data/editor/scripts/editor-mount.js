@@ -35,7 +35,7 @@ const Editor = (() => {
     { id: "base",      icon: "ID",   label: "Identity",    module: "EditorBase"      },
     { id: "dnd",       icon: "DND",  label: "D&D Stats",   module: "EditorDnd"       },
     { id: "boss",      icon: "BOSS", label: "Boss",        module: "EditorBoss"      },
-    { id: "gameplay",  icon: "HP",   label: "Gameplay",    module: "EditorGameplay"  },
+    { id: "gameplay",  icon: "D20",  label: "D&D Gameplay", module: "EditorGameplay"  },
     { id: "spells",    icon: "MAG",  label: "Spells",      module: "EditorSpells"    },
     { id: "inventory", icon: "INV",  label: "Inventory",   module: "EditorInventory" },
     { id: "resources", icon: "RES",  label: "Resources",   module: "EditorResources" },

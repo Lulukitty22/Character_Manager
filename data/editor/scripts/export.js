@@ -46,7 +46,7 @@ const SheetExporter = (() => {
     downloadHTML(html, `${safeFile}-sheet.html`);
   }
 
-  function exportPlayerCharacter(characterData, filePath) {
+  function exportSessionCharacter(characterData, filePath) {
     const owner = localStorage.getItem("githubOwner") || "";
     const repo = localStorage.getItem("githubRepo") || "";
 
@@ -58,7 +58,7 @@ const SheetExporter = (() => {
     const characterId = characterData?.id || "";
     const name = characterData?.identity?.name || "Character";
     const safeFile = name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
-    const html = buildPlayerExportHtml({
+    const html = buildSessionExportHtml({
       characterId,
       characterPath: filePath,
       owner,
@@ -68,13 +68,13 @@ const SheetExporter = (() => {
       characterName: name,
     });
 
-    downloadHTML(html, `${safeFile}-player.html`);
+    downloadHTML(html, `${safeFile}-session.html`);
   }
 
   function openExportChooser(characterData, filePath) {
     const dialog = ensureExportDialog();
     const sheetButton = dialog.querySelector("#btn-export-choice-sheet");
-    const playerButton = dialog.querySelector("#btn-export-choice-player");
+    const sessionButton = dialog.querySelector("#btn-export-choice-session");
     const cancelButton = dialog.querySelector("#btn-export-choice-cancel");
 
     const close = () => dialog.close();
@@ -84,13 +84,13 @@ const SheetExporter = (() => {
       exportCharacter(characterData, filePath);
     };
 
-    const handlePlayer = () => {
+    const handleSession = () => {
       close();
-      exportPlayerCharacter(characterData, filePath);
+      exportSessionCharacter(characterData, filePath);
     };
 
     sheetButton.onclick = handleSheet;
-    playerButton.onclick = handlePlayer;
+    sessionButton.onclick = handleSession;
     cancelButton.onclick = close;
 
     dialog.showModal();
@@ -101,7 +101,7 @@ const SheetExporter = (() => {
   }
 
   function buildViewerExportHtml(opts) {
-    const title = `${escapeHtml(opts.characterName)} - Character Sheet`;
+    const title = `${escapeHtml(opts.characterName)} - Character Card`;
     const bootUrl = `https://raw.githubusercontent.com/${opts.owner}/${opts.repo}/${opts.branch}/data/viewer/boot.js`;
     return `<!DOCTYPE html>
 <html lang="en">
@@ -123,8 +123,8 @@ const SheetExporter = (() => {
 </html>`;
   }
 
-  function buildPlayerExportHtml(opts) {
-    const title = `${escapeHtml(opts.characterName)} - Player Gameplay`;
+  function buildSessionExportHtml(opts) {
+    const title = `${escapeHtml(opts.characterName)} - Session View`;
     const bootUrl = `https://raw.githubusercontent.com/${opts.owner}/${opts.repo}/${opts.branch}/data/player/boot.js`;
     return `<!DOCTYPE html>
 <html lang="en">
@@ -141,7 +141,7 @@ const SheetExporter = (() => {
 </head>
 <body>
   <div id="app-root"></div>
-  ${buildShellBootstrap(bootUrl, "player surface")}
+  ${buildShellBootstrap(bootUrl, "session view")}
 </body>
 </html>`;
   }
@@ -203,14 +203,14 @@ const SheetExporter = (() => {
         <div class="modal-header">
           <div>
             <h3>Export Character</h3>
-            <p class="text-muted text-sm">Choose whether this file should be a read-only share card or a Player gameplay card.</p>
+            <p class="text-muted text-sm">Choose whether this file should be a read-only Character Card or an interactable Session View file.</p>
           </div>
           <button class="button button-icon button-ghost" id="btn-export-choice-cancel-top" aria-label="Close">X</button>
         </div>
         <div class="modal-body">
           <div style="display:flex; flex-direction:column; gap:12px;">
-            <button class="button button-primary" id="btn-export-choice-sheet">Read-only Share Card</button>
-            <button class="button button-ghost" id="btn-export-choice-player">Player Gameplay Card</button>
+            <button class="button button-primary" id="btn-export-choice-sheet">Read-only Character Card</button>
+            <button class="button button-ghost" id="btn-export-choice-session">Session View Card</button>
           </div>
         </div>
         <div class="modal-footer">
@@ -230,7 +230,7 @@ const SheetExporter = (() => {
 
   return {
     exportCharacter,
-    exportPlayerCharacter,
+    exportSessionCharacter,
     openExportChooser,
     exportEditor,
   };

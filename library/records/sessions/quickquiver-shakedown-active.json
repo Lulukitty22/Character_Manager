@@ -212,7 +212,7 @@
         }
       ],
       "poll": {
-        "refreshMs": 300000,
+        "refreshMs": 30000,
         "lastSyncedAt": "2026-05-10T01:43:19.613Z"
       }
     }

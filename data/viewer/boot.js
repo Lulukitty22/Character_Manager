@@ -31,8 +31,8 @@
 
   try {
     const manifestUrl = `${repoBase}/data/viewer/manifest.json`;
-    updateLoading(0.08, "Fetching viewer manifest...", manifestUrl);
-    const manifest = await fetchJson(manifestUrl, "viewer manifest");
+    updateLoading(0.08, "Fetching character card manifest...", manifestUrl);
+    const manifest = await fetchJson(manifestUrl, "character card manifest");
 
     if (!compareSchemaMajor(cfg.schemaVersion, manifest.minCompatibleSchemaMajor || 0)) {
       showFatal(
@@ -51,11 +51,11 @@
     }
 
     const scripts = manifest.scripts || [];
-    updateLoading(0.28, "Loading viewer code...", `${scripts.length} script(s)`);
+    updateLoading(0.28, "Loading character card code...", `${scripts.length} script(s)`);
     for (let i = 0; i < scripts.length; i += 1) {
       const path = scripts[i];
       injectScript(await fetchText(asUrl(path), path), path);
-      updateLoading(0.28 + ((i + 1) / Math.max(scripts.length, 1)) * 0.20, `Loading viewer code: ${i + 1}/${scripts.length}`, path);
+      updateLoading(0.28 + ((i + 1) / Math.max(scripts.length, 1)) * 0.20, `Loading character card code: ${i + 1}/${scripts.length}`, path);
     }
 
     updateLoading(0.52, "Loading character data...", cfg.characterPath);
@@ -65,7 +65,8 @@
       await loadLibraryFromManifest(manifest.library);
     }
 
-    updateLoading(0.96, "Rendering...", "Mounting character sheet.");
+    if (typeof SurfacePresets !== "undefined") SurfacePresets.setActivePreset("character_card");
+    updateLoading(0.96, "Rendering...", "Mounting character card.");
     showContent();
     if (typeof ViewCharacter.mount === "function") {
       ViewCharacter.mount(document.getElementById("sheet-content"), characterData);
@@ -74,11 +75,11 @@
       content.innerHTML = ViewCharacter.buildHTML(characterData);
       ViewCharacter.wireInteractive?.(content, characterData);
     } else {
-      throw new Error("Viewer runtime did not load.");
+      throw new Error("Character card runtime did not load.");
     }
 
     const name = characterData.identity?.name;
-    if (name) document.title = `${name} - Character Sheet`;
+    if (name) document.title = `${name} - Character Card`;
   } catch (error) {
     if (error && error.status === 404 && /character file/i.test(error.message || "")) {
       showFatal(`The character file "${cfg.characterPath}" no longer exists in the repo.`, "#VRLulu");
@@ -114,15 +115,15 @@
     root.innerHTML = `
       <div id="state-loading" class="shell-state">
         <div class="shell-card shell-stack">
-          <div class="shell-label">Viewer Boot</div>
-          <div class="shell-title" id="loading-status">Preparing viewer...</div>
+          <div class="shell-label">Character Card Boot</div>
+          <div class="shell-title" id="loading-status">Preparing character card...</div>
           <div class="shell-progress"><div id="loading-progress-fill" class="shell-progress-fill"></div></div>
           <div id="loading-detail" class="shell-detail"></div>
         </div>
       </div>
       <div id="state-error" class="shell-state" hidden>
         <div class="shell-card shell-stack">
-          <h1>Could not load character</h1>
+          <h1>Could not load character card</h1>
           <p id="error-message">Unknown error.</p>
           <p id="error-url" class="shell-detail"></p>
         </div>

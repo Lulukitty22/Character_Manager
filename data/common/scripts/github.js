@@ -345,6 +345,28 @@ const GitHub = (() => {
     }
   }
 
+  async function readCurrentUser() {
+    if (!isConfigured()) throw new Error("GitHub is not configured.");
+
+    const config = getConfig();
+    const response = await fetch(`${BASE_URL}/user`, {
+      headers: buildHeaders(),
+    });
+
+    if (response.status === 401) throw new Error("Invalid token - authentication failed.");
+    if (response.status === 403) throw new Error("Token does not have access to the GitHub user endpoint.");
+    if (!response.ok) throw new Error(`GitHub returned status ${response.status}.`);
+
+    const data = await response.json();
+    return {
+      login: data.login || "",
+      avatarUrl: data.avatar_url || "",
+      htmlUrl: data.html_url || "",
+      repo: `${config.owner}/${config.repo}`,
+      branch: config.branch || "staging",
+    };
+  }
+
   // â”€â”€â”€ Public API â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   return {
@@ -352,6 +374,7 @@ const GitHub = (() => {
     isConfigured,
     buildRawUrl,
     verifyConfig,
+    readCurrentUser,
     listCharacterFiles,
     readCharacterFile,
     writeCharacterFile,

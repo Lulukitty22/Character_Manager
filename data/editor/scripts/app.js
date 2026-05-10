@@ -70,52 +70,21 @@ const App = (() => {
       <div class="settings-view">
         <div class="settings-header">
           <h2>Settings</h2>
-          <p class="text-muted">Configure your GitHub repository. Your token is stored only in this browser's localStorage.</p>
+          <p class="text-muted">GitHub auth is now handled through the shared runtime drawer. Your token stays in this browser's localStorage.</p>
         </div>
 
         <div class="settings-card card">
           <div class="section-header">
             <span class="section-icon">GitHub</span>
-            <h3>GitHub Repository</h3>
+            <h3>GitHub Connection</h3>
           </div>
-
-          <div class="settings-field">
-            <label class="field-label" for="setting-owner">Repository Owner</label>
-            <p class="field-hint">Your GitHub username (for example Lulukitty22).</p>
-            <input type="text" id="setting-owner" class="field-input"
-              placeholder="e.g. Lulukitty22" value="${escapeHTML(config.owner)}" />
-          </div>
-
-          <div class="settings-field">
-            <label class="field-label" for="setting-repo">Repository Name</label>
-            <p class="field-hint">The name of your public repo (for example Character_Manager).</p>
-            <input type="text" id="setting-repo" class="field-input"
-              placeholder="e.g. Character_Manager" value="${escapeHTML(config.repo)}" />
-          </div>
-
-          <div class="settings-field">
-            <label class="field-label" for="setting-branch">Branch</label>
-            <p class="field-hint">Use the branch that contains the thin-shim library/data/share layout. Keep this aligned with the branch your exported HTML shims point at.</p>
-            <input type="text" id="setting-branch" class="field-input"
-              placeholder="staging" value="${escapeHTML(config.branch)}" />
-          </div>
-
-          <div class="settings-field">
-            <label class="field-label" for="setting-token">Personal Access Token (PAT)</label>
-            <p class="field-hint">
-              Create one at <a href="https://github.com/settings/tokens" target="_blank" rel="noreferrer">github.com/settings/tokens</a>.
-              Choose <strong>Fine-grained token</strong>, set Repository access to your repo,
-              and grant <strong>Contents: Read and Write</strong> permission only.
-              Stored locally and only sent to GitHub.
-            </p>
-            <input type="password" id="setting-token" class="field-input"
-              placeholder="github_pat_xxxxxxxxxxxxxxxx"
-              value="${escapeHTML(config.token)}" autocomplete="off" />
-          </div>
-
+          <p class="text-muted" style="margin-bottom: var(--space-4);">
+            Current target: <strong>${escapeHTML(config.owner || "(owner missing)")}/${escapeHTML(config.repo || "(repo missing)")}</strong>
+            on <strong>${escapeHTML(config.branch || "staging")}</strong>.
+          </p>
           <div class="settings-actions">
-            <button id="btn-save-settings" class="button button-primary">Save Settings</button>
-            <button id="btn-test-connection" class="button button-ghost">Test Connection</button>
+            <button id="btn-open-github-auth" class="button button-primary">Open GitHub Drawer</button>
+            <button id="btn-test-connection" class="button button-ghost">Test Saved Connection</button>
             <span id="connection-status" class="settings-status"></span>
           </div>
         </div>
@@ -128,36 +97,15 @@ const App = (() => {
       </div>
     `;
 
-    document.getElementById("btn-save-settings").addEventListener("click", saveSettings);
+    document.getElementById("btn-open-github-auth").addEventListener("click", () => GitHubAuthWidget?.open?.());
     document.getElementById("btn-test-connection").addEventListener("click", testConnection);
     document.getElementById("btn-clear-settings").addEventListener("click", clearSettings);
-  }
-
-  function saveSettings() {
-    const owner = document.getElementById("setting-owner").value.trim();
-    const repo = document.getElementById("setting-repo").value.trim();
-    const branch = document.getElementById("setting-branch").value.trim() || "staging";
-    const token = document.getElementById("setting-token").value.trim();
-
-    if (!owner || !repo || !token) {
-      showToast("Owner, repository, and token are all required.", "error");
-      return;
-    }
-
-    localStorage.setItem("githubOwner", owner);
-    localStorage.setItem("githubRepo", repo);
-    localStorage.setItem("githubBranch", branch);
-    localStorage.setItem("githubToken", token);
-
-    showToast("Settings saved.", "success");
   }
 
   async function testConnection() {
     const statusEl = document.getElementById("connection-status");
     statusEl.textContent = "Testing...";
     statusEl.className = "settings-status";
-
-    saveSettings();
 
     const result = await GitHub.verifyConfig();
 
@@ -382,6 +330,7 @@ const CharacterEditor = (() => {
             </div>
           </div>
           <div class="editor-actions">
+            <button id="btn-editor-auth" class="button button-ghost">GitHub</button>
             <button id="btn-back-to-list" class="button button-ghost">Back</button>
             <button id="btn-preview-sheet" class="button button-ghost">Preview</button>
             <button id="btn-export-sheet" class="button button-ghost">Export</button>
@@ -408,6 +357,7 @@ const CharacterEditor = (() => {
 
     container.querySelector("#btn-save-character")?.addEventListener("click", saveCurrentCharacter);
     container.querySelector("#btn-save-bar")?.addEventListener("click", saveCurrentCharacter);
+    container.querySelector("#btn-editor-auth")?.addEventListener("click", () => GitHubAuthWidget?.open?.());
     container.querySelector("#btn-back-to-list")?.addEventListener("click", () => App.navigateTo("list"));
 
     container.querySelector("#btn-preview-sheet")?.addEventListener("click", () => {
@@ -492,6 +442,7 @@ const CharacterEditor = (() => {
   }
 
   function openPreview(characterData) {
+    if (typeof SurfacePresets !== "undefined") SurfacePresets.setActivePreset("character_card");
     const overlay = document.createElement("div");
     overlay.className = "sheet-preview-overlay";
     overlay.innerHTML = `

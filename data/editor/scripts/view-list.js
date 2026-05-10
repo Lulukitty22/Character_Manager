@@ -244,6 +244,7 @@ const CharacterList = (() => {
     `;
 
     document.body.appendChild(overlay);
+    if (typeof SurfacePresets !== "undefined") SurfacePresets.setActivePreset("character_card");
     ViewCharacter.mount(overlay.querySelector(".sheet-preview-body"), characterData);
     overlay.querySelector("#btn-close-preview").addEventListener("click", () => overlay.remove());
     overlay.querySelector("#btn-export-preview").addEventListener("click", () => {

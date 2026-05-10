@@ -13,6 +13,9 @@ const ViewCharacter = (() => {
    * (it won't render at all).
    */
   function buildTabs(character) {
+    const preset = typeof SurfacePresets !== "undefined"
+      ? SurfacePresets.active()
+      : { id: "character_card" };
     const identity = character.identity || {};
     const appearance = character.appearance || {};
     const dnd = character.dnd || null;
@@ -35,7 +38,7 @@ const ViewCharacter = (() => {
       },
       {
         id: "stats",
-        label: "Stats",
+        label: "D&D Stats",
         render: () => [
           dnd ? ViewCharacterDnd.renderCombatBlock(dnd, boss, character) : "",
           dnd ? ViewCharacterDnd.renderAbilityScores(dnd, boss) : "",
@@ -43,6 +46,13 @@ const ViewCharacter = (() => {
           dnd ? ViewCharacterDnd.renderSkills(dnd, boss) : "",
           boss ? ViewCharacterBoss.renderBossDefences(boss) : "",
         ].filter(Boolean).join(""),
+      },
+      {
+        id: "gameplay",
+        label: "D&D Gameplay",
+        render: () => dnd && typeof ViewCharacterGameplay !== "undefined"
+          ? ViewCharacterGameplay.render(character, { preset })
+          : "",
       },
       {
         id: "abilities",
@@ -57,7 +67,7 @@ const ViewCharacter = (() => {
       {
         id: "spells",
         label: "Spells",
-        render: () => spells.length ? ViewCharacterSpells.render(spells, spellSlots) : "",
+        render: () => spells.length ? ViewCharacterSpells.render(spells, spellSlots, character.spellSlotLog || []) : "",
       },
       {
         id: "combat",
@@ -153,10 +163,14 @@ const ViewCharacter = (() => {
     ViewCharacterAbilities.wireInteractive?.(containerEl, character);
     ViewCharacterInventory.wireInteractive?.(containerEl, character);
     ViewCharacterResources.wireInteractive?.(containerEl, character);
+    ViewCharacterGameplay.wireInteractive?.(containerEl, character);
     ViewCharacterUtils.wireRecordCardViewers?.(containerEl);
   }
 
   function mount(containerEl, character) {
+    if (typeof SurfacePresets !== "undefined" && !globalThis.__ACTIVE_SHEET_SURFACE__) {
+      SurfacePresets.setActivePreset("character_card");
+    }
     containerEl.innerHTML = buildHTML(character);
     wireInteractive(containerEl, character);
   }

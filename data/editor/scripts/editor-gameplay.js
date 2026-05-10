@@ -15,7 +15,7 @@ const EditorGameplay = (() => {
         <div style="padding: var(--space-12, 3rem) var(--space-6); display: flex; flex-direction: column;
                     align-items: center; gap: var(--space-4); text-align: center; min-height: 320px;
                     justify-content: center;">
-          <h3 style="color: var(--text-secondary, #8a8299);">Gameplay</h3>
+          <h3 style="color: var(--text-secondary, #8a8299);">D&amp;D Gameplay</h3>
           <p class="text-muted text-sm" style="max-width: 420px;">
             Enable D&amp;D Stats first to track calculated HP, rests, and spell slots.
           </p>

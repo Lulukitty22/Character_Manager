@@ -1,22 +1,39 @@
 const PlayerApp = (() => {
+  const POLL_INTERVAL_MS = 30000;
   const state = {
     character: null,
     bootConfig: null,
     context: { party: null, session: null, encounter: null },
     lastNotice: "",
     lastNoticeTone: "neutral",
+    alerts: [],
     writable: false,
   };
+  let pollTimer = null;
+  let mountedContainer = null;
+  let authListenerBound = false;
 
   async function mount(container, characterData, bootConfig = {}) {
+    mountedContainer = container;
     state.character = Schema.applyDefaults(characterData || {});
     state.bootConfig = bootConfig || {};
     state.lastNotice = "";
     state.lastNoticeTone = "neutral";
+    state.alerts = [];
     state.writable = typeof GitHub !== "undefined" && GitHub.isConfigured();
+    if (typeof SurfacePresets !== "undefined") SurfacePresets.setActivePreset("session_view");
+    if (typeof globalThis !== "undefined") {
+      globalThis.__SESSION_VIEW_BRIDGE__ = {
+        queueGameplayAction: (draft) => queueGameplayActionDraft(draft, mountedContainer),
+        openAuth: () => GitHubAuthWidget?.open?.(),
+      };
+    }
+    GitHubAuthWidget?.ensure?.();
+    bindAuthListener();
 
     await refreshRuntimeData({ forceApi: state.writable, quiet: true });
     render(container);
+    startPolling();
   }
 
   async function refreshRuntimeData({ forceApi = false, quiet = false } = {}) {
@@ -30,8 +47,7 @@ const PlayerApp = (() => {
         }
       } catch (error) {
         if (!quiet) {
-          state.lastNotice = `Refresh fell back to cached data: ${error.message || String(error)}`;
-          state.lastNoticeTone = "negative";
+          pushAlert(`Refresh fell back to cached data: ${error.message || String(error)}`, "negative");
         }
       }
     }
@@ -45,19 +61,21 @@ const PlayerApp = (() => {
     const suggestions = buildSuggestions(state.character, context);
     const personalQueue = buildPersonalQueue(context);
     const personalHistory = buildPersonalHistory(context);
+    const inboxEntries = buildInboxEntries(personalQueue, personalHistory);
 
     container.innerHTML = `
       <div class="player-shell">
         <header class="player-topbar">
           <div class="player-topbar-inner">
             <div class="player-topbar-copy">
-              <div class="player-kicker">Player Surface</div>
+              <div class="player-kicker">Session View</div>
               <div class="player-title-row">
                 <h1>${escapeHTML(state.character?.identity?.name || "Character")}</h1>
                 <span class="badge badge-accent">${escapeHTML(context.session?.name || "No active session")}</span>
               </div>
             </div>
             <div class="player-topbar-actions">
+              <button class="button button-ghost button-sm" id="btn-player-auth">GitHub</button>
               <button class="button button-ghost button-sm" id="btn-player-refresh">Refresh</button>
               <button class="button button-primary button-sm" id="btn-player-reload-sheet">Reload Context</button>
             </div>
@@ -76,8 +94,8 @@ const PlayerApp = (() => {
             <section class="player-card">
               <div class="player-card-header">
                 <div class="player-card-copy">
-                  <h2>Table Context</h2>
-                  <div class="text-muted text-sm">What this character is currently connected to.</div>
+                  <h2>Session Summary</h2>
+                  <div class="text-muted text-sm">Party/session routing, authority, and sync state.</div>
                 </div>
               </div>
               ${renderContextSummary(context)}
@@ -86,8 +104,18 @@ const PlayerApp = (() => {
             <section class="player-card">
               <div class="player-card-header">
                 <div class="player-card-copy">
-                  <h2>Queue Request</h2>
-                  <div class="text-muted text-sm">Players queue intent; the DM approves or edits what actually lands.</div>
+                  <h2>Session Inbox</h2>
+                  <div class="text-muted text-sm">DM replies, system alerts, and the most important queue/history events.</div>
+                </div>
+              </div>
+              ${renderInbox(inboxEntries)}
+            </section>
+
+            <section class="player-card">
+              <div class="player-card-header">
+                <div class="player-card-copy">
+                  <h2>Manual Request Composer</h2>
+                  <div class="text-muted text-sm">For custom requests that are broader than the one-click sheet actions.</div>
                 </div>
               </div>
               ${renderComposer(context)}
@@ -138,7 +166,7 @@ const PlayerApp = (() => {
       return `
         <section class="player-banner is-limited">
           <div class="player-banner-title">Read-only right now</div>
-          <div class="text-muted text-sm">This Player file can still read the latest sheet from GitHub, but queue submission needs a GitHub PAT saved in this browser.</div>
+          <div class="text-muted text-sm">This Session View can still read the latest sheet from GitHub, but queue submission needs a GitHub PAT saved in this browser.</div>
         </section>
       `;
     }
@@ -155,7 +183,7 @@ const PlayerApp = (() => {
     return `
       <section class="player-banner is-ready">
         <div class="player-banner-title">Ready to queue</div>
-        <div class="text-muted text-sm">GitHub auth is present in this browser, so requests can sync into the shared session records.</div>
+        <div class="text-muted text-sm">GitHub auth is present in this browser, so queued requests can sync into the shared session records and poll roughly every 30 seconds.</div>
       </section>
     `;
   }
@@ -176,9 +204,38 @@ const PlayerApp = (() => {
           </div>
           <div class="player-action-row">
             <div class="player-section-label">Authority</div>
-            <div class="text-muted text-sm">Player requests are intent. The DM reply and resulting deltas record what actually happened.</div>
+            <div class="text-muted text-sm">Session View queues intent only. The DM reply and resulting deltas record what actually happened.</div>
+          </div>
+          <div class="player-action-row">
+            <div class="player-section-label">Sync</div>
+            <div class="text-muted text-sm">GitHub is the canonical backend in v1. Manual refresh stays available, and authenticated runtime polling targets a 30-second cadence.</div>
           </div>
         </div>
+      </div>
+    `;
+  }
+
+  function renderInbox(entries = []) {
+    if (!entries.length) {
+      return `<div class="player-empty">No inbox events yet. Once requests start moving, approvals, denials, and sync alerts will surface here.</div>`;
+    }
+    return `
+      <div class="player-card-list">
+        ${entries.map((entry) => `
+          <div class="player-action-row">
+            <div class="player-action-topline">
+              <div>
+                <div class="player-action-title">${escapeHTML(entry.title)}</div>
+                <div class="player-action-meta">${escapeHTML(entry.meta)}</div>
+              </div>
+              <span class="player-status is-${escapeAttr(entry.statusTone)}">${escapeHTML(entry.status)}</span>
+            </div>
+            ${entry.note ? `<div class="player-action-note">${escapeHTML(entry.note)}</div>` : ""}
+            <div class="player-action-tags">
+              ${entry.tags.map((tag) => `<span class="badge">${escapeHTML(tag)}</span>`).join("")}
+            </div>
+          </div>
+        `).join("")}
       </div>
     `;
   }
@@ -301,6 +358,8 @@ const PlayerApp = (() => {
   }
 
   function wire(container) {
+    container.querySelector("#btn-player-auth")?.addEventListener("click", () => GitHubAuthWidget?.open?.());
+
     container.querySelector("#btn-player-refresh")?.addEventListener("click", async () => {
       state.lastNotice = "Refreshing context...";
       state.lastNoticeTone = "neutral";
@@ -311,6 +370,7 @@ const PlayerApp = (() => {
           ? "Context refreshed from GitHub."
           : "Refreshed using the currently loaded read-only data.";
         state.lastNoticeTone = "positive";
+        pushAlert(state.lastNotice, "positive", false);
       }
       render(container);
     });
@@ -322,6 +382,7 @@ const PlayerApp = (() => {
           ? "Pulled the latest sheet + gameplay records from GitHub."
           : "Reloaded the current sheet snapshot. Saving still needs GitHub auth in this browser.";
         state.lastNoticeTone = "positive";
+        pushAlert(state.lastNotice, "positive", false);
       }
       render(container);
     });
@@ -367,9 +428,9 @@ const PlayerApp = (() => {
   async function submitDraft(container) {
     const context = state.context || {};
     if (!state.writable) {
-      state.lastNotice = "Queue submission needs a GitHub PAT saved in this browser first.";
-      state.lastNoticeTone = "negative";
+      pushAlert("Queue submission needs a GitHub PAT saved in this browser first.", "negative");
       render(container);
+      GitHubAuthWidget?.open?.();
       return;
     }
 
@@ -381,18 +442,16 @@ const PlayerApp = (() => {
     const targetId = container.querySelector("#player-action-target")?.value.trim() || "";
 
     if (!summary) {
-      state.lastNotice = "Give the DM at least a one-line summary of what you want to do.";
-      state.lastNoticeTone = "negative";
+      pushAlert("Give the DM at least a one-line summary of what you want to do.", "negative");
       render(container);
       return;
     }
 
     const destination = resolveDestinationRecord(mode, context);
     if (!destination) {
-      state.lastNotice = mode === "encounter"
+      pushAlert(mode === "encounter"
         ? "There is no active encounter record linked to this character yet."
-        : "There is no active session record linked to this character yet.";
-      state.lastNoticeTone = "negative";
+        : "There is no active session record linked to this character yet.", "negative");
       render(container);
       return;
     }
@@ -430,13 +489,75 @@ const PlayerApp = (() => {
 
     try {
       await Library.upsert(destination.collection, recordClone);
-      state.lastNotice = "Request queued and synced to GitHub.";
-      state.lastNoticeTone = "positive";
+      pushAlert("Request queued and synced to GitHub.", "positive");
       await refreshRuntimeData({ forceApi: true, quiet: true });
       render(container);
     } catch (error) {
-      state.lastNotice = `Could not queue request: ${error.message || String(error)}`;
-      state.lastNoticeTone = "negative";
+      pushAlert(`Could not queue request: ${error.message || String(error)}`, "negative");
+      render(container);
+    }
+  }
+
+  async function queueGameplayActionDraft(draft = {}, container = mountedContainer) {
+    if (!container) return;
+    const context = state.context || {};
+    if (!state.writable) {
+      pushAlert("Queue submission needs GitHub auth in this browser first.", "negative");
+      render(container);
+      GitHubAuthWidget?.open?.();
+      return;
+    }
+
+    const mode = draft.mode || (draft.kind === "attack" ? "encounter" : "session_utility");
+    const destination = resolveDestinationRecord(mode, context);
+    if (!destination) {
+      pushAlert(mode === "encounter"
+        ? "There is no active encounter record linked to this character yet."
+        : "There is no active session record linked to this character yet.", "negative");
+      render(container);
+      return;
+    }
+
+    const action = Schema.createGameplayActionRequest({
+      kind: draft.kind || "utility",
+      mode,
+      actorId: state.character.id,
+      requestedById: state.character.id,
+      targetIds: Array.isArray(draft.targetIds) ? draft.targetIds : (draft.targetId ? [draft.targetId] : []),
+      payload: {
+        summary: draft.summary || humanizeActionKind(draft.kind || "utility"),
+        note: draft.note || "",
+        itemRef: draft.itemRef || "",
+        ...(draft.payload || {}),
+      },
+      audit: {
+        sourceSurface: "session_view",
+        sourceSurfaceVersion: "v1",
+      },
+    });
+
+    const recordClone = JSON.parse(JSON.stringify(destination.record));
+    GameplayRuntime.queueAction(recordClone, destination.collection, action);
+    if (destination.branch === "session") {
+      recordClone.features.session.poll = {
+        ...(recordClone.features.session.poll || {}),
+        refreshMs: POLL_INTERVAL_MS,
+        lastSyncedAt: new Date().toISOString(),
+      };
+    } else {
+      recordClone.features.encounter.dm = {
+        ...(recordClone.features.encounter.dm || {}),
+        lastUpdatedAt: new Date().toISOString(),
+      };
+    }
+
+    try {
+      await Library.upsert(destination.collection, recordClone);
+      pushAlert(`Queued: ${draft.summary || humanizeActionKind(draft.kind || "utility")}`, "positive");
+      await refreshRuntimeData({ forceApi: true, quiet: true });
+      render(container);
+    } catch (error) {
+      pushAlert(`Could not queue request: ${error.message || String(error)}`, "negative");
       render(container);
     }
   }
@@ -544,6 +665,89 @@ const PlayerApp = (() => {
     return logged
       .map((entry) => buildRenderableAction(entry.action, entry.scope, entry.source))
       .sort((left, right) => String(right.sortAt).localeCompare(String(left.sortAt)));
+  }
+
+  function buildInboxEntries(personalQueue = [], personalHistory = []) {
+    const alertEntries = state.alerts.map((alert) => ({
+      title: alert.title,
+      meta: alert.meta,
+      note: alert.note,
+      status: alert.status,
+      statusTone: alert.statusTone,
+      tags: alert.tags,
+      sortAt: alert.sortAt,
+    }));
+
+    const dmReplies = personalHistory
+      .filter((entry) => entry.note)
+      .slice(0, 5)
+      .map((entry) => ({
+        title: entry.title,
+        meta: entry.meta,
+        note: entry.note,
+        status: entry.status,
+        statusTone: entry.statusTone,
+        tags: ["dm reply", ...entry.tags].slice(0, 4),
+        sortAt: entry.sortAt,
+      }));
+
+    const queued = personalQueue.slice(0, 5).map((entry) => ({
+      ...entry,
+      tags: ["queued", ...entry.tags].slice(0, 4),
+    }));
+
+    return [...alertEntries, ...dmReplies, ...queued]
+      .sort((left, right) => String(right.sortAt || "").localeCompare(String(left.sortAt || "")))
+      .slice(0, 10);
+  }
+
+  function pushAlert(message, tone = "neutral", persist = true) {
+    state.lastNotice = message;
+    state.lastNoticeTone = tone;
+    const entry = {
+      title: tone === "negative" ? "System Alert" : "Session Notice",
+      meta: `${state.context.session?.name || "Session"} | ${new Date().toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })}`,
+      note: message,
+      status: tone === "negative" ? "Alert" : "Notice",
+      statusTone: tone === "negative" ? "negative" : "positive",
+      tags: [tone === "negative" ? "sync" : "session"],
+      sortAt: new Date().toISOString(),
+    };
+    if (persist) {
+      state.alerts = [entry, ...(state.alerts || [])].slice(0, 12);
+    }
+    ViewCharacterUtils?.showToast?.(message, tone === "negative" ? "error" : "info");
+  }
+
+  function startPolling() {
+    clearInterval(pollTimer);
+    pollTimer = setInterval(async () => {
+      if (!mountedContainer || !state.writable) return;
+      try {
+        await refreshRuntimeData({ forceApi: true, quiet: true });
+        state.lastNotice = "Session records polled from GitHub.";
+        state.lastNoticeTone = "positive";
+        render(mountedContainer);
+      } catch (error) {
+        pushAlert(`Polling failed: ${error.message || String(error)}`, "negative");
+        render(mountedContainer);
+      }
+    }, POLL_INTERVAL_MS);
+  }
+
+  function bindAuthListener() {
+    if (authListenerBound) return;
+    authListenerBound = true;
+    window.addEventListener("github-auth-changed", async () => {
+      state.writable = typeof GitHub !== "undefined" && GitHub.isConfigured();
+      if (mountedContainer) {
+        await refreshRuntimeData({ forceApi: state.writable, quiet: true });
+        if (state.writable) pushAlert("GitHub auth is now available in this browser.", "positive");
+        else pushAlert("GitHub auth was cleared from this browser.", "negative");
+        render(mountedContainer);
+        startPolling();
+      }
+    });
   }
 
   function buildRenderableAction(action, scope, sourceRecord) {

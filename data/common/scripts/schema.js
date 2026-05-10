@@ -338,7 +338,7 @@ const Schema = (() => {
         queuedActions: [],
         actionLog: [],
         poll: {
-          refreshMs: 300000,
+          refreshMs: 30000,
           lastSyncedAt: "",
         },
       },

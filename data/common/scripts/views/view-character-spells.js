@@ -8,7 +8,7 @@ const ViewCharacterSpells = (() => {
   const esc = ViewCharacterUtils.esc;
   const renderOvhChips = ViewCharacterUtils.renderOvhChips;
 
-  function render(spells, spellSlots = {}) {
+  function render(spells, spellSlots = {}, spellLog = []) {
     if (!spells || !spells.length) return "";
 
     const grouped = {};
@@ -31,6 +31,7 @@ const ViewCharacterSpells = (() => {
           <div class="ovh-section-divider"><svg viewBox="0 0 600 14" preserveAspectRatio="none"><path d="M0 7 L240 7 M260 7 Q300 -1 340 7 L600 7" stroke="rgba(201,168,76,0.55)" stroke-width="1" fill="none"/><circle cx="300" cy="7" r="2" fill="rgba(201,168,76,0.85)"/></svg></div>
         </div>
         ${levelGroups}
+        ${spellLog.length ? renderSpellLog(spellLog) : ""}
       </section>
     `;
   }
@@ -197,6 +198,33 @@ const ViewCharacterSpells = (() => {
       ].filter(section => section.content),
       raw: spell,
     };
+  }
+
+  function renderSpellLog(spellLog) {
+    return `
+      <div class="ovh-record-group ovh-spell-log-group">
+        <p class="ovh-group-label">
+          <span>Spell Slot History</span>
+          <span class="count">${spellLog.length}</span>
+        </p>
+        <div class="ovh-card ovh-resource-card">
+          <div class="ovh-log">
+            ${spellLog.slice(-12).reverse().map(renderSpellLogEntry).join("")}
+            ${spellLog.length > 12 ? `<div class="text-muted text-sm">${spellLog.length - 12} earlier entr${spellLog.length - 12 === 1 ? "y" : "ies"}</div>` : ""}
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderSpellLogEntry(entry) {
+    const level = Number(entry.level || 0) > 0 ? `Lv ${entry.level}` : "All";
+    return `
+      <div class="ovh-log-entry">
+        <span class="date">${esc(entry.date || "")}</span>
+        <span class="delta heal">${esc(level)}</span>
+        <span class="reason">${esc(entry.reason || "")}</span>
+      </div>`;
   }
 
   function wireInteractive(containerEl) {

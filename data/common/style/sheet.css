@@ -2159,9 +2159,59 @@ details.sheet-mechanic-chip {
   padding-left: calc(var(--space-4, 1rem) + 29px);
 }
 
+.ovh-gameplay-subtitle {
+  margin: -0.35rem 0 0.8rem;
+  color: var(--color-text-muted, #8a8399);
+  font-size: 0.78rem;
+}
+
+.ovh-gameplay-record {
+  padding: 0.85rem 1rem;
+}
+
+.ovh-gameplay-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.ovh-gameplay-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-shrink: 0;
+}
+
+.ovh-gameplay-record .title-block {
+  min-width: 0;
+}
+
+.ovh-gameplay-record .title-block .title {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.ovh-gameplay-record .title-block .sub {
+  color: var(--color-text-muted, #8a8399);
+  font-family: var(--font-body, Georgia, serif);
+  font-size: 0.85rem;
+  font-weight: 400;
+}
+
 @media (max-width: 760px) {
   .ovh-resource-track {
     grid-template-columns: 1fr;
+  }
+
+  .ovh-gameplay-row {
+    flex-direction: column;
+  }
+
+  .ovh-gameplay-actions {
+    width: 100%;
+    justify-content: flex-start;
   }
 
   .ovh-record > summary {
