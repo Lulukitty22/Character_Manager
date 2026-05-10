@@ -36,7 +36,7 @@ const ViewCharacterGameplay = (() => {
           <div class="ovh-section-divider"><svg viewBox="0 0 600 14" preserveAspectRatio="none"><path d="M0 7 L240 7 M260 7 Q300 -1 340 7 L600 7" stroke="rgba(201,168,76,0.55)" stroke-width="1" fill="none"/><circle cx="300" cy="7" r="2" fill="rgba(201,168,76,0.85)"/></svg></div>
         </div>
         ${renderSection("Quick Actions", "Core combat/rest state at a glance.", record.quickActions, preset)}
-        ${renderSection("Item Actions", "Use the same action catalog the runtime uses for inventory items.", record.itemActions, preset)}
+        ${renderItemSection("Item Actions", "Use the same action catalog the runtime uses for inventory items.", record.itemActions, preset)}
         ${renderSection("Spell Actions", "Slot state and cast-ready spell references.", record.spellActions, preset)}
         ${renderSection("Combat Resources", "Ammo, charges, temp HP, and tracked combat pools.", record.combatResources, preset)}
         ${renderSection("Utility", "Downtime, prep, rests, and other non-combat session hooks.", [...record.utility, ...utilities], preset)}
@@ -72,16 +72,12 @@ const ViewCharacterGameplay = (() => {
       },
     ];
 
-    const itemActions = actionableItems.map((item) => ({
+    const itemActions = groupItemActions(actionableItems).map(({ item, actions }) => ({
       title: item.name || "Item",
-      subtitle: item.action?.description || item.description || "",
-      chips: buildItemActionChips(item),
-      actionKind: classifyItemAction(item),
-      itemRef: item.libraryRef || item.id || "",
-      summary: `${item.action?.label || "Use"} ${item.name || "item"}`,
-      label: item.action?.label || "Use",
-      disabled: !item.actionState?.ok,
-      disabledReason: item.actionState?.message || "",
+      subtitle: item.description || "",
+      chips: buildItemActionChips(item, actions),
+      item,
+      actions,
     }));
 
     const spellActions = Object.keys(slotState.slots || {}).map((levelKey) => {
@@ -137,6 +133,20 @@ const ViewCharacterGameplay = (() => {
     `;
   }
 
+  function renderItemSection(title, subtitle, rows, preset) {
+    if (!rows.length) return "";
+    return `
+      <div class="ovh-record-group ovh-gameplay-group">
+        <p class="ovh-group-label">
+          <span>${esc(title)}</span>
+          <span class="count">${rows.length}</span>
+        </p>
+        <div class="ovh-gameplay-subtitle">${esc(subtitle)}</div>
+        ${rows.map((row, index) => renderItemRow(row, preset, title, index)).join("")}
+      </div>
+    `;
+  }
+
   function renderRow(row, preset, sectionTitle, index) {
     const canQueue = preset.canQueueActions && row.actionKind && row.summary;
     const buttonLabel = row.label || (row.actionKind === "consume_item" ? "Use" : "Queue");
@@ -168,15 +178,49 @@ const ViewCharacterGameplay = (() => {
     `;
   }
 
-  function buildItemActionChips(item) {
-    const actionState = item.actionState || {};
-    const resourceChips = (actionState.resources || []).map((entry) => ({
+  function renderItemRow(row, preset, sectionTitle, index) {
+    const canQueue = preset.canQueueActions && typeof InventoryWidgets !== "undefined";
+    const actionMenu = canQueue
+      ? InventoryWidgets.renderActionMenu(row.item, row.actions, { mode: "session_view", buttonLabel: "Queue" })
+      : "";
+
+    return `
+      <div class="ovh-record ovh-gameplay-record" data-gameplay-section="${ViewCharacterUtils.escAttr(sectionTitle)}" data-gameplay-index="${index}" data-gameplay-record="${ViewCharacterUtils.encodeDataAttr({ item: row.item })}">
+        <div class="ovh-gameplay-row">
+          <div class="title-block">
+            <div class="title">
+              ${esc(row.title)}
+              ${row.subtitle ? `<span class="sub">${esc(row.subtitle)}</span>` : ""}
+            </div>
+            ${renderOvhChips(row.chips || [], { className: "ovh-chips quick-chips" })}
+          </div>
+          <div class="ovh-gameplay-actions">
+            ${!preset.canQueueActions ? `<span class="badge">${esc(preset.label)}</span>` : ""}
+            ${actionMenu}
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function buildItemActionChips(item, actions = []) {
+    const aggregateResources = [];
+    const aggregateInventory = [];
+    actions.forEach((entry) => {
+      (entry.actionState?.resources || []).forEach((resource) => {
+        if (!aggregateResources.some(candidate => candidate.name === resource.name)) aggregateResources.push(resource);
+      });
+      (entry.actionState?.inventory || []).forEach((inventory) => {
+        if (!aggregateInventory.some(candidate => candidate.name === inventory.name)) aggregateInventory.push(inventory);
+      });
+    });
+    const resourceChips = aggregateResources.map((entry) => ({
       label: entry.name,
       value: `${entry.current}/${entry.max}`,
       kind: entry.shortage ? "negative" : "quantity",
       description: entry.shortage ? `Needs ${entry.required}, only ${entry.current} available.` : "",
     }));
-    const inventoryChips = (actionState.inventory || []).map((entry) => ({
+    const inventoryChips = aggregateInventory.map((entry) => ({
       label: entry.name,
       value: `${entry.current}`,
       kind: entry.shortage || entry.missing ? "negative" : "quantity",
@@ -184,8 +228,8 @@ const ViewCharacterGameplay = (() => {
     }));
     const base = [
       item.quantity != null ? { label: "Qty", value: item.quantity, kind: "quantity" } : null,
-      item.action?.label ? { label: "Action", value: item.action.label, kind: "action" } : null,
-      item.action?.effects?.heal ? { label: "Heal", value: `+${DndCalculations.healingAmount(item)}`, kind: "positive" } : null,
+      actions.length ? { label: "Actions", value: String(actions.length), kind: "action" } : null,
+      actions.some(entry => entry.action?.effects?.heal) ? { label: "Healing", value: `+${Math.max(...actions.map(entry => DndCalculations.healingAmount(entry) || 0))}`, kind: "positive" } : null,
     ].filter(Boolean);
     return [...base, ...resourceChips, ...inventoryChips];
   }
@@ -213,7 +257,7 @@ const ViewCharacterGameplay = (() => {
     return entries;
   }
 
-  function wireInteractive(containerEl) {
+  function wireInteractive(containerEl, character) {
     containerEl.querySelectorAll(".ovh-gameplay-use").forEach((button) => {
       if (button.dataset.viewerWired === "true") return;
       button.dataset.viewerWired = "true";
@@ -239,6 +283,49 @@ const ViewCharacterGameplay = (() => {
         });
       });
     });
+
+    InventoryWidgets?.wireActionMenus?.(containerEl, {
+      onSelect: ({ itemRow, actionIndex, choice, quantity }) => {
+        const mode = choice?.dataset.itemActionMode || "";
+        if (mode !== "session_view") return;
+        const record = ViewCharacterUtils.decodeDataAttr(itemRow?.dataset.sheetRecord, {})
+          || ViewCharacterUtils.decodeDataAttr(itemRow?.dataset.gameplayRecord, {});
+        const resolved = typeof Library !== "undefined" ? Library.resolveRef(record.raw || record.item || {}) : (record.raw || record.item || {});
+        const actionEntries = typeof InventoryWidgets !== "undefined"
+          ? InventoryWidgets.resolveActionEntries(character, resolved)
+          : [];
+        const actionEntry = actionEntries[actionIndex];
+        if (!actionEntry) return;
+
+        const bridge = globalThis.__SESSION_VIEW_BRIDGE__;
+        if (!bridge || typeof bridge.queueGameplayAction !== "function") {
+          if (typeof GitHubAuthWidget !== "undefined" && SurfacePresets.active()?.canManageAuth) GitHubAuthWidget.open();
+          else ViewCharacterUtils.showToast("This surface is read-only.", "info");
+          return;
+        }
+
+        bridge.queueGameplayAction({
+          kind: classifyItemAction(actionEntry),
+          summary: `${actionEntry.action?.label || "Use"} ${actionEntry.name || "item"}${quantity > 1 ? ` x${quantity}` : ""}`,
+          itemRef: actionEntry.libraryRef || actionEntry.id || "",
+          quantity,
+          payload: {
+            actionLabel: actionEntry.action?.label || "Use",
+            quantity,
+          },
+        });
+      },
+    });
+  }
+
+  function groupItemActions(actionableItems = []) {
+    const map = new Map();
+    actionableItems.forEach((entry) => {
+      const key = entry.id || entry.libraryRef || entry.name || Schema.generateId();
+      if (!map.has(key)) map.set(key, { item: entry, actions: [] });
+      map.get(key).actions.push(entry);
+    });
+    return Array.from(map.values());
   }
 
   return { render, wireInteractive };

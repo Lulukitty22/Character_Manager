@@ -119,19 +119,35 @@ const InventoryWidgets = (() => {
           ${actionEntries.map((entry, index) => {
             const actionState = entry.actionState || { ok: true, message: "" };
             const description = entry.action?.description || buildActionSummaryLines([entry])[0] || "";
+            const quantityCap = actionQuantityCap(entry);
+            const supportsQuantity = quantityCap > 1;
             return `
-              <button
-                type="button"
+              <div
                 class="inventory-action-choice ${actionState.ok ? "" : "is-disabled"}"
-                data-item-action-choice
                 data-item-action-mode="${escAttr(mode)}"
                 data-item-action-index="${index}"
-                ${actionState.ok ? "" : "disabled"}
               >
                 <span class="inventory-action-choice-title">${esc(entry.action?.label || "Use")}</span>
                 ${description ? `<span class="inventory-action-choice-copy">${esc(description)}</span>` : ""}
                 ${!actionState.ok && actionState.message ? `<span class="inventory-action-choice-note">${esc(actionState.message)}</span>` : ""}
-              </button>
+                <div class="inventory-action-choice-footer">
+                  ${supportsQuantity ? `
+                    <div class="inventory-action-stepper" data-item-action-stepper>
+                      <button type="button" class="inventory-action-step-btn" data-item-action-step="-1" ${actionState.ok ? "" : "disabled"}>-</button>
+                      <input type="number" min="1" max="${quantityCap}" value="1" class="inventory-action-qty" data-item-action-qty ${actionState.ok ? "" : "disabled"} />
+                      <button type="button" class="inventory-action-step-btn" data-item-action-step="1" ${actionState.ok ? "" : "disabled"}>+</button>
+                    </div>
+                  ` : `<span class="inventory-action-choice-note">${esc(quantityCap === 1 ? "Single-use action" : "")}</span>`}
+                  <button
+                    type="button"
+                    class="button button-ghost button-sm inventory-action-confirm"
+                    data-item-action-choice
+                    data-item-action-mode="${escAttr(mode)}"
+                    data-item-action-index="${index}"
+                    ${actionState.ok ? "" : "disabled"}
+                  >${esc(mode === "editor" ? "Use" : "Queue")}</button>
+                </div>
+              </div>
             `;
           }).join("")}
         </div>
@@ -163,10 +179,27 @@ const InventoryWidgets = (() => {
         event.preventDefault();
         event.stopPropagation();
         const menu = choice.closest("[data-item-action-menu]");
-        const itemRow = choice.closest("[data-item-action-host]") || choice.closest(".item-row") || choice.closest(".ovh-item-record");
+        const itemRow = choice.closest("[data-item-action-host]") || choice.closest(".item-row") || choice.closest(".array-item") || choice.closest(".ovh-item-record") || choice.closest(".ovh-gameplay-record");
         const actionIndex = parseInt(choice.dataset.itemActionIndex || "-1", 10);
-        if (typeof options.onSelect === "function") options.onSelect({ choice, menu, itemRow, actionIndex });
+        const quantityInput = choice.closest(".inventory-action-choice")?.querySelector("[data-item-action-qty]");
+        const quantity = Math.max(1, parseInt(quantityInput?.value || "1", 10) || 1);
+        if (typeof options.onSelect === "function") options.onSelect({ choice, menu, itemRow, actionIndex, quantity });
         closeAllMenus(containerEl);
+        return;
+      }
+
+      const stepButton = event.target.closest("[data-item-action-step]");
+      if (stepButton) {
+        event.preventDefault();
+        event.stopPropagation();
+        const stepper = stepButton.closest("[data-item-action-stepper]");
+        const input = stepper?.querySelector("[data-item-action-qty]");
+        if (!input) return;
+        const delta = parseInt(stepButton.dataset.itemActionStep || "0", 10) || 0;
+        const min = Math.max(1, parseInt(input.min || "1", 10) || 1);
+        const max = Math.max(min, parseInt(input.max || String(min), 10) || min);
+        const next = Math.max(min, Math.min(max, (parseInt(input.value || "1", 10) || 1) + delta));
+        input.value = String(next);
         return;
       }
 
@@ -201,6 +234,28 @@ const InventoryWidgets = (() => {
       .map(value => String(value).trim().toLowerCase());
   }
 
+  function actionQuantityCap(entry = {}) {
+    const limits = [];
+    const actionState = entry.actionState || {};
+    if (entry.action?.consumeQuantity) {
+      limits.push(Math.max(0, Number(entry.quantity ?? 0)));
+    }
+    (actionState.resources || []).forEach((resource) => {
+      const delta = Number(resource.delta || resource.effectDelta || 0);
+      if (delta < 0) limits.push(Math.floor(Number(resource.current || 0) / Math.abs(delta)));
+      if (delta > 0 && Number(resource.cap || resource.max || 0) > 0) {
+        limits.push(Math.floor((Number(resource.cap || resource.max || 0) - Number(resource.current || 0)) / delta));
+      }
+    });
+    (actionState.inventory || []).forEach((inventory) => {
+      const delta = Number(inventory.delta || inventory.effectDelta || 0);
+      if (delta < 0) limits.push(Math.floor(Number(inventory.current || 0) / Math.abs(delta)));
+      else if (inventory.required > 0) limits.push(Math.floor(Number(inventory.current || 0) / Math.max(1, Number(inventory.required || 1))));
+    });
+    const filtered = limits.filter((value) => Number.isFinite(value) && value > 0);
+    return Math.max(1, filtered.length ? Math.min(...filtered) : 1);
+  }
+
   return {
     buildSubtitle,
     resolveActionEntries,
@@ -208,6 +263,7 @@ const InventoryWidgets = (() => {
     buildActionSummaryLines,
     renderActionMenu,
     wireActionMenus,
+    actionQuantityCap,
   };
 
 })();

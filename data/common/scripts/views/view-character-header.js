@@ -27,7 +27,7 @@ const ViewCharacterHeader = (() => {
    * Render the sticky head + tab nav. Tabs are emitted with `data-ovh-tab`
    * attributes; the panel container in view-character.js matches by id.
    */
-  function render(character, tabs) {
+  function render(character, tabs, options = {}) {
     const identity = character.identity || {};
     const dnd = character.dnd || null;
 
@@ -74,8 +74,11 @@ const ViewCharacterHeader = (() => {
       </div>
     ` : "";
 
+    const preferredTab = options.activeTab && (tabs || []).some(tab => tab.id === options.activeTab)
+      ? options.activeTab
+      : (tabs?.[0]?.id || "");
     const tabsHTML = (tabs || []).map((t, i) => `
-      <button class="ovh-tab ${i === 0 ? "active" : ""}" data-ovh-tab="${esc(t.id)}">
+      <button class="ovh-tab ${(t.id === preferredTab) || (!preferredTab && i === 0) ? "active" : ""}" data-ovh-tab="${esc(t.id)}">
         ${esc(t.label)}
       </button>
     `).join("");

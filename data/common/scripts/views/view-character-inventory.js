@@ -121,7 +121,7 @@ const ViewCharacterInventory = (() => {
 
   function wireInteractive(containerEl, character) {
     InventoryWidgets?.wireActionMenus?.(containerEl, {
-      onSelect: ({ itemRow, actionIndex, choice }) => {
+      onSelect: ({ itemRow, actionIndex, choice, quantity }) => {
         const mode = choice?.dataset.itemActionMode || "";
         if (mode !== "session_view") return;
         const itemRecord = ViewCharacterUtils.decodeDataAttr(itemRow?.dataset.sheetRecord, {});
@@ -149,10 +149,12 @@ const ViewCharacterInventory = (() => {
                 : actionEntry.type === "weapon"
                   ? "attack"
                   : "utility",
-          summary: `${actionEntry.action?.label || "Use"} ${actionEntry.name || "item"}`,
+          summary: `${actionEntry.action?.label || "Use"} ${actionEntry.name || "item"}${quantity > 1 ? ` x${quantity}` : ""}`,
           itemRef: actionEntry.libraryRef || actionEntry.id || "",
+          quantity,
           payload: {
             actionLabel: actionEntry.action?.label || "Use",
+            quantity,
           },
         });
       },

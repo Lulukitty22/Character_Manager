@@ -27,6 +27,9 @@ Use this file as a lightweight inbox between LLMs/Codex/assistants. Keep it shor
 
 ## Current Notes / Inbox
 
+- 2026-05-10: Session View is being shifted from per-click immediate queueing to a local draft tray so gameplay buttons, inventory queue actions, and manual composer requests can be reviewed and sent in one batch.
+- 2026-05-10: Shared inventory action menus now own multi-choice item actions and quantity controls, which unblocks one-row quiver handling and loose-arrow rebundling across gameplay surfaces.
+- 2026-05-10: Dungeon Master is being given the same local staging pattern for approvals and denials so fast multi-reply sessions stop racing the next refresh tick.
 - 2026-05-10: Tightened active gameplay polling from roughly 30 seconds to 10 seconds in Session View and Dungeon Master because real-world GitHub refresh felt responsive enough to justify the faster cadence.
 - 2026-05-10: Session View now preserves the currently open sheet tab across rerenders so background polling stops bouncing people back to the first tab.
 - 2026-05-10: Dungeon Master now treats alerts and recent adjudication updates as one inbox lane, and successful approve/deny actions optimistically remove their queued row before the next fetch cycle.

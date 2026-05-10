@@ -229,16 +229,18 @@ const EditorGameplay = (() => {
   function renderItemActionsSection(actionableItems) {
     if (!actionableItems.length) return "";
 
-    const rows = actionableItems.map((item, index) => {
-      const actionState = item.actionState || { ok: true, resources: [], inventory: [], message: "" };
-      const healAmount = DndCalculations.healingAmount(item);
-      const tempHp = Number(item.action?.effects?.tempHp?.amount || item.action?.effects?.tempHp || 0);
-      const slotEffect = item.action?.effects?.spellSlots || null;
-      const resourceEffects = Array.isArray(item.action?.effects?.resources) ? item.action.effects.resources : [];
-      const inventoryEffects = Array.isArray(item.action?.effects?.inventory) ? item.action.effects.inventory : [];
-      const chips = typeof ViewCharacterUtils !== "undefined"
+    const groups = groupActionableItems(actionableItems);
+    const rows = groups.map((group, index) => {
+      const primary = group.actions[0];
+      const actionState = primary?.actionState || { ok: true, resources: [], inventory: [], message: "" };
+      const healAmount = Math.max(...group.actions.map(entry => DndCalculations.healingAmount(entry) || 0), 0);
+      const tempHp = Math.max(...group.actions.map(entry => Number(entry.action?.effects?.tempHp?.amount || entry.action?.effects?.tempHp || 0)), 0);
+      const slotEffect = group.actions.find(entry => entry.action?.effects?.spellSlots)?.action?.effects?.spellSlots || null;
+      const resourceEffects = group.actions.flatMap(entry => Array.isArray(entry.action?.effects?.resources) ? entry.action.effects.resources : []);
+      const inventoryEffects = group.actions.flatMap(entry => Array.isArray(entry.action?.effects?.inventory) ? entry.action.effects.inventory : []);
+        const chips = typeof ViewCharacterUtils !== "undefined"
         ? ViewCharacterUtils.renderMechanicChips([
-          item.quantity != null ? { label: "Qty", value: item.quantity, kind: "quantity" } : null,
+          group.item.quantity != null ? { label: "Qty", value: group.item.quantity, kind: "quantity" } : null,
           healAmount ? { label: "Heal", value: `+${healAmount}`, kind: "positive", description: "Average healing amount." } : null,
           tempHp ? { label: "Temp HP", value: `+${tempHp}`, kind: "positive" } : null,
           slotEffect?.all ? { label: "Slots", value: "Restore All", kind: "positive" } : null,
@@ -284,14 +286,17 @@ const EditorGameplay = (() => {
       return `
         <div class="array-item" data-item-action-index="${index}">
           <div class="array-item-content">
-            <div class="array-item-title">${EditorBase.escapeHTML(item.name || "Item")}</div>
-            <div class="array-item-subtitle">${EditorBase.escapeHTML(item.action?.description || item.description || "")}</div>
+            <div class="array-item-title">${EditorBase.escapeHTML(group.item.name || "Item")}</div>
+            <div class="array-item-subtitle">${EditorBase.escapeHTML(group.item.description || "")}</div>
             ${!actionState.ok && actionState.message ? `<p class="text-danger text-sm" style="margin-top: var(--space-2);">${EditorBase.escapeHTML(actionState.message)}</p>` : ""}
             ${chips}
             ${resourceBars ? `<div style="display: flex; flex-direction: column; gap: var(--space-2); margin-top: var(--space-3);">${resourceBars}</div>` : ""}
           </div>
           <div class="array-item-actions">
-            <button class="button button-primary button-sm btn-use-item-action" ${actionState.ok ? "" : "disabled"}>${EditorBase.escapeHTML(item.action?.label || "Use")}</button>
+            ${typeof InventoryWidgets !== "undefined"
+              ? InventoryWidgets.renderActionMenu(group.item, group.actions, { mode: "editor", buttonLabel: "Use" })
+              : `<button class="button button-primary button-sm btn-use-item-action" ${actionState.ok ? "" : "disabled"}>${EditorBase.escapeHTML(primary?.action?.label || "Use")}</button>`
+            }
           </div>
         </div>
       `;
@@ -462,12 +467,25 @@ const EditorGameplay = (() => {
   }
 
   function wireItemActions(panelEl, character, actionableItems) {
+    if (typeof InventoryWidgets !== "undefined") {
+      InventoryWidgets.wireActionMenus(panelEl, {
+        onSelect: ({ itemRow, actionIndex, quantity }) => {
+          const rowIndex = parseInt(itemRow?.dataset.itemActionIndex || "-1", 10);
+          const grouped = groupActionableItems(actionableItems)[rowIndex];
+          const actionEntry = grouped?.actions?.[actionIndex];
+          if (!actionEntry) return;
+          applyItemAction(panelEl, character, actionEntry, quantity);
+        },
+      });
+      return;
+    }
+
     panelEl.querySelectorAll(".btn-use-item-action").forEach(button => {
       button.addEventListener("click", () => {
         const row = button.closest("[data-item-action-index]");
         const actionEntry = actionableItems[parseInt(row?.dataset.itemActionIndex || "-1", 10)];
         if (!actionEntry) return;
-        applyItemAction(panelEl, character, actionEntry);
+        applyItemAction(panelEl, character, actionEntry, 1);
       });
     });
   }
@@ -571,12 +589,12 @@ const EditorGameplay = (() => {
     addSpellLog(panelEl, character, 0, reason);
   }
 
-  function applyItemAction(panelEl, character, item) {
+  function applyItemAction(panelEl, character, item, quantity = 1) {
     if (typeof GameplayMutations === "undefined") {
       App.showToast("Gameplay mutation helpers are not loaded.", "error");
       return;
     }
-    const result = GameplayMutations.applyItemAction(character, item);
+    const result = GameplayMutations.applyItemAction(character, item, quantity);
     if (!result.ok) {
       App.showToast(result.message, "error");
       return;
@@ -779,6 +797,16 @@ const EditorGameplay = (() => {
         <span class="log-entry-date">${EditorBase.escapeHTML(entry.date || "")}</span>
       </div>
     `;
+  }
+
+  function groupActionableItems(actionableItems = []) {
+    const map = new Map();
+    actionableItems.forEach((entry) => {
+      const key = entry.id || entry.libraryRef || entry.name || Schema.generateId();
+      if (!map.has(key)) map.set(key, { item: entry, actions: [] });
+      map.get(key).actions.push(entry);
+    });
+    return Array.from(map.values());
   }
 
   return { buildTab, readTab };

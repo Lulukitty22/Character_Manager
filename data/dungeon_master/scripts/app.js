@@ -10,6 +10,7 @@ const DungeonMasterApp = (() => {
     alerts: [],
     lastNotice: "",
     lastNoticeTone: "neutral",
+    responseDrafts: [],
   };
 
   let mountedContainer = null;
@@ -50,6 +51,7 @@ const DungeonMasterApp = (() => {
     const queuedEntries = collectQueueEntries();
     const historyEntries = collectHistoryEntries();
     const inboxEntries = buildInboxEntries(historyEntries);
+    const responseDrafts = buildResponseDraftEntries();
 
     container.innerHTML = `
       <div class="dm-shell">
@@ -113,11 +115,11 @@ const DungeonMasterApp = (() => {
             <section class="dm-card span-8">
               <div class="dm-card-header">
                 <div class="dm-card-copy">
-                  <h2>Queued Actions</h2>
-                  <div class="dm-note">This first pass can already approve or deny queued requests and write the resolution back to GitHub.</div>
+                  <h2>Response Drafts</h2>
+                  <div class="dm-note">Stage approvals and denials locally, then sync them to GitHub together.</div>
                 </div>
               </div>
-              ${renderQueuedActions(queuedEntries)}
+              ${renderResponseDrafts(responseDrafts)}
             </section>
 
             <section class="dm-card span-4">
@@ -128,6 +130,16 @@ const DungeonMasterApp = (() => {
                 </div>
               </div>
               ${renderInbox(inboxEntries)}
+            </section>
+
+            <section class="dm-card span-12">
+              <div class="dm-card-header">
+                <div class="dm-card-copy">
+                  <h2>Queued Actions</h2>
+                  <div class="dm-note">Choose approve or deny to stage a response without immediately sending it.</div>
+                </div>
+              </div>
+              ${renderQueuedActions(queuedEntries)}
             </section>
 
             <section class="dm-card span-12">
@@ -232,11 +244,38 @@ const DungeonMasterApp = (() => {
               ${entry.tags.map((tag) => `<span class="badge">${escapeHTML(tag)}</span>`).join("")}
             </div>
             <div class="dm-inline-actions">
-              <button class="button button-primary button-sm btn-dm-approve" ${state.writable ? "" : "disabled"}>Approve</button>
-              <button class="button button-danger button-sm btn-dm-deny" ${state.writable ? "" : "disabled"}>Deny</button>
+              <button class="button button-primary button-sm btn-dm-approve" ${state.writable ? "" : "disabled"}>Stage Approve</button>
+              <button class="button button-danger button-sm btn-dm-deny" ${state.writable ? "" : "disabled"}>Stage Deny</button>
             </div>
           </div>
         `).join("")}
+      </div>
+    `;
+  }
+
+  function renderResponseDrafts(entries = []) {
+    const canSubmit = Boolean(state.writable && entries.length);
+    return `
+      <div class="dm-list">
+        <div class="dm-inline-actions">
+          <button class="button button-primary button-sm" id="btn-dm-submit-drafts" ${canSubmit ? "" : "disabled"}>Send ${entries.length || 0} Response${entries.length === 1 ? "" : "s"}</button>
+          <button class="button button-ghost button-sm" id="btn-dm-clear-drafts" ${entries.length ? "" : "disabled"}>Clear Drafts</button>
+        </div>
+        ${entries.length ? entries.map((entry, index) => `
+          <div class="dm-row">
+            <div class="dm-row-top">
+              <div>
+                <div class="dm-row-title">${escapeHTML(entry.title)}</div>
+                <div class="dm-row-meta">${escapeHTML(entry.meta)}</div>
+              </div>
+              <span class="badge">${escapeHTML(entry.status)}</span>
+            </div>
+            ${entry.note ? `<div class="dm-note">${escapeHTML(entry.note)}</div>` : ""}
+            <div class="dm-inline-actions">
+              <button class="button button-ghost button-sm btn-dm-remove-draft" data-draft-index="${index}">Remove</button>
+            </div>
+          </div>
+        `).join("") : `<div class="dm-empty">No staged responses yet.</div>`}
       </div>
     `;
   }
@@ -295,7 +334,7 @@ const DungeonMasterApp = (() => {
       button.addEventListener("click", async () => {
         const row = button.closest("[data-queue-index]");
         const entry = collectQueueEntries()[Number(row?.dataset.queueIndex || -1)];
-        if (entry) await resolveQueuedAction(entry, "approved");
+        if (entry) stageResponseDraft(entry, "approved");
       });
     });
 
@@ -303,12 +342,25 @@ const DungeonMasterApp = (() => {
       button.addEventListener("click", async () => {
         const row = button.closest("[data-queue-index]");
         const entry = collectQueueEntries()[Number(row?.dataset.queueIndex || -1)];
-        if (entry) await resolveQueuedAction(entry, "denied");
+        if (entry) stageResponseDraft(entry, "denied");
+      });
+    });
+    container.querySelector("#btn-dm-submit-drafts")?.addEventListener("click", () => submitResponseDrafts());
+    container.querySelector("#btn-dm-clear-drafts")?.addEventListener("click", () => {
+      state.responseDrafts = [];
+      render(container);
+    });
+    container.querySelectorAll(".btn-dm-remove-draft").forEach((button) => {
+      button.addEventListener("click", () => {
+        const index = Number(button.dataset.draftIndex || -1);
+        if (index < 0) return;
+        state.responseDrafts.splice(index, 1);
+        render(container);
       });
     });
   }
 
-  async function resolveQueuedAction(entry, status) {
+  function stageResponseDraft(entry, status) {
     if (!state.writable) {
       pushAlert("Approve/deny needs a GitHub PAT in this browser first.", "negative");
       render(mountedContainer);
@@ -322,6 +374,22 @@ const DungeonMasterApp = (() => {
         : "Optional DM reply for this denied action:",
       ""
     ) ?? "";
+
+    const existingIndex = state.responseDrafts.findIndex((draft) => draft.action.id === entry.action.id);
+    const draft = { ...entry, status, reply };
+    if (existingIndex >= 0) state.responseDrafts[existingIndex] = draft;
+    else state.responseDrafts.unshift(draft);
+    pushAlert(`Staged ${status}: ${entry.title}`, "positive", false);
+    render(mountedContainer);
+  }
+
+  async function resolveQueuedAction(entry, status, reply = "") {
+    if (!state.writable) {
+      pushAlert("Approve/deny needs a GitHub PAT in this browser first.", "negative");
+      render(mountedContainer);
+      GitHubAuthWidget?.open?.();
+      return;
+    }
 
     const record = JSON.parse(JSON.stringify(entry.record));
     const featureKey = entry.collection === "encounters" ? "encounter" : "session";
@@ -354,7 +422,8 @@ const DungeonMasterApp = (() => {
     try {
       await Library.upsert(entry.collection, record);
       applyUpdatedRuntimeRecord(entry.collection, record);
-      pushAlert(`${status === "approved" ? "Approved" : "Denied"}: ${entry.title}`, status === "approved" ? "positive" : "negative");
+      state.responseDrafts = state.responseDrafts.filter((draft) => draft.action.id !== entry.action.id);
+      pushAlert(`${status === "approved" ? "Approved" : "Denied"}: ${entry.title}`, status === "approved" ? "positive" : "negative", false);
       render(mountedContainer);
       refreshRuntimeData({ forceApi: true, quiet: true }).then(() => {
         if (mountedContainer) render(mountedContainer);
@@ -365,6 +434,22 @@ const DungeonMasterApp = (() => {
     } catch (error) {
       pushAlert(`Could not update ${entry.scope}: ${error.message || String(error)}`, "negative");
       render(mountedContainer);
+    }
+  }
+
+  async function submitResponseDrafts() {
+    if (!state.responseDrafts.length) {
+      pushAlert("There are no staged responses to send.", "negative", false);
+      render(mountedContainer);
+      return;
+    }
+    for (const draft of [...state.responseDrafts]) {
+      try {
+        await resolveQueuedAction(draft, draft.status, draft.reply || "");
+      } catch (error) {
+        pushAlert(`Could not send staged ${draft.status}: ${error.message || String(error)}`, "negative");
+        break;
+      }
     }
   }
 
@@ -427,7 +512,16 @@ const DungeonMasterApp = (() => {
       .slice(0, 12);
   }
 
-  function pushAlert(message, tone = "neutral", persist = true) {
+  function buildResponseDraftEntries() {
+    return (state.responseDrafts || []).map((draft) => ({
+      title: draft.title,
+      meta: [draft.scope, draft.record?.name || "", draft.action?.actorLabel || draft.action?.actorId || ""].filter(Boolean).join(" | "),
+      note: draft.reply || draft.note || "",
+      status: draft.status === "approved" ? "Approve" : "Deny",
+    }));
+  }
+
+  function pushAlert(message, tone = "neutral", persist = tone === "negative") {
     state.lastNotice = message;
     state.lastNoticeTone = tone;
     const entry = {

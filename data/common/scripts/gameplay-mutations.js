@@ -1,6 +1,7 @@
 const GameplayMutations = (() => {
 
-  function applyItemAction(character = {}, item = {}) {
+  function applyItemAction(character = {}, item = {}, quantity = 1) {
+    const multiplier = Math.max(1, Number(quantity || 1) || 1);
     const actionState = typeof DndCalculations !== "undefined"
       ? DndCalculations.evaluateItemActionState(character, item)
       : { ok: true, resources: [], inventory: [], message: "" };
@@ -19,8 +20,8 @@ const GameplayMutations = (() => {
       action: { effects },
       addons: { healing: effects.heal },
       description: item.description,
-    }) : 0;
-    const tempHp = Number(effects.tempHp?.amount || effects.tempHp || 0);
+    }) * multiplier : 0;
+    const tempHp = Number(effects.tempHp?.amount || effects.tempHp || 0) * multiplier;
     const slotEffect = effects.spellSlots || null;
 
     let didAnything = false;
@@ -41,20 +42,20 @@ const GameplayMutations = (() => {
       slotDelta += restoreAllSlots(character, item.name || "Item restored all spell slots");
       didAnything = didAnything || slotDelta !== 0;
     } else if (slotEffect?.level) {
-      slotDelta += adjustSpellSlot(character, Number(slotEffect.level || 0), Math.max(1, Number(slotEffect.amount || 1)), item.name || "Item restored a spell slot");
+      slotDelta += adjustSpellSlot(character, Number(slotEffect.level || 0), Math.max(1, Number(slotEffect.amount || 1)) * multiplier, item.name || "Item restored a spell slot");
       didAnything = didAnything || slotDelta !== 0;
     }
 
     (effects.resources || []).forEach(effect => {
-      if (applyResourceEffect(character, effect)) didAnything = true;
+      if (applyResourceEffect(character, scaleEffect(effect, multiplier))) didAnything = true;
     });
 
     (effects.inventory || []).forEach(effect => {
-      if (applyInventoryEffect(character, effect)) didAnything = true;
+      if (applyInventoryEffect(character, scaleEffect(effect, multiplier))) didAnything = true;
     });
 
     if (item.action?.consumeQuantity) {
-      if (decrementInventoryItem(character, item.id || item.libraryRef || item.name)) didAnything = true;
+      if (decrementInventoryItem(character, item.id || item.libraryRef || item.name, multiplier)) didAnything = true;
     }
 
     return {
@@ -65,7 +66,7 @@ const GameplayMutations = (() => {
       actionState,
       item,
       message: didAnything
-        ? `${item.action?.label || "Used"} ${item.name || "item"}.`
+        ? `${item.action?.label || "Used"} ${item.name || "item"}${multiplier > 1 ? ` x${multiplier}` : ""}.`
         : `${item.name || "Item"} had no effect.`,
     };
   }
@@ -209,13 +210,20 @@ const GameplayMutations = (() => {
     return true;
   }
 
-  function decrementInventoryItem(character = {}, itemTarget = "") {
+  function decrementInventoryItem(character = {}, itemTarget = "", quantity = 1) {
     const target = resolveInventoryTarget(character, { target: itemTarget, delta: -1 });
     if (!target?.item) return false;
     const current = Math.max(0, Number(target.item.quantity ?? 0));
     if (current <= 0) return false;
-    target.item.quantity = current - 1;
+    target.item.quantity = Math.max(0, current - Math.max(1, Number(quantity || 1) || 1));
     return true;
+  }
+
+  function scaleEffect(effect = {}, multiplier = 1) {
+    const scaled = { ...effect };
+    if (effect.delta != null) scaled.delta = Number(effect.delta || 0) * multiplier;
+    if (effect.required != null) scaled.required = Number(effect.required || 0) * multiplier;
+    return scaled;
   }
 
   function resolveInventoryTarget(character = {}, effect = {}) {

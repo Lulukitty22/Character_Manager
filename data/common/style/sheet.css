@@ -412,6 +412,57 @@
   color: #e38d8d;
 }
 
+.inventory-action-choice-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  width: 100%;
+}
+
+.inventory-action-stepper {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  border-radius: 999px;
+  border: 2px solid rgba(201, 168, 76, 0.85);
+  padding: 2px;
+  background: rgba(12, 9, 16, 0.94);
+}
+
+.inventory-action-step-btn {
+  width: 28px;
+  height: 28px;
+  border: 0;
+  background: transparent;
+  color: var(--color-text-bright);
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: 999px;
+}
+
+.inventory-action-step-btn:hover:not(:disabled) {
+  background: rgba(201, 168, 76, 0.12);
+}
+
+.inventory-action-step-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.inventory-action-qty {
+  width: 42px;
+  border: 0;
+  background: transparent;
+  color: var(--color-text-bright);
+  text-align: center;
+  font-family: var(--font-ui, 'Inter', system-ui, sans-serif);
+  font-size: 0.84rem;
+  font-weight: 700;
+  outline: none;
+}
+
 .sheet-mechanic-chip {
   display: inline-flex;
   align-items: center;

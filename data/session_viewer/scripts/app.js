@@ -9,6 +9,15 @@ const SessionViewerApp = (() => {
     alerts: [],
     writable: false,
     activeSheetTab: "identity",
+    localDrafts: [],
+    composerDraft: {
+      mode: "session_utility",
+      kind: "utility",
+      summary: "",
+      note: "",
+      itemRef: "",
+      targetId: "",
+    },
   };
   let pollTimer = null;
   let mountedContainer = null;
@@ -26,6 +35,7 @@ const SessionViewerApp = (() => {
     if (typeof globalThis !== "undefined") {
       globalThis.__SESSION_VIEW_BRIDGE__ = {
         queueGameplayAction: (draft) => queueGameplayActionDraft(draft, mountedContainer),
+        submitQueuedDrafts: () => submitLocalDrafts(mountedContainer),
         openAuth: () => GitHubAuthWidget?.open?.(),
       };
     }
@@ -60,10 +70,10 @@ const SessionViewerApp = (() => {
   function render(container) {
     state.activeSheetTab = readActiveSheetTab(container) || state.activeSheetTab || "identity";
     const context = state.context || {};
-    const suggestions = buildSuggestions(state.character, context);
     const personalQueue = buildPersonalQueue(context);
     const personalHistory = buildPersonalHistory(context);
     const inboxEntries = buildInboxEntries(personalQueue, personalHistory);
+    const draftEntries = buildDraftEntries();
 
     container.innerHTML = `
       <div class="player-shell">
@@ -106,6 +116,16 @@ const SessionViewerApp = (() => {
             <section class="player-card">
               <div class="player-card-header">
                 <div class="player-card-copy">
+                  <h2>Request Drafts</h2>
+                  <div class="text-muted text-sm">Stage requests locally, review them together, then send them to the DM in one batch.</div>
+                </div>
+              </div>
+              ${renderDraftTray(draftEntries)}
+            </section>
+
+            <section class="player-card">
+              <div class="player-card-header">
+                <div class="player-card-copy">
                   <h2>Session Inbox</h2>
                   <div class="text-muted text-sm">DM replies, system alerts, and the most important queue/history events.</div>
                 </div>
@@ -117,7 +137,7 @@ const SessionViewerApp = (() => {
               <div class="player-card-header">
                 <div class="player-card-copy">
                   <h2>Manual Request Composer</h2>
-                  <div class="text-muted text-sm">For custom requests that are broader than the one-click sheet actions.</div>
+                  <div class="text-muted text-sm">Build custom requests using the same linked refs and routing rules as the shared gameplay widgets.</div>
                 </div>
               </div>
               ${renderComposer(context)}
@@ -126,18 +146,8 @@ const SessionViewerApp = (() => {
             <section class="player-card">
               <div class="player-card-header">
                 <div class="player-card-copy">
-                  <h2>Quick Suggestions</h2>
-                  <div class="text-muted text-sm">Fast-fill common requests from the current sheet state.</div>
-                </div>
-              </div>
-              ${renderSuggestions(suggestions)}
-            </section>
-
-            <section class="player-card">
-              <div class="player-card-header">
-                <div class="player-card-copy">
-                  <h2>My Queue</h2>
-                  <div class="text-muted text-sm">Outstanding requests involving this character.</div>
+                  <h2>Submitted Queue</h2>
+                  <div class="text-muted text-sm">Outstanding requests that already reached the shared session or encounter records.</div>
                 </div>
               </div>
               ${renderActionList(personalQueue, "No queued requests for this character yet.")}
@@ -190,7 +200,7 @@ const SessionViewerApp = (() => {
     return `
       <section class="player-banner is-ready">
         <div class="player-banner-title">Ready to queue</div>
-        <div class="text-muted text-sm">GitHub auth is present in this browser, so queued requests can sync into the shared session records and poll roughly every 10 seconds.</div>
+        <div class="text-muted text-sm">GitHub auth is present in this browser, so submitted requests can sync into the shared session records and poll roughly every 10 seconds.</div>
       </section>
     `;
   }
@@ -249,7 +259,9 @@ const SessionViewerApp = (() => {
 
   function renderComposer(context = {}) {
     const targetOptions = buildTargetOptions(context);
+    const refOptions = buildRecordRefOptions();
     const canQueue = Boolean(state.writable && (context.session || context.encounter));
+    const draft = state.composerDraft || {};
     const modeOptions = [
       { value: "session_utility", label: "Session Utility", disabled: !context.session },
       { value: "encounter", label: "Encounter", disabled: !context.encounter },
@@ -262,7 +274,7 @@ const SessionViewerApp = (() => {
             <label for="player-action-mode">Route</label>
             <select id="player-action-mode" class="player-select">
               ${modeOptions.map(option => `
-                <option value="${escapeAttr(option.value)}" ${option.disabled ? "disabled" : ""} ${option.value === (context.encounter ? "encounter" : "session_utility") ? "selected" : ""}>
+                <option value="${escapeAttr(option.value)}" ${option.disabled ? "disabled" : ""} ${option.value === (draft.mode || (context.encounter ? "encounter" : "session_utility")) ? "selected" : ""}>
                   ${escapeHTML(option.label)}
                 </option>
               `).join("")}
@@ -271,23 +283,16 @@ const SessionViewerApp = (() => {
           <div class="player-field">
             <label for="player-action-kind">Kind</label>
             <select id="player-action-kind" class="player-select">
-              <option value="utility">Utility</option>
-              <option value="craft">Craft</option>
-              <option value="consume_item">Consume Item</option>
-              <option value="ready_ammo">Ready Ammo</option>
-              <option value="stow_ammo">Stow Ammo</option>
-              <option value="attack">Attack</option>
-              <option value="check">Check</option>
-              <option value="save_request">Save Request</option>
-              <option value="short_rest">Short Rest</option>
-              <option value="long_rest">Long Rest</option>
+              ${["utility","craft","consume_item","ready_ammo","stow_ammo","rebundle_ammo","attack","check","save_request","short_rest","long_rest"].map((kind) => `
+                <option value="${escapeAttr(kind)}" ${kind === (draft.kind || "utility") ? "selected" : ""}>${escapeHTML(humanizeActionKind(kind))}</option>
+              `).join("")}
             </select>
           </div>
         </div>
 
         <div class="player-field">
           <label for="player-action-summary">Summary</label>
-          <input id="player-action-summary" class="player-input" placeholder="What are you trying to do?" />
+          <input id="player-action-summary" class="player-input" placeholder="What are you trying to do?" value="${escapeAttr(draft.summary || "")}" />
         </div>
 
         <div class="player-grid two-up">
@@ -295,47 +300,61 @@ const SessionViewerApp = (() => {
             <label for="player-action-target">Target</label>
             <select id="player-action-target" class="player-select">
               <option value="">No explicit target</option>
-              ${targetOptions.map(option => `<option value="${escapeAttr(option.id)}">${escapeHTML(option.label)}</option>`).join("")}
+              ${targetOptions.map(option => `<option value="${escapeAttr(option.id)}" ${option.id === (draft.targetId || "") ? "selected" : ""}>${escapeHTML(option.label)}</option>`).join("")}
             </select>
           </div>
           <div class="player-field">
-            <label for="player-action-item-ref">Item / Record Ref</label>
-            <input id="player-action-item-ref" class="player-input" placeholder="Optional, e.g. items.wondrous.quiver.field_quiver" />
+            <label for="player-action-item-ref">Linked Record</label>
+            <select id="player-action-item-ref" class="player-select">
+              <option value="">No linked record</option>
+              ${refOptions.map(option => `<option value="${escapeAttr(option.value)}" ${option.value === (draft.itemRef || "") ? "selected" : ""}>${escapeHTML(option.label)}</option>`).join("")}
+            </select>
           </div>
         </div>
 
         <div class="player-field">
           <label for="player-action-note">Details for the DM</label>
-          <textarea id="player-action-note" class="player-textarea" placeholder="Optional details, assumptions, or table note."></textarea>
+          <textarea id="player-action-note" class="player-textarea" placeholder="Optional details, assumptions, or table note.">${escapeHTML(draft.note || "")}</textarea>
         </div>
 
         <div class="player-chip-row">
-          <button type="submit" class="button button-primary" ${canQueue ? "" : "disabled"}>Queue Request</button>
+          <button type="submit" class="button button-primary" ${canQueue ? "" : "disabled"}>Stage Draft</button>
           <button type="button" id="player-clear-draft" class="button button-ghost">Clear Draft</button>
         </div>
       </form>
     `;
   }
 
-  function renderSuggestions(suggestions = []) {
-    if (!suggestions.length) {
-      return `<div class="player-empty">No quick suggestions yet. As the gameplay model grows, this panel can prefill more of the table flow for you.</div>`;
-    }
-
+  function renderDraftTray(entries = []) {
+    const canSubmit = Boolean(state.writable && entries.length);
     return `
-      <div class="player-card-list">
-        ${suggestions.map((suggestion, index) => `
-          <div class="player-suggestion-row">
-            <div class="player-action-title">${escapeHTML(suggestion.title)}</div>
-            <div class="player-suggestion-meta">
-              <span>${escapeHTML(suggestion.kind)}</span>
-              <span>${escapeHTML(suggestion.modeLabel)}</span>
-              ${suggestion.meta ? `<span>${escapeHTML(suggestion.meta)}</span>` : ""}
-            </div>
-            ${suggestion.note ? `<div class="text-muted text-sm">${escapeHTML(suggestion.note)}</div>` : ""}
-            <div><button class="button button-ghost button-sm btn-player-use-suggestion" data-suggestion-index="${index}">Fill Draft</button></div>
+      <div class="player-grid">
+        <div class="player-chip-row">
+          <button type="button" id="btn-player-submit-drafts" class="button button-primary" ${canSubmit ? "" : "disabled"}>Send ${entries.length || 0} Request${entries.length === 1 ? "" : "s"}</button>
+          <button type="button" id="btn-player-clear-drafts" class="button button-ghost" ${entries.length ? "" : "disabled"}>Clear Drafts</button>
+        </div>
+        ${entries.length ? `
+          <div class="player-card-list">
+            ${entries.map((entry, index) => `
+              <div class="player-action-row">
+                <div class="player-action-topline">
+                  <div>
+                    <div class="player-action-title">${escapeHTML(entry.title)}</div>
+                    <div class="player-action-meta">${escapeHTML(entry.meta)}</div>
+                  </div>
+                  <span class="player-status is-neutral">Draft</span>
+                </div>
+                ${entry.note ? `<div class="player-action-note">${escapeHTML(entry.note)}</div>` : ""}
+                <div class="player-action-tags">
+                  ${entry.tags.map((tag) => `<span class="badge">${escapeHTML(tag)}</span>`).join("")}
+                </div>
+                <div class="player-chip-row">
+                  <button type="button" class="button button-ghost button-sm btn-player-remove-draft" data-draft-index="${index}">Remove</button>
+                </div>
+              </div>
+            `).join("")}
           </div>
-        `).join("")}
+        ` : `<div class="player-empty">Nothing staged yet. Use D&amp;D Gameplay, Inventory Queue, or the composer below to build requests before sending them.</div>`}
       </div>
     `;
   }
@@ -394,20 +413,26 @@ const SessionViewerApp = (() => {
       render(container);
     });
 
-    container.querySelectorAll(".btn-player-use-suggestion").forEach((button) => {
+    container.querySelector("#player-clear-draft")?.addEventListener("click", () => clearDraft(container));
+    container.querySelector("#btn-player-clear-drafts")?.addEventListener("click", () => {
+      state.localDrafts = [];
+      render(container);
+    });
+    container.querySelector("#btn-player-submit-drafts")?.addEventListener("click", () => submitLocalDrafts(container));
+    container.querySelectorAll(".btn-player-remove-draft").forEach((button) => {
       button.addEventListener("click", () => {
-        const suggestion = buildSuggestions(state.character, state.context)[Number(button.dataset.suggestionIndex || -1)];
-        if (!suggestion) return;
-        fillDraft(container, suggestion);
+        const index = Number(button.dataset.draftIndex || -1);
+        if (index < 0) return;
+        state.localDrafts.splice(index, 1);
+        render(container);
       });
     });
 
-    container.querySelector("#player-clear-draft")?.addEventListener("click", () => clearDraft(container));
-
     container.querySelector("#player-action-form")?.addEventListener("submit", async (event) => {
       event.preventDefault();
-      await submitDraft(container);
+      await stageManualDraft(container);
     });
+    wireComposerPersistence(container);
   }
 
   function fillDraft(container, suggestion) {
@@ -425,6 +450,14 @@ const SessionViewerApp = (() => {
   }
 
   function clearDraft(container) {
+    state.composerDraft = {
+      mode: state.context.encounter ? "encounter" : "session_utility",
+      kind: "utility",
+      summary: "",
+      note: "",
+      itemRef: "",
+      targetId: "",
+    };
     container.querySelector("#player-action-summary").value = "";
     container.querySelector("#player-action-note").value = "";
     container.querySelector("#player-action-item-ref").value = "";
@@ -432,15 +465,8 @@ const SessionViewerApp = (() => {
     if (target) target.value = "";
   }
 
-  async function submitDraft(container) {
+  async function stageManualDraft(container) {
     const context = state.context || {};
-    if (!state.writable) {
-      pushAlert("Queue submission needs a GitHub PAT saved in this browser first.", "negative");
-      render(container);
-      GitHubAuthWidget?.open?.();
-      return;
-    }
-
     const mode = container.querySelector("#player-action-mode")?.value || "session_utility";
     const kind = container.querySelector("#player-action-kind")?.value || "utility";
     const summary = container.querySelector("#player-action-summary")?.value.trim() || "";
@@ -454,8 +480,7 @@ const SessionViewerApp = (() => {
       return;
     }
 
-    const destination = resolveDestinationRecord(mode, context);
-    if (!destination) {
+    if (!resolveDestinationRecord(mode, context)) {
       pushAlert(mode === "encounter"
         ? "There is no active encounter record linked to this character yet."
         : "There is no active session record linked to this character yet.", "negative");
@@ -463,64 +488,25 @@ const SessionViewerApp = (() => {
       return;
     }
 
-    const action = Schema.createGameplayActionRequest({
+    state.localDrafts.push({
       kind,
       mode,
       actorId: state.character.id,
       requestedById: state.character.id,
       targetIds: targetId ? [targetId] : [],
-      payload: {
-        summary,
-        note,
-        itemRef,
-      },
-      audit: {
-        sourceSurface: "session_view",
-        sourceSurfaceVersion: "v1",
-      },
+      payload: { summary, note, itemRef },
+      audit: { sourceSurface: "session_view", sourceSurfaceVersion: "v1" },
     });
-
-    const recordClone = JSON.parse(JSON.stringify(destination.record));
-    GameplayRuntime.queueAction(recordClone, destination.collection, action);
-    if (destination.branch === "session") {
-      recordClone.features.session.poll = {
-        ...(recordClone.features.session.poll || {}),
-        lastSyncedAt: new Date().toISOString(),
-      };
-    } else {
-      recordClone.features.encounter.dm = {
-        ...(recordClone.features.encounter.dm || {}),
-        lastUpdatedAt: new Date().toISOString(),
-      };
-    }
-
-    try {
-      await Library.upsert(destination.collection, recordClone);
-      applyUpdatedRuntimeRecord(destination.collection, recordClone);
-      pushAlert("Request queued and synced to GitHub.", "positive");
-      render(container);
-      refreshRuntimeData({ forceApi: true, quiet: true }).then(() => {
-        if (mountedContainer) render(mountedContainer);
-      }).catch(() => {});
-    } catch (error) {
-      pushAlert(`Could not queue request: ${error.message || String(error)}`, "negative");
-      render(container);
-    }
+    clearDraft(container);
+    pushAlert("Request staged locally. Send when ready.", "positive", false);
+    render(container);
   }
 
   async function queueGameplayActionDraft(draft = {}, container = mountedContainer) {
     if (!container) return;
     const context = state.context || {};
-    if (!state.writable) {
-      pushAlert("Queue submission needs GitHub auth in this browser first.", "negative");
-      render(container);
-      GitHubAuthWidget?.open?.();
-      return;
-    }
-
     const mode = draft.mode || (draft.kind === "attack" ? "encounter" : "session_utility");
-    const destination = resolveDestinationRecord(mode, context);
-    if (!destination) {
+    if (!resolveDestinationRecord(mode, context)) {
       pushAlert(mode === "encounter"
         ? "There is no active encounter record linked to this character yet."
         : "There is no active session record linked to this character yet.", "negative");
@@ -528,7 +514,7 @@ const SessionViewerApp = (() => {
       return;
     }
 
-    const action = Schema.createGameplayActionRequest({
+    state.localDrafts.push({
       kind: draft.kind || "utility",
       mode,
       actorId: state.character.id,
@@ -538,6 +524,7 @@ const SessionViewerApp = (() => {
         summary: draft.summary || humanizeActionKind(draft.kind || "utility"),
         note: draft.note || "",
         itemRef: draft.itemRef || "",
+        quantity: Math.max(1, Number(draft.quantity || draft.payload?.quantity || 1) || 1),
         ...(draft.payload || {}),
       },
       audit: {
@@ -545,33 +532,59 @@ const SessionViewerApp = (() => {
         sourceSurfaceVersion: "v1",
       },
     });
+    pushAlert(`Staged: ${draft.summary || humanizeActionKind(draft.kind || "utility")}`, "positive", false);
+    render(container);
+  }
 
-    const recordClone = JSON.parse(JSON.stringify(destination.record));
-    GameplayRuntime.queueAction(recordClone, destination.collection, action);
-    if (destination.branch === "session") {
-      recordClone.features.session.poll = {
-        ...(recordClone.features.session.poll || {}),
-        refreshMs: POLL_INTERVAL_MS,
-        lastSyncedAt: new Date().toISOString(),
-      };
-    } else {
-      recordClone.features.encounter.dm = {
-        ...(recordClone.features.encounter.dm || {}),
-        lastUpdatedAt: new Date().toISOString(),
-      };
+  async function submitLocalDrafts(container = mountedContainer) {
+    if (!state.localDrafts.length) {
+      pushAlert("There are no staged requests to send.", "negative", false);
+      if (container) render(container);
+      return;
+    }
+    if (!state.writable) {
+      pushAlert("Sending requests needs a GitHub PAT saved in this browser first.", "negative");
+      if (container) render(container);
+      GitHubAuthWidget?.open?.();
+      return;
     }
 
     try {
-      await Library.upsert(destination.collection, recordClone);
-      applyUpdatedRuntimeRecord(destination.collection, recordClone);
-      pushAlert(`Queued: ${draft.summary || humanizeActionKind(draft.kind || "utility")}`, "positive");
-      render(container);
+      const grouped = groupDraftsByDestination(state.localDrafts, state.context);
+      for (const group of grouped) {
+        const recordClone = JSON.parse(JSON.stringify(group.destination.record));
+        group.actions.forEach((draft) => {
+          const action = Schema.createGameplayActionRequest(draft);
+          GameplayRuntime.queueAction(recordClone, group.destination.collection, action);
+        });
+        if (group.destination.branch === "session") {
+          recordClone.features.session.poll = {
+            ...(recordClone.features.session.poll || {}),
+            refreshMs: POLL_INTERVAL_MS,
+            lastSyncedAt: new Date().toISOString(),
+          };
+        } else {
+          recordClone.features.encounter.dm = {
+            ...(recordClone.features.encounter.dm || {}),
+            lastUpdatedAt: new Date().toISOString(),
+          };
+        }
+        await Library.upsert(group.destination.collection, recordClone);
+        applyUpdatedRuntimeRecord(group.destination.collection, recordClone);
+      }
+      const sentCount = state.localDrafts.length;
+      state.localDrafts = [];
+      pushAlert(`Sent ${sentCount} request${sentCount === 1 ? "" : "s"} to the DM queue.`, "positive", false);
+      if (container) render(container);
       refreshRuntimeData({ forceApi: true, quiet: true }).then(() => {
         if (mountedContainer) render(mountedContainer);
-      }).catch(() => {});
+      }).catch((error) => {
+        pushAlert(`Background refresh failed after sending requests: ${error.message || String(error)}`, "negative");
+        if (mountedContainer) render(mountedContainer);
+      });
     } catch (error) {
-      pushAlert(`Could not queue request: ${error.message || String(error)}`, "negative");
-      render(container);
+      pushAlert(`Could not send staged requests: ${error.message || String(error)}`, "negative");
+      if (container) render(container);
     }
   }
 
@@ -586,6 +599,18 @@ const SessionViewerApp = (() => {
       return { collection: "encounters", branch: "encounter", record: context.encounter };
     }
     return null;
+  }
+
+  function groupDraftsByDestination(drafts = [], context = {}) {
+    const grouped = new Map();
+    drafts.forEach((draft) => {
+      const destination = resolveDestinationRecord(draft.mode, context);
+      if (!destination) throw new Error(`No ${draft.mode === "encounter" ? "encounter" : "session"} record is linked right now.`);
+      const key = `${destination.collection}:${destination.record.id}`;
+      if (!grouped.has(key)) grouped.set(key, { destination, actions: [] });
+      grouped.get(key).actions.push(draft);
+    });
+    return Array.from(grouped.values());
   }
 
   function buildSuggestions(character = {}, context = {}) {
@@ -634,6 +659,19 @@ const SessionViewerApp = (() => {
     });
 
     return suggestions;
+  }
+
+  function buildDraftEntries() {
+    return (state.localDrafts || []).map((draft) => {
+      const targetLabels = (draft.targetIds || []).map((id) => buildTargetOptions(state.context).find((entry) => entry.id === id)?.label || id);
+      const quantity = Math.max(1, Number(draft.payload?.quantity || 1) || 1);
+      return {
+        title: draft.payload?.summary || humanizeActionKind(draft.kind),
+        meta: [draft.mode === "encounter" ? "Encounter" : "Session Utility", quantity > 1 ? `x${quantity}` : "", draft.itemRef || draft.payload?.itemRef || ""].filter(Boolean).join(" | "),
+        note: draft.payload?.note || "",
+        tags: [draft.kind, ...targetLabels].filter(Boolean),
+      };
+    });
   }
 
   function classifySuggestionKind(item = {}, action = {}) {
@@ -714,7 +752,7 @@ const SessionViewerApp = (() => {
       .slice(0, 10);
   }
 
-  function pushAlert(message, tone = "neutral", persist = true) {
+  function pushAlert(message, tone = "neutral", persist = tone === "negative") {
     state.lastNotice = message;
     state.lastNoticeTone = tone;
     const entry = {
@@ -807,6 +845,27 @@ const SessionViewerApp = (() => {
     return Array.from(map.entries()).map(([id, label]) => ({ id, label }));
   }
 
+  function buildRecordRefOptions() {
+    const options = [];
+    const push = (value, label) => {
+      if (!value || options.some((entry) => entry.value === value)) return;
+      options.push({ value, label });
+    };
+    (state.character?.inventory || []).forEach((item) => {
+      const resolved = typeof Library !== "undefined" ? Library.resolveRef(item) : item;
+      push(item.libraryRef || resolved?.id || item.id || "", `Item • ${resolved?.name || item.name || item.id || "Unnamed"}`);
+    });
+    (state.character?.spells || []).forEach((spell) => {
+      const resolved = typeof Library !== "undefined" ? Library.resolveRef(spell) : spell;
+      push(spell.libraryRef || resolved?.id || spell.id || "", `Spell • ${resolved?.name || spell.name || spell.id || "Unnamed"}`);
+    });
+    (state.character?.customResources || []).forEach((resource) => {
+      const resolved = typeof Library !== "undefined" ? Library.resolveRef(resource) : resource;
+      push(resource.libraryRef || resolved?.id || resource.id || "", `Resource • ${resolved?.name || resource.name || resource.id || "Unnamed"}`);
+    });
+    return options;
+  }
+
   function chip(label, value) {
     return `<span class="player-chip"><strong>${escapeHTML(label)}</strong><span>${escapeHTML(value)}</span></span>`;
   }
@@ -839,6 +898,23 @@ const SessionViewerApp = (() => {
 
   function escapeAttr(text) {
     return escapeHTML(text).replace(/`/g, "&#96;");
+  }
+
+  function wireComposerPersistence(container) {
+    const sync = () => {
+      state.composerDraft = {
+        mode: container.querySelector("#player-action-mode")?.value || "session_utility",
+        kind: container.querySelector("#player-action-kind")?.value || "utility",
+        summary: container.querySelector("#player-action-summary")?.value || "",
+        note: container.querySelector("#player-action-note")?.value || "",
+        itemRef: container.querySelector("#player-action-item-ref")?.value || "",
+        targetId: container.querySelector("#player-action-target")?.value || "",
+      };
+    };
+    container.querySelectorAll("#player-action-form input, #player-action-form textarea, #player-action-form select").forEach((field) => {
+      field.addEventListener("input", sync);
+      field.addEventListener("change", sync);
+    });
   }
 
   function readActiveSheetTab(container) {

@@ -358,6 +358,7 @@
   display:        flex;
   flex-direction: column;
   gap:            var(--space-6);
+  padding-bottom: var(--space-8);
 }
 
 .editor-header {
@@ -366,6 +367,13 @@
   justify-content: space-between;
   gap:             var(--space-4);
   flex-wrap:       wrap;
+  padding:         var(--space-4) var(--space-5);
+  border:          1px solid var(--color-border-subtle);
+  border-radius:   var(--radius-lg);
+  background:
+    radial-gradient(circle at top right, rgba(180, 140, 255, 0.12), transparent 30%),
+    linear-gradient(180deg, rgba(24, 18, 36, 0.98), rgba(14, 11, 20, 0.94));
+  box-shadow:      var(--shadow-md);
 }
 
 .editor-title {
@@ -377,6 +385,8 @@
 .editor-title h2 {
   font-size:     var(--text-2xl);
   line-height:   1.1;
+  letter-spacing: 0.03em;
+  color:         var(--color-text-bright);
 }
 
 .editor-actions {
@@ -390,8 +400,11 @@
 
 .editor-tabs {
   display:    flex;
-  gap:        0;
-  border-bottom: 1px solid var(--color-border-subtle);
+  gap:        var(--space-1);
+  padding:    var(--space-2);
+  border:     1px solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  background: rgba(15, 12, 22, 0.9);
   overflow-x: auto;
 }
 
@@ -406,19 +419,23 @@
   color:        var(--color-text-muted);
   cursor:       pointer;
   border:       none;
-  border-bottom: 2px solid transparent;
-  background:   none;
+  border:       1px solid transparent;
+  border-radius: var(--radius-base);
+  background:   transparent;
   white-space:  nowrap;
-  transition:   color var(--transition-base), border-color var(--transition-base);
+  transition:   color var(--transition-base), border-color var(--transition-base), background-color var(--transition-base), transform var(--transition-fast);
 }
 
 .editor-tab:hover {
   color: var(--color-text-primary);
+  background: rgba(255, 255, 255, 0.03);
 }
 
 .editor-tab.active {
   color:         var(--color-accent-light);
-  border-bottom-color: var(--color-accent);
+  border-color: var(--color-border-muted);
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: inset 0 -1px 0 rgba(201, 168, 76, 0.2);
 }
 
 .editor-tab-panel {
@@ -585,11 +602,13 @@
   border:           1px solid var(--color-border-subtle);
   border-radius:    var(--radius-base);
   padding:          var(--space-3) var(--space-4);
-  transition:       border-color var(--transition-base);
+  transition:       border-color var(--transition-base), transform var(--transition-fast), box-shadow var(--transition-base);
 }
 
 .array-item:hover {
   border-color: var(--color-border-muted);
+  transform: translateY(-1px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.16);
 }
 
 .array-item-content {
@@ -903,15 +922,18 @@
 .editor-save-bar {
   position:         sticky;
   bottom:           0;
-  background-color: var(--color-bg-deepest);
-  border-top:       1px solid var(--color-border-subtle);
+  background:
+    linear-gradient(180deg, rgba(12, 10, 16, 0.92), rgba(10, 8, 13, 0.98));
+  border:           1px solid var(--color-border-subtle);
+  border-radius:    var(--radius-lg);
   padding:          var(--space-3) var(--space-6);
   display:          flex;
   align-items:      center;
   justify-content:  flex-end;
   gap:              var(--space-3);
   z-index:          50;
-  margin:           0 calc(var(--space-8) * -1) calc(var(--space-8) * -1);
+  margin-top:       var(--space-2);
+  box-shadow:       var(--shadow-md);
 }
 
 .editor-save-status {

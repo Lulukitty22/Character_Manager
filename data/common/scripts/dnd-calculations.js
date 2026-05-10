@@ -442,6 +442,8 @@ const DndCalculations = (() => {
         name: effect.target || effect.resourceName || "Resource",
         current: 0,
         max: 0,
+        cap: 0,
+        delta,
         required,
         shortage: required > 0,
         missing: true,
@@ -451,14 +453,15 @@ const DndCalculations = (() => {
     const max = Number(resource.max ?? resolved?.max ?? 0);
     const cap = effect.maxCap != null ? Number(effect.maxCap) : max;
     const current = Number(resource.current ?? resolved?.current ?? 0);
-    return {
-      name: resolved?.name || effect.target || effect.resourceName || "Resource",
-      current,
-      max,
-      cap,
-      required,
-      shortage: required > 0 && current < required,
-      blocked: Number(effect.delta || 0) > 0 && cap > 0 && current >= cap,
+      return {
+        name: resolved?.name || effect.target || effect.resourceName || "Resource",
+        current,
+        max,
+        cap,
+        delta,
+        required,
+        shortage: required > 0 && current < required,
+        blocked: Number(effect.delta || 0) > 0 && cap > 0 && current >= cap,
       missing: false,
       resource,
     };
@@ -478,22 +481,24 @@ const DndCalculations = (() => {
         .some(value => String(value).trim().toLowerCase() === target);
     }) || null;
     if (!inventoryItem) {
-      return {
-        name: effect.target || effect.itemName || effect.itemRef || "Item",
-        current: 0,
-        required,
-        shortage: required > 0 || mustExist,
-        missing: true,
+        return {
+          name: effect.target || effect.itemName || effect.itemRef || "Item",
+          current: 0,
+          delta,
+          required,
+          shortage: required > 0 || mustExist,
+          missing: true,
         mustExist,
       };
     }
     const current = Number(inventoryItem.quantity ?? 0);
-    return {
-      name: inventoryItem.name || effect.target || "Item",
-      current,
-      required,
-      shortage: required > 0 && current < required,
-      missing: false,
+      return {
+        name: inventoryItem.name || effect.target || "Item",
+        current,
+        delta,
+        required,
+        shortage: required > 0 && current < required,
+        missing: false,
       mustExist,
       item: inventoryItem,
     };

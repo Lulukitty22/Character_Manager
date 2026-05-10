@@ -35,12 +35,34 @@
       },
       "spellSlots": {}
     },
-    "actions": [],
+    "actions": [
+      {
+        "label": "Re-bundle 20 Arrows",
+        "consumeQuantity": false,
+        "effects": {
+          "inventory": [
+            {
+              "itemRef": "items.consumable.ammunition.loose_arrow",
+              "itemName": "Loose Arrow",
+              "delta": -20,
+              "reason": "Bundled twenty loose arrows back into an arrow bundle"
+            },
+            {
+              "itemRef": "items.consumable.ammunition.arrow_bundle_20",
+              "itemName": "Arrow Bundle (20)",
+              "delta": 1,
+              "reason": "Bundled twenty loose arrows back into an arrow bundle"
+            }
+          ]
+        },
+        "description": "Turn 20 loose arrows back into one Arrow Bundle (20)."
+      }
+    ],
     "inventory": {
       "isStackable": true,
       "defaultQuantity": 1,
       "consumedOnUse": false,
-      "suppressGameplayAction": true
+      "suppressGameplayAction": false
     },
     "mechanics": [
       {
@@ -48,6 +70,12 @@
         "value": "Loose Stock",
         "kind": "neutral",
         "description": "Loose arrows carried in inventory before they are readied into the quiver."
+      },
+      {
+        "label": "Re-bundle",
+        "value": "20 -> 1 Bundle",
+        "kind": "neutral",
+        "description": "Twenty loose arrows can be packed back into a standard arrow bundle."
       }
     ]
   },

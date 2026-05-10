@@ -112,7 +112,7 @@ const ViewCharacter = (() => {
       .map(t => ({ ...t, content: t.render() }))
       .filter(t => t.content && t.content.trim().length > 0);
 
-    const headerHTML = ViewCharacterHeader.render(character, tabs);
+    const headerHTML = ViewCharacterHeader.render(character, tabs, options);
     const preferredTab = options.activeTab && tabs.some(tab => tab.id === options.activeTab)
       ? options.activeTab
       : (tabs[0]?.id || "");
