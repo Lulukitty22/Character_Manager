@@ -102,6 +102,31 @@
             "sourceSurface": "player",
             "createdBy": "phase1-seed"
           }
+        },
+        {
+          "id": "25be449b-a036-4f5d-a175-94f84bfd9251",
+          "kind": "utility",
+          "mode": "session_utility",
+          "status": "queued",
+          "actorId": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
+          "requestedById": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
+          "targetIds": [
+            "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8"
+          ],
+          "payload": {
+            "summary": "Open Bundle Arrow Bundle (20)",
+            "note": "Consume this bundle to add 20 loose arrows to inventory.",
+            "itemRef": "items.consumable.ammunition.arrow_bundle_20"
+          },
+          "roll": null,
+          "proposedDeltas": [],
+          "resultingDeltas": [],
+          "requestedAt": "2026-05-10T01:43:16.968Z",
+          "resolution": null,
+          "audit": {
+            "sourceSurface": "player",
+            "sourceSurfaceVersion": "v1"
+          }
         }
       ],
       "actionLog": [
@@ -188,7 +213,7 @@
       ],
       "poll": {
         "refreshMs": 300000,
-        "lastSyncedAt": "2026-05-09T10:06:15.000Z"
+        "lastSyncedAt": "2026-05-10T01:43:16.968Z"
       }
     }
   },
