@@ -129,7 +129,7 @@
           }
         },
         {
-          "id": "8885228e-fe89-4d39-9963-34be836880f9",
+          "id": "e29db80a-fa0a-48f4-bc2a-e90b6f2f7b8a",
           "kind": "short_rest",
           "mode": "session_utility",
           "status": "queued",
@@ -144,7 +144,7 @@
           "roll": null,
           "proposedDeltas": [],
           "resultingDeltas": [],
-          "requestedAt": "2026-05-10T05:47:17.417Z",
+          "requestedAt": "2026-05-10T05:47:19.247Z",
           "resolution": null,
           "audit": {
             "sourceSurface": "session_view",
@@ -236,7 +236,7 @@
       ],
       "poll": {
         "refreshMs": 30000,
-        "lastSyncedAt": "2026-05-10T05:47:17.417Z"
+        "lastSyncedAt": "2026-05-10T05:47:19.247Z"
       }
     }
   },
