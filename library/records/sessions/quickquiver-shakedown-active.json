@@ -299,8 +299,8 @@
           "resolution": {
             "status": "approved",
             "message": "Approved by DM.",
-            "dmReply": "",
-            "resolvedAt": "2026-05-10T20:38:56.581Z",
+            "dmReply": "Sure",
+            "resolvedAt": "2026-05-10T20:38:59.190Z",
             "resolvedById": "dungeon-master"
           },
           "audit": {
