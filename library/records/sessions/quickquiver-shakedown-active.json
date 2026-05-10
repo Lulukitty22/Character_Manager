@@ -31,27 +31,25 @@
       },
       "queuedActions": [
         {
-          "id": "45955d50-7258-4b58-a783-6345ae520a5f",
-          "kind": "utility",
+          "id": "e29db80a-fa0a-48f4-bc2a-e90b6f2f7b8a",
+          "kind": "short_rest",
           "mode": "session_utility",
           "status": "queued",
           "actorId": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
           "requestedById": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
-          "targetIds": [
-            "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8"
-          ],
+          "targetIds": [],
           "payload": {
-            "summary": "Open Bundle Arrow Bundle (20)",
-            "note": "Consume this bundle to add 20 loose arrows to inventory.",
-            "itemRef": "items.consumable.ammunition.arrow_bundle_20"
+            "summary": "Take a short rest and recover what the DM allows.",
+            "note": "",
+            "itemRef": ""
           },
           "roll": null,
           "proposedDeltas": [],
           "resultingDeltas": [],
-          "requestedAt": "2026-05-10T01:43:19.613Z",
+          "requestedAt": "2026-05-10T05:47:19.247Z",
           "resolution": null,
           "audit": {
-            "sourceSurface": "player",
+            "sourceSurface": "session_view",
             "sourceSurfaceVersion": "v1"
           }
         }
@@ -246,31 +244,33 @@
           }
         },
         {
-          "id": "e29db80a-fa0a-48f4-bc2a-e90b6f2f7b8a",
-          "kind": "short_rest",
+          "id": "45955d50-7258-4b58-a783-6345ae520a5f",
+          "kind": "utility",
           "mode": "session_utility",
-          "status": "approved",
+          "status": "denied",
           "actorId": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
           "requestedById": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
-          "targetIds": [],
+          "targetIds": [
+            "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8"
+          ],
           "payload": {
-            "summary": "Take a short rest and recover what the DM allows.",
-            "note": "",
-            "itemRef": ""
+            "summary": "Open Bundle Arrow Bundle (20)",
+            "note": "Consume this bundle to add 20 loose arrows to inventory.",
+            "itemRef": "items.consumable.ammunition.arrow_bundle_20"
           },
           "roll": null,
           "proposedDeltas": [],
           "resultingDeltas": [],
-          "requestedAt": "2026-05-10T05:47:19.247Z",
+          "requestedAt": "2026-05-10T01:43:19.613Z",
           "resolution": {
-            "status": "approved",
-            "message": "Approved by DM.",
-            "dmReply": "yea.",
-            "resolvedAt": "2026-05-10T05:55:12.256Z",
+            "status": "denied",
+            "message": "Denied by DM.",
+            "dmReply": "",
+            "resolvedAt": "2026-05-10T05:55:50.316Z",
             "resolvedById": "dungeon-master"
           },
           "audit": {
-            "sourceSurface": "session_view",
+            "sourceSurface": "player",
             "sourceSurfaceVersion": "v1"
           }
         }
