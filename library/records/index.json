@@ -95,41 +95,6 @@
       "path": "library/records/traits/aina-trait-archery-test.json"
     },
     {
-      "id": "campaigns.quickquiver-shakedown",
-      "name": "Quickquiver Shakedown",
-      "collections": [
-        "campaigns"
-      ],
-      "tags": [
-        "table-test",
-        "gameplay-runtime",
-        "d-d-5e"
-      ],
-      "path": "library/records/campaigns/quickquiver-shakedown.json"
-    },
-    {
-      "id": "encounters.training-yard-volley",
-      "name": "Training Yard Volley",
-      "collections": [
-        "encounters"
-      ],
-      "tags": [
-        "encounter",
-        "ammo-test",
-        "training-yard"
-      ],
-      "path": "library/records/encounters/training-yard-volley.json"
-    },
-    {
-      "id": "tag:ranger",
-      "name": "Ranger",
-      "collections": [
-        "tags"
-      ],
-      "tags": [],
-      "path": "library/records/tags/ranger.json"
-    },
-    {
       "id": "parties.quickquiver-field-team",
       "name": "Quickquiver Field Team",
       "collections": [
@@ -141,6 +106,19 @@
         "ammo-test"
       ],
       "path": "library/records/parties/quickquiver-field-team.json"
+    },
+    {
+      "id": "campaigns.quickquiver-shakedown",
+      "name": "Quickquiver Shakedown",
+      "collections": [
+        "campaigns"
+      ],
+      "tags": [
+        "table-test",
+        "gameplay-runtime",
+        "d-d-5e"
+      ],
+      "path": "library/records/campaigns/quickquiver-shakedown.json"
     },
     {
       "id": "sessions.quickquiver-shakedown-active",
@@ -155,6 +133,28 @@
         "table-test"
       ],
       "path": "library/records/sessions/quickquiver-shakedown-active.json"
+    },
+    {
+      "id": "tag:ranger",
+      "name": "Ranger",
+      "collections": [
+        "tags"
+      ],
+      "tags": [],
+      "path": "library/records/tags/ranger.json"
+    },
+    {
+      "id": "encounters.training-yard-volley",
+      "name": "Training Yard Volley",
+      "collections": [
+        "encounters"
+      ],
+      "tags": [
+        "encounter",
+        "ammo-test",
+        "training-yard"
+      ],
+      "path": "library/records/encounters/training-yard-volley.json"
     },
     {
       "id": "wood-elf",
