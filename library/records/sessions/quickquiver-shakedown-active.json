@@ -127,6 +127,29 @@
             "sourceSurface": "player",
             "sourceSurfaceVersion": "v1"
           }
+        },
+        {
+          "id": "8885228e-fe89-4d39-9963-34be836880f9",
+          "kind": "short_rest",
+          "mode": "session_utility",
+          "status": "queued",
+          "actorId": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
+          "requestedById": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
+          "targetIds": [],
+          "payload": {
+            "summary": "Take a short rest and recover what the DM allows.",
+            "note": "",
+            "itemRef": ""
+          },
+          "roll": null,
+          "proposedDeltas": [],
+          "resultingDeltas": [],
+          "requestedAt": "2026-05-10T05:47:17.417Z",
+          "resolution": null,
+          "audit": {
+            "sourceSurface": "session_view",
+            "sourceSurfaceVersion": "v1"
+          }
         }
       ],
       "actionLog": [
@@ -213,7 +236,7 @@
       ],
       "poll": {
         "refreshMs": 30000,
-        "lastSyncedAt": "2026-05-10T01:43:19.613Z"
+        "lastSyncedAt": "2026-05-10T05:47:17.417Z"
       }
     }
   },
