@@ -706,21 +706,6 @@
         "updatedAt": "2026-05-03T15:10:50.038Z"
       },
       {
-        "id": "resources.resource-arrows-20",
-        "name": "Quiver Arrows",
-        "collections": [
-          "resources"
-        ],
-        "tags": [
-          "ammo",
-          "archery",
-          "test"
-        ],
-        "path": "library/records/resources/resource-arrows-20.json",
-        "sha": "",
-        "updatedAt": "2026-05-03T15:10:50.038Z"
-      },
-      {
         "id": "resources.capella-resource-legendary-action",
         "name": "Legendary Action",
         "collections": [
@@ -732,6 +717,21 @@
           "action-economy"
         ],
         "path": "library/records/resources/capella-resource-legendary-action.json",
+        "sha": "",
+        "updatedAt": "2026-05-03T15:10:50.038Z"
+      },
+      {
+        "id": "resources.resource-arrows-20",
+        "name": "Quiver Arrows",
+        "collections": [
+          "resources"
+        ],
+        "tags": [
+          "ammo",
+          "archery",
+          "test"
+        ],
+        "path": "library/records/resources/resource-arrows-20.json",
         "sha": "",
         "updatedAt": "2026-05-03T15:10:50.038Z"
       }
@@ -1525,8 +1525,8 @@
           "table-test"
         ],
         "path": "library/records/sessions/quickquiver-shakedown-active.json",
-        "sha": "c26540969233ea9e46217866e6c197a5152cdb39",
-        "updatedAt": "2026-05-10T05:55:13.245Z"
+        "sha": "c736b73aa453335718433429a433e5339dc22282",
+        "updatedAt": "2026-05-10T05:55:54.635Z"
       }
     ],
     "encounters": [
