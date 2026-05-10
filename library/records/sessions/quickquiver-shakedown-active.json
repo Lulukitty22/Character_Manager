@@ -77,29 +77,6 @@
             "sourceSurface": "session_view",
             "sourceSurfaceVersion": "v1"
           }
-        },
-        {
-          "id": "2e795d37-9f11-4604-bad7-bb81be87f551",
-          "kind": "short_rest",
-          "mode": "session_utility",
-          "status": "queued",
-          "actorId": "carol-elfnein",
-          "requestedById": "carol-elfnein",
-          "targetIds": [],
-          "payload": {
-            "summary": "Take a short rest and recover what the DM allows.",
-            "note": "",
-            "itemRef": ""
-          },
-          "roll": null,
-          "proposedDeltas": [],
-          "resultingDeltas": [],
-          "requestedAt": "2026-05-10T05:53:13.886Z",
-          "resolution": null,
-          "audit": {
-            "sourceSurface": "session_view",
-            "sourceSurfaceVersion": "v1"
-          }
         }
       ],
       "actionLog": [
@@ -260,6 +237,35 @@
           "audit": {
             "sourceSurface": "player",
             "createdBy": "phase1-seed"
+          }
+        },
+        {
+          "id": "2e795d37-9f11-4604-bad7-bb81be87f551",
+          "kind": "short_rest",
+          "mode": "session_utility",
+          "status": "approved",
+          "actorId": "carol-elfnein",
+          "requestedById": "carol-elfnein",
+          "targetIds": [],
+          "payload": {
+            "summary": "Take a short rest and recover what the DM allows.",
+            "note": "",
+            "itemRef": ""
+          },
+          "roll": null,
+          "proposedDeltas": [],
+          "resultingDeltas": [],
+          "requestedAt": "2026-05-10T05:53:13.886Z",
+          "resolution": {
+            "status": "approved",
+            "message": "Approved by DM.",
+            "dmReply": "go sleep goobers",
+            "resolvedAt": "2026-05-10T05:54:20.093Z",
+            "resolvedById": "dungeon-master"
+          },
+          "audit": {
+            "sourceSurface": "session_view",
+            "sourceSurfaceVersion": "v1"
           }
         }
       ],
