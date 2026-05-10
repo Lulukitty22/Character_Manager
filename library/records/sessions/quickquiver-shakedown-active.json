@@ -52,6 +52,29 @@
             "sourceSurface": "session_view",
             "sourceSurfaceVersion": "v1"
           }
+        },
+        {
+          "id": "f2513868-405c-41a4-bb2b-cd1e5bbbc645",
+          "kind": "ready_ammo",
+          "mode": "session_utility",
+          "status": "queued",
+          "actorId": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
+          "requestedById": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
+          "targetIds": [],
+          "payload": {
+            "summary": "Ready 1 Arrow Field Quiver",
+            "note": "",
+            "itemRef": "items.wondrous.quiver.field_quiver"
+          },
+          "roll": null,
+          "proposedDeltas": [],
+          "resultingDeltas": [],
+          "requestedAt": "2026-05-10T20:42:51.825Z",
+          "resolution": null,
+          "audit": {
+            "sourceSurface": "session_view",
+            "sourceSurfaceVersion": "v1"
+          }
         }
       ],
       "actionLog": [
@@ -335,7 +358,7 @@
       ],
       "poll": {
         "refreshMs": 10000,
-        "lastSyncedAt": "2026-05-10T20:40:08.182Z"
+        "lastSyncedAt": "2026-05-10T20:42:51.825Z"
       }
     }
   },
