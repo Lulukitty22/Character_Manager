@@ -1,5 +1,5 @@
 const SessionViewerApp = (() => {
-  const POLL_INTERVAL_MS = 30000;
+  const POLL_INTERVAL_MS = 10000;
   const state = {
     character: null,
     bootConfig: null,
@@ -8,6 +8,7 @@ const SessionViewerApp = (() => {
     lastNoticeTone: "neutral",
     alerts: [],
     writable: false,
+    activeSheetTab: "identity",
   };
   let pollTimer = null;
   let mountedContainer = null;
@@ -57,6 +58,7 @@ const SessionViewerApp = (() => {
   }
 
   function render(container) {
+    state.activeSheetTab = readActiveSheetTab(container) || state.activeSheetTab || "identity";
     const context = state.context || {};
     const suggestions = buildSuggestions(state.character, context);
     const personalQueue = buildPersonalQueue(context);
@@ -156,7 +158,12 @@ const SessionViewerApp = (() => {
     `;
 
     const sheetHost = container.querySelector("#player-sheet-host");
-    if (sheetHost) ViewCharacter.mount(sheetHost, state.character);
+    if (sheetHost) {
+      ViewCharacter.mount(sheetHost, state.character, {
+        activeTab: state.activeSheetTab,
+        onTabChange: (tabId) => { state.activeSheetTab = tabId || state.activeSheetTab; },
+      });
+    }
 
     wire(container);
   }
@@ -183,7 +190,7 @@ const SessionViewerApp = (() => {
     return `
       <section class="player-banner is-ready">
         <div class="player-banner-title">Ready to queue</div>
-        <div class="text-muted text-sm">GitHub auth is present in this browser, so queued requests can sync into the shared session records and poll roughly every 30 seconds.</div>
+        <div class="text-muted text-sm">GitHub auth is present in this browser, so queued requests can sync into the shared session records and poll roughly every 10 seconds.</div>
       </section>
     `;
   }
@@ -208,7 +215,7 @@ const SessionViewerApp = (() => {
           </div>
           <div class="player-action-row">
             <div class="player-section-label">Sync</div>
-            <div class="text-muted text-sm">GitHub is the canonical backend in v1. Manual refresh stays available, and authenticated runtime polling targets a 30-second cadence.</div>
+            <div class="text-muted text-sm">GitHub is the canonical backend in v1. Manual refresh stays available, and authenticated runtime polling targets a 10-second cadence.</div>
           </div>
         </div>
       </div>
@@ -489,9 +496,12 @@ const SessionViewerApp = (() => {
 
     try {
       await Library.upsert(destination.collection, recordClone);
+      applyUpdatedRuntimeRecord(destination.collection, recordClone);
       pushAlert("Request queued and synced to GitHub.", "positive");
-      await refreshRuntimeData({ forceApi: true, quiet: true });
       render(container);
+      refreshRuntimeData({ forceApi: true, quiet: true }).then(() => {
+        if (mountedContainer) render(mountedContainer);
+      }).catch(() => {});
     } catch (error) {
       pushAlert(`Could not queue request: ${error.message || String(error)}`, "negative");
       render(container);
@@ -553,9 +563,12 @@ const SessionViewerApp = (() => {
 
     try {
       await Library.upsert(destination.collection, recordClone);
+      applyUpdatedRuntimeRecord(destination.collection, recordClone);
       pushAlert(`Queued: ${draft.summary || humanizeActionKind(draft.kind || "utility")}`, "positive");
-      await refreshRuntimeData({ forceApi: true, quiet: true });
       render(container);
+      refreshRuntimeData({ forceApi: true, quiet: true }).then(() => {
+        if (mountedContainer) render(mountedContainer);
+      }).catch(() => {});
     } catch (error) {
       pushAlert(`Could not queue request: ${error.message || String(error)}`, "negative");
       render(container);
@@ -826,6 +839,31 @@ const SessionViewerApp = (() => {
 
   function escapeAttr(text) {
     return escapeHTML(text).replace(/`/g, "&#96;");
+  }
+
+  function readActiveSheetTab(container) {
+    return container?.querySelector?.("#player-sheet-host .ovh-tab.active")?.getAttribute("data-ovh-tab")
+      || container?.querySelector?.("#player-sheet-host .ovh-panel.active")?.getAttribute("data-ovh-panel")
+      || "";
+  }
+
+  function applyUpdatedRuntimeRecord(collection, record) {
+    if (!record?.id) return;
+    const key = collection === "encounters" ? "encounters" : "sessions";
+    const list = Array.isArray(state.context?.[key]) ? [...state.context[key]] : [];
+    const index = list.findIndex((entry) => entry?.id === record.id);
+    const runtimeRecord = typeof LibraryRecords !== "undefined" && typeof LibraryRecords.toRuntimeRecord === "function"
+      ? LibraryRecords.toRuntimeRecord(record, collection)
+      : record;
+    if (index >= 0) list[index] = runtimeRecord;
+    else list.unshift(runtimeRecord);
+    state.context[key] = list;
+    if (key === "sessions" && state.context.session?.id === runtimeRecord.id) {
+      state.context.session = runtimeRecord;
+    }
+    if (key === "encounters" && state.context.encounter?.id === runtimeRecord.id) {
+      state.context.encounter = runtimeRecord;
+    }
   }
 
   return { mount };

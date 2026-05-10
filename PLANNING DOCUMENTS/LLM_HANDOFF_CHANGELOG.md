@@ -21,12 +21,15 @@ Use this file as a lightweight inbox between LLMs/Codex/assistants. Keep it shor
 - `D&D Gameplay` is an action hub, not a full duplicate sheet or global log dump.
 - Source tabs keep detailed histories.
 - GitHub is v1 canonical backend.
-- Active gameplay surfaces target roughly 30-second polling plus manual refresh.
+- Active gameplay surfaces target roughly 10-second polling plus manual refresh.
 - Exported HTML shims stay tiny and must not embed secrets.
 - Prefer stable ids/refs over free-text labels in records.
 
 ## Current Notes / Inbox
 
+- 2026-05-10: Tightened active gameplay polling from roughly 30 seconds to 10 seconds in Session View and Dungeon Master because real-world GitHub refresh felt responsive enough to justify the faster cadence.
+- 2026-05-10: Session View now preserves the currently open sheet tab across rerenders so background polling stops bouncing people back to the first tab.
+- 2026-05-10: Dungeon Master now treats alerts and recent adjudication updates as one inbox lane, and successful approve/deny actions optimistically remove their queued row before the next fetch cycle.
 - 2026-05-10: Chose shared inventory/item-action widgets as the next implementation slice because they unlock reuse across Editor, Character Card, and Session View faster than starting with Dungeon Master or full HP unification.
 - 2026-05-10: Scoped this pass to shared inventory/action primitives first, with HP/resource unification treated as a follow-up if time stays clean after the inventory migration.
 - 2026-05-10: Realized item-action reuse needs a common mutation layer too, otherwise a shared inventory/action menu would only be presentation-deep and still keep behavior trapped in editor-only code.

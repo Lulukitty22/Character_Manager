@@ -1,5 +1,5 @@
 const DungeonMasterApp = (() => {
-  const POLL_INTERVAL_MS = 30000;
+  const POLL_INTERVAL_MS = 10000;
   const state = {
     context: {
       parties: [],
@@ -49,6 +49,7 @@ const DungeonMasterApp = (() => {
     const activeEncounters = (state.context.encounters || []).filter((entry) => isActiveStatus(entry.status));
     const queuedEntries = collectQueueEntries();
     const historyEntries = collectHistoryEntries();
+    const inboxEntries = buildInboxEntries(historyEntries);
 
     container.innerHTML = `
       <div class="dm-shell">
@@ -76,7 +77,7 @@ const DungeonMasterApp = (() => {
             <div class="dm-card-header">
               <div class="dm-card-copy">
                 <h2>Overview</h2>
-                <div class="dm-note">Live-ish session state from GitHub with 30-second polling plus manual refresh.</div>
+                <div class="dm-note">Live-ish session state from GitHub with 10-second polling plus manual refresh.</div>
               </div>
             </div>
             <div class="dm-stat-grid">
@@ -122,11 +123,11 @@ const DungeonMasterApp = (() => {
             <section class="dm-card span-4">
               <div class="dm-card-header">
                 <div class="dm-card-copy">
-                  <h2>Alerts</h2>
-                  <div class="dm-note">Sync notes, auth changes, and recent DM actions.</div>
+                  <h2>Session Inbox</h2>
+                  <div class="dm-note">Sync notes and recent adjudication updates in one place.</div>
                 </div>
               </div>
-              ${renderAlerts()}
+              ${renderInbox(inboxEntries)}
             </section>
 
             <section class="dm-card span-12">
@@ -260,14 +261,19 @@ const DungeonMasterApp = (() => {
     `;
   }
 
-  function renderAlerts() {
-    if (!state.alerts.length) return `<div class="dm-empty">No alerts yet.</div>`;
+  function renderInbox(entries = []) {
+    if (!entries.length) return `<div class="dm-empty">No inbox events yet.</div>`;
     return `
       <div class="dm-list">
-        ${state.alerts.map((entry) => `
+        ${entries.map((entry) => `
           <div class="dm-row">
-            <div class="dm-row-title">${escapeHTML(entry.title)}</div>
-            <div class="dm-row-meta">${escapeHTML(entry.meta)}</div>
+            <div class="dm-row-top">
+              <div>
+                <div class="dm-row-title">${escapeHTML(entry.title)}</div>
+                <div class="dm-row-meta">${escapeHTML(entry.meta)}</div>
+              </div>
+              <span class="badge">${escapeHTML(entry.status || "notice")}</span>
+            </div>
             ${entry.note ? `<div class="dm-note">${escapeHTML(entry.note)}</div>` : ""}
           </div>
         `).join("")}
@@ -347,9 +353,15 @@ const DungeonMasterApp = (() => {
 
     try {
       await Library.upsert(entry.collection, record);
+      applyUpdatedRuntimeRecord(entry.collection, record);
       pushAlert(`${status === "approved" ? "Approved" : "Denied"}: ${entry.title}`, status === "approved" ? "positive" : "negative");
-      await refreshRuntimeData({ forceApi: true, quiet: true });
       render(mountedContainer);
+      refreshRuntimeData({ forceApi: true, quiet: true }).then(() => {
+        if (mountedContainer) render(mountedContainer);
+      }).catch((error) => {
+        pushAlert(`Background refresh failed after ${status}: ${error.message || String(error)}`, "negative");
+        if (mountedContainer) render(mountedContainer);
+      });
     } catch (error) {
       pushAlert(`Could not update ${entry.scope}: ${error.message || String(error)}`, "negative");
       render(mountedContainer);
@@ -396,6 +408,25 @@ const DungeonMasterApp = (() => {
     };
   }
 
+  function buildInboxEntries(historyEntries = []) {
+    const alertEntries = (state.alerts || []).map((entry) => ({
+      title: entry.title,
+      meta: entry.meta,
+      note: entry.note,
+      status: entry.status,
+      sortAt: entry.sortAt,
+    }));
+
+    const recentHistory = historyEntries.slice(0, 8).map((entry) => ({
+      ...entry,
+      status: entry.status || "logged",
+    }));
+
+    return [...alertEntries, ...recentHistory]
+      .sort((left, right) => String(right.sortAt || "").localeCompare(String(left.sortAt || "")))
+      .slice(0, 12);
+  }
+
   function pushAlert(message, tone = "neutral", persist = true) {
     state.lastNotice = message;
     state.lastNoticeTone = tone;
@@ -403,6 +434,7 @@ const DungeonMasterApp = (() => {
       title: tone === "negative" ? "Dungeon Master Alert" : "Dungeon Master Notice",
       meta: new Date().toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }),
       note: message,
+      status: tone === "negative" ? "alert" : "notice",
       sortAt: new Date().toISOString(),
     };
     if (persist) state.alerts = [entry, ...(state.alerts || [])].slice(0, 12);
@@ -472,6 +504,19 @@ const DungeonMasterApp = (() => {
       .replace(/>/g, "&gt;")
       .replace(/"/g, "&quot;")
       .replace(/'/g, "&#39;");
+  }
+
+  function applyUpdatedRuntimeRecord(collection, record) {
+    if (!record?.id) return;
+    const key = collection === "encounters" ? "encounters" : "sessions";
+    const list = Array.isArray(state.context?.[key]) ? [...state.context[key]] : [];
+    const index = list.findIndex((entry) => entry?.id === record.id);
+    const runtimeRecord = typeof LibraryRecords !== "undefined" && typeof LibraryRecords.toRuntimeRecord === "function"
+      ? LibraryRecords.toRuntimeRecord(record, collection)
+      : record;
+    if (index >= 0) list[index] = runtimeRecord;
+    else list.unshift(runtimeRecord);
+    state.context[key] = list;
   }
 
   return { mount };

@@ -40,7 +40,7 @@ Currently implemented under Session View naming cleanup:
   - Session View side-panel structure
   - inbox/alerts plumbing
   - shared GitHub auth drawer entrypoint
-  - 30-second polling scaffolding
+  - 10-second polling scaffolding
 
 Next:
 
@@ -49,7 +49,7 @@ Next:
 - Route `encounter` actions/logs to encounter records.
 - finish the unified alert-lane behavior and inbox polish
 - deepen the shared auth widget flow and connected-user UX
-- live-test the 30-second polling/manual refresh behavior in a normal browser
+- live-test the 10-second polling/manual refresh behavior in a normal browser
 
 ## Recently Landed Shared Runtime Items
 
@@ -66,8 +66,8 @@ These are now present in the repo:
 - spell-slot/cast history added to the shared `Spells` tab
 - GitHub auth drawer entrypoint added to editor shell and Session View shell
 - Session View inbox/alerts plumbing added
-- near-real-time polling scaffolding added at 30-second interval
-- default/session seed polling interval changed from 5 minutes to 30 seconds
+- near-real-time polling scaffolding added at 10-second interval
+- default/session seed polling interval changed from 5 minutes to 10 seconds
 - common gameplay item-mutation helpers added in `data/common/scripts/gameplay-mutations.js`
 - common HP helper added in `data/common/scripts/widgets/hp-widget.js`
 - common spell-slot helper added in `data/common/scripts/widgets/spell-slot-widget.js`
@@ -131,7 +131,7 @@ Recommended order:
 
 ### Sync and Records
 
-- Polling target is about 30 seconds.
+- Polling target is about 10 seconds.
 - Manual refresh works.
 - Queued actions survive refresh/reload.
 - Overlapping writes do not silently drop requests.

@@ -25,4 +25,4 @@ This folder replaces the oversized unified planning document with small, named M
 
 ## One-Screen Summary
 
-Build the sheet runtime around shared widgets in `data/common`. Public surfaces are `Editor`, `Character Card`, `Session View`, and a future `Dungeon Master View`. `D&D Gameplay` is the shared action hub, not a second full sheet or global log dump. Session View queues actions in v1 and does not directly mutate canonical gameplay state. GitHub remains canonical for v1, with roughly 30-second polling plus manual refresh. Exported HTML files stay tiny shims and never embed secrets.
+Build the sheet runtime around shared widgets in `data/common`. Public surfaces are `Editor`, `Character Card`, `Session View`, and a future `Dungeon Master View`. `D&D Gameplay` is the shared action hub, not a second full sheet or global log dump. Session View queues actions in v1 and does not directly mutate canonical gameplay state. GitHub remains canonical for v1, with roughly 10-second polling plus manual refresh. Exported HTML files stay tiny shims and never embed secrets.

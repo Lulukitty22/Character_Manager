@@ -10,7 +10,7 @@ Generated from the oversized unified plan plus the regenerated Codex split docs.
 - `D&D Gameplay` action-hub model.
 - Session View queue-only v1 model.
 - Campaign/session/encounter/action record shapes.
-- GitHub v1 canonical sync with about 30-second polling.
+- GitHub v1 canonical sync with about 10-second polling.
 - Thin-shim export contract.
 - Ammo/inventory/resource stress-test loop.
 - Roadmap/status/testing checklist.
@@ -31,4 +31,4 @@ The previously tentative shared-runtime claims have now been verified in repo co
 - shared `D&D Gameplay` renderer
 - manifest/boot preset wiring
 - Session View inbox/alerts scaffolding
-- 30-second polling scaffolding
+- 10-second polling scaffolding

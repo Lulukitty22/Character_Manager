@@ -100,7 +100,7 @@ const ViewCharacter = (() => {
     ];
   }
 
-  function buildHTML(character) {
+  function buildHTML(character, options = {}) {
     if (typeof Library !== "undefined") {
       character = Library.resolveCharacterSync(character);
     }
@@ -113,8 +113,12 @@ const ViewCharacter = (() => {
       .filter(t => t.content && t.content.trim().length > 0);
 
     const headerHTML = ViewCharacterHeader.render(character, tabs);
+    const preferredTab = options.activeTab && tabs.some(tab => tab.id === options.activeTab)
+      ? options.activeTab
+      : (tabs[0]?.id || "");
+
     const panelsHTML = tabs.map((t, i) => `
-      <section class="ovh-panel ${i === 0 ? "active" : ""}" data-ovh-panel="${t.id}">
+      <section class="ovh-panel ${(t.id === preferredTab) || (!preferredTab && i === 0) ? "active" : ""}" data-ovh-panel="${t.id}">
         ${t.content}
       </section>
     `).join("");
@@ -133,7 +137,7 @@ const ViewCharacter = (() => {
   /**
    * Wire tab switching + delegate to existing section interactivity.
    */
-  function wireInteractive(containerEl, character) {
+  function wireInteractive(containerEl, character, options = {}) {
     // Tab switching — clicking a .ovh-tab activates its panel
     const tabs = containerEl.querySelectorAll(".ovh-tab");
     const panels = containerEl.querySelectorAll(".ovh-panel");
@@ -142,6 +146,7 @@ const ViewCharacter = (() => {
         const target = tab.getAttribute("data-ovh-tab");
         tabs.forEach(t => t.classList.toggle("active", t === tab));
         panels.forEach(p => p.classList.toggle("active", p.getAttribute("data-ovh-panel") === target));
+        options.onTabChange?.(target);
       });
     });
 
@@ -167,12 +172,12 @@ const ViewCharacter = (() => {
     ViewCharacterUtils.wireRecordCardViewers?.(containerEl);
   }
 
-  function mount(containerEl, character) {
+  function mount(containerEl, character, options = {}) {
     if (typeof SurfacePresets !== "undefined" && !globalThis.__ACTIVE_SHEET_SURFACE__) {
       SurfacePresets.setActivePreset("character_card");
     }
-    containerEl.innerHTML = buildHTML(character);
-    wireInteractive(containerEl, character);
+    containerEl.innerHTML = buildHTML(character, options);
+    wireInteractive(containerEl, character, options);
   }
 
   return {

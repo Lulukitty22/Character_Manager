@@ -97,7 +97,7 @@ GitHub remains canonical for v1:
 
 Use:
 
-- roughly 30-second polling while Session View or Dungeon Master View is open
+- roughly 10-second polling while Session View or Dungeon Master View is open
 - manual refresh controls
 - local pending/request state between polls
 - conflict-safe writes
