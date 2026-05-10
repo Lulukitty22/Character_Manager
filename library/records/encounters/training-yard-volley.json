@@ -61,69 +61,7 @@
           "notes": "First turn of the drill."
         }
       ],
-      "queuedActions": [
-        {
-          "id": "action.request.training-shot",
-          "kind": "attack",
-          "mode": "encounter",
-          "status": "queued",
-          "actorId": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
-          "requestedById": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
-          "targetIds": [
-            "hay-bale-target"
-          ],
-          "payload": {
-            "itemRef": "items.weapon.shortbow.field_shortbow",
-            "summary": "Aina requests a shortbow attack against the training target."
-          },
-          "roll": {
-            "id": "roll.request.training-shot",
-            "kind": "attack",
-            "formula": "1d20+7",
-            "ability": "dex",
-            "skill": "",
-            "dc": 12,
-            "advantage": "normal",
-            "modifiers": [
-              {
-                "label": "Dexterity",
-                "value": 4,
-                "source": "character"
-              },
-              {
-                "label": "Proficiency",
-                "value": 3,
-                "source": "weapon"
-              }
-            ],
-            "visibility": "public",
-            "requestedById": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
-            "rolledById": "",
-            "result": null
-          },
-          "proposedDeltas": [
-            {
-              "id": "delta.request.training-shot.ammo",
-              "targetType": "character",
-              "targetId": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
-              "path": "customResources/resources.resource-arrows-20",
-              "operation": "adjust",
-              "value": -1,
-              "previousValue": null,
-              "nextValue": null,
-              "reason": "Spend one readied arrow to take the shot.",
-              "source": "items.weapon.shortbow.field_shortbow"
-            }
-          ],
-          "resultingDeltas": [],
-          "requestedAt": "2026-05-09T10:07:00.000Z",
-          "resolution": null,
-          "audit": {
-            "sourceSurface": "player",
-            "createdBy": "phase1-seed"
-          }
-        }
-      ],
+      "queuedActions": [],
       "actionLog": [
         {
           "id": "action.applied.training-shot",
@@ -208,6 +146,73 @@
           "audit": {
             "sourceSurface": "dm",
             "projectedToCharacter": true
+          }
+        },
+        {
+          "id": "action.request.training-shot",
+          "kind": "attack",
+          "mode": "encounter",
+          "status": "denied",
+          "actorId": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
+          "requestedById": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
+          "targetIds": [
+            "hay-bale-target"
+          ],
+          "payload": {
+            "itemRef": "items.weapon.shortbow.field_shortbow",
+            "summary": "Aina requests a shortbow attack against the training target."
+          },
+          "roll": {
+            "id": "roll.request.training-shot",
+            "kind": "attack",
+            "formula": "1d20+7",
+            "ability": "dex",
+            "skill": "",
+            "dc": 12,
+            "advantage": "normal",
+            "modifiers": [
+              {
+                "label": "Dexterity",
+                "value": 4,
+                "source": "character"
+              },
+              {
+                "label": "Proficiency",
+                "value": 3,
+                "source": "weapon"
+              }
+            ],
+            "visibility": "public",
+            "requestedById": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
+            "rolledById": "",
+            "result": null
+          },
+          "proposedDeltas": [
+            {
+              "id": "delta.request.training-shot.ammo",
+              "targetType": "character",
+              "targetId": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
+              "path": "customResources/resources.resource-arrows-20",
+              "operation": "adjust",
+              "value": -1,
+              "previousValue": null,
+              "nextValue": null,
+              "reason": "Spend one readied arrow to take the shot.",
+              "source": "items.weapon.shortbow.field_shortbow"
+            }
+          ],
+          "resultingDeltas": [],
+          "requestedAt": "2026-05-09T10:07:00.000Z",
+          "resolution": {
+            "status": "denied",
+            "message": "Denied by DM.",
+            "dmReply": "nope you miss lmao",
+            "resolvedAt": "2026-05-10T05:55:22.737Z",
+            "resolvedById": "dungeon-master"
+          },
+          "audit": {
+            "sourceSurface": "player",
+            "createdBy": "phase1-seed"
           }
         }
       ],
