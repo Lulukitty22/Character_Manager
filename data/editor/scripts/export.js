@@ -45,6 +45,31 @@ const SheetExporter = (() => {
     downloadHTML(html, `${safeFile}-sheet.html`);
   }
 
+  function exportPlayerCharacter(characterData, filePath) {
+    const owner = localStorage.getItem("githubOwner") || "";
+    const repo = localStorage.getItem("githubRepo") || "";
+
+    if (!owner || !repo) {
+      App.showToast("GitHub owner/repo not configured. Set them in Settings first.", "error");
+      return;
+    }
+
+    const characterId = characterData?.id || "";
+    const name = characterData?.identity?.name || "Character";
+    const safeFile = name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+    const html = buildPlayerExportHtml({
+      characterId,
+      characterPath: filePath,
+      owner,
+      repo,
+      branch: EXPORT_BRANCH,
+      schemaVersion: getSchemaVersionString(),
+      characterName: name,
+    });
+
+    downloadHTML(html, `${safeFile}-player.html`);
+  }
+
   function exportEditor(_characterData, _filePath) {
     App.showToast("Per-character editor exports were retired. Use share/Character_Manager_Editor.html instead.", "info");
   }
@@ -72,23 +97,46 @@ const SheetExporter = (() => {
 </html>`;
   }
 
-  function buildShellBootstrap(shellUrl) {
+  function buildPlayerExportHtml(opts) {
+    const title = `${escapeHtml(opts.characterName)} - Player Gameplay`;
+    const bootUrl = `https://raw.githubusercontent.com/${opts.owner}/${opts.repo}/${opts.branch}/data/player/boot.js`;
+    return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>${title}</title>
+  <meta name="character-id" content="${escapeAttr(opts.characterId)}" />
+  <meta name="character-path" content="${escapeAttr(opts.characterPath)}" />
+  <meta name="schema-version" content="${escapeAttr(opts.schemaVersion)}" />
+  <meta name="github-owner" content="${escapeAttr(opts.owner)}" />
+  <meta name="github-repo" content="${escapeAttr(opts.repo)}" />
+  <meta name="github-branch" content="${escapeAttr(opts.branch)}" />
+</head>
+<body>
+  <div id="app-root"></div>
+  ${buildShellBootstrap(bootUrl, "player surface")}
+</body>
+</html>`;
+  }
+
+  function buildShellBootstrap(shellUrl, label = "viewer") {
     const shellUrlJson = JSON.stringify(shellUrl);
     return `<script>
     (async function () {
       var shellUrl = ${shellUrlJson};
       try {
         var response = await fetch(shellUrl, { cache: "no-store" });
-        if (!response.ok) throw new Error("HTTP " + response.status + " loading viewer boot");
+        if (!response.ok) throw new Error("HTTP " + response.status + " loading ${label}");
         var script = document.createElement("script");
         script.textContent = await response.text();
         script.textContent += "\\n//# sourceURL=" + shellUrl;
         document.head.appendChild(script);
       } catch (error) {
         var message = error && error.message ? error.message : String(error);
-        alert("Could not load the character viewer.\\n\\n" + message);
+        alert("Could not load the ${label}.\\n\\n" + message);
         var root = document.getElementById("app-root");
-        if (root) root.textContent = "Could not load viewer: " + message;
+        if (root) root.textContent = "Could not load ${label}: " + message;
       }
     })();
   </script>`;
@@ -119,6 +167,7 @@ const SheetExporter = (() => {
 
   return {
     exportCharacter,
+    exportPlayerCharacter,
     exportEditor,
   };
 

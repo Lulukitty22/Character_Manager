@@ -36,6 +36,19 @@
             "ammo-test"
           ],
           "metadata": {}
+        },
+        {
+          "kind": "encounter-target",
+          "id": "hay-bale-target",
+          "label": "Hay Bale Target",
+          "characterPath": "",
+          "recordPath": "",
+          "side": "neutral",
+          "owner": "",
+          "tags": [
+            "training"
+          ],
+          "metadata": {}
         }
       ],
       "initiative": [
@@ -54,35 +67,10 @@
           "kind": "attack",
           "mode": "encounter",
           "status": "queued",
-          "actor": {
-            "kind": "character",
-            "id": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
-            "label": "Aina Quickquiver",
-            "characterPath": "library/characters/aina-quickquiver.json",
-            "recordPath": "",
-            "side": "party",
-            "owner": "player",
-            "tags": [
-              "archery",
-              "ammo-test"
-            ],
-            "metadata": {}
-          },
-          "targets": [
-            {
-              "kind": "encounter-target",
-              "id": "hay-bale-target",
-              "label": "Hay Bale Target",
-              "characterPath": "",
-              "recordPath": "",
-              "side": "neutral",
-              "owner": "",
-              "tags": [
-                "training"
-              ],
-              "metadata": {},
-              "relation": "target"
-            }
+          "actorId": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
+          "requestedById": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
+          "targetIds": [
+            "hay-bale-target"
           ],
           "payload": {
             "itemRef": "items.item-shortbow-archery-test",
@@ -109,8 +97,8 @@
               }
             ],
             "visibility": "public",
-            "requestedBy": "aina-quickquiver",
-            "rolledBy": "",
+            "requestedById": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
+            "rolledById": "",
             "result": null
           },
           "proposedDeltas": [
@@ -129,7 +117,6 @@
           ],
           "resultingDeltas": [],
           "requestedAt": "2026-05-09T10:07:00.000Z",
-          "requestedBy": "aina-quickquiver",
           "resolution": null,
           "audit": {
             "sourceSurface": "player",
@@ -143,35 +130,10 @@
           "kind": "attack",
           "mode": "encounter",
           "status": "applied",
-          "actor": {
-            "kind": "character",
-            "id": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
-            "label": "Aina Quickquiver",
-            "characterPath": "library/characters/aina-quickquiver.json",
-            "recordPath": "",
-            "side": "party",
-            "owner": "player",
-            "tags": [
-              "archery",
-              "ammo-test"
-            ],
-            "metadata": {}
-          },
-          "targets": [
-            {
-              "kind": "encounter-target",
-              "id": "hay-bale-target",
-              "label": "Hay Bale Target",
-              "characterPath": "",
-              "recordPath": "",
-              "side": "neutral",
-              "owner": "",
-              "tags": [
-                "training"
-              ],
-              "metadata": {},
-              "relation": "target"
-            }
+          "actorId": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
+          "requestedById": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
+          "targetIds": [
+            "hay-bale-target"
           ],
           "payload": {
             "itemRef": "items.item-shortbow-archery-test",
@@ -198,8 +160,8 @@
               }
             ],
             "visibility": "public",
-            "requestedBy": "aina-quickquiver",
-            "rolledBy": "dm.training-yard",
+            "requestedById": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
+            "rolledById": "dm.training-yard",
             "result": {
               "raw": 11,
               "total": 18,
@@ -236,12 +198,12 @@
             }
           ],
           "requestedAt": "2026-05-09T10:07:00.000Z",
-          "requestedBy": "aina-quickquiver",
           "resolution": {
             "status": "approved",
-            "note": "Hit accepted for the drill.",
+            "message": "Hit accepted for the drill.",
+            "dmReply": "Clean shot. Count the ammo spend and mark the target hit.",
             "resolvedAt": "2026-05-09T10:07:20.000Z",
-            "resolvedBy": "dm.training-yard"
+            "resolvedById": "dm.training-yard"
           },
           "audit": {
             "sourceSurface": "dm",

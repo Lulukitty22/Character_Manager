@@ -172,6 +172,7 @@ const CharacterList = (() => {
         <div class="card-actions">
           <button class="button button-primary button-sm btn-edit-char">Edit</button>
           <button class="button button-ghost button-sm btn-view-sheet">View</button>
+          <button class="button button-ghost button-sm btn-export-player">Player</button>
           <button class="button button-ghost button-sm btn-export-sheet">Export</button>
           <button class="button button-danger button-sm btn-delete-char">Delete</button>
         </div>
@@ -196,6 +197,12 @@ const CharacterList = (() => {
       const result = await App.loadCharacter(filePath);
       if (!result) return;
       SheetExporter.exportCharacter(result.data, filePath);
+    });
+
+    cardEl.querySelector(".btn-export-player")?.addEventListener("click", async () => {
+      const result = await App.loadCharacter(filePath);
+      if (!result) return;
+      SheetExporter.exportPlayerCharacter(result.data, filePath);
     });
 
     cardEl.querySelector(".btn-delete-char")?.addEventListener("click", async () => {
@@ -235,6 +242,7 @@ const CharacterList = (() => {
         <div class="sheet-preview-toolbar flex-between">
           <span class="text-muted text-sm">Preview - ${escapeHTML(filePath)}</span>
           <div class="flex gap-2">
+            <button class="button button-ghost button-sm" id="btn-export-player-preview">Player</button>
             <button class="button button-ghost button-sm" id="btn-export-preview">Export</button>
             <button class="button button-ghost button-sm" id="btn-close-preview">Close</button>
           </div>
@@ -248,6 +256,9 @@ const CharacterList = (() => {
     overlay.querySelector("#btn-close-preview").addEventListener("click", () => overlay.remove());
     overlay.querySelector("#btn-export-preview").addEventListener("click", () => {
       SheetExporter.exportCharacter(characterData, filePath);
+    });
+    overlay.querySelector("#btn-export-player-preview").addEventListener("click", () => {
+      SheetExporter.exportPlayerCharacter(characterData, filePath);
     });
     overlay.addEventListener("click", (event) => {
       if (event.target === overlay) overlay.remove();

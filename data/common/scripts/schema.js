@@ -191,8 +191,8 @@ const Schema = (() => {
         ? patch.modifiers.map(createGameplayRollModifier)
         : [],
       visibility: patch.visibility || "public",
-      requestedBy: patch.requestedBy || "",
-      rolledBy: patch.rolledBy || "",
+      requestedById: patch.requestedById || patch.requestedBy || "",
+      rolledById: patch.rolledById || patch.rolledBy || "",
       result: patch.result && typeof patch.result === "object"
         ? {
           raw: Number(patch.result.raw || 0) || 0,
@@ -225,10 +225,13 @@ const Schema = (() => {
       kind: patch.kind || "utility",
       mode: patch.mode || "session_utility",
       status: patch.status || "queued",
-      actor: createGameplayActorRef(patch.actor || {}),
-      targets: Array.isArray(patch.targets)
-        ? patch.targets.map(createGameplayTargetRef)
-        : [],
+      actorId: patch.actorId || patch.actor?.id || "",
+      requestedById: patch.requestedById || patch.requestedBy || patch.actorId || patch.actor?.id || "",
+      targetIds: Array.isArray(patch.targetIds)
+        ? patch.targetIds.map(value => String(value || "").trim()).filter(Boolean)
+        : Array.isArray(patch.targets)
+          ? patch.targets.map(target => String(target?.id || "").trim()).filter(Boolean)
+          : [],
       payload: patch.payload && typeof patch.payload === "object" ? { ...patch.payload } : {},
       roll: patch.roll ? createGameplayRollPayload(patch.roll) : null,
       proposedDeltas: Array.isArray(patch.proposedDeltas)
@@ -238,13 +241,13 @@ const Schema = (() => {
         ? patch.resultingDeltas.map(createGameplayStateDelta)
         : [],
       requestedAt: patch.requestedAt || new Date().toISOString(),
-      requestedBy: patch.requestedBy || "",
       resolution: patch.resolution && typeof patch.resolution === "object"
         ? {
           status: patch.resolution.status || "",
-          note: patch.resolution.note || "",
+          message: patch.resolution.message || patch.resolution.note || "",
+          dmReply: patch.resolution.dmReply || "",
           resolvedAt: patch.resolution.resolvedAt || "",
-          resolvedBy: patch.resolution.resolvedBy || "",
+          resolvedById: patch.resolution.resolvedById || patch.resolution.resolvedBy || "",
         }
         : null,
       audit: patch.audit && typeof patch.audit === "object" ? { ...patch.audit } : {},
@@ -258,9 +261,10 @@ const Schema = (() => {
     });
     action.resolution = {
       status: patch.resolution?.status || action.status,
-      note: patch.resolution?.note || "",
+      message: patch.resolution?.message || patch.resolution?.note || "",
+      dmReply: patch.resolution?.dmReply || "",
       resolvedAt: patch.resolution?.resolvedAt || new Date().toISOString(),
-      resolvedBy: patch.resolution?.resolvedBy || "",
+      resolvedById: patch.resolution?.resolvedById || patch.resolution?.resolvedBy || "",
     };
     return action;
   }

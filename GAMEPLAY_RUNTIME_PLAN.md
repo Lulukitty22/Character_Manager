@@ -95,14 +95,18 @@ Introduce a new collection family for:
 
 ### Action Event / Queue Item
 
-- actor ref
-- target refs
+- `actorId`
+- `requestedById`
+- `targetIds`
 - action kind
 - payload
 - status: `queued` / `approved` / `denied` / `canceled` / `applied`
 - roll data if present
+- proposed state deltas
 - resulting state deltas
 - audit metadata
+
+Keep the canonical saved shape lean. Rich labels, paths, and display-friendly actor cards can be hydrated at runtime from the current party/session/encounter context instead of being copied into every saved log entry.
 
 Characters remain canonical long-lived sheets. Campaign/session/encounter records hold the live play context.
 
@@ -221,14 +225,14 @@ Store structured event entries, not only human text.
 
 Each important action should record:
 
-- actor
+- actor id
 - context
 - roll formula / rolled result / modifiers
-- target
+- target ids
 - approval result
 - applied deltas
 - timestamp
-- optional table note
+- optional table note / DM reply
 
 ### Derived State
 
@@ -300,6 +304,7 @@ Do not leave these as informal blobs; make them named shapes in the schema/runti
 - support queueing self-actions
 - support session utility mode for non-combat actions
 - show personal logs/history
+- keep the first Player MVP readable for anyone who can open the file, but only writable when the browser already has a GitHub PAT configured for the repo
 
 ### Phase 3: DM Surface
 

@@ -35,21 +35,9 @@
           "kind": "craft",
           "mode": "session_utility",
           "status": "queued",
-          "actor": {
-            "kind": "character",
-            "id": "carol-elfnein",
-            "label": "Carol Elfnein",
-            "characterPath": "library/characters/carol-elfnein.json",
-            "recordPath": "",
-            "side": "party",
-            "owner": "player",
-            "tags": [
-              "alchemy",
-              "downtime"
-            ],
-            "metadata": {}
-          },
-          "targets": [],
+          "actorId": "carol-elfnein",
+          "requestedById": "carol-elfnein",
+          "targetIds": [],
           "payload": {
             "template": "brew-healing-potion",
             "summary": "Carol wants to spend downtime making a healing potion.",
@@ -89,8 +77,8 @@
               }
             ],
             "visibility": "public",
-            "requestedBy": "carol-elfnein",
-            "rolledBy": "",
+            "requestedById": "carol-elfnein",
+            "rolledById": "",
             "result": null
           },
           "proposedDeltas": [
@@ -109,7 +97,6 @@
           ],
           "resultingDeltas": [],
           "requestedAt": "2026-05-09T10:05:00.000Z",
-          "requestedBy": "carol-elfnein",
           "resolution": null,
           "audit": {
             "sourceSurface": "player",
@@ -123,21 +110,9 @@
           "kind": "ready_ammo",
           "mode": "session_utility",
           "status": "applied",
-          "actor": {
-            "kind": "character",
-            "id": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
-            "label": "Aina Quickquiver",
-            "characterPath": "library/characters/aina-quickquiver.json",
-            "recordPath": "",
-            "side": "party",
-            "owner": "player",
-            "tags": [
-              "archery",
-              "ammo-test"
-            ],
-            "metadata": {}
-          },
-          "targets": [],
+          "actorId": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
+          "requestedById": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
+          "targetIds": [],
           "payload": {
             "itemRef": "items.item-field-quiver-archery-test",
             "resourceRef": "resources.resource-arrows-20",
@@ -198,12 +173,12 @@
             }
           ],
           "requestedAt": "2026-05-09T10:06:00.000Z",
-          "requestedBy": "aina-quickquiver",
           "resolution": {
             "status": "approved",
-            "note": "Approved as part of the training setup.",
+            "message": "Approved as part of the training setup.",
+            "dmReply": "Ready the first volley and keep the training log clean.",
             "resolvedAt": "2026-05-09T10:06:15.000Z",
-            "resolvedBy": "dm.training-yard"
+            "resolvedById": "dm.training-yard"
           },
           "audit": {
             "sourceSurface": "dm",

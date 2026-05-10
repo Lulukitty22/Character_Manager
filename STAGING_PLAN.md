@@ -73,7 +73,7 @@ The remaining thin-shim cleanup work still matters, but it is no longer the only
 - Do a final browser parity pass on the refactored manager shim and exported viewer shims. The in-app browser verification attempt was blocked by `net::ERR_BLOCKED_BY_CLIENT`, so this still needs a manual follow-up in a normal browser session.
 - Start staged implementation of the four-surface gameplay/runtime plan:
   - Phase 1 shared model/storage is now done
-  - Phase 2 next: add the dedicated per-character `Player` runtime surface and thin-shim export path
+  - Phase 2 is now in progress: add the dedicated per-character `Player` runtime surface and thin-shim export path
   - Phase 3 after that: add the generic `DM` runtime surface for encounter/session adjudication
   - move live table flow out of the editor over time instead of piling more gameplay logic into the admin shell
 
@@ -94,6 +94,8 @@ The remaining thin-shim cleanup work still matters, but it is no longer the only
   - exported/shareable viewer sheets should stay meaningfully read-only for now: do not surface gameplay action buttons there unless the full viewer-side interaction model, persistence rules, and DM-facing expectations are deliberately designed together
 - D&D/DM backend roadmap:
   - the full next-phase architecture is now captured in `GAMEPLAY_RUNTIME_PLAN.md`; keep this staging note focused on progress/status while the larger design evolves there
+  - canonical saved gameplay actions should stay lean: prefer stable ids/refs (`actorId`, `targetIds`, `requestedById`, `itemRef`) plus payload/deltas/rolls, and hydrate nicer labels at runtime instead of storing fat actor snapshots in every log entry
+  - reduce session/encounter overlap by routing `session_utility` actions/logs to session records and `encounter` actions/logs to encounter records unless a later design needs explicit cross-posting
   - add explicit dice and damage calculation support for spells and actions
   - support DM-side rolling on behalf of party members for AFK/slow turns
   - keep a trustworthy log trail for rolls and action outcomes
@@ -133,6 +135,13 @@ The remaining thin-shim cleanup work still matters, but it is no longer the only
   - seeded a concrete campaign -> party -> session -> encounter chain around Aina Quickquiver and Carol Elfnein
   - seeded the first structured downtime/crafting-style queued action plus approved ammo/attack log entries so later Player/DM surfaces have a real specimen to follow
   - fixed the duplicate bare `Ranger` record ids so the library validator is green again
+- Started gameplay runtime Phase 2:
+  - added `data/player/manifest.json` and `data/player/boot.js`
+  - added the first per-character `Player` runtime app at `data/player/scripts/app.js`
+  - `Player` exports now produce a dedicated thin shim that boots `data/player/boot.js`
+  - editor/list UI now exposes a separate `Player` export action alongside the read-only viewer export
+  - player runtime reads session/encounter context from shared library records, shows personal queue/history, and can queue requests into GitHub-backed session/encounter records when this browser already has a PAT configured
+  - when no PAT is present, the player surface stays read-only and explains that limitation instead of faking write support
 
 ## Shim Contract
 
@@ -169,6 +178,11 @@ No embedded character snapshot. No embedded renderer bundle. No inline fallback 
   - validate `data/common/scripts/schema.js`, `data/common/scripts/library.js`, `data/common/scripts/importers/library-records.js`, and `data/editor/scripts/view-library.js`
   - validate library schema after adding the new `campaigns` / `parties` / `sessions` / `encounters` collections
   - spot-check the seeded session/encounter records so queued/logged action payloads stay parseable and readable
+- For gameplay runtime Phase 2:
+  - validate `data/common/scripts/gameplay-runtime.js`, `data/player/boot.js`, `data/player/scripts/app.js`, and updated export/editor entrypoints
+  - export a Player shim for at least one character and confirm it boots from `file:///` the same way the viewer/editor shims do
+  - confirm Player stays read-only without browser-local GitHub auth, then becomes writable once a PAT is present
+  - confirm queued `session_utility` actions land on session records and queued `encounter` actions land on encounter records
 
 ## After This Refactor
 

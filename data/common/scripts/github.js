@@ -18,14 +18,27 @@ const GitHub = (() => {
   const LIBRARY_ROOT = "library";
   const RECORDS_ROOT = "library/records";
 
+  function readMetaConfig(name) {
+    try {
+      if (typeof document === "undefined" || typeof document.querySelector !== "function") return "";
+      const el = document.querySelector(`meta[name="${name}"]`);
+      return (el && el.getAttribute("content")) || "";
+    } catch {
+      return "";
+    }
+  }
+
   // â”€â”€â”€ Config Helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   function getConfig() {
+    const bootConfig = typeof globalThis !== "undefined" && globalThis.__SHEET_BOOT_CONFIG__
+      ? globalThis.__SHEET_BOOT_CONFIG__
+      : {};
     return {
-      token:  localStorage.getItem("githubToken")  || "",
-      owner:  localStorage.getItem("githubOwner")  || "",
-      repo:   localStorage.getItem("githubRepo")   || "",
-      branch: localStorage.getItem("githubBranch") || "staging",
+      token:  localStorage.getItem("githubToken") || "",
+      owner:  localStorage.getItem("githubOwner") || bootConfig.owner || readMetaConfig("github-owner") || "",
+      repo:   localStorage.getItem("githubRepo") || bootConfig.repo || readMetaConfig("github-repo") || "",
+      branch: localStorage.getItem("githubBranch") || bootConfig.branch || readMetaConfig("github-branch") || "staging",
     };
   }
 
