@@ -6,17 +6,17 @@ Session View is interactive, but it is not authoritative.
 
 Lock v1 execution to:
 
-- **queue everything**
+- **stage locally, then queue everything**
 
 Examples:
 
-- use potion -> queue request
-- cast spell -> queue request
-- ready/stow ammo -> queue request
-- utility action -> queue request
-- downtime/crafting action -> queue request
+- use potion -> stage request -> send to queue
+- cast spell -> stage request -> send to queue
+- ready/stow ammo -> stage request -> send to queue
+- utility action -> stage request -> send to queue
+- downtime/crafting action -> stage request -> send to queue
 
-No direct canonical state mutation happens from Session View in v1.
+No direct canonical state mutation happens from Session View in v1, and one-click gameplay affordances should land in the local draft tray rather than immediately hitting GitHub.
 
 ## Session Side Panel
 
@@ -28,6 +28,7 @@ Session View should have a side panel focused on:
 
 It should show:
 
+- local request drafts
 - pending requests
 - approved/denied results
 - DM replies/messages
@@ -51,11 +52,15 @@ The same lane handles:
 
 ## Dungeon Master View
 
-Expected future behavior:
+Current scaffolded behavior:
 
-- load active session/encounter
-- show party-wide and encounter-wide state
-- review queued actions
+- loads active sessions and encounters
+- reads queued actions and recent history from GitHub-backed records
+- stages approvals/denials locally before sending them
+- can already write approve/deny resolutions back to session or encounter logs
+
+Still to add:
+
 - approve, deny, edit, or resolve actions
 - apply direct corrections such as damage/healing/state/resource changes
 - roll on behalf of players if needed
@@ -74,8 +79,8 @@ Suggested statuses:
 General flow:
 
 ```text
-Session View creates action request
-  -> request is saved to session or encounter record
+Session View creates local draft
+  -> local draft is batched and saved to session or encounter record
   -> Dungeon Master workflow reviews it
   -> outcome is approved, denied, edited, or canceled
   -> approved outcome applies state deltas

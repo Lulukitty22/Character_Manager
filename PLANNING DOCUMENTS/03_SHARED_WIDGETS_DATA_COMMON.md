@@ -67,3 +67,6 @@ Additional shared-widget progress now landed:
 - Character Card inventory rows and editor inventory rows now derive their shared item mechanics from the common inventory/action helper instead of duplicating the same logic in two separate places
 - editor inventory `Use` actions now run through the same common mutation layer that the gameplay surface uses, instead of trapping item behavior in editor-only code
 - shared HP percent/tone/readout behavior now drives the main HP bars in D&D Stats, Resources, manager cards, boss toggle updates, and the editor gameplay tab instead of each surface hand-rolling its own thresholds
+- shared inventory action menus now support multi-action items and quantity steppers, so one item row can expose several valid actions without duplicating rows
+- Session View and shared gameplay surfaces now consume the same item-action menu semantics instead of inventing separate one-click gameplay buttons
+- editor gameplay item actions now reuse the shared action menu pattern too, which keeps the manager closer to the Character Card and Session View runtime behavior

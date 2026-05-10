@@ -5,9 +5,9 @@
 | Phase | Name | Status |
 |---|---|---|
 | 1 | Shared Model and Storage | Done / landed. |
-| 2 | Session View Runtime | In progress, now using `data/session_viewer/` naming. |
-| 3 | Shared Widget Migration | Started / active. |
-| 4 | Dungeon Master View | Planned, separate, not implemented yet. |
+| 2 | Session View Runtime | In progress, now using `data/session_viewer/` naming and local request staging. |
+| 3 | Shared Widget Migration | Active, with shared item actions now materially landed. |
+| 4 | Dungeon Master View | Scaffolded / in progress. |
 | 5 | Resolution and Rolling | Planned. |
 | 6 | Downtime and Crafting Hooks | Partially seeded / planned. |
 
@@ -33,7 +33,7 @@ Currently implemented under Session View naming cleanup:
 - export chooser can create either Character Card or gameplay card
 - runtime reads session/encounter context from shared records
 - runtime shows personal queue/history
-- runtime queues GitHub-backed requests when PAT exists
+- runtime stages requests locally, then sends GitHub-backed batches when PAT exists
 - runtime stays read-only without PAT
 - runtime also now includes:
   - public `Session View` wording in the export/UI flow
@@ -41,13 +41,15 @@ Currently implemented under Session View naming cleanup:
   - inbox/alerts plumbing
   - shared GitHub auth drawer entrypoint
   - 10-second polling scaffolding
+  - local request draft tray between summary and inbox
+  - composer state persistence across rerenders
+  - shared inventory/gameplay item-action queue menus with quantity controls
 
 Next:
 
-- Route all actions into queue/request flow.
-- Route `session_utility` actions/logs to session records.
-- Route `encounter` actions/logs to encounter records.
-- finish the unified alert-lane behavior and inbox polish
+- polish the inbox so temporary notices never compete with actual queued/resolved entries
+- finish the tab-preservation and rerender-state cleanup in a normal browser pass
+- deepen linked-record picking in the composer so manual requests feel less raw
 - deepen the shared auth widget flow and connected-user UX
 - live-test the 10-second polling/manual refresh behavior in a normal browser
 
@@ -73,11 +75,14 @@ These are now present in the repo:
 - common spell-slot helper added in `data/common/scripts/widgets/spell-slot-widget.js`
 - common resource helper added in `data/common/scripts/widgets/resource-widget.js`
 - common inventory/action helpers added in `data/common/scripts/widgets/inventory-widget.js`
+- shared inventory/gameplay action menus now support multi-action rows and quantity steppers
 - editor inventory `Use` actions now share the common mutation layer instead of relying on editor-only item behavior
 - Character Card/editor inventory rows now share common item-mechanics derivation
+- gameplay item rows now group by item instead of duplicating one row per action when several actions belong to the same item
 - main HP bars now share percent/tone/readout behavior across D&D Stats, Resources, manager cards, boss toggle updates, and the editor gameplay tab
 - Session View pathing has been renamed from `data/player/` to `data/session_viewer/`
 - first `data/dungeon_master/` scaffold is now present, including a generic boot shell and a basic queue review surface
+- Dungeon Master can now stage multiple approve/deny responses locally before syncing them back to GitHub
 
 ## Remaining Work
 
@@ -85,7 +90,7 @@ These are now present in the repo:
 - Complete shared widget migration for HP, inventory rows, item actions, resources, and spell slots.
 - Add proper inventory/item history presentation in the `Inventory` tab.
 - Improve library viewer/editor support for gameplay records.
-- Deepen Dungeon Master queue/adjudication behavior beyond the first scaffold.
+- Deepen Dungeon Master queue/adjudication behavior beyond approve/deny staging, especially projected deltas into character snapshots.
 - Add resolution, rolling, and damage/healing flows.
 - Define import normalization/review workflow for external records.
 - Improve appearance coverage and debug/status presentation.
@@ -96,11 +101,11 @@ The highest-value next step is to finish the shared-widget migration for the cha
 
 Recommended order:
 
-1. deepen the shared inventory row/widget with capability-gated controls across all surfaces
-2. reuse the shared item `Use` action menu between `Inventory`, `D&D Gameplay`, and later Session View queue controls
+1. finish the remaining rerender-state cleanup in Session View and Dungeon Master after the new draft-tray model
+2. deepen linked record selection and library-picking UX in the Session View composer
 3. finish HP/resource unification beyond bars, especially history placement and resource-widget cleanup
 4. inventory/item history presentation in `Inventory`
-5. deepen Dungeon Master queue/adjudication flow beyond approve/deny scaffolding
+5. deepen Dungeon Master adjudication so approved outcomes project into character snapshots and shared state
 6. then add richer resolution, rolling, and direct table-control actions
 
 ## Verification Checklist

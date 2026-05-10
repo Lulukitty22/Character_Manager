@@ -99,7 +99,7 @@ Use:
 
 - roughly 10-second polling while Session View or Dungeon Master View is open
 - manual refresh controls
-- local pending/request state between polls
+- local draft trays plus local pending/request state between polls
 - conflict-safe writes
 - serialized writes
 - SHA/version conflict handling
@@ -138,3 +138,9 @@ Never embed:
 - PATs
 - Discord credentials
 - live-bridge secrets
+
+## Current UX Notes
+
+- Session View now stages gameplay and composer requests locally before sending them to GitHub in a batch.
+- Dungeon Master now stages approve/deny responses locally before syncing them.
+- Success toasts should not create duplicate inbox history; inbox entries should represent actual queued or resolved records, not temporary local notices.
