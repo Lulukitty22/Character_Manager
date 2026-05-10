@@ -31,79 +31,6 @@
       },
       "queuedActions": [
         {
-          "id": "action.request.brew-healing-potion",
-          "kind": "craft",
-          "mode": "session_utility",
-          "status": "queued",
-          "actorId": "carol-elfnein",
-          "requestedById": "carol-elfnein",
-          "targetIds": [],
-          "payload": {
-            "template": "brew-healing-potion",
-            "summary": "Carol wants to spend downtime making a healing potion.",
-            "inputs": [
-              {
-                "kind": "item",
-                "recordRef": "items.consumable.material.herb_bundle",
-                "quantity": 1
-              }
-            ],
-            "outputs": [
-              {
-                "kind": "item",
-                "recordRef": "items.consumable.potion.potion_of_healing_common",
-                "quantity": 1
-              }
-            ]
-          },
-          "roll": {
-            "id": "roll.request.brew-healing-potion",
-            "kind": "tool_check",
-            "formula": "1d20+5",
-            "ability": "int",
-            "skill": "alchemist-supplies",
-            "dc": 13,
-            "advantage": "normal",
-            "modifiers": [
-              {
-                "label": "Intelligence",
-                "value": 2,
-                "source": "character"
-              },
-              {
-                "label": "Proficiency",
-                "value": 3,
-                "source": "tool"
-              }
-            ],
-            "visibility": "public",
-            "requestedById": "carol-elfnein",
-            "rolledById": "",
-            "result": null
-          },
-          "proposedDeltas": [
-            {
-              "id": "delta.request.brew-healing-potion",
-              "targetType": "record",
-              "targetId": "items.consumable.material.herb_bundle",
-              "path": "inventory/items.consumable.material.herb_bundle",
-              "operation": "adjust",
-              "value": -1,
-              "previousValue": null,
-              "nextValue": null,
-              "reason": "Consumes one herb bundle to start brewing.",
-              "source": "brew-healing-potion"
-            }
-          ],
-          "resultingDeltas": [],
-          "requestedAt": "2026-05-09T10:05:00.000Z",
-          "resolution": null,
-          "audit": {
-            "sourceSurface": "player",
-            "createdBy": "phase1-seed"
-          }
-        },
-        {
           "id": "45955d50-7258-4b58-a783-6345ae520a5f",
           "kind": "utility",
           "mode": "session_utility",
@@ -231,6 +158,85 @@
           "audit": {
             "sourceSurface": "dm",
             "projectedToCharacter": true
+          }
+        },
+        {
+          "id": "action.request.brew-healing-potion",
+          "kind": "craft",
+          "mode": "session_utility",
+          "status": "approved",
+          "actorId": "carol-elfnein",
+          "requestedById": "carol-elfnein",
+          "targetIds": [],
+          "payload": {
+            "template": "brew-healing-potion",
+            "summary": "Carol wants to spend downtime making a healing potion.",
+            "inputs": [
+              {
+                "kind": "item",
+                "recordRef": "items.consumable.material.herb_bundle",
+                "quantity": 1
+              }
+            ],
+            "outputs": [
+              {
+                "kind": "item",
+                "recordRef": "items.consumable.potion.potion_of_healing_common",
+                "quantity": 1
+              }
+            ]
+          },
+          "roll": {
+            "id": "roll.request.brew-healing-potion",
+            "kind": "tool_check",
+            "formula": "1d20+5",
+            "ability": "int",
+            "skill": "alchemist-supplies",
+            "dc": 13,
+            "advantage": "normal",
+            "modifiers": [
+              {
+                "label": "Intelligence",
+                "value": 2,
+                "source": "character"
+              },
+              {
+                "label": "Proficiency",
+                "value": 3,
+                "source": "tool"
+              }
+            ],
+            "visibility": "public",
+            "requestedById": "carol-elfnein",
+            "rolledById": "",
+            "result": null
+          },
+          "proposedDeltas": [
+            {
+              "id": "delta.request.brew-healing-potion",
+              "targetType": "record",
+              "targetId": "items.consumable.material.herb_bundle",
+              "path": "inventory/items.consumable.material.herb_bundle",
+              "operation": "adjust",
+              "value": -1,
+              "previousValue": null,
+              "nextValue": null,
+              "reason": "Consumes one herb bundle to start brewing.",
+              "source": "brew-healing-potion"
+            }
+          ],
+          "resultingDeltas": [],
+          "requestedAt": "2026-05-09T10:05:00.000Z",
+          "resolution": {
+            "status": "approved",
+            "message": "Approved by DM.",
+            "dmReply": "",
+            "resolvedAt": "2026-05-10T05:48:54.770Z",
+            "resolvedById": "dungeon-master"
+          },
+          "audit": {
+            "sourceSurface": "player",
+            "createdBy": "phase1-seed"
           }
         }
       ],
