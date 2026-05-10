@@ -54,29 +54,6 @@
             "sourceSurface": "player",
             "sourceSurfaceVersion": "v1"
           }
-        },
-        {
-          "id": "e29db80a-fa0a-48f4-bc2a-e90b6f2f7b8a",
-          "kind": "short_rest",
-          "mode": "session_utility",
-          "status": "queued",
-          "actorId": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
-          "requestedById": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
-          "targetIds": [],
-          "payload": {
-            "summary": "Take a short rest and recover what the DM allows.",
-            "note": "",
-            "itemRef": ""
-          },
-          "roll": null,
-          "proposedDeltas": [],
-          "resultingDeltas": [],
-          "requestedAt": "2026-05-10T05:47:19.247Z",
-          "resolution": null,
-          "audit": {
-            "sourceSurface": "session_view",
-            "sourceSurfaceVersion": "v1"
-          }
         }
       ],
       "actionLog": [
@@ -261,6 +238,35 @@
             "message": "Approved by DM.",
             "dmReply": "go sleep goobers",
             "resolvedAt": "2026-05-10T05:54:20.093Z",
+            "resolvedById": "dungeon-master"
+          },
+          "audit": {
+            "sourceSurface": "session_view",
+            "sourceSurfaceVersion": "v1"
+          }
+        },
+        {
+          "id": "e29db80a-fa0a-48f4-bc2a-e90b6f2f7b8a",
+          "kind": "short_rest",
+          "mode": "session_utility",
+          "status": "approved",
+          "actorId": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
+          "requestedById": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
+          "targetIds": [],
+          "payload": {
+            "summary": "Take a short rest and recover what the DM allows.",
+            "note": "",
+            "itemRef": ""
+          },
+          "roll": null,
+          "proposedDeltas": [],
+          "resultingDeltas": [],
+          "requestedAt": "2026-05-10T05:47:19.247Z",
+          "resolution": {
+            "status": "approved",
+            "message": "Approved by DM.",
+            "dmReply": "yea.",
+            "resolvedAt": "2026-05-10T05:55:12.256Z",
             "resolvedById": "dungeon-master"
           },
           "audit": {
