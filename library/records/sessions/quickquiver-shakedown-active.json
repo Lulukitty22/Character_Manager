@@ -29,31 +29,7 @@
         ],
         "recipeRefs": []
       },
-      "queuedActions": [
-        {
-          "id": "9fc93d19-5eaf-4f9a-bba4-21883d43e2d5",
-          "kind": "short_rest",
-          "mode": "session_utility",
-          "status": "queued",
-          "actorId": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
-          "requestedById": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
-          "targetIds": [],
-          "payload": {
-            "summary": "Take a short rest and recover what the DM allows.",
-            "note": "",
-            "itemRef": ""
-          },
-          "roll": null,
-          "proposedDeltas": [],
-          "resultingDeltas": [],
-          "requestedAt": "2026-05-10T20:34:40.915Z",
-          "resolution": null,
-          "audit": {
-            "sourceSurface": "session_view",
-            "sourceSurfaceVersion": "v1"
-          }
-        }
-      ],
+      "queuedActions": [],
       "actionLog": [
         {
           "id": "action.applied.ready-volley",
@@ -296,6 +272,35 @@
             "message": "Denied by DM.",
             "dmReply": "no sleep for you",
             "resolvedAt": "2026-05-10T18:08:54.056Z",
+            "resolvedById": "dungeon-master"
+          },
+          "audit": {
+            "sourceSurface": "session_view",
+            "sourceSurfaceVersion": "v1"
+          }
+        },
+        {
+          "id": "9fc93d19-5eaf-4f9a-bba4-21883d43e2d5",
+          "kind": "short_rest",
+          "mode": "session_utility",
+          "status": "approved",
+          "actorId": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
+          "requestedById": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
+          "targetIds": [],
+          "payload": {
+            "summary": "Take a short rest and recover what the DM allows.",
+            "note": "",
+            "itemRef": ""
+          },
+          "roll": null,
+          "proposedDeltas": [],
+          "resultingDeltas": [],
+          "requestedAt": "2026-05-10T20:34:40.915Z",
+          "resolution": {
+            "status": "approved",
+            "message": "Approved by DM.",
+            "dmReply": "",
+            "resolvedAt": "2026-05-10T20:38:26.230Z",
             "resolvedById": "dungeon-master"
           },
           "audit": {
