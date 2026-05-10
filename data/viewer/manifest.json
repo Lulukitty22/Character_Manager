@@ -13,6 +13,8 @@
     "data/common/scripts/library.js",
     "data/common/scripts/surface-presets.js",
     "data/common/scripts/dnd-calculations.js",
+    "data/common/scripts/widgets/hp-widget.js",
+    "data/common/scripts/widgets/inventory-widget.js",
     "data/common/scripts/views/view-character-utils.js",
     "data/common/scripts/views/view-character-header.js",
     "data/common/scripts/views/view-character-notes.js",

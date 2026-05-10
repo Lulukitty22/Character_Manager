@@ -69,6 +69,12 @@ These are now present in the repo:
 - Session View inbox/alerts plumbing added
 - near-real-time polling scaffolding added at 30-second interval
 - default/session seed polling interval changed from 5 minutes to 30 seconds
+- common gameplay item-mutation helpers added in `data/common/scripts/gameplay-mutations.js`
+- common HP helper added in `data/common/scripts/widgets/hp-widget.js`
+- common inventory/action helpers added in `data/common/scripts/widgets/inventory-widget.js`
+- editor inventory `Use` actions now share the common mutation layer instead of relying on editor-only item behavior
+- Character Card/editor inventory rows now share common item-mechanics derivation
+- main HP bars now share percent/tone/readout behavior across D&D Stats, Resources, manager cards, boss toggle updates, and the editor gameplay tab
 
 ## Remaining Work
 
@@ -87,10 +93,10 @@ The highest-value next step is to finish the shared-widget migration for the cha
 
 Recommended order:
 
-1. shared HP widget used consistently in both `D&D Stats` and `Resources`
-2. shared inventory row/widget with capability-gated controls
-3. shared item `Use` action menu reused between `Inventory` and `D&D Gameplay`
-4. shared spell slot/action widget and resource widget cleanup
+1. deepen the shared inventory row/widget with capability-gated controls across all surfaces
+2. reuse the shared item `Use` action menu between `Inventory`, `D&D Gameplay`, and later Session View queue controls
+3. finish HP/resource unification beyond bars, especially history placement and resource-widget cleanup
+4. shared spell slot/action widget cleanup
 5. inventory/item history presentation in `Inventory`
 6. then begin the first Dungeon Master View queue/adjudication dashboard
 
@@ -106,7 +112,7 @@ Recommended order:
 
 ### Shared Widgets
 
-- HP widget renders consistently in `D&D Stats` and `Resources`.
+- HP bar/tone/readout behavior renders consistently in `D&D Stats`, `Resources`, manager cards, boss toggles, and editor gameplay.
 - Inventory rows render across Editor, Character Card, and Session View with capability-gated controls.
 - Item `Use` menu behaves as admin/editable, read-only, or queue-only depending on preset.
 

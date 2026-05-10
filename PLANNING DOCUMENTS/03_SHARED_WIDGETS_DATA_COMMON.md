@@ -56,3 +56,12 @@ Related runtime wiring that is also landed:
 - Character Card and Session View boot flows now set the active capability preset at runtime
 - the shared character renderer now includes a `D&D Gameplay` tab
 - editor/session shells now expose the shared GitHub auth drawer entrypoint
+
+Additional shared-widget progress now landed:
+
+- common HP bar/state helper now lives in `data/common/scripts/widgets/hp-widget.js`
+- common gameplay item-mutation helpers live in `data/common/scripts/gameplay-mutations.js`
+- common inventory/action helpers live in `data/common/scripts/widgets/inventory-widget.js`
+- Character Card inventory rows and editor inventory rows now derive their shared item mechanics from the common inventory/action helper instead of duplicating the same logic in two separate places
+- editor inventory `Use` actions now run through the same common mutation layer that the gameplay surface uses, instead of trapping item behavior in editor-only code
+- shared HP percent/tone/readout behavior now drives the main HP bars in D&D Stats, Resources, manager cards, boss toggle updates, and the editor gameplay tab instead of each surface hand-rolling its own thresholds

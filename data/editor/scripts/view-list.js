@@ -138,23 +138,37 @@ const CharacterList = (() => {
         ? DndCalculations.getActiveHp(characterData)
         : (characterData.boss.bossActive ? characterData.boss.bossHp : characterData.boss.defaultHp);
       const hp = activeHp || { max: 0, current: 0 };
-      const percent = hp.max > 0 ? Math.round((hp.current / hp.max) * 100) : 0;
-      const hpClass = percent >= 60 ? "" : percent >= 30 ? "medium" : "low";
       const bossFlag = characterData.boss.bossActive ? `<span class="badge badge-crimson">Boss Mode</span>` : "";
       hpDisplay = `
         <div class="card-hp">
-          <div class="hp-bar-track"><div class="hp-bar-fill ${hpClass}" style="width:${percent}%"></div></div>
+          ${typeof HpWidgets !== "undefined"
+            ? HpWidgets.renderBar(hp, {
+                variant: "editor",
+                wrapperClass: "",
+                trackClass: "hp-bar-track",
+                fillClassBase: "hp-bar-fill",
+                fillTag: "div",
+                readout: false,
+              })
+            : `<div class="hp-bar-track"><div class="hp-bar-fill" style="width:0%"></div></div>`}
           <span class="hp-text">${hp.current} / ${hp.max} HP ${bossFlag}</span>
         </div>`;
     } else if (characterData.dnd?.hp) {
       const hp = typeof DndCalculations !== "undefined"
         ? DndCalculations.resolveTamedHp(characterData)
         : characterData.dnd.hp;
-      const percent = hp.max > 0 ? Math.round((hp.current / hp.max) * 100) : 0;
-      const hpClass = percent >= 60 ? "" : percent >= 30 ? "medium" : "low";
       hpDisplay = `
         <div class="card-hp">
-          <div class="hp-bar-track"><div class="hp-bar-fill ${hpClass}" style="width:${percent}%"></div></div>
+          ${typeof HpWidgets !== "undefined"
+            ? HpWidgets.renderBar(hp, {
+                variant: "editor",
+                wrapperClass: "",
+                trackClass: "hp-bar-track",
+                fillClassBase: "hp-bar-fill",
+                fillTag: "div",
+                readout: false,
+              })
+            : `<div class="hp-bar-track"><div class="hp-bar-fill" style="width:0%"></div></div>`}
           <span class="hp-text">${hp.current} / ${hp.max} HP</span>
         </div>`;
     }

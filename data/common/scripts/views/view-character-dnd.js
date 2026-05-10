@@ -22,8 +22,7 @@ const ViewCharacterDnd = (() => {
     const tamedHp = character && typeof DndCalculations !== "undefined"
       ? DndCalculations.resolveTamedHp(character)
       : normalizeHpPool(boss?.defaultHp || dnd?.hp || {});
-    const percent = hp.max > 0 ? Math.round((hp.current / hp.max) * 100) : 0;
-    const hpClass = percent >= 60 ? "" : percent >= 30 ? "medium" : "low";
+    const hpState = typeof HpWidgets !== "undefined" ? HpWidgets.normalize(hp) : hp;
     const profBonus = Number(dnd.proficiencyBonus || 2);
     const acPair = getAcPair(dnd, boss);
     const initiativePair = getInitiativePair(dnd, boss);
@@ -62,9 +61,16 @@ const ViewCharacterDnd = (() => {
               <span class="label">HP</span>
               ${dnd.hp?.temp > 0 ? `<span class="temp">+${dnd.hp.temp} temp</span>` : ""}
             </div>
-            <div class="ovh-hp-bar-wrap">
-              <div class="ovh-hp-bar-fill ${hpClass}" style="width:${percent}%"></div>
-            </div>
+            ${typeof HpWidgets !== "undefined"
+              ? HpWidgets.renderBar(hpState, {
+                  variant: "ovh",
+                  wrapperClass: "ovh-hp-bar-wrap",
+                  trackClass: "ovh-hp-bar",
+                  fillClassBase: "ovh-hp-bar-fill",
+                  fillTag: "span",
+                  readout: false,
+                })
+              : `<div class="ovh-hp-bar-wrap"><div class="ovh-hp-bar"><span class="ovh-hp-bar-fill" style="width:0%"></span></div></div>`}
             ${boss ? `
             <div class="sheet-state-mini-row text-sm">
               <span>Boss HP ${boss.bossHp?.max ?? 0}</span>

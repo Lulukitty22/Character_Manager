@@ -59,8 +59,7 @@ const ViewCharacterBoss = (() => {
       : (typeof DndCalculations !== "undefined"
         ? DndCalculations.resolveTamedHp(character)
         : (boss.defaultHp || character.dnd?.hp || { current: 0, max: 0 }));
-    const percent = hp.max > 0 ? Math.round((hp.current / hp.max) * 100) : 0;
-    const hpClass = percent >= 60 ? "" : percent >= 30 ? "medium" : "low";
+    const hpState = typeof HpWidgets !== "undefined" ? HpWidgets.normalize(hp) : hp;
 
     const hpCurrentEl = sheetRoot.querySelector(".sheet-hp-current");
     const hpMaxEl = sheetRoot.querySelector(".sheet-hp-max");
@@ -68,8 +67,12 @@ const ViewCharacterBoss = (() => {
     if (hpCurrentEl) hpCurrentEl.textContent = hp.current;
     if (hpMaxEl) hpMaxEl.textContent = hp.max;
     if (hpBarEl) {
-      hpBarEl.style.width = `${percent}%`;
-      hpBarEl.className = `hp-bar-fill ${hpClass}`;
+      if (typeof HpWidgets !== "undefined") {
+        HpWidgets.applyFillState(hpBarEl, hpState, { variant: "editor", fillClassBase: "hp-bar-fill" });
+      } else {
+        hpBarEl.style.width = "0%";
+        hpBarEl.className = "hp-bar-fill";
+      }
     }
 
     sheetRoot.querySelectorAll(".sheet-boss-only").forEach(el => {

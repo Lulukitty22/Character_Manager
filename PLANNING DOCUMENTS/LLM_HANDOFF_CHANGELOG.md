@@ -27,6 +27,17 @@ Use this file as a lightweight inbox between LLMs/Codex/assistants. Keep it shor
 
 ## Current Notes / Inbox
 
+- 2026-05-10: Chose shared inventory/item-action widgets as the next implementation slice because they unlock reuse across Editor, Character Card, and Session View faster than starting with Dungeon Master or full HP unification.
+- 2026-05-10: Scoped this pass to shared inventory/action primitives first, with HP/resource unification treated as a follow-up if time stays clean after the inventory migration.
+- 2026-05-10: Realized item-action reuse needs a common mutation layer too, otherwise a shared inventory/action menu would only be presentation-deep and still keep behavior trapped in editor-only code.
+- 2026-05-10: Added a common gameplay-mutation layer and a common inventory/action widget layer so shared item behavior can exist in code, not just in the docs.
+- 2026-05-10: Wired the editor inventory tab into the shared inventory/action layer, including real `Use` actions that sync unsaved inventory edits before mutating character state.
+- 2026-05-10: Shared item mechanics now render from one inventory/action helper in both the sheet viewer and the editor inventory tab, so the row semantics are finally starting to converge instead of drifting.
+- 2026-05-10: Extended the shared inventory action menu into Session View inventory rows in queue mode, so capability-driven behavior now exists in a real player-facing surface instead of only in editor land.
+- 2026-05-10: Patched the newly-added-item edge so actionable rows can still render their shared `Use` menu immediately instead of waiting for a later rebuild cycle.
+- 2026-05-10: Chose to pull HP math and tone handling into a small shared helper next, because the duplication across sheet sections, manager cards, boss toggles, and editor gameplay was real but still tractable in one pass.
+- 2026-05-10: Landed `data/common/scripts/widgets/hp-widget.js` and wired it into the main HP bars so the shared runtime now owns percent/tone/readout behavior instead of letting each surface freestyle it.
+- 2026-05-10: Left HP/resource unification for the next pass on purpose once the inventory/action slice was coherent, rather than half-landing a second widget migration in the same stretch.
 - Decide whether `data/player/` should remain an internal/transitional name or be renamed to match public `Session View` wording.
 - If maintaining root summary docs again, keep them downstream of this segmented folder instead of allowing them to drift independently.
 

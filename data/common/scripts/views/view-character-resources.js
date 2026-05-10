@@ -31,14 +31,17 @@ const ViewCharacterResources = (() => {
   }
 
   function renderHpBlock(hpState, hpLog) {
-    const max = Number(hpState.max || 0);
-    const current = Number(hpState.current || 0);
-    const temp = Number(hpState.temp || 0);
-    const pct = max > 0 ? Math.round((current / max) * 100) : 0;
+    const state = typeof HpWidgets !== "undefined"
+      ? HpWidgets.normalize(hpState)
+      : {
+          current: Number(hpState.current || 0),
+          max: Number(hpState.max || 0),
+          temp: Number(hpState.temp || 0),
+        };
     const chips = [
-      { label: "Current", value: current, kind: "quantity" },
-      { label: "Max", value: max, kind: "quantity" },
-      temp ? { label: "Temp", value: temp, kind: "positive", description: "Temporary HP absorbs damage before regular HP." } : null,
+      { label: "Current", value: state.current, kind: "quantity" },
+      { label: "Max", value: state.max, kind: "quantity" },
+      state.temp ? { label: "Temp", value: state.temp, kind: "positive", description: "Temporary HP absorbs damage before regular HP." } : null,
       { label: "Long Rest", value: "Full", kind: "rest", description: "Long rest restores HP and spell slots in the current gameplay model." },
     ].filter(Boolean);
 
@@ -46,15 +49,19 @@ const ViewCharacterResources = (() => {
       <div class="ovh-record-group">
         <p class="ovh-group-label">
           <span>Hit Points</span>
-          <span class="count">${current} / ${max}</span>
+          <span class="count">${state.current} / ${state.max}</span>
         </p>
         <div class="ovh-card ovh-resource-card">
           <div class="ovh-resource-track">
             <div class="rname">Hit Points<span class="meta">Calculated HP pool</span></div>
-            <div class="ovh-hp-bar-wrap">
-              <div class="ovh-hp-bar"><span class="ovh-hp-bar-fill ${pct <= 25 ? "danger" : pct <= 50 ? "warn" : ""}" style="width:${Math.max(0, Math.min(100, pct))}%"></span></div>
-              <span class="hp-readout">${current} / ${max}${temp ? ` + ${temp} temp` : ""}</span>
-            </div>
+            ${typeof HpWidgets !== "undefined"
+              ? HpWidgets.renderBar(state, { variant: "ovh" })
+              : `
+                <div class="ovh-hp-bar-wrap">
+                  <div class="ovh-hp-bar"><span class="ovh-hp-bar-fill" style="width:0%"></span></div>
+                  <span class="hp-readout">${state.current} / ${state.max}</span>
+                </div>
+              `}
             ${renderOvhChips(chips, { className: "ovh-chips quick-chips" })}
           </div>
           ${hpLog.length ? renderLogDetails("HP History", `${hpLog.length} entr${hpLog.length === 1 ? "y" : "ies"}`, hpLog) : ""}

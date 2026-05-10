@@ -66,8 +66,7 @@ const EditorGameplay = (() => {
 
   function renderHpSection(character, hpState, healingItems) {
     const hp = character.dnd?.hp || {};
-    const percent = hpState?.max > 0 ? Math.round((hpState.current / hpState.max) * 100) : 0;
-    const hpClass = percent >= 60 ? "" : percent >= 30 ? "medium" : "low";
+    const normalizedHp = typeof HpWidgets !== "undefined" ? HpWidgets.normalize(hpState) : hpState;
     const logRows = (hp.log || []).slice().reverse().map(renderLogEntry).join("");
     const calcChips = hpState?.calculation?.parts?.length && typeof ViewCharacterUtils !== "undefined"
       ? ViewCharacterUtils.renderMechanicChips([
@@ -109,7 +108,7 @@ const EditorGameplay = (() => {
           </div>
 
           <div class="hp-bar-track" style="margin-bottom: var(--space-4);">
-            <div id="gp-hp-bar-fill" class="hp-bar-fill ${hpClass}" style="width: ${percent}%"></div>
+            <div id="gp-hp-bar-fill" class="hp-bar-fill ${typeof HpWidgets !== "undefined" ? HpWidgets.fillClass(normalizedHp.tone, "editor") : ""}" style="width: ${Math.max(0, Math.min(100, Number(normalizedHp.percent || 0)))}%"></div>
           </div>
 
           <div class="fields-grid-2" style="margin-bottom: var(--space-4);">
@@ -341,13 +340,12 @@ const EditorGameplay = (() => {
     const updateBar = () => {
       const max = parseInt(maxInput?.value, 10) || 0;
       const current = parseInt(currentInput?.value, 10) || 0;
-      const percent = max > 0 ? Math.round((current / max) * 100) : 0;
-      if (barFill) {
-        barFill.style.width = `${Math.min(100, Math.max(0, percent))}%`;
-        barFill.className = "hp-bar-fill" + (percent >= 60 ? "" : percent >= 30 ? " medium" : " low");
-      }
+      const state = typeof HpWidgets !== "undefined"
+        ? HpWidgets.applyFillState(barFill, { current, max }, { variant: "editor", fillClassBase: "hp-bar-fill" })
+        : { current, max };
       if (currentDisplay) currentDisplay.textContent = current;
       if (maxDisplay) maxDisplay.textContent = max;
+      return state;
     };
 
     const syncHpModeUi = (preserveCurrent = false) => {
@@ -588,62 +586,17 @@ const EditorGameplay = (() => {
   }
 
   function applyItemAction(panelEl, character, item) {
-    const actionState = typeof DndCalculations !== "undefined"
-      ? DndCalculations.evaluateItemActionState(character, item)
-      : { ok: true, resources: [], inventory: [], message: "" };
-    if (!actionState.ok) {
-      App.showToast(actionState.message || `Cannot use ${item.name || "item"} right now.`, "error");
+    if (typeof GameplayMutations === "undefined") {
+      App.showToast("Gameplay mutation helpers are not loaded.", "error");
       return;
     }
-
-    const effects = item.action?.effects || {};
-    const healAmount = effects.heal ? DndCalculations.healingAmount({ action: { effects }, addons: { healing: effects.heal }, description: item.description }) : 0;
-    const tempHp = Number(effects.tempHp?.amount || effects.tempHp || 0);
-    const slotEffect = effects.spellSlots || null;
-    let didAnything = false;
-
-    if (healAmount > 0) {
-      const appliedDelta = applyHpAdjust(panelEl, character, "heal", healAmount, item.name || "Item");
-      didAnything = didAnything || appliedDelta !== 0;
-    }
-    if (tempHp > 0) {
-      const tempEl = panelEl.querySelector("#gp-hp-temp");
-      const currentTemp = parseInt(tempEl?.value, 10) || 0;
-      const nextTemp = Math.max(currentTemp, tempHp);
-      if (tempEl) tempEl.value = nextTemp;
-      if (character.dnd?.hp) character.dnd.hp.temp = nextTemp;
-      if (nextTemp !== currentTemp) {
-        addHpLog(panelEl, character, 0, `${item.name || "Item"} granted ${tempHp} temp HP`);
-        didAnything = true;
-      }
-    }
-    if (slotEffect?.all) {
-      restoreAllSlots(panelEl, character, item.name || "Item restored all spell slots");
-      didAnything = true;
-    } else if (slotEffect?.level) {
-      const slotDelta = adjustSpellSlot(panelEl, character, Number(slotEffect.level || 0), Math.max(1, Number(slotEffect.amount || 1)));
-      didAnything = didAnything || slotDelta !== 0;
-    }
-    (effects.resources || []).forEach(effect => {
-      applyResourceEffect(character, effect);
-      didAnything = true;
-    });
-    (effects.inventory || []).forEach(effect => {
-      applyInventoryEffect(character, effect);
-      didAnything = true;
-    });
-
-    if (!didAnything) {
-      App.showToast(`${item.name || "Item"} had no effect.`, "info");
+    const result = GameplayMutations.applyItemAction(character, item);
+    if (!result.ok) {
+      App.showToast(result.message, "error");
       return;
     }
-
-    if (item.action?.consumeQuantity) {
-      decrementInventoryItem(character, item.id);
-    }
-
     refreshGameplayPanel(panelEl, character);
-    App.showToast(`${item.action?.label || "Used"} ${item.name || "item"}.`, "success");
+    App.showToast(result.message, result.didAnything ? "success" : "info");
   }
 
   function applyResourceEffect(character, effect = {}) {

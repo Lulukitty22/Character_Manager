@@ -77,7 +77,7 @@ const EditorInventory = (() => {
           </div>
 
           <div id="inventory-list" class="array-list">
-            ${items.map(item => renderItemRow(item)).join("")}
+            ${items.map(item => renderItemRow(item, character)).join("")}
           </div>
 
           <div class="array-add-row">
@@ -91,7 +91,8 @@ const EditorInventory = (() => {
 
     panel.querySelector("#btn-add-item").addEventListener("click", () => addItemRow(panel));
     panel.querySelector("#btn-browse-items")?.addEventListener("click", () => browseLibraryItems(panel));
-    wireItemList(panel);
+    wireItemList(panel, character);
+    wireInventoryActions(panel, character);
 
     return panel;
   }
@@ -107,14 +108,24 @@ const EditorInventory = (() => {
     `;
   }
 
-  function renderItemRow(item) {
+  function renderItemRow(item, character) {
     const typeLabel = item.type || "misc";
     const attuned   = item.attuned ? `<span class="badge badge-accent">Attuned</span>` : "";
     const active    = item.active !== false ? `<span class="badge">Active</span>` : `<span class="badge">Inactive</span>`;
     const tags      = (item.tags || []).map(tag => `<span class="badge">${EditorBase.escapeHTML(tag)}</span>`).join("");
+    const actionEntries = typeof InventoryWidgets !== "undefined"
+      ? InventoryWidgets.resolveActionEntries(character, item)
+      : [];
+    const mechanics = typeof InventoryWidgets !== "undefined" && typeof ViewCharacterUtils !== "undefined"
+      ? ViewCharacterUtils.renderMechanicChips(InventoryWidgets.buildMechanicChips(item, actionEntries), { className: "sheet-mechanic-chips" })
+      : "";
+    const actionMenu = typeof InventoryWidgets !== "undefined"
+      ? InventoryWidgets.renderActionMenu(item, actionEntries, { mode: "editor", buttonLabel: "Use" })
+      : "";
 
     return `
       <div class="array-item item-row"
+        data-item-action-host
         data-item-id="${EditorBase.escapeAttr(item.id)}"
         data-source="${EditorBase.escapeAttr(item.source || "inline")}"
         data-library-collection="${EditorBase.escapeAttr(item.libraryCollection || "")}"
@@ -132,6 +143,7 @@ const EditorInventory = (() => {
             </div>
             <span class="text-muted text-sm item-quantity-display">x${item.quantity ?? 1}</span>
           </div>
+          ${mechanics}
 
           <!-- Expandable detail form -->
           <div class="expandable-section collapsed item-detail-form">
@@ -196,13 +208,14 @@ const EditorInventory = (() => {
         </div>
 
         <div class="array-item-actions">
+          ${actionMenu}
           <button class="button button-icon button-danger btn-remove-item" title="Remove item">X</button>
         </div>
       </div>
     `;
   }
 
-  function wireItemList(panelEl) {
+  function wireItemList(panelEl, character) {
     panelEl.querySelectorAll(".item-row").forEach(rowEl => wireItemRow(rowEl));
   }
 
@@ -232,11 +245,11 @@ const EditorInventory = (() => {
     });
   }
 
-  function addItemRow(panelEl, item = null) {
+  function addItemRow(panelEl, item = null, character = null) {
     item = item || Schema.createDefaultInventoryItem();
     const listEl = panelEl.querySelector("#inventory-list");
     const temp   = document.createElement("div");
-    temp.innerHTML = renderItemRow(item);
+    temp.innerHTML = renderItemRow(item, character || { inventory: [item] });
     const rowEl  = temp.firstElementChild;
 
     wireItemRow(rowEl);
@@ -272,7 +285,7 @@ const EditorInventory = (() => {
           badge: item.type || "",
           preview: renderItemPreview(item),
           onSelect: () => {
-            addItemRow(panelEl, Library.resolveRef(Library.createReference("items", item, { quantity: 1, active: true })));
+            addItemRow(panelEl, Library.resolveRef(Library.createReference("items", item, { quantity: 1, active: true })), {});
             App.showToast(`Added ${item.name || "item"}.`, "success");
           },
         })),
@@ -311,16 +324,57 @@ const EditorInventory = (() => {
     `;
   }
 
-  function readTab(character) {
-    character.currency = {
-      pp: parseInt(document.getElementById("currency-pp")?.value, 10) || 0,
-      gp: parseInt(document.getElementById("currency-gp")?.value, 10) || 0,
-      ep: parseInt(document.getElementById("currency-ep")?.value, 10) || 0,
-      sp: parseInt(document.getElementById("currency-sp")?.value, 10) || 0,
-      cp: parseInt(document.getElementById("currency-cp")?.value, 10) || 0,
-    };
+  function wireInventoryActions(panelEl, character) {
+    const listEl = panelEl.querySelector("#inventory-list");
+    if (!listEl || typeof InventoryWidgets === "undefined") return;
+    InventoryWidgets.wireActionMenus(listEl, {
+      onSelect: ({ itemRow, actionIndex }) => {
+        syncPanelToCharacter(panelEl, character);
+        const item = findCharacterItemForRow(character, itemRow);
+        const actionEntries = item ? InventoryWidgets.resolveActionEntries(character, item) : [];
+        const actionEntry = actionEntries[actionIndex];
+        if (!actionEntry || typeof GameplayMutations === "undefined") return;
+        const result = GameplayMutations.applyItemAction(character, actionEntry);
+        if (!result.ok) {
+          App.showToast(result.message, "error");
+          return;
+        }
+        if (!result.didAnything) {
+          App.showToast(result.message, "info");
+          return;
+        }
+        rebuildItemList(panelEl, character);
+        App.showToast(result.message, "success");
+      },
+    });
+  }
 
-    const itemRows = document.querySelectorAll("#inventory-list .item-row");
+  function rebuildItemList(panelEl, character) {
+    const listEl = panelEl.querySelector("#inventory-list");
+    if (!listEl) return;
+    const items = (character.inventory || []).map(item => typeof Library !== "undefined" ? Library.resolveRef(item) : item);
+    listEl.innerHTML = items.map(item => renderItemRow(item, character)).join("");
+    wireItemList(panelEl, character);
+    wireInventoryActions(panelEl, character);
+  }
+
+  function findCharacterItemForRow(character, rowEl) {
+    if (!rowEl) return null;
+    const rowId = String(rowEl.dataset.itemId || "").trim().toLowerCase();
+    const rowRef = String(rowEl.dataset.libraryRef || "").trim().toLowerCase();
+    return (character.inventory || []).find(entry => {
+      const resolved = typeof Library !== "undefined" ? Library.resolveRef(entry) : entry;
+      return [entry.id, entry.libraryRef, resolved?.id, resolved?.libraryRef]
+        .filter(Boolean)
+        .some(value => {
+          const clean = String(value).trim().toLowerCase();
+          return clean && (clean === rowId || clean === rowRef);
+        });
+    }) || null;
+  }
+
+  function syncPanelToCharacter(panelEl, character) {
+    const itemRows = panelEl.querySelectorAll("#inventory-list .item-row");
     character.inventory = Array.from(itemRows).map(rowEl => {
       const tagsRaw = rowEl.querySelector(".item-tags")?.value || "";
       const tags    = tagsRaw.split(",").map(t => t.trim()).filter(Boolean);
@@ -354,6 +408,19 @@ const EditorInventory = (() => {
 
       return item;
     }).filter(item => item.name || item.libraryRef);
+    return character;
+  }
+
+  function readTab(character) {
+    character.currency = {
+      pp: parseInt(document.getElementById("currency-pp")?.value, 10) || 0,
+      gp: parseInt(document.getElementById("currency-gp")?.value, 10) || 0,
+      ep: parseInt(document.getElementById("currency-ep")?.value, 10) || 0,
+      sp: parseInt(document.getElementById("currency-sp")?.value, 10) || 0,
+      cp: parseInt(document.getElementById("currency-cp")?.value, 10) || 0,
+    };
+
+    syncPanelToCharacter(document.getElementById("tab-panel-inventory"), character);
 
     return character;
   }

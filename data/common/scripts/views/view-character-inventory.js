@@ -8,10 +8,13 @@ const ViewCharacterInventory = (() => {
   const esc = ViewCharacterUtils.esc;
   const renderOvhChips = ViewCharacterUtils.renderOvhChips;
 
-  function render(character, inventory, currency) {
+  function render(character, inventory, currency, preset = null) {
     const items = inventory || [];
     const funds = currency || {};
     if (!items.length && !Object.values(funds).some(v => v > 0)) return "";
+    const surfacePreset = typeof SurfacePresets !== "undefined"
+      ? SurfacePresets.resolve(preset || SurfacePresets.active())
+      : { id: "character_card", canQueueActions: false };
 
     const actionableById = typeof DndCalculations !== "undefined"
       ? DndCalculations.getActionableItems(character).reduce((map, item) => {
@@ -21,7 +24,7 @@ const ViewCharacterInventory = (() => {
       }, {})
       : {};
 
-    const rows = items.map((item, index) => renderItemRow(item, actionableById[item.id] || [], index)).join("");
+    const rows = items.map((item, index) => renderItemRow(item, actionableById[item.id] || [], index, surfacePreset)).join("");
     const currencyPills = renderCurrency(funds);
 
     return `
@@ -40,50 +43,23 @@ const ViewCharacterInventory = (() => {
     `;
   }
 
-  function renderItemRow(item, actions, index) {
-    const resourceChips = actions.flatMap(actionEntry => (actionEntry.action?.effects?.resources || []).map(effect => ({
-      label: effect.resourceName || effect.target || "Resource",
-      value: Schema.formatModifier(Number(effect.delta || 0)),
-      kind: Number(effect.delta || 0) >= 0 ? "positive" : "negative",
-      description: effect.reason || actionEntry.action?.description || "",
-    })));
-    const inventoryChips = actions.flatMap(actionEntry => (actionEntry.action?.effects?.inventory || []).map(effect => ({
-      label: effect.itemName || effect.target || effect.itemRef || "Item",
-      value: effect.delta
-        ? Schema.formatModifier(Number(effect.delta || 0))
-        : (effect.mustExist || effect.requirePresence ? "Required" : ""),
-      kind: Number(effect.delta || 0) >= 0 ? "positive" : "negative",
-      description: effect.reason || actionEntry.action?.description || "",
-    })));
+  function renderItemRow(item, actions, index, preset) {
+    const mechanics = typeof InventoryWidgets !== "undefined"
+      ? InventoryWidgets.buildMechanicChips(item, actions)
+      : [];
 
-    const mechanics = [
-      item.quantity != null && item.quantity !== 1 ? { label: "Qty", value: item.quantity, kind: "quantity" } : null,
-      item.type ? { label: "Type", value: item.type, kind: "neutral" } : null,
-      item.weight != null && item.weight !== "" ? { label: "Weight", value: item.weight, kind: "neutral" } : null,
-      item.active === false ? { label: "Inactive", kind: "negative", description: "This item is currently not equipped or not applying passive effects." } : { label: "Active", kind: "positive" },
-      item.attuned ? {
-        label: "Attuned",
-        kind: "requirement",
-        description: "This item is attuned or requires attunement for its full effects.",
-      } : null,
-      item.addons?.equipment?.slot ? { label: "Slot", value: item.addons.equipment.slot, kind: "neutral" } : null,
-      item.addons?.equipment?.rarity ? { label: "Rarity", value: item.addons.equipment.rarity, kind: "positive" } : null,
-      item.addons?.effects?.hp?.flatBonus ? { label: "Max HP", value: Schema.formatModifier(Number(item.addons.effects.hp.flatBonus || 0)), kind: "positive" } : null,
-      item.addons?.effects?.hp?.perLevelBonus ? { label: "HP / Lv", value: Schema.formatModifier(Number(item.addons.effects.hp.perLevelBonus || 0)), kind: "positive" } : null,
-      item.addons?.effects?.hp?.tempHp ? { label: "Temp HP", value: `+${Number(item.addons.effects.hp.tempHp || 0)}`, kind: "positive" } : null,
-      item.addons?.healing ? { label: "Healing", value: `+${DndCalculations.healingAmount(item)}`, kind: "positive" } : null,
-      ...resourceChips,
-      ...inventoryChips,
-      ...(item.addons?.mechanics || []),
-    ].filter(Boolean);
-
-    const subtitle = [item.type || "Item", item.addons?.equipment?.rarity || "", item.attuned ? "Attuned" : ""]
-      .filter(Boolean)
-      .join(" | ");
+    const subtitle = typeof InventoryWidgets !== "undefined"
+      ? InventoryWidgets.buildSubtitle(item)
+      : [item.type || "Item", item.addons?.equipment?.rarity || "", item.attuned ? "Attuned" : ""]
+        .filter(Boolean)
+        .join(" | ");
     const quantity = Number(item.quantity ?? 1);
     const openAttr = actions.length || index < 2 ? " open" : "";
     const stateClass = item.active === false ? "" : "prepared";
     const tags = renderOvhChips((item.tags || []).map(tag => ({ label: tag, kind: "neutral" })), { className: "ovh-chips tag-row" });
+    const actionMenu = preset?.canQueueActions && typeof InventoryWidgets !== "undefined"
+      ? InventoryWidgets.renderActionMenu(item, actions, { mode: "session_view", buttonLabel: "Queue" })
+      : "";
 
     return `
       <details class="ovh-record ovh-item-record sheet-record-card" data-sheet-record="${ViewCharacterUtils.encodeDataAttr(buildItemViewerRecord(item, mechanics, actions))}"${openAttr}>
@@ -97,6 +73,7 @@ const ViewCharacterInventory = (() => {
             ${renderOvhChips(mechanics, { className: "ovh-chips quick-chips" })}
           </div>
           ${quantity > 1 ? `<span class="ovh-quantity-badge">x${esc(quantity)}</span>` : ""}
+          ${actionMenu}
           <button type="button" class="ovh-view-button sheet-open-record-viewer">View</button>
         </summary>
         <div class="body">
@@ -124,22 +101,10 @@ const ViewCharacterInventory = (() => {
     if (actions.length) {
       sections.push({
         title: "Actions",
-        content: actions.map(entry => {
-          const effects = [];
-          if (entry.action?.effects?.heal) effects.push(`Healing: +${DndCalculations.healingAmount(entry)}`);
-          if (entry.action?.effects?.tempHp) effects.push(`Temp HP: +${Number(entry.action.effects.tempHp.amount || entry.action.effects.tempHp || 0)}`);
-          (entry.action?.effects?.resources || []).forEach(effect => {
-            effects.push(`${effect.resourceName || effect.target || "Resource"} ${Schema.formatModifier(Number(effect.delta || 0))}`);
-          });
-          (entry.action?.effects?.inventory || []).forEach(effect => {
-            const label = effect.itemName || effect.target || effect.itemRef || "Item";
-            if (Number(effect.delta || 0)) effects.push(`${label} ${Schema.formatModifier(Number(effect.delta || 0))}`);
-            else if (effect.mustExist || effect.requirePresence) effects.push(`Requires ${label}`);
-          });
-          if (entry.action?.effects?.spellSlots?.all) effects.push("Restore all spell slots");
-          if (entry.action?.effects?.spellSlots?.level) effects.push(`Restore level ${entry.action.effects.spellSlots.level} slots by ${entry.action.effects.spellSlots.amount || 1}`);
-          return `${entry.action?.label || "Use"}${effects.length ? `: ${effects.join("; ")}` : ""}`;
-        }).join("\n"),
+        content: (typeof InventoryWidgets !== "undefined"
+          ? InventoryWidgets.buildActionSummaryLines(actions)
+          : actions.map(entry => entry.action?.label || "Use")
+        ).join("\n"),
       });
     }
 
@@ -155,6 +120,44 @@ const ViewCharacterInventory = (() => {
   }
 
   function wireInteractive(containerEl, character) {
+    InventoryWidgets?.wireActionMenus?.(containerEl, {
+      onSelect: ({ itemRow, actionIndex, choice }) => {
+        const mode = choice?.dataset.itemActionMode || "";
+        if (mode !== "session_view") return;
+        const itemRecord = ViewCharacterUtils.decodeDataAttr(itemRow?.dataset.sheetRecord, {});
+        const resolved = typeof Library !== "undefined" ? Library.resolveRef(itemRecord.raw || {}) : (itemRecord.raw || {});
+        const actionEntries = typeof InventoryWidgets !== "undefined"
+          ? InventoryWidgets.resolveActionEntries(character, resolved)
+          : [];
+        const actionEntry = actionEntries[actionIndex];
+        if (!actionEntry) return;
+
+        const bridge = globalThis.__SESSION_VIEW_BRIDGE__;
+        if (!bridge || typeof bridge.queueGameplayAction !== "function") {
+          if (typeof GitHubAuthWidget !== "undefined" && SurfacePresets.active()?.canManageAuth) GitHubAuthWidget.open();
+          else ViewCharacterUtils.showToast("This surface is read-only.", "info");
+          return;
+        }
+
+        bridge.queueGameplayAction({
+          kind: actionEntry.action?.effects?.heal || actionEntry.action?.effects?.tempHp
+            ? "consume_item"
+            : actionEntry.action?.label?.toLowerCase().includes("ready")
+              ? "ready_ammo"
+              : actionEntry.action?.label?.toLowerCase().includes("stow")
+                ? "stow_ammo"
+                : actionEntry.type === "weapon"
+                  ? "attack"
+                  : "utility",
+          summary: `${actionEntry.action?.label || "Use"} ${actionEntry.name || "item"}`,
+          itemRef: actionEntry.libraryRef || actionEntry.id || "",
+          payload: {
+            actionLabel: actionEntry.action?.label || "Use",
+          },
+        });
+      },
+    });
+
     containerEl.querySelectorAll(".ovh-item-record .sheet-open-record-viewer").forEach(button => {
       if (button.dataset.viewerWired === "true") return;
       button.dataset.viewerWired = "true";

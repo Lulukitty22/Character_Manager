@@ -80,7 +80,7 @@ const ViewCharacter = (() => {
       {
         id: "inventory",
         label: "Inventory",
-        render: () => ViewCharacterInventory.render(character, inventory, currency),
+        render: () => ViewCharacterInventory.render(character, inventory, currency, preset),
       },
       {
         id: "resources",
