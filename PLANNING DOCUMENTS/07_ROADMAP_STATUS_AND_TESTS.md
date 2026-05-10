@@ -5,7 +5,7 @@
 | Phase | Name | Status |
 |---|---|---|
 | 1 | Shared Model and Storage | Done / landed. |
-| 2 | Session View Runtime | In progress, currently partly under older `Player` naming. |
+| 2 | Session View Runtime | In progress, now using `data/session_viewer/` naming. |
 | 3 | Shared Widget Migration | Started / active. |
 | 4 | Dungeon Master View | Planned, separate, not implemented yet. |
 | 5 | Resolution and Rolling | Planned. |
@@ -24,12 +24,12 @@
 
 ## Phase 2 In Progress
 
-Currently implemented under older `Player` naming:
+Currently implemented under Session View naming cleanup:
 
-- `data/player/manifest.json`
-- `data/player/boot.js`
-- `data/player/scripts/app.js`
-- Session View exports currently boot `data/player/boot.js`
+- `data/session_viewer/manifest.json`
+- `data/session_viewer/boot.js`
+- `data/session_viewer/scripts/app.js`
+- Session View exports now boot `data/session_viewer/boot.js`
 - export chooser can create either Character Card or gameplay card
 - runtime reads session/encounter context from shared records
 - runtime shows personal queue/history
@@ -44,7 +44,6 @@ Currently implemented under older `Player` naming:
 
 Next:
 
-- Decide whether to rename internal `data/player/` paths.
 - Route all actions into queue/request flow.
 - Route `session_utility` actions/logs to session records.
 - Route `encounter` actions/logs to encounter records.
@@ -71,10 +70,14 @@ These are now present in the repo:
 - default/session seed polling interval changed from 5 minutes to 30 seconds
 - common gameplay item-mutation helpers added in `data/common/scripts/gameplay-mutations.js`
 - common HP helper added in `data/common/scripts/widgets/hp-widget.js`
+- common spell-slot helper added in `data/common/scripts/widgets/spell-slot-widget.js`
+- common resource helper added in `data/common/scripts/widgets/resource-widget.js`
 - common inventory/action helpers added in `data/common/scripts/widgets/inventory-widget.js`
 - editor inventory `Use` actions now share the common mutation layer instead of relying on editor-only item behavior
 - Character Card/editor inventory rows now share common item-mechanics derivation
 - main HP bars now share percent/tone/readout behavior across D&D Stats, Resources, manager cards, boss toggle updates, and the editor gameplay tab
+- Session View pathing has been renamed from `data/player/` to `data/session_viewer/`
+- first `data/dungeon_master/` scaffold is now present, including a generic boot shell and a basic queue review surface
 
 ## Remaining Work
 
@@ -82,7 +85,7 @@ These are now present in the repo:
 - Complete shared widget migration for HP, inventory rows, item actions, resources, and spell slots.
 - Add proper inventory/item history presentation in the `Inventory` tab.
 - Improve library viewer/editor support for gameplay records.
-- Build Dungeon Master View later as a separate surface.
+- Deepen Dungeon Master queue/adjudication behavior beyond the first scaffold.
 - Add resolution, rolling, and damage/healing flows.
 - Define import normalization/review workflow for external records.
 - Improve appearance coverage and debug/status presentation.
@@ -96,9 +99,9 @@ Recommended order:
 1. deepen the shared inventory row/widget with capability-gated controls across all surfaces
 2. reuse the shared item `Use` action menu between `Inventory`, `D&D Gameplay`, and later Session View queue controls
 3. finish HP/resource unification beyond bars, especially history placement and resource-widget cleanup
-4. shared spell slot/action widget cleanup
-5. inventory/item history presentation in `Inventory`
-6. then begin the first Dungeon Master View queue/adjudication dashboard
+4. inventory/item history presentation in `Inventory`
+5. deepen Dungeon Master queue/adjudication flow beyond approve/deny scaffolding
+6. then add richer resolution, rolling, and direct table-control actions
 
 ## Verification Checklist
 

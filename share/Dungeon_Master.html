@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dungeon Master</title>
+  <meta name="github-owner" content="Lulukitty22" />
+  <meta name="github-repo" content="Character_Manager" />
+  <meta name="github-branch" content="staging" />
+</head>
+<body>
+  <div id="app-root"></div>
+  <script>
+    (async function () {
+      var owner = document.querySelector('meta[name="github-owner"]').getAttribute("content");
+      var repo = document.querySelector('meta[name="github-repo"]').getAttribute("content");
+      var branch = document.querySelector('meta[name="github-branch"]').getAttribute("content") || "staging";
+      var shellUrl = "https://raw.githubusercontent.com/" + owner + "/" + repo + "/" + branch + "/data/dungeon_master/boot.js";
+      try {
+        var response = await fetch(shellUrl, { cache: "no-store" });
+        if (!response.ok) throw new Error("HTTP " + response.status + " loading dungeon master boot");
+        var script = document.createElement("script");
+        script.textContent = await response.text();
+        script.textContent += "\n//# sourceURL=" + shellUrl;
+        document.head.appendChild(script);
+      } catch (error) {
+        var message = error && error.message ? error.message : String(error);
+        alert("Could not load the dungeon master view.\n\n" + message);
+        var root = document.getElementById("app-root");
+        if (root) root.textContent = "Could not load dungeon master view: " + message;
+      }
+    })();
+  </script>
+</body>
+</html>

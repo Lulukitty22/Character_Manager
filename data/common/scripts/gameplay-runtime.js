@@ -1,7 +1,7 @@
 /**
  * gameplay-runtime.js
  * Shared helpers for discovering gameplay context, compacting queued actions,
- * and hydrating readable labels for Player/DM surfaces.
+ * and hydrating readable labels for Session View / Dungeon Master surfaces.
  */
 
 const GameplayRuntime = (() => {

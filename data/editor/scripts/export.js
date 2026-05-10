@@ -125,7 +125,7 @@ const SheetExporter = (() => {
 
   function buildSessionExportHtml(opts) {
     const title = `${escapeHtml(opts.characterName)} - Session View`;
-    const bootUrl = `https://raw.githubusercontent.com/${opts.owner}/${opts.repo}/${opts.branch}/data/player/boot.js`;
+    const bootUrl = `https://raw.githubusercontent.com/${opts.owner}/${opts.repo}/${opts.branch}/data/session_viewer/boot.js`;
     return `<!DOCTYPE html>
 <html lang="en">
 <head>

@@ -60,6 +60,8 @@ Related runtime wiring that is also landed:
 Additional shared-widget progress now landed:
 
 - common HP bar/state helper now lives in `data/common/scripts/widgets/hp-widget.js`
+- common spell-slot helper now lives in `data/common/scripts/widgets/spell-slot-widget.js`
+- common resource meter/helper now lives in `data/common/scripts/widgets/resource-widget.js`
 - common gameplay item-mutation helpers live in `data/common/scripts/gameplay-mutations.js`
 - common inventory/action helpers live in `data/common/scripts/widgets/inventory-widget.js`
 - Character Card inventory rows and editor inventory rows now derive their shared item mechanics from the common inventory/action helper instead of duplicating the same logic in two separate places

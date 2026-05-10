@@ -9,18 +9,14 @@
   }
 
   const cfg = {
-    mode: "player",
-    characterId: readMeta("character-id"),
-    characterPath: readMeta("character-path"),
+    mode: "dungeon_master",
     schemaVersion: readMeta("schema-version"),
     owner: readMeta("github-owner"),
     repo: readMeta("github-repo"),
     branch: readMeta("github-branch", "staging"),
   };
 
-  if (typeof globalThis !== "undefined") {
-    globalThis.__SHEET_BOOT_CONFIG__ = cfg;
-  }
+  if (typeof globalThis !== "undefined") globalThis.__SHEET_BOOT_CONFIG__ = cfg;
 
   const repoBase = cfg.owner && cfg.repo
     ? `https://raw.githubusercontent.com/${cfg.owner}/${cfg.repo}/${cfg.branch}`
@@ -29,19 +25,19 @@
   installBaseShellStyles();
   renderLoadingShell();
 
-  if (!repoBase || !cfg.characterPath) {
-    showError("Exported file is missing required GitHub or character metadata.", "");
+  if (!repoBase) {
+    showError("Dungeon Master shell is missing required GitHub metadata.", "");
     return;
   }
 
   try {
-    const manifestUrl = `${repoBase}/data/player/manifest.json`;
-    updateLoading(0.08, "Fetching session view manifest...", manifestUrl);
-    const manifest = await fetchJson(manifestUrl, "session view manifest");
+    const manifestUrl = `${repoBase}/data/dungeon_master/manifest.json`;
+    updateLoading(0.08, "Fetching dungeon master manifest...", manifestUrl);
+    const manifest = await fetchJson(manifestUrl, "dungeon master manifest");
 
     if (!compareSchemaMajor(cfg.schemaVersion, manifest.minCompatibleSchemaMajor || 0)) {
       showFatal(
-        `This file was built for schema v${cfg.schemaVersion}, but the current player runtime requires v${manifest.minCompatibleSchemaMajor}+.`,
+        `This file was built for schema v${cfg.schemaVersion}, but the current dungeon master runtime requires v${manifest.minCompatibleSchemaMajor}+.`,
         manifest.discord
       );
       return;
@@ -56,36 +52,27 @@
     }
 
     const scripts = manifest.scripts || [];
-    updateLoading(0.28, "Loading session view code...", `${scripts.length} script(s)`);
+    updateLoading(0.28, "Loading dungeon master code...", `${scripts.length} script(s)`);
     for (let i = 0; i < scripts.length; i += 1) {
       const path = scripts[i];
       injectScript(await fetchText(asUrl(path), path), path);
-      updateLoading(0.28 + ((i + 1) / Math.max(scripts.length, 1)) * 0.22, `Loading session view code: ${i + 1}/${scripts.length}`, path);
+      updateLoading(0.28 + ((i + 1) / Math.max(scripts.length, 1)) * 0.22, `Loading dungeon master code: ${i + 1}/${scripts.length}`, path);
     }
-
-    updateLoading(0.54, "Loading character data...", cfg.characterPath);
-    const characterData = await fetchJson(`${repoBase}/${cfg.characterPath}`, "character file");
 
     if (typeof Library !== "undefined" && manifest.library?.manifestPath) {
       await loadLibraryFromManifest(manifest.library);
     }
 
-    if (typeof SurfacePresets !== "undefined") SurfacePresets.setActivePreset("session_view");
-    updateLoading(0.96, "Rendering...", "Mounting session view.");
+    if (typeof SurfacePresets !== "undefined") SurfacePresets.setActivePreset("dungeon_master");
+    updateLoading(0.96, "Rendering...", "Mounting dungeon master view.");
     showContent();
-    if (typeof PlayerApp !== "undefined" && typeof PlayerApp.mount === "function") {
-      await PlayerApp.mount(document.getElementById("player-content"), characterData, cfg);
+    if (typeof DungeonMasterApp !== "undefined" && typeof DungeonMasterApp.mount === "function") {
+      await DungeonMasterApp.mount(document.getElementById("dungeon-master-content"), cfg);
     } else {
-      throw new Error("Session view runtime did not load.");
+      throw new Error("Dungeon master runtime did not load.");
     }
-
-    const name = characterData.identity?.name;
-    if (name) document.title = `${name} - Session View`;
+    document.title = "Dungeon Master";
   } catch (error) {
-    if (error && error.status === 404 && /character file/i.test(error.message || "")) {
-      showFatal(`The character file "${cfg.characterPath}" no longer exists in the repo.`, "#VRLulu");
-      return;
-    }
     showError(error.message || String(error), error.url || "");
   }
 
@@ -107,7 +94,7 @@
       .shell-label { color: #8a8299; font-size: 0.88rem; }
       .shell-detail { color: #716a84; font-size: 0.78rem; word-break: break-word; }
       .shell-title { color: #f0eaf8; font-weight: 700; }
-      #player-content { min-height: 100vh; }
+      #dungeon-master-content { min-height: 100vh; }
     `;
     document.head.appendChild(style);
   }
@@ -116,27 +103,27 @@
     root.innerHTML = `
       <div id="state-loading" class="shell-state">
         <div class="shell-card shell-stack">
-          <div class="shell-label">Session View Boot</div>
-          <div class="shell-title" id="loading-status">Preparing session view...</div>
+          <div class="shell-label">Dungeon Master Boot</div>
+          <div class="shell-title" id="loading-status">Preparing dungeon master view...</div>
           <div class="shell-progress"><div id="loading-progress-fill" class="shell-progress-fill"></div></div>
           <div id="loading-detail" class="shell-detail"></div>
         </div>
       </div>
       <div id="state-error" class="shell-state" hidden>
         <div class="shell-card shell-stack">
-          <h1>Could not load session view</h1>
+          <h1>Could not load dungeon master view</h1>
           <p id="error-message">Unknown error.</p>
           <p id="error-url" class="shell-detail"></p>
         </div>
       </div>
       <div id="state-fatal" class="shell-state" hidden>
         <div class="shell-card shell-stack">
-          <h1>This player file is out of date</h1>
+          <h1>This dungeon master file is out of date</h1>
           <p id="fatal-reason">The behind-the-scenes setup that runs this file has changed.</p>
           <p class="shell-detail">Please ask <strong id="fatal-discord">#VRLulu</strong> for an updated file.</p>
         </div>
       </div>
-      <main id="player-content" hidden></main>
+      <main id="dungeon-master-content" hidden></main>
     `;
   }
 
@@ -144,9 +131,7 @@
     const fill = document.getElementById("loading-progress-fill");
     const statusEl = document.getElementById("loading-status");
     const detailEl = document.getElementById("loading-detail");
-    if (fill && typeof progress === "number") {
-      fill.style.width = `${Math.max(0, Math.min(100, Math.round(progress * 100)))}%`;
-    }
+    if (fill && typeof progress === "number") fill.style.width = `${Math.max(0, Math.min(100, Math.round(progress * 100)))}%`;
     if (statusEl) statusEl.textContent = status || "";
     if (detailEl) detailEl.textContent = detail || "";
   }
@@ -179,7 +164,7 @@
     const loading = document.getElementById("state-loading");
     const error = document.getElementById("state-error");
     const fatal = document.getElementById("state-fatal");
-    const content = document.getElementById("player-content");
+    const content = document.getElementById("dungeon-master-content");
     if (loading) loading.hidden = true;
     if (error) error.hidden = true;
     if (fatal) fatal.hidden = true;
@@ -291,7 +276,7 @@
       });
       Library.seedCollections(seeded);
     } catch (error) {
-      console.warn("Player library load failed:", error);
+      console.warn("Dungeon master library load failed:", error);
       updateLoading(0.90, "Library unavailable; continuing without records.", error.message || String(error));
     }
   }

@@ -52,6 +52,14 @@ const EditorResources = (() => {
   }
 
   function renderResourcePool(resource) {
+    const resourceTrack = typeof ResourceWidgets !== "undefined"
+      ? ResourceWidgets.renderTrack(resource, {
+          title: resource.name || "Resource",
+          note: resource.description || "",
+          readout: `${Number(resource.current ?? 0)} / ${Number(resource.max ?? 0)}`,
+          style: "margin-bottom: var(--space-4);",
+        })
+      : "";
     const logRows = (resource.log || []).slice().reverse().map(entry => renderLogEntry(entry)).join("");
 
     return `
@@ -69,6 +77,8 @@ const EditorResources = (() => {
           ${resource.source === "library" ? `<span class="badge badge-accent">Library</span>` : ""}
           <button class="button button-icon button-danger btn-remove-resource" title="Remove pool">Delete</button>
         </div>
+
+        ${resourceTrack}
 
         <div class="flex items-center gap-4" style="margin-bottom: var(--space-4);">
           <div class="resource-counter">
@@ -107,6 +117,9 @@ const EditorResources = (() => {
 
   function wireResourcePool(poolEl) {
     poolEl.querySelector(".btn-remove-resource")?.addEventListener("click", () => poolEl.remove());
+    poolEl.querySelector(".resource-name")?.addEventListener("input", () => updateResourceTrack(poolEl));
+    poolEl.querySelector(".resource-current")?.addEventListener("input", () => updateResourceTrack(poolEl));
+    poolEl.querySelector(".resource-max")?.addEventListener("input", () => updateResourceTrack(poolEl));
 
     const toggleBtn = poolEl.querySelector(".resource-log-toggle");
     const logSection = poolEl.querySelector(".resource-log-section");
@@ -144,6 +157,7 @@ const EditorResources = (() => {
 
     const currentInput = poolEl.querySelector(".resource-current");
     if (currentInput) currentInput.value = newVal;
+    updateResourceTrack(poolEl);
 
     const entry = Schema.createDefaultResourceLogEntry(delta, reason);
 
@@ -158,6 +172,22 @@ const EditorResources = (() => {
 
     poolEl.querySelector(".resource-adjust-amount").value = "";
     poolEl.querySelector(".resource-adjust-reason").value = "";
+  }
+
+  function updateResourceTrack(poolEl) {
+    if (typeof ResourceWidgets === "undefined") return;
+    const trackHost = poolEl.querySelector(".ovh-resource-track");
+    if (!trackHost) return;
+    const name = poolEl.querySelector(".resource-name")?.value.trim() || "Resource";
+    const current = parseInt(poolEl.querySelector(".resource-current")?.value, 10) || 0;
+    const max = parseInt(poolEl.querySelector(".resource-max")?.value, 10) || 0;
+    const temp = document.createElement("div");
+    temp.innerHTML = ResourceWidgets.renderTrack(
+      { name, current, max },
+      { title: name, note: "", readout: `${current} / ${max}`, style: "margin-bottom: var(--space-4);" }
+    );
+    const nextTrack = temp.firstElementChild;
+    if (nextTrack) trackHost.replaceWith(nextTrack);
   }
 
   function addResourcePool(panelEl, resource = null) {

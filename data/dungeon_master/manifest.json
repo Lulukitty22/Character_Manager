@@ -1,0 +1,29 @@
+{
+  "minCompatibleSchemaMajor": 2,
+  "discord": "#VRLulu",
+  "styles": [
+    "data/common/style/base.css",
+    "data/common/style/sheet.css",
+    "data/dungeon_master/style/dungeon_master.css"
+  ],
+  "scripts": [
+    "data/common/scripts/schema.js",
+    "data/common/scripts/importers/library-records.js",
+    "data/common/scripts/library.js",
+    "data/common/scripts/github.js",
+    "data/common/scripts/surface-presets.js",
+    "data/common/scripts/gameplay-runtime.js",
+    "data/common/scripts/dnd-calculations.js",
+    "data/common/scripts/widgets/hp-widget.js",
+    "data/common/scripts/widgets/spell-slot-widget.js",
+    "data/common/scripts/widgets/resource-widget.js",
+    "data/common/scripts/widgets/github-auth-widget.js",
+    "data/common/scripts/views/view-character-utils.js",
+    "data/dungeon_master/scripts/app.js"
+  ],
+  "library": {
+    "manifestPath": "library/manifest.json",
+    "basePath": "",
+    "concurrency": 12
+  }
+}

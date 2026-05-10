@@ -181,23 +181,9 @@ const EditorGameplay = (() => {
       : "";
     const slotRows = [1,2,3,4,5,6,7,8,9].map(level => {
       const slot = slotState?.slots?.[level] || { max: 0, current: 0, calculatedMax: 0, overrideMax: 0 };
-      const calculated = slot.calculatedMax || 0;
-      const unavailable = Number(slot.max || 0) <= 0;
-      return `
-        <div class="spell-slot-row" data-slot-level="${level}">
-          <span class="spell-slot-level">Lv ${level}</span>
-          <div class="spell-slot-inputs">
-            <input type="number" min="0" max="20" class="field-input field-number gp-spell-slot-current" data-level="${level}" value="${slot.current || 0}" title="Current slots" />
-            <span class="text-muted">/</span>
-            <input type="number" min="0" max="20" class="field-input field-number gp-spell-slot-max" data-level="${level}" value="${slotState?.overrideActive ? (slot.overrideMax || slot.max || 0) : (slot.max || 0)}" data-calculated-max="${calculated}" ${slotState?.overrideActive ? "" : "readonly"} title="Max slots" />
-          </div>
-          ${calculated ? `<span class="text-faint text-xs">Calc ${calculated}</span>` : ""}
-          <div class="flex gap-2">
-            <button class="button button-ghost button-sm btn-slot-use" ${unavailable ? "disabled" : ""}>Use</button>
-            <button class="button button-ghost button-sm btn-slot-restore" ${unavailable ? "disabled" : ""}>Restore</button>
-          </div>
-        </div>
-      `;
+      return typeof SpellSlotWidgets !== "undefined"
+        ? SpellSlotWidgets.renderEditorRow(level, slot, { overrideActive: slotState?.overrideActive })
+        : "";
     }).join("");
     const logRows = (spellSlotLog || []).slice().reverse().map(renderSpellLogEntry).join("");
 
@@ -713,20 +699,19 @@ const EditorGameplay = (() => {
   }
 
   function renderActionResourceBar(resource) {
-    const max = Math.max(0, Number(resource.max || 0));
-    const current = Math.max(0, Number(resource.current || 0));
-    const pct = max > 0 ? Math.round((current / max) * 100) : 0;
-    const tone = resource.shortage ? "danger" : pct <= 25 ? "danger" : pct <= 50 ? "warn" : "purple";
     const note = resource.required > 0 ? `Needs ${resource.required}` : "Tracked resource";
-    return `
-      <div class="ovh-resource-track" style="padding: var(--space-3);">
-        <div class="rname">${EditorBase.escapeHTML(resource.name)}<span class="meta">${EditorBase.escapeHTML(note)}</span></div>
-        <div class="ovh-hp-bar-wrap">
-          <div class="ovh-hp-bar"><span class="ovh-hp-bar-fill ${tone}" style="width:${Math.max(0, Math.min(100, pct))}%"></span></div>
-          <span class="hp-readout">${current} / ${max}</span>
-        </div>
-      </div>
-    `;
+    const state = typeof ResourceWidgets !== "undefined"
+      ? ResourceWidgets.normalize(resource)
+      : resource;
+    if (resource.shortage) state.tone = "danger";
+    return typeof ResourceWidgets !== "undefined"
+      ? ResourceWidgets.renderTrack(state, {
+          title: resource.name,
+          note,
+          readout: `${state.current} / ${state.max}`,
+          style: "padding: var(--space-3);",
+        })
+      : "";
   }
 
   function readTab(character) {

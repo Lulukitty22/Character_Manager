@@ -4,7 +4,7 @@
   "styles": [
     "data/common/style/base.css",
     "data/common/style/sheet.css",
-    "data/player/style/player.css"
+    "data/session_viewer/style/session_viewer.css"
   ],
   "scripts": [
     "data/common/scripts/schema.js",
@@ -15,6 +15,8 @@
     "data/common/scripts/gameplay-runtime.js",
     "data/common/scripts/dnd-calculations.js",
     "data/common/scripts/widgets/hp-widget.js",
+    "data/common/scripts/widgets/spell-slot-widget.js",
+    "data/common/scripts/widgets/resource-widget.js",
     "data/common/scripts/gameplay-mutations.js",
     "data/common/scripts/widgets/github-auth-widget.js",
     "data/common/scripts/widgets/inventory-widget.js",
@@ -31,7 +33,7 @@
     "data/common/scripts/views/view-character-resources.js",
     "data/common/scripts/views/view-character-roblox.js",
     "data/common/scripts/views/view-character.js",
-    "data/player/scripts/app.js"
+    "data/session_viewer/scripts/app.js"
   ],
   "library": {
     "manifestPath": "library/manifest.json",

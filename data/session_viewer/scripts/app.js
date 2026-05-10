@@ -1,4 +1,4 @@
-const PlayerApp = (() => {
+const SessionViewerApp = (() => {
   const POLL_INTERVAL_MS = 30000;
   const state = {
     character: null,
@@ -468,7 +468,7 @@ const PlayerApp = (() => {
         itemRef,
       },
       audit: {
-        sourceSurface: "player",
+        sourceSurface: "session_view",
         sourceSurfaceVersion: "v1",
       },
     });
@@ -830,3 +830,5 @@ const PlayerApp = (() => {
 
   return { mount };
 })();
+
+if (typeof globalThis !== "undefined") globalThis.SessionViewerApp = SessionViewerApp;

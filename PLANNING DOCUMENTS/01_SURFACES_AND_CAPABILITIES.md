@@ -6,7 +6,7 @@
 |---|---|---|
 | `Editor` | Admin/authoring surface. | `Editor` |
 | `Character Card` | Read-only per-character reference/export. | `Viewer` |
-| `Session View` | Player-facing at-table gameplay surface. | `Player`, currently may still exist as `data/player/`. |
+| `Session View` | Player-facing at-table gameplay surface. | `Player`, now implemented under `data/session_viewer/`. |
 | `Dungeon Master` | Future DM-facing adjudication/control runtime. | Older docs sometimes said `DM` or `DM-like surface`. |
 
 ## Critical Separation Rule

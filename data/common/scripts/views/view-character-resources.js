@@ -83,12 +83,12 @@ const ViewCharacterResources = (() => {
   }
 
   function renderResourceBlock(resource) {
-    const max = Number(resource.max || 0);
-    const current = Number(resource.current || 0);
-    const pct = max > 0 ? Math.round((current / max) * 100) : 0;
+    const state = typeof ResourceWidgets !== "undefined"
+      ? ResourceWidgets.normalize(resource)
+      : { current: Number(resource.current || 0), max: Number(resource.max || 0), percent: 0 };
     const mechanics = [
-      { label: "Current", value: current, kind: "quantity" },
-      { label: "Max", value: max, kind: "quantity" },
+      { label: "Current", value: state.current, kind: "quantity" },
+      { label: "Max", value: state.max, kind: "quantity" },
       ...(resource.addons?.mechanics || []),
     ];
     const subtitle = resource.description || (resource.source === "library" ? "Library resource" : "Custom resource");
@@ -104,13 +104,17 @@ const ViewCharacterResources = (() => {
             ${renderOvhChips(mechanics, { className: "ovh-chips quick-chips" })}
           </div>
           <span class="ovh-group-meter">
-            <span class="ovh-mini-bar purple ${pct <= 25 ? "danger" : pct <= 50 ? "warn" : ""}"><i style="width:${Math.max(0, Math.min(100, pct))}%"></i></span>
-            <span class="count">${current} / ${max}</span>
+            ${typeof ResourceWidgets !== "undefined"
+              ? ResourceWidgets.renderMiniMeter(state)
+              : `<span class="ovh-mini-bar purple"><i style="width:0%"></i></span>`}
+            <span class="count">${state.current} / ${state.max}</span>
           </span>
           <button type="button" class="ovh-view-button sheet-open-record-viewer">View</button>
         </summary>
         <div class="body">
-          <div class="ovh-hp-bar"><span class="ovh-hp-bar-fill purple ${pct <= 25 ? "danger" : pct <= 50 ? "warn" : ""}" style="width:${Math.max(0, Math.min(100, pct))}%"></span></div>
+          ${typeof ResourceWidgets !== "undefined"
+            ? ResourceWidgets.renderTrack(state, { title: resource.name || "Resource", note: subtitle, readout: `${state.current} / ${state.max}` })
+            : `<div class="ovh-hp-bar"><span class="ovh-hp-bar-fill purple" style="width:0%"></span></div>`}
           ${resource.description ? `<p class="desc">${esc(resource.description)}</p>` : ""}
           ${(resource.log || []).length ? renderInlineLog(resource.log) : ""}
         </div>

@@ -16,7 +16,7 @@ data/
   common/
   editor/
   viewer/
-  player/        # current transitional internal path for the public Session View surface
+  session_viewer/  # internal path for the public Session View surface
 
 share/
   Character_Manager_Editor.html

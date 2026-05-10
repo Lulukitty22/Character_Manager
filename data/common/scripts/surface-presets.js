@@ -41,6 +41,18 @@ const SurfacePresets = (() => {
       canManageAuth: true,
       isReadOnly: false,
     },
+    dungeon_master: {
+      id: "dungeon_master",
+      label: "Dungeon Master",
+      canEditMetadata: false,
+      canEditQuantityDirectly: false,
+      canUseActions: true,
+      canQueueActions: false,
+      canViewLogs: true,
+      canDirectlyMutateState: true,
+      canManageAuth: true,
+      isReadOnly: false,
+    },
   };
 
   let activePresetId = "character_card";

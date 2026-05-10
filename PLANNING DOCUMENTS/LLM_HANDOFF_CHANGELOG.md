@@ -37,8 +37,11 @@ Use this file as a lightweight inbox between LLMs/Codex/assistants. Keep it shor
 - 2026-05-10: Patched the newly-added-item edge so actionable rows can still render their shared `Use` menu immediately instead of waiting for a later rebuild cycle.
 - 2026-05-10: Chose to pull HP math and tone handling into a small shared helper next, because the duplication across sheet sections, manager cards, boss toggles, and editor gameplay was real but still tractable in one pass.
 - 2026-05-10: Landed `data/common/scripts/widgets/hp-widget.js` and wired it into the main HP bars so the shared runtime now owns percent/tone/readout behavior instead of letting each surface freestyle it.
+- 2026-05-10: The internal Session runtime path has been renamed away from `data/player/` to `data/session_viewer/` so the repo stops teaching a public/private naming mismatch to every future implementation pass.
+- 2026-05-10: Started the shared spell-slot/resource widget cleanup with common helpers so the next runtime passes can stop re-deriving slot counts and resource bars in three different styles.
+- 2026-05-10: Added the first `data/dungeon_master/` scaffold plus `share/Dungeon_Master.html`, including a basic queue review surface that can already approve or deny queued actions back into session/encounter records.
+- 2026-05-10: The first dungeon master scaffold resolves queued actions back into gameplay logs, but it does not yet project approved or denied outcomes into character snapshots or apply resulting deltas automatically.
 - 2026-05-10: Left HP/resource unification for the next pass on purpose once the inventory/action slice was coherent, rather than half-landing a second widget migration in the same stretch.
-- Decide whether `data/player/` should remain an internal/transitional name or be renamed to match public `Session View` wording.
 - If maintaining root summary docs again, keep them downstream of this segmented folder instead of allowing them to drift independently.
 
 ## Completed Notes

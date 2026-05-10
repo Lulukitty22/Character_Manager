@@ -50,12 +50,12 @@ const ViewCharacterSpells = (() => {
   }
 
   function renderSlotTracker(current, max) {
+    if (typeof SpellSlotWidgets !== "undefined") {
+      return SpellSlotWidgets.renderCount(current, max);
+    }
     const currentSafe = Math.max(0, Number(current || 0));
     const maxSafe = Math.max(0, Number(max || 0));
-    const pct = maxSafe > 0 ? Math.round((currentSafe / maxSafe) * 100) : 0;
-    const tone = pct <= 25 ? "danger" : pct <= 50 ? "warn" : "";
-    const toneClass = tone ? ` ${tone}` : "";
-    return `<span class="count${toneClass}" title="${currentSafe}/${maxSafe} slots">${currentSafe} / ${maxSafe} slots</span>`;
+    return `<span class="count" title="${currentSafe}/${maxSafe} slots">${currentSafe} / ${maxSafe} slots</span>`;
   }
 
   function renderSpellEntry(spell) {
