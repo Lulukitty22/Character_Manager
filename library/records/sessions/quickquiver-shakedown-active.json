@@ -31,22 +31,22 @@
       },
       "queuedActions": [
         {
-          "id": "d653f3b9-604b-41aa-9774-49ae2fc4c1bb",
-          "kind": "utility",
+          "id": "a5a00dcc-5af4-48d1-96f7-b71d72a83d2a",
+          "kind": "ready_ammo",
           "mode": "session_utility",
           "status": "queued",
           "actorId": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
           "requestedById": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
           "targetIds": [],
           "payload": {
-            "summary": "Open Bundle Arrow Bundle (20)",
+            "summary": "Ready 1 Arrow Field Quiver",
             "note": "",
-            "itemRef": "items.consumable.ammunition.arrow_bundle_20"
+            "itemRef": "items.wondrous.quiver.field_quiver"
           },
           "roll": null,
           "proposedDeltas": [],
           "resultingDeltas": [],
-          "requestedAt": "2026-05-10T20:40:08.182Z",
+          "requestedAt": "2026-05-10T20:42:52.402Z",
           "resolution": null,
           "audit": {
             "sourceSurface": "session_view",
@@ -333,27 +333,27 @@
           }
         },
         {
-          "id": "a5a00dcc-5af4-48d1-96f7-b71d72a83d2a",
-          "kind": "ready_ammo",
+          "id": "d653f3b9-604b-41aa-9774-49ae2fc4c1bb",
+          "kind": "utility",
           "mode": "session_utility",
-          "status": "approved",
+          "status": "denied",
           "actorId": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
           "requestedById": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
           "targetIds": [],
           "payload": {
-            "summary": "Ready 1 Arrow Field Quiver",
+            "summary": "Open Bundle Arrow Bundle (20)",
             "note": "",
-            "itemRef": "items.wondrous.quiver.field_quiver"
+            "itemRef": "items.consumable.ammunition.arrow_bundle_20"
           },
           "roll": null,
           "proposedDeltas": [],
           "resultingDeltas": [],
-          "requestedAt": "2026-05-10T20:42:52.402Z",
+          "requestedAt": "2026-05-10T20:40:08.182Z",
           "resolution": {
-            "status": "approved",
-            "message": "Approved by DM.",
-            "dmReply": "",
-            "resolvedAt": "2026-05-10T20:49:26.518Z",
+            "status": "denied",
+            "message": "Denied by DM.",
+            "dmReply": "you already have like 200 loose arrows bro",
+            "resolvedAt": "2026-05-10T20:49:32.261Z",
             "resolvedById": "dungeon-master"
           },
           "audit": {
