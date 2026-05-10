@@ -1,8 +1,9 @@
 /**
  * library.js
  * Shared repo-backed records for spells, items, resources, tags, feats,
- * traits, classes, and species. Character files store lightweight references; this
- * module resolves those references for editing, preview, and export.
+ * traits, classes, species, and gameplay campaign/session data.
+ * Character files store lightweight references; this module resolves those
+ * references for editing, preview, export, and future gameplay surfaces.
  */
 
 const Library = (() => {
@@ -11,14 +12,18 @@ const Library = (() => {
   const LOAD_CONCURRENCY = 12;
 
   const COLLECTIONS = {
-    spells:    { folder: "spells",    label: "Spells" },
-    items:     { folder: "items",     label: "Items" },
-    resources: { folder: "resources", label: "Resources" },
-    tags:      { folder: "tags",      label: "Tags" },
-    feats:     { folder: "feats",     label: "Feats" },
-    traits:    { folder: "traits",    label: "Traits" },
-    classes:   { folder: "classes",   label: "Classes" },
-    species:   { folder: "species",   label: "Species", aliases: ["races"] },
+    spells:     { folder: "spells",     label: "Spells" },
+    items:      { folder: "items",      label: "Items" },
+    resources:  { folder: "resources",  label: "Resources" },
+    tags:       { folder: "tags",       label: "Tags" },
+    feats:      { folder: "feats",      label: "Feats" },
+    traits:     { folder: "traits",     label: "Traits" },
+    classes:    { folder: "classes",    label: "Classes" },
+    species:    { folder: "species",    label: "Species", aliases: ["races"] },
+    campaigns:  { folder: "campaigns",  label: "Campaigns" },
+    parties:    { folder: "parties",    label: "Parties" },
+    sessions:   { folder: "sessions",   label: "Sessions" },
+    encounters: { folder: "encounters", label: "Encounters" },
   };
 
   const state = {
@@ -1127,6 +1132,10 @@ const Library = (() => {
       traits: "Trait",
       classes: "Class",
       species: "Species",
+      campaigns: "Campaign",
+      parties: "Party",
+      sessions: "Session",
+      encounters: "Encounter",
     };
     return labels[collection] || collection;
   }

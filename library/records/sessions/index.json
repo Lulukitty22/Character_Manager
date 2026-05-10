@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "index.records.sessions",
+  "name": "Sessions",
+  "path": "library/records/sessions/index.json",
+  "directories": [],
+  "entries": [
+    {
+      "id": "sessions.quickquiver-shakedown-active",
+      "name": "Quickquiver Shakedown Active Session",
+      "collections": [
+        "sessions"
+      ],
+      "tags": [
+        "session",
+        "downtime",
+        "utility-mode",
+        "table-test"
+      ],
+      "path": "library/records/sessions/quickquiver-shakedown-active.json"
+    }
+  ]
+}

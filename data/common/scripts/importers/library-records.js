@@ -7,6 +7,14 @@ const LibraryRecords = (() => {
   const SCHEMA_VERSION = 1;
 
   const COLLECTION_ALIASES = {
+    campaign: "campaigns",
+    campaigns: "campaigns",
+    party: "parties",
+    parties: "parties",
+    session: "sessions",
+    sessions: "sessions",
+    encounter: "encounters",
+    encounters: "encounters",
     race: "species",
     races: "species",
     species: "species",
@@ -176,6 +184,70 @@ const LibraryRecords = (() => {
       features.rulesText = { description: raw.description || "" };
     }
 
+    if (collection === "campaigns") {
+      features.campaign = {
+        status: raw.status || "draft",
+        setting: raw.setting || "",
+        activePartyRef: raw.activePartyRef || "",
+        activeSessionRef: raw.activeSessionRef || "",
+        activeEncounterRef: raw.activeEncounterRef || "",
+      };
+      features.notes = { summary: raw.description || "" };
+    }
+
+    if (collection === "parties") {
+      features.party = {
+        campaignRef: raw.campaignRef || "",
+        status: raw.status || "active",
+        defaultMode: raw.defaultMode || "session_utility",
+        members: Array.isArray(raw.members) ? raw.members : [],
+        sharedNotes: raw.sharedNotes || raw.description || "",
+      };
+    }
+
+    if (collection === "sessions") {
+      features.session = {
+        campaignRef: raw.campaignRef || "",
+        partyRef: raw.partyRef || "",
+        encounterRef: raw.encounterRef || "",
+        status: raw.status || "active",
+        mode: raw.mode || "session_utility",
+        notes: raw.notes || raw.description || "",
+        downtime: raw.downtime && typeof raw.downtime === "object" ? raw.downtime : {
+          location: "",
+          focus: [],
+          recipeRefs: [],
+        },
+        queuedActions: Array.isArray(raw.queuedActions) ? raw.queuedActions : [],
+        actionLog: Array.isArray(raw.actionLog) ? raw.actionLog : [],
+        poll: raw.poll && typeof raw.poll === "object" ? raw.poll : {
+          refreshMs: 300000,
+          lastSyncedAt: "",
+        },
+      };
+    }
+
+    if (collection === "encounters") {
+      features.encounter = {
+        campaignRef: raw.campaignRef || "",
+        partyRef: raw.partyRef || "",
+        sessionRef: raw.sessionRef || "",
+        status: raw.status || "setup",
+        phase: raw.phase || "setup",
+        round: Number(raw.round || 0) || 0,
+        turnIndex: Number(raw.turnIndex || 0) || 0,
+        notes: raw.notes || raw.description || "",
+        participants: Array.isArray(raw.participants) ? raw.participants : [],
+        initiative: Array.isArray(raw.initiative) ? raw.initiative : [],
+        queuedActions: Array.isArray(raw.queuedActions) ? raw.queuedActions : [],
+        actionLog: Array.isArray(raw.actionLog) ? raw.actionLog : [],
+        dm: raw.dm && typeof raw.dm === "object" ? raw.dm : {
+          adjudicator: "",
+          lastUpdatedAt: "",
+        },
+      };
+    }
+
     if (Array.isArray(addons.mechanics) && addons.mechanics.length) {
       features.mechanics = addons.mechanics;
     }
@@ -224,6 +296,59 @@ const LibraryRecords = (() => {
       runtime.speed = { walk: Number(canonical.features?.movement?.walk?.quantity || 30) };
     }
 
+    if (runtime.collection === "campaigns") {
+      runtime.status = canonical.features?.campaign?.status || "draft";
+      runtime.setting = canonical.features?.campaign?.setting || "";
+      runtime.activePartyRef = canonical.features?.campaign?.activePartyRef || "";
+      runtime.activeSessionRef = canonical.features?.campaign?.activeSessionRef || "";
+      runtime.activeEncounterRef = canonical.features?.campaign?.activeEncounterRef || "";
+    }
+
+    if (runtime.collection === "parties") {
+      runtime.status = canonical.features?.party?.status || "active";
+      runtime.campaignRef = canonical.features?.party?.campaignRef || "";
+      runtime.defaultMode = canonical.features?.party?.defaultMode || "session_utility";
+      runtime.members = Array.isArray(canonical.features?.party?.members)
+        ? canonical.features.party.members
+        : [];
+    }
+
+    if (runtime.collection === "sessions") {
+      runtime.status = canonical.features?.session?.status || "active";
+      runtime.mode = canonical.features?.session?.mode || "session_utility";
+      runtime.campaignRef = canonical.features?.session?.campaignRef || "";
+      runtime.partyRef = canonical.features?.session?.partyRef || "";
+      runtime.encounterRef = canonical.features?.session?.encounterRef || "";
+      runtime.queuedActions = Array.isArray(canonical.features?.session?.queuedActions)
+        ? canonical.features.session.queuedActions
+        : [];
+      runtime.actionLog = Array.isArray(canonical.features?.session?.actionLog)
+        ? canonical.features.session.actionLog
+        : [];
+    }
+
+    if (runtime.collection === "encounters") {
+      runtime.status = canonical.features?.encounter?.status || "setup";
+      runtime.phase = canonical.features?.encounter?.phase || "setup";
+      runtime.round = Number(canonical.features?.encounter?.round || 0) || 0;
+      runtime.turnIndex = Number(canonical.features?.encounter?.turnIndex || 0) || 0;
+      runtime.campaignRef = canonical.features?.encounter?.campaignRef || "";
+      runtime.partyRef = canonical.features?.encounter?.partyRef || "";
+      runtime.sessionRef = canonical.features?.encounter?.sessionRef || "";
+      runtime.participants = Array.isArray(canonical.features?.encounter?.participants)
+        ? canonical.features.encounter.participants
+        : [];
+      runtime.initiative = Array.isArray(canonical.features?.encounter?.initiative)
+        ? canonical.features.encounter.initiative
+        : [];
+      runtime.queuedActions = Array.isArray(canonical.features?.encounter?.queuedActions)
+        ? canonical.features.encounter.queuedActions
+        : [];
+      runtime.actionLog = Array.isArray(canonical.features?.encounter?.actionLog)
+        ? canonical.features.encounter.actionLog
+        : [];
+    }
+
     return runtime;
   }
 
@@ -251,6 +376,10 @@ const LibraryRecords = (() => {
       actions: features.actions || [],
       hp: features.hp,
       spellcasting: features.spellcastingProgression,
+      campaign: features.campaign,
+      party: features.party,
+      session: features.session,
+      encounter: features.encounter,
     };
   }
 
@@ -262,6 +391,18 @@ const LibraryRecords = (() => {
     if (features.spell?.level != null) chips.push({ label: "Level", value: features.spell.level ? String(features.spell.level) : "Cantrip", kind: "neutral" });
     if (features.spell?.school) chips.push({ label: "School", value: features.spell.school, kind: "neutral" });
     if (features.resource?.defaultMax != null) chips.push({ label: "Max", value: features.resource.defaultMax, kind: "quantity" });
+    if (features.campaign?.status) chips.push({ label: "Status", value: features.campaign.status, kind: "neutral" });
+    if (features.campaign?.setting) chips.push({ label: "Setting", value: features.campaign.setting, kind: "neutral" });
+    if (features.party?.members?.length) chips.push({ label: "Members", value: String(features.party.members.length), kind: "quantity" });
+    if (features.party?.defaultMode) chips.push({ label: "Mode", value: features.party.defaultMode, kind: "neutral" });
+    if (features.session?.status) chips.push({ label: "Status", value: features.session.status, kind: "neutral" });
+    if (features.session?.mode) chips.push({ label: "Mode", value: features.session.mode, kind: "neutral" });
+    if (features.session?.queuedActions?.length != null) chips.push({ label: "Queued", value: String(features.session.queuedActions.length), kind: "quantity" });
+    if (features.session?.actionLog?.length != null) chips.push({ label: "Log", value: String(features.session.actionLog.length), kind: "quantity" });
+    if (features.encounter?.status) chips.push({ label: "Status", value: features.encounter.status, kind: "neutral" });
+    if (features.encounter?.phase) chips.push({ label: "Phase", value: features.encounter.phase, kind: "neutral" });
+    if (features.encounter?.round != null) chips.push({ label: "Round", value: String(features.encounter.round), kind: "quantity" });
+    if (features.encounter?.queuedActions?.length != null) chips.push({ label: "Queued", value: String(features.encounter.queuedActions.length), kind: "quantity" });
     return chips;
   }
 

@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "index.records.parties",
+  "name": "Parties",
+  "path": "library/records/parties/index.json",
+  "directories": [],
+  "entries": [
+    {
+      "id": "parties.quickquiver-field-team",
+      "name": "Quickquiver Field Team",
+      "collections": [
+        "parties"
+      ],
+      "tags": [
+        "party",
+        "table-test",
+        "ammo-test"
+      ],
+      "path": "library/records/parties/quickquiver-field-team.json"
+    }
+  ]
+}

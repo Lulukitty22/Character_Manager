@@ -45,6 +45,15 @@
       "path": "library/records/classes/idk-what-class.json"
     },
     {
+      "id": "classes.ranger",
+      "name": "Ranger",
+      "collections": [
+        "classes"
+      ],
+      "tags": [],
+      "path": "library/records/classes/ranger.json"
+    },
+    {
       "id": "classes.sorcerer",
       "name": "Sorcerer",
       "collections": [

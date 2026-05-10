@@ -4,15 +4,26 @@
 
 Every time you read this plan during implementation, update `STAGING_PLAN.md` in the same change set if status, architecture, paths, or decisions have changed.
 
+If a feature plan becomes too large for this staging note, create or update a companion root-level `*_PLAN.md` file and leave a concise pointer here instead of flooding this document.
+
 ## Current Goal
 
-Land the thin-shim refactor cleanly so the repo has three stable top-level buckets:
+The thin-shim refactor is effectively landed. The next active design-and-implementation track is the D&D gameplay/runtime expansion:
 
-- `library/` for persisted content
-- `data/` for runtime code and manifests
-- `share/` for human-opened HTML shims and examples
+- keep `library/`, `data/`, and `share/` as the stable foundation
+- add the planned four-surface runtime on top of that foundation
+- keep `Viewer` read-only while moving live table flow into dedicated `Player` and `DM` surfaces
+- keep the GitHub-backed thin-shim contract stable while we add gameplay/session records
 
-The D&D stats visual port is already done and browser-verified. This restructuring is the current blocker and focus.
+The full gameplay/runtime design now lives in the companion plan:
+
+- `GAMEPLAY_RUNTIME_PLAN.md`
+
+The remaining thin-shim cleanup work still matters, but it is no longer the only headline.
+
+## Companion Plans
+
+- `GAMEPLAY_RUNTIME_PLAN.md` - full four-surface D&D gameplay/runtime plan
 
 ## Decisions Locked In
 
@@ -60,6 +71,11 @@ The D&D stats visual port is already done and browser-verified. This restructuri
 
 - Delete the now-empty top-level `app/` directory once the external process lock is gone.
 - Do a final browser parity pass on the refactored manager shim and exported viewer shims. The in-app browser verification attempt was blocked by `net::ERR_BLOCKED_BY_CLIENT`, so this still needs a manual follow-up in a normal browser session.
+- Start staged implementation of the four-surface gameplay/runtime plan:
+  - Phase 1 shared model/storage is now done
+  - Phase 2 next: add the dedicated per-character `Player` runtime surface and thin-shim export path
+  - Phase 3 after that: add the generic `DM` runtime surface for encounter/session adjudication
+  - move live table flow out of the editor over time instead of piling more gameplay logic into the admin shell
 
 ## Backend Follow-Ups
 
@@ -77,6 +93,7 @@ The D&D stats visual port is already done and browser-verified. This restructuri
   - rebundling loose arrows back into `Arrow Bundle (20)` is not modeled yet; treat that as a later inventory/backend design decision instead of sneaking in a one-off conversion rule
   - exported/shareable viewer sheets should stay meaningfully read-only for now: do not surface gameplay action buttons there unless the full viewer-side interaction model, persistence rules, and DM-facing expectations are deliberately designed together
 - D&D/DM backend roadmap:
+  - the full next-phase architecture is now captured in `GAMEPLAY_RUNTIME_PLAN.md`; keep this staging note focused on progress/status while the larger design evolves there
   - add explicit dice and damage calculation support for spells and actions
   - support DM-side rolling on behalf of party members for AFK/slow turns
   - keep a trustworthy log trail for rolls and action outcomes
@@ -109,6 +126,13 @@ The D&D stats visual port is already done and browser-verified. This restructuri
 - Spell-slot gameplay rows now hard-stop when a character has no access to that slot level, and impossible stored slot counts are clamped away instead of lingering as usable UI state.
 - Inventory-tab quantity badges in the editor now update immediately when the quantity input changes instead of waiting for a save/reload cycle.
 - Shared/exported viewer inventory rows no longer render nonfunctional item-action buttons; gameplay actions remain an editor/runtime concern until a real viewer/DM interaction surface exists.
+- Landed gameplay runtime Phase 1 in the shared model layer:
+  - added named schema helpers for gameplay actor refs, target refs, roll payloads, state deltas, action requests/resolutions, party members, and initiative entries
+  - added first-class library collections for `campaigns`, `parties`, `sessions`, and `encounters`
+  - taught the shared library runtime and library editor to load, render, and edit those collections
+  - seeded a concrete campaign -> party -> session -> encounter chain around Aina Quickquiver and Carol Elfnein
+  - seeded the first structured downtime/crafting-style queued action plus approved ammo/attack log entries so later Player/DM surfaces have a real specimen to follow
+  - fixed the duplicate bare `Ranger` record ids so the library validator is green again
 
 ## Shim Contract
 
@@ -141,6 +165,10 @@ No embedded character snapshot. No embedded renderer bundle. No inline fallback 
 - Force a bad boot URL and confirm the shim fails with native bootstrap reporting.
 - Force a missing character path and confirm the remote loader shows the in-app missing-file state.
 - Run static checks and repo-wide stale reference searches before closing the refactor.
+- For gameplay runtime Phase 1:
+  - validate `data/common/scripts/schema.js`, `data/common/scripts/library.js`, `data/common/scripts/importers/library-records.js`, and `data/editor/scripts/view-library.js`
+  - validate library schema after adding the new `campaigns` / `parties` / `sessions` / `encounters` collections
+  - spot-check the seeded session/encounter records so queued/logged action payloads stay parseable and readable
 
 ## After This Refactor
 

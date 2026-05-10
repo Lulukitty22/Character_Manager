@@ -5,7 +5,20 @@
 
 const ViewLibrary = (() => {
 
-  const EDITABLE_COLLECTIONS = ["spells", "items", "resources", "tags", "feats", "traits", "classes", "species"];
+  const EDITABLE_COLLECTIONS = [
+    "spells",
+    "items",
+    "resources",
+    "tags",
+    "feats",
+    "traits",
+    "classes",
+    "species",
+    "campaigns",
+    "parties",
+    "sessions",
+    "encounters",
+  ];
 
   async function render(container) {
     container.innerHTML = `
@@ -54,7 +67,7 @@ const ViewLibrary = (() => {
         <div class="list-header flex-between">
           <div>
             <h2 class="list-title">Shared Library</h2>
-            <p class="text-muted text-sm">Reusable records for spells, items, resources, tags, feats, traits, classes, and species.</p>
+            <p class="text-muted text-sm">Reusable records for spells, items, resources, tags, feats, traits, classes, species, and gameplay session data.</p>
           </div>
           <button id="btn-library-refresh" class="button button-ghost button-sm">Refresh</button>
         </div>
@@ -323,6 +336,72 @@ const ViewLibrary = (() => {
       return `<textarea class="field-textarea library-description" rows="3" style="margin-top: var(--space-3);" placeholder="Description">${escapeHTML(entry.description || "")}</textarea>`;
     }
 
+    if (collection === "campaigns") {
+      return `
+        <div class="fields-grid-2" style="margin-top: var(--space-3);">
+          <input class="field-input library-campaign-status" value="${escapeAttr(entry.status || entry.addons?.campaign?.status || "draft")}" placeholder="Status" />
+          <input class="field-input library-campaign-setting" value="${escapeAttr(entry.setting || entry.addons?.campaign?.setting || "")}" placeholder="Setting" />
+        </div>
+        <div class="fields-grid-3" style="margin-top: var(--space-3);">
+          <input class="field-input library-campaign-party-ref" value="${escapeAttr(entry.activePartyRef || entry.addons?.campaign?.activePartyRef || "")}" placeholder="Active party ref" />
+          <input class="field-input library-campaign-session-ref" value="${escapeAttr(entry.activeSessionRef || entry.addons?.campaign?.activeSessionRef || "")}" placeholder="Active session ref" />
+          <input class="field-input library-campaign-encounter-ref" value="${escapeAttr(entry.activeEncounterRef || entry.addons?.campaign?.activeEncounterRef || "")}" placeholder="Active encounter ref" />
+        </div>
+        <textarea class="field-textarea library-description" rows="3" style="margin-top: var(--space-3);" placeholder="Summary">${escapeHTML(entry.description || "")}</textarea>
+      `;
+    }
+
+    if (collection === "parties") {
+      return `
+        <div class="fields-grid-3" style="margin-top: var(--space-3);">
+          <input class="field-input library-party-campaign-ref" value="${escapeAttr(entry.campaignRef || entry.addons?.party?.campaignRef || "")}" placeholder="Campaign ref" />
+          <input class="field-input library-party-status" value="${escapeAttr(entry.status || entry.addons?.party?.status || "active")}" placeholder="Status" />
+          <input class="field-input library-party-mode" value="${escapeAttr(entry.defaultMode || entry.addons?.party?.defaultMode || "session_utility")}" placeholder="Default mode" />
+        </div>
+        <textarea class="field-textarea library-party-members" rows="5" style="margin-top: var(--space-3);" placeholder="Members JSON">${escapeHTML(formatJson(entry.members || entry.addons?.party?.members || []))}</textarea>
+        <textarea class="field-textarea library-description" rows="3" style="margin-top: var(--space-3);" placeholder="Shared notes">${escapeHTML(entry.description || entry.addons?.party?.sharedNotes || "")}</textarea>
+      `;
+    }
+
+    if (collection === "sessions") {
+      return `
+        <div class="fields-grid-3" style="margin-top: var(--space-3);">
+          <input class="field-input library-session-campaign-ref" value="${escapeAttr(entry.campaignRef || entry.addons?.session?.campaignRef || "")}" placeholder="Campaign ref" />
+          <input class="field-input library-session-party-ref" value="${escapeAttr(entry.partyRef || entry.addons?.session?.partyRef || "")}" placeholder="Party ref" />
+          <input class="field-input library-session-encounter-ref" value="${escapeAttr(entry.encounterRef || entry.addons?.session?.encounterRef || "")}" placeholder="Encounter ref" />
+        </div>
+        <div class="fields-grid-2" style="margin-top: var(--space-3);">
+          <input class="field-input library-session-status" value="${escapeAttr(entry.status || entry.addons?.session?.status || "active")}" placeholder="Status" />
+          <input class="field-input library-session-mode" value="${escapeAttr(entry.mode || entry.addons?.session?.mode || "session_utility")}" placeholder="Mode" />
+        </div>
+        <textarea class="field-textarea library-session-downtime" rows="4" style="margin-top: var(--space-3);" placeholder="Downtime JSON">${escapeHTML(formatJson(entry.addons?.session?.downtime || {}))}</textarea>
+        <textarea class="field-textarea library-session-queue" rows="5" style="margin-top: var(--space-3);" placeholder="Queued actions JSON">${escapeHTML(formatJson(entry.queuedActions || entry.addons?.session?.queuedActions || []))}</textarea>
+        <textarea class="field-textarea library-session-log" rows="5" style="margin-top: var(--space-3);" placeholder="Action log JSON">${escapeHTML(formatJson(entry.actionLog || entry.addons?.session?.actionLog || []))}</textarea>
+        <textarea class="field-textarea library-description" rows="3" style="margin-top: var(--space-3);" placeholder="Notes">${escapeHTML(entry.description || entry.addons?.session?.notes || "")}</textarea>
+      `;
+    }
+
+    if (collection === "encounters") {
+      return `
+        <div class="fields-grid-3" style="margin-top: var(--space-3);">
+          <input class="field-input library-encounter-campaign-ref" value="${escapeAttr(entry.campaignRef || entry.addons?.encounter?.campaignRef || "")}" placeholder="Campaign ref" />
+          <input class="field-input library-encounter-party-ref" value="${escapeAttr(entry.partyRef || entry.addons?.encounter?.partyRef || "")}" placeholder="Party ref" />
+          <input class="field-input library-encounter-session-ref" value="${escapeAttr(entry.sessionRef || entry.addons?.encounter?.sessionRef || "")}" placeholder="Session ref" />
+        </div>
+        <div class="fields-grid-4" style="margin-top: var(--space-3);">
+          <input class="field-input library-encounter-status" value="${escapeAttr(entry.status || entry.addons?.encounter?.status || "setup")}" placeholder="Status" />
+          <input class="field-input library-encounter-phase" value="${escapeAttr(entry.phase || entry.addons?.encounter?.phase || "setup")}" placeholder="Phase" />
+          <input class="field-input library-encounter-round" type="number" value="${Number(entry.round || entry.addons?.encounter?.round || 0)}" placeholder="Round" />
+          <input class="field-input library-encounter-turn-index" type="number" value="${Number(entry.turnIndex || entry.addons?.encounter?.turnIndex || 0)}" placeholder="Turn index" />
+        </div>
+        <textarea class="field-textarea library-encounter-participants" rows="5" style="margin-top: var(--space-3);" placeholder="Participants JSON">${escapeHTML(formatJson(entry.participants || entry.addons?.encounter?.participants || []))}</textarea>
+        <textarea class="field-textarea library-encounter-initiative" rows="5" style="margin-top: var(--space-3);" placeholder="Initiative JSON">${escapeHTML(formatJson(entry.initiative || entry.addons?.encounter?.initiative || []))}</textarea>
+        <textarea class="field-textarea library-encounter-queue" rows="5" style="margin-top: var(--space-3);" placeholder="Queued actions JSON">${escapeHTML(formatJson(entry.queuedActions || entry.addons?.encounter?.queuedActions || []))}</textarea>
+        <textarea class="field-textarea library-encounter-log" rows="5" style="margin-top: var(--space-3);" placeholder="Action log JSON">${escapeHTML(formatJson(entry.actionLog || entry.addons?.encounter?.actionLog || []))}</textarea>
+        <textarea class="field-textarea library-description" rows="3" style="margin-top: var(--space-3);" placeholder="Notes">${escapeHTML(entry.description || entry.addons?.encounter?.notes || "")}</textarea>
+      `;
+    }
+
     return "";
   }
 
@@ -522,6 +601,83 @@ const ViewLibrary = (() => {
       };
     }
 
+    if (collection === "campaigns") {
+      const description = readDescription(row);
+      record.desc = description;
+      record.features.campaign = {
+        ...(record.features.campaign || {}),
+        status: row.querySelector(".library-campaign-status")?.value.trim() || "draft",
+        setting: row.querySelector(".library-campaign-setting")?.value.trim() || "",
+        activePartyRef: row.querySelector(".library-campaign-party-ref")?.value.trim() || "",
+        activeSessionRef: row.querySelector(".library-campaign-session-ref")?.value.trim() || "",
+        activeEncounterRef: row.querySelector(".library-campaign-encounter-ref")?.value.trim() || "",
+      };
+      record.features.notes = {
+        ...(record.features.notes || {}),
+        summary: description,
+      };
+    }
+
+    if (collection === "parties") {
+      const description = readDescription(row);
+      record.desc = description;
+      record.features.party = {
+        ...(record.features.party || {}),
+        campaignRef: row.querySelector(".library-party-campaign-ref")?.value.trim() || "",
+        status: row.querySelector(".library-party-status")?.value.trim() || "active",
+        defaultMode: row.querySelector(".library-party-mode")?.value.trim() || "session_utility",
+        members: parseJsonWithFallback(row.querySelector(".library-party-members")?.value, existing.features?.party?.members || [], "Party members JSON was invalid."),
+        sharedNotes: description,
+      };
+    }
+
+    if (collection === "sessions") {
+      const description = readDescription(row);
+      record.desc = description;
+      record.features.session = {
+        ...(record.features.session || {}),
+        campaignRef: row.querySelector(".library-session-campaign-ref")?.value.trim() || "",
+        partyRef: row.querySelector(".library-session-party-ref")?.value.trim() || "",
+        encounterRef: row.querySelector(".library-session-encounter-ref")?.value.trim() || "",
+        status: row.querySelector(".library-session-status")?.value.trim() || "active",
+        mode: row.querySelector(".library-session-mode")?.value.trim() || "session_utility",
+        notes: description,
+        downtime: parseJsonWithFallback(row.querySelector(".library-session-downtime")?.value, existing.features?.session?.downtime || {}, "Session downtime JSON was invalid."),
+        queuedActions: parseJsonWithFallback(row.querySelector(".library-session-queue")?.value, existing.features?.session?.queuedActions || [], "Session queue JSON was invalid."),
+        actionLog: parseJsonWithFallback(row.querySelector(".library-session-log")?.value, existing.features?.session?.actionLog || [], "Session log JSON was invalid."),
+        poll: {
+          ...(record.features.session?.poll || {}),
+          refreshMs: Number(record.features.session?.poll?.refreshMs || 300000) || 300000,
+          lastSyncedAt: record.features.session?.poll?.lastSyncedAt || "",
+        },
+      };
+    }
+
+    if (collection === "encounters") {
+      const description = readDescription(row);
+      record.desc = description;
+      record.features.encounter = {
+        ...(record.features.encounter || {}),
+        campaignRef: row.querySelector(".library-encounter-campaign-ref")?.value.trim() || "",
+        partyRef: row.querySelector(".library-encounter-party-ref")?.value.trim() || "",
+        sessionRef: row.querySelector(".library-encounter-session-ref")?.value.trim() || "",
+        status: row.querySelector(".library-encounter-status")?.value.trim() || "setup",
+        phase: row.querySelector(".library-encounter-phase")?.value.trim() || "setup",
+        round: parseInt(row.querySelector(".library-encounter-round")?.value, 10) || 0,
+        turnIndex: parseInt(row.querySelector(".library-encounter-turn-index")?.value, 10) || 0,
+        notes: description,
+        participants: parseJsonWithFallback(row.querySelector(".library-encounter-participants")?.value, existing.features?.encounter?.participants || [], "Encounter participants JSON was invalid."),
+        initiative: parseJsonWithFallback(row.querySelector(".library-encounter-initiative")?.value, existing.features?.encounter?.initiative || [], "Encounter initiative JSON was invalid."),
+        queuedActions: parseJsonWithFallback(row.querySelector(".library-encounter-queue")?.value, existing.features?.encounter?.queuedActions || [], "Encounter queue JSON was invalid."),
+        actionLog: parseJsonWithFallback(row.querySelector(".library-encounter-log")?.value, existing.features?.encounter?.actionLog || [], "Encounter log JSON was invalid."),
+        dm: {
+          ...(record.features.encounter?.dm || {}),
+          adjudicator: record.features.encounter?.dm?.adjudicator || "",
+          lastUpdatedAt: record.features.encounter?.dm?.lastUpdatedAt || "",
+        },
+      };
+    }
+
     return record;
   }
 
@@ -534,6 +690,21 @@ const ViewLibrary = (() => {
     const match = text.match(/^(\d+)\s*(.*)$/);
     if (!match) return { text };
     return { quantity: Number(match[1]), unit: match[2] || "" };
+  }
+
+  function formatJson(value) {
+    return JSON.stringify(value ?? null, null, 2);
+  }
+
+  function parseJsonWithFallback(value, fallback, toastMessage) {
+    const clean = String(value || "").trim();
+    if (!clean) return fallback;
+    try {
+      return JSON.parse(clean);
+    } catch {
+      App.showToast(toastMessage, "error");
+      return fallback;
+    }
   }
 
   function renderImports(panel) {
@@ -933,6 +1104,7 @@ const ViewLibrary = (() => {
 
   function singular(collection) {
     if (collection === "species") return "species";
+    if (collection === "parties") return "party";
     return collection.endsWith("s") ? collection.slice(0, -1) : collection;
   }
 

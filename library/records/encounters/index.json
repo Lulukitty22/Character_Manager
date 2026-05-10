@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "index.records.encounters",
+  "name": "Encounters",
+  "path": "library/records/encounters/index.json",
+  "directories": [],
+  "entries": [
+    {
+      "id": "encounters.training-yard-volley",
+      "name": "Training Yard Volley",
+      "collections": [
+        "encounters"
+      ],
+      "tags": [
+        "encounter",
+        "ammo-test",
+        "training-yard"
+      ],
+      "path": "library/records/encounters/training-yard-volley.json"
+    }
+  ]
+}

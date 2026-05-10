@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "campaigns.quickquiver-shakedown",
+  "name": "Quickquiver Shakedown",
+  "collections": [
+    "campaigns"
+  ],
+  "tags": [
+    "table-test",
+    "gameplay-runtime",
+    "d-d-5e"
+  ],
+  "variantOf": null,
+  "sourceReferences": [],
+  "features": {
+    "campaign": {
+      "status": "active",
+      "setting": "Field training camp",
+      "activePartyRef": "parties.quickquiver-field-team",
+      "activeSessionRef": "sessions.quickquiver-shakedown-active",
+      "activeEncounterRef": "encounters.training-yard-volley"
+    },
+    "chronology": {
+      "startedAt": "2026-05-09T10:00:00.000Z",
+      "lastSyncedAt": "2026-05-09T10:00:00.000Z"
+    },
+    "notes": {
+      "summary": "Sandbox campaign used to prove the four-surface gameplay runtime model before full Player and DM shells exist."
+    }
+  },
+  "desc": "Sandbox campaign used to prove the four-surface gameplay runtime model before full Player and DM shells exist."
+}

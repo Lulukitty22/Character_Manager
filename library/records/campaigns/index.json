@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "index.records.campaigns",
+  "name": "Campaigns",
+  "path": "library/records/campaigns/index.json",
+  "directories": [],
+  "entries": [
+    {
+      "id": "campaigns.quickquiver-shakedown",
+      "name": "Quickquiver Shakedown",
+      "collections": [
+        "campaigns"
+      ],
+      "tags": [
+        "table-test",
+        "gameplay-runtime",
+        "d-d-5e"
+      ],
+      "path": "library/records/campaigns/quickquiver-shakedown.json"
+    }
+  ]
+}

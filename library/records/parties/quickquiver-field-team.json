@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "id": "parties.quickquiver-field-team",
+  "name": "Quickquiver Field Team",
+  "collections": [
+    "parties"
+  ],
+  "tags": [
+    "party",
+    "table-test",
+    "ammo-test"
+  ],
+  "variantOf": null,
+  "sourceReferences": [],
+  "features": {
+    "party": {
+      "campaignRef": "campaigns.quickquiver-shakedown",
+      "status": "active",
+      "defaultMode": "session_utility",
+      "members": [
+        {
+          "id": "party-member-aina",
+          "role": "scout",
+          "owner": "player",
+          "notes": "Primary ammo/inventory stress-test character.",
+          "actor": {
+            "kind": "character",
+            "id": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
+            "label": "Aina Quickquiver",
+            "characterPath": "library/characters/aina-quickquiver.json",
+            "recordPath": "",
+            "side": "party",
+            "owner": "player",
+            "tags": [
+              "archery",
+              "ammo-test"
+            ],
+            "metadata": {}
+          }
+        },
+        {
+          "id": "party-member-carol",
+          "role": "support",
+          "owner": "player",
+          "notes": "Potion-making and downtime utility test character.",
+          "actor": {
+            "kind": "character",
+            "id": "carol-elfnein",
+            "label": "Carol Elfnein",
+            "characterPath": "library/characters/carol-elfnein.json",
+            "recordPath": "",
+            "side": "party",
+            "owner": "player",
+            "tags": [
+              "alchemy",
+              "downtime"
+            ],
+            "metadata": {}
+          }
+        }
+      ],
+      "sharedNotes": "Aina proves ammo and combat-action state. Carol carries the first downtime/crafting-shaped hooks."
+    }
+  },
+  "desc": "Aina proves ammo and combat-action state. Carol carries the first downtime/crafting-shaped hooks."
+}

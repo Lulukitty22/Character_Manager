@@ -5,6 +5,22 @@
   "path": "library/records/index.json",
   "directories": [
     {
+      "name": "Campaigns",
+      "path": "library/records/campaigns/index.json"
+    },
+    {
+      "name": "Encounters",
+      "path": "library/records/encounters/index.json"
+    },
+    {
+      "name": "Parties",
+      "path": "library/records/parties/index.json"
+    },
+    {
+      "name": "Sessions",
+      "path": "library/records/sessions/index.json"
+    },
+    {
       "name": "Species",
       "path": "library/records/species/index.json"
     },
@@ -79,13 +95,66 @@
       "path": "library/records/traits/aina-trait-archery-test.json"
     },
     {
-      "id": "ranger",
+      "id": "campaigns.quickquiver-shakedown",
+      "name": "Quickquiver Shakedown",
+      "collections": [
+        "campaigns"
+      ],
+      "tags": [
+        "table-test",
+        "gameplay-runtime",
+        "d-d-5e"
+      ],
+      "path": "library/records/campaigns/quickquiver-shakedown.json"
+    },
+    {
+      "id": "encounters.training-yard-volley",
+      "name": "Training Yard Volley",
+      "collections": [
+        "encounters"
+      ],
+      "tags": [
+        "encounter",
+        "ammo-test",
+        "training-yard"
+      ],
+      "path": "library/records/encounters/training-yard-volley.json"
+    },
+    {
+      "id": "tag:ranger",
       "name": "Ranger",
       "collections": [
         "tags"
       ],
       "tags": [],
       "path": "library/records/tags/ranger.json"
+    },
+    {
+      "id": "parties.quickquiver-field-team",
+      "name": "Quickquiver Field Team",
+      "collections": [
+        "parties"
+      ],
+      "tags": [
+        "party",
+        "table-test",
+        "ammo-test"
+      ],
+      "path": "library/records/parties/quickquiver-field-team.json"
+    },
+    {
+      "id": "sessions.quickquiver-shakedown-active",
+      "name": "Quickquiver Shakedown Active Session",
+      "collections": [
+        "sessions"
+      ],
+      "tags": [
+        "session",
+        "downtime",
+        "utility-mode",
+        "table-test"
+      ],
+      "path": "library/records/sessions/quickquiver-shakedown-active.json"
     },
     {
       "id": "wood-elf",

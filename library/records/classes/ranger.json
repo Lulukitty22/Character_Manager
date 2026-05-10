@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "ranger",
+  "id": "classes.ranger",
   "name": "Ranger",
   "collections": [
     "classes"

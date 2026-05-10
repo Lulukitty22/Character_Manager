@@ -149,9 +149,226 @@ const Schema = (() => {
     };
   }
 
+  function createGameplayActorRef(patch = {}) {
+    return {
+      kind: patch.kind || "character",
+      id: patch.id || "",
+      label: patch.label || "",
+      characterPath: patch.characterPath || "",
+      recordPath: patch.recordPath || "",
+      side: patch.side || "",
+      owner: patch.owner || "",
+      tags: Array.isArray(patch.tags) ? patch.tags.slice() : [],
+      metadata: patch.metadata && typeof patch.metadata === "object" ? { ...patch.metadata } : {},
+    };
+  }
+
+  function createGameplayTargetRef(patch = {}) {
+    return {
+      ...createGameplayActorRef(patch),
+      relation: patch.relation || "",
+    };
+  }
+
+  function createGameplayRollModifier(patch = {}) {
+    return {
+      label: patch.label || "",
+      value: Number(patch.value || 0) || 0,
+      source: patch.source || "",
+    };
+  }
+
+  function createGameplayRollPayload(patch = {}) {
+    return {
+      id: patch.id || generateId(),
+      kind: patch.kind || "check",
+      formula: patch.formula || "",
+      ability: patch.ability || "",
+      skill: patch.skill || "",
+      dc: Number.isFinite(Number(patch.dc)) ? Number(patch.dc) : null,
+      advantage: patch.advantage || "normal",
+      modifiers: Array.isArray(patch.modifiers)
+        ? patch.modifiers.map(createGameplayRollModifier)
+        : [],
+      visibility: patch.visibility || "public",
+      requestedBy: patch.requestedBy || "",
+      rolledBy: patch.rolledBy || "",
+      result: patch.result && typeof patch.result === "object"
+        ? {
+          raw: Number(patch.result.raw || 0) || 0,
+          total: Number(patch.result.total || 0) || 0,
+          outcome: patch.result.outcome || "",
+          notes: patch.result.notes || "",
+        }
+        : null,
+    };
+  }
+
+  function createGameplayStateDelta(patch = {}) {
+    return {
+      id: patch.id || generateId(),
+      targetType: patch.targetType || "character",
+      targetId: patch.targetId || "",
+      path: patch.path || "",
+      operation: patch.operation || "adjust",
+      value: patch.value ?? 0,
+      previousValue: patch.previousValue ?? null,
+      nextValue: patch.nextValue ?? null,
+      reason: patch.reason || "",
+      source: patch.source || "",
+    };
+  }
+
+  function createGameplayActionRequest(patch = {}) {
+    return {
+      id: patch.id || generateId(),
+      kind: patch.kind || "utility",
+      mode: patch.mode || "session_utility",
+      status: patch.status || "queued",
+      actor: createGameplayActorRef(patch.actor || {}),
+      targets: Array.isArray(patch.targets)
+        ? patch.targets.map(createGameplayTargetRef)
+        : [],
+      payload: patch.payload && typeof patch.payload === "object" ? { ...patch.payload } : {},
+      roll: patch.roll ? createGameplayRollPayload(patch.roll) : null,
+      proposedDeltas: Array.isArray(patch.proposedDeltas)
+        ? patch.proposedDeltas.map(createGameplayStateDelta)
+        : [],
+      resultingDeltas: Array.isArray(patch.resultingDeltas)
+        ? patch.resultingDeltas.map(createGameplayStateDelta)
+        : [],
+      requestedAt: patch.requestedAt || new Date().toISOString(),
+      requestedBy: patch.requestedBy || "",
+      resolution: patch.resolution && typeof patch.resolution === "object"
+        ? {
+          status: patch.resolution.status || "",
+          note: patch.resolution.note || "",
+          resolvedAt: patch.resolution.resolvedAt || "",
+          resolvedBy: patch.resolution.resolvedBy || "",
+        }
+        : null,
+      audit: patch.audit && typeof patch.audit === "object" ? { ...patch.audit } : {},
+    };
+  }
+
+  function createGameplayActionResolution(patch = {}) {
+    const action = createGameplayActionRequest({
+      ...patch,
+      status: patch.status || "approved",
+    });
+    action.resolution = {
+      status: patch.resolution?.status || action.status,
+      note: patch.resolution?.note || "",
+      resolvedAt: patch.resolution?.resolvedAt || new Date().toISOString(),
+      resolvedBy: patch.resolution?.resolvedBy || "",
+    };
+    return action;
+  }
+
+  function createDefaultPartyMember(patch = {}) {
+    return {
+      id: patch.id || generateId(),
+      role: patch.role || "member",
+      owner: patch.owner || "",
+      notes: patch.notes || "",
+      actor: createGameplayActorRef(patch.actor || {}),
+    };
+  }
+
+  function createDefaultInitiativeEntry(patch = {}) {
+    return {
+      id: patch.id || generateId(),
+      actorId: patch.actorId || "",
+      label: patch.label || "",
+      initiative: Number(patch.initiative || 0) || 0,
+      hasActed: Boolean(patch.hasActed),
+      notes: patch.notes || "",
+    };
+  }
+
+  function createDefaultCampaignFeatures() {
+    return {
+      campaign: {
+        status: "draft",
+        setting: "",
+        activePartyRef: "",
+        activeSessionRef: "",
+        activeEncounterRef: "",
+      },
+      chronology: {
+        startedAt: "",
+        lastSyncedAt: "",
+      },
+      notes: {
+        summary: "",
+      },
+    };
+  }
+
+  function createDefaultPartyFeatures() {
+    return {
+      party: {
+        campaignRef: "",
+        status: "active",
+        defaultMode: "session_utility",
+        members: [],
+        sharedNotes: "",
+      },
+    };
+  }
+
+  function createDefaultSessionFeatures() {
+    return {
+      session: {
+        campaignRef: "",
+        partyRef: "",
+        encounterRef: "",
+        status: "active",
+        mode: "session_utility",
+        notes: "",
+        downtime: {
+          location: "",
+          focus: [],
+          recipeRefs: [],
+        },
+        queuedActions: [],
+        actionLog: [],
+        poll: {
+          refreshMs: 300000,
+          lastSyncedAt: "",
+        },
+      },
+    };
+  }
+
+  function createDefaultEncounterFeatures() {
+    return {
+      encounter: {
+        campaignRef: "",
+        partyRef: "",
+        sessionRef: "",
+        status: "setup",
+        phase: "setup",
+        round: 0,
+        turnIndex: 0,
+        notes: "",
+        participants: [],
+        initiative: [],
+        queuedActions: [],
+        actionLog: [],
+        dm: {
+          adjudicator: "",
+          lastUpdatedAt: "",
+        },
+      },
+    };
+  }
+
   function createLibraryRecord(collection) {
-    const id = generateId();
     const canonicalCollection = collection === "races" ? "species" : collection;
+    const id = canonicalCollection === "tags"
+      ? `tag:${generateId()}`
+      : `${canonicalCollection}.${generateId()}`;
 
     return {
       schemaVersion: 1,
@@ -161,136 +378,17 @@ const Schema = (() => {
       tags: [],
       variantOf: null,
       sourceReferences: [],
-      features: {},
+      features: createDefaultLibraryFeatures(canonicalCollection),
       desc: "",
     };
+  }
 
-    const base = {
-      id,
-      collection,
-      name: "",
-      tags: [],
-      source: "custom",
-      provider: "",
-      providerId: "",
-      variantOf: "",
-      addons: { mechanics: [] },
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    };
-
-    if (collection === "spells") {
-      return {
-        ...base,
-        level: 0,
-        school: "",
-        castingTime: "1 action",
-        range: "",
-        components: [],
-        duration: "",
-        description: "",
-        addons: {
-          mechanics: [],
-          components: [],
-          ritual: { enabled: false },
-          concentration: { enabled: false },
-        },
-      };
-    }
-
-    if (collection === "items") {
-      return {
-        ...base,
-        type: "misc",
-        active: true,
-        weight: null,
-        attuned: false,
-        description: "",
-        addons: {
-          mechanics: [],
-          equipment: { slot: "", rarity: "" },
-          effects: {
-            hp: { flatBonus: 0, perLevelBonus: 0, tempHp: 0 },
-            spellSlots: {},
-          },
-          actions: [],
-        },
-      };
-    }
-
-    if (collection === "resources") {
-      return {
-        ...base,
-        max: 0,
-        description: "",
-        addons: {
-          mechanics: [],
-          resource: { currentIsCharacterState: true, logIsCharacterState: true },
-        },
-      };
-    }
-
-    if (collection === "tags") {
-      return {
-        ...base,
-        color: "",
-        description: "",
-        addons: { mechanics: [] },
-      };
-    }
-
-    if (collection === "feats") {
-      return {
-        ...base,
-        description: "",
-        addons: {
-          mechanics: [],
-          prerequisites: [],
-        },
-      };
-    }
-
-    if (collection === "traits") {
-      return {
-        ...base,
-        type: "trait",
-        description: "",
-        addons: { mechanics: [] },
-      };
-    }
-
-    if (collection === "classes") {
-      return {
-        ...base,
-        description: "",
-        hitDie: "",
-        primaryAbility: "",
-        addons: {
-          mechanics: [],
-          stats: {},
-          speed: {},
-          proficiencies: [],
-          feats: [],
-        },
-      };
-    }
-
-    if (collection === "races") {
-      return {
-        ...base,
-        description: "",
-        speed: { walk: 30 },
-        addons: {
-          mechanics: [],
-          stats: {},
-          hp: { flatBonus: 0, perLevelBonus: 0 },
-          proficiencies: [],
-          traits: [],
-        },
-      };
-    }
-
-    return base;
+  function createDefaultLibraryFeatures(collection) {
+    if (collection === "campaigns") return createDefaultCampaignFeatures();
+    if (collection === "parties") return createDefaultPartyFeatures();
+    if (collection === "sessions") return createDefaultSessionFeatures();
+    if (collection === "encounters") return createDefaultEncounterFeatures();
+    return {};
   }
 
   function createLibraryCollection(collection) {
@@ -816,6 +914,20 @@ const Schema = (() => {
     createDefaultFeat,
     createDefaultResourceLogEntry,
     createDefaultHpLogEntry,
+    createGameplayActorRef,
+    createGameplayTargetRef,
+    createGameplayRollModifier,
+    createGameplayRollPayload,
+    createGameplayStateDelta,
+    createGameplayActionRequest,
+    createGameplayActionResolution,
+    createDefaultPartyMember,
+    createDefaultInitiativeEntry,
+    createDefaultCampaignFeatures,
+    createDefaultPartyFeatures,
+    createDefaultSessionFeatures,
+    createDefaultEncounterFeatures,
+    createDefaultLibraryFeatures,
     createLibraryRecord,
     createLibraryCollection,
     createCharacterLibraryRef,

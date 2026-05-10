@@ -1,0 +1,259 @@
+{
+  "schemaVersion": 1,
+  "id": "encounters.training-yard-volley",
+  "name": "Training Yard Volley",
+  "collections": [
+    "encounters"
+  ],
+  "tags": [
+    "encounter",
+    "ammo-test",
+    "training-yard"
+  ],
+  "variantOf": null,
+  "sourceReferences": [],
+  "features": {
+    "encounter": {
+      "campaignRef": "campaigns.quickquiver-shakedown",
+      "partyRef": "parties.quickquiver-field-team",
+      "sessionRef": "sessions.quickquiver-shakedown-active",
+      "status": "active",
+      "phase": "round",
+      "round": 1,
+      "turnIndex": 0,
+      "notes": "Simple live-fire drill used to seed the first encounter log and queue model.",
+      "participants": [
+        {
+          "kind": "character",
+          "id": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
+          "label": "Aina Quickquiver",
+          "characterPath": "library/characters/aina-quickquiver.json",
+          "recordPath": "",
+          "side": "party",
+          "owner": "player",
+          "tags": [
+            "archery",
+            "ammo-test"
+          ],
+          "metadata": {}
+        }
+      ],
+      "initiative": [
+        {
+          "id": "initiative.aina",
+          "actorId": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
+          "label": "Aina Quickquiver",
+          "initiative": 16,
+          "hasActed": false,
+          "notes": "First turn of the drill."
+        }
+      ],
+      "queuedActions": [
+        {
+          "id": "action.request.training-shot",
+          "kind": "attack",
+          "mode": "encounter",
+          "status": "queued",
+          "actor": {
+            "kind": "character",
+            "id": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
+            "label": "Aina Quickquiver",
+            "characterPath": "library/characters/aina-quickquiver.json",
+            "recordPath": "",
+            "side": "party",
+            "owner": "player",
+            "tags": [
+              "archery",
+              "ammo-test"
+            ],
+            "metadata": {}
+          },
+          "targets": [
+            {
+              "kind": "encounter-target",
+              "id": "hay-bale-target",
+              "label": "Hay Bale Target",
+              "characterPath": "",
+              "recordPath": "",
+              "side": "neutral",
+              "owner": "",
+              "tags": [
+                "training"
+              ],
+              "metadata": {},
+              "relation": "target"
+            }
+          ],
+          "payload": {
+            "itemRef": "items.item-shortbow-archery-test",
+            "summary": "Aina requests a shortbow attack against the training target."
+          },
+          "roll": {
+            "id": "roll.request.training-shot",
+            "kind": "attack",
+            "formula": "1d20+7",
+            "ability": "dex",
+            "skill": "",
+            "dc": 12,
+            "advantage": "normal",
+            "modifiers": [
+              {
+                "label": "Dexterity",
+                "value": 4,
+                "source": "character"
+              },
+              {
+                "label": "Proficiency",
+                "value": 3,
+                "source": "weapon"
+              }
+            ],
+            "visibility": "public",
+            "requestedBy": "aina-quickquiver",
+            "rolledBy": "",
+            "result": null
+          },
+          "proposedDeltas": [
+            {
+              "id": "delta.request.training-shot.ammo",
+              "targetType": "character",
+              "targetId": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
+              "path": "customResources/resources.resource-arrows-20",
+              "operation": "adjust",
+              "value": -1,
+              "previousValue": null,
+              "nextValue": null,
+              "reason": "Spend one readied arrow to take the shot.",
+              "source": "items.item-shortbow-archery-test"
+            }
+          ],
+          "resultingDeltas": [],
+          "requestedAt": "2026-05-09T10:07:00.000Z",
+          "requestedBy": "aina-quickquiver",
+          "resolution": null,
+          "audit": {
+            "sourceSurface": "player",
+            "createdBy": "phase1-seed"
+          }
+        }
+      ],
+      "actionLog": [
+        {
+          "id": "action.applied.training-shot",
+          "kind": "attack",
+          "mode": "encounter",
+          "status": "applied",
+          "actor": {
+            "kind": "character",
+            "id": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
+            "label": "Aina Quickquiver",
+            "characterPath": "library/characters/aina-quickquiver.json",
+            "recordPath": "",
+            "side": "party",
+            "owner": "player",
+            "tags": [
+              "archery",
+              "ammo-test"
+            ],
+            "metadata": {}
+          },
+          "targets": [
+            {
+              "kind": "encounter-target",
+              "id": "hay-bale-target",
+              "label": "Hay Bale Target",
+              "characterPath": "",
+              "recordPath": "",
+              "side": "neutral",
+              "owner": "",
+              "tags": [
+                "training"
+              ],
+              "metadata": {},
+              "relation": "target"
+            }
+          ],
+          "payload": {
+            "itemRef": "items.item-shortbow-archery-test",
+            "summary": "Aina lands a training hit."
+          },
+          "roll": {
+            "id": "roll.applied.training-shot",
+            "kind": "attack",
+            "formula": "1d20+7",
+            "ability": "dex",
+            "skill": "",
+            "dc": 12,
+            "advantage": "normal",
+            "modifiers": [
+              {
+                "label": "Dexterity",
+                "value": 4,
+                "source": "character"
+              },
+              {
+                "label": "Proficiency",
+                "value": 3,
+                "source": "weapon"
+              }
+            ],
+            "visibility": "public",
+            "requestedBy": "aina-quickquiver",
+            "rolledBy": "dm.training-yard",
+            "result": {
+              "raw": 11,
+              "total": 18,
+              "outcome": "hit",
+              "notes": "Solid training shot."
+            }
+          },
+          "proposedDeltas": [
+            {
+              "id": "delta.request.training-shot.ammo",
+              "targetType": "character",
+              "targetId": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
+              "path": "customResources/resources.resource-arrows-20",
+              "operation": "adjust",
+              "value": -1,
+              "previousValue": null,
+              "nextValue": null,
+              "reason": "Spend one readied arrow to take the shot.",
+              "source": "items.item-shortbow-archery-test"
+            }
+          ],
+          "resultingDeltas": [
+            {
+              "id": "delta.applied.training-shot.ammo",
+              "targetType": "character",
+              "targetId": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
+              "path": "customResources/resources.resource-arrows-20",
+              "operation": "adjust",
+              "value": -1,
+              "previousValue": 3,
+              "nextValue": 2,
+              "reason": "Spend one readied arrow to take the shot.",
+              "source": "dm.approval"
+            }
+          ],
+          "requestedAt": "2026-05-09T10:07:00.000Z",
+          "requestedBy": "aina-quickquiver",
+          "resolution": {
+            "status": "approved",
+            "note": "Hit accepted for the drill.",
+            "resolvedAt": "2026-05-09T10:07:20.000Z",
+            "resolvedBy": "dm.training-yard"
+          },
+          "audit": {
+            "sourceSurface": "dm",
+            "projectedToCharacter": true
+          }
+        }
+      ],
+      "dm": {
+        "adjudicator": "dm.training-yard",
+        "lastUpdatedAt": "2026-05-09T10:07:20.000Z"
+      }
+    }
+  },
+  "desc": "Simple live-fire drill used to seed the first encounter log and queue model."
+}

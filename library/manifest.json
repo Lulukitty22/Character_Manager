@@ -1354,7 +1354,7 @@
         "updatedAt": "2026-05-03T15:10:50.038Z"
       },
       {
-        "id": "ranger",
+        "id": "classes.ranger",
         "name": "Ranger",
         "collections": [
           "classes"
@@ -1467,6 +1467,75 @@
         "path": "library/records/species/wood-elf.json",
         "sha": "fb87b1f5dcd5b939ab6f4079f9755435a165f93c",
         "updatedAt": "2026-05-09T08:07:28.811Z"
+      }
+    ],
+    "campaigns": [
+      {
+        "id": "campaigns.quickquiver-shakedown",
+        "name": "Quickquiver Shakedown",
+        "collections": [
+          "campaigns"
+        ],
+        "tags": [
+          "table-test",
+          "gameplay-runtime",
+          "d-d-5e"
+        ],
+        "path": "library/records/campaigns/quickquiver-shakedown.json",
+        "sha": "",
+        "updatedAt": "2026-05-09T10:00:00.000Z"
+      }
+    ],
+    "parties": [
+      {
+        "id": "parties.quickquiver-field-team",
+        "name": "Quickquiver Field Team",
+        "collections": [
+          "parties"
+        ],
+        "tags": [
+          "party",
+          "table-test",
+          "ammo-test"
+        ],
+        "path": "library/records/parties/quickquiver-field-team.json",
+        "sha": "",
+        "updatedAt": "2026-05-09T10:00:00.000Z"
+      }
+    ],
+    "sessions": [
+      {
+        "id": "sessions.quickquiver-shakedown-active",
+        "name": "Quickquiver Shakedown Active Session",
+        "collections": [
+          "sessions"
+        ],
+        "tags": [
+          "session",
+          "downtime",
+          "utility-mode",
+          "table-test"
+        ],
+        "path": "library/records/sessions/quickquiver-shakedown-active.json",
+        "sha": "",
+        "updatedAt": "2026-05-09T10:00:00.000Z"
+      }
+    ],
+    "encounters": [
+      {
+        "id": "encounters.training-yard-volley",
+        "name": "Training Yard Volley",
+        "collections": [
+          "encounters"
+        ],
+        "tags": [
+          "encounter",
+          "ammo-test",
+          "training-yard"
+        ],
+        "path": "library/records/encounters/training-yard-volley.json",
+        "sha": "",
+        "updatedAt": "2026-05-09T10:00:00.000Z"
       }
     ]
   }

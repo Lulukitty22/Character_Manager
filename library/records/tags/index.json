@@ -60,7 +60,7 @@
       "path": "library/records/tags/dual-state-sheet.json"
     },
     {
-      "id": "ranger",
+      "id": "tag:ranger",
       "name": "Ranger",
       "collections": [
         "tags"

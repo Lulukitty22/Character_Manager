@@ -5,8 +5,16 @@
   "path": "library/index.json",
   "directories": [
     {
+      "name": "Campaigns",
+      "path": "library/records/campaigns/index.json"
+    },
+    {
       "name": "Classes",
       "path": "library/records/classes/index.json"
+    },
+    {
+      "name": "Encounters",
+      "path": "library/records/encounters/index.json"
     },
     {
       "name": "Feats",
@@ -17,12 +25,20 @@
       "path": "library/records/items/index.json"
     },
     {
+      "name": "Parties",
+      "path": "library/records/parties/index.json"
+    },
+    {
       "name": "Records",
       "path": "library/records/index.json"
     },
     {
       "name": "Resources",
       "path": "library/records/resources/index.json"
+    },
+    {
+      "name": "Sessions",
+      "path": "library/records/sessions/index.json"
     },
     {
       "name": "Species",
