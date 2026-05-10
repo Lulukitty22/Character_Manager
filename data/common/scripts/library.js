@@ -26,6 +26,17 @@ const Library = (() => {
     encounters: { folder: "encounters", label: "Encounters" },
   };
 
+  const LEGACY_REFERENCE_ALIASES = {
+    "items.item-arrow-bundle-20-test": "items.consumable.ammunition.arrow_bundle_20",
+    "items.item-loose-arrow-test": "items.consumable.ammunition.loose_arrow",
+    "items.item-field-quiver-archery-test": "items.wondrous.quiver.field_quiver",
+    "items.item-shortbow-archery-test": "items.weapon.shortbow.field_shortbow",
+    "items.dnd5eapi-magic-items-potion-of-healing-common": "items.consumable.potion.potion_of_healing_common",
+    "items.dnd5eapi-magic-items-potion-of-healing-greater": "items.consumable.potion.potion_of_greater_healing",
+    "items.dnd5eapi-magic-items-potion-of-healing-superior": "items.consumable.potion.potion_of_superior_healing",
+    "items.dnd5eapi-magic-items-potion-of-healing-supreme": "items.consumable.potion.potion_of_supreme_healing",
+  };
+
   const state = {
     collections: {},
     shaByRecord: {},
@@ -282,9 +293,15 @@ const Library = (() => {
     if (!clean) return [];
     const canonical = getCollectionKey(collection);
     const prefix = `${canonical}.`;
+    const alias = LEGACY_REFERENCE_ALIASES[clean] || "";
     const candidates = [clean];
+    if (alias) candidates.push(alias);
     if (!clean.startsWith(prefix)) candidates.push(`${prefix}${clean}`);
     else candidates.push(clean.slice(prefix.length));
+    if (alias) {
+      if (!alias.startsWith(prefix)) candidates.push(`${prefix}${alias}`);
+      else candidates.push(alias.slice(prefix.length));
+    }
     return [...new Set(candidates)];
   }
 

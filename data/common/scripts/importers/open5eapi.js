@@ -136,9 +136,11 @@ const Open5eApiImporter = (() => {
   function itemRecord(result, raw = {}) {
     const key = raw.key || raw.slug || LibraryRecords.slugify(raw.name || result.name || "item");
     const rawCategory = LibraryRecords.slugify(raw.category?.key || raw.category?.name || "item");
-    const isAmmo = /ammunition|arrow|bolt|bullet|needle/i.test([rawCategory, raw.name, raw.desc].join(" "));
-    const category = isAmmo ? "equipment" : rawCategory;
-    const subcategory = isAmmo ? "ammunition" : "";
+    const categoryText = [rawCategory, raw.name, raw.desc, raw.description].join(" ");
+    const isAmmo = /ammunition|arrow|bolt|bullet|needle/i.test(categoryText);
+    const isPotion = /potion|elixir|draught/i.test(categoryText);
+    const category = isAmmo || isPotion ? "consumable" : rawCategory;
+    const subcategory = isAmmo ? "ammunition" : isPotion ? "potion" : "";
     return LibraryRecords.createRecord("items", {
       id: `items.${category}.${subcategory ? `${subcategory}.` : ""}${LibraryRecords.slugify(raw.name || result.name || key)}`,
       name: raw.name || result.name || "",

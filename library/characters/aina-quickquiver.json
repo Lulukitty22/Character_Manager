@@ -54,7 +54,7 @@
       "source": "library",
       "libraryCollection": "items",
       "librarySource": "custom",
-      "libraryRef": "items.item-shortbow-archery-test",
+      "libraryRef": "items.weapon.shortbow.field_shortbow",
       "active": true,
       "quantity": 1,
       "overrides": {}
@@ -64,7 +64,7 @@
       "source": "library",
       "libraryCollection": "items",
       "librarySource": "custom",
-      "libraryRef": "items.item-arrow-bundle-20-test",
+      "libraryRef": "items.consumable.ammunition.arrow_bundle_20",
       "active": true,
       "quantity": 5,
       "overrides": {}
@@ -74,7 +74,7 @@
       "source": "library",
       "libraryCollection": "items",
       "librarySource": "custom",
-      "libraryRef": "items.item-loose-arrow-test",
+      "libraryRef": "items.consumable.ammunition.loose_arrow",
       "active": true,
       "quantity": 172,
       "overrides": {}
@@ -84,7 +84,7 @@
       "source": "library",
       "libraryCollection": "items",
       "librarySource": "custom",
-      "libraryRef": "items.item-field-quiver-archery-test",
+      "libraryRef": "items.wondrous.quiver.field_quiver",
       "active": true,
       "quantity": 1,
       "overrides": {}
@@ -94,7 +94,7 @@
       "source": "library",
       "libraryCollection": "items",
       "librarySource": "external",
-      "libraryRef": "items.dnd5eapi-magic-items-potion-of-healing-common",
+      "libraryRef": "items.consumable.potion.potion_of_healing_common",
       "active": true,
       "quantity": 10,
       "overrides": {}

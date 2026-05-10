@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "id": "index.items.consumable.ammunition",
+  "name": "Ammunition",
+  "path": "library/records/items/consumable/ammunition/index.json",
+  "directories": [],
+  "entries": [
+    {
+      "id": "items.consumable.ammunition.arrow_bundle_20",
+      "name": "Arrow Bundle (20)",
+      "collections": [
+        "items",
+        "items/consumable",
+        "items/consumable/ammunition"
+      ],
+      "tags": [
+        "ammo",
+        "ammunition",
+        "archery",
+        "consumable",
+        "ammo-test"
+      ],
+      "path": "library/records/items/consumable/ammunition/arrow-bundle-20.json"
+    },
+    {
+      "id": "items.consumable.ammunition.loose_arrow",
+      "name": "Loose Arrow",
+      "collections": [
+        "items",
+        "items/consumable",
+        "items/consumable/ammunition"
+      ],
+      "tags": [
+        "ammo",
+        "ammunition",
+        "archery",
+        "ammo-test",
+        "loose-ammo"
+      ],
+      "path": "library/records/items/consumable/ammunition/loose-arrow.json"
+    }
+  ]
+}

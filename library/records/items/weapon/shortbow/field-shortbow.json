@@ -1,18 +1,18 @@
 {
   "schemaVersion": 1,
-  "id": "items.item-shortbow-archery-test",
+  "id": "items.weapon.shortbow.field_shortbow",
   "name": "Field Shortbow",
   "collections": [
     "items",
     "items/weapon",
-    "items/weapon/equipment-categories-weapon"
+    "items/weapon/shortbow"
   ],
   "tags": [
     "weapon",
     "archery",
     "ammo-test",
-    "equipment-categories-weapon",
-    "equipment-categories-martial-ranged-weapons",
+    "shortbow",
+    "martial-ranged-weapon",
     "ammunition-using"
   ],
   "variantOf": null,
@@ -20,7 +20,7 @@
   "features": {
     "item": {
       "category": "weapon",
-      "subcategory": "equipment-categories-weapon",
+      "subcategory": "shortbow",
       "rarity": "",
       "requiresAttunement": false
     },
@@ -43,7 +43,7 @@
         "effects": {
           "inventory": [
             {
-              "itemRef": "items.item-field-quiver-archery-test",
+              "itemRef": "items.wondrous.quiver.field_quiver",
               "itemName": "Field Quiver",
               "delta": 0,
               "mustExist": true,

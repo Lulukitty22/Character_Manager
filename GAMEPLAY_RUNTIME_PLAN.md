@@ -107,6 +107,7 @@ Introduce a new collection family for:
 - audit metadata
 
 Keep the canonical saved shape lean. Rich labels, paths, and display-friendly actor cards can be hydrated at runtime from the current party/session/encounter context instead of being copied into every saved log entry.
+When a gameplay packet points at a real shared library object, prefer stable refs like `itemRef`, `recordRef`, and `resourceRef` over loose human text so those packets stay linkable, inspectable, and reusable across Player/DM/Viewer surfaces.
 
 Characters remain canonical long-lived sheets. Campaign/session/encounter records hold the live play context.
 
@@ -184,6 +185,7 @@ The D&D Gameplay system should be soft-rules assist, not strict enforcement.
 - crafting-adjacent actions like potion making
 
 These should be modeled as logged gameplay events, not editor cheats.
+Downtime payloads should describe inventory inputs/outputs with shared record refs wherever possible, so a crafting request can point at the exact herb bundle or potion record the DM is evaluating.
 
 ### Action Categories
 
@@ -301,6 +303,7 @@ Do not leave these as informal blobs; make them named shapes in the schema/runti
 ### Phase 2: Player Surface
 
 - add per-character gameplay shim/export path
+- keep export entry simple: one export choice should branch into either Viewer or Player card output instead of scattering separate export buttons across the editor
 - support queueing self-actions
 - support session utility mode for non-combat actions
 - show personal logs/history

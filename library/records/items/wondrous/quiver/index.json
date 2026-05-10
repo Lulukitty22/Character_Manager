@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "index.items.wondrous.quiver",
+  "name": "Quiver",
+  "path": "library/records/items/wondrous/quiver/index.json",
+  "directories": [],
+  "entries": [
+    {
+      "id": "items.wondrous.quiver.field_quiver",
+      "name": "Field Quiver",
+      "collections": [
+        "items",
+        "items/wondrous",
+        "items/wondrous/quiver"
+      ],
+      "tags": [
+        "archery",
+        "ammo-test",
+        "quiver"
+      ],
+      "path": "library/records/items/wondrous/quiver/field-quiver.json"
+    }
+  ]
+}

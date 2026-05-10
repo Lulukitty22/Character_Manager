@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "id": "items.consumable.material.herb_bundle",
+  "name": "Herb Bundle",
+  "collections": [
+    "items",
+    "items/consumable",
+    "items/consumable/material"
+  ],
+  "tags": [
+    "alchemy",
+    "crafting",
+    "material",
+    "herb"
+  ],
+  "variantOf": null,
+  "sourceReferences": [],
+  "features": {
+    "item": {
+      "category": "consumable",
+      "subcategory": "material",
+      "rarity": "",
+      "requiresAttunement": false
+    },
+    "weight": {
+      "quantity": 0.25,
+      "unit": "lb"
+    },
+    "effects": {
+      "hp": {
+        "flatBonus": 0,
+        "perLevelBonus": 0,
+        "tempHp": 0
+      },
+      "spellSlots": {}
+    },
+    "actions": [],
+    "inventory": {
+      "isStackable": true,
+      "defaultQuantity": 1,
+      "consumedOnUse": false,
+      "suppressGameplayAction": true
+    },
+    "mechanics": [
+      {
+        "label": "Crafting",
+        "value": "Potion Input",
+        "kind": "neutral",
+        "description": "Bundle of useful herbs for brewing healing potions and similar downtime crafting."
+      }
+    ]
+  },
+  "desc": "Bundle of alchemical herbs suitable for potion brewing and downtime crafting."
+}

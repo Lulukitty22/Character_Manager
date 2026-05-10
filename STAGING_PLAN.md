@@ -102,6 +102,7 @@ The remaining thin-shim cleanup work still matters, but it is no longer the only
   - review how GitHub/raw caching affects action/roll logs versus initial HTML boot loading, and decide what must stay local/live versus what can tolerate delayed propagation
 - Library/backend architecture follow-up:
   - seriously test and theorize the shared backend model for items, spells, resources, and tags as one connected system instead of treating each surface as isolated UI work
+  - gameplay/session payloads should prefer stable library refs (`itemRef`, `recordRef`, `resourceRef`) over loose labels wherever the action is talking about a real shared record; keep labels as hydrated UI detail, not canonical saved wiring
   - add a clean authoring path for tags and other library records; right now raw JSON editing is effectively reserved for repo maintainers and LLM-assisted changes
   - decide what level of in-app authoring regular users should have for tags, records, and linked mechanics versus what should stay maintainer-only
   - add a dedicated tag viewer/editor path if tags remain a first-class part of filtering, mechanics, and presentation
@@ -139,9 +140,15 @@ The remaining thin-shim cleanup work still matters, but it is no longer the only
   - added `data/player/manifest.json` and `data/player/boot.js`
   - added the first per-character `Player` runtime app at `data/player/scripts/app.js`
   - `Player` exports now produce a dedicated thin shim that boots `data/player/boot.js`
-  - editor/list UI now exposes a separate `Player` export action alongside the read-only viewer export
+  - editor/list UI now route export through one chooser dialog so users can pick either a read-only share card or a Player gameplay card at export time
   - player runtime reads session/encounter context from shared library records, shows personal queue/history, and can queue requests into GitHub-backed session/encounter records when this browser already has a PAT configured
   - when no PAT is present, the player surface stays read-only and explains that limitation instead of faking write support
+- Tightened the first gameplay seed/content cleanup pass:
+  - seeded downtime crafting payloads now use real shared item refs for inputs/outputs instead of loose text labels
+  - active ammo/quiver/potion test items were renamed onto cleaner lowercase ids and cleaner folder paths (`items.consumable.ammunition.*`, `items.consumable.potion.*`, `items.wondrous.quiver.*`, `items.weapon.shortbow.*`)
+  - left legacy item-ref aliases in the shared library resolver so older character/session data can still hydrate during the transition
+  - importer normalization now steers ammunition and potion imports into the cleaner consumable subfolders instead of recreating `equipment-categories-*` style item paths
+  - fixed the first Player export crash by restoring the missing `escapeAttr()` helper inside the Player runtime
 
 ## Shim Contract
 

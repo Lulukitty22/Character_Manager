@@ -1,4 +1,4 @@
-{
+﻿{
   "version": 2,
   "schemaVersion": 1,
   "collections": {
@@ -500,27 +500,26 @@
     ],
     "items": [
       {
-        "id": "items.item-arrow-bundle-20-test",
+        "id": "items.consumable.ammunition.arrow_bundle_20",
         "name": "Arrow Bundle (20)",
         "collections": [
           "items",
           "items/consumable",
-          "items/consumable/equipment-categories-ammunition"
+          "items/consumable/ammunition"
         ],
         "tags": [
           "ammo",
           "ammunition",
           "archery",
           "consumable",
-          "ammo-test",
-          "equipment-categories-ammunition"
+          "ammo-test"
         ],
-        "path": "library/records/items/consumable/equipment-categories-ammunition/item-arrow-bundle-20-test.json",
+        "path": "library/records/items/consumable/ammunition/arrow-bundle-20.json",
         "sha": "",
-        "updatedAt": "2026-05-03T15:10:50.038Z"
+        "updatedAt": "2026-05-09T10:00:00.000Z"
       },
       {
-        "id": "items.item-field-quiver-archery-test",
+        "id": "items.wondrous.quiver.field_quiver",
         "name": "Field Quiver",
         "collections": [
           "items",
@@ -532,141 +531,150 @@
           "ammo-test",
           "quiver"
         ],
-        "path": "library/records/items/wondrous/record/item-field-quiver-archery-test.json",
+        "path": "library/records/items/wondrous/quiver/field-quiver.json",
         "sha": "",
-        "updatedAt": "2026-05-09T00:00:00.000Z"
+        "updatedAt": "2026-05-09T10:00:00.000Z"
       },
       {
-        "id": "items.item-loose-arrow-test",
+        "id": "items.weapon.shortbow.field_shortbow",
+        "name": "Field Shortbow",
+        "collections": [
+          "items",
+          "items/weapon",
+          "items/weapon/shortbow"
+        ],
+        "tags": [
+          "weapon",
+          "archery",
+          "ammo-test",
+          "shortbow",
+          "martial-ranged-weapon",
+          "ammunition-using"
+        ],
+        "path": "library/records/items/weapon/shortbow/field-shortbow.json",
+        "sha": "",
+        "updatedAt": "2026-05-09T10:00:00.000Z"
+      },
+      {
+        "id": "items.consumable.material.herb_bundle",
+        "name": "Herb Bundle",
+        "collections": [
+          "items",
+          "items/consumable",
+          "items/consumable/material"
+        ],
+        "tags": [
+          "alchemy",
+          "crafting",
+          "material",
+          "herb"
+        ],
+        "path": "library/records/items/consumable/material/herb-bundle.json",
+        "sha": "",
+        "updatedAt": "2026-05-09T10:00:00.000Z"
+      },
+      {
+        "id": "items.consumable.ammunition.loose_arrow",
         "name": "Loose Arrow",
         "collections": [
           "items",
           "items/consumable",
-          "items/consumable/equipment-categories-ammunition"
+          "items/consumable/ammunition"
         ],
         "tags": [
           "ammo",
           "ammunition",
           "archery",
           "ammo-test",
-          "equipment-categories-ammunition",
           "loose-ammo"
         ],
-        "path": "library/records/items/consumable/equipment-categories-ammunition/item-loose-arrow-test.json",
+        "path": "library/records/items/consumable/ammunition/loose-arrow.json",
         "sha": "",
-        "updatedAt": "2026-05-09T00:00:00.000Z"
+        "updatedAt": "2026-05-09T10:00:00.000Z"
       },
       {
-        "id": "items.item-shortbow-archery-test",
-        "name": "Field Shortbow",
-        "collections": [
-          "items",
-          "items/weapon",
-          "items/weapon/equipment-categories-weapon"
-        ],
-        "tags": [
-          "weapon",
-          "archery",
-          "ammo-test",
-          "equipment-categories-weapon",
-          "equipment-categories-martial-ranged-weapons",
-          "ammunition-using"
-        ],
-        "path": "library/records/items/weapon/equipment-categories-weapon/item-shortbow-archery-test.json",
-        "sha": "",
-        "updatedAt": "2026-05-03T15:10:50.038Z"
-      },
-      {
-        "id": "items.dnd5eapi-magic-items-potion-of-healing-greater",
+        "id": "items.consumable.potion.potion_of_greater_healing",
         "name": "Potion of Greater Healing",
         "collections": [
           "items",
           "items/consumable",
-          "items/consumable/equipment-categories-potion"
+          "items/consumable/potion"
         ],
         "tags": [
           "dnd5eapi",
           "srd",
-          "magic-items",
-          "equipment-categories-potion",
           "potion",
           "healing",
           "consumable",
           "rarity-uncommon",
           "uncommon"
         ],
-        "path": "library/records/items/consumable/equipment-categories-potion/dnd5eapi-magic-items-potion-of-healing-greater.json",
+        "path": "library/records/items/consumable/potion/potion-of-greater-healing.json",
         "sha": "",
-        "updatedAt": "2026-05-03T15:10:50.038Z"
+        "updatedAt": "2026-05-09T10:00:00.000Z"
       },
       {
-        "id": "items.dnd5eapi-magic-items-potion-of-healing-common",
+        "id": "items.consumable.potion.potion_of_healing_common",
         "name": "Potion of Healing",
         "collections": [
           "items",
           "items/consumable",
-          "items/consumable/equipment-categories-potion"
+          "items/consumable/potion"
         ],
         "tags": [
           "dnd5eapi",
           "srd",
-          "magic-items",
-          "equipment-categories-potion",
           "potion",
           "healing",
           "consumable",
           "rarity-common",
           "common"
         ],
-        "path": "library/records/items/consumable/equipment-categories-potion/dnd5eapi-magic-items-potion-of-healing-common.json",
+        "path": "library/records/items/consumable/potion/potion-of-healing-common.json",
         "sha": "",
-        "updatedAt": "2026-05-03T15:10:50.038Z"
+        "updatedAt": "2026-05-09T10:00:00.000Z"
       },
       {
-        "id": "items.dnd5eapi-magic-items-potion-of-healing-superior",
+        "id": "items.consumable.potion.potion_of_superior_healing",
         "name": "Potion of Superior Healing",
         "collections": [
           "items",
           "items/consumable",
-          "items/consumable/equipment-categories-potion"
+          "items/consumable/potion"
         ],
         "tags": [
           "dnd5eapi",
           "srd",
-          "magic-items",
-          "equipment-categories-potion",
           "potion",
           "healing",
           "consumable",
           "rarity-rare",
           "rare"
         ],
-        "path": "library/records/items/consumable/equipment-categories-potion/dnd5eapi-magic-items-potion-of-healing-superior.json",
+        "path": "library/records/items/consumable/potion/potion-of-superior-healing.json",
         "sha": "",
-        "updatedAt": "2026-05-03T15:10:50.038Z"
+        "updatedAt": "2026-05-09T10:00:00.000Z"
       },
       {
-        "id": "items.dnd5eapi-magic-items-potion-of-healing-supreme",
+        "id": "items.consumable.potion.potion_of_supreme_healing",
         "name": "Potion of Supreme Healing",
         "collections": [
           "items",
           "items/consumable",
-          "items/consumable/equipment-categories-potion"
+          "items/consumable/potion"
         ],
         "tags": [
           "dnd5eapi",
           "srd",
-          "magic-items",
-          "equipment-categories-potion",
           "potion",
           "healing",
           "consumable",
           "rarity-very-rare",
           "very-rare"
         ],
-        "path": "library/records/items/consumable/equipment-categories-potion/dnd5eapi-magic-items-potion-of-healing-supreme.json",
+        "path": "library/records/items/consumable/potion/potion-of-supreme-healing.json",
         "sha": "",
-        "updatedAt": "2026-05-03T15:10:50.038Z"
+        "updatedAt": "2026-05-09T10:00:00.000Z"
       },
       {
         "id": "items.cdb0b5d2-8287-4f14-acdb-c5881df01916",
@@ -674,7 +682,7 @@
         "collections": [
           "items",
           "items/wondrous",
-          "items/wondrous/record"
+          "items/wondrous/quiver"
         ],
         "tags": [],
         "path": "library/records/items/wondrous/record/cdb0b5d2-8287-4f14-acdb-c5881df01916.json",
@@ -1208,7 +1216,7 @@
       },
       {
         "id": "traits.22aa3b43-201b-48e5-a393-79ccccd0c18e",
-        "name": "Roll Calculator Ã¢â‚¬â€ Boss Saves",
+        "name": "Roll Calculator ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Boss Saves",
         "collections": [
           "traits"
         ],
@@ -1221,7 +1229,7 @@
       },
       {
         "id": "traits.b0d2e3d0-f347-4d01-a943-9b821a55acf1",
-        "name": "Roll Calculator Ã¢â‚¬â€ Social / Casting",
+        "name": "Roll Calculator ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Social / Casting",
         "collections": [
           "traits"
         ],
@@ -1540,3 +1548,4 @@
     ]
   }
 }
+

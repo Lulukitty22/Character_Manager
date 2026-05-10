@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
-  "id": "items.item-field-quiver-archery-test",
+  "id": "items.wondrous.quiver.field_quiver",
   "name": "Field Quiver",
   "collections": [
     "items",
     "items/wondrous",
-    "items/wondrous/record"
+    "items/wondrous/quiver"
   ],
   "tags": [
     "archery",
@@ -17,7 +17,7 @@
   "features": {
     "item": {
       "category": "wondrous",
-      "subcategory": "record",
+      "subcategory": "quiver",
       "rarity": "",
       "requiresAttunement": false
     },
@@ -40,7 +40,7 @@
         "effects": {
           "inventory": [
             {
-              "itemRef": "items.item-loose-arrow-test",
+              "itemRef": "items.consumable.ammunition.loose_arrow",
               "itemName": "Loose Arrow",
               "delta": -1,
               "reason": "Readied 1 loose arrow into the quiver"
@@ -72,7 +72,7 @@
           ],
           "inventory": [
             {
-              "itemRef": "items.item-loose-arrow-test",
+              "itemRef": "items.consumable.ammunition.loose_arrow",
               "itemName": "Loose Arrow",
               "delta": 1,
               "reason": "Removed 1 ready arrow from the quiver"

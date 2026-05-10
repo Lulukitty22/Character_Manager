@@ -384,7 +384,6 @@ const CharacterEditor = (() => {
           <div class="editor-actions">
             <button id="btn-back-to-list" class="button button-ghost">Back</button>
             <button id="btn-preview-sheet" class="button button-ghost">Preview</button>
-            <button id="btn-export-player" class="button button-ghost">Player</button>
             <button id="btn-export-sheet" class="button button-ghost">Export</button>
             <button id="btn-save-character" class="button button-primary">Save to GitHub</button>
           </div>
@@ -418,12 +417,7 @@ const CharacterEditor = (() => {
 
     container.querySelector("#btn-export-sheet")?.addEventListener("click", () => {
       const data = getCurrentEditorData();
-      SheetExporter.exportCharacter(data, currentFilePath);
-    });
-
-    container.querySelector("#btn-export-player")?.addEventListener("click", () => {
-      const data = getCurrentEditorData();
-      SheetExporter.exportPlayerCharacter(data, currentFilePath);
+      SheetExporter.openExportChooser(data, currentFilePath);
     });
   }
 

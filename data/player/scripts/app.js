@@ -236,7 +236,7 @@ const PlayerApp = (() => {
           </div>
           <div class="player-field">
             <label for="player-action-item-ref">Item / Record Ref</label>
-            <input id="player-action-item-ref" class="player-input" placeholder="Optional, e.g. items.item-field-quiver-archery-test" />
+            <input id="player-action-item-ref" class="player-input" placeholder="Optional, e.g. items.wondrous.quiver.field_quiver" />
           </div>
         </div>
 
@@ -618,6 +618,10 @@ const PlayerApp = (() => {
       .replace(/>/g, "&gt;")
       .replace(/"/g, "&quot;")
       .replace(/'/g, "&#39;");
+  }
+
+  function escapeAttr(text) {
+    return escapeHTML(text).replace(/`/g, "&#96;");
   }
 
   return { mount };

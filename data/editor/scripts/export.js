@@ -13,6 +13,7 @@
 const SheetExporter = (() => {
 
   const EXPORT_BRANCH = "staging";
+  const EXPORT_DIALOG_ID = "sheet-export-dialog";
 
   function getSchemaVersionString() {
     const version = typeof Schema !== "undefined" ? Schema.SCHEMA_VERSION : null;
@@ -68,6 +69,31 @@ const SheetExporter = (() => {
     });
 
     downloadHTML(html, `${safeFile}-player.html`);
+  }
+
+  function openExportChooser(characterData, filePath) {
+    const dialog = ensureExportDialog();
+    const sheetButton = dialog.querySelector("#btn-export-choice-sheet");
+    const playerButton = dialog.querySelector("#btn-export-choice-player");
+    const cancelButton = dialog.querySelector("#btn-export-choice-cancel");
+
+    const close = () => dialog.close();
+
+    const handleSheet = () => {
+      close();
+      exportCharacter(characterData, filePath);
+    };
+
+    const handlePlayer = () => {
+      close();
+      exportPlayerCharacter(characterData, filePath);
+    };
+
+    sheetButton.onclick = handleSheet;
+    playerButton.onclick = handlePlayer;
+    cancelButton.onclick = close;
+
+    dialog.showModal();
   }
 
   function exportEditor(_characterData, _filePath) {
@@ -165,9 +191,47 @@ const SheetExporter = (() => {
     return escapeHtml(value).replace(/"/g, "&quot;");
   }
 
+  function ensureExportDialog() {
+    let dialog = document.getElementById(EXPORT_DIALOG_ID);
+    if (dialog) return dialog;
+
+    dialog = document.createElement("dialog");
+    dialog.id = EXPORT_DIALOG_ID;
+    dialog.className = "modal-dialog";
+    dialog.innerHTML = `
+      <div class="modal-content">
+        <div class="modal-header">
+          <div>
+            <h3>Export Character</h3>
+            <p class="text-muted text-sm">Choose whether this file should be a read-only share card or a Player gameplay card.</p>
+          </div>
+          <button class="button button-icon button-ghost" id="btn-export-choice-cancel-top" aria-label="Close">X</button>
+        </div>
+        <div class="modal-body">
+          <div style="display:flex; flex-direction:column; gap:12px;">
+            <button class="button button-primary" id="btn-export-choice-sheet">Read-only Share Card</button>
+            <button class="button button-ghost" id="btn-export-choice-player">Player Gameplay Card</button>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="button button-ghost" id="btn-export-choice-cancel">Cancel</button>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(dialog);
+
+    dialog.querySelector("#btn-export-choice-cancel-top")?.addEventListener("click", () => dialog.close());
+    dialog.addEventListener("click", (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+
+    return dialog;
+  }
+
   return {
     exportCharacter,
     exportPlayerCharacter,
+    openExportChooser,
     exportEditor,
   };
 

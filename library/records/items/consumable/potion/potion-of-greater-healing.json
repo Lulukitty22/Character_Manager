@@ -1,24 +1,22 @@
 {
   "schemaVersion": 1,
-  "id": "items.dnd5eapi-magic-items-potion-of-healing-greater",
+  "id": "items.consumable.potion.potion_of_greater_healing",
   "name": "Potion of Greater Healing",
   "collections": [
     "items",
     "items/consumable",
-    "items/consumable/equipment-categories-potion"
+    "items/consumable/potion"
   ],
   "tags": [
     "dnd5eapi",
     "srd",
-    "magic-items",
-    "equipment-categories-potion",
     "potion",
     "healing",
     "consumable",
     "rarity-uncommon",
     "uncommon"
   ],
-  "variantOf": "dnd5eapi-magic-items-potion-of-healing",
+  "variantOf": "items.consumable.potion.potion_of_healing",
   "sourceReferences": [
     {
       "provider": "dnd5eapi",
@@ -30,7 +28,7 @@
   "features": {
     "item": {
       "category": "consumable",
-      "subcategory": "equipment-categories-potion",
+      "subcategory": "potion",
       "rarity": "uncommon",
       "requiresAttunement": false
     },

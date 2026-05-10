@@ -43,15 +43,15 @@
             "summary": "Carol wants to spend downtime making a healing potion.",
             "inputs": [
               {
-                "kind": "material",
-                "label": "Herb bundle",
+                "kind": "item",
+                "recordRef": "items.consumable.material.herb_bundle",
                 "quantity": 1
               }
             ],
             "outputs": [
               {
                 "kind": "item",
-                "recordRef": "items.dnd5eapi-magic-items-potion-of-healing-common",
+                "recordRef": "items.consumable.potion.potion_of_healing_common",
                 "quantity": 1
               }
             ]
@@ -85,8 +85,8 @@
             {
               "id": "delta.request.brew-healing-potion",
               "targetType": "record",
-              "targetId": "inventory.herb-bundle",
-              "path": "inventory/herb-bundle",
+              "targetId": "items.consumable.material.herb_bundle",
+              "path": "inventory/items.consumable.material.herb_bundle",
               "operation": "adjust",
               "value": -1,
               "previousValue": null,
@@ -114,7 +114,7 @@
           "requestedById": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
           "targetIds": [],
           "payload": {
-            "itemRef": "items.item-field-quiver-archery-test",
+            "itemRef": "items.wondrous.quiver.field_quiver",
             "resourceRef": "resources.resource-arrows-20",
             "quantity": 3,
             "summary": "Aina readied three arrows for a training volley."
@@ -131,7 +131,7 @@
               "previousValue": null,
               "nextValue": null,
               "reason": "Move loose arrows into the quiver.",
-              "source": "items.item-field-quiver-archery-test"
+              "source": "items.wondrous.quiver.field_quiver"
             },
             {
               "id": "delta.ready-volley.quiver",
@@ -143,7 +143,7 @@
               "previousValue": null,
               "nextValue": null,
               "reason": "Increase ready arrows in the quiver.",
-              "source": "items.item-field-quiver-archery-test"
+              "source": "items.wondrous.quiver.field_quiver"
             }
           ],
           "resultingDeltas": [

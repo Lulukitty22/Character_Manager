@@ -122,9 +122,11 @@ const Dnd5eApiImporter = (() => {
   function itemRecord(result, raw = {}) {
     const endpoint = result.raw?.endpoint || "";
     const rawCategory = LibraryRecords.slugify(raw.gear_category?.index || raw.equipment_category?.index || raw.rarity?.name || endpoint || "item");
-    const isAmmo = /ammunition|arrow|bolt|bullet|needle/i.test([rawCategory, raw.name, raw.index].join(" "));
-    const category = isAmmo ? "equipment" : rawCategory;
-    const subcategory = isAmmo ? "ammunition" : "";
+    const categoryText = [rawCategory, raw.name, raw.index, raw.desc, raw.description, raw.special].join(" ");
+    const isAmmo = /ammunition|arrow|bolt|bullet|needle/i.test(categoryText);
+    const isPotion = /potion|elixir|draught/i.test(categoryText) || Boolean(healingDice(raw));
+    const category = isAmmo || isPotion ? "consumable" : rawCategory;
+    const subcategory = isAmmo ? "ammunition" : isPotion ? "potion" : "";
     const healDice = healingDice(raw);
     const actions = [];
     if (healDice) {

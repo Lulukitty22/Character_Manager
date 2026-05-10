@@ -73,7 +73,7 @@
             "hay-bale-target"
           ],
           "payload": {
-            "itemRef": "items.item-shortbow-archery-test",
+            "itemRef": "items.weapon.shortbow.field_shortbow",
             "summary": "Aina requests a shortbow attack against the training target."
           },
           "roll": {
@@ -112,7 +112,7 @@
               "previousValue": null,
               "nextValue": null,
               "reason": "Spend one readied arrow to take the shot.",
-              "source": "items.item-shortbow-archery-test"
+              "source": "items.weapon.shortbow.field_shortbow"
             }
           ],
           "resultingDeltas": [],
@@ -136,7 +136,7 @@
             "hay-bale-target"
           ],
           "payload": {
-            "itemRef": "items.item-shortbow-archery-test",
+            "itemRef": "items.weapon.shortbow.field_shortbow",
             "summary": "Aina lands a training hit."
           },
           "roll": {
@@ -180,7 +180,7 @@
               "previousValue": null,
               "nextValue": null,
               "reason": "Spend one readied arrow to take the shot.",
-              "source": "items.item-shortbow-archery-test"
+              "source": "items.weapon.shortbow.field_shortbow"
             }
           ],
           "resultingDeltas": [

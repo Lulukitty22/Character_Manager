@@ -1,18 +1,21 @@
-﻿{
+{
   "schemaVersion": 1,
   "id": "index.items.consumable",
   "name": "Consumable",
   "path": "library/records/items/consumable/index.json",
   "directories": [
     {
-      "name": "Equipment Categories Ammunition",
-      "path": "library/records/items/consumable/equipment-categories-ammunition/index.json"
+      "name": "Ammunition",
+      "path": "library/records/items/consumable/ammunition/index.json"
     },
     {
-      "name": "Equipment Categories Potion",
-      "path": "library/records/items/consumable/equipment-categories-potion/index.json"
+      "name": "Material",
+      "path": "library/records/items/consumable/material/index.json"
+    },
+    {
+      "name": "Potion",
+      "path": "library/records/items/consumable/potion/index.json"
     }
   ],
   "entries": []
 }
-

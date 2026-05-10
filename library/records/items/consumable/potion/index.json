@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "id": "index.items.consumable.potion",
+  "name": "Potion",
+  "path": "library/records/items/consumable/potion/index.json",
+  "directories": [],
+  "entries": [
+    {
+      "id": "items.consumable.potion.potion_of_greater_healing",
+      "name": "Potion of Greater Healing",
+      "collections": [
+        "items",
+        "items/consumable",
+        "items/consumable/potion"
+      ],
+      "tags": [
+        "dnd5eapi",
+        "srd",
+        "potion",
+        "healing",
+        "consumable",
+        "rarity-uncommon",
+        "uncommon"
+      ],
+      "path": "library/records/items/consumable/potion/potion-of-greater-healing.json"
+    },
+    {
+      "id": "items.consumable.potion.potion_of_healing_common",
+      "name": "Potion of Healing",
+      "collections": [
+        "items",
+        "items/consumable",
+        "items/consumable/potion"
+      ],
+      "tags": [
+        "dnd5eapi",
+        "srd",
+        "potion",
+        "healing",
+        "consumable",
+        "rarity-common",
+        "common"
+      ],
+      "path": "library/records/items/consumable/potion/potion-of-healing-common.json"
+    },
+    {
+      "id": "items.consumable.potion.potion_of_superior_healing",
+      "name": "Potion of Superior Healing",
+      "collections": [
+        "items",
+        "items/consumable",
+        "items/consumable/potion"
+      ],
+      "tags": [
+        "dnd5eapi",
+        "srd",
+        "potion",
+        "healing",
+        "consumable",
+        "rarity-rare",
+        "rare"
+      ],
+      "path": "library/records/items/consumable/potion/potion-of-superior-healing.json"
+    },
+    {
+      "id": "items.consumable.potion.potion_of_supreme_healing",
+      "name": "Potion of Supreme Healing",
+      "collections": [
+        "items",
+        "items/consumable",
+        "items/consumable/potion"
+      ],
+      "tags": [
+        "dnd5eapi",
+        "srd",
+        "potion",
+        "healing",
+        "consumable",
+        "rarity-very-rare",
+        "very-rare"
+      ],
+      "path": "library/records/items/consumable/potion/potion-of-supreme-healing.json"
+    }
+  ]
+}

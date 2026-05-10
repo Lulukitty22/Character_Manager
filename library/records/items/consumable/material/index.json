@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "index.items.consumable.material",
+  "name": "Material",
+  "path": "library/records/items/consumable/material/index.json",
+  "directories": [],
+  "entries": [
+    {
+      "id": "items.consumable.material.herb_bundle",
+      "name": "Herb Bundle",
+      "collections": [
+        "items",
+        "items/consumable",
+        "items/consumable/material"
+      ],
+      "tags": [
+        "alchemy",
+        "crafting",
+        "material",
+        "herb"
+      ],
+      "path": "library/records/items/consumable/material/herb-bundle.json"
+    }
+  ]
+}

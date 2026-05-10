@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "index.items.weapon.shortbow",
+  "name": "Shortbow",
+  "path": "library/records/items/weapon/shortbow/index.json",
+  "directories": [],
+  "entries": [
+    {
+      "id": "items.weapon.shortbow.field_shortbow",
+      "name": "Field Shortbow",
+      "collections": [
+        "items",
+        "items/weapon",
+        "items/weapon/shortbow"
+      ],
+      "tags": [
+        "weapon",
+        "archery",
+        "ammo-test",
+        "shortbow",
+        "martial-ranged-weapon",
+        "ammunition-using"
+      ],
+      "path": "library/records/items/weapon/shortbow/field-shortbow.json"
+    }
+  ]
+}
