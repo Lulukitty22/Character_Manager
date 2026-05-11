@@ -31,29 +31,6 @@
       },
       "queuedActions": [
         {
-          "id": "a5a00dcc-5af4-48d1-96f7-b71d72a83d2a",
-          "kind": "ready_ammo",
-          "mode": "session_utility",
-          "status": "queued",
-          "actorId": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
-          "requestedById": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
-          "targetIds": [],
-          "payload": {
-            "summary": "Ready 1 Arrow Field Quiver",
-            "note": "",
-            "itemRef": "items.wondrous.quiver.field_quiver"
-          },
-          "roll": null,
-          "proposedDeltas": [],
-          "resultingDeltas": [],
-          "requestedAt": "2026-05-10T20:42:52.402Z",
-          "resolution": null,
-          "audit": {
-            "sourceSurface": "session_view",
-            "sourceSurfaceVersion": "v1"
-          }
-        },
-        {
           "id": "e9ad6163-48b6-4b1f-9626-4317b54d1e9f",
           "kind": "spend_spell_slot",
           "mode": "session_utility",
@@ -501,6 +478,35 @@
             "message": "Approved by DM.",
             "dmReply": "",
             "resolvedAt": "2026-05-11T02:58:01.831Z",
+            "resolvedById": "dungeon-master"
+          },
+          "audit": {
+            "sourceSurface": "session_view",
+            "sourceSurfaceVersion": "v1"
+          }
+        },
+        {
+          "id": "a5a00dcc-5af4-48d1-96f7-b71d72a83d2a",
+          "kind": "ready_ammo",
+          "mode": "session_utility",
+          "status": "approved",
+          "actorId": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
+          "requestedById": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
+          "targetIds": [],
+          "payload": {
+            "summary": "Ready 1 Arrow Field Quiver",
+            "note": "",
+            "itemRef": "items.wondrous.quiver.field_quiver"
+          },
+          "roll": null,
+          "proposedDeltas": [],
+          "resultingDeltas": [],
+          "requestedAt": "2026-05-10T20:42:52.402Z",
+          "resolution": {
+            "status": "approved",
+            "message": "Approved by DM.",
+            "dmReply": "",
+            "resolvedAt": "2026-05-11T03:01:03.781Z",
             "resolvedById": "dungeon-master"
           },
           "audit": {
