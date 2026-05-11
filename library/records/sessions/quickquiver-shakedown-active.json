@@ -55,31 +55,6 @@
           }
         },
         {
-          "id": "ff1f6a9f-ae1f-4280-9884-2d62f4a51847",
-          "kind": "spend_spell_slot",
-          "mode": "session_utility",
-          "status": "queued",
-          "actorId": "carol-elfnein",
-          "requestedById": "carol-elfnein",
-          "targetIds": [],
-          "payload": {
-            "summary": "Spend one level 1 spell slot.",
-            "note": "",
-            "itemRef": "",
-            "quantity": 1,
-            "level": 1
-          },
-          "roll": null,
-          "proposedDeltas": [],
-          "resultingDeltas": [],
-          "requestedAt": "2026-05-10T21:17:06.019Z",
-          "resolution": null,
-          "audit": {
-            "sourceSurface": "session_view",
-            "sourceSurfaceVersion": "v1"
-          }
-        },
-        {
           "id": "e9ad6163-48b6-4b1f-9626-4317b54d1e9f",
           "kind": "spend_spell_slot",
           "mode": "session_utility",
@@ -474,6 +449,37 @@
           }
         },
         {
+          "id": "ff1f6a9f-ae1f-4280-9884-2d62f4a51847",
+          "kind": "spend_spell_slot",
+          "mode": "session_utility",
+          "status": "denied",
+          "actorId": "carol-elfnein",
+          "requestedById": "carol-elfnein",
+          "targetIds": [],
+          "payload": {
+            "summary": "Spend one level 1 spell slot.",
+            "note": "",
+            "itemRef": "",
+            "quantity": 1,
+            "level": 1
+          },
+          "roll": null,
+          "proposedDeltas": [],
+          "resultingDeltas": [],
+          "requestedAt": "2026-05-10T21:17:06.019Z",
+          "resolution": {
+            "status": "denied",
+            "message": "Denied by DM.",
+            "dmReply": "",
+            "resolvedAt": "2026-05-11T02:57:09.524Z",
+            "resolvedById": "dungeon-master"
+          },
+          "audit": {
+            "sourceSurface": "session_view",
+            "sourceSurfaceVersion": "v1"
+          }
+        },
+        {
           "id": "a5a00dcc-5af4-48d1-96f7-b71d72a83d2a",
           "kind": "ready_ammo",
           "mode": "session_utility",
@@ -494,7 +500,7 @@
             "status": "approved",
             "message": "Approved by DM.",
             "dmReply": "",
-            "resolvedAt": "2026-05-11T02:57:14.705Z",
+            "resolvedAt": "2026-05-11T02:57:55.529Z",
             "resolvedById": "dungeon-master"
           },
           "audit": {
