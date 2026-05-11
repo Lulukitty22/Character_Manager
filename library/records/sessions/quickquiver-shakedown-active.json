@@ -31,23 +31,22 @@
       },
       "queuedActions": [
         {
-          "id": "329b4d66-99f0-42b4-80cc-3d0285ff75b8",
-          "kind": "short_rest",
+          "id": "a5a00dcc-5af4-48d1-96f7-b71d72a83d2a",
+          "kind": "ready_ammo",
           "mode": "session_utility",
           "status": "queued",
-          "actorId": "carol-elfnein",
-          "requestedById": "carol-elfnein",
+          "actorId": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
+          "requestedById": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
           "targetIds": [],
           "payload": {
-            "summary": "Take a short rest and recover what the DM allows.",
+            "summary": "Ready 1 Arrow Field Quiver",
             "note": "",
-            "itemRef": "",
-            "quantity": 1
+            "itemRef": "items.wondrous.quiver.field_quiver"
           },
           "roll": null,
           "proposedDeltas": [],
           "resultingDeltas": [],
-          "requestedAt": "2026-05-10T21:17:06.019Z",
+          "requestedAt": "2026-05-10T20:42:52.402Z",
           "resolution": null,
           "audit": {
             "sourceSurface": "session_view",
@@ -480,27 +479,28 @@
           }
         },
         {
-          "id": "a5a00dcc-5af4-48d1-96f7-b71d72a83d2a",
-          "kind": "ready_ammo",
+          "id": "329b4d66-99f0-42b4-80cc-3d0285ff75b8",
+          "kind": "short_rest",
           "mode": "session_utility",
           "status": "approved",
-          "actorId": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
-          "requestedById": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
+          "actorId": "carol-elfnein",
+          "requestedById": "carol-elfnein",
           "targetIds": [],
           "payload": {
-            "summary": "Ready 1 Arrow Field Quiver",
+            "summary": "Take a short rest and recover what the DM allows.",
             "note": "",
-            "itemRef": "items.wondrous.quiver.field_quiver"
+            "itemRef": "",
+            "quantity": 1
           },
           "roll": null,
           "proposedDeltas": [],
           "resultingDeltas": [],
-          "requestedAt": "2026-05-10T20:42:52.402Z",
+          "requestedAt": "2026-05-10T21:17:06.019Z",
           "resolution": {
             "status": "approved",
             "message": "Approved by DM.",
             "dmReply": "",
-            "resolvedAt": "2026-05-11T02:57:57.431Z",
+            "resolvedAt": "2026-05-11T02:58:01.831Z",
             "resolvedById": "dungeon-master"
           },
           "audit": {
