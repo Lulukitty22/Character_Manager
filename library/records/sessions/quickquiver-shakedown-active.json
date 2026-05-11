@@ -31,29 +31,6 @@
       },
       "queuedActions": [
         {
-          "id": "a5a00dcc-5af4-48d1-96f7-b71d72a83d2a",
-          "kind": "ready_ammo",
-          "mode": "session_utility",
-          "status": "queued",
-          "actorId": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
-          "requestedById": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
-          "targetIds": [],
-          "payload": {
-            "summary": "Ready 1 Arrow Field Quiver",
-            "note": "",
-            "itemRef": "items.wondrous.quiver.field_quiver"
-          },
-          "roll": null,
-          "proposedDeltas": [],
-          "resultingDeltas": [],
-          "requestedAt": "2026-05-10T20:42:52.402Z",
-          "resolution": null,
-          "audit": {
-            "sourceSurface": "session_view",
-            "sourceSurfaceVersion": "v1"
-          }
-        },
-        {
           "id": "329b4d66-99f0-42b4-80cc-3d0285ff75b8",
           "kind": "short_rest",
           "mode": "session_utility",
@@ -66,6 +43,31 @@
             "note": "",
             "itemRef": "",
             "quantity": 1
+          },
+          "roll": null,
+          "proposedDeltas": [],
+          "resultingDeltas": [],
+          "requestedAt": "2026-05-10T21:17:06.019Z",
+          "resolution": null,
+          "audit": {
+            "sourceSurface": "session_view",
+            "sourceSurfaceVersion": "v1"
+          }
+        },
+        {
+          "id": "ff1f6a9f-ae1f-4280-9884-2d62f4a51847",
+          "kind": "spend_spell_slot",
+          "mode": "session_utility",
+          "status": "queued",
+          "actorId": "carol-elfnein",
+          "requestedById": "carol-elfnein",
+          "targetIds": [],
+          "payload": {
+            "summary": "Spend one level 1 spell slot.",
+            "note": "",
+            "itemRef": "",
+            "quantity": 1,
+            "level": 1
           },
           "roll": null,
           "proposedDeltas": [],
@@ -472,29 +474,27 @@
           }
         },
         {
-          "id": "ff1f6a9f-ae1f-4280-9884-2d62f4a51847",
-          "kind": "spend_spell_slot",
+          "id": "a5a00dcc-5af4-48d1-96f7-b71d72a83d2a",
+          "kind": "ready_ammo",
           "mode": "session_utility",
-          "status": "denied",
-          "actorId": "carol-elfnein",
-          "requestedById": "carol-elfnein",
+          "status": "approved",
+          "actorId": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
+          "requestedById": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
           "targetIds": [],
           "payload": {
-            "summary": "Spend one level 1 spell slot.",
+            "summary": "Ready 1 Arrow Field Quiver",
             "note": "",
-            "itemRef": "",
-            "quantity": 1,
-            "level": 1
+            "itemRef": "items.wondrous.quiver.field_quiver"
           },
           "roll": null,
           "proposedDeltas": [],
           "resultingDeltas": [],
-          "requestedAt": "2026-05-10T21:17:06.019Z",
+          "requestedAt": "2026-05-10T20:42:52.402Z",
           "resolution": {
-            "status": "denied",
-            "message": "Denied by DM.",
+            "status": "approved",
+            "message": "Approved by DM.",
             "dmReply": "",
-            "resolvedAt": "2026-05-11T02:55:58.105Z",
+            "resolvedAt": "2026-05-11T02:56:01.874Z",
             "resolvedById": "dungeon-master"
           },
           "audit": {
