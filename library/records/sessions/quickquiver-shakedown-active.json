@@ -54,19 +54,18 @@
           }
         },
         {
-          "id": "ff1f6a9f-ae1f-4280-9884-2d62f4a51847",
-          "kind": "spend_spell_slot",
+          "id": "329b4d66-99f0-42b4-80cc-3d0285ff75b8",
+          "kind": "short_rest",
           "mode": "session_utility",
           "status": "queued",
           "actorId": "carol-elfnein",
           "requestedById": "carol-elfnein",
           "targetIds": [],
           "payload": {
-            "summary": "Spend one level 1 spell slot.",
+            "summary": "Take a short rest and recover what the DM allows.",
             "note": "",
             "itemRef": "",
-            "quantity": 1,
-            "level": 1
+            "quantity": 1
           },
           "roll": null,
           "proposedDeltas": [],
@@ -473,28 +472,29 @@
           }
         },
         {
-          "id": "329b4d66-99f0-42b4-80cc-3d0285ff75b8",
-          "kind": "short_rest",
+          "id": "ff1f6a9f-ae1f-4280-9884-2d62f4a51847",
+          "kind": "spend_spell_slot",
           "mode": "session_utility",
-          "status": "approved",
+          "status": "denied",
           "actorId": "carol-elfnein",
           "requestedById": "carol-elfnein",
           "targetIds": [],
           "payload": {
-            "summary": "Take a short rest and recover what the DM allows.",
+            "summary": "Spend one level 1 spell slot.",
             "note": "",
             "itemRef": "",
-            "quantity": 1
+            "quantity": 1,
+            "level": 1
           },
           "roll": null,
           "proposedDeltas": [],
           "resultingDeltas": [],
           "requestedAt": "2026-05-10T21:17:06.019Z",
           "resolution": {
-            "status": "approved",
-            "message": "Approved by DM.",
+            "status": "denied",
+            "message": "Denied by DM.",
             "dmReply": "",
-            "resolvedAt": "2026-05-11T02:55:53.388Z",
+            "resolvedAt": "2026-05-11T02:55:58.105Z",
             "resolvedById": "dungeon-master"
           },
           "audit": {
