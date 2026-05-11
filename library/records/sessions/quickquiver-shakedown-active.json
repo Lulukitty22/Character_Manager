@@ -103,19 +103,18 @@
           }
         },
         {
-          "id": "e9ad6163-48b6-4b1f-9626-4317b54d1e9f",
-          "kind": "spend_spell_slot",
+          "id": "59df75bf-dd1c-4d54-abe1-c27f95e11094",
+          "kind": "short_rest",
           "mode": "session_utility",
           "status": "queued",
           "actorId": "carol-elfnein",
           "requestedById": "carol-elfnein",
           "targetIds": [],
           "payload": {
-            "summary": "Spend one level 1 spell slot.",
+            "summary": "Take a short rest and recover what the DM allows.",
             "note": "",
             "itemRef": "",
-            "quantity": 1,
-            "level": 1
+            "quantity": 1
           },
           "roll": null,
           "proposedDeltas": [],
@@ -436,36 +435,6 @@
           }
         },
         {
-          "id": "59df75bf-dd1c-4d54-abe1-c27f95e11094",
-          "kind": "short_rest",
-          "mode": "session_utility",
-          "status": "approved",
-          "actorId": "carol-elfnein",
-          "requestedById": "carol-elfnein",
-          "targetIds": [],
-          "payload": {
-            "summary": "Take a short rest and recover what the DM allows.",
-            "note": "",
-            "itemRef": "",
-            "quantity": 1
-          },
-          "roll": null,
-          "proposedDeltas": [],
-          "resultingDeltas": [],
-          "requestedAt": "2026-05-10T23:30:52.599Z",
-          "resolution": {
-            "status": "approved",
-            "message": "Approved by DM.",
-            "dmReply": "",
-            "resolvedAt": "2026-05-11T02:40:20.466Z",
-            "resolvedById": "dungeon-master"
-          },
-          "audit": {
-            "sourceSurface": "session_view",
-            "sourceSurfaceVersion": "v1"
-          }
-        },
-        {
           "id": "f0cc2c4f-5f15-4efd-b658-7d649db7ff4c",
           "kind": "spend_spell_slot",
           "mode": "session_utility",
@@ -488,7 +457,38 @@
             "status": "approved",
             "message": "Approved by DM.",
             "dmReply": "",
-            "resolvedAt": "2026-05-11T02:54:13.090Z",
+            "resolvedAt": "2026-05-11T02:40:57.030Z",
+            "resolvedById": "dungeon-master"
+          },
+          "audit": {
+            "sourceSurface": "session_view",
+            "sourceSurfaceVersion": "v1"
+          }
+        },
+        {
+          "id": "e9ad6163-48b6-4b1f-9626-4317b54d1e9f",
+          "kind": "spend_spell_slot",
+          "mode": "session_utility",
+          "status": "approved",
+          "actorId": "carol-elfnein",
+          "requestedById": "carol-elfnein",
+          "targetIds": [],
+          "payload": {
+            "summary": "Spend one level 1 spell slot.",
+            "note": "",
+            "itemRef": "",
+            "quantity": 1,
+            "level": 1
+          },
+          "roll": null,
+          "proposedDeltas": [],
+          "resultingDeltas": [],
+          "requestedAt": "2026-05-10T23:30:52.599Z",
+          "resolution": {
+            "status": "approved",
+            "message": "Approved by DM.",
+            "dmReply": "",
+            "resolvedAt": "2026-05-11T02:55:48.332Z",
             "resolvedById": "dungeon-master"
           },
           "audit": {
