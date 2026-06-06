@@ -2,7 +2,7 @@
   "id": "carol-elfnein",
   "meta": {
     "repoPath": "library/characters/carol-elfnein.json",
-    "lastUpdated": "2026-06-06T05:25:05.473Z"
+    "lastUpdated": "2026-06-06T05:27:53.965Z"
   },
   "identity": {
     "name": "Carol Elfnein",
@@ -43,8 +43,9 @@
       "libraryCollection": "spells",
       "librarySource": "custom",
       "libraryRef": "elfnein-spell-fire-bolt",
-      "overrides": {},
-      "prepared": true
+      "prepared": true,
+      "access": {},
+      "overrides": {}
     },
     {
       "id": "30602150-c6a3-4084-93b4-b0818c93bc8c",
@@ -52,8 +53,9 @@
       "libraryCollection": "spells",
       "librarySource": "custom",
       "libraryRef": "elfnein-spell-create-bonfire",
-      "overrides": {},
-      "prepared": true
+      "prepared": true,
+      "access": {},
+      "overrides": {}
     },
     {
       "id": "c0acda21-8dd0-4e63-9544-4eebbe268eab",
@@ -61,8 +63,9 @@
       "libraryCollection": "spells",
       "librarySource": "custom",
       "libraryRef": "elfnein-spell-ray-of-frost",
-      "overrides": {},
-      "prepared": true
+      "prepared": true,
+      "access": {},
+      "overrides": {}
     },
     {
       "id": "b92bfcf2-edb1-423c-baca-2fae3029cd43",
@@ -70,8 +73,9 @@
       "libraryCollection": "spells",
       "librarySource": "custom",
       "libraryRef": "elfnein-spell-booming-blade",
-      "overrides": {},
-      "prepared": true
+      "prepared": true,
+      "access": {},
+      "overrides": {}
     },
     {
       "id": "d12f9847-741e-4f35-a95d-48597a3e22a8",
@@ -79,8 +83,9 @@
       "libraryCollection": "spells",
       "librarySource": "custom",
       "libraryRef": "elfnein-spell-mage-armor",
-      "overrides": {},
-      "prepared": true
+      "prepared": true,
+      "access": {},
+      "overrides": {}
     },
     {
       "id": "f0546aa1-f5bd-42ce-9540-3576761d8ae3",
@@ -88,8 +93,9 @@
       "libraryCollection": "spells",
       "librarySource": "custom",
       "libraryRef": "elfnein-spell-shield",
-      "overrides": {},
-      "prepared": true
+      "prepared": true,
+      "access": {},
+      "overrides": {}
     },
     {
       "id": "1cec3b8f-94fd-460b-9c3c-d88783219623",
@@ -97,8 +103,9 @@
       "libraryCollection": "spells",
       "librarySource": "custom",
       "libraryRef": "elfnein-spell-chromatic-orb",
-      "overrides": {},
-      "prepared": true
+      "prepared": true,
+      "access": {},
+      "overrides": {}
     },
     {
       "id": "45474b1b-9b98-4652-9656-c7d0cccf9ed6",
@@ -106,8 +113,9 @@
       "libraryCollection": "spells",
       "librarySource": "custom",
       "libraryRef": "elfnein-spell-burning-hands",
-      "overrides": {},
-      "prepared": true
+      "prepared": true,
+      "access": {},
+      "overrides": {}
     },
     {
       "id": "5f2cef4c-1724-426e-af29-45ac06f31e40",
@@ -115,8 +123,9 @@
       "libraryCollection": "spells",
       "librarySource": "custom",
       "libraryRef": "elfnein-spell-catapult",
-      "overrides": {},
-      "prepared": true
+      "prepared": true,
+      "access": {},
+      "overrides": {}
     },
     {
       "id": "05cad082-ec9a-4e85-8d31-718897493d46",
@@ -124,8 +133,9 @@
       "libraryCollection": "spells",
       "librarySource": "custom",
       "libraryRef": "elfnein-spell-web",
-      "overrides": {},
-      "prepared": true
+      "prepared": true,
+      "access": {},
+      "overrides": {}
     },
     {
       "id": "d711ed33-5113-46d2-ba7f-016ef5d1b1e0",
@@ -133,8 +143,9 @@
       "libraryCollection": "spells",
       "librarySource": "custom",
       "libraryRef": "elfnein-spell-hold-person",
-      "overrides": {},
-      "prepared": true
+      "prepared": true,
+      "access": {},
+      "overrides": {}
     },
     {
       "id": "1c3dba49-e8f3-4321-b336-38960786de4f",
@@ -142,8 +153,9 @@
       "libraryCollection": "spells",
       "librarySource": "custom",
       "libraryRef": "elfnein-spell-rimes-binding-of-ice",
-      "overrides": {},
-      "prepared": true
+      "prepared": true,
+      "access": {},
+      "overrides": {}
     },
     {
       "id": "29229240-81a7-4ca5-9c4d-16eb8edeb056",
@@ -151,8 +163,9 @@
       "libraryCollection": "spells",
       "librarySource": "custom",
       "libraryRef": "spells.open5e-spells-srd-2024-fireball",
-      "overrides": {},
-      "prepared": true
+      "prepared": true,
+      "access": {},
+      "overrides": {}
     },
     {
       "id": "d202ec90-52ff-4531-aa30-dc06f56f08f7",
@@ -160,8 +173,9 @@
       "libraryCollection": "spells",
       "librarySource": "custom",
       "libraryRef": "elfnein-spell-tidal-wave",
-      "overrides": {},
-      "prepared": true
+      "prepared": true,
+      "access": {},
+      "overrides": {}
     },
     {
       "id": "55788c25-a81d-4d95-b844-bddca3a4fce4",
@@ -169,8 +183,9 @@
       "libraryCollection": "spells",
       "librarySource": "custom",
       "libraryRef": "elfnein-spell-wall-of-force",
-      "overrides": {},
-      "prepared": true
+      "prepared": true,
+      "access": {},
+      "overrides": {}
     },
     {
       "id": "2a42ed35-3916-4cc2-ae13-43612bf78201",
@@ -178,8 +193,9 @@
       "libraryCollection": "spells",
       "librarySource": "custom",
       "libraryRef": "elfnein-spell-steel-wind-strike",
-      "overrides": {},
-      "prepared": true
+      "prepared": true,
+      "access": {},
+      "overrides": {}
     },
     {
       "id": "087d54dc-75bb-487e-b259-248b96f924f3",
@@ -187,8 +203,9 @@
       "libraryCollection": "spells",
       "librarySource": "custom",
       "libraryRef": "elfnein-spell-tashas-otherworldly-guise",
-      "overrides": {},
-      "prepared": false
+      "prepared": false,
+      "access": {},
+      "overrides": {}
     },
     {
       "id": "c2904b3a-951e-4db0-9834-7f74aec20d6e",
@@ -196,8 +213,9 @@
       "libraryCollection": "spells",
       "librarySource": "custom",
       "libraryRef": "elfnein-spell-prismatic-wall",
-      "overrides": {},
-      "prepared": false
+      "prepared": false,
+      "access": {},
+      "overrides": {}
     },
     {
       "id": "8aee21f8-5683-4e6f-a25d-2011147eef78",
@@ -205,8 +223,9 @@
       "libraryCollection": "spells",
       "librarySource": "custom",
       "libraryRef": "elfnein-spell-guidance",
-      "overrides": {},
-      "prepared": true
+      "prepared": true,
+      "access": {},
+      "overrides": {}
     },
     {
       "id": "eff71c66-a370-4bdd-93aa-c96bc22f883e",
@@ -214,8 +233,9 @@
       "libraryCollection": "spells",
       "librarySource": "custom",
       "libraryRef": "elfnein-spell-absorb-elements",
-      "overrides": {},
-      "prepared": true
+      "prepared": true,
+      "access": {},
+      "overrides": {}
     },
     {
       "id": "4c1c6a20-d3ae-416d-9757-c8a0c7529006",
@@ -223,8 +243,9 @@
       "libraryCollection": "spells",
       "librarySource": "custom",
       "libraryRef": "elfnein-spell-enlarge-reduce",
-      "overrides": {},
-      "prepared": false
+      "prepared": false,
+      "access": {},
+      "overrides": {}
     }
   ],
   "spellSlots": {
@@ -303,9 +324,9 @@
       "libraryCollection": "items",
       "librarySource": "custom",
       "libraryRef": "elfnein-item-dur-da-bla",
-      "overrides": {},
+      "active": true,
       "quantity": 1,
-      "active": true
+      "overrides": {}
     },
     {
       "id": "a4384585-651e-4ddb-bd55-dcc4a38c9e25",
@@ -313,9 +334,9 @@
       "libraryCollection": "items",
       "librarySource": "custom",
       "libraryRef": "elfnein-item-silver-gold-focus",
-      "overrides": {},
+      "active": true,
       "quantity": 1,
-      "active": true
+      "overrides": {}
     }
   ],
   "currency": {
@@ -332,47 +353,47 @@
       "libraryCollection": "resources",
       "librarySource": "custom",
       "libraryRef": "elfnein-resource-spell-memories",
-      "overrides": {},
       "current": 50,
       "max": 70,
       "log": [
         {
-          "id": "e076994f-1bb2-4889-b2e7-8d38cf7a72e3",
+          "id": "4eea5c99-3844-4c0d-bb48-b76741fdc67c",
           "date": "2024-09-02",
           "delta": 70,
           "reason": "Creation of character, starting with 70 memories."
         },
         {
-          "id": "27f9c5f6-6ac8-4183-abd1-5c6ec3b03f53",
+          "id": "dc0aa6dc-d931-4467-8a5c-d76f7eda7364",
           "date": "2024-09-02",
           "delta": -2,
           "reason": "Used map spell; 2 memory removed for using silver/gold elemental."
         },
         {
-          "id": "fdfe12a1-39a2-4fd1-9e44-9da2ea28fb91",
+          "id": "81acf042-c3f7-4424-b8ab-0003ba13dfed",
           "date": "2024-09-02",
           "delta": -2,
           "reason": "Used airburst spell; demonstration out of combat, reduced cost."
         },
         {
-          "id": "d3490ee1-b5dd-4f15-ab62-5bc44d941794",
+          "id": "6c30750c-f887-4599-a35f-076ac7aa3bff",
           "date": "2024-09-02",
           "delta": -10,
           "reason": "Used Fireball; rolled 4 d8s total 18, -2 each dice, 10 memory lost."
         },
         {
-          "id": "a43f6621-2bb7-4544-a8f7-025f56a455d6",
+          "id": "3ea7efac-3073-4a8e-bbb3-06dc8d190f05",
           "date": "2024-09-02",
           "delta": 0,
           "reason": "Used Fireball; rolled 1d8-2 total below 0, no memory lost or gained."
         },
         {
-          "id": "4094dea7-0442-4b94-919c-89e1dc0ce758",
+          "id": "0ca19934-4973-457d-a51f-068e1cfd5bdf",
           "date": "2024-09-02",
           "delta": -6,
           "reason": "Used Fireball; rolled 2d8-2s totaling 6 memory lost."
         }
-      ]
+      ],
+      "overrides": {}
     },
     {
       "id": "8a316ef0-bf19-48dc-8987-eab9ecc3b563",
@@ -380,10 +401,10 @@
       "libraryCollection": "resources",
       "librarySource": "custom",
       "libraryRef": "elfnein-resource-bladesong",
-      "overrides": {},
       "current": 4,
       "max": 4,
-      "log": []
+      "log": [],
+      "overrides": {}
     },
     {
       "id": "7c19f143-dd24-43f6-9132-236af9b9f97c",
@@ -391,10 +412,10 @@
       "libraryCollection": "resources",
       "librarySource": "custom",
       "libraryRef": "elfnein-resource-sorcery-points",
-      "overrides": {},
       "current": 2,
       "max": 2,
-      "log": []
+      "log": [],
+      "overrides": {}
     }
   ],
   "dnd": {
@@ -460,7 +481,7 @@
     ],
     "hp": {
       "max": 62,
-      "current": 26,
+      "current": 40,
       "temp": 0,
       "log": [
         {
@@ -552,6 +573,12 @@
           "date": "2026-06-06",
           "delta": -25,
           "reason": "Got vored then crotch shot."
+        },
+        {
+          "id": "141962b5-6dff-4698-8b97-47e4c5f198ad",
+          "date": "2026-06-06",
+          "delta": 14,
+          "reason": "Greater Healing Potion"
         }
       ],
       "mode": "calculated"
