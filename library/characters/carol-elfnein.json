@@ -2,7 +2,7 @@
   "id": "carol-elfnein",
   "meta": {
     "repoPath": "library/characters/carol-elfnein.json",
-    "lastUpdated": "2026-06-06T05:22:40.712Z"
+    "lastUpdated": "2026-06-06T05:25:05.473Z"
   },
   "identity": {
     "name": "Carol Elfnein",
@@ -38,7 +38,7 @@
   "notes": "Provisional sheet. Elfnein is less mechanically settled than Capella or Seraphine, so uncertain features are marked with Provisional, Future, or DM Fiat chips. Current assumed play state is Wizard 9 / Sorcerer 1, total level 10, with future Wizard/Sorcerer progression listed as available planning rather than current access. Her magic is flavored as alchemy; when material focus or elemental sources are unavailable, spells can burn Spell Memories.",
   "spells": [
     {
-      "id": "9dc394db-3091-42b5-b2e7-e9a9a555cdac",
+      "id": "3e6fb34f-911a-47fe-b435-71c9314f9ef1",
       "source": "library",
       "libraryCollection": "spells",
       "librarySource": "custom",
@@ -47,7 +47,7 @@
       "prepared": true
     },
     {
-      "id": "f2aee2c7-7b2b-4842-928c-9d67131a1d0b",
+      "id": "30602150-c6a3-4084-93b4-b0818c93bc8c",
       "source": "library",
       "libraryCollection": "spells",
       "librarySource": "custom",
@@ -56,7 +56,7 @@
       "prepared": true
     },
     {
-      "id": "96014e9a-0015-4016-8bce-e242442d74c7",
+      "id": "c0acda21-8dd0-4e63-9544-4eebbe268eab",
       "source": "library",
       "libraryCollection": "spells",
       "librarySource": "custom",
@@ -65,7 +65,7 @@
       "prepared": true
     },
     {
-      "id": "57d4409f-ac12-44e0-b73c-439b06010f24",
+      "id": "b92bfcf2-edb1-423c-baca-2fae3029cd43",
       "source": "library",
       "libraryCollection": "spells",
       "librarySource": "custom",
@@ -74,7 +74,7 @@
       "prepared": true
     },
     {
-      "id": "a1e9b36f-e98b-44fa-8691-e37f15ba6133",
+      "id": "d12f9847-741e-4f35-a95d-48597a3e22a8",
       "source": "library",
       "libraryCollection": "spells",
       "librarySource": "custom",
@@ -83,7 +83,7 @@
       "prepared": true
     },
     {
-      "id": "5f113b34-6b85-40da-8747-38a3027bc22c",
+      "id": "f0546aa1-f5bd-42ce-9540-3576761d8ae3",
       "source": "library",
       "libraryCollection": "spells",
       "librarySource": "custom",
@@ -92,7 +92,7 @@
       "prepared": true
     },
     {
-      "id": "abc2183d-ae84-4278-b9f4-fc7a3850e11f",
+      "id": "1cec3b8f-94fd-460b-9c3c-d88783219623",
       "source": "library",
       "libraryCollection": "spells",
       "librarySource": "custom",
@@ -101,7 +101,7 @@
       "prepared": true
     },
     {
-      "id": "f836b6c7-4924-4550-8496-50942516274b",
+      "id": "45474b1b-9b98-4652-9656-c7d0cccf9ed6",
       "source": "library",
       "libraryCollection": "spells",
       "librarySource": "custom",
@@ -110,7 +110,7 @@
       "prepared": true
     },
     {
-      "id": "dcc5c2e5-c0a7-48a4-9238-562550a436fb",
+      "id": "5f2cef4c-1724-426e-af29-45ac06f31e40",
       "source": "library",
       "libraryCollection": "spells",
       "librarySource": "custom",
@@ -119,7 +119,7 @@
       "prepared": true
     },
     {
-      "id": "a230ba5d-f8c4-43a5-92ad-f6ceab13fd48",
+      "id": "05cad082-ec9a-4e85-8d31-718897493d46",
       "source": "library",
       "libraryCollection": "spells",
       "librarySource": "custom",
@@ -128,7 +128,7 @@
       "prepared": true
     },
     {
-      "id": "f0598ee1-7c6c-43b3-bff3-ae7e67a06d81",
+      "id": "d711ed33-5113-46d2-ba7f-016ef5d1b1e0",
       "source": "library",
       "libraryCollection": "spells",
       "librarySource": "custom",
@@ -137,7 +137,7 @@
       "prepared": true
     },
     {
-      "id": "c45a3277-6094-4cdf-b55a-67a8c07fc4e9",
+      "id": "1c3dba49-e8f3-4321-b336-38960786de4f",
       "source": "library",
       "libraryCollection": "spells",
       "librarySource": "custom",
@@ -146,7 +146,7 @@
       "prepared": true
     },
     {
-      "id": "d4bec4d4-7848-47b7-8e1b-c30a02292b5f",
+      "id": "29229240-81a7-4ca5-9c4d-16eb8edeb056",
       "source": "library",
       "libraryCollection": "spells",
       "librarySource": "custom",
@@ -155,7 +155,7 @@
       "prepared": true
     },
     {
-      "id": "10a16ec1-d6b6-41a5-8bf4-49a4a7ef5e96",
+      "id": "d202ec90-52ff-4531-aa30-dc06f56f08f7",
       "source": "library",
       "libraryCollection": "spells",
       "librarySource": "custom",
@@ -164,7 +164,7 @@
       "prepared": true
     },
     {
-      "id": "0069b31b-38cc-4c9b-80a3-1452a95dd88d",
+      "id": "55788c25-a81d-4d95-b844-bddca3a4fce4",
       "source": "library",
       "libraryCollection": "spells",
       "librarySource": "custom",
@@ -173,7 +173,7 @@
       "prepared": true
     },
     {
-      "id": "3513af36-0e10-4f72-b75a-bcb014bb79aa",
+      "id": "2a42ed35-3916-4cc2-ae13-43612bf78201",
       "source": "library",
       "libraryCollection": "spells",
       "librarySource": "custom",
@@ -182,7 +182,7 @@
       "prepared": true
     },
     {
-      "id": "803d0100-ad5d-4f1c-9d4c-a55c7bd505d3",
+      "id": "087d54dc-75bb-487e-b259-248b96f924f3",
       "source": "library",
       "libraryCollection": "spells",
       "librarySource": "custom",
@@ -191,7 +191,7 @@
       "prepared": false
     },
     {
-      "id": "a5feea1c-606a-4770-a1d0-d878a31f8085",
+      "id": "c2904b3a-951e-4db0-9834-7f74aec20d6e",
       "source": "library",
       "libraryCollection": "spells",
       "librarySource": "custom",
@@ -200,7 +200,7 @@
       "prepared": false
     },
     {
-      "id": "ff3b6df5-ccba-47e8-87cb-efaa949ae4b6",
+      "id": "8aee21f8-5683-4e6f-a25d-2011147eef78",
       "source": "library",
       "libraryCollection": "spells",
       "librarySource": "custom",
@@ -209,7 +209,7 @@
       "prepared": true
     },
     {
-      "id": "664f7cb2-35dc-4940-adee-a98a3242768e",
+      "id": "eff71c66-a370-4bdd-93aa-c96bc22f883e",
       "source": "library",
       "libraryCollection": "spells",
       "librarySource": "custom",
@@ -218,7 +218,7 @@
       "prepared": true
     },
     {
-      "id": "e0266d24-c877-45ae-9f63-cb9ff0f21f5e",
+      "id": "4c1c6a20-d3ae-416d-9757-c8a0c7529006",
       "source": "library",
       "libraryCollection": "spells",
       "librarySource": "custom",
@@ -251,7 +251,7 @@
   },
   "abilities": [
     {
-      "id": "7bd7d94e-2b9a-440a-a5f5-0941b1592a3d",
+      "id": "c215b7be-6939-4ee6-996f-3bf0b744bb75",
       "source": "library",
       "libraryCollection": "traits",
       "librarySource": "custom",
@@ -260,7 +260,7 @@
       "active": true
     },
     {
-      "id": "e4f7fe27-afcf-43a9-8a58-7c7e6f06028d",
+      "id": "59c9aea0-4177-419a-9054-5dd0f3b06a90",
       "source": "library",
       "libraryCollection": "traits",
       "librarySource": "custom",
@@ -269,7 +269,7 @@
       "active": true
     },
     {
-      "id": "2b50d4d4-9549-4b7f-a709-0b4afebc9a38",
+      "id": "cfa4deb8-d710-409a-a4d5-b4b19dfadc24",
       "source": "library",
       "libraryCollection": "traits",
       "librarySource": "custom",
@@ -278,7 +278,7 @@
       "active": true
     },
     {
-      "id": "1954cfaa-90da-49a3-949c-677999b5f0f4",
+      "id": "36ca9c98-a510-4af0-b42c-1759993ab200",
       "source": "library",
       "libraryCollection": "traits",
       "librarySource": "custom",
@@ -287,7 +287,7 @@
       "active": true
     },
     {
-      "id": "4d119383-cb41-48e6-968d-bbb63a1531fa",
+      "id": "c49882a7-e2a7-43da-855f-1d2bccc297cc",
       "source": "library",
       "libraryCollection": "traits",
       "librarySource": "custom",
@@ -298,7 +298,7 @@
   ],
   "inventory": [
     {
-      "id": "049d31d7-bc6e-4899-a0d9-5d0ec1bcdd33",
+      "id": "7a8f115c-95d9-4d12-b655-fca7cc0f1906",
       "source": "library",
       "libraryCollection": "items",
       "librarySource": "custom",
@@ -308,7 +308,7 @@
       "active": true
     },
     {
-      "id": "2a730abc-229b-45f7-a398-4d7a36d428d8",
+      "id": "a4384585-651e-4ddb-bd55-dcc4a38c9e25",
       "source": "library",
       "libraryCollection": "items",
       "librarySource": "custom",
@@ -327,7 +327,7 @@
   },
   "customResources": [
     {
-      "id": "fd60e194-0669-4aab-9988-3c41ec37e645",
+      "id": "740adb60-0925-47e6-80d5-fe9cdd935b52",
       "source": "library",
       "libraryCollection": "resources",
       "librarySource": "custom",
@@ -337,37 +337,37 @@
       "max": 70,
       "log": [
         {
-          "id": "d9a232ee-b720-4243-947f-d687d3296bb0",
+          "id": "e076994f-1bb2-4889-b2e7-8d38cf7a72e3",
           "date": "2024-09-02",
           "delta": 70,
           "reason": "Creation of character, starting with 70 memories."
         },
         {
-          "id": "a307d28b-f3c5-44ef-b9f3-f32d1c5f9452",
+          "id": "27f9c5f6-6ac8-4183-abd1-5c6ec3b03f53",
           "date": "2024-09-02",
           "delta": -2,
           "reason": "Used map spell; 2 memory removed for using silver/gold elemental."
         },
         {
-          "id": "f060729f-2dce-468c-9e6a-3bdf24bf3bc0",
+          "id": "fdfe12a1-39a2-4fd1-9e44-9da2ea28fb91",
           "date": "2024-09-02",
           "delta": -2,
           "reason": "Used airburst spell; demonstration out of combat, reduced cost."
         },
         {
-          "id": "32f90061-a7b1-4df9-a099-13b85a6c8690",
+          "id": "d3490ee1-b5dd-4f15-ab62-5bc44d941794",
           "date": "2024-09-02",
           "delta": -10,
           "reason": "Used Fireball; rolled 4 d8s total 18, -2 each dice, 10 memory lost."
         },
         {
-          "id": "a254cf15-7d62-44ba-8f08-485b0dd5f792",
+          "id": "a43f6621-2bb7-4544-a8f7-025f56a455d6",
           "date": "2024-09-02",
           "delta": 0,
           "reason": "Used Fireball; rolled 1d8-2 total below 0, no memory lost or gained."
         },
         {
-          "id": "274caf66-9e87-48f9-9d26-565973502ded",
+          "id": "4094dea7-0442-4b94-919c-89e1dc0ce758",
           "date": "2024-09-02",
           "delta": -6,
           "reason": "Used Fireball; rolled 2d8-2s totaling 6 memory lost."
@@ -375,7 +375,7 @@
       ]
     },
     {
-      "id": "ec865362-ffeb-452f-84bc-2c97634fb0cf",
+      "id": "8a316ef0-bf19-48dc-8987-eab9ecc3b563",
       "source": "library",
       "libraryCollection": "resources",
       "librarySource": "custom",
@@ -386,7 +386,7 @@
       "log": []
     },
     {
-      "id": "ffa3d562-66d6-4620-87a8-14aa07ff98d9",
+      "id": "7c19f143-dd24-43f6-9132-236af9b9f97c",
       "source": "library",
       "libraryCollection": "resources",
       "librarySource": "custom",
@@ -600,7 +600,7 @@
     "initiative": 3,
     "feats": [
       {
-        "id": "d9974261-d45c-42e7-aa92-61f69e25bf9d",
+        "id": "0e55a438-d9d4-453a-a6dc-979f5dbf8620",
         "source": "library",
         "libraryCollection": "feats",
         "librarySource": "custom",
@@ -608,7 +608,7 @@
         "overrides": {}
       },
       {
-        "id": "01d03b99-9800-41d3-8aad-86da87e2f61e",
+        "id": "c2ab3bb6-d3d6-4729-8112-b43f52ed0f64",
         "source": "library",
         "libraryCollection": "feats",
         "librarySource": "custom",
