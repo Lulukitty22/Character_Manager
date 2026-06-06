@@ -180,6 +180,22 @@
         "updatedAt": "2026-05-03T15:10:50.038Z"
       },
       {
+        "id": "elfnein-spell-fire-bolt",
+        "name": "Fire Bolt",
+        "collections": [
+          "spells"
+        ],
+        "tags": [
+          "elfnein",
+          "wizard",
+          "cantrip",
+          "alchemy"
+        ],
+        "path": "library/records/spells/elfnein-spell-fire-bolt.json",
+        "sha": "4609ac9dca067b3d7a40375e3e3faab59459e8c8",
+        "updatedAt": "2026-06-06T05:22:34.444Z"
+      },
+      {
         "id": "spells.open5e-spells-srd-2024-fireball",
         "name": "Fireball",
         "collections": [
