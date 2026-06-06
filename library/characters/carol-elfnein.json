@@ -2,7 +2,7 @@
   "id": "carol-elfnein",
   "meta": {
     "repoPath": "library/characters/carol-elfnein.json",
-    "lastUpdated": "2026-06-06T05:27:53.965Z"
+    "lastUpdated": "2026-06-06T06:05:17.825Z"
   },
   "identity": {
     "name": "Carol Elfnein",
@@ -357,37 +357,37 @@
       "max": 70,
       "log": [
         {
-          "id": "4eea5c99-3844-4c0d-bb48-b76741fdc67c",
+          "id": "a4b77296-9160-490d-a040-c5809892916f",
           "date": "2024-09-02",
           "delta": 70,
           "reason": "Creation of character, starting with 70 memories."
         },
         {
-          "id": "dc0aa6dc-d931-4467-8a5c-d76f7eda7364",
+          "id": "f4963166-a479-440a-babf-f23930841442",
           "date": "2024-09-02",
           "delta": -2,
           "reason": "Used map spell; 2 memory removed for using silver/gold elemental."
         },
         {
-          "id": "81acf042-c3f7-4424-b8ab-0003ba13dfed",
+          "id": "a71a0699-ee04-4147-8002-8aa8bf671f71",
           "date": "2024-09-02",
           "delta": -2,
           "reason": "Used airburst spell; demonstration out of combat, reduced cost."
         },
         {
-          "id": "6c30750c-f887-4599-a35f-076ac7aa3bff",
+          "id": "6ec4ee53-4a42-41a8-9803-0aa2d856d495",
           "date": "2024-09-02",
           "delta": -10,
           "reason": "Used Fireball; rolled 4 d8s total 18, -2 each dice, 10 memory lost."
         },
         {
-          "id": "3ea7efac-3073-4a8e-bbb3-06dc8d190f05",
+          "id": "8aa3752c-e0e3-43ca-9fbc-472b06e965ba",
           "date": "2024-09-02",
           "delta": 0,
           "reason": "Used Fireball; rolled 1d8-2 total below 0, no memory lost or gained."
         },
         {
-          "id": "0ca19934-4973-457d-a51f-068e1cfd5bdf",
+          "id": "0c8b4928-fe60-4bdf-8947-17ab4a89bfe0",
           "date": "2024-09-02",
           "delta": -6,
           "reason": "Used Fireball; rolled 2d8-2s totaling 6 memory lost."
