@@ -1,8 +1,8 @@
-﻿{
+{
   "id": "carol-elfnein",
   "meta": {
     "repoPath": "library/characters/carol-elfnein.json",
-    "lastUpdated": "2026-05-01T18:02:00.000Z"
+    "lastUpdated": "2026-06-06T05:22:40.712Z"
   },
   "identity": {
     "name": "Carol Elfnein",
@@ -38,980 +38,193 @@
   "notes": "Provisional sheet. Elfnein is less mechanically settled than Capella or Seraphine, so uncertain features are marked with Provisional, Future, or DM Fiat chips. Current assumed play state is Wizard 9 / Sorcerer 1, total level 10, with future Wizard/Sorcerer progression listed as available planning rather than current access. Her magic is flavored as alchemy; when material focus or elemental sources are unavailable, spells can burn Spell Memories.",
   "spells": [
     {
-      "id": "elfnein-spell-fire-bolt",
-      "source": "inline",
-      "name": "Fire Bolt",
-      "level": 0,
-      "school": "Evocation",
-      "castingTime": "1 action",
-      "range": "120 ft",
-      "components": [
-        "V",
-        "S"
-      ],
-      "duration": "Instantaneous",
-      "description": "Wizard cantrip, flavored as directed thermal transmutation.",
-      "prepared": true,
-      "access": {
-        "label": "Current",
-        "kind": "positive",
-        "description": "Available in the current Wizard 9 / Sorcerer 1 state.",
-        "chips": [
-          {
-            "label": "Alchemy",
-            "kind": "neutral",
-            "description": "Flavor as alchemical conversion rather than traditional spellcasting."
-          }
-        ]
-      },
-      "tags": [
-        "Elfnein",
-        "Wizard",
-        "Cantrip",
-        "Alchemy"
-      ],
-      "addons": {
-        "mechanics": [],
-        "ritual": {
-          "enabled": false
-        },
-        "concentration": {
-          "enabled": false
-        },
-        "components": [
-          "V",
-          "S"
-        ]
-      }
+      "id": "9dc394db-3091-42b5-b2e7-e9a9a555cdac",
+      "source": "library",
+      "libraryCollection": "spells",
+      "librarySource": "custom",
+      "libraryRef": "elfnein-spell-fire-bolt",
+      "overrides": {},
+      "prepared": true
     },
     {
-      "id": "elfnein-spell-create-bonfire",
-      "source": "inline",
-      "name": "Create Bonfire",
-      "level": 0,
-      "school": "Conjuration",
-      "castingTime": "1 action",
-      "range": "60 ft",
-      "components": [
-        "V",
-        "S"
-      ],
-      "duration": "Concentration, up to 1 minute",
-      "description": "Wizard cantrip, flavored as localized combustible transmutation.",
-      "prepared": true,
-      "access": {
-        "label": "Current",
-        "kind": "positive",
-        "description": "Available in the current Wizard 9 / Sorcerer 1 state."
-      },
-      "tags": [
-        "Elfnein",
-        "Wizard",
-        "Cantrip",
-        "Alchemy"
-      ],
-      "addons": {
-        "mechanics": [
-          {
-            "label": "Concentration",
-            "kind": "requirement",
-            "description": "Requires sustained focus."
-          }
-        ],
-        "ritual": {
-          "enabled": false
-        },
-        "concentration": {
-          "enabled": true
-        },
-        "components": [
-          "V",
-          "S"
-        ]
-      }
+      "id": "f2aee2c7-7b2b-4842-928c-9d67131a1d0b",
+      "source": "library",
+      "libraryCollection": "spells",
+      "librarySource": "custom",
+      "libraryRef": "elfnein-spell-create-bonfire",
+      "overrides": {},
+      "prepared": true
     },
     {
-      "id": "elfnein-spell-ray-of-frost",
-      "source": "inline",
-      "name": "Ray of Frost",
-      "level": 0,
-      "school": "Evocation",
-      "castingTime": "1 action",
-      "range": "60 ft",
-      "components": [
-        "V",
-        "S"
-      ],
-      "duration": "Instantaneous",
-      "description": "Wizard cantrip, favored for cold/elemental alchemy.",
-      "prepared": true,
-      "access": {
-        "label": "Current",
-        "kind": "positive",
-        "description": "Available in the current Wizard 9 / Sorcerer 1 state."
-      },
-      "tags": [
-        "Elfnein",
-        "Wizard",
-        "Cantrip",
-        "Cold"
-      ],
-      "addons": {
-        "mechanics": [],
-        "ritual": {
-          "enabled": false
-        },
-        "concentration": {
-          "enabled": false
-        },
-        "components": [
-          "V",
-          "S"
-        ]
-      }
+      "id": "96014e9a-0015-4016-8bce-e242442d74c7",
+      "source": "library",
+      "libraryCollection": "spells",
+      "librarySource": "custom",
+      "libraryRef": "elfnein-spell-ray-of-frost",
+      "overrides": {},
+      "prepared": true
     },
     {
-      "id": "elfnein-spell-booming-blade",
-      "source": "inline",
-      "name": "Booming Blade",
-      "level": 0,
-      "school": "Evocation",
-      "castingTime": "1 action",
-      "range": "Self",
-      "components": [
-        "S",
-        "M"
-      ],
-      "duration": "1 round",
-      "description": "Bladesinger combat cantrip, likely delivered through Dur Da Bla strings or alchemical blade-song force.",
-      "prepared": true,
-      "access": {
-        "label": "Current",
-        "kind": "positive",
-        "description": "Added at Wizard 4."
-      },
-      "tags": [
-        "Elfnein",
-        "Wizard",
-        "Cantrip",
-        "Bladesong"
-      ],
-      "addons": {
-        "mechanics": [
-          {
-            "label": "Weapon Spell",
-            "kind": "action",
-            "description": "Requires a weapon-style attack delivery."
-          }
-        ],
-        "ritual": {
-          "enabled": false
-        },
-        "concentration": {
-          "enabled": false
-        },
-        "components": [
-          "S",
-          "M"
-        ]
-      }
+      "id": "57d4409f-ac12-44e0-b73c-439b06010f24",
+      "source": "library",
+      "libraryCollection": "spells",
+      "librarySource": "custom",
+      "libraryRef": "elfnein-spell-booming-blade",
+      "overrides": {},
+      "prepared": true
     },
     {
-      "id": "elfnein-spell-mage-armor",
-      "source": "inline",
-      "name": "Mage Armor",
-      "level": 1,
-      "school": "Abjuration",
-      "castingTime": "1 action",
-      "range": "Touch",
-      "components": [
-        "V",
-        "S",
-        "M"
-      ],
-      "duration": "8 hours",
-      "description": "Listed at Wizard 1; may explain her base AC 16 if combined with Dexterity.",
-      "prepared": true,
-      "access": {
-        "label": "Current",
-        "kind": "positive",
-        "description": "Available in the current Wizard 9 / Sorcerer 1 state."
-      },
-      "tags": [
-        "Elfnein",
-        "Wizard",
-        "Defense"
-      ],
-      "addons": {
-        "mechanics": [
-          {
-            "label": "AC Base",
-            "value": "13 + DEX",
-            "kind": "positive",
-            "description": "With DEX 16, this supports AC 16."
-          }
-        ],
-        "ritual": {
-          "enabled": false
-        },
-        "concentration": {
-          "enabled": false
-        },
-        "components": [
-          "V",
-          "S",
-          "M"
-        ]
-      }
+      "id": "a1e9b36f-e98b-44fa-8691-e37f15ba6133",
+      "source": "library",
+      "libraryCollection": "spells",
+      "librarySource": "custom",
+      "libraryRef": "elfnein-spell-mage-armor",
+      "overrides": {},
+      "prepared": true
     },
     {
-      "id": "elfnein-spell-shield",
-      "source": "inline",
-      "name": "Shield",
-      "level": 1,
-      "school": "Abjuration",
-      "castingTime": "1 reaction",
-      "range": "Self",
-      "components": [
-        "V",
-        "S"
-      ],
-      "duration": "1 round",
-      "description": "+5 AC reaction. Her notes list Bladesong AC 22 and Shield Bladesong AC 25, but the math may actually imply 27 from 22 + 5; keep this as a provisional table ruling.",
-      "prepared": true,
-      "access": {
-        "label": "Current",
-        "kind": "positive",
-        "description": "Available in the current Wizard 9 / Sorcerer 1 state.",
-        "chips": [
-          {
-            "label": "Provisional Math",
-            "kind": "requirement",
-            "description": "Discord notes say Shield Bladesong AC 25 despite Shield usually adding +5 to AC 22."
-          }
-        ]
-      },
-      "tags": [
-        "Elfnein",
-        "Wizard",
-        "Defense",
-        "Reaction"
-      ],
-      "addons": {
-        "mechanics": [
-          {
-            "label": "+5 AC",
-            "kind": "positive",
-            "description": "Reaction until the start of the next turn."
-          }
-        ],
-        "ritual": {
-          "enabled": false
-        },
-        "concentration": {
-          "enabled": false
-        },
-        "components": [
-          "V",
-          "S"
-        ]
-      }
+      "id": "5f113b34-6b85-40da-8747-38a3027bc22c",
+      "source": "library",
+      "libraryCollection": "spells",
+      "librarySource": "custom",
+      "libraryRef": "elfnein-spell-shield",
+      "overrides": {},
+      "prepared": true
     },
     {
-      "id": "elfnein-spell-chromatic-orb",
-      "source": "inline",
-      "name": "Chromatic Orb",
-      "level": 1,
-      "school": "Evocation",
-      "castingTime": "1 action",
-      "range": "90 ft",
-      "components": [
-        "V",
-        "S",
-        "M"
-      ],
-      "duration": "Instantaneous",
-      "description": "Elemental conversion attack.",
-      "prepared": true,
-      "access": {
-        "label": "Current",
-        "kind": "positive",
-        "description": "Available in the current Wizard 9 / Sorcerer 1 state."
-      },
-      "tags": [
-        "Elfnein",
-        "Wizard",
-        "Elemental",
-        "Alchemy"
-      ],
-      "addons": {
-        "mechanics": [
-          {
-            "label": "Element Choice",
-            "kind": "neutral",
-            "description": "Fits equivalent exchange and elemental material conversion."
-          }
-        ],
-        "ritual": {
-          "enabled": false
-        },
-        "concentration": {
-          "enabled": false
-        },
-        "components": [
-          "V",
-          "S",
-          "M"
-        ]
-      }
+      "id": "abc2183d-ae84-4278-b9f4-fc7a3850e11f",
+      "source": "library",
+      "libraryCollection": "spells",
+      "librarySource": "custom",
+      "libraryRef": "elfnein-spell-chromatic-orb",
+      "overrides": {},
+      "prepared": true
     },
     {
-      "id": "elfnein-spell-burning-hands",
-      "source": "inline",
-      "name": "Burning Hands",
-      "level": 1,
-      "school": "Evocation",
-      "castingTime": "1 action",
-      "range": "Self",
-      "components": [
-        "V",
-        "S"
-      ],
-      "duration": "Instantaneous",
-      "description": "Close-range fire alchemy.",
-      "prepared": true,
-      "access": {
-        "label": "Current",
-        "kind": "positive",
-        "description": "Available in the current Wizard 9 / Sorcerer 1 state."
-      },
-      "tags": [
-        "Elfnein",
-        "Wizard",
-        "Fire"
-      ],
-      "addons": {
-        "mechanics": [],
-        "ritual": {
-          "enabled": false
-        },
-        "concentration": {
-          "enabled": false
-        },
-        "components": [
-          "V",
-          "S"
-        ]
-      }
+      "id": "f836b6c7-4924-4550-8496-50942516274b",
+      "source": "library",
+      "libraryCollection": "spells",
+      "librarySource": "custom",
+      "libraryRef": "elfnein-spell-burning-hands",
+      "overrides": {},
+      "prepared": true
     },
     {
-      "id": "elfnein-spell-catapult",
-      "source": "inline",
-      "name": "Catapult",
-      "level": 1,
-      "school": "Transmutation",
-      "castingTime": "1 action",
-      "range": "60 ft",
-      "components": [
-        "S"
-      ],
-      "duration": "Instantaneous",
-      "description": "Object momentum transmutation.",
-      "prepared": true,
-      "access": {
-        "label": "Current",
-        "kind": "positive",
-        "description": "Available in the current Wizard 9 / Sorcerer 1 state."
-      },
-      "tags": [
-        "Elfnein",
-        "Wizard",
-        "Alchemy"
-      ],
-      "addons": {
-        "mechanics": [],
-        "ritual": {
-          "enabled": false
-        },
-        "concentration": {
-          "enabled": false
-        },
-        "components": [
-          "S"
-        ]
-      }
+      "id": "dcc5c2e5-c0a7-48a4-9238-562550a436fb",
+      "source": "library",
+      "libraryCollection": "spells",
+      "librarySource": "custom",
+      "libraryRef": "elfnein-spell-catapult",
+      "overrides": {},
+      "prepared": true
     },
     {
-      "id": "elfnein-spell-web",
-      "source": "inline",
-      "name": "Web",
-      "level": 2,
-      "school": "Conjuration",
-      "castingTime": "1 action",
-      "range": "60 ft",
-      "components": [
-        "V",
-        "S",
-        "M"
-      ],
-      "duration": "Concentration, up to 1 hour",
-      "description": "Could be reflavored as binding alchemical filaments or Dur Da Bla string restraint.",
-      "prepared": true,
-      "access": {
-        "label": "Current",
-        "kind": "positive",
-        "description": "Available in the current Wizard 9 / Sorcerer 1 state."
-      },
-      "tags": [
-        "Elfnein",
-        "Wizard",
-        "Control",
-        "Strings"
-      ],
-      "addons": {
-        "mechanics": [
-          {
-            "label": "Restrain",
-            "kind": "condition",
-            "description": "Thematic match for Dur Da Bla strings."
-          }
-        ],
-        "ritual": {
-          "enabled": false
-        },
-        "concentration": {
-          "enabled": true
-        },
-        "components": [
-          "V",
-          "S",
-          "M"
-        ]
-      }
+      "id": "a230ba5d-f8c4-43a5-92ad-f6ceab13fd48",
+      "source": "library",
+      "libraryCollection": "spells",
+      "librarySource": "custom",
+      "libraryRef": "elfnein-spell-web",
+      "overrides": {},
+      "prepared": true
     },
     {
-      "id": "elfnein-spell-hold-person",
-      "source": "inline",
-      "name": "Hold Person",
-      "level": 2,
-      "school": "Enchantment",
-      "castingTime": "1 action",
-      "range": "60 ft",
-      "components": [
-        "V",
-        "S",
-        "M"
-      ],
-      "duration": "Concentration, up to 1 minute",
-      "description": "Listed at Wizard 3.",
-      "prepared": true,
-      "access": {
-        "label": "Current",
-        "kind": "positive",
-        "description": "Available in the current Wizard 9 / Sorcerer 1 state."
-      },
-      "tags": [
-        "Elfnein",
-        "Wizard",
-        "Control"
-      ],
-      "addons": {
-        "mechanics": [
-          {
-            "label": "Paralyzed",
-            "kind": "condition",
-            "description": "Target control effect."
-          }
-        ],
-        "ritual": {
-          "enabled": false
-        },
-        "concentration": {
-          "enabled": true
-        },
-        "components": [
-          "V",
-          "S",
-          "M"
-        ]
-      }
+      "id": "f0598ee1-7c6c-43b3-bff3-ae7e67a06d81",
+      "source": "library",
+      "libraryCollection": "spells",
+      "librarySource": "custom",
+      "libraryRef": "elfnein-spell-hold-person",
+      "overrides": {},
+      "prepared": true
     },
     {
-      "id": "elfnein-spell-rimes-binding-of-ice",
-      "source": "inline",
-      "name": "Rime's Binding Ice",
-      "level": 2,
-      "school": "Evocation",
-      "castingTime": "1 action",
-      "range": "Self",
-      "components": [
-        "S",
-        "M"
-      ],
-      "duration": "Instantaneous",
-      "description": "Cold binding alchemy.",
-      "prepared": true,
-      "access": {
-        "label": "Current",
-        "kind": "positive",
-        "description": "Available in the current Wizard 9 / Sorcerer 1 state."
-      },
-      "tags": [
-        "Elfnein",
-        "Wizard",
-        "Cold",
-        "Control"
-      ],
-      "addons": {
-        "mechanics": [
-          {
-            "label": "Speed Lock",
-            "kind": "condition",
-            "description": "Can prevent movement until the target breaks free."
-          }
-        ],
-        "ritual": {
-          "enabled": false
-        },
-        "concentration": {
-          "enabled": false
-        },
-        "components": [
-          "S",
-          "M"
-        ]
-      }
+      "id": "c45a3277-6094-4cdf-b55a-67a8c07fc4e9",
+      "source": "library",
+      "libraryCollection": "spells",
+      "librarySource": "custom",
+      "libraryRef": "elfnein-spell-rimes-binding-of-ice",
+      "overrides": {},
+      "prepared": true
     },
     {
-      "id": "elfnein-spell-fireball",
-      "source": "inline",
-      "name": "Fireball",
-      "level": 3,
-      "school": "Evocation",
-      "castingTime": "1 action",
-      "range": "150 ft",
-      "components": [
-        "V",
-        "S",
-        "M"
-      ],
-      "duration": "Instantaneous",
-      "description": "Listed at Wizard 5. Memory log includes multiple Fireball memory-burn examples.",
-      "prepared": true,
-      "access": {
-        "label": "Current",
-        "kind": "positive",
-        "description": "Available in the current Wizard 9 / Sorcerer 1 state.",
-        "chips": [
-          {
-            "label": "Memory Burn",
-            "kind": "negative",
-            "description": "If no suitable material source/focus is available, Fireball can burn Spell Memories."
-          }
-        ]
-      },
-      "tags": [
-        "Elfnein",
-        "Wizard",
-        "Fire",
-        "Memory Cost"
-      ],
-      "addons": {
-        "mechanics": [
-          {
-            "label": "Memory Burn",
-            "kind": "negative",
-            "description": "Example logs include 10 memory lost and 6 memory lost on Fireball casts."
-          }
-        ],
-        "ritual": {
-          "enabled": false
-        },
-        "concentration": {
-          "enabled": false
-        },
-        "components": [
-          "V",
-          "S",
-          "M"
-        ]
-      }
+      "id": "d4bec4d4-7848-47b7-8e1b-c30a02292b5f",
+      "source": "library",
+      "libraryCollection": "spells",
+      "librarySource": "custom",
+      "libraryRef": "spells.open5e-spells-srd-2024-fireball",
+      "overrides": {},
+      "prepared": true
     },
     {
-      "id": "elfnein-spell-tidal-wave",
-      "source": "inline",
-      "name": "Tidal Wave",
-      "level": 3,
-      "school": "Conjuration",
-      "castingTime": "1 action",
-      "range": "120 ft",
-      "components": [
-        "V",
-        "S",
-        "M"
-      ],
-      "duration": "Instantaneous",
-      "description": "Water/material conversion spell.",
-      "prepared": true,
-      "access": {
-        "label": "Current",
-        "kind": "positive",
-        "description": "Available in the current Wizard 9 / Sorcerer 1 state."
-      },
-      "tags": [
-        "Elfnein",
-        "Wizard",
-        "Water",
-        "Alchemy"
-      ],
-      "addons": {
-        "mechanics": [],
-        "ritual": {
-          "enabled": false
-        },
-        "concentration": {
-          "enabled": false
-        },
-        "components": [
-          "V",
-          "S",
-          "M"
-        ]
-      }
+      "id": "10a16ec1-d6b6-41a5-8bf4-49a4a7ef5e96",
+      "source": "library",
+      "libraryCollection": "spells",
+      "librarySource": "custom",
+      "libraryRef": "elfnein-spell-tidal-wave",
+      "overrides": {},
+      "prepared": true
     },
     {
-      "id": "elfnein-spell-wall-of-force",
-      "source": "inline",
-      "name": "Wall of Force",
-      "level": 5,
-      "school": "Evocation",
-      "castingTime": "1 action",
-      "range": "120 ft",
-      "components": [
-        "V",
-        "S",
-        "M"
-      ],
-      "duration": "Concentration, up to 10 minutes",
-      "description": "Listed at Wizard 9.",
-      "prepared": true,
-      "access": {
-        "label": "Current",
-        "kind": "positive",
-        "description": "Available in the current Wizard 9 / Sorcerer 1 state."
-      },
-      "tags": [
-        "Elfnein",
-        "Wizard",
-        "Control",
-        "Force"
-      ],
-      "addons": {
-        "mechanics": [
-          {
-            "label": "Concentration",
-            "kind": "requirement"
-          }
-        ],
-        "ritual": {
-          "enabled": false
-        },
-        "concentration": {
-          "enabled": true
-        },
-        "components": [
-          "V",
-          "S",
-          "M"
-        ]
-      }
+      "id": "0069b31b-38cc-4c9b-80a3-1452a95dd88d",
+      "source": "library",
+      "libraryCollection": "spells",
+      "librarySource": "custom",
+      "libraryRef": "elfnein-spell-wall-of-force",
+      "overrides": {},
+      "prepared": true
     },
     {
-      "id": "elfnein-spell-steel-wind-strike",
-      "source": "inline",
-      "name": "Steel Wind Strike",
-      "level": 5,
-      "school": "Conjuration",
-      "castingTime": "1 action",
-      "range": "30 ft",
-      "components": [
-        "S",
-        "M"
-      ],
-      "duration": "Instantaneous",
-      "description": "Very fitting for Dur Da Bla string/blade-song movement.",
-      "prepared": true,
-      "access": {
-        "label": "Current",
-        "kind": "positive",
-        "description": "Available in the current Wizard 9 / Sorcerer 1 state."
-      },
-      "tags": [
-        "Elfnein",
-        "Wizard",
-        "Bladesong",
-        "Strings"
-      ],
-      "addons": {
-        "mechanics": [
-          {
-            "label": "Dur Da Bla",
-            "kind": "positive",
-            "description": "Strong thematic fit for cutting string attacks."
-          }
-        ],
-        "ritual": {
-          "enabled": false
-        },
-        "concentration": {
-          "enabled": false
-        },
-        "components": [
-          "S",
-          "M"
-        ]
-      }
+      "id": "3513af36-0e10-4f72-b75a-bcb014bb79aa",
+      "source": "library",
+      "libraryCollection": "spells",
+      "librarySource": "custom",
+      "libraryRef": "elfnein-spell-steel-wind-strike",
+      "overrides": {},
+      "prepared": true
     },
     {
-      "id": "elfnein-spell-tashas-otherworldly-guise",
-      "source": "inline",
-      "name": "Tasha's Otherworldly Guise",
-      "level": 6,
-      "school": "Transmutation",
-      "castingTime": "1 bonus action",
-      "range": "Self",
-      "components": [
-        "V",
-        "S",
-        "M"
-      ],
-      "duration": "Concentration, up to 1 minute",
-      "description": "Future Wizard 11 spell. Her Faust Robe counts as both this effect and Bladesong in the notes.",
-      "prepared": false,
-      "access": {
-        "label": "Future",
-        "kind": "requirement",
-        "showKnown": false,
-        "description": "Planned Wizard 11 access. The Faust Robe can emulate this thematically, but current hard spell access is provisional.",
-        "chips": [
-          {
-            "label": "Faust Robe",
-            "kind": "positive",
-            "description": "Dur Da Bla transmutation can count as this transformation effect."
-          }
-        ]
-      },
-      "tags": [
-        "Elfnein",
-        "Wizard",
-        "Future",
-        "Faust Robe"
-      ],
-      "addons": {
-        "mechanics": [
-          {
-            "label": "Future",
-            "kind": "requirement",
-            "description": "Not normal current-level access."
-          }
-        ],
-        "ritual": {
-          "enabled": false
-        },
-        "concentration": {
-          "enabled": true
-        },
-        "components": [
-          "V",
-          "S",
-          "M"
-        ]
-      }
+      "id": "803d0100-ad5d-4f1c-9d4c-a55c7bd505d3",
+      "source": "library",
+      "libraryCollection": "spells",
+      "librarySource": "custom",
+      "libraryRef": "elfnein-spell-tashas-otherworldly-guise",
+      "overrides": {},
+      "prepared": false
     },
     {
-      "id": "elfnein-spell-prismatic-wall",
-      "source": "inline",
-      "name": "Prismatic Wall",
-      "level": 9,
-      "school": "Abjuration",
-      "castingTime": "1 action",
-      "range": "60 ft",
-      "components": [
-        "V",
-        "S"
-      ],
-      "duration": "10 minutes",
-      "description": "Future Wizard 17 capstone planning spell.",
-      "prepared": false,
-      "access": {
-        "label": "Future",
-        "kind": "requirement",
-        "showKnown": false,
-        "description": "Planned Wizard 17 spell, not current access."
-      },
-      "tags": [
-        "Elfnein",
-        "Wizard",
-        "Future"
-      ],
-      "addons": {
-        "mechanics": [
-          {
-            "label": "Future",
-            "kind": "requirement"
-          }
-        ],
-        "ritual": {
-          "enabled": false
-        },
-        "concentration": {
-          "enabled": false
-        },
-        "components": [
-          "V",
-          "S"
-        ]
-      }
+      "id": "a5feea1c-606a-4770-a1d0-d878a31f8085",
+      "source": "library",
+      "libraryCollection": "spells",
+      "librarySource": "custom",
+      "libraryRef": "elfnein-spell-prismatic-wall",
+      "overrides": {},
+      "prepared": false
     },
     {
-      "id": "elfnein-spell-guidance",
-      "source": "inline",
-      "name": "Guidance",
-      "level": 0,
-      "school": "Divination",
-      "castingTime": "1 action",
-      "range": "Touch",
-      "components": [
-        "V",
-        "S"
-      ],
-      "duration": "Concentration, up to 1 minute",
-      "description": "Sorcerer / Mage of Quandrix cantrip from the side progression.",
-      "prepared": true,
-      "access": {
-        "label": "Current",
-        "kind": "positive",
-        "description": "Available from Sorcerer 1 / Mage of Quandrix side progression."
-      },
-      "tags": [
-        "Elfnein",
-        "Sorcerer",
-        "Cantrip"
-      ],
-      "addons": {
-        "mechanics": [
-          {
-            "label": "Concentration",
-            "kind": "requirement"
-          }
-        ],
-        "ritual": {
-          "enabled": false
-        },
-        "concentration": {
-          "enabled": true
-        },
-        "components": [
-          "V",
-          "S"
-        ]
-      }
+      "id": "ff3b6df5-ccba-47e8-87cb-efaa949ae4b6",
+      "source": "library",
+      "libraryCollection": "spells",
+      "librarySource": "custom",
+      "libraryRef": "elfnein-spell-guidance",
+      "overrides": {},
+      "prepared": true
     },
     {
-      "id": "elfnein-spell-absorb-elements",
-      "source": "inline",
-      "name": "Absorb Elements",
-      "level": 1,
-      "school": "Abjuration",
-      "castingTime": "1 reaction",
-      "range": "Self",
-      "components": [
-        "S"
-      ],
-      "duration": "1 round",
-      "description": "Sorcerer 1 elemental defense.",
-      "prepared": true,
-      "access": {
-        "label": "Current",
-        "kind": "positive",
-        "description": "Available from Sorcerer 1 side progression."
-      },
-      "tags": [
-        "Elfnein",
-        "Sorcerer",
-        "Defense",
-        "Elemental"
-      ],
-      "addons": {
-        "mechanics": [
-          {
-            "label": "Reaction",
-            "kind": "action"
-          },
-          {
-            "label": "Resistance",
-            "kind": "resistance",
-            "description": "Temporary resistance to triggering elemental damage."
-          }
-        ],
-        "ritual": {
-          "enabled": false
-        },
-        "concentration": {
-          "enabled": false
-        },
-        "components": [
-          "S"
-        ]
-      }
+      "id": "664f7cb2-35dc-4940-adee-a98a3242768e",
+      "source": "library",
+      "libraryCollection": "spells",
+      "librarySource": "custom",
+      "libraryRef": "elfnein-spell-absorb-elements",
+      "overrides": {},
+      "prepared": true
     },
     {
-      "id": "elfnein-spell-enlarge-reduce",
-      "source": "inline",
-      "name": "Enlarge/Reduce",
-      "level": 2,
-      "school": "Transmutation",
-      "castingTime": "1 action",
-      "range": "30 ft",
-      "components": [
-        "V",
-        "S",
-        "M"
-      ],
-      "duration": "Concentration, up to 1 minute",
-      "description": "Future Sorcerer 3 spell.",
-      "prepared": false,
-      "access": {
-        "label": "Future",
-        "kind": "requirement",
-        "showKnown": false,
-        "description": "Planned Sorcerer 3 access."
-      },
-      "tags": [
-        "Elfnein",
-        "Sorcerer",
-        "Future",
-        "Alchemy"
-      ],
-      "addons": {
-        "mechanics": [
-          {
-            "label": "Future",
-            "kind": "requirement"
-          }
-        ],
-        "ritual": {
-          "enabled": false
-        },
-        "concentration": {
-          "enabled": true
-        },
-        "components": [
-          "V",
-          "S",
-          "M"
-        ]
-      }
+      "id": "e0266d24-c877-45ae-9f63-cb9ff0f21f5e",
+      "source": "library",
+      "libraryCollection": "spells",
+      "librarySource": "custom",
+      "libraryRef": "elfnein-spell-enlarge-reduce",
+      "overrides": {},
+      "prepared": false
     }
   ],
   "spellSlots": {
@@ -1038,314 +251,150 @@
   },
   "abilities": [
     {
-      "id": "elfnein-trait-alchemy",
-      "source": "inline",
-      "name": "Alchemy, Not Magic",
-      "type": "trait",
-      "active": true,
-      "description": "Elfnein does not understand her power as magic. Her spells are equivalent-exchange alchemy: matter, energy, memories, song, and focus are converted into effects.",
-      "tags": [
-        "Alchemy",
-        "Equivalent Exchange"
-      ],
-      "addons": {
-        "mechanics": [
-          {
-            "label": "Material Source",
-            "kind": "requirement",
-            "description": "Prefer a real material, elemental source, or silver/gold focus before burning memories."
-          },
-          {
-            "label": "Memory Burn",
-            "kind": "negative",
-            "description": "If no sufficient source exists, spells can consume Spell Memories."
-          }
-        ]
-      }
+      "id": "7bd7d94e-2b9a-440a-a5f5-0941b1592a3d",
+      "source": "library",
+      "libraryCollection": "traits",
+      "librarySource": "custom",
+      "libraryRef": "elfnein-trait-alchemy",
+      "overrides": {},
+      "active": true
     },
     {
-      "id": "elfnein-trait-bladesong",
-      "source": "inline",
-      "name": "Bladesong / War and Song",
-      "type": "feature",
-      "active": true,
-      "description": "Bladesinger transformation powered by song. Her voice carries unnaturally clearly and can pierce through walls. Current notes use INT to AC during Bladesong.",
-      "tags": [
-        "Bladesinger",
-        "Song",
-        "Defense"
-      ],
-      "addons": {
-        "mechanics": [
-          {
-            "label": "+INT to AC",
-            "value": "+6",
-            "kind": "positive",
-            "description": "With INT 22, Bladesong adds +6 AC."
-          },
-          {
-            "label": "Audible",
-            "kind": "negative",
-            "description": "Her song is very easy to hear and identify compared with normal sound."
-          }
-        ]
-      }
+      "id": "e4f7fe27-afcf-43a9-8a58-7c7e6f06028d",
+      "source": "library",
+      "libraryCollection": "traits",
+      "librarySource": "custom",
+      "libraryRef": "elfnein-trait-bladesong",
+      "overrides": {},
+      "active": true
     },
     {
-      "id": "elfnein-trait-song-charisma",
-      "source": "inline",
-      "name": "Siren-Like Singing",
-      "type": "feature",
-      "active": true,
-      "description": "When her singing matters socially, roll 1d8. On 1-5, no bonus. On 6-7, add +1 to Charisma rolls. On 8, add +2.",
-      "tags": [
-        "Song",
-        "Charisma",
-        "Provisional"
-      ],
-      "addons": {
-        "mechanics": [
-          {
-            "label": "1d8 Check",
-            "kind": "requirement",
-            "relatedRoll": "1d8; 6-7 = +1 CHA, 8 = +2 CHA"
-          },
-          {
-            "label": "Situational",
-            "kind": "neutral",
-            "description": "Use only when the singing plausibly affects the scene."
-          }
-        ]
-      }
+      "id": "2b50d4d4-9549-4b7f-a709-0b4afebc9a38",
+      "source": "library",
+      "libraryCollection": "traits",
+      "librarySource": "custom",
+      "libraryRef": "elfnein-trait-song-charisma",
+      "overrides": {},
+      "active": true
     },
     {
-      "id": "elfnein-trait-deathless",
-      "source": "inline",
-      "name": "Deathless Reborn Nature",
-      "type": "trait",
-      "active": true,
-      "description": "She has already broken some laws of humanity: living forever, being reborn, and existing as a homunculus-like Reborn. Knowledge from past lives can be rolled with 1d6.",
-      "tags": [
-        "Reborn",
-        "Memory",
-        "Past Lives"
-      ],
-      "addons": {
-        "mechanics": [
-          {
-            "label": "+1d6",
-            "kind": "positive",
-            "relatedRoll": "Knowledge from a Past Life"
-          },
-          {
-            "label": "Fragmented Memory",
-            "kind": "negative",
-            "description": "Her memories are scattered and unreliable."
-          }
-        ]
-      }
+      "id": "1954cfaa-90da-49a3-949c-677999b5f0f4",
+      "source": "library",
+      "libraryCollection": "traits",
+      "librarySource": "custom",
+      "libraryRef": "elfnein-trait-deathless",
+      "overrides": {},
+      "active": true
     },
     {
-      "id": "elfnein-trait-faust-robe",
-      "source": "inline",
-      "name": "Dur Da Bla: Faust Robe",
-      "type": "feature",
-      "active": true,
-      "description": "Dur Da Bla can transmute from alchemical harp into a Faust Robe. This counts as both Tasha's Otherworldly Guise and Bladesinger transformation in the notes. It can take up to a full minute to complete, leaving her vulnerable.",
-      "tags": [
-        "Dur Da Bla",
-        "Faust Robe",
-        "Transformation"
-      ],
-      "addons": {
-        "mechanics": [
-          {
-            "label": "Up to 1 Minute",
-            "kind": "requirement",
-            "description": "Transformation can require up to a full minute and protection from allies."
-          },
-          {
-            "label": "Vulnerable Cast",
-            "kind": "negative",
-            "description": "If attacked during the transformation, roll to see whether the cast succeeds."
-          },
-          {
-            "label": "Memory Burn",
-            "kind": "negative",
-            "relatedRoll": "1d4, then that many d8-CHA modifier; subtract positive total from Spell Memories."
-          }
-        ]
-      }
+      "id": "4d119383-cb41-48e6-968d-bbb63a1531fa",
+      "source": "library",
+      "libraryCollection": "traits",
+      "librarySource": "custom",
+      "libraryRef": "elfnein-trait-faust-robe",
+      "overrides": {},
+      "active": true
     }
   ],
   "inventory": [
     {
-      "id": "elfnein-item-dur-da-bla",
-      "source": "inline",
-      "name": "Dur Da Bla",
-      "type": "wondrous",
+      "id": "049d31d7-bc6e-4899-a0d9-5d0ec1bcdd33",
+      "source": "library",
+      "libraryCollection": "items",
+      "librarySource": "custom",
+      "libraryRef": "elfnein-item-dur-da-bla",
+      "overrides": {},
       "quantity": 1,
-      "weight": null,
-      "attuned": true,
-      "description": "Legendary alchemical harp. Its strings amplify Elfnein's alchemy and can become nearly indestructible cutting or binding weapons. It can also transmute into the Faust Robe.",
-      "tags": [
-        "Legendary",
-        "Harp",
-        "Strings",
-        "Faust Robe"
-      ],
-      "addons": {
-        "mechanics": [
-          {
-            "label": "Legendary",
-            "kind": "positive"
-          },
-          {
-            "label": "Memory Cost",
-            "kind": "negative",
-            "description": "Heavy use can burn years of memory away."
-          },
-          {
-            "label": "Restrain / Bisect",
-            "kind": "damage",
-            "description": "Strings can restrain or cut, subject to equivalent exchange."
-          }
-        ],
-        "equipment": {
-          "slot": "instrument / robe",
-          "rarity": "legendary"
-        }
-      }
+      "active": true
     },
     {
-      "id": "elfnein-item-silver-gold-focus",
-      "source": "inline",
-      "name": "Silver / Gold Alchemical Focus",
-      "type": "tool",
+      "id": "2a730abc-229b-45f7-a398-4d7a36d428d8",
+      "source": "library",
+      "libraryCollection": "items",
+      "librarySource": "custom",
+      "libraryRef": "elfnein-item-silver-gold-focus",
+      "overrides": {},
       "quantity": 1,
-      "weight": null,
-      "attuned": false,
-      "description": "Free silver/gold or elemental material lets Elfnein transmute without paying the full memory cost.",
-      "tags": [
-        "Alchemy",
-        "Focus",
-        "Material Source"
-      ],
-      "addons": {
-        "mechanics": [
-          {
-            "label": "Reduces Cost",
-            "kind": "positive",
-            "description": "Can reduce or avoid Spell Memory burn when an appropriate material source exists."
-          }
-        ],
-        "equipment": {
-          "slot": "focus",
-          "rarity": ""
-        }
-      }
+      "active": true
     }
   ],
   "currency": {
+    "pp": 0,
     "gp": 0,
-    "sp": 0,
-    "cp": 0,
     "ep": 0,
-    "pp": 0
+    "sp": 0,
+    "cp": 0
   },
   "customResources": [
     {
-      "id": "elfnein-resource-spell-memories",
-      "source": "inline",
-      "name": "Spell Memories",
-      "max": 70,
+      "id": "fd60e194-0669-4aab-9988-3c41ec37e645",
+      "source": "library",
+      "libraryCollection": "resources",
+      "librarySource": "custom",
+      "libraryRef": "elfnein-resource-spell-memories",
+      "overrides": {},
       "current": 50,
+      "max": 70,
       "log": [
         {
-          "id": "elfnein-memory-created",
+          "id": "d9a232ee-b720-4243-947f-d687d3296bb0",
           "date": "2024-09-02",
           "delta": 70,
           "reason": "Creation of character, starting with 70 memories."
         },
         {
-          "id": "elfnein-memory-map",
+          "id": "a307d28b-f3c5-44ef-b9f3-f32d1c5f9452",
           "date": "2024-09-02",
           "delta": -2,
           "reason": "Used map spell; 2 memory removed for using silver/gold elemental."
         },
         {
-          "id": "elfnein-memory-airburst",
+          "id": "f060729f-2dce-468c-9e6a-3bdf24bf3bc0",
           "date": "2024-09-02",
           "delta": -2,
           "reason": "Used airburst spell; demonstration out of combat, reduced cost."
         },
         {
-          "id": "elfnein-memory-fireball-1",
+          "id": "32f90061-a7b1-4df9-a099-13b85a6c8690",
           "date": "2024-09-02",
           "delta": -10,
           "reason": "Used Fireball; rolled 4 d8s total 18, -2 each dice, 10 memory lost."
         },
         {
-          "id": "elfnein-memory-fireball-2",
+          "id": "a254cf15-7d62-44ba-8f08-485b0dd5f792",
           "date": "2024-09-02",
           "delta": 0,
           "reason": "Used Fireball; rolled 1d8-2 total below 0, no memory lost or gained."
         },
         {
-          "id": "elfnein-memory-fireball-3",
+          "id": "274caf66-9e87-48f9-9d26-565973502ded",
           "date": "2024-09-02",
           "delta": -6,
           "reason": "Used Fireball; rolled 2d8-2s totaling 6 memory lost."
         }
-      ],
-      "addons": {
-        "mechanics": [
-          {
-            "label": "Memory Burn",
-            "kind": "negative",
-            "description": "When lacking material sources, roll the relevant memory-cost formula and subtract from this pool."
-          },
-          {
-            "label": "DM Fiat Restore",
-            "kind": "positive",
-            "description": "Memorable events can restore memories. Examples: new face +10, solid mutual friend +30."
-          }
-        ]
-      }
+      ]
     },
     {
-      "id": "elfnein-resource-bladesong",
-      "source": "inline",
-      "name": "Bladesong Uses",
-      "max": 4,
+      "id": "ec865362-ffeb-452f-84bc-2c97634fb0cf",
+      "source": "library",
+      "libraryCollection": "resources",
+      "librarySource": "custom",
+      "libraryRef": "elfnein-resource-bladesong",
+      "overrides": {},
       "current": 4,
-      "log": [],
-      "addons": {
-        "mechanics": [
-          {
-            "label": "Provisional",
-            "kind": "requirement",
-            "description": "Using proficiency bonus uses per long rest as a practical default."
-          }
-        ]
-      }
+      "max": 4,
+      "log": []
     },
     {
-      "id": "elfnein-resource-sorcery-points",
-      "source": "inline",
-      "name": "Sorcery Points",
-      "max": 2,
+      "id": "ffa3d562-66d6-4620-87a8-14aa07ff98d9",
+      "source": "library",
+      "libraryCollection": "resources",
+      "librarySource": "custom",
+      "libraryRef": "elfnein-resource-sorcery-points",
+      "overrides": {},
       "current": 2,
-      "log": [],
-      "addons": {
-        "mechanics": [
-          {
-            "label": "Future-ish",
-            "kind": "requirement",
-            "description": "The notes list Metamagic Adept at Wizard 8 with 2 points/day, plus future Sorcerer progression."
-          }
-        ]
-      }
+      "max": 2,
+      "log": []
     }
   ],
   "dnd": {
@@ -1410,8 +459,8 @@
       }
     ],
     "hp": {
-      "max": 58,
-      "current": 58,
+      "max": 62,
+      "current": 26,
       "temp": 0,
       "log": [
         {
@@ -1479,8 +528,33 @@
           "date": "2024-09-02",
           "delta": 16,
           "reason": "2x level up; +16 max too."
+        },
+        {
+          "id": "f3d08240-c5ef-4075-b63f-d4672fb0207f",
+          "date": "2026-06-06",
+          "delta": -62,
+          "reason": "Resetting to 0 real quick"
+        },
+        {
+          "id": "aa46cc91-c512-45f6-90e5-4bd0ffaa4e6e",
+          "date": "2026-06-06",
+          "delta": 26,
+          "reason": "Current HP"
+        },
+        {
+          "id": "f9306cc9-aed3-46f3-9154-67e15f3b0f5c",
+          "date": "2026-06-06",
+          "delta": 25,
+          "reason": "Adding a thing rq"
+        },
+        {
+          "id": "07a2234a-3f60-4bbe-8ee1-a954a27bfd20",
+          "date": "2026-06-06",
+          "delta": -25,
+          "reason": "Got vored then crotch shot."
         }
-      ]
+      ],
+      "mode": "calculated"
     },
     "acModes": [
       {
@@ -1526,48 +600,20 @@
     "initiative": 3,
     "feats": [
       {
-        "id": "elfnein-feat-dual-wielder",
-        "source": "inline",
-        "name": "Dual Wielder",
-        "description": "+1 AC while dual wielding and can dual wield non-light one-handed weapons. Included as Wizard 4 progression.",
-        "tags": [
-          "Combat",
-          "Bladesong"
-        ],
-        "addons": {
-          "mechanics": [
-            {
-              "label": "+1 AC",
-              "kind": "positive"
-            }
-          ]
-        }
+        "id": "d9974261-d45c-42e7-aa92-61f69e25bf9d",
+        "source": "library",
+        "libraryCollection": "feats",
+        "librarySource": "custom",
+        "libraryRef": "elfnein-feat-dual-wielder",
+        "overrides": {}
       },
       {
-        "id": "elfnein-feat-metamagic-adept",
-        "source": "inline",
-        "name": "Metamagic Adept",
-        "description": "2 Sorcery Points/day. Quickened Spell and Transmuted Spell listed at Wizard 8.",
-        "tags": [
-          "Metamagic",
-          "Sorcery Points"
-        ],
-        "addons": {
-          "mechanics": [
-            {
-              "label": "2/day",
-              "kind": "quantity"
-            },
-            {
-              "label": "Quickened",
-              "kind": "action"
-            },
-            {
-              "label": "Transmuted",
-              "kind": "neutral"
-            }
-          ]
-        }
+        "id": "01d03b99-9800-41d3-8aad-86da87e2f61e",
+        "source": "library",
+        "libraryCollection": "feats",
+        "librarySource": "custom",
+        "libraryRef": "elfnein-feat-metamagic-adept",
+        "overrides": {}
       }
     ],
     "addons": {
@@ -1709,6 +755,8 @@
         ]
       }
     }
-  }
+  },
+  "spellSlotMode": "calculated",
+  "spellSlotOverrides": {},
+  "spellSlotLog": []
 }
-
