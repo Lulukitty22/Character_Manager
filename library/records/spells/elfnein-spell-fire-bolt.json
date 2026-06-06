@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "id": "elfnein-spell-fire-bolt",
+  "name": "Fire Bolt",
+  "collections": [
+    "spells"
+  ],
+  "tags": [
+    "Elfnein",
+    "Wizard",
+    "Cantrip",
+    "Alchemy"
+  ],
+  "variantOf": null,
+  "sourceReferences": [],
+  "features": {},
+  "desc": "",
+  "level": 0,
+  "school": "Evocation",
+  "castingTime": "1 action",
+  "range": "120 ft",
+  "components": [
+    "V",
+    "S"
+  ],
+  "duration": "Instantaneous",
+  "description": "Wizard cantrip, flavored as directed thermal transmutation.",
+  "prepared": true,
+  "access": {
+    "label": "Current",
+    "kind": "positive",
+    "description": "Available in the current Wizard 9 / Sorcerer 1 state.",
+    "chips": [
+      {
+        "label": "Alchemy",
+        "kind": "neutral",
+        "description": "Flavor as alchemical conversion rather than traditional spellcasting."
+      }
+    ]
+  },
+  "source": "custom",
+  "collection": "spells",
+  "updatedAt": "2026-06-06T05:22:29.176Z",
+  "addons": {
+    "components": [
+      "V",
+      "S"
+    ],
+    "ritual": {
+      "enabled": false
+    },
+    "concentration": {
+      "enabled": false
+    }
+  }
+}
