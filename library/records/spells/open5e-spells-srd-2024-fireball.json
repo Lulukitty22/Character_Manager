@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "id": "spells.open5e-spells-srd-2024-fireball",
+  "name": "Fireball",
+  "collections": [
+    "spells"
+  ],
+  "tags": [
+    "Elfnein",
+    "Wizard",
+    "Fire",
+    "Memory Cost"
+  ],
+  "variantOf": null,
+  "sourceReferences": [],
+  "features": {},
+  "desc": "",
+  "level": 3,
+  "school": "Evocation",
+  "castingTime": "1 action",
+  "range": "150 ft",
+  "components": [
+    "V",
+    "S",
+    "M"
+  ],
+  "duration": "Instantaneous",
+  "description": "Listed at Wizard 5. Memory log includes multiple Fireball memory-burn examples.",
+  "prepared": true,
+  "access": {
+    "label": "Current",
+    "kind": "positive",
+    "description": "Available in the current Wizard 9 / Sorcerer 1 state.",
+    "chips": [
+      {
+        "label": "Memory Burn",
+        "kind": "negative",
+        "description": "If no suitable material source/focus is available, Fireball can burn Spell Memories."
+      }
+    ]
+  },
+  "source": "custom",
+  "collection": "spells",
+  "updatedAt": "2026-06-06T05:22:29.176Z",
+  "addons": {
+    "components": [
+      "V",
+      "S",
+      "M"
+    ],
+    "ritual": {
+      "enabled": false
+    },
+    "concentration": {
+      "enabled": false
+    }
+  }
+}
