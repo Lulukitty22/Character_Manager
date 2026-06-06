@@ -2,7 +2,7 @@
   "id": "carol-elfnein",
   "meta": {
     "repoPath": "library/characters/carol-elfnein.json",
-    "lastUpdated": "2026-06-06T07:20:41.699Z"
+    "lastUpdated": "2026-06-06T07:22:01.750Z"
   },
   "identity": {
     "name": "Carol Elfnein",
@@ -357,37 +357,37 @@
       "max": 70,
       "log": [
         {
-          "id": "329fd61e-c603-483d-a6da-60bf64535c21",
+          "id": "577d4bda-4df7-4f73-bf05-6b7581dd1fdc",
           "date": "2024-09-02",
           "delta": 70,
           "reason": "Creation of character, starting with 70 memories."
         },
         {
-          "id": "61f1ef0f-acca-4399-bf13-a2b74c31073e",
+          "id": "21b1efee-1981-4412-9a05-1a70eb96cc33",
           "date": "2024-09-02",
           "delta": -2,
           "reason": "Used map spell; 2 memory removed for using silver/gold elemental."
         },
         {
-          "id": "170d8641-7518-4d66-87cc-bc72caf2c9f3",
+          "id": "b7dc9102-71a8-4d04-94ad-7ec8118811a1",
           "date": "2024-09-02",
           "delta": -2,
           "reason": "Used airburst spell; demonstration out of combat, reduced cost."
         },
         {
-          "id": "b4dfa840-e0ff-49bd-82ef-7378f4741080",
+          "id": "4cbeddb9-35b9-4f7c-889e-4bc75c238f86",
           "date": "2024-09-02",
           "delta": -10,
           "reason": "Used Fireball; rolled 4 d8s total 18, -2 each dice, 10 memory lost."
         },
         {
-          "id": "8cd64de8-97c2-4290-8fdb-851c129836a5",
+          "id": "3247271f-e0e8-47c6-9d6e-777758c8ae23",
           "date": "2024-09-02",
           "delta": 0,
           "reason": "Used Fireball; rolled 1d8-2 total below 0, no memory lost or gained."
         },
         {
-          "id": "d18b7818-f11f-4a7b-8440-421337d0d288",
+          "id": "8b5b88fa-923a-4b4d-963d-c2f05cc2c8c2",
           "date": "2024-09-02",
           "delta": -6,
           "reason": "Used Fireball; rolled 2d8-2s totaling 6 memory lost."
@@ -791,5 +791,18 @@
   },
   "spellSlotMode": "calculated",
   "spellSlotOverrides": {},
-  "spellSlotLog": []
+  "spellSlotLog": [
+    {
+      "id": "291c6358-efe3-4c40-99a5-33d3c920149a",
+      "date": "2026-06-06",
+      "level": 1,
+      "reason": "Used level 1 slot"
+    },
+    {
+      "id": "a497d701-1cf8-466e-bbba-06c5bedd0058",
+      "date": "2026-06-06",
+      "level": 1,
+      "reason": "Restored level 1 slot"
+    }
+  ]
 }
