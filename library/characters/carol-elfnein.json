@@ -2,7 +2,7 @@
   "id": "carol-elfnein",
   "meta": {
     "repoPath": "library/characters/carol-elfnein.json",
-    "lastUpdated": "2026-06-06T06:05:17.825Z"
+    "lastUpdated": "2026-06-06T07:20:41.699Z"
   },
   "identity": {
     "name": "Carol Elfnein",
@@ -357,37 +357,37 @@
       "max": 70,
       "log": [
         {
-          "id": "a4b77296-9160-490d-a040-c5809892916f",
+          "id": "329fd61e-c603-483d-a6da-60bf64535c21",
           "date": "2024-09-02",
           "delta": 70,
           "reason": "Creation of character, starting with 70 memories."
         },
         {
-          "id": "f4963166-a479-440a-babf-f23930841442",
+          "id": "61f1ef0f-acca-4399-bf13-a2b74c31073e",
           "date": "2024-09-02",
           "delta": -2,
           "reason": "Used map spell; 2 memory removed for using silver/gold elemental."
         },
         {
-          "id": "a71a0699-ee04-4147-8002-8aa8bf671f71",
+          "id": "170d8641-7518-4d66-87cc-bc72caf2c9f3",
           "date": "2024-09-02",
           "delta": -2,
           "reason": "Used airburst spell; demonstration out of combat, reduced cost."
         },
         {
-          "id": "6ec4ee53-4a42-41a8-9803-0aa2d856d495",
+          "id": "b4dfa840-e0ff-49bd-82ef-7378f4741080",
           "date": "2024-09-02",
           "delta": -10,
           "reason": "Used Fireball; rolled 4 d8s total 18, -2 each dice, 10 memory lost."
         },
         {
-          "id": "8aa3752c-e0e3-43ca-9fbc-472b06e965ba",
+          "id": "8cd64de8-97c2-4290-8fdb-851c129836a5",
           "date": "2024-09-02",
           "delta": 0,
           "reason": "Used Fireball; rolled 1d8-2 total below 0, no memory lost or gained."
         },
         {
-          "id": "0c8b4928-fe60-4bdf-8947-17ab4a89bfe0",
+          "id": "d18b7818-f11f-4a7b-8440-421337d0d288",
           "date": "2024-09-02",
           "delta": -6,
           "reason": "Used Fireball; rolled 2d8-2s totaling 6 memory lost."
@@ -481,7 +481,7 @@
     ],
     "hp": {
       "max": 62,
-      "current": 40,
+      "current": 28,
       "temp": 0,
       "log": [
         {
@@ -579,6 +579,12 @@
           "date": "2026-06-06",
           "delta": 14,
           "reason": "Greater Healing Potion"
+        },
+        {
+          "id": "8312de33-6d1a-4995-a1f6-752058e44c0d",
+          "date": "2026-06-06",
+          "delta": -12,
+          "reason": "FRIENDLY FIRE FROM GIRUTO!"
         }
       ],
       "mode": "calculated"
