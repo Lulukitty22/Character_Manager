@@ -183,20 +183,17 @@
         "id": "spells.open5e-spells-srd-2024-fireball",
         "name": "Fireball",
         "collections": [
-          "spells",
-          "spells/evocation",
-          "spells/level-3"
+          "spells"
         ],
         "tags": [
-          "open5eapi",
-          "5e-2024-rules",
-          "srd",
-          "wizards-of-the-coast",
-          "5th-edition-2024"
+          "elfnein",
+          "wizard",
+          "fire",
+          "memory-cost"
         ],
-        "path": "library/records/spells/evocation/open5e-spells-srd-2024-fireball.json",
-        "sha": "",
-        "updatedAt": "2026-05-03T15:10:50.038Z"
+        "path": "library/records/spells/open5e-spells-srd-2024-fireball.json",
+        "sha": "399ef1d792cee79d21b3d70401a2798d288f7b5b",
+        "updatedAt": "2026-06-06T05:22:30.220Z"
       },
       {
         "id": "spells.4c177263-68ac-419d-84d5-d71d1c18bbbf",
