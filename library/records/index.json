@@ -95,6 +95,20 @@
       "path": "library/records/traits/aina-trait-archery-test.json"
     },
     {
+      "id": "spells.open5e-spells-srd-2024-fireball",
+      "name": "Fireball",
+      "collections": [
+        "spells"
+      ],
+      "tags": [
+        "Elfnein",
+        "Wizard",
+        "Fire",
+        "Memory Cost"
+      ],
+      "path": "library/records/spells/open5e-spells-srd-2024-fireball.json"
+    },
+    {
       "id": "parties.quickquiver-field-team",
       "name": "Quickquiver Field Team",
       "collections": [
