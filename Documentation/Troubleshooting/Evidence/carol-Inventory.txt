@@ -1,0 +1,50 @@
+Browser tab: 4, Title: "127.0.0.1:5500/audit/carol-elfnein.html", URL: "http://127.0.0.1:5500/audit/carol-elfnein.html".
+1 AXWebArea 127.0.0.1:5500/audit/carol-elfnein.html
+	2 container sheet-content
+		3 container
+			4 text PC PLAYER CHARACTER
+			5 heading Carol Elfnein, Value: 1
+				6 text Carol Elfnein
+			7 text REBORN / HOMUNCULUS (HUMAN) • WIZARD / BLADESINGING 10 • SORCERER / MAGE OF QUANDRIX / LV.1 • SAGE
+			8 container HP 28 / 62
+				9 text HP 28/62
+			10 container AC — Base / Mage Armor
+				11 text AC 16
+			12 container Initiative
+				13 text INIT +3
+			14 container Speed
+				15 text SPD 30
+			16 button IDENTITY
+			17 button D&D STATS
+			18 button D&D GAMEPLAY
+			19 button ABILITIES & FEATS
+			20 button SPELLS
+			21 button INVENTORY
+			22 button RESOURCES
+			23 button NOTES
+		24 container
+			25 heading INVENTORY, Value: 2
+				26 text INVENTORY
+			27 text CARRIED ITEMS 2
+			28 button (expanded) > (Missing items record) Item Active MISSING REF elfnein-item-dur-da-bla VIEW, Secondary Actions: Collapse
+				29 text >
+				30 container
+					31 text (Missing items record)  Item
+				32 text Active
+				33 container This character points at a library record that was not loaded or no longer exists.
+					34 text MISSING REF elfnein-item-dur-da-bla
+				35 button VIEW
+			36 text Could not resolve library reference "elfnein-item-dur-da-bla".
+			37 text missing-library-ref
+			38 button (expanded) > (Missing items record) Item Active MISSING REF elfnein-item-silver-gold-focus VIEW, Secondary Actions: Collapse
+				39 text >
+				40 container
+					41 text (Missing items record)  Item
+				42 text Active
+				43 container This character points at a library record that was not loaded or no longer exists.
+					44 text MISSING REF elfnein-item-silver-gold-focus
+				45 button VIEW
+			46 text Could not resolve library reference "elfnein-item-silver-gold-focus".
+			47 text missing-library-ref
+
+The focused UI element is 21 button INVENTORY

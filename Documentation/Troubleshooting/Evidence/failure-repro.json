@@ -1,0 +1,48 @@
+{
+  "firstError": "Simulated network interruption",
+  "convertedAfterFailure": {
+    "identity": {
+      "name": "Audit"
+    },
+    "spells": [
+      {
+        "id": "7239dc30-f06f-4a9e-aa94-361008457dd1",
+        "source": "library",
+        "libraryCollection": "spells",
+        "librarySource": "custom",
+        "libraryRef": "first-spell",
+        "overrides": {},
+        "prepared": false
+      },
+      {
+        "id": "20ba5a36-5099-4990-a5be-dc585c36ebb9",
+        "source": "library",
+        "libraryCollection": "spells",
+        "librarySource": "custom",
+        "libraryRef": "second-spell",
+        "overrides": {},
+        "prepared": false
+      }
+    ],
+    "inventory": [
+      {
+        "id": "865ff44d-2752-4ef5-94e4-1879a7c78227",
+        "source": "library",
+        "libraryCollection": "items",
+        "librarySource": "custom",
+        "libraryRef": "zero-item",
+        "overrides": {},
+        "quantity": 1,
+        "active": true
+      }
+    ],
+    "abilities": [],
+    "customResources": []
+  },
+  "firstWriteCount": 4,
+  "retryWrites": [],
+  "refsWithoutPersistedRecords": [
+    "second-spell",
+    "zero-item"
+  ]
+}

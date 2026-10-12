@@ -1,0 +1,5 @@
+2026-10-12: Character repair is the active scope; session/DM expansion is parked.
+2026-10-12: Previous plans archived under OLD/Session and DM Planning. Two issue logs and reports consolidated under Troubleshooting; raw evidence retained separately.
+2026-10-12: Local staging b4fe6fc was behind GitHub staging f7056ce. Existing HTML serving target is staging, regardless of local checkout.
+2026-10-12: Start with lossless editor/canonical saving. See Editor and Saving.md and Repair Priorities.md; no character mechanics repaired yet.
+2026-10-12: Legacy published at f7056ce; working branch codex/character-repairs. Both start from current GitHub staging; live shims still load staging.

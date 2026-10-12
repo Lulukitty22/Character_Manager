@@ -21,7 +21,7 @@ A GitHub-backed D&D character manager built around thin HTML shims and remotely 
 - `share/examples/`
   - Hard-coded UI prototypes and visual targets.
 
-`README.md` explains the stable shape of the repo. `STAGING_PLAN.md` tracks current migration status and must be updated whenever structure, paths, or workflow decisions change.
+Start with [Documentation/Start Here.md](Documentation/Start%20Here.md). `Documentation/Primary` contains short code pointers; `Documentation/Troubleshooting` contains audits and repair notes. Previous session/DM plans are archived under `Documentation/OLD` and do not define the current roadmap.
 
 ## Thin-Shim Model
 

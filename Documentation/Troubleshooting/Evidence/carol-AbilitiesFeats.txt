@@ -1,0 +1,79 @@
+Browser tab: 4, Title: "127.0.0.1:5500/audit/carol-elfnein.html", URL: "http://127.0.0.1:5500/audit/carol-elfnein.html".
+1 AXWebArea 127.0.0.1:5500/audit/carol-elfnein.html
+	2 container sheet-content
+		3 container
+			4 text PC PLAYER CHARACTER
+			5 heading Carol Elfnein, Value: 1
+				6 text Carol Elfnein
+			7 text REBORN / HOMUNCULUS (HUMAN) • WIZARD / BLADESINGING 10 • SORCERER / MAGE OF QUANDRIX / LV.1 • SAGE
+			8 container HP 28 / 62
+				9 text HP 28/62
+			10 container AC — Base / Mage Armor
+				11 text AC 16
+			12 container Initiative
+				13 text INIT +3
+			14 container Speed
+				15 text SPD 30
+			16 button IDENTITY
+			17 button D&D STATS
+			18 button D&D GAMEPLAY
+			19 button ABILITIES & FEATS
+			20 button SPELLS
+			21 button INVENTORY
+			22 button RESOURCES
+			23 button NOTES
+		24 container
+			25 heading FEATS & CLASSES, Value: 2
+				26 text FEATS & CLASSES
+			27 text MULTICLASS SORCERER / MAGE OF QUANDRIX Lv.1 FEATS (Missing feats record)
+			28 container This character points at a library record that was not loaded or no longer exists.
+				29 text MISSING REF elfnein-feat-dual-wielder
+			30 text Could not resolve library reference "elfnein-feat-dual-wielder".
+			31 text (Missing feats record)
+			32 container This character points at a library record that was not loaded or no longer exists.
+				33 text MISSING REF elfnein-feat-metamagic-adept
+			34 text Could not resolve library reference "elfnein-feat-metamagic-adept".
+			35 heading ABILITIES & TRAITS, Value: 2
+				36 text ABILITIES & TRAITS
+			37 button (collapsed) > (Missing traits record) Active MISSING REF elfnein-trait-alchemy VIEW, Secondary Actions: Expand
+				38 text >
+				39 text (Missing traits record)
+				40 container
+					41 text Active
+					42 container This character points at a library record that was not loaded or no longer exists.
+						43 text MISSING REF elfnein-trait-alchemy
+				44 button VIEW
+			45 button (collapsed) > (Missing traits record) Active MISSING REF elfnein-trait-bladesong VIEW, Secondary Actions: Expand
+				46 text >
+				47 text (Missing traits record)
+				48 container
+					49 text Active
+					50 container This character points at a library record that was not loaded or no longer exists.
+						51 text MISSING REF elfnein-trait-bladesong
+				52 button VIEW
+			53 button (collapsed) > (Missing traits record) Active MISSING REF elfnein-trait-song-charisma VIEW, Secondary Actions: Expand
+				54 text >
+				55 text (Missing traits record)
+				56 container
+					57 text Active
+					58 container This character points at a library record that was not loaded or no longer exists.
+						59 text MISSING REF elfnein-trait-song-charisma
+				60 button VIEW
+			61 button (collapsed) > (Missing traits record) Active MISSING REF elfnein-trait-deathless VIEW, Secondary Actions: Expand
+				62 text >
+				63 text (Missing traits record)
+				64 container
+					65 text Active
+					66 container This character points at a library record that was not loaded or no longer exists.
+						67 text MISSING REF elfnein-trait-deathless
+				68 button VIEW
+			69 button (collapsed) > (Missing traits record) Active MISSING REF elfnein-trait-faust-robe VIEW, Secondary Actions: Expand
+				70 text >
+				71 text (Missing traits record)
+				72 container
+					73 text Active
+					74 container This character points at a library record that was not loaded or no longer exists.
+						75 text MISSING REF elfnein-trait-faust-robe
+				76 button VIEW
+
+The focused UI element is 19 button ABILITIES & FEATS

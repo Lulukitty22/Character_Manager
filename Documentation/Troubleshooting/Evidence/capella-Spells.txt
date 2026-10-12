@@ -1,0 +1,477 @@
+Browser tab: 4, Title: "127.0.0.1:5500/audit/capella-emerada-lugnica.html", URL: "http://127.0.0.1:5500/audit/capella-emerada-lugnica.html".
+0 AXWebArea 127.0.0.1:5500/audit/capella-emerada-lugnica.html
+	1 container sheet-content
+		2 container
+			3 text BOSS BOSS / NPC
+			4 heading Capella Emerada Lugnica, Value: 1
+				5 text Capella Emerada Lugnica
+			6 text ABERRANT LICH / SHAPECHANGER • ABERRANT LICH / SHAPECHANGER / COLLEGE OF ELOQUENCE / ELDRITCH LICH TRAITS 20 • ELEGANT MANIPULATOR
+			7 container HP 66 / 66
+				8 text HP 66/66
+			9 container AC — Unnatural Armor
+				10 text AC 19
+			11 container Initiative
+				12 text INIT +1
+			13 container Speed
+				14 text SPD 30
+			15 button IDENTITY
+			16 button D&D STATS
+			17 button D&D GAMEPLAY
+			18 button ABILITIES & FEATS
+			19 button SPELLS
+			20 button COMBAT
+			21 button RESOURCES
+			22 button NOTES
+		23 container
+			24 heading SPELLS, Value: 2
+				25 text SPELLS
+			26 image
+			27 text LEVEL 1 1 spell
+			28 button (expanded) Secondary Actions: Collapse, > Disguise Self Level 1 | illusion Prepared CAST 1 action RANGE Self COMPONENTS V, S DURATION 1 hour Inspect LEVEL 1 SCHOOL illusion VIEW
+				29 text >
+				30 container
+					31 text Disguise Self  Level 1 | illusion
+				32 text Prepared
+				33 text CAST
+				34 text 1 action
+				35 text RANGE
+				36 text Self
+				37 container Spell components required to cast this spell.
+					38 text COMPONENTS V, S
+				39 text DURATION
+				40 text 1 hour
+				41 text Inspect
+				42 text LEVEL
+				43 text 1
+				44 text SCHOOL
+				45 text illusion
+				46 button VIEW
+			47 text Quick social cover for a harmless, noble, wounded, or ordinary persona. This supports roleplay disguise; Mimic Anatomy still handles physical impersonation.
+			48 text capella social disguise dandd-5e-wiki player-s-handbook dnd5eapi LEVEL 2 4 spells
+			49 button (expanded) Secondary Actions: Collapse, > Detect Thoughts Level 2 | divination Prepared CAST 1 action RANGE Self COMPONENTS V, S, M DURATION Concentration, up to 1 minute PROBE Deeper LOW INT 3 or lower Thoughts LEVEL 2 SCHOOL divination VIEW
+				50 text >
+				51 container
+					52 text Detect Thoughts  Level 2 | divination
+				53 text Prepared
+				54 text CAST
+				55 text 1 action
+				56 text RANGE
+				57 text Self
+				58 container Spell components required to cast this spell.
+					59 text COMPONENTS V, S, M
+				60 text DURATION
+				61 text Concentration, up to 1 minute
+				62 container Probing deeper forces a Wisdom saving throw.
+					63 text PROBE Deeper
+				64 container Creatures with Intelligence 3 or lower are unaffected.
+					65 text LOW INT 3 or lower
+				66 text Thoughts
+				67 text LEVEL
+				68 text 2
+				69 text SCHOOL
+				70 text divination
+				71 button VIEW
+			72 text Used to tailor lies, impersonation, and social manipulation.
+			73 text social dandd-5e-wiki player-s-handbook dnd5eapi
+			74 button (expanded) Secondary Actions: Collapse, > Suggestion Level 2 | enchantment Prepared CAST 1 action RANGE 30 ft COMPONENTS V, M DURATION Concentration, up to 8 hours SAVE Wisdom Charm Harm Ends LEVEL 2 SCHOOL enchantment VIEW
+				75 text >
+				76 container
+					77 text Suggestion  Level 2 | enchantment
+				78 text Prepared
+				79 text CAST
+				80 text 1 action
+				81 text RANGE
+				82 text 30 ft
+				83 container Spell components required to cast this spell.
+					84 text COMPONENTS V, M
+				85 text DURATION
+				86 text Concentration, up to 8 hours
+				87 container Targets make a Wisdom saving throw.
+					88 text SAVE Wisdom
+				89 text Charm
+				90 text Harm Ends
+				91 text LEVEL
+				92 text 2
+				93 text SCHOOL
+				94 text enchantment
+				95 button VIEW
+			96 text Social pressure option for manipulation scenes.
+			97 text social dandd-5e-wiki player-s-handbook dnd5eapi
+			98 button (expanded) Secondary Actions: Collapse, > Alter Self Level 2 | transmutation Prepared CAST 1 action RANGE Self COMPONENTS V, S DURATION Concentration, up to 1 hour MODES 3 options LEVEL 2 SCHOOL transmutation VIEW
+				99 text >
+				100 container
+					101 text Alter Self  Level 2 | transmutation
+				102 text Prepared
+				103 text CAST
+				104 text 1 action
+				105 text RANGE
+				106 text Self
+				107 container Spell components required to cast this spell.
+					108 text COMPONENTS V, S
+				109 text DURATION
+				110 text Concentration, up to 1 hour
+				111 container Aquatic adaptation, change appearance, or natural weapons.
+					112 text MODES 3 options
+				113 text LEVEL
+				114 text 2
+				115 text SCHOOL
+				116 text transmutation
+				117 button VIEW
+			118 text A cleaner low-intensity transformation option when full Flesh Polymorph would be too loud. Good for gills, claws, texture changes, and unsettling physical tells.
+			119 text capella shapechange utility dandd-5e-wiki player-s-handbook dnd5eapi
+			120 button (expanded) Secondary Actions: Collapse, > Mirror Image Level 2 | illusion Prepared CAST 1 action RANGE Self COMPONENTS V, S DURATION 1 minute DUPLICATES 3 Sight LEVEL 2 SCHOOL illusion VIEW
+				121 text >
+				122 container
+					123 text Mirror Image  Level 2 | illusion
+				124 text Prepared
+				125 text CAST
+				126 text 1 action
+				127 text RANGE
+				128 text Self
+				129 container Spell components required to cast this spell.
+					130 text COMPONENTS V, S
+				131 text DURATION
+				132 text 1 minute
+				133 container Three illusory duplicates protect you from attacks.
+					134 text DUPLICATES 3
+				135 text Sight
+				136 text LEVEL
+				137 text 2
+				138 text SCHOOL
+				139 text illusion
+				140 button VIEW
+			141 text Defensive misdirection for the elegant monster routine: attackers strike false angles while her real body keeps reshaping.
+			142 text capella defense illusion dandd-5e-wiki player-s-handbook dnd5eapi LEVEL 3 2 spells
+			143 button (expanded) Secondary Actions: Collapse, > Fear Level 3 | illusion Prepared CAST 1 action RANGE Self (30-foot cone) COMPONENTS V, S, M DURATION Concentration, up to 1 minute Frightened Drop Item LEVEL 3 SCHOOL illusion VIEW
+				144 text >
+				145 container
+					146 text Fear  Level 3 | illusion
+				147 text Prepared
+				148 text CAST
+				149 text 1 action
+				150 text RANGE
+				151 text Self (30-foot cone)
+				152 container Spell components required to cast this spell.
+					153 text COMPONENTS V, S, M
+				154 text DURATION
+				155 text Concentration, up to 1 minute
+				156 text Frightened
+				157 text Drop Item
+				158 text LEVEL
+				159 text 3
+				160 text SCHOOL
+				161 text illusion
+				162 button VIEW
+			163 text Turns body horror and social dread into battlefield control. Use when the encounter wants panic, scattering, and loss of nerve instead of raw damage.
+			164 text capella control psychic dandd-5e-wiki player-s-handbook dnd5eapi
+			165 button (expanded) Secondary Actions: Collapse, > Counterspell Level 3 | abjuration Prepared CAST 1 reaction, which you take when you see a creature within 60 feet of you casting a spell RANGE 60 ft COMPONENTS S DURATION Instantaneous Interrupt UPCAST 4th+ LEVEL 3 SCHOOL abjuration VIEW
+				166 text >
+				167 container
+					168 text Counterspell  Level 3 | abjuration
+				169 text Prepared
+				170 text CAST
+				171 text 1 reaction, which you take when you see a creature within 60 feet of you casting a spell
+				172 text RANGE
+				173 text 60 ft
+				174 container Spell components required to cast this spell.
+					175 text COMPONENTS S
+				176 text DURATION
+				177 text Instantaneous
+				178 text Interrupt
+				179 container Higher-level slots can shut down equal-or-lower spells.
+					180 text UPCAST 4th+
+				181 text LEVEL
+				182 text 3
+				183 text SCHOOL
+				184 text abjuration
+				185 button VIEW
+			186 text Lets Capella interrupt magic that would pin, reveal, banish, or burst her down before the body horror engine gets rolling.
+			187 text capella reaction defense dandd-5e-wiki player-s-handbook dnd5eapi LEVEL 4 2 spells
+			188 button (expanded) Secondary Actions: Collapse, > Flesh Polymorph Level 4 | transmutation Prepared CAST Bonus Action or Reaction RANGE Self DURATION Instant / sustained traits LEVEL 4 SCHOOL transmutation VIEW
+				189 text >
+				190 container
+					191 text Flesh Polymorph  Level 4 | transmutation
+				192 text Prepared
+				193 text CAST
+				194 text Bonus Action or Reaction
+				195 text RANGE
+				196 text Self
+				197 text DURATION
+				198 text Instant / sustained traits
+				199 text LEVEL
+				200 text 4
+				201 text SCHOOL
+				202 text transmutation
+				203 button VIEW
+			204 text Modified self-only Polymorph. Does not replace HP, AC, mental stats, or the sheet. Adds physical traits only. Usually keep up to 3 major traits active at once.
+			205 text signature homebrew
+			206 button (expanded) Secondary Actions: Collapse, > Dimension Door Level 4 | conjuration Prepared CAST 1 action RANGE 500 ft COMPONENTS V DURATION Instantaneous CARRY 1 willing creature Collision LEVEL 4 SCHOOL conjuration VIEW
+				207 text >
+				208 container
+					209 text Dimension Door  Level 4 | conjuration
+				210 text Prepared
+				211 text CAST
+				212 text 1 action
+				213 text RANGE
+				214 text 500 ft
+				215 container Spell components required to cast this spell.
+					216 text COMPONENTS V
+				217 text DURATION
+				218 text Instantaneous
+				219 container You can bring one willing creature of your size or smaller.
+					220 text CARRY 1 willing creature
+				221 text Collision
+				222 text LEVEL
+				223 text 4
+				224 text SCHOOL
+				225 text conjuration
+				226 button VIEW
+			227 text Panic-button repositioning, dramatic exits, abduction staging, or returning from an impossible angle.
+			228 text capella mobility escape dandd-5e-wiki player-s-handbook dnd5eapi LEVEL 5 6 spells
+			229 button (expanded) Secondary Actions: Collapse, > Voice of Distortion Level 5 | enchantment Prepared CAST Action or Legendary Action RANGE 60 ft COMPONENTS V DURATION 1 round LEVEL 5 SCHOOL enchantment VIEW
+				230 text >
+				231 container
+					232 text Voice of Distortion  Level 5 | enchantment
+				233 text Prepared
+				234 text CAST
+				235 text Action or Legendary Action
+				236 text RANGE
+				237 text 60 ft
+				238 container Spell components required to cast this spell.
+					239 text COMPONENTS V
+				240 text DURATION
+				241 text 1 round
+				242 text LEVEL
+				243 text 5
+				244 text SCHOOL
+				245 text enchantment
+				246 button VIEW
+			247 text One creature that can hear Capella makes a DC 25 WIS save. On failure choose one: lose reaction, disadvantage on next attack, cannot willingly move closer, or subtract 1d6 from next saving throw or ability check.
+			248 text control
+			249 button (expanded) Secondary Actions: Collapse, > Hold Monster Level 5 | enchantment Prepared CAST 1 action RANGE 90 ft COMPONENTS V, S, M DURATION Concentration, up to 1 minute Paralyzed Repeat Save LEVEL 5 SCHOOL enchantment VIEW
+				250 text >
+				251 container
+					252 text Hold Monster  Level 5 | enchantment
+				253 text Prepared
+				254 text CAST
+				255 text 1 action
+				256 text RANGE
+				257 text 90 ft
+				258 container Spell components required to cast this spell.
+					259 text COMPONENTS V, S, M
+				260 text DURATION
+				261 text Concentration, up to 1 minute
+				262 text Paralyzed
+				263 text Repeat Save
+				264 text LEVEL
+				265 text 5
+				266 text SCHOOL
+				267 text enchantment
+				268 button VIEW
+			269 text Single-target lockdown that fits her nonlethal disable/maim/control style. Particularly scary before a tendril, bite, or false mercy follow-up.
+			270 text capella control disable dandd-5e-wiki player-s-handbook dnd5eapi
+			271 button (expanded) Secondary Actions: Collapse, > Modify Memory Level 5 | enchantment Prepared CAST 1 action RANGE 30 ft COMPONENTS V, S DURATION Concentration, up to 1 minute MEMORY WINDOW 24h / 10m RESTORE Remove Curse / Greater Restoration / Wish LEVEL 5 SCHOOL enchantment VIEW
+				272 text >
+				273 container
+					274 text Modify Memory  Level 5 | enchantment
+				275 text Prepared
+				276 text CAST
+				277 text 1 action
+				278 text RANGE
+				279 text 30 ft
+				280 container Spell components required to cast this spell.
+					281 text COMPONENTS V, S
+				282 text DURATION
+				283 text Concentration, up to 1 minute
+				284 container Only recent memories from the last 24 hours can be altered.
+					285 text MEMORY WINDOW 24h / 10m
+				286 container Those spells can restore the target's true memory.
+					287 text RESTORE Remove Curse / Greater Restoration / Wish
+				288 text LEVEL
+				289 text 5
+				290 text SCHOOL
+				291 text enchantment
+				292 button VIEW
+			293 text After-scene cleanup, interrogation horror, or social manipulation. Use with care around player agency.
+			294 text capella social memory dandd-5e-wiki player-s-handbook dnd5eapi
+			295 button (collapsed) Secondary Actions: Expand, > Mislead Level 5 | illusion Known CAST 1 action RANGE Self COMPONENTS S DURATION Concentration, up to 1 hour Invisible Senses LEVEL 5 SCHOOL illusion VIEW
+				296 text >
+				297 container
+					298 text Mislead  Level 5 | illusion
+				299 text Known
+				300 text CAST
+				301 text 1 action
+				302 text RANGE
+				303 text Self
+				304 container Spell components required to cast this spell.
+					305 text COMPONENTS S
+				306 text DURATION
+				307 text Concentration, up to 1 hour
+				308 text Invisible
+				309 text Senses
+				310 text LEVEL
+				311 text 5
+				312 text SCHOOL
+				313 text illusion
+				314 button VIEW
+			315 button (collapsed) Secondary Actions: Expand, > Seeming Level 5 | illusion Known CAST 1 action RANGE 30 ft COMPONENTS V, S DURATION 8 hours Inspection GROUP Any number LEVEL 5 SCHOOL illusion VIEW
+				316 text >
+				317 container
+					318 text Seeming  Level 5 | illusion
+				319 text Known
+				320 text CAST
+				321 text 1 action
+				322 text RANGE
+				323 text 30 ft
+				324 container Spell components required to cast this spell.
+					325 text COMPONENTS V, S
+				326 text DURATION
+				327 text 8 hours
+				328 text Inspection
+				329 container You can disguise any number of creatures in range.
+					330 text GROUP Any number
+				331 text LEVEL
+				332 text 5
+				333 text SCHOOL
+				334 text illusion
+				335 button VIEW
+			336 button (collapsed) Secondary Actions: Expand, > Geas Level 5 | enchantment Known CAST 1 minute RANGE 60 ft COMPONENTS V DURATION 30 days Charmed PSYCHIC 5d10 LONG REST 30 days / 1 year / until ended LEVEL 5 SCHOOL enchantment VIEW
+				337 text >
+				338 container
+					339 text Geas  Level 5 | enchantment
+				340 text Known
+				341 text CAST
+				342 text 1 minute
+				343 text RANGE
+				344 text 60 ft
+				345 container Spell components required to cast this spell.
+					346 text COMPONENTS V
+				347 text DURATION
+				348 text 30 days
+				349 text Charmed
+				350 container Defying the command deals psychic damage once per day.
+					351 text PSYCHIC 5d10
+				352 container Higher slot levels extend the duration dramatically.
+					353 text LONG REST 30 days / 1 year / until ended
+				354 text LEVEL
+				355 text 5
+				356 text SCHOOL
+				357 text enchantment
+				358 button VIEW
+			359 text LEVEL 6 1 spell
+			360 button (expanded) Secondary Actions: Collapse, > Mass Suggestion Level 6 | enchantment Prepared CAST 1 action RANGE 60 ft COMPONENTS V, M DURATION 24 hours TARGETS Up to 12 Harm Ends UPCAST 10d / 30d / 1y LEVEL 6 SCHOOL enchantment VIEW
+				361 text >
+				362 container
+					363 text Mass Suggestion  Level 6 | enchantment
+				364 text Prepared
+				365 text CAST
+				366 text 1 action
+				367 text RANGE
+				368 text 60 ft
+				369 container Spell components required to cast this spell.
+					370 text COMPONENTS V, M
+				371 text DURATION
+				372 text 24 hours
+				373 container You can affect up to twelve creatures of your choice.
+					374 text TARGETS Up to 12
+				375 text Harm Ends
+				376 container Higher slots extend duration to 10 days, 30 days, or 1 year and a day.
+					377 text UPCAST 10d / 30d / 1y
+				378 text LEVEL
+				379 text 6
+				380 text SCHOOL
+				381 text enchantment
+				382 button VIEW
+			383 text A high-tier version of her social pressure: broad, elegant, and terrifying when used on bystanders, guards, or enemy mobs.
+			384 text capella social control dandd-5e-wiki player-s-handbook dnd5eapi LEVEL 7 1 spell
+			385 button (collapsed) Secondary Actions: Expand, > Plane Shift Level 7 | conjuration Known CAST 1 action RANGE Touch COMPONENTS V, S, M DURATION Instantaneous WILLING Up to 8 Banish LEVEL 7 SCHOOL conjuration VIEW
+				386 text >
+				387 container
+					388 text Plane Shift  Level 7 | conjuration
+				389 text Known
+				390 text CAST
+				391 text 1 action
+				392 text RANGE
+				393 text Touch
+				394 container Spell components required to cast this spell.
+					395 text COMPONENTS V, S, M
+				396 text DURATION
+				397 text Instantaneous
+				398 container You can transport up to eight willing creatures linked in a circle.
+					399 text WILLING Up to 8
+				400 text Banish
+				401 text LEVEL
+				402 text 7
+				403 text SCHOOL
+				404 text conjuration
+				405 button VIEW
+			406 text LEVEL 8 2 spells
+			407 button (expanded) Secondary Actions: Collapse, > Dominate Monster Level 8 | enchantment Boss Only Tier 8 CAST 1 action RANGE 60 ft COMPONENTS V, S DURATION Concentration, up to 1 hour TELEPATHIC Link CONTROL Action Damage Save LEVEL 8 SCHOOL enchantment VIEW
+				408 text >
+				409 container
+					410 text Dominate Monster  Level 8 | enchantment
+				411 text Boss Only
+				412 text Tier 8
+				413 text CAST
+				414 text 1 action
+				415 text RANGE
+				416 text 60 ft
+				417 container Spell components required to cast this spell.
+					418 text COMPONENTS V, S
+				419 text DURATION
+				420 text Concentration, up to 1 hour
+				421 container You can issue commands while you are conscious.
+					422 text TELEPATHIC Link
+				423 container You can spend your action to take precise control until the end of your next turn.
+					424 text CONTROL Action
+				425 text Damage Save
+				426 text LEVEL
+				427 text 8
+				428 text SCHOOL
+				429 text enchantment
+				430 button VIEW
+			431 text Used as an aberrant lich-style high-tier psychic power. DM may reflavor as invasive flesh/voice control.
+			432 text psychic boss dandd-5e-wiki player-s-handbook dnd5eapi
+			433 button (expanded) Secondary Actions: Collapse, > Power Word Stun Level 8 | enchantment Prepared CAST 1 action RANGE 60 ft COMPONENTS V DURATION Instantaneous THRESHOLD 150 HP Con Save LEVEL 8 SCHOOL enchantment VIEW
+				434 text >
+				435 container
+					436 text Power Word Stun  Level 8 | enchantment
+				437 text Prepared
+				438 text CAST
+				439 text 1 action
+				440 text RANGE
+				441 text 60 ft
+				442 container Spell components required to cast this spell.
+					443 text COMPONENTS V
+				444 text DURATION
+				445 text Instantaneous
+				446 container Only creatures with 150 hit points or fewer are affected.
+					447 text THRESHOLD 150 HP
+				448 text Con Save
+				449 text LEVEL
+				450 text 8
+				451 text SCHOOL
+				452 text enchantment
+				453 button VIEW
+			454 text Clean nonlethal boss disable. It fits her preference for humiliation, capture, and control over immediate execution.
+			455 text capella control nonlethal dandd-5e-wiki player-s-handbook dnd5eapi LEVEL 10 1 spell
+			456 button (collapsed) Secondary Actions: Expand, > Power Word Cum Level 10 | enchantment Known CAST 1 action RANGE 69 COMPONENTS V DURATION Instantaneous LEVEL 10 SCHOOL enchantment VIEW
+				457 text >
+				458 container
+					459 text Power Word Cum  Level 10 | enchantment
+				460 text Known
+				461 text CAST
+				462 text 1 action
+				463 text RANGE
+				464 text 69
+				465 container Spell components required to cast this spell.
+					466 text COMPONENTS V
+				467 text DURATION
+				468 text Instantaneous
+				469 text LEVEL
+				470 text 10
+				471 text SCHOOL
+				472 text enchantment
+				473 button VIEW
+
+The focused UI element is 19 button SPELLS

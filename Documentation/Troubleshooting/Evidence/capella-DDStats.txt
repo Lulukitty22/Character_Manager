@@ -1,0 +1,204 @@
+Browser tab: 4, Title: "127.0.0.1:5500/audit/capella-emerada-lugnica.html", URL: "http://127.0.0.1:5500/audit/capella-emerada-lugnica.html".
+0 AXWebArea 127.0.0.1:5500/audit/capella-emerada-lugnica.html
+	1 container sheet-content
+		2 container
+			3 text BOSS BOSS / NPC
+			4 heading Capella Emerada Lugnica, Value: 1
+				5 text Capella Emerada Lugnica
+			6 text ABERRANT LICH / SHAPECHANGER • ABERRANT LICH / SHAPECHANGER / COLLEGE OF ELOQUENCE / ELDRITCH LICH TRAITS 20 • ELEGANT MANIPULATOR
+			7 container HP 66 / 66
+				8 text HP 66/66
+			9 container AC — Unnatural Armor
+				10 text AC 19
+			11 container Initiative
+				12 text INIT +1
+			13 container Speed
+				14 text SPD 30
+			15 button IDENTITY
+			16 button D&D STATS
+			17 button D&D GAMEPLAY
+			18 button ABILITIES & FEATS
+			19 button SPELLS
+			20 button COMBAT
+			21 button RESOURCES
+			22 button NOTES
+		23 container
+			24 heading COMBAT, Value: 2
+				25 text COMBAT
+			26 text 210 / 210 HP Boss HP 210 Tamed HP 104
+			27 container Class hit dice plus Constitution and race HP bonuses.
+				28 button (collapsed) CALCULATED HP 104, Secondary Actions: Expand
+					29 text CALCULATED HP
+					30 text 104
+			31 container 20 levels using d10; CON -1 each level.
+				32 button (collapsed) ABERRANT LICH / SHAPECHANGER 104, Secondary Actions: Expand
+					33 text ABERRANT LICH / SHAPECHANGER
+					34 text 104
+			35 text TAMED / DEFAULT
+			36 text 104 HP / AC 11
+			37 text Initiative -3; Spell DC 15
+			38 text BOSS PRESENCE
+			39 text 210 HP / AC 19
+			40 text Initiative +0; Spell DC 20
+			41 text STR +6, DEX +5, CON +8, INT +1, WIS +9, CHA +10
+			42 text Boss HP: 210
+			43 text Boss body hit dice
+			44 text 20d10 avg = 110
+			45 text CON bonus
+			46 text +100 (CON +5 x 20)
+			47 text Use only while Capella is an enemy boss / DMPC boss.
+			48 text Tamed HP: 66
+			49 text Default body hit dice
+			50 text 12d8 avg = 54
+			51 text CON bonus
+			52 text +12 (CON +1 x 12)
+			53 text Use after Boss Presence is removed.
+			54 text ROLL CALCULATOR
+			55 text Spell Save DC
+			56 container Standard spell save DC base.
+				57 button (collapsed) BASE 8, Secondary Actions: Expand
+					58 text BASE
+					59 text 8
+			60 container Charisma modifier from score 10.
+				61 button (collapsed) CHARISMA +0, Secondary Actions: Expand
+					62 text CHARISMA
+					63 text +0
+			64 container Proficiency bonus.
+				65 button (collapsed) PROFICIENCY +5, Secondary Actions: Expand
+					66 text PROFICIENCY
+					67 text +5
+			68 container Arcane Mastery bonus from the spellcasting package.
+				69 button (collapsed) ARCANE MASTERY +2, Secondary Actions: Expand
+					70 text ARCANE MASTERY
+					71 text +2
+			72 text 15
+			73 text Spell/Flesh Attack
+			74 container Charisma modifier from score 10.
+				75 button (collapsed) CHARISMA +0, Secondary Actions: Expand
+					76 text CHARISMA
+					77 text +0
+			78 container Proficiency bonus.
+				79 button (collapsed) PROFICIENCY +5, Secondary Actions: Expand
+					80 text PROFICIENCY
+					81 text +5
+			82 container Arcane Mastery bonus from the spellcasting package.
+				83 button (collapsed) ARCANE MASTERY +2, Secondary Actions: Expand
+					84 text ARCANE MASTERY
+					85 text +2
+			86 text +7
+			87 text Prepared Deception / Impersonation / Persuasion
+			88 container Capella's Charisma modifier.
+				89 button (collapsed) CHARISMA +5, Secondary Actions: Expand
+					90 text CHARISMA
+					91 text +5
+			92 container Prepared deception package bonus.
+				93 button (collapsed) EXPERT DECEIVER TRAIT +10, Secondary Actions: Expand
+					94 text EXPERT DECEIVER TRAIT
+					95 text +10
+			96 text Cannot apply to members of the player party. Must spend a day or long rest studying the target first. Uses CHA +5 and Expert Deceiver +10; Silver Tongue floors the d20 at 10.
+			97 container Any lower d20 result is treated as this value.
+				98 button (collapsed) FLOOR 10, Secondary Actions: Expand
+					99 text FLOOR
+					100 text 10
+			101 container Capella must spend a day or long rest studying a target before using the prepared deception package. Related: Prepared Deception / Impersonation / Persuasion +15; Silver Tongue floor 10
+				102 button (collapsed) STUDY TARGET Day / Long Rest, Secondary Actions: Expand
+					103 text STUDY TARGET
+					104 text Day / Long Rest
+			105 container Prepared Deception cannot apply to members of the player party.
+				106 button (collapsed) NOT VS PARTY, Secondary Actions: Expand
+					107 text NOT VS PARTY
+			108 text +15
+			109 text Improv Deception / Impersonation / Persuasion
+			110 container Tamed social checks use Capella's Charisma modifier.
+				111 button (collapsed) CHARISMA +5, Secondary Actions: Expand
+					112 text CHARISMA
+					113 text +5
+			114 text Player-facing social checks use Charisma only. No Expert Deceiver and no Silver Tongue versus player Insight checks.
+			115 text +5
+			116 text Insight / Perception / Stealth
+			117 container Wisdom -1 plus proficiency +5.
+				118 button (collapsed) INSIGHT +4, Secondary Actions: Expand
+					119 text INSIGHT
+					120 text +4
+			121 container Wisdom -1 plus proficiency +5.
+				122 button (collapsed) PERCEPTION +4, Secondary Actions: Expand
+					123 text PERCEPTION
+					124 text +4
+			125 container Dexterity +1 plus proficiency +5.
+				126 button (collapsed) STEALTH +6, Secondary Actions: Expand
+					127 text STEALTH
+					128 text +6
+			129 text Use the relevant base ability in tamed mode; Boss Presence pushes the combat-useful read/stealth checks to +9.
+			130 text +4 to +6
+			131 heading ARMOR CLASS MODES, Value: 2
+				132 text ARMOR CLASS MODES
+			133 button DEFAULT BODY 11 10 + default DEX +1
+				134 text DEFAULT BODY
+				135 text 11
+				136 text 10 + default DEX +1
+			137 heading COMBAT STATS, Value: 2
+				138 text COMBAT STATS
+			139 text ARMOR CLASS
+			140 text 11
+			141 text INITIATIVE
+			142 text -3
+			143 text PROF. BONUS
+			144 text +5
+			145 text SPELL SAVE DC
+			146 text 15
+			147 text SPELL/FLESH ATTACK
+			148 text +7
+			149 text WALK 30ft FLY 40ft SWIM 30ft CLIMB 30ft
+			150 heading ABILITY SCORES, Value: 2
+				151 text ABILITY SCORES
+			152 container Strength
+				153 text STR
+				154 text -2
+				155 text 6
+				156 text Base 6 (-2) Boss +6 = 12 (+1)
+			157 container Dexterity
+				158 text DEX
+				159 text -3
+				160 text 5
+				161 text Base 5 (-3) Boss +5 = 10 (+0)
+			162 container Constitution
+				163 text CON
+				164 text -1
+				165 text 8
+				166 text Base 8 (-1) Boss +8 = 16 (+3)
+			167 container Intelligence
+				168 text INT
+				169 text -5
+				170 text 1
+				171 text Base 1 (-5) Boss +1 = 2 (-4)
+			172 container Wisdom
+				173 text WIS
+				174 text -1
+				175 text 9
+				176 text Base 9 (-1) Boss +9 = 18 (+4)
+			177 container Charisma
+				178 text CHA
+				179 text +0
+				180 text 10
+				181 text Base 10 (+0) Boss +10 = 20 (+5)
+				182 text SPELLCASTING
+			183 text Spellcasting ability: Charisma
+			184 heading SAVING THROWS, Value: 2
+				185 text SAVING THROWS
+			186 container
+				187 text +3 STRENGTH
+			188 container
+				189 text +2 DEXTERITY
+			190 container
+				191 text +4 CONSTITUTION
+			192 container
+				193 text +0 INTELLIGENCE
+			194 container
+				195 text +4 WISDOM
+			196 container
+				197 text +5 CHARISMA
+			198 heading SKILLS, Value: 2
+				199 text SKILLS
+			200 text -3 Acrobatics DEX -1 Animal Handling WIS -5 Arcana INT -2 Athletics STR +5 Deception CHA Player-facing improv only; prepared package is separate. -5 History INT +4 Insight WIS +0 Intimidation CHA -5 Investigation INT -1 Medicine WIS -5 Nature INT +4 Perception WIS +0 Performance CHA +5 Persuasion CHA Player-facing improv only; prepared package is separate. -5 Religion INT -3 Sleight of Hand DEX +2 Stealth DEX -1 Survival WIS
+
+The focused UI element is 16 button D&D STATS

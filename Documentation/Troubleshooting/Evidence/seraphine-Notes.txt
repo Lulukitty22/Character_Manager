@@ -1,0 +1,32 @@
+Browser tab: 4, Title: "127.0.0.1:5500/audit/seraphine.html", URL: "http://127.0.0.1:5500/audit/seraphine.html".
+1 AXWebArea 127.0.0.1:5500/audit/seraphine.html
+	2 container sheet-content
+		3 container
+			4 text PC PLAYER CHARACTER
+			5 heading Seraphine, Value: 1
+				6 text Seraphine
+			7 text HUMAN (DRAGONMARK OF SENTINEL) • CLERIC 9 • ACOLYTE / UNKNOWN
+			8 container HP 57 / 57
+				9 text HP 57/57
+			10 container AC — Assumed AC
+				11 text AC 16
+			12 container Initiative
+				13 text INIT +2
+			14 container Speed
+				15 text SPD 30
+			16 button IDENTITY
+			17 button D&D STATS
+			18 button D&D GAMEPLAY
+			19 button ABILITIES & FEATS
+			20 button SPELLS
+			21 button INVENTORY
+			22 button RESOURCES
+			23 button NOTES
+		24 container
+			25 heading NOTES, Value: 2
+				26 text NOTES
+			27 text PERSONALITY "I don't deserve protection." The joy and sparkle in her eyes are almost gone. She is constantly scared, jumpy, quiet, and soft-spoken. She compulsively overhelps and overexerts herself until it hurts her. Taller people approaching make her flinch every time; smaller people make her step in front of them, sometimes even as if defending them from her own allies. BACKSTORY Seraphine refuses to give her real name, or may have forgotten it. She appeared one day with very little explanation. She is fanatical about religion and the old ways, even in a land hostile to religion, healing, and the supernatural. She has taken a self-imposed vow against…
+			28 button Read more
+			29 text DM NOTES Fiction-first sheet: Seraphine can carry a broader cleric/story spell list than strict D&D preparation would normally allow. Use Prepared/Available/Mark Spell/Story Permission chips to decide what is ready, what is known, and what needs DM/story permission. Fading Grace is intentionally marked as undefined until its exact quirk rules are written.
+
+The focused UI element is 23 button NOTES

@@ -1,0 +1,80 @@
+Browser tab: 4, Title: "127.0.0.1:5500/audit/seraphine.html", URL: "http://127.0.0.1:5500/audit/seraphine.html".
+1 AXWebArea 127.0.0.1:5500/audit/seraphine.html
+	2 container sheet-content
+		3 container
+			4 text PC PLAYER CHARACTER
+			5 heading Seraphine, Value: 1
+				6 text Seraphine
+			7 text HUMAN (DRAGONMARK OF SENTINEL) • CLERIC 9 • ACOLYTE / UNKNOWN
+			8 container HP 57 / 57
+				9 text HP 57/57
+			10 container AC — Assumed AC
+				11 text AC 16
+			12 container Initiative
+				13 text INIT +2
+			14 container Speed
+				15 text SPD 30
+			16 button IDENTITY
+			17 button D&D STATS
+			18 button D&D GAMEPLAY
+			19 button ABILITIES & FEATS
+			20 button SPELLS
+			21 button INVENTORY
+			22 button RESOURCES
+			23 button NOTES
+		24 container
+			25 heading FEATS & CLASSES, Value: 2
+				26 text FEATS & CLASSES
+			27 text Dragonmark of Sentinel
+			28 container
+				29 text Expanded Spells Protector Reaction
+			30 text Protective mark granting Sentinel's Intuition, Guardian's Shield, Vigilant Guardian, and expanded spell access.
+			31 heading ABILITIES & TRAITS, Value: 2
+				32 text ABILITIES & TRAITS
+			33 button (collapsed) > Dragonmark of Sentinel TYPE trait Active CON +2 / WIS +1 Mark Spells VIEW, Secondary Actions: Expand
+				34 text >
+				35 text Dragonmark of Sentinel
+				36 container
+					37 text TYPE trait Active
+					38 text CON +2 / WIS +1
+					39 text Mark Spells
+				40 button VIEW
+			41 button (collapsed) > Sentinel's Intuition TYPE feature Active +1d4 VIEW, Secondary Actions: Expand
+				42 text >
+				43 text Sentinel's Intuition
+				44 container
+					45 text TYPE feature Active
+					46 text +1d4
+				47 button VIEW
+			48 button (collapsed) > Guardian's Shield TYPE reaction Active 1 / Long Rest +5 AC reaction VIEW, Secondary Actions: Expand
+				49 text >
+				50 text Guardian's Shield
+				51 container
+					52 text TYPE reaction Active
+					53 text 1 / Long Rest
+					54 text +5 AC reaction
+				55 button VIEW
+			56 button (collapsed) > Vigilant Guardian TYPE reaction Active Reaction 1 / Long Rest Take the Hit VIEW, Secondary Actions: Expand
+				57 text >
+				58 text Vigilant Guardian
+				59 container
+					60 text TYPE reaction Active Reaction 1 / Long Rest
+					61 text Take the Hit
+				62 button VIEW
+			63 button (collapsed) > Fading Grace TYPE trait Active Undefined Survival Miracle VIEW, Secondary Actions: Expand
+				64 text >
+				65 text Fading Grace
+				66 container
+					67 text TYPE trait Active
+					68 text Undefined
+					69 text Survival Miracle
+				70 button VIEW
+			71 button (collapsed) > Self-Imposed Vow Against Violence TYPE trait Active RP Constraint Stress Trigger VIEW, Secondary Actions: Expand
+				72 text >
+				73 text Self-Imposed Vow Against Violence
+				74 container
+					75 text TYPE trait Active RP Constraint
+					76 text Stress Trigger
+				77 button VIEW
+
+The focused UI element is 19 button ABILITIES & FEATS

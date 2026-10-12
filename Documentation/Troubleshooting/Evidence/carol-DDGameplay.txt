@@ -1,0 +1,31 @@
+Browser tab: 4, Title: "127.0.0.1:5500/audit/carol-elfnein.html", URL: "http://127.0.0.1:5500/audit/carol-elfnein.html".
+1 AXWebArea 127.0.0.1:5500/audit/carol-elfnein.html
+	2 container sheet-content
+		3 container
+			4 text PC PLAYER CHARACTER
+			5 heading Carol Elfnein, Value: 1
+				6 text Carol Elfnein
+			7 text REBORN / HOMUNCULUS (HUMAN) • WIZARD / BLADESINGING 10 • SORCERER / MAGE OF QUANDRIX / LV.1 • SAGE
+			8 container HP 28 / 62
+				9 text HP 28/62
+			10 container AC — Base / Mage Armor
+				11 text AC 16
+			12 container Initiative
+				13 text INIT +3
+			14 container Speed
+				15 text SPD 30
+			16 button IDENTITY
+			17 button D&D STATS
+			18 button D&D GAMEPLAY
+			19 button ABILITIES & FEATS
+			20 button SPELLS
+			21 button INVENTORY
+			22 button RESOURCES
+			23 button NOTES
+		24 container
+			25 heading D&D GAMEPLAY, Value: 2
+				26 text D&D GAMEPLAY
+			27 image
+			28 text QUICK ACTIONS 3 Core combat/rest state at a glance. Hit Points 28 / 62 CURRENT 28 MAX 62 CHARACTER CARD Short Rest Recovery, hit dice, and short-rest features. UTILITY Queue CHARACTER CARD Long Rest Reset long-rest resources and preparation. UTILITY Queue CHARACTER CARD SPELL ACTIONS 5 Slot state and cast-ready spell references. Level 1 Slots 4 / 4 available CURRENT 4 MAX 4 CHARACTER CARD Level 2 Slots 3 / 3 available CURRENT 3 MAX 3 CHARACTER CARD Level 3 Slots 3 / 3 available CURRENT 3 MAX 3 CHARACTER CARD Level 4 Slots 3 / 3 available CURRENT 3 MAX 3 CHARACTER CARD Level 5 Slots 2 / 2 available CURRENT 2 MAX 2 CHARACTER CARD COMBAT RESOURCES 3 Ammo, charges, temp HP, and tracked combat pools. (Missing resources record) 50 / 70 CURRENT 50 MAX 70 CHARACTER CARD (Missing resources record) 4 / 4 CURRENT 4 MAX 4 CHARACTER CARD (Missing resources record) 2 / 2 CURRENT 2 MAX 2 CHARACTER CARD
+
+The focused UI element is 18 button D&D GAMEPLAY

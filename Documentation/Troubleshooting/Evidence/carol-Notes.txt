@@ -1,0 +1,32 @@
+Browser tab: 4, Title: "127.0.0.1:5500/audit/carol-elfnein.html", URL: "http://127.0.0.1:5500/audit/carol-elfnein.html".
+1 AXWebArea 127.0.0.1:5500/audit/carol-elfnein.html
+	2 container sheet-content
+		3 container
+			4 text PC PLAYER CHARACTER
+			5 heading Carol Elfnein, Value: 1
+				6 text Carol Elfnein
+			7 text REBORN / HOMUNCULUS (HUMAN) • WIZARD / BLADESINGING 10 • SORCERER / MAGE OF QUANDRIX / LV.1 • SAGE
+			8 container HP 28 / 62
+				9 text HP 28/62
+			10 container AC — Base / Mage Armor
+				11 text AC 16
+			12 container Initiative
+				13 text INIT +3
+			14 container Speed
+				15 text SPD 30
+			16 button IDENTITY
+			17 button D&D STATS
+			18 button D&D GAMEPLAY
+			19 button ABILITIES & FEATS
+			20 button SPELLS
+			21 button INVENTORY
+			22 button RESOURCES
+			23 button NOTES
+		24 container
+			25 heading NOTES, Value: 2
+				26 text NOTES
+			27 text PERSONALITY Hostile, extremely guarded, and nearly mute unless forced to speak. Elfnein assumes others want to hurt her, exploit her, or steal from her. She is an outcast whose sanity and memory have eroded over centuries. BACKSTORY Elfnein was born in Arnica more than 600 years ago. Her father, an alchemist and doctor, cured a plague through science and alchemy, but the state branded him a witch because he lacked status and was seen practicing religious or arcane arts. He was burned alive in front of her.…
+			28 button Read more
+			29 text DM NOTES Provisional sheet. Elfnein is less mechanically settled than Capella or Seraphine, so uncertain features are marked with Provisional, Future, or DM Fiat chips. Current assumed play state is Wizard 9 / Sorcerer 1, total level 10, with future Wizard/Sorcerer progression listed as available planning rather than current access. Her magic is flavored as alchemy; when material focus or elemental sources are unavailable, spells can burn Spell Memories.
+
+The focused UI element is 23 button NOTES

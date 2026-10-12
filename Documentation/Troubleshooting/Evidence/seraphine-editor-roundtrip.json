@@ -1,0 +1,199 @@
+{
+  "spells": [
+    {
+      "id": "seraphine-spell-guidance",
+      "name": "Guidance",
+      "level": 0,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": true,
+      "access": {
+        "label": "Cantrip",
+        "kind": "positive",
+        "description": "Cantrip-level spell access; does not use spell slots.",
+        "chips": []
+      },
+      "tags": [
+        "Seraphine",
+        "Cantrip"
+      ]
+    },
+    {
+      "id": "seraphine-spell-light",
+      "name": "Light",
+      "level": 0,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "description": "",
+      "prepared": true,
+      "access": {
+        "label": "Cantrip",
+        "kind": "positive",
+        "description": "Cantrip-level spell access; does not use spell slots.",
+        "chips": []
+      },
+      "tags": [
+        "Seraphine",
+        "Cantrip"
+      ]
+    }
+  ],
+  "inventory": [
+    {
+      "id": "seraphine-item-clerical-charms",
+      "name": "Clerical Charms and Colors",
+      "type": "wondrous",
+      "active": true,
+      "quantity": 1,
+      "weight": null,
+      "attuned": false,
+      "description": "Small religious charms, colors, and devotional markers worn even where religion is outlawed.",
+      "tags": [
+        "Clerical",
+        "Religion"
+      ]
+    },
+    {
+      "id": "seraphine-item-priestess-robes",
+      "name": "Priestess Robes",
+      "type": "weapon",
+      "active": true,
+      "quantity": 1,
+      "weight": null,
+      "attuned": false,
+      "description": "Full clerical robes or improvised priestess clothing. More symbolic than armored.",
+      "tags": [
+        "Clothing",
+        "Religion"
+      ]
+    }
+  ],
+  "feats": [
+    {
+      "id": "seraphine-feat-dragonmark-sentinel",
+      "name": "Dragonmark of Sentinel",
+      "description": "Protective mark granting Sentinel's Intuition, Guardian's Shield, Vigilant Guardian, and expanded spell access."
+    }
+  ],
+  "resources": [
+    {
+      "id": "seraphine-resource-guardian-shield",
+      "name": "Guardian's Shield",
+      "max": 1,
+      "current": 1,
+      "log": [],
+      "addons": {
+        "mechanics": [
+          {
+            "label": "Long Rest",
+            "kind": "duration",
+            "description": "Restores after a long rest."
+          }
+        ]
+      }
+    },
+    {
+      "id": "seraphine-resource-vigilant-guardian",
+      "name": "Vigilant Guardian",
+      "max": 1,
+      "current": 1,
+      "log": [],
+      "addons": {
+        "mechanics": [
+          {
+            "label": "Long Rest",
+            "kind": "duration",
+            "description": "Restores after a long rest."
+          }
+        ]
+      }
+    },
+    {
+      "id": "seraphine-resource-overhelp-strain",
+      "name": "Overhelp Strain",
+      "max": 10,
+      "current": 0,
+      "log": [],
+      "addons": {
+        "mechanics": [
+          {
+            "label": "RP Stress",
+            "kind": "negative",
+            "description": "Optional tracker for self-harm by overexertion, panic, or compulsive protection."
+          }
+        ]
+      }
+    }
+  ],
+  "hp": {
+    "max": 57,
+    "current": 57,
+    "temp": 0,
+    "log": [
+      {
+        "id": "seraphine-hp-start",
+        "date": "2025-02-07",
+        "delta": 57,
+        "reason": "Base HP calculator: 9 starting Cleric + 48 from 8 subsequent levels."
+      }
+    ],
+    "mode": "calculated"
+  },
+  "slots": {
+    "1": {
+      "max": 4,
+      "current": 4
+    },
+    "2": {
+      "max": 3,
+      "current": 3
+    },
+    "3": {
+      "max": 3,
+      "current": 3
+    },
+    "4": {
+      "max": 3,
+      "current": 3
+    },
+    "5": {
+      "max": 1,
+      "current": 1
+    }
+  },
+  "abilities": [
+    {
+      "id": "seraphine-trait-dragonmark-sentinel",
+      "source": "inline",
+      "name": "Dragonmark of Sentinel",
+      "type": "trait",
+      "active": true,
+      "description": "Protective dragonmark package. CON +2 and WIS +1 are already included in stats. Adds Sentinel's Intuition, Guardian's Shield, Vigilant Guardian, and expanded Mark spells.",
+      "tags": [
+        "Dragonmark",
+        "Protection"
+      ],
+      "addons": {
+        "mechanics": [
+          {
+            "label": "CON +2 / WIS +1",
+            "kind": "positive",
+            "description": "Already folded into the displayed ability scores."
+          },
+          {
+            "label": "Mark Spells",
+            "kind": "positive",
+            "description": "Adds protective spells such as Shield, Compelled Duel, Counterspell, and Bigby's Hand to her usable list."
+          }
+        ]
+      }
+    }
+  ]
+}

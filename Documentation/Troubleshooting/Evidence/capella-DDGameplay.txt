@@ -1,0 +1,31 @@
+Browser tab: 4, Title: "127.0.0.1:5500/audit/capella-emerada-lugnica.html", URL: "http://127.0.0.1:5500/audit/capella-emerada-lugnica.html".
+0 AXWebArea 127.0.0.1:5500/audit/capella-emerada-lugnica.html
+	1 container sheet-content
+		2 container
+			3 text BOSS BOSS / NPC
+			4 heading Capella Emerada Lugnica, Value: 1
+				5 text Capella Emerada Lugnica
+			6 text ABERRANT LICH / SHAPECHANGER • ABERRANT LICH / SHAPECHANGER / COLLEGE OF ELOQUENCE / ELDRITCH LICH TRAITS 20 • ELEGANT MANIPULATOR
+			7 container HP 66 / 66
+				8 text HP 66/66
+			9 container AC — Unnatural Armor
+				10 text AC 19
+			11 container Initiative
+				12 text INIT +1
+			13 container Speed
+				14 text SPD 30
+			15 button IDENTITY
+			16 button D&D STATS
+			17 button D&D GAMEPLAY
+			18 button ABILITIES & FEATS
+			19 button SPELLS
+			20 button COMBAT
+			21 button RESOURCES
+			22 button NOTES
+		23 container
+			24 heading D&D GAMEPLAY, Value: 2
+				25 text D&D GAMEPLAY
+			26 image
+			27 text QUICK ACTIONS 3 Core combat/rest state at a glance. Hit Points 104 / 104 CURRENT 104 MAX 104 CHARACTER CARD Short Rest Recovery, hit dice, and short-rest features. UTILITY Queue CHARACTER CARD Long Rest Reset long-rest resources and preparation. UTILITY Queue CHARACTER CARD COMBAT RESOURCES 2 Ammo, charges, temp HP, and tracked combat pools. Active Flesh Polymorph Traits 2 / 3 CURRENT 2 MAX 3 CHARACTER CARD Legendary Action 1 / 1 CURRENT 1 MAX 1 CHARACTER CARD
+
+The focused UI element is 17 button D&D GAMEPLAY

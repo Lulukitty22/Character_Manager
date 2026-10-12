@@ -1,0 +1,159 @@
+Browser tab: 4, Title: "127.0.0.1:5500/audit/capella-emerada-lugnica.html", URL: "http://127.0.0.1:5500/audit/capella-emerada-lugnica.html".
+0 AXWebArea 127.0.0.1:5500/audit/capella-emerada-lugnica.html
+	1 container sheet-content
+		2 container
+			3 text BOSS BOSS / NPC
+			4 heading Capella Emerada Lugnica, Value: 1
+				5 text Capella Emerada Lugnica
+			6 text ABERRANT LICH / SHAPECHANGER • ABERRANT LICH / SHAPECHANGER / COLLEGE OF ELOQUENCE / ELDRITCH LICH TRAITS 20 • ELEGANT MANIPULATOR
+			7 container HP 66 / 66
+				8 text HP 66/66
+			9 container AC — Unnatural Armor
+				10 text AC 19
+			11 container Initiative
+				12 text INIT +1
+			13 container Speed
+				14 text SPD 30
+			15 button IDENTITY
+			16 button D&D STATS
+			17 button D&D GAMEPLAY
+			18 button ABILITIES & FEATS
+			19 button SPELLS
+			20 button COMBAT
+			21 button RESOURCES
+			22 button NOTES
+		23 container
+			24 heading FEATS & CLASSES, Value: 2
+				25 text FEATS & CLASSES
+			26 text Actor Feat
+			27 text Official Actor feat: +1 Charisma, advantage on Deception and Performance checks when impersonating, and the ability to mimic voices and sounds you have heard for at least 1 minute.
+			28 text Skill Expert
+			29 text Official Skill Expert feat: increase one ability score by 1, gain proficiency in one skill, and choose one proficient skill to gain expertise.
+			30 text Beguiling Influence
+			31 text Official warlock invocation: gain proficiency in Deception and Persuasion.
+			32 text Silver Tongue
+			33 text Official College of Eloquence feature: when you make a Charisma (Deception) or Charisma (Persuasion) check, a d20 roll of 9 or lower counts as a 10.
+			34 heading ABILITIES & TRAITS, Value: 2
+				35 text ABILITIES & TRAITS
+			36 button (collapsed) > Roll Calculator â€” Boss Saves Active VIEW, Secondary Actions: Expand
+				37 text >
+				38 text Roll Calculator â€” Boss Saves
+				39 text Active
+				40 button VIEW
+			41 button (collapsed) > Roll Calculator â€” Social / Casting Active VIEW, Secondary Actions: Expand
+				42 text >
+				43 text Roll Calculator â€” Social / Casting
+				44 text Active
+				45 button VIEW
+			46 button (collapsed) > Advantage on All Rolls Active VIEW, Secondary Actions: Expand
+				47 text >
+				48 text Advantage on All Rolls
+				49 text Active
+				50 button VIEW
+			51 button (collapsed) > Charisma Spellcasting Active VIEW, Secondary Actions: Expand
+				52 text >
+				53 text Charisma Spellcasting
+				54 text Active
+				55 button VIEW
+			56 button (collapsed) > Expert Deceiver Active VIEW, Secondary Actions: Expand
+				57 text >
+				58 text Expert Deceiver
+				59 text Active
+				60 button VIEW
+			61 button (collapsed) > Silver Tongue Active VIEW, Secondary Actions: Expand
+				62 text >
+				63 text Silver Tongue
+				64 text Active
+				65 button VIEW
+			66 button (collapsed) > Arcane Mastery Active VIEW, Secondary Actions: Expand
+				67 text >
+				68 text Arcane Mastery
+				69 text Active
+				70 button VIEW
+			71 button (collapsed) > Unnatural Armor Active VIEW, Secondary Actions: Expand
+				72 text >
+				73 text Unnatural Armor
+				74 text Active
+				75 button VIEW
+			76 button (collapsed) > Aberrant Lich Bonus Active VIEW, Secondary Actions: Expand
+				77 text >
+				78 text Aberrant Lich Bonus
+				79 text Active
+				80 button VIEW
+			81 button (collapsed) > Far Realm Mutation Active VIEW, Secondary Actions: Expand
+				82 text >
+				83 text Far Realm Mutation
+				84 text Active
+				85 button VIEW
+			86 button (collapsed) > Soul Vessel / Far Realm Parasite Active VIEW, Secondary Actions: Expand
+				87 text >
+				88 text Soul Vessel / Far Realm Parasite
+				89 text Active
+				90 button VIEW
+			91 button (collapsed) > Extra Attack Active VIEW, Secondary Actions: Expand
+				92 text >
+				93 text Extra Attack
+				94 text Active
+				95 button VIEW
+			96 button (collapsed) > Bonus Attack Active VIEW, Secondary Actions: Expand
+				97 text >
+				98 text Bonus Attack
+				99 text Active
+				100 button VIEW
+			101 button (collapsed) > Legendary Action Active VIEW, Secondary Actions: Expand
+				102 text >
+				103 text Legendary Action
+				104 text Active
+				105 button VIEW
+			106 button (collapsed) > Nonlethal Intent Active VIEW, Secondary Actions: Expand
+				107 text >
+				108 text Nonlethal Intent
+				109 text Active
+				110 button VIEW
+			111 button (collapsed) > Boss Presence Active VIEW, Secondary Actions: Expand
+				112 text >
+				113 text Boss Presence
+				114 text Active
+				115 button VIEW
+			116 button (collapsed) > Monstrous Regeneration Active VIEW, Secondary Actions: Expand
+				117 text >
+				118 text Monstrous Regeneration
+				119 text Active
+				120 button VIEW
+			121 button (collapsed) > Flesh Polymorph Active VIEW, Secondary Actions: Expand
+				122 text >
+				123 text Flesh Polymorph
+				124 text Active
+				125 button VIEW
+			126 button (collapsed) > Flesh Reshape Escape Active VIEW, Secondary Actions: Expand
+				127 text >
+				128 text Flesh Reshape Escape
+				129 text Active
+				130 button VIEW
+			131 button (collapsed) > Impersonation Active VIEW, Secondary Actions: Expand
+				132 text >
+				133 text Impersonation
+				134 text Active
+				135 button VIEW
+			136 button (collapsed) > Telepathy Active VIEW, Secondary Actions: Expand
+				137 text >
+				138 text Telepathy
+				139 text Active
+				140 button VIEW
+			141 button (collapsed) > Polymorph Trait Limit Active VIEW, Secondary Actions: Expand
+				142 text >
+				143 text Polymorph Trait Limit
+				144 text Active
+				145 button VIEW
+			146 heading SPECIAL RULES, Value: 2
+				147 text SPECIAL RULES
+			148 text DEATH / VESSEL RULE
+			149 text When Capella drops to 0 HP, her current body collapses, laughs, speaks through the corpse, or melts away. She does not make death saves. The encounter ends unless the party can track, contain, destroy, or otherwise deal with the Soul Vessel / Far Realm Parasite. Optional mid-fight reform: after 1 full round, reform 60 ft away with 105 HP and keep regeneration.
+			150 text TAMED RULE
+			151 text If Capella is tamed, pacified, recruited, purified, weakened, or otherwise removed from boss status, remove Boss Presence bonuses and use default/tamed stats and HP unless she later regains boss status.
+			152 text IF TOO WEAK
+			153 text Use HP 260, regeneration 40, or Armored Flesh more often.
+			154 text DM NOTE
+			155 text The RP is mostly separate. At the table, prioritize HP, AC, saves, attacks, damage, regeneration, and the few rules that matter in combat.
+
+The focused UI element is 18 button ABILITIES & FEATS

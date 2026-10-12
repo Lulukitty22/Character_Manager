@@ -1,0 +1,809 @@
+Browser tab: 4, Title: "127.0.0.1:5500/audit/seraphine.html", URL: "http://127.0.0.1:5500/audit/seraphine.html".
+1 AXWebArea 127.0.0.1:5500/audit/seraphine.html
+	2 container sheet-content
+		3 container
+			4 text PC PLAYER CHARACTER
+			5 heading Seraphine, Value: 1
+				6 text Seraphine
+			7 text HUMAN (DRAGONMARK OF SENTINEL) • CLERIC 9 • ACOLYTE / UNKNOWN
+			8 container HP 57 / 57
+				9 text HP 57/57
+			10 container AC — Assumed AC
+				11 text AC 16
+			12 container Initiative
+				13 text INIT +2
+			14 container Speed
+				15 text SPD 30
+			16 button IDENTITY
+			17 button D&D STATS
+			18 button D&D GAMEPLAY
+			19 button ABILITIES & FEATS
+			20 button SPELLS
+			21 button INVENTORY
+			22 button RESOURCES
+			23 button NOTES
+		24 container
+			25 heading SPELLS, Value: 2
+				26 text SPELLS
+			27 image
+			28 text CANTRIPS 10 spells
+			29 button (expanded) > Guidance Cantrip Prepared Cantrip VIEW, Secondary Actions: Collapse
+				30 text >
+				31 container
+					32 text Guidance  Cantrip
+				33 text Prepared
+				34 text Cantrip
+				35 button VIEW
+			36 text Seraphine Cantrip
+			37 button (expanded) > Light Cantrip Prepared Cantrip VIEW, Secondary Actions: Collapse
+				38 text >
+				39 container
+					40 text Light  Cantrip
+				41 text Prepared
+				42 text Cantrip
+				43 button VIEW
+			44 text Seraphine Cantrip
+			45 button (expanded) > Hand of Radiance Cantrip Prepared Cantrip Story Permission VIEW, Secondary Actions: Collapse
+				46 text >
+				47 container
+					48 text Hand of Radiance  Cantrip
+				49 text Prepared
+				50 text Cantrip
+				51 text Story Permission
+				52 button VIEW
+			53 text Seraphine Cantrip Story Permission
+			54 button (expanded) > Mending Cantrip Prepared Cantrip VIEW, Secondary Actions: Collapse
+				55 text >
+				56 container
+					57 text Mending  Cantrip
+				58 text Prepared
+				59 text Cantrip
+				60 button VIEW
+			61 text Seraphine Cantrip
+			62 button (expanded) > Resistance Cantrip Prepared Cantrip VIEW, Secondary Actions: Collapse
+				63 text >
+				64 container
+					65 text Resistance  Cantrip
+				66 text Prepared
+				67 text Cantrip
+				68 button VIEW
+			69 text Seraphine Cantrip
+			70 button (expanded) > Spare the Dying Cantrip Prepared Cantrip VIEW, Secondary Actions: Collapse
+				71 text >
+				72 container
+					73 text Spare the Dying  Cantrip
+				74 text Prepared
+				75 text Cantrip
+				76 button VIEW
+			77 text Seraphine Cantrip
+			78 button (expanded) > Sacred Flame Cantrip Prepared Cantrip VIEW, Secondary Actions: Collapse
+				79 text >
+				80 container
+					81 text Sacred Flame  Cantrip
+				82 text Prepared
+				83 text Cantrip
+				84 button VIEW
+			85 text Seraphine Cantrip
+			86 button (expanded) > Thaumaturgy Cantrip Prepared Cantrip VIEW, Secondary Actions: Collapse
+				87 text >
+				88 container
+					89 text Thaumaturgy  Cantrip
+				90 text Prepared
+				91 text Cantrip
+				92 button VIEW
+			93 text Seraphine Cantrip
+			94 button (expanded) > Virtue Cantrip Prepared Cantrip Story Permission VIEW, Secondary Actions: Collapse
+				95 text >
+				96 container
+					97 text Virtue  Cantrip
+				98 text Prepared
+				99 text Cantrip
+				100 text Story Permission
+				101 button VIEW
+			102 text Seraphine Cantrip Story Permission
+			103 button (expanded) > Word of Radiance Cantrip Prepared Cantrip Story Permission VIEW, Secondary Actions: Collapse
+				104 text >
+				105 container
+					106 text Word of Radiance  Cantrip
+				107 text Prepared
+				108 text Cantrip
+				109 text Story Permission
+				110 button VIEW
+			111 text Seraphine Cantrip Story Permission LEVEL 1
+			112 text 4 / 4 slots
+			113 button (expanded) > Bane Level 1 Known Available VIEW, Secondary Actions: Collapse
+				114 text >
+				115 container
+					116 text Bane  Level 1
+				117 text Known
+				118 text Available
+				119 button VIEW
+			120 text Seraphine Level 1
+			121 button (expanded) > Bless Level 1 Prepared VIEW, Secondary Actions: Collapse
+				122 text >
+				123 container
+					124 text Bless  Level 1
+				125 text Prepared
+				126 button VIEW
+			127 text Seraphine Level 1
+			128 button (expanded) > Ceremony Level 1 Prepared Ritual VIEW, Secondary Actions: Collapse
+				129 text >
+				130 container
+					131 text Ceremony  Level 1
+				132 text Prepared
+				133 text Ritual
+				134 button VIEW
+			135 text Seraphine Level 1
+			136 button (expanded) > Command Level 1 Known Available VIEW, Secondary Actions: Collapse
+				137 text >
+				138 container
+					139 text Command  Level 1
+				140 text Known
+				141 text Available
+				142 button VIEW
+			143 text Seraphine Level 1
+			144 button (expanded) > Create or Destroy Water Level 1 Known Available VIEW, Secondary Actions: Collapse
+				145 text >
+				146 container
+					147 text Create or Destroy Water  Level 1
+				148 text Known
+				149 text Available
+				150 button VIEW
+			151 text Seraphine Level 1
+			152 button (expanded) > Cure Wounds Level 1 Prepared Mercy / Healing VIEW, Secondary Actions: Collapse
+				153 text >
+				154 container
+					155 text Cure Wounds  Level 1
+				156 text Prepared
+				157 text Mercy / Healing
+				158 button VIEW
+			159 text Seraphine Level 1 Healing
+			160 button (expanded) > Detect Evil and Good Level 1 Known Available VIEW, Secondary Actions: Collapse
+				161 text >
+				162 container
+					163 text Detect Evil and Good  Level 1
+				164 text Known
+				165 text Available
+				166 button VIEW
+			167 text Seraphine Level 1
+			168 button (expanded) > Detect Magic Level 1 Prepared Ritual VIEW, Secondary Actions: Collapse
+				169 text >
+				170 container
+					171 text Detect Magic  Level 1
+				172 text Prepared
+				173 text Ritual
+				174 button VIEW
+			175 text Seraphine Level 1
+			176 button (expanded) > Detect Poison and Disease Level 1 Known Available Ritual VIEW, Secondary Actions: Collapse
+				177 text >
+				178 container
+					179 text Detect Poison and Disease  Level 1
+				180 text Known
+				181 text Available
+				182 text Ritual
+				183 button VIEW
+			184 text Seraphine Level 1
+			185 button (expanded) > Guiding Bolt Level 1 Known Available VIEW, Secondary Actions: Collapse
+				186 text >
+				187 container
+					188 text Guiding Bolt  Level 1
+				189 text Known
+				190 text Available
+				191 button VIEW
+			192 text Seraphine Level 1
+			193 button (expanded) > Guiding Hand Level 1 Known Available Story Permission VIEW, Secondary Actions: Collapse
+				194 text >
+				195 container
+					196 text Guiding Hand  Level 1
+				197 text Known
+				198 text Available
+				199 text Story Permission
+				200 button VIEW
+			201 text Seraphine Level 1 Story Permission
+			202 button (expanded) > Healing Word Level 1 Prepared Mercy / Healing VIEW, Secondary Actions: Collapse
+				203 text >
+				204 container
+					205 text Healing Word  Level 1
+				206 text Prepared
+				207 text Mercy / Healing
+				208 button VIEW
+			209 text Seraphine Level 1 Healing
+			210 button (expanded) > Protection from Evil and Good Level 1 Known Available VIEW, Secondary Actions: Collapse
+				211 text >
+				212 container
+					213 text Protection from Evil and Good  Level 1
+				214 text Known
+				215 text Available
+				216 button VIEW
+			217 text Seraphine Level 1
+			218 button (expanded) > Purify Food and Drink Level 1 Known Available Ritual VIEW, Secondary Actions: Collapse
+				219 text >
+				220 container
+					221 text Purify Food and Drink  Level 1
+				222 text Known
+				223 text Available
+				224 text Ritual
+				225 button VIEW
+			226 text Seraphine Level 1
+			227 button (expanded) > Sanctuary Level 1 Prepared VIEW, Secondary Actions: Collapse
+				228 text >
+				229 container
+					230 text Sanctuary  Level 1
+				231 text Prepared
+				232 button VIEW
+			233 text Seraphine Level 1
+			234 button (expanded) > Shield Level 1 Prepared Mark Spell COMPONENTS V, S VIEW, Secondary Actions: Collapse
+				235 text >
+				236 container
+					237 text Shield  Level 1
+				238 text Prepared
+				239 text Mark Spell
+				240 container Spell components required to cast this spell.
+					241 text COMPONENTS V, S
+				242 button VIEW
+			243 text Seraphine Level 1 Dragonmark
+			244 button (expanded) > Shield of Faith Level 1 Known Available VIEW, Secondary Actions: Collapse
+				245 text >
+				246 container
+					247 text Shield of Faith  Level 1
+				248 text Known
+				249 text Available
+				250 button VIEW
+			251 text Seraphine Level 1
+			252 button (expanded) > Compelled Duel Level 1 Known Available Mark Spell VIEW, Secondary Actions: Collapse
+				253 text >
+				254 container
+					255 text Compelled Duel  Level 1
+				256 text Known
+				257 text Available
+				258 text Mark Spell
+				259 button VIEW
+			260 text Seraphine Level 1 Dragonmark LEVEL 2
+			261 text 3 / 3 slots
+			262 button (expanded) > Aid Level 2 Prepared Mercy / Healing VIEW, Secondary Actions: Collapse
+				263 text >
+				264 container
+					265 text Aid  Level 2
+				266 text Prepared
+				267 text Mercy / Healing
+				268 button VIEW
+			269 text Seraphine Level 2 Healing
+			270 button (expanded) > Augury Level 2 Prepared Ritual VIEW, Secondary Actions: Collapse
+				271 text >
+				272 container
+					273 text Augury  Level 2
+				274 text Prepared
+				275 text Ritual
+				276 button VIEW
+			277 text Seraphine Level 2
+			278 button (expanded) > Blindness/Deafness Level 2 Known Available VIEW, Secondary Actions: Collapse
+				279 text >
+				280 container
+					281 text Blindness/Deafness  Level 2
+				282 text Known
+				283 text Available
+				284 button VIEW
+			285 text Seraphine Level 2
+			286 button (expanded) > Borrowed Knowledge Level 2 Known Available Story Permission VIEW, Secondary Actions: Collapse
+				287 text >
+				288 container
+					289 text Borrowed Knowledge  Level 2
+				290 text Known
+				291 text Available
+				292 text Story Permission
+				293 button VIEW
+			294 text Seraphine Level 2 Story Permission
+			295 button (expanded) > Calm Emotions Level 2 Prepared VIEW, Secondary Actions: Collapse
+				296 text >
+				297 container
+					298 text Calm Emotions  Level 2
+				299 text Prepared
+				300 button VIEW
+			301 text Seraphine Level 2
+			302 button (expanded) > Continual Flame Level 2 Known Available VIEW, Secondary Actions: Collapse
+				303 text >
+				304 container
+					305 text Continual Flame  Level 2
+				306 text Known
+				307 text Available
+				308 button VIEW
+			309 text Seraphine Level 2
+			310 button (expanded) > Enhance Ability Level 2 Known Available VIEW, Secondary Actions: Collapse
+				311 text >
+				312 container
+					313 text Enhance Ability  Level 2
+				314 text Known
+				315 text Available
+				316 button VIEW
+			317 text Seraphine Level 2
+			318 button (expanded) > Find Traps Level 2 Known Available VIEW, Secondary Actions: Collapse
+				319 text >
+				320 container
+					321 text Find Traps  Level 2
+				322 text Known
+				323 text Available
+				324 button VIEW
+			325 text Seraphine Level 2
+			326 button (expanded) > Gentle Repose Level 2 Known Available Ritual VIEW, Secondary Actions: Collapse
+				327 text >
+				328 container
+					329 text Gentle Repose  Level 2
+				330 text Known
+				331 text Available
+				332 text Ritual
+				333 button VIEW
+			334 text Seraphine Level 2
+			335 button (expanded) > Hold Person Level 2 Known Available VIEW, Secondary Actions: Collapse
+				336 text >
+				337 container
+					338 text Hold Person  Level 2
+				339 text Known
+				340 text Available
+				341 button VIEW
+			342 text Seraphine Level 2
+			343 button (expanded) > Lesser Restoration Level 2 Prepared Mercy / Healing VIEW, Secondary Actions: Collapse
+				344 text >
+				345 container
+					346 text Lesser Restoration  Level 2
+				347 text Prepared
+				348 text Mercy / Healing
+				349 button VIEW
+			350 text Seraphine Level 2 Healing
+			351 button (expanded) > Locate Object Level 2 Known Available VIEW, Secondary Actions: Collapse
+				352 text >
+				353 container
+					354 text Locate Object  Level 2
+				355 text Known
+				356 text Available
+				357 button VIEW
+			358 text Seraphine Level 2
+			359 button (expanded) > Prayer of Healing Level 2 Prepared Mercy / Healing VIEW, Secondary Actions: Collapse
+				360 text >
+				361 container
+					362 text Prayer of Healing  Level 2
+				363 text Prepared
+				364 text Mercy / Healing
+				365 button VIEW
+			366 text Seraphine Level 2 Healing
+			367 button (expanded) > Protection from Poison Level 2 Known Available VIEW, Secondary Actions: Collapse
+				368 text >
+				369 container
+					370 text Protection from Poison  Level 2
+				371 text Known
+				372 text Available
+				373 button VIEW
+			374 text Seraphine Level 2
+			375 button (expanded) > Silence Level 2 Known Available Ritual VIEW, Secondary Actions: Collapse
+				376 text >
+				377 container
+					378 text Silence  Level 2
+				379 text Known
+				380 text Available
+				381 text Ritual
+				382 button VIEW
+			383 text Seraphine Level 2
+			384 button (expanded) > Spiritual Weapon Level 2 Known Available VIEW, Secondary Actions: Collapse
+				385 text >
+				386 container
+					387 text Spiritual Weapon  Level 2
+				388 text Known
+				389 text Available
+				390 button VIEW
+			391 text Seraphine Level 2
+			392 button (expanded) > Warding Bond Level 2 Prepared VIEW, Secondary Actions: Collapse
+				393 text >
+				394 container
+					395 text Warding Bond  Level 2
+				396 text Prepared
+				397 button VIEW
+			398 text Seraphine Level 2
+			399 button (expanded) > Zone of Truth Level 2 Prepared VIEW, Secondary Actions: Collapse
+				400 text >
+				401 container
+					402 text Zone of Truth  Level 2
+				403 text Prepared
+				404 button VIEW
+			405 text Seraphine Level 2 LEVEL 3
+			406 text 3 / 3 slots
+			407 button (expanded) > Aura of Vitality Level 3 Known Available Mercy / Healing VIEW, Secondary Actions: Collapse
+				408 text >
+				409 container
+					410 text Aura of Vitality  Level 3
+				411 text Known
+				412 text Available
+				413 text Mercy / Healing
+				414 button VIEW
+			415 text Seraphine Level 3 Healing
+			416 button (expanded) > Beacon of Hope Level 3 Prepared Mercy / Healing VIEW, Secondary Actions: Collapse
+				417 text >
+				418 container
+					419 text Beacon of Hope  Level 3
+				420 text Prepared
+				421 text Mercy / Healing
+				422 button VIEW
+			423 text Seraphine Level 3 Healing
+			424 button (expanded) > Clairvoyance Level 3 Known Available VIEW, Secondary Actions: Collapse
+				425 text >
+				426 container
+					427 text Clairvoyance  Level 3
+				428 text Known
+				429 text Available
+				430 button VIEW
+			431 text Seraphine Level 3
+			432 button (expanded) > Create Food and Water Level 3 Known Available VIEW, Secondary Actions: Collapse
+				433 text >
+				434 container
+					435 text Create Food and Water  Level 3
+				436 text Known
+				437 text Available
+				438 button VIEW
+			439 text Seraphine Level 3
+			440 button (expanded) > Daylight Level 3 Known Available VIEW, Secondary Actions: Collapse
+				441 text >
+				442 container
+					443 text Daylight  Level 3
+				444 text Known
+				445 text Available
+				446 button VIEW
+			447 text Seraphine Level 3
+			448 button (expanded) > Dispel Magic Level 3 Known Available VIEW, Secondary Actions: Collapse
+				449 text >
+				450 container
+					451 text Dispel Magic  Level 3
+				452 text Known
+				453 text Available
+				454 button VIEW
+			455 text Seraphine Level 3
+			456 button (expanded) > Fast Friends Level 3 Known Available Story Permission VIEW, Secondary Actions: Collapse
+				457 text >
+				458 container
+					459 text Fast Friends  Level 3
+				460 text Known
+				461 text Available
+				462 text Story Permission
+				463 button VIEW
+			464 text Seraphine Level 3 Story Permission
+			465 button (expanded) > Feign Death Level 3 Known Available Ritual VIEW, Secondary Actions: Collapse
+				466 text >
+				467 container
+					468 text Feign Death  Level 3
+				469 text Known
+				470 text Available
+				471 text Ritual
+				472 button VIEW
+			473 text Seraphine Level 3
+			474 button (expanded) > Glyph of Warding Level 3 Known Available VIEW, Secondary Actions: Collapse
+				475 text >
+				476 container
+					477 text Glyph of Warding  Level 3
+				478 text Known
+				479 text Available
+				480 button VIEW
+			481 text Seraphine Level 3
+			482 button (expanded) > Incite Greed Level 3 Known Available Story Permission VIEW, Secondary Actions: Collapse
+				483 text >
+				484 container
+					485 text Incite Greed  Level 3
+				486 text Known
+				487 text Available
+				488 text Story Permission
+				489 button VIEW
+			490 text Seraphine Level 3 Story Permission
+			491 button (expanded) > Life Transference Level 3 Known Available VIEW, Secondary Actions: Collapse
+				492 text >
+				493 container
+					494 text Life Transference  Level 3
+				495 text Known
+				496 text Available
+				497 button VIEW
+			498 text Seraphine Level 3
+			499 button (expanded) > Magic Circle Level 3 Known Available VIEW, Secondary Actions: Collapse
+				500 text >
+				501 container
+					502 text Magic Circle  Level 3
+				503 text Known
+				504 text Available
+				505 button VIEW
+			506 text Seraphine Level 3
+			507 button (expanded) > Mass Healing Word Level 3 Prepared Mercy / Healing VIEW, Secondary Actions: Collapse
+				508 text >
+				509 container
+					510 text Mass Healing Word  Level 3
+				511 text Prepared
+				512 text Mercy / Healing
+				513 button VIEW
+			514 text Seraphine Level 3 Healing
+			515 button (expanded) > Meld into Stone Level 3 Known Available Ritual VIEW, Secondary Actions: Collapse
+				516 text >
+				517 container
+					518 text Meld into Stone  Level 3
+				519 text Known
+				520 text Available
+				521 text Ritual
+				522 button VIEW
+			523 text Seraphine Level 3
+			524 button (expanded) > Motivational Speech Level 3 Known Available Story Permission VIEW, Secondary Actions: Collapse
+				525 text >
+				526 container
+					527 text Motivational Speech  Level 3
+				528 text Known
+				529 text Available
+				530 text Story Permission
+				531 button VIEW
+			532 text Seraphine Level 3 Story Permission
+			533 button (expanded) > Protection from Energy Level 3 Known Available VIEW, Secondary Actions: Collapse
+				534 text >
+				535 container
+					536 text Protection from Energy  Level 3
+				537 text Known
+				538 text Available
+				539 button VIEW
+			540 text Seraphine Level 3
+			541 button (expanded) > Remove Curse Level 3 Prepared VIEW, Secondary Actions: Collapse
+				542 text >
+				543 container
+					544 text Remove Curse  Level 3
+				545 text Prepared
+				546 button VIEW
+			547 text Seraphine Level 3
+			548 button (expanded) > Revivify Level 3 Prepared Mercy / Healing VIEW, Secondary Actions: Collapse
+				549 text >
+				550 container
+					551 text Revivify  Level 3
+				552 text Prepared
+				553 text Mercy / Healing
+				554 button VIEW
+			555 text Seraphine Level 3 Healing
+			556 button (expanded) > Sending Level 3 Known Available VIEW, Secondary Actions: Collapse
+				557 text >
+				558 container
+					559 text Sending  Level 3
+				560 text Known
+				561 text Available
+				562 button VIEW
+			563 text Seraphine Level 3
+			564 button (expanded) > Speak with Dead Level 3 Known Available VIEW, Secondary Actions: Collapse
+				565 text >
+				566 container
+					567 text Speak with Dead  Level 3
+				568 text Known
+				569 text Available
+				570 button VIEW
+			571 text Seraphine Level 3
+			572 button (expanded) > Spirit Guardians Level 3 Prepared VIEW, Secondary Actions: Collapse
+				573 text >
+				574 container
+					575 text Spirit Guardians  Level 3
+				576 text Prepared
+				577 button VIEW
+			578 text Seraphine Level 3
+			579 button (expanded) > Tongues Level 3 Prepared VIEW, Secondary Actions: Collapse
+				580 text >
+				581 container
+					582 text Tongues  Level 3
+				583 text Prepared
+				584 button VIEW
+			585 text Seraphine Level 3
+			586 button (expanded) > Water Walk Level 3 Prepared Ritual VIEW, Secondary Actions: Collapse
+				587 text >
+				588 container
+					589 text Water Walk  Level 3
+				590 text Prepared
+				591 text Ritual
+				592 button VIEW
+			593 text Seraphine Level 3
+			594 button (expanded) > Counterspell Level 3 Known Available Mark Spell COMPONENTS V, S VIEW, Secondary Actions: Collapse
+				595 text >
+				596 container
+					597 text Counterspell  Level 3
+				598 text Known
+				599 text Available
+				600 text Mark Spell
+				601 container Spell components required to cast this spell.
+					602 text COMPONENTS V, S
+				603 button VIEW
+			604 text Seraphine Level 3 Dragonmark Story Permission LEVEL 4
+			605 text 3 / 3 slots
+			606 button (expanded) > Aura of Life Level 4 Known Available Mercy / Healing VIEW, Secondary Actions: Collapse
+				607 text >
+				608 container
+					609 text Aura of Life  Level 4
+				610 text Known
+				611 text Available
+				612 text Mercy / Healing
+				613 button VIEW
+			614 text Seraphine Level 4 Healing
+			615 button (expanded) > Aura of Purity Level 4 Known Available VIEW, Secondary Actions: Collapse
+				616 text >
+				617 container
+					618 text Aura of Purity  Level 4
+				619 text Known
+				620 text Available
+				621 button VIEW
+			622 text Seraphine Level 4
+			623 button (expanded) > Banishment Level 4 Known Available VIEW, Secondary Actions: Collapse
+				624 text >
+				625 container
+					626 text Banishment  Level 4
+				627 text Known
+				628 text Available
+				629 button VIEW
+			630 text Seraphine Level 4
+			631 button (expanded) > Control Water Level 4 Known Available VIEW, Secondary Actions: Collapse
+				632 text >
+				633 container
+					634 text Control Water  Level 4
+				635 text Known
+				636 text Available
+				637 button VIEW
+			638 text Seraphine Level 4
+			639 button (expanded) > Death Ward Level 4 Prepared VIEW, Secondary Actions: Collapse
+				640 text >
+				641 container
+					642 text Death Ward  Level 4
+				643 text Prepared
+				644 button VIEW
+			645 text Seraphine Level 4
+			646 button (expanded) > Divination Level 4 Prepared Ritual VIEW, Secondary Actions: Collapse
+				647 text >
+				648 container
+					649 text Divination  Level 4
+				650 text Prepared
+				651 text Ritual
+				652 button VIEW
+			653 text Seraphine Level 4
+			654 button (expanded) > Freedom of Movement Level 4 Known Available VIEW, Secondary Actions: Collapse
+				655 text >
+				656 container
+					657 text Freedom of Movement  Level 4
+				658 text Known
+				659 text Available
+				660 button VIEW
+			661 text Seraphine Level 4
+			662 button (expanded) > Guardian of Faith Level 4 Prepared VIEW, Secondary Actions: Collapse
+				663 text >
+				664 container
+					665 text Guardian of Faith  Level 4
+				666 text Prepared
+				667 button VIEW
+			668 text Seraphine Level 4
+			669 button (expanded) > Locate Creature Level 4 Known Available VIEW, Secondary Actions: Collapse
+				670 text >
+				671 container
+					672 text Locate Creature  Level 4
+				673 text Known
+				674 text Available
+				675 button VIEW
+			676 text Seraphine Level 4
+			677 button (expanded) > Stone Shape Level 4 Known Available VIEW, Secondary Actions: Collapse
+				678 text >
+				679 container
+					680 text Stone Shape  Level 4
+				681 text Known
+				682 text Available
+				683 button VIEW
+			684 text Seraphine Level 4 LEVEL 5
+			685 text 1 / 1 slots
+			686 button (expanded) > Bigby's Hand Level 5 Known Available Mark Spell VIEW, Secondary Actions: Collapse
+				687 text >
+				688 container
+					689 text Bigby's Hand  Level 5
+				690 text Known
+				691 text Available
+				692 text Mark Spell
+				693 button VIEW
+			694 text Seraphine Level 5 Dragonmark Story Permission
+			695 button (expanded) > Commune Level 5 Prepared Ritual VIEW, Secondary Actions: Collapse
+				696 text >
+				697 container
+					698 text Commune  Level 5
+				699 text Prepared
+				700 text Ritual
+				701 button VIEW
+			702 text Seraphine Level 5
+			703 button (expanded) > Dawn Level 5 Known Available VIEW, Secondary Actions: Collapse
+				704 text >
+				705 container
+					706 text Dawn  Level 5
+				707 text Known
+				708 text Available
+				709 button VIEW
+			710 text Seraphine Level 5
+			711 button (expanded) > Dispel Evil and Good Level 5 Known Available VIEW, Secondary Actions: Collapse
+				712 text >
+				713 container
+					714 text Dispel Evil and Good  Level 5
+				715 text Known
+				716 text Available
+				717 button VIEW
+			718 text Seraphine Level 5
+			719 button (expanded) > Flame Strike Level 5 Known Available VIEW, Secondary Actions: Collapse
+				720 text >
+				721 container
+					722 text Flame Strike  Level 5
+				723 text Known
+				724 text Available
+				725 button VIEW
+			726 text Seraphine Level 5
+			727 button (expanded) > Geas Level 5 Known Available VIEW, Secondary Actions: Collapse
+				728 text >
+				729 container
+					730 text Geas  Level 5
+				731 text Known
+				732 text Available
+				733 button VIEW
+			734 text Seraphine Level 5
+			735 button (expanded) > Greater Restoration Level 5 Prepared Mercy / Healing VIEW, Secondary Actions: Collapse
+				736 text >
+				737 container
+					738 text Greater Restoration  Level 5
+				739 text Prepared
+				740 text Mercy / Healing
+				741 button VIEW
+			742 text Seraphine Level 5 Healing
+			743 button (expanded) > Hallow Level 5 Known Available VIEW, Secondary Actions: Collapse
+				744 text >
+				745 container
+					746 text Hallow  Level 5
+				747 text Known
+				748 text Available
+				749 button VIEW
+			750 text Seraphine Level 5
+			751 button (expanded) > Holy Weapon Level 5 Known Available VIEW, Secondary Actions: Collapse
+				752 text >
+				753 container
+					754 text Holy Weapon  Level 5
+				755 text Known
+				756 text Available
+				757 button VIEW
+			758 text Seraphine Level 5
+			759 button (expanded) > Legend Lore Level 5 Known Available VIEW, Secondary Actions: Collapse
+				760 text >
+				761 container
+					762 text Legend Lore  Level 5
+				763 text Known
+				764 text Available
+				765 button VIEW
+			766 text Seraphine Level 5
+			767 button (expanded) > Mass Cure Wounds Level 5 Prepared Mercy / Healing VIEW, Secondary Actions: Collapse
+				768 text >
+				769 container
+					770 text Mass Cure Wounds  Level 5
+				771 text Prepared
+				772 text Mercy / Healing
+				773 button VIEW
+			774 text Seraphine Level 5 Healing
+			775 button (expanded) > Planar Binding Level 5 Known Available VIEW, Secondary Actions: Collapse
+				776 text >
+				777 container
+					778 text Planar Binding  Level 5
+				779 text Known
+				780 text Available
+				781 button VIEW
+			782 text Seraphine Level 5
+			783 button (expanded) > Raise Dead Level 5 Prepared Mercy / Healing VIEW, Secondary Actions: Collapse
+				784 text >
+				785 container
+					786 text Raise Dead  Level 5
+				787 text Prepared
+				788 text Mercy / Healing
+				789 button VIEW
+			790 text Seraphine Level 5 Healing
+			791 button (expanded) > Scrying Level 5 Known Available VIEW, Secondary Actions: Collapse
+				792 text >
+				793 container
+					794 text Scrying  Level 5
+				795 text Known
+				796 text Available
+				797 button VIEW
+			798 text Seraphine Level 5
+			799 button (expanded) > Summon Celestial Level 5 Known Available VIEW, Secondary Actions: Collapse
+				800 text >
+				801 container
+					802 text Summon Celestial  Level 5
+				803 text Known
+				804 text Available
+				805 button VIEW
+			806 text Seraphine Level 5
+
+The focused UI element is 20 button SPELLS

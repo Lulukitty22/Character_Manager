@@ -1,0 +1,102 @@
+Browser tab: 4, Title: "127.0.0.1:5500/audit/seraphine.html", URL: "http://127.0.0.1:5500/audit/seraphine.html".
+1 AXWebArea 127.0.0.1:5500/audit/seraphine.html
+	2 container sheet-content
+		3 container
+			4 text PC PLAYER CHARACTER
+			5 heading Seraphine, Value: 1
+				6 text Seraphine
+			7 text HUMAN (DRAGONMARK OF SENTINEL) • CLERIC 9 • ACOLYTE / UNKNOWN
+			8 container HP 57 / 57
+				9 text HP 57/57
+			10 container AC — Assumed AC
+				11 text AC 16
+			12 container Initiative
+				13 text INIT +2
+			14 container Speed
+				15 text SPD 30
+			16 button IDENTITY
+			17 button D&D STATS
+			18 button D&D GAMEPLAY
+			19 button ABILITIES & FEATS
+			20 button SPELLS
+			21 button INVENTORY
+			22 button RESOURCES
+			23 button NOTES
+		24 container
+			25 heading COMBAT, Value: 2
+				26 text COMBAT
+			27 text 57 / 57 HP
+			28 container Class hit dice plus Constitution and race HP bonuses.
+				29 button (collapsed) CALCULATED HP 57, Secondary Actions: Expand
+					30 text CALCULATED HP
+					31 text 57
+			32 container 9 levels using d8; CON +1 each level.
+				33 button (collapsed) CLERIC 57, Secondary Actions: Expand
+					34 text CLERIC
+					35 text 57
+			36 heading ARMOR CLASS MODES, Value: 2
+				37 text ARMOR CLASS MODES
+			38 button ASSUMED AC 16 Discord sheet says AC 16?; armor/shield details not yet specified.
+				39 text ASSUMED AC
+				40 text 16
+				41 text Discord sheet says AC 16?; armor/shield details not yet specified.
+			42 heading COMBAT STATS, Value: 2
+				43 text COMBAT STATS
+			44 text ARMOR CLASS
+			45 text 16
+			46 text INITIATIVE
+			47 text +2
+			48 text PROF. BONUS
+			49 text +4
+			50 text SPELL SAVE DC
+			51 text 16
+			52 text SPELL/FLESH ATTACK
+			53 text +8
+			54 text WALK 30ft
+			55 heading ABILITY SCORES, Value: 2
+				56 text ABILITY SCORES
+			57 container Strength
+				58 text STR
+				59 text -1
+				60 text 8
+			61 container Dexterity
+				62 text DEX
+				63 text +2
+				64 text 14
+			65 container Constitution
+				66 text CON
+				67 text +1
+				68 text 12
+			69 container Intelligence
+				70 text INT
+				71 text +1
+				72 text 12
+			73 container Wisdom
+				74 text WIS
+				75 text +4
+				76 text 19
+				77 text SPELLCASTING
+			78 container Charisma
+				79 text CHA
+				80 text +2
+				81 text 14
+			82 text Spellcasting ability: Wisdom
+			83 heading SAVING THROWS, Value: 2
+				84 text SAVING THROWS
+			85 container
+				86 text -1 STRENGTH
+			87 container
+				88 text +2 DEXTERITY
+			89 container
+				90 text +1 CONSTITUTION
+			91 container
+				92 text +1 INTELLIGENCE
+			93 container
+				94 text +8 WISDOM
+			95 container
+				96 text +6 CHARISMA
+			97 heading SKILLS, Value: 2
+				98 text SKILLS
+			99 text +2 Acrobatics DEX +4 Animal Handling WIS +1 Arcana INT -1 Athletics STR +2 Deception CHA +1 History INT +8 Insight WIS +2 Intimidation CHA +1 Investigation INT +8 Medicine WIS +1 Nature INT +8 Perception WIS +2 Performance CHA +2 Persuasion CHA +5 Religion INT +2 Sleight of Hand DEX +2 Stealth DEX +4 Survival WIS
+
+The focused UI element is 17 button D&D STATS

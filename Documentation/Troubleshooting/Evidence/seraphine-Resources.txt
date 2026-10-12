@@ -1,0 +1,74 @@
+Browser tab: 4, Title: "127.0.0.1:5500/audit/seraphine.html", URL: "http://127.0.0.1:5500/audit/seraphine.html".
+1 AXWebArea 127.0.0.1:5500/audit/seraphine.html
+	2 container sheet-content
+		3 container
+			4 text PC PLAYER CHARACTER
+			5 heading Seraphine, Value: 1
+				6 text Seraphine
+			7 text HUMAN (DRAGONMARK OF SENTINEL) • CLERIC 9 • ACOLYTE / UNKNOWN
+			8 container HP 57 / 57
+				9 text HP 57/57
+			10 container AC — Assumed AC
+				11 text AC 16
+			12 container Initiative
+				13 text INIT +2
+			14 container Speed
+				15 text SPD 30
+			16 button IDENTITY
+			17 button D&D STATS
+			18 button D&D GAMEPLAY
+			19 button ABILITIES & FEATS
+			20 button SPELLS
+			21 button INVENTORY
+			22 button RESOURCES
+			23 button NOTES
+		24 container
+			25 heading RESOURCES, Value: 2
+				26 text RESOURCES
+			27 image
+			28 text HIT POINTS 57 / 57 Hit Points CALCULATED HP POOL 57 / 57 CURRENT 57 MAX 57
+			29 container Long rest restores HP and spell slots in the current gameplay model.
+				30 text LONG REST Full
+			31 button (collapsed) > HP History 1 entry, Secondary Actions: Expand
+				32 text >
+				33 container
+					34 text HP History  1 entry
+			35 text TRACKED RESOURCES 3
+			36 button (expanded) > Guardian's Shield Custom resource CURRENT 1 MAX 1 Long Rest 1 / 1 VIEW, Secondary Actions: Collapse
+				37 text >
+				38 container
+					39 text Guardian's Shield  Custom resource
+				40 text CURRENT
+				41 text 1
+				42 text MAX
+				43 text 1
+				44 text Long Rest
+				45 text 1 / 1
+				46 button VIEW
+			47 text Guardian's Shield CUSTOM RESOURCE 1 / 1
+			48 button (expanded) > Vigilant Guardian Custom resource CURRENT 1 MAX 1 Long Rest 1 / 1 VIEW, Secondary Actions: Collapse
+				49 text >
+				50 container
+					51 text Vigilant Guardian  Custom resource
+				52 text CURRENT
+				53 text 1
+				54 text MAX
+				55 text 1
+				56 text Long Rest
+				57 text 1 / 1
+				58 button VIEW
+			59 text Vigilant Guardian CUSTOM RESOURCE 1 / 1
+			60 button (expanded) > Overhelp Strain Custom resource CURRENT 0 MAX 10 RP Stress 0 / 10 VIEW, Secondary Actions: Collapse
+				61 text >
+				62 container
+					63 text Overhelp Strain  Custom resource
+				64 text CURRENT
+				65 text 0
+				66 text MAX
+				67 text 10
+				68 text RP Stress
+				69 text 0 / 10
+				70 button VIEW
+			71 text Overhelp Strain CUSTOM RESOURCE 0 / 10
+
+The focused UI element is 22 button RESOURCES

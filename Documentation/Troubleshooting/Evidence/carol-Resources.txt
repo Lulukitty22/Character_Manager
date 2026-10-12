@@ -1,0 +1,81 @@
+Browser tab: 4, Title: "127.0.0.1:5500/audit/carol-elfnein.html", URL: "http://127.0.0.1:5500/audit/carol-elfnein.html".
+1 AXWebArea 127.0.0.1:5500/audit/carol-elfnein.html
+	2 container sheet-content
+		3 container
+			4 text PC PLAYER CHARACTER
+			5 heading Carol Elfnein, Value: 1
+				6 text Carol Elfnein
+			7 text REBORN / HOMUNCULUS (HUMAN) • WIZARD / BLADESINGING 10 • SORCERER / MAGE OF QUANDRIX / LV.1 • SAGE
+			8 container HP 28 / 62
+				9 text HP 28/62
+			10 container AC — Base / Mage Armor
+				11 text AC 16
+			12 container Initiative
+				13 text INIT +3
+			14 container Speed
+				15 text SPD 30
+			16 button IDENTITY
+			17 button D&D STATS
+			18 button D&D GAMEPLAY
+			19 button ABILITIES & FEATS
+			20 button SPELLS
+			21 button INVENTORY
+			22 button RESOURCES
+			23 button NOTES
+		24 container
+			25 heading RESOURCES, Value: 2
+				26 text RESOURCES
+			27 image
+			28 text HIT POINTS 28 / 62 Hit Points CALCULATED HP POOL 28 / 62 CURRENT 28 MAX 62
+			29 container Long rest restores HP and spell slots in the current gameplay model.
+				30 text LONG REST Full
+			31 button (collapsed) > HP History 17 entries, Secondary Actions: Expand
+				32 text >
+				33 container
+					34 text HP History  17 entries
+			35 text TRACKED RESOURCES 3
+			36 button (expanded) Secondary Actions: Collapse, > (Missing resources record) Could not resolve library reference "elfnein-resource-spell-memories". CURRENT 50 MAX 70 MISSING REF elfnein-resource-spell-memories 50 / 70 VIEW
+				37 text >
+				38 container
+					39 text (Missing resources record)  Could not resolve library reference "elfnein-resource-spell-memories".
+				40 text CURRENT
+				41 text 50
+				42 text MAX
+				43 text 70
+				44 container This character points at a library record that was not loaded or no longer exists.
+					45 text MISSING REF elfnein-resource-spell-memories
+				46 text 50 / 70
+				47 button VIEW
+			48 text (Missing resources record) COULD NOT RESOLVE LIBRARY REFERENCE "ELFNEIN-RESOURCE-SPELL-MEMORIES". 50 / 70
+			49 text Could not resolve library reference "elfnein-resource-spell-memories".
+			50 text 2024-09-02 -6 Used Fireball; rolled 2d8-2s totaling 6 memory lost. 2024-09-02 +0 Used Fireball; rolled 1d8-2 total below 0, no memory lost or gained. 2024-09-02 -10 Used Fireball; rolled 4 d8s total 18, -2 each dice, 10 memory lost. 2024-09-02 -2 Used airburst spell; demonstration out of combat, reduced cost. 2024-09-02 -2 Used map spell; 2 memory removed for using silver/gold elemental. 2024-09-02 +70 Creation of character, starting with 70 memories.
+			51 button (expanded) Secondary Actions: Collapse, > (Missing resources record) Could not resolve library reference "elfnein-resource-bladesong". CURRENT 4 MAX 4 MISSING REF elfnein-resource-bladesong 4 / 4 VIEW
+				52 text >
+				53 container
+					54 text (Missing resources record)  Could not resolve library reference "elfnein-resource-bladesong".
+				55 text CURRENT
+				56 text 4
+				57 text MAX
+				58 text 4
+				59 container This character points at a library record that was not loaded or no longer exists.
+					60 text MISSING REF elfnein-resource-bladesong
+				61 text 4 / 4
+				62 button VIEW
+			63 text (Missing resources record) COULD NOT RESOLVE LIBRARY REFERENCE "ELFNEIN-RESOURCE-BLADESONG". 4 / 4
+			64 text Could not resolve library reference "elfnein-resource-bladesong".
+			65 button (expanded) Secondary Actions: Collapse, > (Missing resources record) Could not resolve library reference "elfnein-resource-sorcery-points". CURRENT 2 MAX 2 MISSING REF elfnein-resource-sorcery-points 2 / 2 VIEW
+				66 text >
+				67 container
+					68 text (Missing resources record)  Could not resolve library reference "elfnein-resource-sorcery-points".
+				69 text CURRENT
+				70 text 2
+				71 text MAX
+				72 text 2
+				73 container This character points at a library record that was not loaded or no longer exists.
+					74 text MISSING REF elfnein-resource-sorcery-points
+				75 text 2 / 2
+				76 button VIEW
+			77 text (Missing resources record) COULD NOT RESOLVE LIBRARY REFERENCE "ELFNEIN-RESOURCE-SORCERY-POINTS". 2 / 2
+			78 text Could not resolve library reference "elfnein-resource-sorcery-points".
+
+The focused UI element is 22 button RESOURCES

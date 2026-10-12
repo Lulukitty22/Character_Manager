@@ -1,0 +1,31 @@
+Browser tab: 4, Title: "127.0.0.1:5500/audit/seraphine.html", URL: "http://127.0.0.1:5500/audit/seraphine.html".
+1 AXWebArea 127.0.0.1:5500/audit/seraphine.html
+	2 container sheet-content
+		3 container
+			4 text PC PLAYER CHARACTER
+			5 heading Seraphine, Value: 1
+				6 text Seraphine
+			7 text HUMAN (DRAGONMARK OF SENTINEL) • CLERIC 9 • ACOLYTE / UNKNOWN
+			8 container HP 57 / 57
+				9 text HP 57/57
+			10 container AC — Assumed AC
+				11 text AC 16
+			12 container Initiative
+				13 text INIT +2
+			14 container Speed
+				15 text SPD 30
+			16 button IDENTITY
+			17 button D&D STATS
+			18 button D&D GAMEPLAY
+			19 button ABILITIES & FEATS
+			20 button SPELLS
+			21 button INVENTORY
+			22 button RESOURCES
+			23 button NOTES
+		24 container
+			25 heading D&D GAMEPLAY, Value: 2
+				26 text D&D GAMEPLAY
+			27 image
+			28 text QUICK ACTIONS 3 Core combat/rest state at a glance. Hit Points 57 / 57 CURRENT 57 MAX 57 CHARACTER CARD Short Rest Recovery, hit dice, and short-rest features. UTILITY Queue CHARACTER CARD Long Rest Reset long-rest resources and preparation. UTILITY Queue CHARACTER CARD SPELL ACTIONS 5 Slot state and cast-ready spell references. Level 1 Slots 4 / 4 available CURRENT 4 MAX 4 CHARACTER CARD Level 2 Slots 3 / 3 available CURRENT 3 MAX 3 CHARACTER CARD Level 3 Slots 3 / 3 available CURRENT 3 MAX 3 CHARACTER CARD Level 4 Slots 3 / 3 available CURRENT 3 MAX 3 CHARACTER CARD Level 5 Slots 1 / 1 available CURRENT 1 MAX 1 CHARACTER CARD COMBAT RESOURCES 3 Ammo, charges, temp HP, and tracked combat pools. Guardian's Shield 1 / 1 CURRENT 1 MAX 1 CHARACTER CARD Vigilant Guardian 1 / 1 CURRENT 1 MAX 1 CHARACTER CARD Overhelp Strain 0 / 10 CURRENT 0 MAX 10 CHARACTER CARD
+
+The focused UI element is 18 button D&D GAMEPLAY

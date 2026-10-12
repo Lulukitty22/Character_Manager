@@ -1,0 +1,70 @@
+CHARACTER MANAGER AUDIT - 2026-10-12
+Request: recover project status; audit all characters/cards/sheets/features; present findings. Do not repair canonical data or publish changes during this audit.
+
+SCOPE / EVIDENCE
+- Local branch staging b4fe6fc (May 10). GitHub staging f7056ce (June 6 UTC / June 6 shortly after midnight Pacific), 74 data-only commits ahead. All runtime files unchanged. Remote diff has 7 files; saved remote-snapshots.json overlays local checkout. Main remote head 89ad9b3 (May 7). Local main behind origin/main by 19 commits.
+- GitHub issue search found zero issues; PR search found historical PRs 1-3. PR status/details not yet reviewed.
+- git fetch failed because .git/FETCH_HEAD is read-only in sandbox. Used GitHub connector compare/read tools instead; no need to fetch to finish audit.
+- Existing untracked .claude/launch.json was not created by audit. No AGENTS.md found by rg --files. No package.json/test runner/CI found so far.
+- Node v24.19 available. Local validator passes 98 records / 98 manifest entries. Validator explicitly SKIPS character files and does not prove semantic correctness.
+- audit/run-audit.cjs loads actual viewer JS in Node VM, seeds actual library with remote overlays, resolves/render-generates all six staging sheets. All render without throw. All data/tools JS syntax parses. Browser inspection via temporary audit HTML pages uses actual runtime/styles with latest data but bypasses remote boot/auth.
+- Local HTTP server port 5500, exec session 28237. Browser tab 1 current audit/capella-emerada-lugnica.html. No live writes/PAT actions performed.
+
+CONFIRMED HIGH IMPACT
+1. Carol: June conversion leaves 31 unresolved library refs: 19 spells, 2 items, 5 abilities, 3 resources, 2 feats. Of 21 spells only Fire Bolt and Fireball resolve. Full list in results.json. Remote manifest and diff contain no matching records for missing refs. Inline details recoverable from local pre-June JSON/git history. Missing spells default to level 0 in renderer, so become bogus cantrips. June records Fire Bolt and duplicate root-level Fireball saved, rest absent.
+2. Capella: stored slots levels 1-9 exist, but resolveSpellSlots produces {}. Unknown/custom class progression -> none; absent spellSlotMode/overrides selects calculated mode and discards stored maxima. Spell Slots disappear from sheet/gameplay.
+3. HP migration: absent hp.mode selects calculated whenever class calculation possible. Stored manual HP silently replaced. Capella tamed 66 -> 104; test character stored 1337 max with current 730 -> max 6/current730. Repro Fighter5 CON14 stored100/100 -> calculated44/44. No migration review/validation; unknown classes default d8.
+4. Sticky header reads raw dnd.hp / stored initiative / acModes, not shared active/calc state. Capella header66/66, D&D stats210/210, gameplay tamed104/104, notes tamed66. Rall header0/0 vs calculated0/92. Header initiative+1 vs stats boss+0 / tamed-3.
+5. Boss toggle changes state classes/visibility but targets obsolete selectors .sheet-hp-current, .sheet-hp-max, .hp-bar-fill; current stats renderer uses .ovh-hp-current, .ovh-hp-max, .ovh-hp-bar-fill. Browser toggling to tamed changes ability/AC text but HP remains210/210 and header unchanged. Gameplay resolves tamedHP regardless boss state. Need capture screenshot artifact if helpful.
+6. Capella numeric content contradictory: base ability scores 6,5,8,1,9,10 plus boss bonuses6,5,8,1,9,10 produce boss12,10,16,2,18,20. INT2 / -4 shown. Narrative/formula annotations imply different modifiers. Prepared/improv CHA+5 annotations disagree with baseCHA10/+0. These may be data setup mistakes; do not invent intended replacement stats. Custom proficiency5 at level20 may be house rule, not automatically classify wrong.
+7. Rall: level11 Fighter/Battlemaster plus same-class Fighter/EldritchKnight1, proficiency2, WIS spellcasting, HP0/0, no slots, Fireball. Mechanically incomplete/contradictory; exact intended custom build unknown. Renderer ignores subclass progression in caster lookup. Need official rules citation if asserting standard rules numbers.
+8. Aina Ranger5 calculated slots only three level1, no level2; half caster uses generic floor(level/2) full-caster table even for single class. Ranger3 gives two level1. Subclass caster calculation ignores subclass entirely, pact slots manual only. Need primary rules verify specific expected counts.
+9. Main-only John Baluci exists characters/john-baluci.json; staging library/characters contains six characters and no John. New editor lists only library/characters. John preserved on main, invisible in staging. Historical main runtime paths manager/* vs new data/*, character paths characters/* vs library/characters/*. Old distributed exports are not present locally, cannot enumerate every external saved HTML.
+10. Hardcoded staging export branch, regardless configured GitHub branch. Editor writes selected githubBranch but export always reads staging. Can export wrong/missing version when editing main/another branch.
+11. DM approval is log-only: resolveQueuedAction moves request -> actionLog with approved/denied, no character delta application. Docs explicitly admit. Queued spells/attacks/rests/ammo do not become canonical gameplay changes on approval.
+12. Conflict handling can lose edits/requests: App.writeCharacterWithRetries and Library.saveRecord refresh SHA then retry same stale payload rather than merge. No protection against two clients writing same record. DM staged responses each clone captured record (entry.record), so same-record sequential approvals can resurrect prior queued rows / erase prior log additions. Need isolated reproduction for exact batch behavior.
+13. Session/DM local draft trays live in JS memory only, disappear on page reload. Active tabs/composer survive rerender (not reload). Polling full library every10 sec only when state.writable. Read-only Session Refresh does not fetch new remote data (forceApi gated on writable). quiet polling swallows errors and can report success from cached state. Count request overhead after remote manifest inspection.
+14. Session partial-batch submit clears drafts only after every destination group succeeds; retry after one succeeds can duplicate sent actions because new UUIDs generated. DM submit catches swallowed errors inside resolveQueuedAction so outer break may not happen.
+
+POTENTIAL ROOT CAUSE - INVESTIGATE NEXT
+- Library.recordFromCharacterEntry starts Schema.createLibraryRecord schemaVersion1/features{} and overlays legacy inline fields (level, description, addons etc). LibraryRecords.normalizeRecord sees schemaVersion1, retains features/desc (often empty), ignores legacy fields. Could wipe spell/item/trait semantics when saving inline entries. save simulation currently failed GitHub undefined because viewer manifest omits github.js; add context.GitHub={} stub before simulation and rerun. NEVER real network writes in this simulation.
+- syncNameRecord creates blank canonical class/species records and upsertLocal shallow replaces existing features/desc with blanks. Need simulated reproduction to prove.
+- syncArray mutates character refs before all library writes complete. Failure followed by retry can save refs to unsaved records; check.
+- itemState uses Number(quantity)||1, so inline quantity0 ->1. It only retains quantity/active; attuned and character-local state may be lost. Need reproduction.
+- Editor readTab helpers reconstruct entries and omit extra addons/mechanics fields for inline spells. Read code and mock UI if necessary.
+
+NOT A CONFIRMED BUG
+- Many local JSON files have UTF8 BOM. Raw Node JSON.parse fails, but GitHub.decodeBase64Utf8 strips BOM and browser fetch UTF8 decoding strips BOM. Do not claim production load failure from BOM alone.
+- Seraphine 95 spells includes story/future permissions deliberately. Notes explicitly say fiction-first broader list. Do not mark all higher-level spells or many known spells invalid automatically. Need check action buttons respect access/prepared flags.
+- Capella custom class/boss values may intentionally depart from standard rules; report internal contradictions separately from rules compliance.
+
+OUTSTANDING WORK
+1. Finish isolated save/migration/conflict simulations with mocked GitHub.
+2. Inspect Carol browser Spells to confirm cantrip fallback. Check normal raw remote boot/editor read-only path where practical.
+3. Review Seraphine access/prepared vs gameplay cast controls; Aina ammo state/actions; John main-only schema; full manifests/assets and remote orphan/duplicate records.
+4. Verify standard single-class slot/proficiency/subclass claims using primary rules only (web required for niche uncertain facts).
+5. Save final report AUDIT_REPORT.md with severity, file+line evidence, character table, tests/limits, prioritized repair plan; update this txt after discoveries. User asked findings, no fixes yet.
+
+NEW CONFIRMED FINDINGS (after save simulation)
+15. Save conversion data loss REPRODUCED with mocked writes: inline Audit Spell level3/Evocation/range150/8d6/description -> resolved level0/empty school/range/description/addons. recordFromCharacterEntry writes schemaVersion1/features{}/desc empty plus legacy fields; canonical normalizer ignores legacy fields. File audit/results.json saveSimulation records before/after. This is a systemic save bug, not just Carol data.
+16. Class erasure REPRODUCED: syncing a Wizard character replaces existing classes.wizard d6/full-caster/features/description/tags with empty fields. syncNameRecord -> upsertLocal overwrites canonical definition. Human species similarly at risk. Standard fallback tables mask some damage.
+17. Interrupted migration REPRODUCED: first spell writes, simulated second write fails; all character entries already refs; retry Library.syncCharacter writes zero records, leaving refs to second spell and item unpersisted. audit/failure-repro.json. Consistent with Carol partial migration, but exact historic trigger unproven.
+18. Inline item quantity0 becomes1 and attuned flag is dropped when converted. Proven in failure-repro.json. Item record legacy addon normalization also loses mechanics like spell migration.
+19. Browser confirms Carol all21 spells under CANTRIPS, INCLUDING successfully resolved Fireball and Fire Bolt. Both June saved records have malformed canonical features so Fireball loses level3/description. Existing evocation Fireball record was not deleted; runtime chooses first duplicate id entry and root record sorts first. Need inspect exact duplicate IDs.
+20. Header class level label uses total character level beside primary class, then appends multiclass levels. Carol displays Wizard10 + Sorcerer1 even though total10 means Wizard9/Sorcerer1. identity renderer also repeats incorrect primary total label.
+21. Browser confirms boss toggle leaves main HP210 after tamed toggle; stats and other fields switch, header unchanged. Test screenshot in tool output shows contradictory HP66 header,210 main,104 tamed summary,66 tamed explanatory block.
+22. Official 2014 D&D Beyond Ranger table confirms level5 slots 4 level1 +2 level2 vs app3 level1 only; level3 needs3 level1 vs app2. Official Fighter table confirms proficiency+4 level11 vs Rall+2. Preserve possible house-rule choice separately.
+23. Shared gameplay Spell Actions only lists slot-spend requests; it never iterates character.spells / resolves actual cast payloads. No real spell selection/casting pipeline; source tab displays spells only. Seraphine story permissions are presentation metadata, gameplay does not implement spell access gating.
+
+FINAL CHECKS / CORRECTIONS
+24. Remote manifest99 entries, no duplicate IDs. Old canonical evocation Fireball remains on disk unlisted; malformed new root Fireball replaces manifest path by same ID. It also breaks Rall Fireball. Correct earlier speculative note about first duplicate choosing: only new one loaded from manifest.
+25. Seraphine ALL95 inline spells lack description and castingTime; spells are names/access/levels rather than complete spell cards. Editor harvest preserves those empty core fields but drops addons. Do not claim blank details caused by form harvest alone; they pre-exist in source.
+26. All115 stylesheet/script asset references across four runtime manifests exist locally. All runtime files unchanged since current GitHub staging so this covers remote file inventory too.
+27. Actual permanent Editor shim successfully loads remote runtime and shows Settings / target staging without PAT. Actual Carol Character Card remote boot succeeds; corrupted output reproduced with real fetches. No auth/write operations attempted.
+28. PR1/2 merged, PR3 closed unmerged; GitHub Actions total_count0. README references absent STAGING_PLAN.md although segmented docs current.
+29. Full report saved audit/AUDIT_REPORT.md. It distinguishes reproduced writes (mock only), source-confirmed concurrency bugs, custom rules ambiguity, and untested live scenarios.
+30. Actual remote Session View and Dungeon Master boots succeed without auth. Seed records/queue/history visible and submit/approve controls disabled. Confirms four surfaces boot, not authenticated functionality.
+31. DM queue/history show Aina UUID instead of name because hydrateAction(action,{}) omits participant context. Report updated.
+32. Audit finished; final report is audit/AUDIT_REPORT.md, running notes audit/ISSUES.txt. Canonical source/data unchanged. No fix/PR/issue created. Local audit HTTP server and temporary tabs will be stopped/closed on completion.
+
+2026-10-12 organization: this log moved into Documentation/Troubleshooting/Notes. Reports are one folder above; original evidence is in ../Evidence. Previous audit/ paths in historical entries refer to that retained evidence. Active pointers: Documentation/Primary.

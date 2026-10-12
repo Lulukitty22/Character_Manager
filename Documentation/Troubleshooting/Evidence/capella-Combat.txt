@@ -1,0 +1,29 @@
+Browser tab: 4, Title: "127.0.0.1:5500/audit/capella-emerada-lugnica.html", URL: "http://127.0.0.1:5500/audit/capella-emerada-lugnica.html".
+0 AXWebArea 127.0.0.1:5500/audit/capella-emerada-lugnica.html
+	1 container sheet-content
+		2 container
+			3 text BOSS BOSS / NPC
+			4 heading Capella Emerada Lugnica, Value: 1
+				5 text Capella Emerada Lugnica
+			6 text ABERRANT LICH / SHAPECHANGER • ABERRANT LICH / SHAPECHANGER / COLLEGE OF ELOQUENCE / ELDRITCH LICH TRAITS 20 • ELEGANT MANIPULATOR
+			7 container HP 66 / 66
+				8 text HP 66/66
+			9 container AC — Unnatural Armor
+				10 text AC 19
+			11 container Initiative
+				12 text INIT +1
+			13 container Speed
+				14 text SPD 30
+			15 button IDENTITY
+			16 button D&D STATS
+			17 button D&D GAMEPLAY
+			18 button ABILITIES & FEATS
+			19 button SPELLS
+			20 button COMBAT
+			21 button RESOURCES
+			22 button NOTES
+		23 container
+			24 button Tamed / Default
+			25 text Click to preview the other state
+
+The focused UI element is 20 button COMBAT

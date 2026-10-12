@@ -1,0 +1,230 @@
+Browser tab: 4, Title: "127.0.0.1:5500/audit/carol-elfnein.html", URL: "http://127.0.0.1:5500/audit/carol-elfnein.html".
+1 AXWebArea 127.0.0.1:5500/audit/carol-elfnein.html
+	2 container sheet-content
+		3 container
+			4 text PC PLAYER CHARACTER
+			5 heading Carol Elfnein, Value: 1
+				6 text Carol Elfnein
+			7 text REBORN / HOMUNCULUS (HUMAN) • WIZARD / BLADESINGING 10 • SORCERER / MAGE OF QUANDRIX / LV.1 • SAGE
+			8 container HP 28 / 62
+				9 text HP 28/62
+			10 container AC — Base / Mage Armor
+				11 text AC 16
+			12 container Initiative
+				13 text INIT +3
+			14 container Speed
+				15 text SPD 30
+			16 button IDENTITY
+			17 button D&D STATS
+			18 button D&D GAMEPLAY
+			19 button ABILITIES & FEATS
+			20 button SPELLS
+			21 button INVENTORY
+			22 button RESOURCES
+			23 button NOTES
+		24 container
+			25 heading SPELLS, Value: 2
+				26 text SPELLS
+			27 image
+			28 text CANTRIPS 21 spells
+			29 button (expanded) > Fire Bolt Cantrip Prepared VIEW, Secondary Actions: Collapse
+				30 text >
+				31 container
+					32 text Fire Bolt  Cantrip
+				33 text Prepared
+				34 button VIEW
+			35 text elfnein wizard cantrip alchemy
+			36 button (expanded) > (Missing spells record) Cantrip Prepared MISSING REF elfnein-spell-create-bonfire VIEW, Secondary Actions: Collapse
+				37 text >
+				38 container
+					39 text (Missing spells record)  Cantrip
+				40 text Prepared
+				41 container This character points at a library record that was not loaded or no longer exists.
+					42 text MISSING REF elfnein-spell-create-bonfire
+				43 button VIEW
+			44 text Could not resolve library reference "elfnein-spell-create-bonfire".
+			45 text missing-library-ref
+			46 button (expanded) > (Missing spells record) Cantrip Prepared MISSING REF elfnein-spell-ray-of-frost VIEW, Secondary Actions: Collapse
+				47 text >
+				48 container
+					49 text (Missing spells record)  Cantrip
+				50 text Prepared
+				51 container This character points at a library record that was not loaded or no longer exists.
+					52 text MISSING REF elfnein-spell-ray-of-frost
+				53 button VIEW
+			54 text Could not resolve library reference "elfnein-spell-ray-of-frost".
+			55 text missing-library-ref
+			56 button (expanded) > (Missing spells record) Cantrip Prepared MISSING REF elfnein-spell-booming-blade VIEW, Secondary Actions: Collapse
+				57 text >
+				58 container
+					59 text (Missing spells record)  Cantrip
+				60 text Prepared
+				61 container This character points at a library record that was not loaded or no longer exists.
+					62 text MISSING REF elfnein-spell-booming-blade
+				63 button VIEW
+			64 text Could not resolve library reference "elfnein-spell-booming-blade".
+			65 text missing-library-ref
+			66 button (expanded) > (Missing spells record) Cantrip Prepared MISSING REF elfnein-spell-mage-armor VIEW, Secondary Actions: Collapse
+				67 text >
+				68 container
+					69 text (Missing spells record)  Cantrip
+				70 text Prepared
+				71 container This character points at a library record that was not loaded or no longer exists.
+					72 text MISSING REF elfnein-spell-mage-armor
+				73 button VIEW
+			74 text Could not resolve library reference "elfnein-spell-mage-armor".
+			75 text missing-library-ref
+			76 button (expanded) > (Missing spells record) Cantrip Prepared MISSING REF elfnein-spell-shield VIEW, Secondary Actions: Collapse
+				77 text >
+				78 container
+					79 text (Missing spells record)  Cantrip
+				80 text Prepared
+				81 container This character points at a library record that was not loaded or no longer exists.
+					82 text MISSING REF elfnein-spell-shield
+				83 button VIEW
+			84 text Could not resolve library reference "elfnein-spell-shield".
+			85 text missing-library-ref
+			86 button (expanded) > (Missing spells record) Cantrip Prepared MISSING REF elfnein-spell-chromatic-orb VIEW, Secondary Actions: Collapse
+				87 text >
+				88 container
+					89 text (Missing spells record)  Cantrip
+				90 text Prepared
+				91 container This character points at a library record that was not loaded or no longer exists.
+					92 text MISSING REF elfnein-spell-chromatic-orb
+				93 button VIEW
+			94 text Could not resolve library reference "elfnein-spell-chromatic-orb".
+			95 text missing-library-ref
+			96 button (expanded) > (Missing spells record) Cantrip Prepared MISSING REF elfnein-spell-burning-hands VIEW, Secondary Actions: Collapse
+				97 text >
+				98 container
+					99 text (Missing spells record)  Cantrip
+				100 text Prepared
+				101 container This character points at a library record that was not loaded or no longer exists.
+					102 text MISSING REF elfnein-spell-burning-hands
+				103 button VIEW
+			104 text Could not resolve library reference "elfnein-spell-burning-hands".
+			105 text missing-library-ref
+			106 button (expanded) > (Missing spells record) Cantrip Prepared MISSING REF elfnein-spell-catapult VIEW, Secondary Actions: Collapse
+				107 text >
+				108 container
+					109 text (Missing spells record)  Cantrip
+				110 text Prepared
+				111 container This character points at a library record that was not loaded or no longer exists.
+					112 text MISSING REF elfnein-spell-catapult
+				113 button VIEW
+			114 text Could not resolve library reference "elfnein-spell-catapult".
+			115 text missing-library-ref
+			116 button (expanded) > (Missing spells record) Cantrip Prepared MISSING REF elfnein-spell-web VIEW, Secondary Actions: Collapse
+				117 text >
+				118 container
+					119 text (Missing spells record)  Cantrip
+				120 text Prepared
+				121 container This character points at a library record that was not loaded or no longer exists.
+					122 text MISSING REF elfnein-spell-web
+				123 button VIEW
+			124 text Could not resolve library reference "elfnein-spell-web".
+			125 text missing-library-ref
+			126 button (expanded) > (Missing spells record) Cantrip Prepared MISSING REF elfnein-spell-hold-person VIEW, Secondary Actions: Collapse
+				127 text >
+				128 container
+					129 text (Missing spells record)  Cantrip
+				130 text Prepared
+				131 container This character points at a library record that was not loaded or no longer exists.
+					132 text MISSING REF elfnein-spell-hold-person
+				133 button VIEW
+			134 text Could not resolve library reference "elfnein-spell-hold-person".
+			135 text missing-library-ref
+			136 button (expanded) > (Missing spells record) Cantrip Prepared MISSING REF elfnein-spell-rimes-binding-of-ice VIEW, Secondary Actions: Collapse
+				137 text >
+				138 container
+					139 text (Missing spells record)  Cantrip
+				140 text Prepared
+				141 container This character points at a library record that was not loaded or no longer exists.
+					142 text MISSING REF elfnein-spell-rimes-binding-of-ice
+				143 button VIEW
+			144 text Could not resolve library reference "elfnein-spell-rimes-binding-of-ice".
+			145 text missing-library-ref
+			146 button (expanded) > Fireball Cantrip Prepared VIEW, Secondary Actions: Collapse
+				147 text >
+				148 container
+					149 text Fireball  Cantrip
+				150 text Prepared
+				151 button VIEW
+			152 text elfnein wizard fire memory-cost
+			153 button (expanded) > (Missing spells record) Cantrip Prepared MISSING REF elfnein-spell-tidal-wave VIEW, Secondary Actions: Collapse
+				154 text >
+				155 container
+					156 text (Missing spells record)  Cantrip
+				157 text Prepared
+				158 container This character points at a library record that was not loaded or no longer exists.
+					159 text MISSING REF elfnein-spell-tidal-wave
+				160 button VIEW
+			161 text Could not resolve library reference "elfnein-spell-tidal-wave".
+			162 text missing-library-ref
+			163 button (expanded) > (Missing spells record) Cantrip Prepared MISSING REF elfnein-spell-wall-of-force VIEW, Secondary Actions: Collapse
+				164 text >
+				165 container
+					166 text (Missing spells record)  Cantrip
+				167 text Prepared
+				168 container This character points at a library record that was not loaded or no longer exists.
+					169 text MISSING REF elfnein-spell-wall-of-force
+				170 button VIEW
+			171 text Could not resolve library reference "elfnein-spell-wall-of-force".
+			172 text missing-library-ref
+			173 button (expanded) > (Missing spells record) Cantrip Prepared MISSING REF elfnein-spell-steel-wind-strike VIEW, Secondary Actions: Collapse
+				174 text >
+				175 container
+					176 text (Missing spells record)  Cantrip
+				177 text Prepared
+				178 container This character points at a library record that was not loaded or no longer exists.
+					179 text MISSING REF elfnein-spell-steel-wind-strike
+				180 button VIEW
+			181 text Could not resolve library reference "elfnein-spell-steel-wind-strike".
+			182 text missing-library-ref
+			183 button (collapsed) > (Missing spells record) Cantrip Known MISSING REF elfnein-spell-tashas-otherworldly-guise VIEW, Secondary Actions: Expand
+				184 text >
+				185 container
+					186 text (Missing spells record)  Cantrip
+				187 text Known
+				188 container This character points at a library record that was not loaded or no longer exists.
+					189 text MISSING REF elfnein-spell-tashas-otherworldly-guise
+				190 button VIEW
+			191 button (collapsed) > (Missing spells record) Cantrip Known MISSING REF elfnein-spell-prismatic-wall VIEW, Secondary Actions: Expand
+				192 text >
+				193 container
+					194 text (Missing spells record)  Cantrip
+				195 text Known
+				196 container This character points at a library record that was not loaded or no longer exists.
+					197 text MISSING REF elfnein-spell-prismatic-wall
+				198 button VIEW
+			199 button (expanded) > (Missing spells record) Cantrip Prepared MISSING REF elfnein-spell-guidance VIEW, Secondary Actions: Collapse
+				200 text >
+				201 container
+					202 text (Missing spells record)  Cantrip
+				203 text Prepared
+				204 container This character points at a library record that was not loaded or no longer exists.
+					205 text MISSING REF elfnein-spell-guidance
+				206 button VIEW
+			207 text Could not resolve library reference "elfnein-spell-guidance".
+			208 text missing-library-ref
+			209 button (expanded) > (Missing spells record) Cantrip Prepared MISSING REF elfnein-spell-absorb-elements VIEW, Secondary Actions: Collapse
+				210 text >
+				211 container
+					212 text (Missing spells record)  Cantrip
+				213 text Prepared
+				214 container This character points at a library record that was not loaded or no longer exists.
+					215 text MISSING REF elfnein-spell-absorb-elements
+				216 button VIEW
+			217 text Could not resolve library reference "elfnein-spell-absorb-elements".
+			218 text missing-library-ref
+			219 button (collapsed) > (Missing spells record) Cantrip Known MISSING REF elfnein-spell-enlarge-reduce VIEW, Secondary Actions: Expand
+				220 text >
+				221 container
+					222 text (Missing spells record)  Cantrip
+				223 text Known
+				224 container This character points at a library record that was not loaded or no longer exists.
+					225 text MISSING REF elfnein-spell-enlarge-reduce
+				226 button VIEW
+			227 text SPELL SLOT HISTORY 2 2026-06-06 Lv 1 Restored level 1 slot 2026-06-06 Lv 1 Used level 1 slot
+
+The focused UI element is 20 button SPELLS

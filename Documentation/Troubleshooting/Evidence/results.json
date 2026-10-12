@@ -1,0 +1,1497 @@
+{
+  "libraryProblems": [],
+  "characters": [
+    {
+      "name": "Aina Quickquiver",
+      "id": "6a4c38d4-530e-4dc7-a127-4e13f2dbf1a8",
+      "path": "library/characters/aina-quickquiver.json",
+      "level": 5,
+      "class": "Ranger",
+      "multiclass": [],
+      "storedHp": {
+        "mode": "calculated",
+        "max": 44,
+        "current": 32,
+        "temp": 0,
+        "log": [
+          {
+            "id": "bce891bc-fd7c-4d23-8040-6748fc94f0a0",
+            "date": "2026-05-09",
+            "delta": 7,
+            "reason": "Potion of Healing"
+          },
+          {
+            "id": "45fb0de7-f691-4479-984b-f57283473e05",
+            "date": "2026-05-09",
+            "delta": -40,
+            "reason": "stepped on a crack and broke the elfs back. or something. idk how the saying goes. im sure thats right."
+          },
+          {
+            "id": "22e30edf-d0cd-4ff9-964a-4a41985ba520",
+            "date": "2026-05-09",
+            "delta": 7,
+            "reason": "Potion of Healing"
+          },
+          {
+            "id": "37e69d47-b969-46c5-9c90-1a3ab420517d",
+            "date": "2026-05-09",
+            "delta": -40,
+            "reason": "stepped on a crack again. elf back, gone. reduced to atoms."
+          },
+          {
+            "id": "2bcaa34d-cdeb-46dc-8625-1ca06e644fae",
+            "date": "2026-05-09",
+            "delta": 7,
+            "reason": "Potion of Healing"
+          },
+          {
+            "id": "6de104d7-52a5-4b9c-b6d8-7cce886d8d34",
+            "date": "2026-05-09",
+            "delta": -30,
+            "reason": "another crack, but not as big!"
+          },
+          {
+            "id": "ec501917-6ed4-4158-9667-4045b43d4b75",
+            "date": "2026-05-09",
+            "delta": 7,
+            "reason": "Potion of Healing"
+          },
+          {
+            "id": "719f0cac-50bd-47d0-952e-494fa9acba8b",
+            "date": "2026-05-09",
+            "delta": 7,
+            "reason": "Potion of Healing"
+          },
+          {
+            "id": "0fbd8831-ea0d-4f1f-8a83-59ad38b864c4",
+            "date": "2026-05-09",
+            "delta": 7,
+            "reason": "Potion of Healing"
+          },
+          {
+            "id": "186ba606-15e1-48e0-9f88-59e3fadd77b5",
+            "date": "2026-05-09",
+            "delta": -3,
+            "reason": "stubbed toe!!!"
+          }
+        ]
+      },
+      "effectiveHp": {
+        "current": 32,
+        "max": 44,
+        "temp": 0,
+        "mode": "calculated",
+        "overrideActive": false,
+        "storedOverrideMax": 44,
+        "calculatedMax": 44,
+        "hasCalculatedMax": true,
+        "calculation": {
+          "total": 44,
+          "conMod": 2,
+          "parts": [
+            {
+              "label": "Ranger",
+              "value": 44,
+              "kind": "positive",
+              "description": "5 levels using d10; CON +2 each level."
+            }
+          ],
+          "race": {
+            "schemaVersion": 1,
+            "id": "wood-elf",
+            "name": "Wood Elf",
+            "collections": [
+              "species"
+            ],
+            "tags": [],
+            "variantOf": null,
+            "sourceReferences": [],
+            "features": {},
+            "desc": "",
+            "collection": "species",
+            "source": "custom",
+            "provider": "",
+            "providerId": "",
+            "description": "",
+            "addons": {
+              "mechanics": [],
+              "sourceDocument": null,
+              "actions": []
+            },
+            "speed": {
+              "walk": 30
+            }
+          },
+          "levels": [
+            {
+              "class": "Ranger",
+              "subclass": "Hunter",
+              "level": 5
+            }
+          ]
+        }
+      },
+      "storedSlots": {
+        "1": {
+          "max": 3,
+          "current": 3
+        }
+      },
+      "effectiveSlots": {
+        "1": {
+          "max": 3,
+          "current": 3,
+          "calculatedMax": 3,
+          "overrideMax": 0
+        }
+      },
+      "spellCount": 0,
+      "inventoryCount": 5,
+      "abilityCount": 1,
+      "missing": [],
+      "renderError": null,
+      "htmlLength": 239404,
+      "tabs": [
+        "identity",
+        "stats",
+        "gameplay",
+        "abilities",
+        "inventory",
+        "resources",
+        "notes"
+      ],
+      "proficiency": 3,
+      "stats": {
+        "str": {
+          "score": 10
+        },
+        "dex": {
+          "score": 18
+        },
+        "con": {
+          "score": 14
+        },
+        "int": {
+          "score": 12
+        },
+        "wis": {
+          "score": 14
+        },
+        "cha": {
+          "score": 8
+        }
+      },
+      "notes": "Use the Field Shortbow action to spend ready arrows. Open Arrow Bundle (20) into loose arrows, then use Field Quiver actions to ready or stow arrows. Exported sheet should match preview exactly."
+    },
+    {
+      "name": "Capella Emerada Lugnica",
+      "id": "93b6bd4a-9f95-4788-a309-a75def5d3a7c",
+      "path": "library/characters/capella-emerada-lugnica.json",
+      "level": 20,
+      "class": "Aberrant Lich / Shapechanger",
+      "multiclass": [],
+      "storedHp": {
+        "max": 66,
+        "current": 66,
+        "temp": 0,
+        "log": []
+      },
+      "effectiveHp": {
+        "current": 210,
+        "max": 210,
+        "temp": 0
+      },
+      "storedSlots": {
+        "1": {
+          "max": 4,
+          "current": 4
+        },
+        "2": {
+          "max": 3,
+          "current": 3
+        },
+        "3": {
+          "max": 3,
+          "current": 3
+        },
+        "4": {
+          "max": 3,
+          "current": 3
+        },
+        "5": {
+          "max": 2,
+          "current": 2
+        },
+        "6": {
+          "max": 1,
+          "current": 1
+        },
+        "7": {
+          "max": 1,
+          "current": 1
+        },
+        "8": {
+          "max": 1,
+          "current": 1
+        },
+        "9": {
+          "max": 1,
+          "current": 1
+        }
+      },
+      "effectiveSlots": {},
+      "spellCount": 20,
+      "inventoryCount": 0,
+      "abilityCount": 22,
+      "missing": [],
+      "renderError": null,
+      "htmlLength": 332204,
+      "tabs": [
+        "identity",
+        "stats",
+        "gameplay",
+        "abilities",
+        "spells",
+        "combat",
+        "resources",
+        "notes"
+      ],
+      "proficiency": 5,
+      "stats": {
+        "str": {
+          "score": 6
+        },
+        "dex": {
+          "score": 5
+        },
+        "con": {
+          "score": 8
+        },
+        "int": {
+          "score": 1
+        },
+        "wis": {
+          "score": 9
+        },
+        "cha": {
+          "score": 10
+        }
+      },
+      "notes": "Use Boss Presence only while Capella is being run as an enemy boss or DMPC boss. If she is tamed, pacified, recruited, purified, weakened, or otherwise removed from boss status, turn Boss Presence off and use the tamed/default stats and HP. Player-facing Deception / Impersonation / Persuasion uses the special social rules in the Roll Calculator: no prepared deception package against party members, and no Silver Tongue or Expert Deceiver against player Insight checks."
+    },
+    {
+      "name": "Carol Elfnein",
+      "id": "carol-elfnein",
+      "path": "library/characters/carol-elfnein.json",
+      "level": 10,
+      "class": "Wizard",
+      "multiclass": [
+        {
+          "class": "Sorcerer",
+          "subclass": "Mage of Quandrix",
+          "level": 1
+        }
+      ],
+      "storedHp": {
+        "max": 62,
+        "current": 28,
+        "temp": 0,
+        "log": [
+          {
+            "id": "elfnein-hp-created",
+            "date": "2024-09-02",
+            "delta": 58,
+            "reason": "Base HP 58 from Discord calculator."
+          },
+          {
+            "id": "elfnein-hp-explosion",
+            "date": "2024-09-02",
+            "delta": -11,
+            "reason": "Fire damage from explosion."
+          },
+          {
+            "id": "elfnein-hp-long-rest-1",
+            "date": "2024-09-02",
+            "delta": 11,
+            "reason": "Healed in long rest."
+          },
+          {
+            "id": "elfnein-hp-amalgam-bite",
+            "date": "2024-09-02",
+            "delta": -32,
+            "reason": "Damage from being bit/jumped by Amalgam."
+          },
+          {
+            "id": "elfnein-hp-amalgam-necrotic",
+            "date": "2024-09-02",
+            "delta": -6,
+            "reason": "Necrotic damage from Amalgam bite."
+          },
+          {
+            "id": "elfnein-hp-divine-intervention",
+            "date": "2024-09-02",
+            "delta": 1,
+            "reason": "Divine intervention."
+          },
+          {
+            "id": "elfnein-hp-crushed",
+            "date": "2024-09-02",
+            "delta": -6,
+            "reason": "Crushed again."
+          },
+          {
+            "id": "elfnein-hp-potion-1",
+            "date": "2024-09-02",
+            "delta": 4,
+            "reason": "Healing potion."
+          },
+          {
+            "id": "elfnein-hp-potion-2",
+            "date": "2024-09-02",
+            "delta": 3,
+            "reason": "Healing potion."
+          },
+          {
+            "id": "elfnein-hp-short-rest",
+            "date": "2024-09-02",
+            "delta": 32,
+            "reason": "Short rest."
+          },
+          {
+            "id": "elfnein-hp-level-up",
+            "date": "2024-09-02",
+            "delta": 16,
+            "reason": "2x level up; +16 max too."
+          },
+          {
+            "id": "f3d08240-c5ef-4075-b63f-d4672fb0207f",
+            "date": "2026-06-06",
+            "delta": -62,
+            "reason": "Resetting to 0 real quick"
+          },
+          {
+            "id": "aa46cc91-c512-45f6-90e5-4bd0ffaa4e6e",
+            "date": "2026-06-06",
+            "delta": 26,
+            "reason": "Current HP"
+          },
+          {
+            "id": "f9306cc9-aed3-46f3-9154-67e15f3b0f5c",
+            "date": "2026-06-06",
+            "delta": 25,
+            "reason": "Adding a thing rq"
+          },
+          {
+            "id": "07a2234a-3f60-4bbe-8ee1-a954a27bfd20",
+            "date": "2026-06-06",
+            "delta": -25,
+            "reason": "Got vored then crotch shot."
+          },
+          {
+            "id": "141962b5-6dff-4698-8b97-47e4c5f198ad",
+            "date": "2026-06-06",
+            "delta": 14,
+            "reason": "Greater Healing Potion"
+          },
+          {
+            "id": "8312de33-6d1a-4995-a1f6-752058e44c0d",
+            "date": "2026-06-06",
+            "delta": -12,
+            "reason": "FRIENDLY FIRE FROM GIRUTO!"
+          }
+        ],
+        "mode": "calculated"
+      },
+      "effectiveHp": {
+        "current": 28,
+        "max": 62,
+        "temp": 0,
+        "mode": "calculated",
+        "overrideActive": false,
+        "storedOverrideMax": 62,
+        "calculatedMax": 62,
+        "hasCalculatedMax": true,
+        "calculation": {
+          "total": 62,
+          "conMod": 2,
+          "parts": [
+            {
+              "label": "Wizard",
+              "value": 56,
+              "kind": "positive",
+              "description": "9 levels using d6; CON +2 each level."
+            },
+            {
+              "label": "Sorcerer",
+              "value": 6,
+              "kind": "positive",
+              "description": "1 level using d6; CON +2 each level."
+            }
+          ],
+          "race": {
+            "schemaVersion": 1,
+            "id": "species.reborn-homunculus-human",
+            "name": "Reborn / Homunculus (Human)",
+            "collections": [
+              "species"
+            ],
+            "tags": [
+              "dandd-5e",
+              "reborn",
+              "human",
+              "homunculus",
+              "species"
+            ],
+            "variantOf": "human",
+            "sourceReferences": [],
+            "features": {
+              "species": {
+                "creatureType": "humanoid",
+                "defaultSize": "medium"
+              },
+              "movement": {
+                "walk": {
+                  "quantity": 30,
+                  "unit": "ft"
+                }
+              },
+              "abilityBonuses": {},
+              "hp": {
+                "flatBonus": 0,
+                "perLevelBonus": 0
+              },
+              "traits": {
+                "traitIds": []
+              },
+              "mechanics": [
+                {
+                  "label": "Provisional",
+                  "kind": "requirement",
+                  "description": "Elfnein's ancestry is story-driven; keep exact stat origin table-approved."
+                }
+              ]
+            },
+            "desc": "Story-first Reborn/Homunculus ancestry template.",
+            "collection": "species",
+            "source": "custom",
+            "provider": "",
+            "providerId": "",
+            "description": "Story-first Reborn/Homunculus ancestry template.",
+            "addons": {
+              "mechanics": [
+                {
+                  "label": "Provisional",
+                  "kind": "requirement",
+                  "description": "Elfnein's ancestry is story-driven; keep exact stat origin table-approved."
+                }
+              ],
+              "sourceDocument": null,
+              "actions": [],
+              "hp": {
+                "flatBonus": 0,
+                "perLevelBonus": 0
+              }
+            },
+            "speed": {
+              "walk": 30
+            }
+          },
+          "levels": [
+            {
+              "class": "Wizard",
+              "subclass": "Bladesinging",
+              "level": 9
+            },
+            {
+              "class": "Sorcerer",
+              "subclass": "Mage of Quandrix",
+              "level": 1
+            }
+          ]
+        }
+      },
+      "storedSlots": {
+        "1": {
+          "max": 4,
+          "current": 4
+        },
+        "2": {
+          "max": 3,
+          "current": 3
+        },
+        "3": {
+          "max": 3,
+          "current": 3
+        },
+        "4": {
+          "max": 3,
+          "current": 3
+        },
+        "5": {
+          "max": 2,
+          "current": 2
+        }
+      },
+      "effectiveSlots": {
+        "1": {
+          "max": 4,
+          "current": 4,
+          "calculatedMax": 4,
+          "overrideMax": 0
+        },
+        "2": {
+          "max": 3,
+          "current": 3,
+          "calculatedMax": 3,
+          "overrideMax": 0
+        },
+        "3": {
+          "max": 3,
+          "current": 3,
+          "calculatedMax": 3,
+          "overrideMax": 0
+        },
+        "4": {
+          "max": 3,
+          "current": 3,
+          "calculatedMax": 3,
+          "overrideMax": 0
+        },
+        "5": {
+          "max": 2,
+          "current": 2,
+          "calculatedMax": 2,
+          "overrideMax": 0
+        }
+      },
+      "spellCount": 21,
+      "inventoryCount": 2,
+      "abilityCount": 5,
+      "missing": [
+        {
+          "section": "spells",
+          "ref": "elfnein-spell-create-bonfire"
+        },
+        {
+          "section": "spells",
+          "ref": "elfnein-spell-ray-of-frost"
+        },
+        {
+          "section": "spells",
+          "ref": "elfnein-spell-booming-blade"
+        },
+        {
+          "section": "spells",
+          "ref": "elfnein-spell-mage-armor"
+        },
+        {
+          "section": "spells",
+          "ref": "elfnein-spell-shield"
+        },
+        {
+          "section": "spells",
+          "ref": "elfnein-spell-chromatic-orb"
+        },
+        {
+          "section": "spells",
+          "ref": "elfnein-spell-burning-hands"
+        },
+        {
+          "section": "spells",
+          "ref": "elfnein-spell-catapult"
+        },
+        {
+          "section": "spells",
+          "ref": "elfnein-spell-web"
+        },
+        {
+          "section": "spells",
+          "ref": "elfnein-spell-hold-person"
+        },
+        {
+          "section": "spells",
+          "ref": "elfnein-spell-rimes-binding-of-ice"
+        },
+        {
+          "section": "spells",
+          "ref": "elfnein-spell-tidal-wave"
+        },
+        {
+          "section": "spells",
+          "ref": "elfnein-spell-wall-of-force"
+        },
+        {
+          "section": "spells",
+          "ref": "elfnein-spell-steel-wind-strike"
+        },
+        {
+          "section": "spells",
+          "ref": "elfnein-spell-tashas-otherworldly-guise"
+        },
+        {
+          "section": "spells",
+          "ref": "elfnein-spell-prismatic-wall"
+        },
+        {
+          "section": "spells",
+          "ref": "elfnein-spell-guidance"
+        },
+        {
+          "section": "spells",
+          "ref": "elfnein-spell-absorb-elements"
+        },
+        {
+          "section": "spells",
+          "ref": "elfnein-spell-enlarge-reduce"
+        },
+        {
+          "section": "inventory",
+          "ref": "elfnein-item-dur-da-bla"
+        },
+        {
+          "section": "inventory",
+          "ref": "elfnein-item-silver-gold-focus"
+        },
+        {
+          "section": "abilities",
+          "ref": "elfnein-trait-alchemy"
+        },
+        {
+          "section": "abilities",
+          "ref": "elfnein-trait-bladesong"
+        },
+        {
+          "section": "abilities",
+          "ref": "elfnein-trait-song-charisma"
+        },
+        {
+          "section": "abilities",
+          "ref": "elfnein-trait-deathless"
+        },
+        {
+          "section": "abilities",
+          "ref": "elfnein-trait-faust-robe"
+        },
+        {
+          "section": "customResources",
+          "ref": "elfnein-resource-spell-memories"
+        },
+        {
+          "section": "customResources",
+          "ref": "elfnein-resource-bladesong"
+        },
+        {
+          "section": "customResources",
+          "ref": "elfnein-resource-sorcery-points"
+        },
+        {
+          "section": "feats",
+          "ref": "elfnein-feat-dual-wielder"
+        },
+        {
+          "section": "feats",
+          "ref": "elfnein-feat-metamagic-adept"
+        }
+      ],
+      "renderError": null,
+      "htmlLength": 133066,
+      "tabs": [
+        "identity",
+        "stats",
+        "gameplay",
+        "abilities",
+        "spells",
+        "inventory",
+        "resources",
+        "notes"
+      ],
+      "proficiency": 4,
+      "stats": {
+        "str": {
+          "score": 8
+        },
+        "dex": {
+          "score": 16
+        },
+        "con": {
+          "score": 14
+        },
+        "int": {
+          "score": 22
+        },
+        "wis": {
+          "score": 10
+        },
+        "cha": {
+          "score": 11
+        }
+      },
+      "notes": "Provisional sheet. Elfnein is less mechanically settled than Capella or Seraphine, so uncertain features are marked with Provisional, Future, or DM Fiat chips. Current assumed play state is Wizard 9 / Sorcerer 1, total level 10, with future Wizard/Sorcerer progression listed as available planning rather than current access. Her magic is flavored as alchemy; when material focus or elemental sources are unavailable, spells can burn Spell Memories."
+    },
+    {
+      "name": "Rall",
+      "id": "1d8fc4ba-acac-44fe-8edd-7a0ffc465238",
+      "path": "library/characters/rall.json",
+      "level": 11,
+      "class": "Fighter",
+      "multiclass": [
+        {
+          "class": "Fighter",
+          "subclass": "Eldritch Knight",
+          "level": 1
+        }
+      ],
+      "storedHp": {
+        "max": 0,
+        "current": 0,
+        "temp": 0,
+        "log": []
+      },
+      "effectiveHp": {
+        "current": 0,
+        "max": 92,
+        "temp": 0,
+        "mode": "calculated",
+        "overrideActive": false,
+        "storedOverrideMax": 0,
+        "calculatedMax": 92,
+        "hasCalculatedMax": true,
+        "calculation": {
+          "total": 92,
+          "conMod": 2,
+          "parts": [
+            {
+              "label": "Fighter",
+              "value": 84,
+              "kind": "positive",
+              "description": "10 levels using d10; CON +2 each level."
+            },
+            {
+              "label": "Fighter",
+              "value": 8,
+              "kind": "positive",
+              "description": "1 level using d10; CON +2 each level."
+            }
+          ],
+          "race": null,
+          "levels": [
+            {
+              "class": "Fighter",
+              "subclass": "Battlemaster",
+              "level": 10
+            },
+            {
+              "class": "Fighter",
+              "subclass": "Eldritch Knight",
+              "level": 1
+            }
+          ]
+        }
+      },
+      "storedSlots": {},
+      "effectiveSlots": {},
+      "spellCount": 1,
+      "inventoryCount": 1,
+      "abilityCount": 0,
+      "missing": [],
+      "renderError": null,
+      "htmlLength": 30335,
+      "tabs": [
+        "identity",
+        "stats",
+        "gameplay",
+        "abilities",
+        "spells",
+        "inventory",
+        "resources"
+      ],
+      "proficiency": 2,
+      "stats": {
+        "str": {
+          "score": 12
+        },
+        "dex": {
+          "score": 18
+        },
+        "con": {
+          "score": 14
+        },
+        "int": {
+          "score": 16
+        },
+        "wis": {
+          "score": 19
+        },
+        "cha": {
+          "score": 12
+        }
+      },
+      "notes": ""
+    },
+    {
+      "name": "Seraphine",
+      "id": "seraphine",
+      "path": "library/characters/seraphine.json",
+      "level": 9,
+      "class": "Cleric",
+      "multiclass": [],
+      "storedHp": {
+        "max": 57,
+        "current": 57,
+        "temp": 0,
+        "log": [
+          {
+            "id": "seraphine-hp-start",
+            "date": "2025-02-07",
+            "delta": 57,
+            "reason": "Base HP calculator: 9 starting Cleric + 48 from 8 subsequent levels."
+          }
+        ]
+      },
+      "effectiveHp": {
+        "current": 57,
+        "max": 57,
+        "temp": 0,
+        "mode": "calculated",
+        "overrideActive": false,
+        "storedOverrideMax": 57,
+        "calculatedMax": 57,
+        "hasCalculatedMax": true,
+        "calculation": {
+          "total": 57,
+          "conMod": 1,
+          "parts": [
+            {
+              "label": "Cleric",
+              "value": 57,
+              "kind": "positive",
+              "description": "9 levels using d8; CON +1 each level."
+            }
+          ],
+          "race": {
+            "schemaVersion": 1,
+            "id": "species.human-dragonmark-of-sentinel",
+            "name": "Human (Dragonmark of Sentinel)",
+            "collections": [
+              "species"
+            ],
+            "tags": [
+              "dandd-5e",
+              "dragonmark",
+              "human",
+              "species"
+            ],
+            "variantOf": "human",
+            "sourceReferences": [],
+            "features": {
+              "species": {
+                "creatureType": "humanoid",
+                "defaultSize": "medium"
+              },
+              "movement": {
+                "walk": {
+                  "quantity": 30,
+                  "unit": "ft"
+                }
+              },
+              "abilityBonuses": {
+                "con": 2,
+                "wis": 1
+              },
+              "hp": {
+                "flatBonus": 0,
+                "perLevelBonus": 0
+              },
+              "traits": {
+                "traitIds": [
+                  "Sentinel's Intuition",
+                  "Guardian's Shield",
+                  "Vigilant Guardian"
+                ]
+              },
+              "mechanics": [
+                {
+                  "label": "CON",
+                  "value": "+2",
+                  "kind": "positive",
+                  "description": "Dragonmark of Sentinel ability increase."
+                },
+                {
+                  "label": "WIS",
+                  "value": "+1",
+                  "kind": "positive",
+                  "description": "Dragonmark of Sentinel ability increase."
+                }
+              ]
+            },
+            "desc": "Protective human dragonmark lineage. The listed stat bonuses are tracked as ancestry math and should already be included in final ability scores.",
+            "collection": "species",
+            "source": "custom",
+            "provider": "",
+            "providerId": "",
+            "description": "Protective human dragonmark lineage. The listed stat bonuses are tracked as ancestry math and should already be included in final ability scores.",
+            "addons": {
+              "mechanics": [
+                {
+                  "label": "CON",
+                  "value": "+2",
+                  "kind": "positive",
+                  "description": "Dragonmark of Sentinel ability increase."
+                },
+                {
+                  "label": "WIS",
+                  "value": "+1",
+                  "kind": "positive",
+                  "description": "Dragonmark of Sentinel ability increase."
+                }
+              ],
+              "sourceDocument": null,
+              "actions": [],
+              "hp": {
+                "flatBonus": 0,
+                "perLevelBonus": 0
+              }
+            },
+            "speed": {
+              "walk": 30
+            }
+          },
+          "levels": [
+            {
+              "class": "Cleric",
+              "subclass": "",
+              "level": 9
+            }
+          ]
+        }
+      },
+      "storedSlots": {
+        "1": {
+          "max": 4,
+          "current": 4
+        },
+        "2": {
+          "max": 3,
+          "current": 3
+        },
+        "3": {
+          "max": 3,
+          "current": 3
+        },
+        "4": {
+          "max": 3,
+          "current": 3
+        },
+        "5": {
+          "max": 1,
+          "current": 1
+        }
+      },
+      "effectiveSlots": {
+        "1": {
+          "max": 4,
+          "current": 4,
+          "calculatedMax": 4,
+          "overrideMax": 0
+        },
+        "2": {
+          "max": 3,
+          "current": 3,
+          "calculatedMax": 3,
+          "overrideMax": 0
+        },
+        "3": {
+          "max": 3,
+          "current": 3,
+          "calculatedMax": 3,
+          "overrideMax": 0
+        },
+        "4": {
+          "max": 3,
+          "current": 3,
+          "calculatedMax": 3,
+          "overrideMax": 0
+        },
+        "5": {
+          "max": 1,
+          "current": 1,
+          "calculatedMax": 1,
+          "overrideMax": 0
+        }
+      },
+      "spellCount": 95,
+      "inventoryCount": 2,
+      "abilityCount": 6,
+      "missing": [],
+      "renderError": null,
+      "htmlLength": 354673,
+      "tabs": [
+        "identity",
+        "stats",
+        "gameplay",
+        "abilities",
+        "spells",
+        "inventory",
+        "resources",
+        "notes"
+      ],
+      "proficiency": 4,
+      "stats": {
+        "str": {
+          "score": 8
+        },
+        "dex": {
+          "score": 14
+        },
+        "con": {
+          "score": 12
+        },
+        "int": {
+          "score": 12
+        },
+        "wis": {
+          "score": 19
+        },
+        "cha": {
+          "score": 14
+        }
+      },
+      "notes": "Fiction-first sheet: Seraphine can carry a broader cleric/story spell list than strict D&D preparation would normally allow. Use Prepared/Available/Mark Spell/Story Permission chips to decide what is ready, what is known, and what needs DM/story permission. Fading Grace is intentionally marked as undefined until its exact quirk rules are written."
+    },
+    {
+      "name": "Test Character 1",
+      "id": "a34bbbcd-d770-413d-829b-5da278db5973",
+      "path": "library/characters/test-character-1.json",
+      "level": 1,
+      "class": "Wizard",
+      "multiclass": [],
+      "storedHp": {
+        "max": 1337,
+        "current": 730,
+        "temp": 0,
+        "log": [
+          {
+            "id": "1006ceb6-3dbe-49d2-a44b-3783d0f2c5d4",
+            "date": "2026-05-01",
+            "delta": -1000,
+            "reason": "FIREBALL!"
+          },
+          {
+            "id": "825ad394-b3a1-4d8d-bca4-ffe901721c67",
+            "date": "2026-05-01",
+            "delta": 1,
+            "reason": "Start"
+          },
+          {
+            "id": "7a8e576d-afc5-4fa5-a331-48416071f150",
+            "date": "2026-05-01",
+            "delta": -607,
+            "reason": "FIREBALL!"
+          }
+        ]
+      },
+      "effectiveHp": {
+        "current": 730,
+        "max": 6,
+        "temp": 0,
+        "mode": "calculated",
+        "overrideActive": false,
+        "storedOverrideMax": 1337,
+        "calculatedMax": 6,
+        "hasCalculatedMax": true,
+        "calculation": {
+          "total": 6,
+          "conMod": 0,
+          "parts": [
+            {
+              "label": "Wizard",
+              "value": 6,
+              "kind": "positive",
+              "description": "1 level using d6; CON +0 each level."
+            }
+          ],
+          "race": {
+            "schemaVersion": 1,
+            "id": "species.human",
+            "name": "Human",
+            "collections": [
+              "species"
+            ],
+            "tags": [
+              "dandd-5e",
+              "species"
+            ],
+            "variantOf": null,
+            "sourceReferences": [],
+            "features": {
+              "species": {
+                "creatureType": "humanoid",
+                "defaultSize": "medium"
+              },
+              "movement": {
+                "walk": {
+                  "quantity": 30,
+                  "unit": "ft"
+                }
+              },
+              "abilityBonuses": {},
+              "hp": {
+                "flatBonus": 0,
+                "perLevelBonus": 0
+              },
+              "traits": {
+                "traitIds": []
+              },
+              "mechanics": [
+                {
+                  "label": "Flexible Lineage",
+                  "kind": "neutral",
+                  "description": "Use the exact table-approved human variant for ability scores."
+                }
+              ]
+            },
+            "desc": "Generic human ancestry template.",
+            "collection": "species",
+            "source": "custom",
+            "provider": "",
+            "providerId": "",
+            "description": "Generic human ancestry template.",
+            "addons": {
+              "mechanics": [
+                {
+                  "label": "Flexible Lineage",
+                  "kind": "neutral",
+                  "description": "Use the exact table-approved human variant for ability scores."
+                }
+              ],
+              "sourceDocument": null,
+              "actions": [],
+              "hp": {
+                "flatBonus": 0,
+                "perLevelBonus": 0
+              }
+            },
+            "speed": {
+              "walk": 30
+            }
+          },
+          "levels": [
+            {
+              "class": "Wizard",
+              "subclass": "",
+              "level": 1
+            }
+          ]
+        }
+      },
+      "storedSlots": {},
+      "effectiveSlots": {
+        "1": {
+          "max": 2,
+          "current": 2,
+          "calculatedMax": 2,
+          "overrideMax": 0
+        }
+      },
+      "spellCount": 1,
+      "inventoryCount": 1,
+      "abilityCount": 0,
+      "missing": [],
+      "renderError": null,
+      "htmlLength": 32705,
+      "tabs": [
+        "identity",
+        "stats",
+        "gameplay",
+        "abilities",
+        "spells",
+        "inventory",
+        "resources",
+        "notes"
+      ],
+      "proficiency": 2,
+      "stats": {
+        "str": {
+          "score": 12
+        },
+        "dex": {
+          "score": 9
+        },
+        "con": {
+          "score": 11
+        },
+        "int": {
+          "score": 5
+        },
+        "wis": {
+          "score": 14
+        },
+        "cha": {
+          "score": 15
+        }
+      },
+      "notes": "Yes"
+    }
+  ],
+  "repros": {
+    "slotOverride": {
+      "casterLevel": 5,
+      "slots": {
+        "1": {
+          "max": 4,
+          "current": 3,
+          "calculatedMax": 4,
+          "overrideMax": 1
+        },
+        "2": {
+          "max": 3,
+          "current": 3,
+          "calculatedMax": 3,
+          "overrideMax": 0
+        },
+        "3": {
+          "max": 2,
+          "current": 2,
+          "calculatedMax": 2,
+          "overrideMax": 0
+        }
+      },
+      "parts": [
+        {
+          "label": "Wizard",
+          "value": "Caster Lv 5",
+          "kind": "positive",
+          "description": "5 levels using full spellcasting progression."
+        }
+      ],
+      "note": "",
+      "mode": "override",
+      "overrideActive": true,
+      "overrides": {
+        "1": 1
+      }
+    },
+    "ranger3": {
+      "casterLevel": 1,
+      "slots": {
+        "1": {
+          "max": 2,
+          "current": 2
+        }
+      },
+      "parts": [
+        {
+          "label": "Ranger",
+          "value": "Caster Lv 1",
+          "kind": "positive",
+          "description": "3 levels using half spellcasting progression."
+        }
+      ],
+      "note": ""
+    },
+    "hpMissingMode": {
+      "current": 44,
+      "max": 44,
+      "temp": 0,
+      "mode": "calculated",
+      "overrideActive": false,
+      "storedOverrideMax": 100,
+      "calculatedMax": 44,
+      "hasCalculatedMax": true,
+      "calculation": {
+        "total": 44,
+        "conMod": 2,
+        "parts": [
+          {
+            "label": "Fighter",
+            "value": 44,
+            "kind": "positive",
+            "description": "5 levels using d10; CON +2 each level."
+          }
+        ],
+        "race": null,
+        "levels": [
+          {
+            "class": "Fighter",
+            "subclass": "",
+            "level": 5
+          }
+        ]
+      }
+    }
+  },
+  "syntax": [],
+  "saveSimulation": {
+    "character": {
+      "identity": {
+        "name": "Audit Character",
+        "race": "Human"
+      },
+      "dnd": {
+        "class": "Wizard",
+        "level": 5,
+        "feats": []
+      },
+      "spells": [
+        {
+          "id": "52ec41a3-7420-476c-bb8b-6b76936103b6",
+          "source": "library",
+          "libraryCollection": "spells",
+          "librarySource": "custom",
+          "libraryRef": "audit-spell",
+          "overrides": {},
+          "prepared": true
+        }
+      ],
+      "inventory": [],
+      "abilities": [],
+      "customResources": []
+    },
+    "spellAfterSave": {
+      "schemaVersion": 1,
+      "id": "52ec41a3-7420-476c-bb8b-6b76936103b6",
+      "name": "Audit Spell",
+      "collections": [
+        "spells"
+      ],
+      "tags": [],
+      "variantOf": null,
+      "sourceReferences": [],
+      "features": {},
+      "desc": "",
+      "collection": "spells",
+      "source": "library",
+      "provider": "",
+      "providerId": "",
+      "description": "",
+      "addons": {
+        "mechanics": [],
+        "sourceDocument": null,
+        "actions": []
+      },
+      "level": 0,
+      "school": "",
+      "castingTime": "",
+      "range": "",
+      "components": [],
+      "duration": "",
+      "libraryCollection": "spells",
+      "librarySource": "custom",
+      "libraryRef": "audit-spell",
+      "overrides": {},
+      "prepared": true,
+      "access": null,
+      "active": true,
+      "quantity": 1,
+      "current": 0,
+      "max": 0,
+      "log": []
+    },
+    "classBefore": {
+      "schemaVersion": 1,
+      "id": "classes.wizard",
+      "name": "Wizard",
+      "collections": [
+        "classes"
+      ],
+      "tags": [
+        "dandd-5e",
+        "full-caster"
+      ],
+      "variantOf": null,
+      "sourceReferences": [],
+      "features": {
+        "class": {
+          "hitDie": "d6",
+          "primaryAbility": "Intelligence"
+        },
+        "spellcastingProgression": {
+          "progression": "full"
+        }
+      },
+      "desc": "Prepared arcane full caster.",
+      "collection": "classes",
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "description": "Prepared arcane full caster.",
+      "addons": {
+        "mechanics": [],
+        "sourceDocument": null,
+        "actions": [],
+        "spellcasting": {
+          "progression": "full"
+        }
+      },
+      "hitDie": "d6",
+      "primaryAbility": "Intelligence"
+    },
+    "classAfter": {
+      "schemaVersion": 1,
+      "id": "classes.wizard",
+      "name": "Wizard",
+      "collections": [
+        "classes"
+      ],
+      "tags": [],
+      "variantOf": null,
+      "sourceReferences": [],
+      "features": {},
+      "desc": "",
+      "collection": "classes",
+      "source": "custom",
+      "provider": "",
+      "providerId": "",
+      "description": "",
+      "addons": {
+        "mechanics": [],
+        "sourceDocument": null,
+        "actions": []
+      },
+      "hitDie": "",
+      "primaryAbility": ""
+    },
+    "spellWritten": {
+      "path": "library/records/spells/audit-spell.json",
+      "data": {
+        "schemaVersion": 1,
+        "id": "audit-spell",
+        "name": "Audit Spell",
+        "collections": [
+          "spells"
+        ],
+        "tags": [],
+        "variantOf": null,
+        "sourceReferences": [],
+        "features": {},
+        "desc": "",
+        "source": "custom",
+        "level": 3,
+        "school": "Evocation",
+        "castingTime": "1 action",
+        "range": "150 ft",
+        "duration": "Instantaneous",
+        "description": "Deal 8d6 fire damage.",
+        "prepared": true,
+        "access": {
+          "label": "Future"
+        },
+        "addons": {
+          "damage": {
+            "dice": "8d6"
+          },
+          "components": [],
+          "ritual": {
+            "enabled": false
+          },
+          "concentration": {
+            "enabled": false
+          }
+        },
+        "collection": "spells",
+        "updatedAt": "2026-10-12T07:10:46.012Z"
+      }
+    },
+    "writeCount": 12
+  }
+}

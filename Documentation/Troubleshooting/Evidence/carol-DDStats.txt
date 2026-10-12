@@ -1,0 +1,118 @@
+Browser tab: 4, Title: "127.0.0.1:5500/audit/carol-elfnein.html", URL: "http://127.0.0.1:5500/audit/carol-elfnein.html".
+1 AXWebArea 127.0.0.1:5500/audit/carol-elfnein.html
+	2 container sheet-content
+		3 container
+			4 text PC PLAYER CHARACTER
+			5 heading Carol Elfnein, Value: 1
+				6 text Carol Elfnein
+			7 text REBORN / HOMUNCULUS (HUMAN) • WIZARD / BLADESINGING 10 • SORCERER / MAGE OF QUANDRIX / LV.1 • SAGE
+			8 container HP 28 / 62
+				9 text HP 28/62
+			10 container AC — Base / Mage Armor
+				11 text AC 16
+			12 container Initiative
+				13 text INIT +3
+			14 container Speed
+				15 text SPD 30
+			16 button IDENTITY
+			17 button D&D STATS
+			18 button D&D GAMEPLAY
+			19 button ABILITIES & FEATS
+			20 button SPELLS
+			21 button INVENTORY
+			22 button RESOURCES
+			23 button NOTES
+		24 container
+			25 heading COMBAT, Value: 2
+				26 text COMBAT
+			27 text 28 / 62 HP
+			28 container Class hit dice plus Constitution and race HP bonuses.
+				29 button (collapsed) CALCULATED HP 62, Secondary Actions: Expand
+					30 text CALCULATED HP
+					31 text 62
+			32 container 9 levels using d6; CON +2 each level.
+				33 button (collapsed) WIZARD 56, Secondary Actions: Expand
+					34 text WIZARD
+					35 text 56
+			36 container 1 level using d6; CON +2 each level.
+				37 button (collapsed) SORCERER 6, Secondary Actions: Expand
+					38 text SORCERER
+					39 text 6
+			40 heading ARMOR CLASS MODES, Value: 2
+				41 text ARMOR CLASS MODES
+			42 button BASE / MAGE ARMOR 16 13 + DEX +3
+				43 text BASE / MAGE ARMOR
+				44 text 16
+				45 text 13 + DEX +3
+			46 button BLADESONG 22 Base 16 + INT +6
+				47 text BLADESONG
+				48 text 22
+				49 text Base 16 + INT +6
+			50 button SHIELD + BLADESONG 25 Discord note says 25; RAW math may be 27
+				51 text SHIELD + BLADESONG
+				52 text 25
+				53 text Discord note says 25; RAW math may be 27
+			54 button MAX / OTHERWORLDLY GUISE 29 Future Faust Robe / Otherworldly Guise + Shield + Bladesong
+				55 text MAX / OTHERWORLDLY GUISE
+				56 text 29
+				57 text Future Faust Robe / Otherworldly Guise + Shield + Bladesong
+			58 heading COMBAT STATS, Value: 2
+				59 text COMBAT STATS
+			60 text ARMOR CLASS
+			61 text 16
+			62 text INITIATIVE
+			63 text +3
+			64 text PROF. BONUS
+			65 text +4
+			66 text SPELL SAVE DC
+			67 text 18
+			68 text SPELL/FLESH ATTACK
+			69 text +10
+			70 text WALK 30ft
+			71 heading ABILITY SCORES, Value: 2
+				72 text ABILITY SCORES
+			73 container Strength
+				74 text STR
+				75 text -1
+				76 text 8
+			77 container Dexterity
+				78 text DEX
+				79 text +3
+				80 text 16
+			81 container Constitution
+				82 text CON
+				83 text +2
+				84 text 14
+			85 container Intelligence
+				86 text INT
+				87 text +6
+				88 text 22
+				89 text SPELLCASTING
+			90 container Wisdom
+				91 text WIS
+				92 text +0
+				93 text 10
+			94 container Charisma
+				95 text CHA
+				96 text +0
+				97 text 11
+			98 text Spellcasting ability: Intelligence
+			99 heading SAVING THROWS, Value: 2
+				100 text SAVING THROWS
+			101 container
+				102 text -1 STRENGTH
+			103 container
+				104 text +3 DEXTERITY
+			105 container
+				106 text +2 CONSTITUTION
+			107 container
+				108 text +10 INTELLIGENCE
+			109 container
+				110 text +4 WISDOM
+			111 container
+				112 text +0 CHARISMA
+			113 heading SKILLS, Value: 2
+				114 text SKILLS
+			115 text +3 Acrobatics DEX +0 Animal Handling WIS +10 Arcana INT -1 Athletics STR +0 Deception CHA +10 History INT +0 Insight WIS +0 Intimidation CHA +10 Investigation INT +0 Medicine WIS +10 Nature INT +0 Perception WIS +0 Performance CHA +0 Persuasion CHA +10 Religion INT +3 Sleight of Hand DEX +3 Stealth DEX +0 Survival WIS
+
+The focused UI element is 17 button D&D STATS

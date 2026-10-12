@@ -1,0 +1,52 @@
+Browser tab: 4, Title: "127.0.0.1:5500/audit/seraphine.html", URL: "http://127.0.0.1:5500/audit/seraphine.html".
+1 AXWebArea 127.0.0.1:5500/audit/seraphine.html
+	2 container sheet-content
+		3 container
+			4 text PC PLAYER CHARACTER
+			5 heading Seraphine, Value: 1
+				6 text Seraphine
+			7 text HUMAN (DRAGONMARK OF SENTINEL) • CLERIC 9 • ACOLYTE / UNKNOWN
+			8 container HP 57 / 57
+				9 text HP 57/57
+			10 container AC — Assumed AC
+				11 text AC 16
+			12 container Initiative
+				13 text INIT +2
+			14 container Speed
+				15 text SPD 30
+			16 button IDENTITY
+			17 button D&D STATS
+			18 button D&D GAMEPLAY
+			19 button ABILITIES & FEATS
+			20 button SPELLS
+			21 button INVENTORY
+			22 button RESOURCES
+			23 button NOTES
+		24 container
+			25 heading INVENTORY, Value: 2
+				26 text INVENTORY
+			27 text CARRIED ITEMS 2
+			28 button (expanded) > Clerical Charms and Colors wondrous TYPE wondrous Active Visible Faith VIEW, Secondary Actions: Collapse
+				29 text >
+				30 container
+					31 text Clerical Charms and Colors  wondrous
+				32 text TYPE
+				33 text wondrous
+				34 text Active
+				35 text Visible Faith
+				36 button VIEW
+			37 text Small religious charms, colors, and devotional markers worn even where religion is outlawed.
+			38 text Clerical Religion
+			39 button (expanded) > Priestess Robes clothing TYPE clothing Active Unarmored Symbol VIEW, Secondary Actions: Collapse
+				40 text >
+				41 container
+					42 text Priestess Robes  clothing
+				43 text TYPE
+				44 text clothing
+				45 text Active
+				46 text Unarmored Symbol
+				47 button VIEW
+			48 text Full clerical robes or improvised priestess clothing. More symbolic than armored.
+			49 text Clothing Religion
+
+The focused UI element is 21 button INVENTORY
