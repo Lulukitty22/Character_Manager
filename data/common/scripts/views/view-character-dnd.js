@@ -165,6 +165,7 @@ const ViewCharacterDnd = (() => {
           <div class="abbr">${abbr}</div>
           <div class="mod">${renderStateValue(formatSigned(baseMod), formatSigned(bossMod), bossActive, boss)}</div>
           <div class="score">${renderStateValue(baseScore, bossScore, bossActive, boss)}</div>
+          ${baseScore > 20 ? `<div class="spellmark" title="Base ability score exceeds the usual limit of 20; campaign bonuses are allowed.">Above usual limit (20)</div>` : ""}
           ${boss ? `
           <div class="sheet-ability-breakdown">
             <span class="sheet-mode-line sheet-mode-tamed">Base ${baseScore} (${formatSigned(baseMod)})</span>

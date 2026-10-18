@@ -1,0 +1,834 @@
+{
+  "status": "documentation comparison, not approved character data",
+  "rules": "2024 Wizard/Sorcerer; 2025 Artificer feature milestones with final plan/prepared caps pending",
+  "builds": [
+    {
+      "wizard": 9,
+      "artificer": 3,
+      "sorcerer": 0,
+      "total": 12,
+      "proficiency": 4,
+      "effectiveCaster": 11,
+      "slots": {
+        "1": {
+          "max": 4,
+          "current": 4
+        },
+        "2": {
+          "max": 3,
+          "current": 3
+        },
+        "3": {
+          "max": 3,
+          "current": 3
+        },
+        "4": {
+          "max": 3,
+          "current": 3
+        },
+        "5": {
+          "max": 2,
+          "current": 2
+        },
+        "6": {
+          "max": 1,
+          "current": 1
+        }
+      },
+      "spellTiers": {
+        "wizard": 5,
+        "artificer": 1,
+        "sorcerer": 0
+      }
+    },
+    {
+      "wizard": 8,
+      "artificer": 4,
+      "sorcerer": 0,
+      "total": 12,
+      "proficiency": 4,
+      "effectiveCaster": 10,
+      "slots": {
+        "1": {
+          "max": 4,
+          "current": 4
+        },
+        "2": {
+          "max": 3,
+          "current": 3
+        },
+        "3": {
+          "max": 3,
+          "current": 3
+        },
+        "4": {
+          "max": 3,
+          "current": 3
+        },
+        "5": {
+          "max": 2,
+          "current": 2
+        }
+      },
+      "spellTiers": {
+        "wizard": 4,
+        "artificer": 1,
+        "sorcerer": 0
+      }
+    },
+    {
+      "wizard": 7,
+      "artificer": 5,
+      "sorcerer": 0,
+      "total": 12,
+      "proficiency": 4,
+      "effectiveCaster": 10,
+      "slots": {
+        "1": {
+          "max": 4,
+          "current": 4
+        },
+        "2": {
+          "max": 3,
+          "current": 3
+        },
+        "3": {
+          "max": 3,
+          "current": 3
+        },
+        "4": {
+          "max": 3,
+          "current": 3
+        },
+        "5": {
+          "max": 2,
+          "current": 2
+        }
+      },
+      "spellTiers": {
+        "wizard": 4,
+        "artificer": 2,
+        "sorcerer": 0
+      }
+    },
+    {
+      "wizard": 6,
+      "artificer": 6,
+      "sorcerer": 0,
+      "total": 12,
+      "proficiency": 4,
+      "effectiveCaster": 9,
+      "slots": {
+        "1": {
+          "max": 4,
+          "current": 4
+        },
+        "2": {
+          "max": 3,
+          "current": 3
+        },
+        "3": {
+          "max": 3,
+          "current": 3
+        },
+        "4": {
+          "max": 3,
+          "current": 3
+        },
+        "5": {
+          "max": 1,
+          "current": 1
+        }
+      },
+      "spellTiers": {
+        "wizard": 3,
+        "artificer": 2,
+        "sorcerer": 0
+      }
+    },
+    {
+      "wizard": 12,
+      "artificer": 0,
+      "sorcerer": 0,
+      "total": 12,
+      "proficiency": 4,
+      "effectiveCaster": 12,
+      "slots": {
+        "1": {
+          "max": 4,
+          "current": 4
+        },
+        "2": {
+          "max": 3,
+          "current": 3
+        },
+        "3": {
+          "max": 3,
+          "current": 3
+        },
+        "4": {
+          "max": 3,
+          "current": 3
+        },
+        "5": {
+          "max": 2,
+          "current": 2
+        },
+        "6": {
+          "max": 1,
+          "current": 1
+        }
+      },
+      "spellTiers": {
+        "wizard": 6,
+        "artificer": 0,
+        "sorcerer": 0
+      }
+    },
+    {
+      "wizard": 0,
+      "artificer": 12,
+      "sorcerer": 0,
+      "total": 12,
+      "proficiency": 4,
+      "effectiveCaster": 6,
+      "slots": {
+        "1": {
+          "max": 4,
+          "current": 4
+        },
+        "2": {
+          "max": 3,
+          "current": 3
+        },
+        "3": {
+          "max": 3,
+          "current": 3
+        }
+      },
+      "spellTiers": {
+        "wizard": 0,
+        "artificer": 3,
+        "sorcerer": 0
+      }
+    },
+    {
+      "wizard": 0,
+      "artificer": 0,
+      "sorcerer": 12,
+      "total": 12,
+      "proficiency": 4,
+      "effectiveCaster": 12,
+      "slots": {
+        "1": {
+          "max": 4,
+          "current": 4
+        },
+        "2": {
+          "max": 3,
+          "current": 3
+        },
+        "3": {
+          "max": 3,
+          "current": 3
+        },
+        "4": {
+          "max": 3,
+          "current": 3
+        },
+        "5": {
+          "max": 2,
+          "current": 2
+        },
+        "6": {
+          "max": 1,
+          "current": 1
+        }
+      },
+      "spellTiers": {
+        "wizard": 0,
+        "artificer": 0,
+        "sorcerer": 6
+      }
+    },
+    {
+      "wizard": 11,
+      "artificer": 3,
+      "sorcerer": 0,
+      "total": 14,
+      "proficiency": 5,
+      "effectiveCaster": 13,
+      "slots": {
+        "1": {
+          "max": 4,
+          "current": 4
+        },
+        "2": {
+          "max": 3,
+          "current": 3
+        },
+        "3": {
+          "max": 3,
+          "current": 3
+        },
+        "4": {
+          "max": 3,
+          "current": 3
+        },
+        "5": {
+          "max": 2,
+          "current": 2
+        },
+        "6": {
+          "max": 1,
+          "current": 1
+        },
+        "7": {
+          "max": 1,
+          "current": 1
+        }
+      },
+      "spellTiers": {
+        "wizard": 6,
+        "artificer": 1,
+        "sorcerer": 0
+      }
+    },
+    {
+      "wizard": 9,
+      "artificer": 5,
+      "sorcerer": 0,
+      "total": 14,
+      "proficiency": 5,
+      "effectiveCaster": 12,
+      "slots": {
+        "1": {
+          "max": 4,
+          "current": 4
+        },
+        "2": {
+          "max": 3,
+          "current": 3
+        },
+        "3": {
+          "max": 3,
+          "current": 3
+        },
+        "4": {
+          "max": 3,
+          "current": 3
+        },
+        "5": {
+          "max": 2,
+          "current": 2
+        },
+        "6": {
+          "max": 1,
+          "current": 1
+        }
+      },
+      "spellTiers": {
+        "wizard": 5,
+        "artificer": 2,
+        "sorcerer": 0
+      }
+    },
+    {
+      "wizard": 8,
+      "artificer": 6,
+      "sorcerer": 0,
+      "total": 14,
+      "proficiency": 5,
+      "effectiveCaster": 11,
+      "slots": {
+        "1": {
+          "max": 4,
+          "current": 4
+        },
+        "2": {
+          "max": 3,
+          "current": 3
+        },
+        "3": {
+          "max": 3,
+          "current": 3
+        },
+        "4": {
+          "max": 3,
+          "current": 3
+        },
+        "5": {
+          "max": 2,
+          "current": 2
+        },
+        "6": {
+          "max": 1,
+          "current": 1
+        }
+      },
+      "spellTiers": {
+        "wizard": 4,
+        "artificer": 2,
+        "sorcerer": 0
+      }
+    },
+    {
+      "wizard": 9,
+      "artificer": 3,
+      "sorcerer": 2,
+      "total": 14,
+      "proficiency": 5,
+      "effectiveCaster": 13,
+      "slots": {
+        "1": {
+          "max": 4,
+          "current": 4
+        },
+        "2": {
+          "max": 3,
+          "current": 3
+        },
+        "3": {
+          "max": 3,
+          "current": 3
+        },
+        "4": {
+          "max": 3,
+          "current": 3
+        },
+        "5": {
+          "max": 2,
+          "current": 2
+        },
+        "6": {
+          "max": 1,
+          "current": 1
+        },
+        "7": {
+          "max": 1,
+          "current": 1
+        }
+      },
+      "spellTiers": {
+        "wizard": 5,
+        "artificer": 1,
+        "sorcerer": 1
+      }
+    },
+    {
+      "wizard": 9,
+      "artificer": 6,
+      "sorcerer": 0,
+      "total": 15,
+      "proficiency": 5,
+      "effectiveCaster": 12,
+      "slots": {
+        "1": {
+          "max": 4,
+          "current": 4
+        },
+        "2": {
+          "max": 3,
+          "current": 3
+        },
+        "3": {
+          "max": 3,
+          "current": 3
+        },
+        "4": {
+          "max": 3,
+          "current": 3
+        },
+        "5": {
+          "max": 2,
+          "current": 2
+        },
+        "6": {
+          "max": 1,
+          "current": 1
+        }
+      },
+      "spellTiers": {
+        "wizard": 5,
+        "artificer": 2,
+        "sorcerer": 0
+      }
+    },
+    {
+      "wizard": 11,
+      "artificer": 6,
+      "sorcerer": 0,
+      "total": 17,
+      "proficiency": 6,
+      "effectiveCaster": 14,
+      "slots": {
+        "1": {
+          "max": 4,
+          "current": 4
+        },
+        "2": {
+          "max": 3,
+          "current": 3
+        },
+        "3": {
+          "max": 3,
+          "current": 3
+        },
+        "4": {
+          "max": 3,
+          "current": 3
+        },
+        "5": {
+          "max": 2,
+          "current": 2
+        },
+        "6": {
+          "max": 1,
+          "current": 1
+        },
+        "7": {
+          "max": 1,
+          "current": 1
+        }
+      },
+      "spellTiers": {
+        "wizard": 6,
+        "artificer": 2,
+        "sorcerer": 0
+      }
+    },
+    {
+      "wizard": 17,
+      "artificer": 3,
+      "sorcerer": 0,
+      "total": 20,
+      "proficiency": 6,
+      "effectiveCaster": 19,
+      "slots": {
+        "1": {
+          "max": 4,
+          "current": 4
+        },
+        "2": {
+          "max": 3,
+          "current": 3
+        },
+        "3": {
+          "max": 3,
+          "current": 3
+        },
+        "4": {
+          "max": 3,
+          "current": 3
+        },
+        "5": {
+          "max": 3,
+          "current": 3
+        },
+        "6": {
+          "max": 2,
+          "current": 2
+        },
+        "7": {
+          "max": 1,
+          "current": 1
+        },
+        "8": {
+          "max": 1,
+          "current": 1
+        },
+        "9": {
+          "max": 1,
+          "current": 1
+        }
+      },
+      "spellTiers": {
+        "wizard": 9,
+        "artificer": 1,
+        "sorcerer": 0
+      }
+    },
+    {
+      "wizard": 14,
+      "artificer": 6,
+      "sorcerer": 0,
+      "total": 20,
+      "proficiency": 6,
+      "effectiveCaster": 17,
+      "slots": {
+        "1": {
+          "max": 4,
+          "current": 4
+        },
+        "2": {
+          "max": 3,
+          "current": 3
+        },
+        "3": {
+          "max": 3,
+          "current": 3
+        },
+        "4": {
+          "max": 3,
+          "current": 3
+        },
+        "5": {
+          "max": 2,
+          "current": 2
+        },
+        "6": {
+          "max": 1,
+          "current": 1
+        },
+        "7": {
+          "max": 1,
+          "current": 1
+        },
+        "8": {
+          "max": 1,
+          "current": 1
+        },
+        "9": {
+          "max": 1,
+          "current": 1
+        }
+      },
+      "spellTiers": {
+        "wizard": 7,
+        "artificer": 2,
+        "sorcerer": 0
+      }
+    },
+    {
+      "wizard": 11,
+      "artificer": 9,
+      "sorcerer": 0,
+      "total": 20,
+      "proficiency": 6,
+      "effectiveCaster": 16,
+      "slots": {
+        "1": {
+          "max": 4,
+          "current": 4
+        },
+        "2": {
+          "max": 3,
+          "current": 3
+        },
+        "3": {
+          "max": 3,
+          "current": 3
+        },
+        "4": {
+          "max": 3,
+          "current": 3
+        },
+        "5": {
+          "max": 2,
+          "current": 2
+        },
+        "6": {
+          "max": 1,
+          "current": 1
+        },
+        "7": {
+          "max": 1,
+          "current": 1
+        },
+        "8": {
+          "max": 1,
+          "current": 1
+        }
+      },
+      "spellTiers": {
+        "wizard": 6,
+        "artificer": 3,
+        "sorcerer": 0
+      }
+    },
+    {
+      "wizard": 9,
+      "artificer": 11,
+      "sorcerer": 0,
+      "total": 20,
+      "proficiency": 6,
+      "effectiveCaster": 15,
+      "slots": {
+        "1": {
+          "max": 4,
+          "current": 4
+        },
+        "2": {
+          "max": 3,
+          "current": 3
+        },
+        "3": {
+          "max": 3,
+          "current": 3
+        },
+        "4": {
+          "max": 3,
+          "current": 3
+        },
+        "5": {
+          "max": 2,
+          "current": 2
+        },
+        "6": {
+          "max": 1,
+          "current": 1
+        },
+        "7": {
+          "max": 1,
+          "current": 1
+        },
+        "8": {
+          "max": 1,
+          "current": 1
+        }
+      },
+      "spellTiers": {
+        "wizard": 5,
+        "artificer": 3,
+        "sorcerer": 0
+      }
+    },
+    {
+      "wizard": 20,
+      "artificer": 0,
+      "sorcerer": 0,
+      "total": 20,
+      "proficiency": 6,
+      "effectiveCaster": 20,
+      "slots": {
+        "1": {
+          "max": 4,
+          "current": 4
+        },
+        "2": {
+          "max": 3,
+          "current": 3
+        },
+        "3": {
+          "max": 3,
+          "current": 3
+        },
+        "4": {
+          "max": 3,
+          "current": 3
+        },
+        "5": {
+          "max": 3,
+          "current": 3
+        },
+        "6": {
+          "max": 2,
+          "current": 2
+        },
+        "7": {
+          "max": 2,
+          "current": 2
+        },
+        "8": {
+          "max": 1,
+          "current": 1
+        },
+        "9": {
+          "max": 1,
+          "current": 1
+        }
+      },
+      "spellTiers": {
+        "wizard": 9,
+        "artificer": 0,
+        "sorcerer": 0
+      }
+    },
+    {
+      "wizard": 0,
+      "artificer": 20,
+      "sorcerer": 0,
+      "total": 20,
+      "proficiency": 6,
+      "effectiveCaster": 10,
+      "slots": {
+        "1": {
+          "max": 4,
+          "current": 4
+        },
+        "2": {
+          "max": 3,
+          "current": 3
+        },
+        "3": {
+          "max": 3,
+          "current": 3
+        },
+        "4": {
+          "max": 3,
+          "current": 3
+        },
+        "5": {
+          "max": 2,
+          "current": 2
+        }
+      },
+      "spellTiers": {
+        "wizard": 0,
+        "artificer": 5,
+        "sorcerer": 0
+      }
+    },
+    {
+      "wizard": 0,
+      "artificer": 0,
+      "sorcerer": 20,
+      "total": 20,
+      "proficiency": 6,
+      "effectiveCaster": 20,
+      "slots": {
+        "1": {
+          "max": 4,
+          "current": 4
+        },
+        "2": {
+          "max": 3,
+          "current": 3
+        },
+        "3": {
+          "max": 3,
+          "current": 3
+        },
+        "4": {
+          "max": 3,
+          "current": 3
+        },
+        "5": {
+          "max": 3,
+          "current": 3
+        },
+        "6": {
+          "max": 2,
+          "current": 2
+        },
+        "7": {
+          "max": 2,
+          "current": 2
+        },
+        "8": {
+          "max": 1,
+          "current": 1
+        },
+        "9": {
+          "max": 1,
+          "current": 1
+        }
+      },
+      "spellTiers": {
+        "wizard": 0,
+        "artificer": 0,
+        "sorcerer": 9
+      }
+    }
+  ]
+}

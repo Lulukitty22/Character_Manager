@@ -1,0 +1,3 @@
+# Carol Planning Snapshots
+
+Frozen copies saved2026-10-17 before consolidating append-heavy current documents. These preserve older wording/proposals and decision history, including stale pending statements; they are NOT current rules. Original relative links reflect their former locations and may not resolve from this snapshot folder. Use [current resume](../../../Primary/Carol%20Rebuild%20Status.md), [sheet](../../../Character%20Sheets/Carol%20Elfnein.md) and [weapon](../../../Class%20Reference/Aetherlock%20Engineered%20Rounds.md). Original Discord source remains unchanged in _OLD/Carol Source Sheets.

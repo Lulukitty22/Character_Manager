@@ -290,6 +290,8 @@ const EditorDnd = (() => {
           const modifier = Schema.getAbilityModifier(score);
           const modEl    = input.closest(".stat-input-group")?.querySelector(".stat-input-modifier");
           if (modEl) modEl.textContent = Schema.formatModifier(modifier);
+          const limitNote = input.closest(".stat-input-group")?.querySelector(".stat-input-limit-note");
+          if (limitNote) limitNote.hidden = score <= 20;
         });
       });
 
@@ -330,11 +332,15 @@ const EditorDnd = (() => {
     return `
       <div class="stat-input-group">
         <span class="stat-input-label">${Schema.ABILITY_ABBREVIATIONS[ability]}</span>
-        <input type="number" min="1" max="30"
+        <input type="number" min="1" step="1"
           class="stat-input-score field-input"
           data-ability="${ability}"
           value="${score}" />
         <span class="stat-input-modifier">${Schema.formatModifier(modifier)}</span>
+        <span class="stat-input-limit-note text-muted text-xs" ${Number(score) > 20 ? "" : "hidden"}
+          title="Above the usual ability score limit of 20. Campaign bonuses are allowed; this does not prevent saving.">
+          Above usual limit (20)
+        </span>
       </div>
     `;
   }

@@ -38,3 +38,5 @@ REPORT COMPLETE
 - Reviewed canonical definitions and all24 tabs; verified actual no-save editor corruption and boss/AC behavior. Desktop/narrow screenshots retained. Local audit server/tab will be cleaned up.
 
 2026-10-12 organization: this log moved into Documentation/Troubleshooting/Notes. Reports are one folder above; original evidence is in ../Evidence. Previous audit/ paths in historical entries refer to that retained evidence. Active pointers: Documentation/Primary.
+
+CAROL-FOCUSED PASS2026-10-12: Active issue inventory moved forward in Documentation/Issues/Carol-Elfnein Issues.md.40 items distinguish bugs, gaps, disconnected features and rulings;21 spells and12 missing nonspell records cross-referenced. Historical b4fe6fc snapshot retained. Confirmed DurDaBla attunedtrue is absent from migrated ref; raw HP history sums36 vs stored28, older history70 vs58; source summaries incomplete; subclass Quandrix playtest source requires validation/package completion. User wants Carol first rather than broad editor-first repair.

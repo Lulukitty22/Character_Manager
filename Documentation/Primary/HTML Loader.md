@@ -8,3 +8,9 @@ HTML files are thin shims that read GitHub owner/repository/branch metadata and 
 - Session/DM: `data/session_viewer`, `data/dungeon_master`, `share/Dungeon_Master.html`; existing work is parked.
 - Viewer metadata: `character-path`, `schema-version`, `github-owner`, `github-repo`, `github-branch`.
 - Investigate a blank/error sheet in order: metadata -> boot fetch -> manifest paths/order -> character/library references -> mount.
+
+## Intended hosted behavior
+
+Retain the HTML/JavaScript viewer with campaign and character context. Current thin shims fetch remote assets; they are not self-contained offline exports. The proposed direction combines a static frontend/core catalogue with a managed backend. HTTPS authentication is recommended; compatibility with local file origins needs testing.
+
+Existing Session/DM code remains parked while the new DM/party casting workflow is designed. No loader/export target was changed in this documentation cleanup. See [Campaigns and Shared Data](../Systems/Campaigns%20and%20Shared%20Data.md).

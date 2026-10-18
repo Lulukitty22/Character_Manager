@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "Static file server",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "5500", "--directory", "D:/Projects/Misc/Dungeons And Dragons Manager"],
+      "port": 5500
+    }
+  ]
+}

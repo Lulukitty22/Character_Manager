@@ -9,3 +9,9 @@
 - HP/slots: `data/common/scripts/dnd-calculations.js`.
 - Record detail modal/chips: `views/view-character-utils.js`; styles: `data/common/style/sheet.css`.
 - 2026-10-12: boss HP toggle targets obsolete selectors; AC selection only changes header text; Carol's non-boss custom calculators never render.
+
+## Intended shared state
+
+One resolved active-effect state and shared game clock should drive every statistic display. Configured expiry is automatic; the DM can end effects early and players can request ending through the Instant flow. Hiding an effect does not disable its mechanics.
+
+Character tabs are public by default, with owner-controlled per-tab privacy; the name remains visible. Action/effect notifications default to public even for private source tabs; the requester can hide an action/effect at submission. See [Campaigns and Shared Data](../Systems/Campaigns%20and%20Shared%20Data.md#character-sheet-visibility) and [Spell Effects and Active State](../Systems/Spell%20Effects%20and%20Active%20State.md). No runtime implementation is claimed.
