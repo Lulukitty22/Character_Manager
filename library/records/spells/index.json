@@ -57,6 +57,20 @@
       "path": "library/records/spells/transmutation/open5e-spells-wz-abrupt-hug.json"
     },
     {
+      "id": "spells.capella-spell-counterspell",
+      "name": "Counterspell",
+      "collections": [
+        "spells"
+      ],
+      "tags": [
+        "Seraphine",
+        "Level 3",
+        "Dragonmark",
+        "Story Permission"
+      ],
+      "path": "library/records/spells/capella-spell-counterspell.json"
+    },
+    {
       "id": "spells.open5e-spells-srd-2024-fireball",
       "name": "Fireball",
       "collections": [
