@@ -47,21 +47,17 @@
         "id": "spells.capella-spell-counterspell",
         "name": "Counterspell",
         "collections": [
-          "spells",
-          "spells/abjuration",
-          "spells/level-3"
+          "spells"
         ],
         "tags": [
-          "capella",
-          "reaction",
-          "defense",
-          "dandd-5e-wiki",
-          "player-s-handbook",
-          "dnd5eapi"
+          "seraphine",
+          "level-3",
+          "dragonmark",
+          "story-permission"
         ],
-        "path": "library/records/spells/abjuration/capella-spell-counterspell.json",
-        "sha": "",
-        "updatedAt": "2026-05-03T15:10:50.038Z"
+        "path": "library/records/spells/capella-spell-counterspell.json",
+        "sha": "2a660f598f610d8a19ef5f2ab60aa39133963158",
+        "updatedAt": "2026-10-19T02:43:03.958Z"
       },
       {
         "id": "spells.d249f049-b5c0-4dc0-87d6-3b755dc761ce",
