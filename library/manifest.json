@@ -227,21 +227,15 @@
         "id": "spells.capella-spell-geas",
         "name": "Geas",
         "collections": [
-          "spells",
-          "spells/enchantment",
-          "spells/level-5"
+          "spells"
         ],
         "tags": [
-          "capella",
-          "social",
-          "coercion",
-          "dandd-5e-wiki",
-          "player-s-handbook",
-          "dnd5eapi"
+          "seraphine",
+          "level-5"
         ],
-        "path": "library/records/spells/enchantment/capella-spell-geas.json",
-        "sha": "",
-        "updatedAt": "2026-05-03T15:10:50.038Z"
+        "path": "library/records/spells/capella-spell-geas.json",
+        "sha": "015f99a5baa4299035d87e11b7335110f0484d69",
+        "updatedAt": "2026-10-19T02:43:09.258Z"
       },
       {
         "id": "spells.capella-spell-hold-monster",
