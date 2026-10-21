@@ -21,7 +21,7 @@ A GitHub-backed D&D character manager built around thin HTML shims and remotely 
 - `share/examples/`
   - Hard-coded UI prototypes and visual targets.
 
-Start with [Documentation/Start Here.md](Documentation/Start%20Here.md). `Documentation/Primary` contains short code pointers; `Documentation/Troubleshooting` contains audits and repair notes. Previous session/DM plans are archived under `Documentation/_OLD` and do not define the current roadmap.
+Start with [Documentation/Start Here.md](Documentation/Start%20Here.md) for short folder introductions, then use each folder's `x_Directory.md`. Documentation now separates character sheets, supporting rules, selected system designs, implementation guidance and dated audit evidence. Superseded drafts are recoverable from the timestamped Git backup instead of kept as competing instructions.
 
 ## Thin-Shim Model
 

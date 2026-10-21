@@ -1,8 +1,6 @@
 # Aetherlock Costs and Damage
 
-Updated 2026-10-18. This is the current cost ledger, including the 2026-10-18 clarification that Arcana modifies both scribing and installation/removal. The earlier undiscounted level 1+ mounting totals are superseded. [Aetherlock Engineered Rounds](Aetherlock%20Engineered%20Rounds.md) owns actions and delivery; [Containers and Scrolls](../Systems/Spell%20Containers%20and%20Consumable%20Sources.md) owns scribing, mounting and the single-item lifecycle. Costs do not debit existing gold, slots or stock.
-
-The former 10 gp/slot-level Spellround recipe is superseded by actual scroll scribing plus mounting. Earlier prices are archived under [Before Scroll Pricing](../_OLD/Carol%20Planning%20Snapshots/2026-10-17%20Before%20Scroll%20Pricing/Aetherlock%20Costs%20and%20Damage.md).
+Updated 2026-10-19. This ledger owns current ammunition prices and derived comparisons; runtime implementation is deferred. Arcana modifies both scribing and mounting/removal, including level 1+ handling. [Weapon rules](Aetherlock%20Engineered%20Rounds.md) own actions; [Carol's sheet](../Character%20Sheets/Carol%20Elfnein.md#aetherlock-summary) owns stock; [scroll lifecycle](../Systems/Spell%20Containers%20and%20Consumable%20Sources.md) owns eligibility and handling formulas. Rounding and the parked economy proposals remain open; these estimates do not debit existing gold, slots or stock.
 
 ## Inputs
 
@@ -10,33 +8,30 @@ The former 10 gp/slot-level Spellround recipe is superseded by actual scroll scr
 |---|---|
 | Complete Basic Round | Purchased at 1 gp. No second identical casing fee. Raw manufacture is unspecified. |
 | DIY casing | Proposed: 1 gp brass yields ten casings. Not selected as a complete Basic Round recipe. |
-| Scroll | Scribing baseline × scribe's Arcana multiplier, plus full specific consumed components. Required reusable components must be available. No additional payload slot payment. |
-| Level 1+ mounting/removal | Baseline 50 gp and two hours per spell level, both multiplied by the operator Arcana multiplier. Same schedule for binder and Spellround insertion/removal. |
-| Cantrip mounting/removal | Each operation: 15 gp and one eight-hour workday × operator's Arcana multiplier. Separate from new scroll creation. |
+| Scroll | Use the [scribing requirements and baseline](../Systems/Spell%20Containers%20and%20Consumable%20Sources.md#scribing-mounting-and-removal) with the [selected Arcana multiplier](../Systems/Spell%20Containers%20and%20Consumable%20Sources.md#selected-arcana-multiplier). |
+| Mounting/removal | Use the [canonical handling schedule](../Systems/Spell%20Containers%20and%20Consumable%20Sources.md#scribing-mounting-and-removal), including its distinct cantrip baseline. |
 | Arcane enhancement | One Basic + 5 gp crystal dust + 5 gp runic ink; ten minutes, no slot. |
 | HEDP batch | One 100 gp grenade + six Basic + 20 gp parts; one hour with Tinker's Tools produces six rounds. |
 | Empty canister refill | Current: 12 gp reagents + one hour with Tinker's Tools + one first-level slot; fills 12 charges in an existing shell. Proposed 120 gp reagents remain unselected. |
 
 ## Scribing reference and multiplier
 
-Use **M = 3^((5 − A)/5)**, where A is total Arcana. It is not a roll; tool proficiency never supplies another score or stacked bonus. Arcana or Calligrapher proficiency remains a separate eligibility route. Prepare the spell each inscription day and retain required components under the recorded baseline.
+The tables below derive from the scroll design's [published scribing baseline](../Systems/Spell%20Containers%20and%20Consumable%20Sources.md#published-scribing-baseline), [Arcana formula and discount scope](../Systems/Spell%20Containers%20and%20Consumable%20Sources.md#selected-arcana-multiplier), and [mounting/removal schedule](../Systems/Spell%20Containers%20and%20Consumable%20Sources.md#scribing-mounting-and-removal). Eligibility, component requirements, workday length and precision policy are defined there. Displayed figures here are rounded comparisons pending the final rounding decision.
 
-Multiply baseline materials and work by M, then add specific consumed components at full cost. Installation/removal also multiplies its own baseline fees and time by the operator Arcana multiplier, including level 1+ handling. Purchases, specific consumed components and other recipes are not discounted. One workday is eight hours. Preserve precision; displayed values below are rounded comparisons pending a final rounding policy.
+| Spell level | Carol's scribing materials at Arcana +16 | Carol's workdays |
+|---|---:|---:|
+| Cantrip | 1.34 gp | 0.08919 |
+| 1 | 2.23 gp | 0.08919 |
+| 2 | 8.92 gp | 0.26758 |
+| 3 | 13.38 gp | 0.44597 |
+| 4 | 89.19 gp | 0.89194 |
+| 5 | 133.79 gp | 2.22984 |
+| 6 | 891.94 gp | 3.56774 |
+| 7 | 1,114.92 gp | 4.45968 |
+| 8 | 1,337.90 gp | 5.35161 |
+| 9 | 4,459.68 gp | 10.70322 |
 
-| Spell level | Baseline materials | Baseline workdays | Carol's materials at Arcana +16 | Carol's workdays |
-|---|---:|---:|---:|---:|
-| Cantrip | 15 gp | 1 | 1.34 gp | 0.08919 |
-| 1 | 25 gp | 1 | 2.23 gp | 0.08919 |
-| 2 | 100 gp | 3 | 8.92 gp | 0.26758 |
-| 3 | 150 gp | 5 | 13.38 gp | 0.44597 |
-| 4 | 1,000 gp | 10 | 89.19 gp | 0.89194 |
-| 5 | 1,500 gp | 25 | 133.79 gp | 2.22984 |
-| 6 | 10,000 gp | 40 | 891.94 gp | 3.56774 |
-| 7 | 12,500 gp | 50 | 1,114.92 gp | 4.45968 |
-| 8 | 15,000 gp | 60 | 1,337.90 gp | 5.35161 |
-| 9 | 50,000 gp | 120 | 4,459.68 gp | 10.70322 |
-
-Carol's M is approximately 0.08919350686224783, from INT +6 and Expertise with PB +5. Only the scribe's score discounts their scribing; an assembler uses their own score for cantrip mounting. An eligible donor is needed for a spell Carol cannot cast. Higher-level upcast scroll pricing still needs an explicit policy; do not charge the base tier for a stronger saved cast by assumption.
+These examples use Carol's accepted [Arcana modifier](../Character%20Sheets/Carol%20Elfnein.md#skills-and-tools). M denotes the applicable operator's multiplier from the linked rule. An eligible donor is needed for a spell Carol cannot cast. Select the table row using the scroll's [actual saved cast level](../Systems/Spell%20Containers%20and%20Consumable%20Sources.md#upcast-scroll-level), including eligible upcasts.
 
 ## Completed ammunition
 
@@ -53,11 +48,13 @@ The table uses purchased Basic Rounds and Carol's scribing/mounting where eligib
 | Cantrip | Basic + new scroll + separate mount | Two ×0.08919 workday, about 85.63 minutes | 3.68 gp | Depends on spell and donor scaling |
 | Revivify 3 — example only | Basic + donor scroll +300 gp consumed diamond + discounted mounting | 5 × scribe M workdays +6 × installer M hours | 301 gp +150 gp × scribe M +150 gp × installer M | Eligible dead creature returns with 1 HP; qualified donor needed |
 
+For handling an existing scroll with Carol's Arcana, a fifth-level mounting/removal job starts from 250 gp/10 hours and costs about 22.30 gp and 53.52 minutes after the multiplier. Cantrip mounting/removal alone costs about 1.34 gp and 42.81 minutes; new scribing is a separate job.
+
 Cone of Cold has no priced consumed component in this example. Shield/Cure Wounds have V/S and no material component. Revivify is not a new grant or stock selection; Carol cannot supply it. Do not apply her Arcana discount to another donor's work.
 
 Assembly moves the same real scroll into its container, not a duplicate or second scribing. An owned scroll needs mounting only; a new scroll needs both jobs. Extracting it preserves identity and snapshot. Mechanical loading of completed ammunition remains free under the weapon rule; that is separate from hours-long mounting work.
 
-Binder casting pays current-user resources and uses their current statistics, preserving the original snapshot for later loose/round use. Do not sum donor and current-caster bonuses or choose the better set. A fifth-level mount has a baseline of 250 gp/10 hours before the operator multiplier; it only handles the existing item and never creates another charged scroll. The published own-book backup rate is reference, not a selected discount.
+For binder versus prepaid casting and preserved donor statistics, use the [single-scroll lifecycle](../Systems/Spell%20Containers%20and%20Consumable%20Sources.md#one-physical-scroll--selected-2026-10-17). Mounting/removal costs follow the linked handling schedule; they do not create another scroll.
 
 ## Firing power, separate from ammunition
 
@@ -76,6 +73,6 @@ A canister holds 12 charges. Basic/Arcane use one per projectile; Precision Basi
 
 Allocated reagent value is not another at-fire fee. A full refill still costs one whole first-level slot and one hour; do not create usable fractional slots. A full canister supports 12 ordinary Basic/Arcane projectiles, six Spellround/HEDP or three Precision projectiles.
 
-Current stock: 18 Basic +6 Arcane +3 Cone of Cold +3 HEDP +2 Shield +2 Cure Wounds = 34 rounds. Five filled canisters hold 60 charges. Normal stock expenditure costs 44 charges; no automatic rest refill or historical gold/slot debit applies.
+[Carol's sheet](../Character%20Sheets/Carol%20Elfnein.md#aetherlock-summary) owns inventory counts and their charge budget. Rests do not refill physical rounds or canisters.
 
 Prior sources, recorded as verified 2026-10-17: [scribing](https://www.dndbeyond.com/sources/dnd/br-2024/equipment#ScribingSpellScrolls), [scrolls](https://www.dndbeyond.com/sources/dnd/br-2024/magic-items-a-z#SpellScroll), and [Wizard copying](https://www.dndbeyond.com/sources/dnd/br-2024/character-classes#Wizard). Universal scroll access, enhanced donor snapshots, binder behavior, mounting and weapon recipes are campaign mechanics. This cleanup does not claim fresh source verification.

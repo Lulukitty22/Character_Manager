@@ -1,6 +1,6 @@
 # Spell Containers and Consumable Sources
 
-Updated 2026-10-18. This document owns container access, capacity, spellbook contents and the single-scroll lifecycle. These are design decisions, not implemented behavior. Resume the broader architecture discussion at [Campaigns and Shared Data](Campaigns%20and%20Shared%20Data.md).
+This document owns container access, capacity, spellbook readiness and the single-scroll lifecycle, including crafting and saved casting formulas. These are selected design requirements, not implemented behavior. Remaining design questions are listed at the end.
 
 Books and bags are owned inventory containers with nested spell entries or items. Keep reusable definitions, owned instances and casting/effect state separate. Preserve unknown and nested data through save/reload/import/export before choosing a migration schema.
 
@@ -34,9 +34,11 @@ This deletion rule applies to editor and sheet deletion controls. Gameplay dropp
 - Books have editable names and user-controlled saved tab order.
 - A normal campaign book holds 16 spell entries. Every contained eligible spell is ready. Multiple books add capacity without another global preparation cap; they do not grant class cantrips, new spell tiers or extra slots.
 - Cantrips use normal spaces. There is no special cantrip container subtype or capacity exemption.
-- Carol has three permanent Enduring Spellbooks: Combat, Cantrips and Workshop/Alchemy. Protection does not increase capacity or consume active-replica allowances. See [Books and Grants](../Class%20Reference/Carol%20Books%20and%20Grants.md) for contents.
+- All classes store spells in book items. The character's applicable class/level ability to cast a spell establishes eligibility without another learning step; physical acquisition, scribing and mounting remain distinct operations with their selected costs.
+- Readiness derives from accessible eligible contents without a hidden global preparation filter or secondary-book penalty. Preserve normal casting time, components, range, concentration, saves, effects and stacking unless explicitly changed.
+- [Carol's sheet](../Character%20Sheets/Carol%20Elfnein.md#spell-resources-and-books) owns her Enduring book inventory and contents. Protection does not increase capacity or consume active-replica allowances.
 
-Class and level eligibility still apply. [Spellbook Policy](../Primary/Spellbook%20Policy.md) records the campaign's acquisition/readiness exceptions and remaining ritual/source questions. Normal casting times, components and effects remain unless explicitly changed.
+The 16-entry/all-ready system is a campaign rule, not published preparation. Books do not grant class spell access; higher shared slots support eligible upcasts rather than new class spell tiers. Ritual and source questions remain below. The [published class rules](https://www.dndbeyond.com/sources/dnd/br-2024/character-classes) provide the comparison, with explicit campaign exceptions taking precedence.
 
 ## Capacities — published defaults selected 2026-10-17
 
@@ -94,11 +96,15 @@ Fresh True Strike belongs to the current wielder's firing-time casting. It is no
 
 Scribing makes a **new scroll**. Under the recorded published baseline, Arcana or Calligrapher proficiency qualifies; the spell must be prepared each inscription day and required components available. Consumed components are spent on completion. Published scribing imposes no additional slot payment. Campaign one-shot eligibility and snapshot exceptions remain separate from that baseline.
 
-Mounting secures an **existing scroll** in a binder or one-scroll Spellround. The selected baseline for levels 1–9 is 50 gp and two hours per spell level, multiplied by the operator's Arcana multiplier M. Mounting and removal use the same schedule for binders and Spellrounds. A fifth-level operation has a baseline of 250 gp/10 hours; at Carol's Arcana +16 it costs about 22.30 gp and 0.89194 hours (53.52 minutes). This 2026-10-18 clarification supersedes the earlier undiscounted level 1+ handling rule. Moving an existing scroll does not charge for scribing a new one.
+Mounting secures an **existing scroll** in a binder or one-scroll Spellround. The selected baseline for levels 1–9 is 50 gp and two hours per spell level, multiplied by the operator's Arcana multiplier M. Mounting and removal use the same schedule for binders and Spellrounds. See the [completed-ammunition ledger](../Class%20Reference/Aetherlock%20Costs%20and%20Damage.md#completed-ammunition) for Carol's discounted fifth-level mounting example. This 2026-10-18 clarification supersedes the earlier undiscounted level 1+ handling rule. Moving an existing scroll does not charge for scribing a new one.
 
 Cantrip mounting and removal each use a baseline of 15 gp and one eight-hour workday, multiplied by the operator's selected Arcana multiplier. This replaces the 25 gp/one-hour proposal. Creating a new cantrip scroll is a separate scribing operation with its own cost. Level 1+ mounting/removal also uses M under the latest clarification, with its distinct baseline of 50 gp/two hours per level.
 
 No cheaper own-book backup rate or extra mounting Arcana check has been selected. Ordinary chamber loading of completed ammunition is free under the weapon rule; it is not the hours-long job of installing/removing its scroll.
+
+### Upcast scroll level
+
+Selected 2026-10-19: an eligible upcast scroll is saved and scribed at its actual cast level, not the spell's base level. For example, a fourth-level spell scribed as a sixth-level cast is a sixth-level scroll: use the sixth-level scribing baseline and retain its sixth-level formulas in the snapshot. This does not grant the scribe spell access they otherwise lack. Apply the normal Arcana multiplier and component requirements to that selected tier.
 
 ### Published scribing baseline
 
@@ -142,7 +148,7 @@ Each +5 divides cost/time by three. The curve is positive and approaches zero. E
 
 Arcana 0 or a negative score does not bypass proficiency eligibility. The +5 normalization is a house rule, not a published minimum.
 
-Carol's Arcana +16 is INT +6 plus Expertise with PB +5. A fifth-level scroll costs about 133.79 gp and 2.22984 workdays before specific consumed components. If Carol also mounts it, a 1 gp Basic Round and discounted handling add about 23.30 gp and 0.89194 hours: about 157.09 gp total. A first-level round is about 7.69 gp plus any specific consumed components. Cantrip mounting alone costs about 1.34 gp and 42.81 minutes; new scribing is another operation. These examples do not debit existing stock or gold.
+Carol's derived scroll costs and work times belong in the [scribing ledger](../Class%20Reference/Aetherlock%20Costs%20and%20Damage.md#scribing-reference-and-multiplier); assembled-round totals and handling examples belong in [completed ammunition](../Class%20Reference/Aetherlock%20Costs%20and%20Damage.md#completed-ammunition). These examples do not debit existing stock or gold.
 
 See [Costs and Damage](../Class%20Reference/Aetherlock%20Costs%20and%20Damage.md) for the complete ledger. The Basic Round is the complete 1 gp physical base, not an additional fee on top of an identical casing. Proposed DIY casings and the proposed 120 gp canister refill remain separate unresolved economics. Scroll extraction does not establish projectile recovery after firing.
 
@@ -150,11 +156,11 @@ See [Costs and Damage](../Class%20Reference/Aetherlock%20Costs%20and%20Damage.md
 
 - Movement/retrieval action costs and gameplay transfer, sale, loss or destruction of nonempty containers.
 - Instance identities, cycle prevention, incomplete measurements, volume estimates and override UX.
-- Upcast scroll pricing and conditional snapshot options. Spellround removal uses the same discounted schedule as binder removal.
+- Conditional snapshot options. Upcast scroll tier/pricing is selected above; Spellround removal uses the same discounted schedule as binder removal.
 - Rituals, duplicate spell identities/casting sources and class-granted spells when a book is lost.
 - Crafting score/buff timing and display rounding.
 - Lossless editor harvesting, definition conversion and migration; actual viewer/editor verification.
 
 Implementation remains deferred while rules and architecture are discussed. Weapon-specific details belong in Aetherlock, not appended as another competing rules section here.
 
-Related: [Spellbook Policy](../Primary/Spellbook%20Policy.md), [Library Integration](../Class%20Reference/Library%20Integration.md), [Editor and Saving](../Primary/Editor%20and%20Saving.md), [LLM Assistance](../Primary/LLM%20Assistance.md), and [Carol status](../Primary/Carol%20Rebuild%20Status.md).
+Related: [Campaigns and Shared Data](Campaigns%20and%20Shared%20Data.md), [Spell Effects and Active State](Spell%20Effects%20and%20Active%20State.md), and the [Runtime and Repair Guide](../Implementation/Runtime%20and%20Repair%20Guide.md).

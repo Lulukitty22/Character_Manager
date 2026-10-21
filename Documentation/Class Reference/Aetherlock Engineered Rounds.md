@@ -1,23 +1,23 @@
 # Aetherlock Engineered Rounds
 
-Updated 2026-10-18. These are the selected campaign rules for Carol's granted custom rifle, not automatic Artificer features. [Carol's sheet](../Character%20Sheets/Carol%20Elfnein.md) owns her build; this document owns weapon mechanics. [Costs and Damage](Aetherlock%20Costs%20and%20Damage.md) owns the ledger. Runtime implementation remains deferred.
+Updated 2026-10-18. This document owns the selected campaign mechanics for Carol's granted custom rifle; [Carol's sheet](../Character%20Sheets/Carol%20Elfnein.md) owns her build and [Costs and Damage](Aetherlock%20Costs%20and%20Damage.md) owns the ledger. Runtime implementation is deferred. Remaining questions concern unusual payloads, critical/Potent Cantrip mapping and manufacturing details listed below; settled firing, charge and scroll rules remain usable.
 
 ## Rifle and actions
 
 | Rule | Selected value |
 |---|---|
 | Attunement | Requires an Artificer. Aetherlock, permanent Wand and permanent Manifold use Carol's three slots. |
-| Frame | Two-Handed rifle, no Light property. Weight remains open; the old one-handed 3 lb frame is superseded. |
+| Frame | Two-Handed rifle, no Light property. Weight remains open. |
 | Capacity | Six unrestricted chambers, with any available mix. Physical rounds do not refill on rests. |
 | Range | 80/240 ft. Attack rolls have Disadvantage beyond 80 ft; no delivery beyond 240 ft. This replaces compatible payload casting range, including Touch; other area/target restrictions remain except explicit Self/cone changes. |
-| Aim | d20 +11: INT +6 and PB +5 under the proficient INT-guidance campaign rule. Wand does not boost gun aim. |
+| Aim | d20 +11: INT +6 and proficiency bonus +5 under the proficient INT-guidance campaign rule. Wand does not boost gun aim. |
 | Basic damage | 2d10 +6 Piercing, mean 17. Spellround and HE-FRAG replace this damage entirely. |
 | Discharge | Each permitted attack fires 1–3 Basic/Arcane projectiles, or one Spellround/HE-FRAG. No burst containing Spellround/HE-FRAG. Each projectile consumes its round and charges and receives applicable resolution. |
 | Handling | Chamber selection and fuze programming are part of firing. Loading existing completed rounds has no separate action cost. This creates no new ammunition. |
 | Guise | Two attack opportunities in its Attack action: up to six Basic/Arcane projectiles, or two Spellround/HE-FRAG. No class Extra Attack outside Guise. |
 | True Strike | A fresh Magic action with one weapon attack and one enhanced projectile. It is not a free cantrip added to Guise attacks or a burst-wide rider. |
 
-The old Bonus Action one-round reload and its 11-shot/six-turn calculation are superseded. Charge-canister replacement has a separate Bonus Action and readiness delay below. Six chambers and 12 charges are different limits.
+Charge-canister replacement has a separate Bonus Action and readiness delay below. Six chambers and 12 charges are different limits.
 
 ## Fuzes and delivery
 
@@ -41,8 +41,6 @@ The 1 gp Basic Round is the complete physical base. Crafting an enhanced round c
 | Spellround | One actual crafted scroll mounted into one Basic Round. Pay scribing and specific consumed components once, then the selected mounting job. No additional payload slot payment. |
 | HE-FRAG / HEDP | One complete 100 gp grenade + six Basic Rounds + 20 gp parts; one hour with Tinker's Tools/proficiency produces six rounds, 126 gp/batch or 21 gp each. |
 
-Infused Round is retired; there is no generic temporary equipment-enchantment ammunition or replacement utility recipe. Calling Arcane ammunition “infused with magical energy” is lore, not an Artificer infusion or extra resource.
-
 ### Spellrounds and snapshots
 
 Eligible duration is instantaneous or one round, subject to recipe compatibility; Shield is an explicit Reaction exception. No blanket longer concentration-buff or reaction-spell access is granted. A qualified scribe makes the scroll under the recorded published prerequisites. Anyone may use its one-shot cast under the campaign exception.
@@ -51,7 +49,7 @@ The scroll saves donor identity, cast level/DC, applicable modifiers, scaling an
 
 There is no concentration merely while stored. Carol maintains required concentration after release under the current weapon rule, with one normal concentration. Storage does not make concentration invulnerable.
 
-The same physical scroll can be removed intact before use; mounting never duplicates it. Level 1+ mounting/removal uses a baseline of 50 gp and two hours per spell level, with both multiplied by the Arcana multiplier of the operator. Binder and Spellround removal use the same schedule. Cantrip mounting uses the 15 gp/one-workday baseline multiplied by the assembler's Arcana multiplier. Scribing is a separate operation using the scribe's multiplier. See [the canonical scroll lifecycle](../Systems/Spell%20Containers%20and%20Consumable%20Sources.md) for eligibility, exact formula, handling costs and preserved snapshot rules.
+The same physical scroll can be removed intact before use; mounting never duplicates it. Use the canonical [scribing, mounting and removal schedule](../Systems/Spell%20Containers%20and%20Consumable%20Sources.md#scribing-mounting-and-removal) and [Arcana multiplier](../Systems/Spell%20Containers%20and%20Consumable%20Sources.md#selected-arcana-multiplier) for those separate operations. The [cost ledger](Aetherlock%20Costs%20and%20Damage.md#completed-ammunition) supplies worked ammunition prices.
 
 Firing pays no new payload slot. Guise activation does use a slot; retain the recorded 2024 one-slot-cast-per-turn restriction for another slot-funded cast that turn. Ordinary attacks and cantrips remain separate options. Rests do not restore expended rounds; new stock requires manufacture or acquisition. No expiration or stock cap has been selected.
 
@@ -71,7 +69,7 @@ A failed delivery consumes the round, Reaction and applicable charges. Successfu
 
 Each round deals 5d6 Piercing in a 20 ft-radius sphere, DC 15 DEX half; mean 17.5 before defenses. It uses Impact/Airburst, replaces Basic damage, has friendly fire, and gains no slot or Evoker bonus. HEDP is the selected name, not an additional armor-piercing mechanic.
 
-The six-round batch replaces the old one-grenade/one-round recipe. The 100 gp grenade price and conversion allowance are campaign selections, not published price claims. This does not manufacture a free grenade or add free rounds to Carol's existing stock. Allocated power reagents add 2 gp per normal shot at the current refill price; full-canister slot/work costs remain separate.
+The 100 gp grenade price and conversion allowance are campaign selections, not published price claims. This does not manufacture a free grenade or add free rounds to Carol's existing stock. Allocated power reagents add 2 gp per normal shot at the current refill price; full-canister slot/work costs remain separate.
 
 ## Charges, Precision and replacement
 
@@ -84,7 +82,7 @@ A reusable canister holds **12 charges**. Physical ammunition and magical power 
 | HE-FRAG | 2 | Two Guise shots cost 4. |
 | Precision Basic/Arcane | 4 total, including +3 surcharge | One/two/three precise projectiles cost 4/8/12; each gets Advantage. |
 
-Precision has no additional range, numeric attack bonus or DC increase. Rifle range remains 80/240 ft; normal Advantage/Disadvantage interactions apply. No Precision benefit is granted to save-only payloads. Any application beyond Basic/Arcane needs an explicitly selected rule. The old +2 charge wording and one-shot-only Precision model are superseded.
+Precision has no additional range, numeric attack bonus or DC increase. Rifle range remains 80/240 ft; normal Advantage/Disadvantage interactions apply. No Precision benefit is granted to save-only payloads. Any application beyond Basic/Arcane needs an explicitly selected rule.
 
 Replacing a canister costs a **Bonus Action**, allowed after firing on the same turn. Replacement immediately locks the rifle for the rest of that turn, intervening off-turn use, and the entire next own turn. It becomes ready at the start of the second subsequent own turn: replace on N, blocked through N+1, ready N+2.
 
@@ -94,27 +92,14 @@ Example: fire and replace on turn 1; rifle unavailable throughout turn 2; ready 
 
 Refilling an empty reusable canister currently consumes **12 gp magical reagents, one first-level slot and one hour using Tinker's Tools/proficiency**. The proposed 120 gp reagent cost is not selected. The recipe fills an existing shell; new-shell pricing and partial refills remain open. Rests do not refill charges, though recovered slots can fund paid work. Reagent flavor does not create another recipe or free refill.
 
-Starting supply is five filled canisters: one installed and four spare, 60 total charges. Historical fills do not debit current gold/slots. This replaces the old 10 gp/30-minute/no-slot proposal.
+Character quantities belong to the sheet, not this reusable weapon definition. Existing filled canisters do not debit current gold/slots.
 
-## Starting ammunition
+## Character loadout
 
-| Round | Carried | Stored spell level |
-|---|---:|---|
-| Basic | 18 | — |
-| Arcane | 6 | — |
-| Cone of Cold | 3 | 5 |
-| HE-FRAG | 3 | — |
-| Shield | 2 | 1 |
-| Cure Wounds | 2 | 1 |
+[Carol's sheet](../Character%20Sheets/Carol%20Elfnein.md#aetherlock-summary) owns selected ammunition, filled canisters, donor-specific payload values and the worked charge budget. This weapon definition governs how those resources are used; it does not duplicate the inventory. Initial chamber order remains unspecified.
 
-Total 34; at most six loaded. Initial chamber arrangement is unspecified. Cone of Cold is the canonical name for the user's “Cone of Frost”: Carol's stored version is 8d8 +6 Cold, DC 19 CON half. Existing stock is prior manufacture, not a new current resource debit.
-
-Expending this stock normally needs 18 +6 +(3 ×2) +(7 ×2) = 44 charges; five full canisters leave 16 charges. Precision changes that calculation.
-
-## Retirements and open work
-
-Double Tap, Rapid Cycle, generic Infused Round, the Overclock daily PB pool, Living Circuitry and the Masterwork revolver variant are retired. Higher Capacity Core and Resonant Cylinder do not add active benefits beyond the selected base rules. No unearned upgrades, extra attack bonus, free copied spells or old daily pool are restored. [Legacy Features](Aetherlock%20Legacy%20Features.md) preserves the historical comparison.
+## Open work
 
 Open: unusual payloads, critical/Potent Cantrip mapping, unwilling Self recipients, manufacturing tools/workspace and donor participation, raw Basic/casing supply, rifle weight, initial chamber order, new canister shells and partial refills. The 120 gp refill and DIY casing proposal are parked. These minor choices do not block current [campaign architecture](../Systems/Campaigns%20and%20Shared%20Data.md); implementation remains deferred.
 
-Prior research sources: [2024 weapons/actions](https://www.dndbeyond.com/sources/dnd/br-2024/equipment), [casting](https://www.dndbeyond.com/sources/dnd/br-2024/spells), [Evoker](https://www.dndbeyond.com/sources/dnd/br-2024/character-classes#Evoker), [grenade](https://roll20.net/compendium/dnd5e/Items%3AFragmentation%20Grenade?expansion=33359), [Scorching Ray](https://roll20.net/compendium/dnd5e/Spells%3AScorching%20Ray?expansion=32231), [True Strike](https://www.dndbeyond.com/spells/2619204-true-strike), [Booming Blade errata](https://media.wizards.com/2020/dnd/downloads/SCAG-Errata.pdf), and [original source](../_OLD/Carol%20Source%20Sheets/DISCORD%20CAROL%20ELFNEIN%20SHEET.txt). Booming Blade remains melee within 5 ft, not a ranged bullet effect. This cleanup does not claim fresh source verification.
+Prior research sources: [2024 weapons/actions](https://www.dndbeyond.com/sources/dnd/br-2024/equipment), [casting](https://www.dndbeyond.com/sources/dnd/br-2024/spells), [Evoker](https://www.dndbeyond.com/sources/dnd/br-2024/character-classes#Evoker), [grenade](https://roll20.net/compendium/dnd5e/Items%3AFragmentation%20Grenade?expansion=33359), [Scorching Ray](https://roll20.net/compendium/dnd5e/Spells%3AScorching%20Ray?expansion=32231), [True Strike](https://www.dndbeyond.com/spells/2619204-true-strike), and [Booming Blade errata](https://media.wizards.com/2020/dnd/downloads/SCAG-Errata.pdf). Booming Blade remains melee within 5 ft, not a ranged bullet effect. This cleanup does not claim fresh source verification.

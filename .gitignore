@@ -1,0 +1,4 @@
+# Generated audit views; regenerate with the retained audit script.
+Documentation/Troubleshooting/Evidence/*.html
+!Documentation/Troubleshooting/Evidence/remote-*.html
+Documentation/Troubleshooting/Evidence/composition-detail.txt
